@@ -1,0 +1,6 @@
+{
+  "name": "ChapterOS",
+  "description": "Student Chapter Operations Platform — managing members, activities, tasks, finance, documents and multi-term governance.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

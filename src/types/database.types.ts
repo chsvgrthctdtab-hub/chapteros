@@ -1,0 +1,1428 @@
+/**
+ * Chi Hội Manager - Supabase Database Types
+ * Generated representation matching PostgreSQL schema in supabase/migrations/
+ */
+
+export type Json =
+  | string
+  | number
+  | boolean
+  | null
+  | { [key: string]: Json | undefined }
+  | Json[];
+
+export type OrganizationRole = 'admin' | 'leader' | 'deputy' | 'treasurer' | 'secretary';
+export type OrganizationType = 'lien_chi_hoi' | 'chi_hoi' | 'clb' | 'doi';
+export type MembershipStatus = 'active' | 'inactive' | 'pending' | 'suspended';
+export type TermStatus = 'draft' | 'active' | 'completed' | 'archived';
+export type MemberStatus = 'active' | 'alumni';
+export type TermMemberStatus = 'active' | 'leave' | 'completed' | 'resigned';
+export type ActivityCategory = 'general' | 'volunteer' | 'academic' | 'sports' | 'culture' | 'meeting' | 'training';
+export type ActivityStatus = 'draft' | 'planning' | 'published' | 'in_progress' | 'completed' | 'cancelled';
+export type RegistrationStatus = 'registered' | 'confirmed' | 'cancelled' | 'waitlist';
+export type AttendanceStatus = 'unmarked' | 'present' | 'absent' | 'excused';
+export type TaskStatus = 'todo' | 'in_progress' | 'in_review' | 'completed' | 'cancelled';
+export type TaskPriority = 'low' | 'medium' | 'high' | 'urgent';
+export type FinanceType = 'income' | 'expense';
+export type TransactionStatus = 'draft' | 'pending_approval' | 'approved' | 'posted' | 'rejected';
+export type PeriodClosingType = 'month' | 'quarter' | 'custom';
+export type PeriodClosingStatus = 'closed' | 'reopened';
+export type ReconciliationStatus = 'balanced' | 'mismatch' | 'override';
+export type DocumentCategory = 'general' | 'resolution' | 'decision' | 'plan' | 'report' | 'template' | 'handover' | 'financial_receipt';
+export type DocumentAccessLevel = 'public' | 'internal' | 'board_only' | 'admin_only';
+export type DocumentSourceType = 'supabase' | 'google_drive';
+export type GoogleConnectionStatus = 'not_connected' | 'connected' | 'expired' | 'revoked' | 'error';
+export type GoogleConnectionType = 'user' | 'organization';
+
+export interface Database {
+  public: {
+    Tables: {
+      organizations: {
+        Row: {
+          id: string;
+          name: string;
+          code: string;
+          type: OrganizationType;
+          parent_id: string | null;
+          description: string | null;
+          logo_url: string | null;
+          finance_approval_threshold: number | null;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          name: string;
+          code: string;
+          type?: OrganizationType;
+          parent_id?: string | null;
+          description?: string | null;
+          logo_url?: string | null;
+          finance_approval_threshold?: number | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          name?: string;
+          code?: string;
+          type?: OrganizationType;
+          parent_id?: string | null;
+          description?: string | null;
+          logo_url?: string | null;
+          finance_approval_threshold?: number | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+      };
+      profiles: {
+        Row: {
+          id: string;
+          full_name: string;
+          email: string;
+          avatar_url: string | null;
+          phone: string | null;
+          student_id: string | null;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id: string;
+          full_name: string;
+          email: string;
+          avatar_url?: string | null;
+          phone?: string | null;
+          student_id?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          full_name?: string;
+          email?: string;
+          avatar_url?: string | null;
+          phone?: string | null;
+          student_id?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+      };
+      organization_memberships: {
+        Row: {
+          id: string;
+          organization_id: string;
+          user_id: string;
+          role: OrganizationRole;
+          status: MembershipStatus;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          organization_id: string;
+          user_id: string;
+          role?: OrganizationRole;
+          status?: MembershipStatus;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          organization_id?: string;
+          user_id?: string;
+          role?: OrganizationRole;
+          status?: MembershipStatus;
+          created_at?: string;
+          updated_at?: string;
+        };
+      };
+      terms: {
+        Row: {
+          id: string;
+          organization_id: string;
+          name: string;
+          start_date: string;
+          end_date: string;
+          status: TermStatus;
+          is_current: boolean;
+          closing_snapshot: Json | null;
+          closed_at: string | null;
+          closed_by: string | null;
+          handover_notes: string | null;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          organization_id: string;
+          name: string;
+          start_date: string;
+          end_date: string;
+          status?: TermStatus;
+          is_current?: boolean;
+          closing_snapshot?: Json | null;
+          closed_at?: string | null;
+          closed_by?: string | null;
+          handover_notes?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          organization_id?: string;
+          name?: string;
+          start_date?: string;
+          end_date?: string;
+          status?: TermStatus;
+          is_current?: boolean;
+          closing_snapshot?: Json | null;
+          closed_at?: string | null;
+          closed_by?: string | null;
+          handover_notes?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+      };
+      members: {
+        Row: {
+          id: string;
+          organization_id: string;
+          user_id: string | null;
+          student_id: string | null;
+          full_name: string;
+          email: string | null;
+          phone: string | null;
+          class_name: string | null;
+          major: string | null;
+          cohort: string | null;
+          position: string | null;
+          status: MemberStatus;
+          joined_date: string | null;
+          notes: string | null;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          organization_id: string;
+          user_id?: string | null;
+          student_id?: string | null;
+          full_name: string;
+          email?: string | null;
+          phone?: string | null;
+          class_name?: string | null;
+          major?: string | null;
+          cohort?: string | null;
+          position?: string | null;
+          status?: MemberStatus;
+          joined_date?: string | null;
+          notes?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          organization_id?: string;
+          user_id?: string | null;
+          student_id?: string | null;
+          full_name?: string;
+          email?: string | null;
+          phone?: string | null;
+          class_name?: string | null;
+          major?: string | null;
+          cohort?: string | null;
+          position?: string | null;
+          status?: MemberStatus;
+          joined_date?: string | null;
+          notes?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+      };
+      term_members: {
+        Row: {
+          id: string;
+          term_id: string;
+          member_id: string;
+          position: string;
+          department: string | null;
+          status: TermMemberStatus;
+          joined_date: string | null;
+          notes: string | null;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          term_id: string;
+          member_id: string;
+          position?: string;
+          department?: string | null;
+          status?: TermMemberStatus;
+          joined_date?: string | null;
+          notes?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          term_id?: string;
+          member_id?: string;
+          position?: string;
+          department?: string | null;
+          status?: TermMemberStatus;
+          joined_date?: string | null;
+          notes?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+      };
+      activities: {
+        Row: {
+          id: string;
+          organization_id: string;
+          term_id: string;
+          plan_id: string | null;
+          code: string | null;
+          title: string;
+          description: string | null;
+          category: ActivityCategory;
+          status: ActivityStatus;
+          location: string | null;
+          start_date: string;
+          end_date: string;
+          target_members: number | null;
+          banner_url: string | null;
+          lead_member_id: string | null;
+          created_by: string | null;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          organization_id: string;
+          term_id: string;
+          plan_id?: string | null;
+          code?: string | null;
+          title: string;
+          description?: string | null;
+          category?: ActivityCategory;
+          status?: ActivityStatus;
+          location?: string | null;
+          start_date: string;
+          end_date: string;
+          target_members?: number | null;
+          banner_url?: string | null;
+          lead_member_id?: string | null;
+          created_by?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          organization_id?: string;
+          term_id?: string;
+          plan_id?: string | null;
+          code?: string | null;
+          title?: string;
+          description?: string | null;
+          category?: ActivityCategory;
+          status?: ActivityStatus;
+          location?: string | null;
+          start_date?: string;
+          end_date?: string;
+          target_members?: number | null;
+          banner_url?: string | null;
+          lead_member_id?: string | null;
+          created_by?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+      };
+      activity_participants: {
+        Row: {
+          id: string;
+          activity_id: string;
+          member_id: string;
+          registration_status: RegistrationStatus;
+          registered_at: string;
+          attendance_status: AttendanceStatus;
+          attended_at: string | null;
+          notes: string | null;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          activity_id: string;
+          member_id: string;
+          registration_status?: RegistrationStatus;
+          registered_at?: string;
+          attendance_status?: AttendanceStatus;
+          attended_at?: string | null;
+          notes?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          activity_id?: string;
+          member_id?: string;
+          registration_status?: RegistrationStatus;
+          registered_at?: string;
+          attendance_status?: AttendanceStatus;
+          attended_at?: string | null;
+          notes?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+      };
+      tasks: {
+        Row: {
+          id: string;
+          organization_id: string;
+          term_id: string;
+          activity_id: string | null;
+          title: string;
+          description: string | null;
+          status: TaskStatus;
+          priority: TaskPriority;
+          progress: number;
+          due_date: string | null;
+          assigned_to: string | null;
+          created_by: string | null;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          organization_id: string;
+          term_id: string;
+          activity_id?: string | null;
+          title: string;
+          description?: string | null;
+          status?: TaskStatus;
+          priority?: TaskPriority;
+          progress?: number;
+          due_date?: string | null;
+          assigned_to?: string | null;
+          created_by?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          organization_id?: string;
+          term_id?: string;
+          activity_id?: string | null;
+          title?: string;
+          description?: string | null;
+          status?: TaskStatus;
+          priority?: TaskPriority;
+          progress?: number;
+          due_date?: string | null;
+          assigned_to?: string | null;
+          created_by?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+      };
+      finance_categories: {
+        Row: {
+          id: string;
+          organization_id: string;
+          name: string;
+          type: FinanceType;
+          description: string | null;
+          is_system: boolean;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          organization_id: string;
+          name: string;
+          type: FinanceType;
+          description?: string | null;
+          is_system?: boolean;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          organization_id?: string;
+          name?: string;
+          type?: FinanceType;
+          description?: string | null;
+          is_system?: boolean;
+          created_at?: string;
+          updated_at?: string;
+        };
+      };
+      finance_transactions: {
+        Row: {
+          id: string;
+          organization_id: string;
+          term_id: string;
+          category_id: string;
+          activity_id: string | null;
+          transaction_type: FinanceType;
+          amount: number;
+          description: string;
+          transaction_date: string;
+          status: TransactionStatus;
+          approved_by: string | null;
+          approved_at: string | null;
+          rejection_reason: string | null;
+          rejected_at: string | null;
+          period_closing_id: string | null;
+          receipt_url: string | null;
+          recorded_by: string | null;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          organization_id: string;
+          term_id: string;
+          category_id: string;
+          activity_id?: string | null;
+          transaction_type: FinanceType;
+          amount: number;
+          description: string;
+          transaction_date?: string;
+          status?: TransactionStatus;
+          approved_by?: string | null;
+          approved_at?: string | null;
+          rejection_reason?: string | null;
+          rejected_at?: string | null;
+          period_closing_id?: string | null;
+          receipt_url?: string | null;
+          recorded_by?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          organization_id?: string;
+          term_id?: string;
+          category_id?: string;
+          activity_id?: string | null;
+          transaction_type?: FinanceType;
+          amount?: number;
+          description?: string;
+          transaction_date?: string;
+          status?: TransactionStatus;
+          approved_by?: string | null;
+          approved_at?: string | null;
+          rejection_reason?: string | null;
+          rejected_at?: string | null;
+          period_closing_id?: string | null;
+          receipt_url?: string | null;
+          recorded_by?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+      };
+      finance_period_closings: {
+        Row: {
+          id: string;
+          organization_id: string;
+          term_id: string;
+          period_type: PeriodClosingType;
+          period_name: string;
+          period_start: string;
+          period_end: string;
+          status: PeriodClosingStatus;
+          opening_balance: number;
+          total_income: number;
+          total_expense: number;
+          closing_balance: number;
+          actual_balance: number;
+          reconciliation_status: ReconciliationStatus;
+          reconciliation_discrepancy: number;
+          reconciliation_notes: string | null;
+          closed_at: string;
+          closed_by: string | null;
+          closed_by_name: string | null;
+          reopened_at: string | null;
+          reopened_by: string | null;
+          reopened_by_name: string | null;
+          reopen_reason: string | null;
+          snapshot_data: Json | null;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          organization_id: string;
+          term_id: string;
+          period_type: PeriodClosingType;
+          period_name: string;
+          period_start: string;
+          period_end: string;
+          status?: PeriodClosingStatus;
+          opening_balance?: number;
+          total_income?: number;
+          total_expense?: number;
+          closing_balance?: number;
+          actual_balance?: number;
+          reconciliation_status?: ReconciliationStatus;
+          reconciliation_discrepancy?: number;
+          reconciliation_notes?: string | null;
+          closed_at?: string;
+          closed_by?: string | null;
+          closed_by_name?: string | null;
+          reopened_at?: string | null;
+          reopened_by?: string | null;
+          reopened_by_name?: string | null;
+          reopen_reason?: string | null;
+          snapshot_data?: Json | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          organization_id?: string;
+          term_id?: string;
+          period_type?: PeriodClosingType;
+          period_name?: string;
+          period_start?: string;
+          period_end?: string;
+          status?: PeriodClosingStatus;
+          opening_balance?: number;
+          total_income?: number;
+          total_expense?: number;
+          closing_balance?: number;
+          actual_balance?: number;
+          reconciliation_status?: ReconciliationStatus;
+          reconciliation_discrepancy?: number;
+          reconciliation_notes?: string | null;
+          closed_at?: string;
+          closed_by?: string | null;
+          closed_by_name?: string | null;
+          reopened_at?: string | null;
+          reopened_by?: string | null;
+          reopened_by_name?: string | null;
+          reopen_reason?: string | null;
+          snapshot_data?: Json | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+      };
+      documents: {
+        Row: {
+          id: string;
+          organization_id: string;
+          term_id: string | null;
+          activity_id: string | null;
+          member_id: string | null;
+          task_id: string | null;
+          title: string;
+          category: DocumentCategory;
+          source_type: DocumentSourceType;
+          file_path: string;
+          drive_file_id: string | null;
+          drive_url: string | null;
+          file_icon_url: string | null;
+          thumbnail_url: string | null;
+          is_folder: boolean;
+          file_size: number | null;
+          mime_type: string | null;
+          access_level: DocumentAccessLevel;
+          uploaded_by: string | null;
+          linked_by: string | null;
+          metadata: Json;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          organization_id: string;
+          term_id?: string | null;
+          activity_id?: string | null;
+          member_id?: string | null;
+          task_id?: string | null;
+          title: string;
+          category?: DocumentCategory;
+          source_type?: DocumentSourceType;
+          file_path?: string;
+          drive_file_id?: string | null;
+          drive_url?: string | null;
+          file_icon_url?: string | null;
+          thumbnail_url?: string | null;
+          is_folder?: boolean;
+          file_size?: number | null;
+          mime_type?: string | null;
+          access_level?: DocumentAccessLevel;
+          uploaded_by?: string | null;
+          linked_by?: string | null;
+          metadata?: Json;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          organization_id?: string;
+          term_id?: string | null;
+          activity_id?: string | null;
+          member_id?: string | null;
+          task_id?: string | null;
+          title?: string;
+          category?: DocumentCategory;
+          source_type?: DocumentSourceType;
+          file_path?: string;
+          drive_file_id?: string | null;
+          drive_url?: string | null;
+          file_icon_url?: string | null;
+          thumbnail_url?: string | null;
+          is_folder?: boolean;
+          file_size?: number | null;
+          mime_type?: string | null;
+          access_level?: DocumentAccessLevel;
+          uploaded_by?: string | null;
+          linked_by?: string | null;
+          metadata?: Json;
+          created_at?: string;
+          updated_at?: string;
+        };
+      };
+      google_connections: {
+        Row: {
+          id: string;
+          user_id: string | null;
+          organization_id: string | null;
+          connection_type: GoogleConnectionType;
+          google_account_id: string | null;
+          google_email: string;
+          google_name: string | null;
+          google_avatar_url: string | null;
+          status: GoogleConnectionStatus;
+          granted_scopes: string[];
+          token_expires_at: string | null;
+          last_verified_at: string;
+          error_message: string | null;
+          metadata: Json;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          user_id?: string | null;
+          organization_id?: string | null;
+          connection_type?: GoogleConnectionType;
+          google_account_id?: string | null;
+          google_email: string;
+          google_name?: string | null;
+          google_avatar_url?: string | null;
+          status?: GoogleConnectionStatus;
+          granted_scopes?: string[];
+          token_expires_at?: string | null;
+          last_verified_at?: string;
+          error_message?: string | null;
+          metadata?: Json;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          user_id?: string | null;
+          organization_id?: string | null;
+          connection_type?: GoogleConnectionType;
+          google_account_id?: string | null;
+          google_email?: string;
+          google_name?: string | null;
+          google_avatar_url?: string | null;
+          status?: GoogleConnectionStatus;
+          granted_scopes?: string[];
+          token_expires_at?: string | null;
+          last_verified_at?: string;
+          error_message?: string | null;
+          metadata?: Json;
+          created_at?: string;
+          updated_at?: string;
+        };
+      };
+      activity_forms: {
+        Row: {
+          id: string;
+          organization_id: string;
+          activity_id: string;
+          user_id: string | null;
+          google_form_id: string;
+          form_title: string;
+          form_responder_uri: string | null;
+          linked_sheet_id: string | null;
+          auto_sync_participants: boolean;
+          sync_frequency_minutes: number;
+          status: string;
+          last_synced_at: string | null;
+          field_mappings: Json;
+          metadata: Json;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          organization_id: string;
+          activity_id: string;
+          user_id?: string | null;
+          google_form_id: string;
+          form_title: string;
+          form_responder_uri?: string | null;
+          linked_sheet_id?: string | null;
+          auto_sync_participants?: boolean;
+          sync_frequency_minutes?: number;
+          status?: string;
+          last_synced_at?: string | null;
+          field_mappings?: Json;
+          metadata?: Json;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          organization_id?: string;
+          activity_id?: string;
+          user_id?: string | null;
+          google_form_id?: string;
+          form_title?: string;
+          form_responder_uri?: string | null;
+          linked_sheet_id?: string | null;
+          auto_sync_participants?: boolean;
+          sync_frequency_minutes?: number;
+          status?: string;
+          last_synced_at?: string | null;
+          field_mappings?: Json;
+          metadata?: Json;
+          created_at?: string;
+          updated_at?: string;
+        };
+      };
+      activity_form_responses: {
+        Row: {
+          id: string;
+          activity_form_id: string;
+          activity_id: string;
+          organization_id: string;
+          google_response_id: string;
+          respondent_email: string | null;
+          submitted_at: string;
+          raw_answers: Json;
+          parsed_student_id: string | null;
+          parsed_full_name: string | null;
+          parsed_phone: string | null;
+          parsed_class_name: string | null;
+          matched_member_id: string | null;
+          matched_participant_id: string | null;
+          match_status: string;
+          notes: string | null;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          activity_form_id: string;
+          activity_id: string;
+          organization_id: string;
+          google_response_id: string;
+          respondent_email?: string | null;
+          submitted_at: string;
+          raw_answers?: Json;
+          parsed_student_id?: string | null;
+          parsed_full_name?: string | null;
+          parsed_phone?: string | null;
+          parsed_class_name?: string | null;
+          matched_member_id?: string | null;
+          matched_participant_id?: string | null;
+          match_status?: string;
+          notes?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          activity_form_id?: string;
+          activity_id?: string;
+          organization_id?: string;
+          google_response_id?: string;
+          respondent_email?: string | null;
+          submitted_at?: string;
+          raw_answers?: Json;
+          parsed_student_id?: string | null;
+          parsed_full_name?: string | null;
+          parsed_phone?: string | null;
+          parsed_class_name?: string | null;
+          matched_member_id?: string | null;
+          matched_participant_id?: string | null;
+          match_status?: string;
+          notes?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+      };
+      google_sheet_connections: {
+        Row: {
+          id: string;
+          organization_id: string;
+          user_id: string | null;
+          spreadsheet_id: string;
+          spreadsheet_name: string;
+          spreadsheet_url: string;
+          status: string;
+          module_tabs: string[];
+          last_import_at: string | null;
+          last_export_at: string | null;
+          last_sync_status: string;
+          last_sync_error: string | null;
+          metadata: Json;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          organization_id: string;
+          user_id?: string | null;
+          spreadsheet_id: string;
+          spreadsheet_name: string;
+          spreadsheet_url: string;
+          status?: string;
+          module_tabs?: string[];
+          last_import_at?: string | null;
+          last_export_at?: string | null;
+          last_sync_status?: string;
+          last_sync_error?: string | null;
+          metadata?: Json;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          organization_id?: string;
+          user_id?: string | null;
+          spreadsheet_id?: string;
+          spreadsheet_name?: string;
+          spreadsheet_url?: string;
+          status?: string;
+          module_tabs?: string[];
+          last_import_at?: string | null;
+          last_export_at?: string | null;
+          last_sync_status?: string;
+          last_sync_error?: string | null;
+          metadata?: Json;
+          created_at?: string;
+          updated_at?: string;
+        };
+      };
+      activity_calendar_events: {
+        Row: {
+          id: string;
+          organization_id: string;
+          activity_id: string;
+          user_id: string | null;
+          google_calendar_id: string;
+          google_event_id: string;
+          event_url: string | null;
+          status: string;
+          last_synced_at: string | null;
+          metadata: Json;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          organization_id: string;
+          activity_id: string;
+          user_id?: string | null;
+          google_calendar_id?: string;
+          google_event_id: string;
+          event_url?: string | null;
+          status?: string;
+          last_synced_at?: string | null;
+          metadata?: Json;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          organization_id?: string;
+          activity_id?: string;
+          user_id?: string | null;
+          google_calendar_id?: string;
+          google_event_id?: string;
+          event_url?: string | null;
+          status?: string;
+          last_synced_at?: string | null;
+          metadata?: Json;
+          created_at?: string;
+          updated_at?: string;
+        };
+      };
+      google_calendar_events: {
+        Row: {
+          id: string;
+          organization_id: string;
+          activity_id: string;
+          user_id: string | null;
+          google_calendar_id: string;
+          google_event_id: string;
+          event_url: string | null;
+          status: string;
+          last_synced_at: string | null;
+          metadata: Json;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          organization_id: string;
+          activity_id: string;
+          user_id?: string | null;
+          google_calendar_id?: string;
+          google_event_id: string;
+          event_url?: string | null;
+          status?: string;
+          last_synced_at?: string | null;
+          metadata?: Json;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          organization_id?: string;
+          activity_id?: string;
+          user_id?: string | null;
+          google_calendar_id?: string;
+          google_event_id?: string;
+          event_url?: string | null;
+          status?: string;
+          last_synced_at?: string | null;
+          metadata?: Json;
+          created_at?: string;
+          updated_at?: string;
+        };
+      };
+      audit_logs: {
+        Row: {
+          id: string;
+          organization_id: string;
+          user_id: string | null;
+          action: string;
+          entity_type: string;
+          entity_id: string | null;
+          metadata: Json;
+          created_at: string;
+        };
+        Insert: {
+          id?: string;
+          organization_id: string;
+          user_id?: string | null;
+          action: string;
+          entity_type: string;
+          entity_id?: string | null;
+          metadata?: Json;
+          created_at?: string;
+        };
+        Update: {
+          id?: string;
+          organization_id?: string;
+          user_id?: string | null;
+          action?: string;
+          entity_type?: string;
+          entity_id?: string | null;
+          metadata?: Json;
+          created_at?: string;
+        };
+      };
+      user_notification_reads: {
+        Row: {
+          id: string;
+          organization_id: string;
+          user_id: string;
+          notification_key: string;
+          is_read: boolean;
+          read_at: string;
+          created_at: string;
+        };
+        Insert: {
+          id?: string;
+          organization_id: string;
+          user_id: string;
+          notification_key: string;
+          is_read?: boolean;
+          read_at?: string;
+          created_at?: string;
+        };
+        Update: {
+          id?: string;
+          organization_id?: string;
+          user_id?: string;
+          notification_key?: string;
+          is_read?: boolean;
+          read_at?: string;
+          created_at?: string;
+        };
+      };
+      notifications: {
+        Row: {
+          id: string;
+          organization_id: string;
+          user_id: string | null;
+          title: string;
+          message: string;
+          type: 'info' | 'warning' | 'danger' | 'success';
+          category: 'task' | 'activity' | 'finance' | 'document' | 'integration' | 'system' | 'general';
+          link: string | null;
+          entity_type: string | null;
+          entity_id: string | null;
+          metadata: Json;
+          created_at: string;
+        };
+        Insert: {
+          id?: string;
+          organization_id: string;
+          user_id?: string | null;
+          title: string;
+          message: string;
+          type?: 'info' | 'warning' | 'danger' | 'success';
+          category?: 'task' | 'activity' | 'finance' | 'document' | 'integration' | 'system' | 'general';
+          link?: string | null;
+          entity_type?: string | null;
+          entity_id?: string | null;
+          metadata?: Json;
+          created_at?: string;
+        };
+        Update: {
+          id?: string;
+          organization_id?: string;
+          user_id?: string | null;
+          title?: string;
+          message?: string;
+          type?: 'info' | 'warning' | 'danger' | 'success';
+          category?: 'task' | 'activity' | 'finance' | 'document' | 'integration' | 'system' | 'general';
+          link?: string | null;
+          entity_type?: string | null;
+          entity_id?: string | null;
+          metadata?: Json;
+          created_at?: string;
+        };
+      };
+      invitations: {
+        Row: {
+          id: string;
+          organization_id: string;
+          role: OrganizationRole;
+          token: string;
+          max_uses: number;
+          uses_count: number;
+          created_by: string | null;
+          expires_at: string | null;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          organization_id: string;
+          role?: OrganizationRole;
+          token?: string;
+          max_uses?: number;
+          uses_count?: number;
+          created_by?: string | null;
+          expires_at?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          organization_id?: string;
+          role?: OrganizationRole;
+          token?: string;
+          max_uses?: number;
+          uses_count?: number;
+          created_by?: string | null;
+          expires_at?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+      };
+      plans: {
+        Row: {
+          id: string;
+          code: string;
+          name: string;
+          description: string | null;
+          start_date: string | null;
+          end_date: string | null;
+          lead_organization_id: string;
+          status: 'draft' | 'planning' | 'active' | 'completed' | 'cancelled';
+          created_by: string | null;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          code: string;
+          name: string;
+          description?: string | null;
+          start_date?: string | null;
+          end_date?: string | null;
+          lead_organization_id: string;
+          status?: 'draft' | 'planning' | 'active' | 'completed' | 'cancelled';
+          created_by?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          code?: string;
+          name?: string;
+          description?: string | null;
+          start_date?: string | null;
+          end_date?: string | null;
+          lead_organization_id?: string;
+          status?: 'draft' | 'planning' | 'active' | 'completed' | 'cancelled';
+          created_by?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+      };
+      plan_organizations: {
+        Row: {
+          id: string;
+          plan_id: string;
+          organization_id: string;
+          role_in_plan: 'host' | 'co_host' | 'partner' | 'supporter' | 'observer';
+          is_host: boolean;
+          role_description: string | null;
+          status: 'pending' | 'active' | 'rejected' | 'removed';
+          joined_at: string;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          plan_id: string;
+          organization_id: string;
+          role_in_plan?: 'host' | 'co_host' | 'partner' | 'supporter' | 'observer';
+          is_host?: boolean;
+          role_description?: string | null;
+          status?: 'pending' | 'active' | 'rejected' | 'removed';
+          joined_at?: string;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          plan_id?: string;
+          organization_id?: string;
+          role_in_plan?: 'host' | 'co_host' | 'partner' | 'supporter' | 'observer';
+          is_host?: boolean;
+          role_description?: string | null;
+          status?: 'pending' | 'active' | 'rejected' | 'removed';
+          joined_at?: string;
+          created_at?: string;
+          updated_at?: string;
+        };
+      };
+      collab_activities: {
+        Row: {
+          id: string;
+          plan_id: string;
+          lead_organization_id: string;
+          organization_id: string | null;
+          title: string;
+          code: string;
+          description: string | null;
+          category: ActivityCategory;
+          status: ActivityStatus;
+          location: string | null;
+          start_date: string;
+          end_date: string;
+          banner_url: string | null;
+          created_by: string | null;
+          created_at: string;
+        };
+        Insert: {
+          id?: string;
+          plan_id: string;
+          lead_organization_id?: string;
+          organization_id?: string | null;
+          title: string;
+          code: string;
+          description?: string | null;
+          category?: ActivityCategory;
+          status?: ActivityStatus;
+          location?: string | null;
+          start_date: string;
+          end_date: string;
+          banner_url?: string | null;
+          created_by?: string | null;
+          created_at?: string;
+        };
+        Update: {
+          id?: string;
+          plan_id?: string;
+          lead_organization_id?: string;
+          organization_id?: string | null;
+          title?: string;
+          code?: string;
+          description?: string | null;
+          category?: ActivityCategory;
+          status?: ActivityStatus;
+          location?: string | null;
+          start_date?: string;
+          end_date?: string;
+          banner_url?: string | null;
+          created_by?: string | null;
+          created_at?: string;
+        };
+      };
+      collab_tasks: {
+        Row: {
+          id: string;
+          collab_activity_id: string | null;
+          title: string;
+          description: string | null;
+          assigned_to: string | null;
+          organization_id: string | null;
+          status: 'todo' | 'in_progress' | 'review' | 'done';
+          priority: TaskPriority;
+          due_date: string | null;
+          created_at: string;
+        };
+        Insert: {
+          id?: string;
+          collab_activity_id?: string | null;
+          title: string;
+          description?: string | null;
+          assigned_to?: string | null;
+          organization_id?: string | null;
+          status?: 'todo' | 'in_progress' | 'review' | 'done';
+          priority?: TaskPriority;
+          due_date?: string | null;
+          created_at?: string;
+        };
+        Update: {
+          id?: string;
+          collab_activity_id?: string | null;
+          title?: string;
+          description?: string | null;
+          assigned_to?: string | null;
+          organization_id?: string | null;
+          status?: 'todo' | 'in_progress' | 'review' | 'done';
+          priority?: TaskPriority;
+          due_date?: string | null;
+          created_at?: string;
+        };
+      };
+      collab_transactions: {
+        Row: {
+          id: string;
+          plan_id: string;
+          collab_activity_id: string | null;
+          organization_id: string;
+          transaction_type: FinanceType;
+          amount: number;
+          category_name: string;
+          description: string;
+          transaction_date: string;
+          receipt_url: string | null;
+          recorded_by: string | null;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          plan_id: string;
+          collab_activity_id?: string | null;
+          organization_id: string;
+          transaction_type?: FinanceType;
+          amount: number;
+          category_name: string;
+          description: string;
+          transaction_date: string;
+          receipt_url?: string | null;
+          recorded_by?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          plan_id?: string;
+          collab_activity_id?: string | null;
+          organization_id?: string;
+          transaction_type?: FinanceType;
+          amount?: number;
+          category_name?: string;
+          description?: string;
+          transaction_date?: string;
+          receipt_url?: string | null;
+          recorded_by?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+      };
+    };
+    Views: {
+      [_ in never]: never;
+    };
+    Functions: {
+      is_org_member: {
+        Args: { target_org_id: string };
+        Returns: boolean;
+      };
+      is_org_admin: {
+        Args: { target_org_id: string };
+        Returns: boolean;
+      };
+      is_org_board: {
+        Args: { target_org_id: string };
+        Returns: boolean;
+      };
+      has_org_role: {
+        Args: { target_org_id: string; allowed_roles: string[] };
+        Returns: boolean;
+      };
+      accept_invitation: {
+        Args: { invite_token: string };
+        Returns: string;
+      };
+      assign_role_by_email: {
+        Args: { p_org_id: string; p_email: string; p_role: OrganizationRole };
+        Returns: void;
+      };
+      claim_pending_roles: {
+        Args: Record<string, never>;
+        Returns: void;
+      };
+      create_plan_secure: {
+        Args: {
+          p_lead_org_id: string;
+          p_code: string;
+          p_name: string;
+          p_description?: string | null;
+          p_start_date?: string | null;
+          p_end_date?: string | null;
+          p_status?: string | null;
+        };
+        Returns: string | Json | Record<string, unknown>;
+      };
+    };
+    Enums: {
+      organization_role: OrganizationRole;
+      membership_status: MembershipStatus;
+      term_status: TermStatus;
+      member_status: MemberStatus;
+      term_member_status: TermMemberStatus;
+      activity_category: ActivityCategory;
+      activity_status: ActivityStatus;
+      registration_status: RegistrationStatus;
+      attendance_status: AttendanceStatus;
+      task_status: TaskStatus;
+      task_priority: TaskPriority;
+      finance_type: FinanceType;
+      document_category: DocumentCategory;
+      document_access_level: DocumentAccessLevel;
+    };
+  };
+}
