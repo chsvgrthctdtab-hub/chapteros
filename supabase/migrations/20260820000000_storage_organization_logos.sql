@@ -31,11 +31,13 @@ ON CONFLICT (id) DO UPDATE SET
 -- Storage objects path convention: {organization_id}/logo.{ext}
 
 -- Policy 2.1: Anyone can read/view organization logos (Public)
+DROP POLICY IF EXISTS "Public read for organization logos" ON storage.objects;
 CREATE POLICY "Public read for organization logos"
 ON storage.objects FOR SELECT
 USING (bucket_id = 'organization-logos');
 
 -- Policy 2.2: Org admins and board members can upload logo for their organization
+DROP POLICY IF EXISTS "Org admins can upload organization logo" ON storage.objects;
 CREATE POLICY "Org admins can upload organization logo"
 ON storage.objects FOR INSERT
 TO authenticated
@@ -48,6 +50,7 @@ WITH CHECK (
 );
 
 -- Policy 2.3: Org admins and board members can update/overwrite logo for their organization
+DROP POLICY IF EXISTS "Org admins can update organization logo" ON storage.objects;
 CREATE POLICY "Org admins can update organization logo"
 ON storage.objects FOR UPDATE
 TO authenticated
@@ -67,6 +70,7 @@ WITH CHECK (
 );
 
 -- Policy 2.4: Org admins and board members can delete logo for their organization
+DROP POLICY IF EXISTS "Org admins can delete organization logo" ON storage.objects;
 CREATE POLICY "Org admins can delete organization logo"
 ON storage.objects FOR DELETE
 TO authenticated
