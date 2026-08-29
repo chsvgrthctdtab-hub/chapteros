@@ -86,7 +86,7 @@ export function ConnectGoogleDialog({
       return;
     }
 
-    const clientId = (import.meta as any).env?.VITE_GOOGLE_CLIENT_ID || '474158790557-l26p3ejbj637hhhaqk7o5ogttamgf90h.apps.googleusercontent.com';
+    const clientId = (import.meta as any).env?.VITE_GOOGLE_CLIENT_ID || '523699618144-66v42mjkjammd6rtlsne4h01epar55rc.apps.googleusercontent.com';
 
     // 1. If Google Identity Services (GIS) is available, request OAuth access token directly
     if (typeof window !== 'undefined' && (window as any).google?.accounts?.oauth2) {
