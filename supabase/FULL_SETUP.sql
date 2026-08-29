@@ -3306,7 +3306,7 @@ CREATE POLICY "BCH can create invitations"
     public.is_org_board(organization_id)
   );
 
-﻿-- ==============================================================================
+-- ==============================================================================
 -- Migration: 20260833000000_add_profiles_insert_rls.sql
 -- Description:
 --   1. Add RLS INSERT policy on public.profiles to allow authenticated users
@@ -3393,23 +3393,14 @@ ALTER TABLE public.finance_transactions
 -- FIX: Organization Creation Policies & Auto-Membership Trigger
 -- ============================================================
 
--- Cho phep nguoi dung tao Don vi moi
 DROP POLICY IF EXISTS "Authenticated users can create organization" ON public.organizations;
 CREATE POLICY "Authenticated users can create organization"
-  ON public.organizations
-  FOR INSERT
-  TO authenticated
-  WITH CHECK (true);
+  ON public.organizations FOR INSERT TO authenticated WITH CHECK (true);
 
--- Cho phep nguoi dung tu them minh vao Don vi
 DROP POLICY IF EXISTS "Users can insert own membership" ON public.organization_memberships;
 CREATE POLICY "Users can insert own membership"
-  ON public.organization_memberships
-  FOR INSERT
-  TO authenticated
-  WITH CHECK (user_id = auth.uid());
+  ON public.organization_memberships FOR INSERT TO authenticated WITH CHECK (user_id = auth.uid());
 
--- Trigger tu dong them nguoi tao lam Admin khi tao Don vi moi
 CREATE OR REPLACE FUNCTION public.handle_new_organization()
 RETURNS TRIGGER AS $$
 BEGIN
