@@ -3419,3 +3419,14 @@ DROP TRIGGER IF EXISTS on_organization_created ON public.organizations;
 CREATE TRIGGER on_organization_created
   AFTER INSERT ON public.organizations
   FOR EACH ROW EXECUTE FUNCTION public.handle_new_organization();
+
+-- ==============================================================================
+-- GRANT: Cấp quyền truy cập bảng cho các role (BẮT BUỘC sau khi tạo schema mới)
+-- ==============================================================================
+GRANT USAGE ON SCHEMA public TO postgres, anon, authenticated, service_role;
+GRANT ALL ON ALL TABLES IN SCHEMA public TO postgres, service_role;
+GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA public TO authenticated;
+GRANT USAGE, SELECT ON ALL SEQUENCES IN SCHEMA public TO authenticated;
+ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT ALL ON TABLES TO postgres, service_role;
+ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT SELECT, INSERT, UPDATE, DELETE ON TABLES TO authenticated;
+ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT USAGE, SELECT ON SEQUENCES TO authenticated;
