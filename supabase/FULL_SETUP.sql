@@ -1,14 +1,4 @@
 -- ==============================================================================
--- CHAPTEROS - FULL SETUP SQL (Gộp từ toàn bộ 25 Migration Files)
--- Đây là file đã chạy thành công trên môi trường test
--- Chạy file này trên Supabase SQL Editor để khởi tạo toàn bộ database
--- ==============================================================================
-
-
--- ============================================================
--- FILE: 20260814000000_initial_domain_model.sql
--- ============================================================
--- ==============================================================================
 -- CHI HỘI MANAGER - DOMAIN MODEL & SUPABASE DATABASE INITIAL SCHEMA
 -- Version: 1.0.0
 -- Description: Centralized management system for student chapters (Chi hội sinh viên)
@@ -829,10 +819,6 @@ CREATE TRIGGER on_profile_updated
   EXECUTE FUNCTION public.handle_profile_updated();
 
 
-
--- ============================================================
--- FILE: 20260814000001_storage_documents.sql
--- ============================================================
 -- ==============================================================================
 -- Supabase Storage Configuration & Policies for Chi Hội Manager
 -- Bucket: 'documents' (Private organization-scoped documents)
@@ -938,10 +924,6 @@ USING (
   )
 );
 
-
--- ============================================================
--- FILE: 20260814000002_google_integration_foundation.sql
--- ============================================================
 -- ==============================================================================
 -- CHI HỘI MANAGER - GOOGLE INTEGRATION FOUNDATION SCHEMA
 -- Version: 1.1.0 (Phase 9)
@@ -1051,10 +1033,6 @@ CREATE POLICY "Users and board can delete google connections"
     (connection_type = 'organization' AND organization_id IS NOT NULL AND public.is_org_board(organization_id))
   );
 
-
--- ============================================================
--- FILE: 20260814000003_activity_google_forms.sql
--- ============================================================
 -- ==============================================================================
 -- Migration: 20260814000003_activity_google_forms.sql
 -- Description: Phase 10 - Google Forms Integration for Activities & Participants
@@ -1205,10 +1183,6 @@ CREATE POLICY "Board members can manage form responses"
     public.is_org_board(organization_id)
   );
 
-
--- ============================================================
--- FILE: 20260814000004_google_sheets_integration.sql
--- ============================================================
 -- ==============================================================================
 -- Migration: 20260814000004_google_sheets_integration.sql
 -- Description: Phase 11 - Google Sheets Integration Metadata & RLS
@@ -1287,10 +1261,6 @@ CREATE POLICY "Board members can delete google sheet connections"
     public.is_org_board(organization_id)
   );
 
-
--- ============================================================
--- FILE: 20260814000005_google_drive_documents.sql
--- ============================================================
 -- ==============================================================================
 -- Migration: Google Drive Integration & Document Source Differentiation
 -- Chi Hội Manager - Phase 12
@@ -1333,10 +1303,6 @@ COMMENT ON COLUMN public.documents.drive_file_id IS 'Unique identifier of the fi
 COMMENT ON COLUMN public.documents.drive_url IS 'Direct web link (webViewLink or alternateLink) to view file on Google Drive';
 COMMENT ON COLUMN public.documents.linked_by IS 'Profile ID of the user who linked this Drive file';
 
-
--- ============================================================
--- FILE: 20260814000006_google_calendar_and_audit_logs.sql
--- ============================================================
 -- ==============================================================================
 -- Migration: 20260814000006_google_calendar_and_audit_logs.sql
 -- Description: Phase 2 Foundation - Google Calendar Events & System Audit Logs
@@ -1463,10 +1429,6 @@ CREATE POLICY "Authenticated users can insert audit logs"
     AND public.is_org_member(organization_id)
   );
 
-
--- ============================================================
--- FILE: 20260817000000_creator_as_member_and_nullable_student_id.sql
--- ============================================================
 -- ==============================================================================
 -- Migration: 20260817000000_creator_as_member_and_nullable_student_id.sql
 -- Description:
@@ -1586,10 +1548,6 @@ JOIN public.profiles p ON p.id = m.user_id
 WHERE m.user_id IS NOT NULL
 ON CONFLICT (organization_id, user_id) DO NOTHING;
 
-
--- ============================================================
--- FILE: 20260818000000_sync_profile_to_members.sql
--- ============================================================
 -- ==============================================================================
 -- Migration: 20260818000000_sync_profile_to_members.sql
 -- Description:
@@ -1665,10 +1623,6 @@ WHERE m.user_id = p.id
     OR m.student_id IS DISTINCT FROM p.student_id
   );
 
-
--- ============================================================
--- FILE: 20260819000000_term_management_enhancements.sql
--- ============================================================
 -- Migration: 20260819000000_term_management_enhancements.sql
 -- Description: Adds congress_date column to terms, partial unique index for single active term per org, and activate_term atomic RPC function
 
@@ -1722,10 +1676,6 @@ $$ LANGUAGE plpgsql SECURITY DEFINER SET search_path = public;
 -- Grant execution to authenticated users (internal check is_org_board guards actual authorization)
 GRANT EXECUTE ON FUNCTION public.activate_term(UUID, UUID) TO authenticated;
 
-
--- ============================================================
--- FILE: 20260820000000_storage_organization_logos.sql
--- ============================================================
 -- ==============================================================================
 -- Supabase Storage Configuration & Policies for Organization Logos
 -- Bucket: 'organization-logos' (Public read, admin-only write)
@@ -1806,10 +1756,6 @@ USING (
   )
 );
 
-
--- ============================================================
--- FILE: 20260821000000_google_connections_unique_constraints.sql
--- ============================================================
 -- ==============================================================================
 -- CHI HỘI MANAGER - GOOGLE CONNECTIONS UNIQUE CONSTRAINTS
 -- Migration: 20260821000000_google_connections_unique_constraints.sql
@@ -1859,10 +1805,6 @@ COMMENT ON CONSTRAINT uq_google_connections_user ON public.google_connections IS
 COMMENT ON CONSTRAINT uq_google_connections_org ON public.google_connections IS 
   'Ensures at most 1 official Google Workspace connection per organization';
 
-
--- ============================================================
--- FILE: 20260822000000_audit_logs_rbac_and_notifications.sql
--- ============================================================
 -- ==============================================================================
 -- Migration: 20260822000000_audit_logs_rbac_and_notifications.sql
 -- Description: Phase 3.2 - Audit Log RBAC Hardening & Notification Center Infrastructure
@@ -1947,10 +1889,6 @@ CREATE POLICY "Board can create notifications"
     public.is_org_board(organization_id)
   );
 
-
--- ============================================================
--- FILE: 20260823000000_activity_lifecycle_and_lead_member.sql
--- ============================================================
 -- ==============================================================================
 -- Migration: 20260823000000_activity_lifecycle_and_lead_member.sql
 -- Description: Add lead_member_id to activities, enforce tenant validation, and notify PostgREST
@@ -2013,10 +1951,6 @@ CREATE TRIGGER trg_validate_activity_lead_member
 -- 6. Notify PostgREST to reload schema cache
 NOTIFY pgrst, 'reload schema';
 
-
--- ============================================================
--- FILE: 20260824000000_term_closing_and_handover.sql
--- ============================================================
 -- Migration: 20260824000000_term_closing_and_handover.sql
 -- Description: Adds closing_snapshot, closed_at, closed_by, and handover_notes columns to terms table for Phase 3.3.4 Term Closing & Handover
 
@@ -2029,10 +1963,6 @@ ADD COLUMN IF NOT EXISTS handover_notes TEXT DEFAULT NULL;
 -- Create index on term status and organization for fast filtering
 CREATE INDEX IF NOT EXISTS idx_terms_org_status ON public.terms(organization_id, status);
 
-
--- ============================================================
--- FILE: 20260825000000_finance_approval_and_period_closing.sql
--- ============================================================
 -- Migration: 20260825000000_finance_approval_and_period_closing.sql
 -- Description: Phase 3.3.5 - Finance Approval Workflow, Thresholds, Periodic Closings & Reconciliation
 
@@ -2134,10 +2064,6 @@ FOR DELETE
 TO authenticated
 USING (public.is_org_admin(organization_id));
 
-
--- ============================================================
--- FILE: 20260826000000_sync_finance_approval_schema.sql
--- ============================================================
 -- Migration: 20260826000000_sync_finance_approval_schema.sql
 -- Description: Synchronize Finance Approval, Status, Thresholds, and Period Closings Schema
 
@@ -2300,10 +2226,6 @@ CREATE POLICY "finance_period_closings_delete"
   TO authenticated
   USING (public.is_org_admin(organization_id));
 
-
--- ============================================================
--- FILE: 20260827000000_harden_security_definer_functions.sql
--- ============================================================
 -- ==============================================================================
 -- Security Hardening: Revoke public execution on internal SECURITY DEFINER functions
 -- ==============================================================================
@@ -2347,10 +2269,6 @@ GRANT EXECUTE ON FUNCTION public.user_belongs_to_org(UUID) TO anon, authenticate
 GRANT EXECUTE ON FUNCTION public.user_has_org_role(UUID, TEXT[]) TO anon, authenticated;
 
 
-
--- ============================================================
--- FILE: 20260828000000_create_plan_secure.sql
--- ============================================================
 -- Migration: 20260828000000_create_plan_secure.sql
 -- Description: Creates the secure RPC function create_plan_secure for creating plans with automatic host organization assignment
 
@@ -2437,10 +2355,6 @@ $$;
 -- Grant execution permission to authenticated users
 GRANT EXECUTE ON FUNCTION public.create_plan_secure(UUID, TEXT, TEXT, TEXT, TIMESTAMPTZ, TIMESTAMPTZ, TEXT) TO authenticated;
 
-
--- ============================================================
--- FILE: 20260829000000_update_member_status_constraint.sql
--- ============================================================
 -- Migration: Update members status check constraint to active and alumni only
 -- Clean up any legacy inactive or transferred status data to active or alumni
 
@@ -2452,10 +2366,6 @@ WHERE status NOT IN ('active', 'alumni');
 ALTER TABLE members DROP CONSTRAINT IF EXISTS members_status_check;
 ALTER TABLE members ADD CONSTRAINT members_status_check CHECK (status IN ('active', 'alumni'));
 
-
--- ============================================================
--- FILE: 20260830000000_collaboration_workspace_tables_and_rls.sql
--- ============================================================
 -- Migration: 20260830000000_collaboration_workspace_tables_and_rls.sql
 -- Description: Creates collaboration workspace tables (plans, plan_organizations, collab_activities, collab_tasks, collab_transactions) and enforces strict cross-organization RLS policies
 
@@ -2931,10 +2841,6 @@ CREATE POLICY "Board can delete collab transactions"
     )
   );
 
-
--- ============================================================
--- FILE: 20260831000000_harden_collab_tasks_assignee_update_rls.sql
--- ============================================================
 -- Migration: 20260831000000_harden_collab_tasks_assignee_update_rls.sql
 -- Description: Harden UPDATE permissions on public.collab_tasks so Assignees can only update task status and cannot modify ownership, activity, organization, or metadata. Board (BCH) retains full management permissions.
 
@@ -3060,10 +2966,6 @@ CREATE POLICY "Assignee can update collab task status"
     )
   );
 
-
--- ============================================================
--- FILE: 20260832000000_harden_invitations_and_role_assignment_rpc.sql
--- ============================================================
 -- Migration: 20260832000000_harden_invitations_and_role_assignment_rpc.sql
 -- Description: Harden assign_role_by_email, accept_invitation, and claim_pending_roles RPCs with strict caller authorization and remove open SELECT RLS policies on public.invitations.
 
@@ -3404,10 +3306,6 @@ CREATE POLICY "BCH can create invitations"
     public.is_org_board(organization_id)
   );
 
-
--- ============================================================
--- FILE: 20260833000000_add_profiles_insert_rls.sql
--- ============================================================
 ﻿-- ==============================================================================
 -- Migration: 20260833000000_add_profiles_insert_rls.sql
 -- Description:
@@ -3456,10 +3354,6 @@ CREATE TRIGGER on_auth_user_created
   AFTER INSERT ON auth.users
   FOR EACH ROW EXECUTE FUNCTION public.handle_new_user();
 
-
--- ============================================================
--- FILE: 20260834000000_add_missing_schema_columns.sql
--- ============================================================
 -- Migration: 20260834000000_add_missing_schema_columns.sql
 -- Description: Add missing columns across organizations, activities, and documents tables to match full ChapterOS domain schema.
 
@@ -3499,7 +3393,7 @@ ALTER TABLE public.finance_transactions
 -- FIX: Organization Creation Policies & Auto-Membership Trigger
 -- ============================================================
 
--- Cho phép người dùng đã đăng nhập tạo Đơn vị mới
+-- Cho phep nguoi dung tao Don vi moi
 DROP POLICY IF EXISTS "Authenticated users can create organization" ON public.organizations;
 CREATE POLICY "Authenticated users can create organization"
   ON public.organizations
@@ -3507,7 +3401,7 @@ CREATE POLICY "Authenticated users can create organization"
   TO authenticated
   WITH CHECK (true);
 
--- Cho phép người dùng tự thêm mình vào organization
+-- Cho phep nguoi dung tu them minh vao Don vi
 DROP POLICY IF EXISTS "Users can insert own membership" ON public.organization_memberships;
 CREATE POLICY "Users can insert own membership"
   ON public.organization_memberships
@@ -3515,7 +3409,7 @@ CREATE POLICY "Users can insert own membership"
   TO authenticated
   WITH CHECK (user_id = auth.uid());
 
--- Trigger tự động thêm người tạo làm Admin khi tạo Đơn vị mới
+-- Trigger tu dong them nguoi tao lam Admin khi tao Don vi moi
 CREATE OR REPLACE FUNCTION public.handle_new_organization()
 RETURNS TRIGGER AS $$
 BEGIN
