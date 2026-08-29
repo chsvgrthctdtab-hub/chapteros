@@ -753,8 +753,14 @@ ALTER TABLE public.organization_invites ENABLE ROW LEVEL SECURITY;
 DROP POLICY IF EXISTS "Public organizations read" ON public.organizations;
 CREATE POLICY "Public organizations read" ON public.organizations FOR SELECT TO authenticated USING (true);
 
+DROP POLICY IF EXISTS "Authenticated users can create organization" ON public.organizations;
+CREATE POLICY "Authenticated users can create organization" ON public.organizations FOR INSERT TO authenticated WITH CHECK (true);
+
 DROP POLICY IF EXISTS "Board manage organization" ON public.organizations;
 CREATE POLICY "Board manage organization" ON public.organizations FOR UPDATE TO authenticated USING (public.is_org_board(id)) WITH CHECK (public.is_org_board(id));
+
+DROP POLICY IF EXISTS "Board delete organization" ON public.organizations;
+CREATE POLICY "Board delete organization" ON public.organizations FOR DELETE TO authenticated USING (public.is_org_board(id));
 
 -- Profiles
 DROP POLICY IF EXISTS "Profiles read by authenticated" ON public.profiles;
