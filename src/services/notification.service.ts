@@ -82,7 +82,7 @@ export const notificationService = {
         (supabase.from('google_connections') as any)
           .select('id, connection_type, status, email, updated_at')
           .or(`organization_id.eq.${organizationId},user_id.eq.${userId}`)
-          .in('status', ['error', 'expired', 'revoked']),
+          .in('status', ['error', 'expired']),
         (supabase.from('finance_transactions') as any)
           .select('transaction_type, amount, status')
           .eq('organization_id', organizationId)
