@@ -180,6 +180,11 @@ export function SettingsNavRail({ activeTab, onSelectTab }: SettingsNavRailProps
             </div>
           );
         })}
+        {/* System & Author Info */}
+        <div className="pt-4 mt-4 border-t border-slate-100 text-center text-[11px] text-slate-400 space-y-0.5">
+          <p className="font-semibold text-slate-600">ChapterOS v2.0</p>
+          <p>Tác giả: <span className="text-emerald-700 font-semibold">tienthuan_0909</span></p>
+        </div>
       </div>
     </div>
   );

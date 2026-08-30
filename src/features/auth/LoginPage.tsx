@@ -138,8 +138,9 @@ export function LoginPage() {
       </main>
 
       {/* Footer */}
-      <footer className="w-full max-w-sm text-center py-4 text-[11px] text-slate-400 font-medium">
-        &copy; {new Date().getFullYear()} ChapterOS. All rights reserved.
+      <footer className="w-full max-w-sm text-center py-4 text-[11px] text-slate-400 font-medium space-y-1">
+        <p>&copy; {new Date().getFullYear()} ChapterOS. All rights reserved.</p>
+        <p className="text-slate-400">Phát triển bởi <span className="text-slate-600 font-semibold">tienthuan_0909</span></p>
       </footer>
     </div>
   );

@@ -239,7 +239,7 @@ export function Sidebar({ collapsed, onToggleCollapse, mobileOpen, onCloseMobile
               <Shield className="h-4 w-4 text-emerald-700 shrink-0" />
               <div className="truncate">
                 <p className="font-bold text-slate-800 text-xs leading-tight truncate">ChapterOS</p>
-                <p className="text-[11px] text-slate-400 truncate">Governance Suite v2</p>
+                <p className="text-[11px] text-slate-500 truncate">Tác giả: <span className="font-semibold text-emerald-800">tienthuan_0909</span></p>
               </div>
             </div>
           ) : (
