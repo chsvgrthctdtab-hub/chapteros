@@ -25,6 +25,7 @@ import { AssignTermDialog } from './components/AssignTermDialog';
 import { ExecutiveBoardSection } from './components/ExecutiveBoardSection';
 import { GoogleSheetsExportModal } from '@/integrations/google/sheets/components/GoogleSheetsExportModal';
 import { GoogleSheetsImportWizardModal } from '@/integrations/google/sheets/components/GoogleSheetsImportWizardModal';
+import { ImportMembersFromFileDialog } from './components/ImportMembersFromFileDialog';
 import { useMembersList, useOrgTerms, memberKeys } from './queries/member.queries';
 import { useOrganizationMemberships } from '@/features/chapters/queries/organization.queries';
 import {
@@ -106,6 +107,7 @@ export function MembersPage() {
   // Google Sheets Modals
   const [sheetsExportOpen, setSheetsExportOpen] = useState(false);
   const [sheetsImportOpen, setSheetsImportOpen] = useState(false);
+  const [fileImportOpen, setFileImportOpen] = useState(false);
 
   // Computed Stats for Quick Operational Strip
   // BAN CHẤP HÀNH must count from organization_memberships of active org
@@ -328,7 +330,19 @@ export function MembersPage() {
               className="text-xs h-8 text-slate-700 hover:text-blue-700 hover:bg-blue-50 border-slate-200 cursor-pointer"
             >
               <Upload className="h-3.5 w-3.5 mr-1.5 text-blue-600" />
-              <span>{t('members.action.import', 'Nhập')}</span>
+              <span>{t('members.action.import', 'Nhập Sheets')}</span>
+            </Button>
+          )}
+
+          {canManage && (
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => setFileImportOpen(true)}
+              className="text-xs h-8 text-slate-700 hover:text-emerald-700 hover:bg-emerald-50 border-slate-200 cursor-pointer"
+            >
+              <FileSpreadsheet className="h-3.5 w-3.5 mr-1.5 text-emerald-600" />
+              <span>Nhập từ file</span>
             </Button>
           )}
 
@@ -549,6 +563,16 @@ export function MembersPage() {
           module="members"
           termId={filters.termId !== 'all' ? filters.termId : undefined}
           onImportSuccess={() => queryClient.invalidateQueries({ queryKey: memberKeys.all })}
+        />
+      )}
+
+      {/* Import từ file Excel/CSV */}
+      {orgId && (
+        <ImportMembersFromFileDialog
+          open={fileImportOpen}
+          onOpenChange={setFileImportOpen}
+          organizationId={orgId}
+          onSuccess={() => queryClient.invalidateQueries({ queryKey: memberKeys.all })}
         />
       )}
     </div>

@@ -254,3 +254,100 @@ export function useRemoveTermMember(memberId: string, organizationId?: string) {
     },
   });
 }
+
+/**
+ * Mutation: Bulk import members from Excel/CSV (upsert by student_id)
+ */
+export interface BulkImportMemberPayload {
+  student_id: string;
+  full_name: string;
+  class_name: string;
+  cohort: string;
+  email?: string | null;
+  phone?: string | null;
+  major?: string | null;
+  joined_date?: string | null;
+  notes?: string | null;
+  position: string;
+  status: 'active';
+}
+
+export interface BulkImportResult {
+  inserted: number;
+  updated: number;
+  failed: { studentId: string; reason: string }[];
+}
+
+export function useBulkImportMembers(organizationId?: string) {
+  const queryClient = useQueryClient();
+  const { supabase } = useAuth();
+
+  return useMutation({
+    mutationFn: async (rows: BulkImportMemberPayload[]): Promise<BulkImportResult> => {
+      if (!organizationId) throw new Error('Chưa chọn Đơn vị làm việc');
+      if (!rows.length) throw new Error('Không có dữ liệu để import');
+
+      const result: BulkImportResult = { inserted: 0, updated: 0, failed: [] };
+
+      // Lấy danh sách MSSV đã tồn tại
+      const { data: existing } = await supabase
+        .from('members')
+        .select('id, student_id')
+        .eq('organization_id', organizationId);
+
+      const existingMap = new Map((existing || []).map((m: { id: string; student_id: string }) => [m.student_id, m.id]));
+
+      for (const row of rows) {
+        try {
+          const existingId = existingMap.get(row.student_id);
+          if (existingId) {
+            // Ghi đè
+            const { error } = await supabase
+              .from('members')
+              .update({
+                full_name: row.full_name,
+                class_name: row.class_name,
+                cohort: row.cohort,
+                email: row.email || null,
+                phone: row.phone || null,
+                major: row.major || null,
+                joined_date: row.joined_date || null,
+                notes: row.notes || null,
+              })
+              .eq('id', existingId)
+              .eq('organization_id', organizationId);
+            if (error) throw error;
+            result.updated++;
+          } else {
+            // Thêm mới
+            const { error } = await supabase
+              .from('members')
+              .insert({
+                organization_id: organizationId,
+                student_id: row.student_id,
+                full_name: row.full_name,
+                class_name: row.class_name,
+                cohort: row.cohort,
+                email: row.email || null,
+                phone: row.phone || null,
+                major: row.major || null,
+                position: row.position,
+                status: row.status,
+                joined_date: row.joined_date || new Date().toISOString().split('T')[0],
+                notes: row.notes || null,
+              });
+            if (error) throw error;
+            result.inserted++;
+          }
+        } catch (err: unknown) {
+          const msg = (err as { message?: string })?.message || 'Lỗi không xác định';
+          result.failed.push({ studentId: row.student_id, reason: msg });
+        }
+      }
+      return result;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: memberKeys.lists() });
+    },
+  });
+}
