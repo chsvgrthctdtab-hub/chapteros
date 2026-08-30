@@ -618,7 +618,7 @@ B2102222\tTrần Thị Mai Anh\tĐã xác nhận\tCó mặt\tgoogle_form\tTrư�
                 <div className="p-3 bg-emerald-50 border border-emerald-200 rounded-lg text-xs text-emerald-900 flex items-start gap-2">
                   <ShieldCheck className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
                   <div>
-                    Sẵn sàng xử lý <strong>{previewResult.rows.length - previewResult.summary.invalidRows}</strong> dòng dữ liệu hợp lệ vào cơ sở dữ liệu Supabase của Chi hội.
+                    Sẵn sàng xử lý <strong>{previewResult.rows.length - previewResult.summary.invalidRows}</strong> dòng dữ liệu hợp lệ vào cơ sở dữ liệu Supabase của Đơn vị.
                     {previewResult.summary.invalidRows > 0 && (
                       <span className="block text-rose-700 font-medium mt-0.5">
                         Lưu ý: {previewResult.summary.invalidRows} dòng bị lỗi sẽ tự động được bỏ qua và ghi vào nhật ký thất bại.

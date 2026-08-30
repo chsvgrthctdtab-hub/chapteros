@@ -11,12 +11,20 @@ export const memberKeys = {
   all: ['members'] as const,
   lists: () => [...memberKeys.all, 'list'] as const,
   list: (orgId: string, params: MemberFilterParams) => [...memberKeys.lists(), orgId, params] as const,
+  stats: (orgId: string, activeTermId?: string) => [...memberKeys.all, 'stats', orgId, activeTermId || 'none'] as const,
   details: () => [...memberKeys.all, 'detail'] as const,
   detail: (id: string) => [...memberKeys.details(), id] as const,
   histories: () => [...memberKeys.all, 'history'] as const,
   history: (memberId: string) => [...memberKeys.histories(), memberId] as const,
   terms: (orgId: string) => ['terms', 'org', orgId] as const,
 };
+
+export interface MemberKPIStatsResponse {
+  total: number;
+  active: number;
+  alumni: number;
+  assignedToTerm: number;
+}
 
 export interface MembersListResponse {
   data: MemberListItem[];
@@ -37,6 +45,23 @@ export function useMembersList(organizationId?: string, params: MemberFilterPara
         return { data: [], totalCount: 0, page: 1, pageSize: params.pageSize || 15, totalPages: 0 };
       }
       return memberService.listMembers(organizationId, params);
+    },
+    enabled: Boolean(organizationId),
+    staleTime: 1000 * 30, // 30s cache
+  });
+}
+
+/**
+ * Fetch total organizational KPI stats for member strip (active, alumni, assigned to term)
+ */
+export function useMemberKPIStats(organizationId?: string, activeTermId?: string) {
+  return useQuery<MemberKPIStatsResponse>({
+    queryKey: memberKeys.stats(organizationId || '', activeTermId),
+    queryFn: async () => {
+      if (!organizationId) {
+        return { total: 0, active: 0, alumni: 0, assignedToTerm: 0 };
+      }
+      return memberService.getMemberStats(organizationId, activeTermId);
     },
     enabled: Boolean(organizationId),
     staleTime: 1000 * 30, // 30s cache

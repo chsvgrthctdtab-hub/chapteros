@@ -112,7 +112,7 @@ export function MemberKPIStrip({
       id: 'board',
       label: language === 'vi' ? 'Ban Chấp Hành' : 'Executive Board',
       value: stats.boardCount,
-      subtext: language === 'vi' ? 'Cán bộ cốt cán Chi hội' : 'Chapter leadership accounts',
+      subtext: language === 'vi' ? 'Cán bộ cốt cán Đơn vị' : 'Organization leadership accounts',
       icon: ShieldAlert,
       color: 'text-indigo-700',
       badgeBg: 'bg-indigo-50 text-indigo-800 border-indigo-200/80',

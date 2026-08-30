@@ -22,6 +22,16 @@ export const memberService = {
   },
 
   /**
+   * Get total member KPI statistics for organization
+   */
+  async getMemberStats(organizationId: string, activeTermId?: string) {
+    if (!organizationId) {
+      return { total: 0, active: 0, alumni: 0, assignedToTerm: 0 };
+    }
+    return memberRepository.getStats(organizationId, activeTermId);
+  },
+
+  /**
    * Get member by ID
    */
   async getMemberById(id: string, organizationId?: string): Promise<Member | null> {

@@ -5,6 +5,7 @@ import {
   Download,
   Upload,
   FileSpreadsheet,
+  ChevronDown,
 } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useToast } from '@/contexts/ToastContext';
@@ -12,6 +13,12 @@ import { useLanguage } from '@/contexts/LanguageContext';
 import { useQueryClient } from '@tanstack/react-query';
 import { isOrgBoard, getOrgBoardTitle, getOrgMemberNoun, type OrganizationRole } from '@/types/roles';
 import { Button } from '@/components/ui/button';
+import {
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuItem,
+} from '@/components/ui/dropdown-menu';
 import { ConfirmDialog } from '@/components/common/ConfirmDialog';
 import { QueryErrorState } from '@/components/common/QueryErrorState';
 import { MemberKPIStrip } from './components/MemberKPIStrip';
@@ -26,7 +33,7 @@ import { ExecutiveBoardSection } from './components/ExecutiveBoardSection';
 import { GoogleSheetsExportModal } from '@/integrations/google/sheets/components/GoogleSheetsExportModal';
 import { GoogleSheetsImportWizardModal } from '@/integrations/google/sheets/components/GoogleSheetsImportWizardModal';
 import { ImportMembersFromFileDialog } from './components/ImportMembersFromFileDialog';
-import { useMembersList, useOrgTerms, memberKeys } from './queries/member.queries';
+import { useMembersList, useOrgTerms, useMemberKPIStats, memberKeys } from './queries/member.queries';
 import { useOrganizationMemberships } from '@/features/chapters/queries/organization.queries';
 import {
   useCreateMember,
@@ -109,21 +116,23 @@ export function MembersPage() {
   const [sheetsImportOpen, setSheetsImportOpen] = useState(false);
   const [fileImportOpen, setFileImportOpen] = useState(false);
 
+  // Total organizational KPI stats (not affected by pagination)
+  const { data: memberStats } = useMemberKPIStats(orgId, currentTerm?.id);
+
   // Computed Stats for Quick Operational Strip
   // BAN CHẤP HÀNH must count from organization_memberships of active org
   const stats = useMemo(() => {
-    const list = membersResponse?.data || [];
-    const total = membersResponse?.totalCount || 0;
-    const active = list.filter((m) => m.status === 'active').length;
-    const alumni = list.filter((m) => m.status === 'alumni').length;
-    const assignedToTerm = list.filter((m) => m.currentTermAssignment !== null).length;
+    const total = memberStats?.total ?? (membersResponse?.totalCount || 0);
+    const active = memberStats?.active ?? 0;
+    const alumni = memberStats?.alumni ?? 0;
+    const assignedToTerm = memberStats?.assignedToTerm ?? 0;
     
     // Domain Rule: BCH count is strictly from organization_memberships with role < admin (leader, deputy, treasurer, secretary)
     const boardRoles: OrganizationRole[] = ['leader', 'deputy', 'treasurer', 'secretary'];
     const boardCount = bchMemberships.filter((m) => m.role !== 'admin' && boardRoles.includes(m.role)).length;
 
     return { total, active, alumni, assignedToTerm, boardCount };
-  }, [membersResponse, bchMemberships]);
+  }, [memberStats, membersResponse?.totalCount, bchMemberships]);
 
   // Handlers
   const handleFilterChange = (newFilters: Partial<MemberFilterParams>) => {
@@ -300,60 +309,75 @@ export function MembersPage() {
           </p>
         </div>
 
-        {/* Top Header Actions */}
-        <div className="flex flex-wrap items-center gap-2">
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => setSheetsExportOpen(true)}
-            className="text-xs h-8 text-slate-700 hover:text-emerald-800 hover:bg-emerald-50 border-slate-200 cursor-pointer"
-          >
-            <Download className="h-3.5 w-3.5 mr-1.5 text-emerald-700" />
-            <span>{t('members.action.export_sheets', 'Xuất Sheets')}</span>
-          </Button>
+        {/* Top Header Actions (Single clean row) */}
+        <div className="flex items-center gap-2 shrink-0">
+          {/* Dropdown Xuất */}
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button
+                variant="outline"
+                size="sm"
+                className="text-xs h-8 px-2.5 text-slate-700 hover:text-emerald-800 hover:bg-emerald-50 border-slate-200 cursor-pointer flex items-center gap-1 font-medium"
+              >
+                <Download className="h-3.5 w-3.5 text-emerald-700" />
+                <span>{t('members.action.export', 'Xuất')}</span>
+                <ChevronDown className="h-3 w-3 opacity-60 ml-0.5" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end" className="w-48 shadow-lg">
+              <DropdownMenuItem onClick={() => setSheetsExportOpen(true)} className="cursor-pointer text-xs py-2">
+                <Download className="h-3.5 w-3.5 mr-2 text-emerald-700" />
+                <span>{t('members.action.export_sheets', 'Xuất Google Sheets')}</span>
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={handleExportCsv} className="cursor-pointer text-xs py-2">
+                <FileSpreadsheet className="h-3.5 w-3.5 mr-2 text-slate-500" />
+                <span>{t('members.action.export_csv', 'Xuất file CSV')}</span>
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
 
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={handleExportCsv}
-            className="text-xs h-8 text-slate-700 hover:bg-slate-50 border-slate-200 cursor-pointer"
-          >
-            <FileSpreadsheet className="h-3.5 w-3.5 mr-1.5 text-slate-500" />
-            <span>{t('members.action.export_csv', 'Xuất CSV')}</span>
-          </Button>
-
+          {/* Dropdown Nhập */}
           {canManage && (
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => setSheetsImportOpen(true)}
-              className="text-xs h-8 text-slate-700 hover:text-blue-700 hover:bg-blue-50 border-slate-200 cursor-pointer"
-            >
-              <Upload className="h-3.5 w-3.5 mr-1.5 text-blue-600" />
-              <span>{t('members.action.import', 'Nhập Sheets')}</span>
-            </Button>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="text-xs h-8 px-2.5 text-slate-700 hover:text-blue-700 hover:bg-blue-50 border-slate-200 cursor-pointer flex items-center gap-1 font-medium"
+                >
+                  <Upload className="h-3.5 w-3.5 text-blue-600" />
+                  <span>{t('members.action.import', 'Nhập')}</span>
+                  <ChevronDown className="h-3 w-3 opacity-60 ml-0.5" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="w-52 shadow-lg">
+                <DropdownMenuItem
+                  onClick={() => setFileImportOpen(true)}
+                  className="cursor-pointer text-xs py-2 font-medium text-emerald-800 focus:text-emerald-900 focus:bg-emerald-50"
+                >
+                  <FileSpreadsheet className="h-3.5 w-3.5 mr-2 text-emerald-600" />
+                  <span>Nhập từ file Excel / CSV</span>
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                  onClick={() => setSheetsImportOpen(true)}
+                  className="cursor-pointer text-xs py-2 text-slate-700"
+                >
+                  <Upload className="h-3.5 w-3.5 mr-2 text-blue-600" />
+                  <span>Nhập từ Google Sheets</span>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
           )}
 
-          {canManage && (
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => setFileImportOpen(true)}
-              className="text-xs h-8 text-slate-700 hover:text-emerald-700 hover:bg-emerald-50 border-slate-200 cursor-pointer"
-            >
-              <FileSpreadsheet className="h-3.5 w-3.5 mr-1.5 text-emerald-600" />
-              <span>Nhập từ file</span>
-            </Button>
-          )}
-
+          {/* Nút Thêm hội viên */}
           {canManage && (
             <Button
               size="sm"
               onClick={handleOpenCreateDialog}
-              className="bg-emerald-700 hover:bg-emerald-800 text-white text-xs h-8 shadow-xs cursor-pointer font-medium"
+              className="bg-emerald-700 hover:bg-emerald-800 text-white text-xs h-8 px-3 shadow-xs cursor-pointer font-medium shrink-0 flex items-center gap-1.5"
             >
-              <UserPlus className="h-3.5 w-3.5 mr-1.5" />
-              <span>{language === 'vi' ? `Thêm ${memberNoun.toLowerCase()}` : `Add ${memberNoun.toLowerCase()}`}</span>
+              <UserPlus className="h-3.5 w-3.5" />
+              <span className="whitespace-nowrap">{language === 'vi' ? `Thêm ${memberNoun.toLowerCase()}` : `Add ${memberNoun.toLowerCase()}`}</span>
             </Button>
           )}
         </div>

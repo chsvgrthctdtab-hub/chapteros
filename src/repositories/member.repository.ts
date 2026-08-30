@@ -451,4 +451,54 @@ export const memberRepository = {
     }
     return (data || []).map((row) => mapTermFromDb(row as DbTerm));
   },
+
+  /**
+   * Fetch total KPI statistics for an organization (not limited to paginated slice)
+   */
+  async getStats(organizationId: string, activeTermId?: string): Promise<{ total: number; active: number; alumni: number; assignedToTerm: number }> {
+    if (!isSupabaseConfigured || !organizationId) {
+      return { total: 0, active: 0, alumni: 0, assignedToTerm: 0 };
+    }
+
+    // 1. Fetch all members with status for this org
+    const { data: members, error: mError } = await supabase
+      .from('members')
+      .select('id, status')
+      .eq('organization_id', organizationId);
+
+    if (mError) {
+      console.warn('Could not fetch member stats:', mError.message);
+      return { total: 0, active: 0, alumni: 0, assignedToTerm: 0 };
+    }
+
+    const memberList = (members || []) as DbMember[];
+    const total = memberList.length;
+    const active = memberList.filter((m) => m.status === 'active').length;
+    const alumni = memberList.filter((m) => m.status === 'alumni').length;
+
+    // 2. Fetch assigned to term count
+    let assignedToTerm = 0;
+    if (activeTermId) {
+      const { data: termMembers, error: tmError } = await supabase
+        .from('term_members')
+        .select('member_id')
+        .eq('term_id', activeTermId);
+      if (!tmError && termMembers) {
+        const uniqueMembers = new Set(termMembers.map((tm: { member_id: string }) => tm.member_id));
+        assignedToTerm = uniqueMembers.size;
+      }
+    } else if (memberList.length > 0) {
+      const memberIds = memberList.map((m) => m.id);
+      const { data: termMembers, error: tmError } = await supabase
+        .from('term_members')
+        .select('member_id')
+        .in('member_id', memberIds);
+      if (!tmError && termMembers) {
+        const uniqueMembers = new Set(termMembers.map((tm: { member_id: string }) => tm.member_id));
+        assignedToTerm = uniqueMembers.size;
+      }
+    }
+
+    return { total, active, alumni, assignedToTerm };
+  },
 };
