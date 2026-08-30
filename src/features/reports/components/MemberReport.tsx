@@ -206,7 +206,7 @@ export function MemberReport({ organizationId, termId }: MemberReportProps) {
               Cơ cấu Chức vụ & Vị trí Phụ trách
             </CardTitle>
             <CardDescription className="text-2xs text-slate-500">
-              Phân bổ nhân sự theo từng chức danh trong Chi hội
+              Phân bổ nhân sự theo từng chức danh trong Đơn vị
             </CardDescription>
           </CardHeader>
           <CardContent className="p-4">

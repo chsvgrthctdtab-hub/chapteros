@@ -66,7 +66,7 @@ export function CreateInviteDialog({
   const handleAssignRole = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!organizationId) {
-      setErrorMessage('Không tìm thấy thông tin Chi hội hiện tại.');
+      setErrorMessage('Không tìm thấy thông tin Đơn vị hiện tại.');
       return;
     }
 

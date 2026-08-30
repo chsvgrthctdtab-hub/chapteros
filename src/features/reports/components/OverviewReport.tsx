@@ -93,7 +93,7 @@ export function OverviewReport({ organizationId, filterParams }: OverviewReportP
               Bức tranh Hoạt động Toàn diện (Operational Performance Overview)
             </h3>
             <p className="text-2xs text-slate-500 mt-0.5">
-              Tổng hợp hiệu suất vận hành theo từng khối nghiệp vụ chính của Chi hội
+              Tổng hợp hiệu suất vận hành theo từng khối nghiệp vụ chính của Đơn vị
             </p>
           </div>
         </div>

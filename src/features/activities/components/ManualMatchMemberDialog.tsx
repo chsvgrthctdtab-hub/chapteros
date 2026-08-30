@@ -67,7 +67,7 @@ export function ManualMatchMemberDialog({
             </div>
             <div>
               <h3 className="text-sm font-bold text-slate-900">Khớp thủ công với Hội viên</h3>
-              <p className="text-[11px] text-slate-500">Liên kết phản hồi Google Form vào hồ sơ Chi hội</p>
+              <p className="text-[11px] text-slate-500">Liên kết phản hồi Google Form vào hồ sơ Đơn vị</p>
             </div>
           </div>
           <button

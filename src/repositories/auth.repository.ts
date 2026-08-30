@@ -227,7 +227,7 @@ export const authRepository = {
         error.message?.includes('Mã số sinh viên')
       ) {
         throw new Error(
-          `Mã số sinh viên "${profileData.studentId}" đã được sử dụng bởi một hội viên khác trong Chi hội. Vui lòng kiểm tra lại MSSV.`
+          `Mã số sinh viên "${profileData.studentId}" đã được sử dụng bởi một hội viên khác trong Đơn vị. Vui lòng kiểm tra lại MSSV.`
         );
       }
       throw error;

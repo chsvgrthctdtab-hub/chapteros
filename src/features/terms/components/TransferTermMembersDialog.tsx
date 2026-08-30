@@ -386,7 +386,7 @@ export function TransferTermMembersDialog({
                 </p>
                 <p>• Các bản ghi phân công mới sẽ được tạo riêng cho nhiệm kỳ <strong>"{targetTerm?.name}"</strong>.</p>
                 <p>• Dữ liệu phân công và lịch sử hoạt động của nhiệm kỳ <strong>"{sourceTerm.name}"</strong> được giữ nguyên không thay đổi.</p>
-                <p>• Hồ sơ hội viên gốc trong Chi hội không bị ảnh hưởng hay trùng lặp.</p>
+                <p>• Hồ sơ hội viên gốc trong Đơn vị không bị ảnh hưởng hay trùng lặp.</p>
                 <p>• Nếu có hội viên đã tồn tại trong nhiệm kỳ mới, hệ thống sẽ tự động bỏ qua để tránh trùng lặp.</p>
               </div>
             </div>

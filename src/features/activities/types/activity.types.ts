@@ -56,7 +56,7 @@ export const ACTIVITY_CATEGORIES: Record<ActivityCategory, CategoryConfig> = {
       border: 'border-slate-200',
     },
     iconName: 'Sparkles',
-    description: 'Các hoạt động chung của Chi hội, sinh hoạt định kỳ, giao lưu.',
+    description: 'Các hoạt động chung của Đơn vị, sinh hoạt định kỳ, giao lưu.',
   },
   volunteer: {
     key: 'volunteer',

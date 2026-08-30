@@ -56,7 +56,7 @@ export const memberService = {
     options?: CreateMemberOptions
   ): Promise<Member> {
     if (!organizationId) {
-      throw new Error('Chưa chọn Chi hội làm việc');
+      throw new Error('Chưa chọn Đơn vị làm việc');
     }
 
     const cleanStudentId = payload.student_id ? payload.student_id.trim().toUpperCase() : null;
@@ -69,7 +69,7 @@ export const memberService = {
     if (cleanStudentId) {
       const existing = await memberRepository.findByStudentId(organizationId, cleanStudentId);
       if (existing) {
-        throw new Error(`Mã số sinh viên "${cleanStudentId}" đã tồn tại trong Chi hội (${existing.fullName}).`);
+        throw new Error(`Mã số sinh viên "${cleanStudentId}" đã tồn tại trong Đơn vị (${existing.fullName}).`);
       }
     }
 

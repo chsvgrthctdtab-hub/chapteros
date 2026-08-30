@@ -466,7 +466,7 @@ export function MembersPage() {
                     </h3>
                     <p className="text-xs text-slate-500">
                       {language === 'vi'
-                        ? 'Chưa có hồ sơ hội viên nào trong Chi hội hoặc không có kết quả phù hợp với bộ lọc hiện tại.'
+                        ? 'Chưa có hồ sơ hội viên nào trong Đơn vị hoặc không có kết quả phù hợp với bộ lọc hiện tại.'
                         : 'No member records in this Chapter or none matched current filters.'}
                     </p>
                   </div>
@@ -555,7 +555,7 @@ export function MembersPage() {
         }
         warningNote={
           language === 'vi'
-            ? 'Hành động này sẽ xóa vĩnh viễn hồ sơ và toàn bộ phân công nhiệm kỳ liên quan khỏi Chi hội.'
+            ? 'Hành động này sẽ xóa vĩnh viễn hồ sơ và toàn bộ phân công nhiệm kỳ liên quan khỏi Đơn vị.'
             : 'This action will permanently delete the member profile and related term assignments.'
         }
         confirmLabel={language === 'vi' ? 'Xác nhận xóa' : 'Confirm Delete'}

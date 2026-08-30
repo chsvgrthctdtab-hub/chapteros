@@ -36,7 +36,7 @@ export type TermFormData = {
 export const termMemberAssignmentSchema = z.object({
   memberId: z
     .string()
-    .min(1, 'Vui lòng chọn hội viên trong Chi hội.'),
+    .min(1, 'Vui lòng chọn hội viên trong Đơn vị.'),
   position: z
     .string()
     .trim()

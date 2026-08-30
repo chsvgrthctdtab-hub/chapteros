@@ -46,7 +46,7 @@ export function IntegrationsTab({ organization }: IntegrationsTabProps) {
               Tích hợp Google Workspace & Dịch vụ Đám mây
             </h3>
             <p className="text-xs text-slate-500 mt-0.5 max-w-2xl">
-              Đồng bộ hóa tài liệu biểu mẫu, bảng tính thu chi và lưu trữ đám mây của Chi hội trực tiếp lên Google Drive.
+              Đồng bộ hóa tài liệu biểu mẫu, bảng tính thu chi và lưu trữ đám mây của Đơn vị trực tiếp lên Google Drive.
             </p>
           </div>
 

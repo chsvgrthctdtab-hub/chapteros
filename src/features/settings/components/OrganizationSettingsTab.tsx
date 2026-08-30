@@ -198,7 +198,7 @@ export function OrganizationSettingsTab({
       <Card className="border-slate-200 shadow-2xs">
         <CardContent className="py-12 text-center text-slate-500 text-xs">
           <Building2 className="h-8 w-8 text-slate-300 mx-auto mb-2" />
-          <p className="font-medium text-slate-700">Chưa chọn Chi hội hoạt động</p>
+          <p className="font-medium text-slate-700">Chưa chọn Đơn vị hoạt động</p>
           <p className="text-[11px] text-slate-400 mt-1">
             Vui lòng chọn một Chi hội trong thanh điều hướng để cấu hình thông tin.
           </p>
@@ -379,7 +379,7 @@ export function OrganizationSettingsTab({
               <label className="text-xs font-semibold text-slate-700 flex items-center justify-between">
                 <span className="flex items-center gap-1.5">
                   <ImageIcon className="h-3.5 w-3.5 text-slate-500" />
-                  Biểu trưng Chi hội (Logo)
+                  Biểu trưng Đơn vị (Logo)
                 </span>
                 {organization.logoUrl && !imgError && (
                   <span className="text-[11px] font-medium text-emerald-600">Đang sử dụng</span>
@@ -417,7 +417,7 @@ export function OrganizationSettingsTab({
                     {organization.logoUrl && !imgError ? (
                       <>
                         <p className="text-xs font-semibold text-slate-800 truncate">
-                          Logo chính thức của Chi hội
+                          Logo chính thức của Đơn vị
                         </p>
                         <p className="text-[11px] text-slate-500">
                           Định dạng PNG, JPG, WebP — tối đa 2 MB

@@ -149,7 +149,7 @@ export const AUDIT_ACTION_MAP: Record<string, { label: string; module: string; i
   'term.delete': { label: 'Xóa nhiệm kỳ', module: 'term', impact: 'delete' },
 
   // Organizations & Roles
-  'organization.create': { label: 'Khởi tạo Chi hội mới', module: 'organization', impact: 'create' },
+  'organization.create': { label: 'Khởi tạo Đơn vị mới', module: 'organization', impact: 'create' },
   'organization.update': { label: 'Cập nhật thông tin Chi hội', module: 'organization', impact: 'update' },
   'organization.role_change': { label: 'Thay đổi phân quyền vai trò', module: 'organization', impact: 'security' },
 

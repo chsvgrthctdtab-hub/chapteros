@@ -927,7 +927,7 @@ export const googleSheetsService = {
 
             const targetActivityId = (defaultAct as { id: string } | null)?.id;
             if (!targetActivityId) {
-              throw new Error('Chưa có hoạt động nào trong Chi hội để liên kết người tham gia.');
+              throw new Error('Chưa có hoạt động nào trong Đơn vị để liên kết người tham gia.');
             }
 
             const regStatus = (finalData.registrationStatus as string) || 'confirmed';

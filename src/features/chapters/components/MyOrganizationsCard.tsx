@@ -51,7 +51,7 @@ export function MyOrganizationsCard({
             <div>
               <div className="flex items-center gap-2">
                 <CardTitle className="text-base font-bold text-slate-900">
-                  Danh sách Chi hội của tôi
+                  Danh sách Đơn vị của tôi
                 </CardTitle>
                 <Badge variant="outline" className="text-[11px] bg-white text-slate-700">
                   {userOrganizations.length} Chi hội
@@ -66,7 +66,7 @@ export function MyOrganizationsCard({
           <Link to="/onboarding">
             <Button size="sm" variant="outline" className="text-xs gap-1.5 h-8">
               <PlusCircle className="h-3.5 w-3.5 text-blue-600" />
-              Tạo thêm Chi hội mới
+              Tạo thêm Đơn vị mới
             </Button>
           </Link>
         </div>
@@ -81,11 +81,11 @@ export function MyOrganizationsCard({
         ) : userOrganizations.length === 0 ? (
           <div className="text-center py-8 space-y-3">
             <Building2 className="h-8 w-8 text-slate-300 mx-auto" />
-            <p className="text-xs text-slate-500">Bạn chưa là thành viên của Chi hội nào.</p>
+            <p className="text-xs text-slate-500">Bạn chưa là thành viên của Đơn vị nào.</p>
             <Link to="/onboarding">
               <Button size="sm" className="text-xs bg-blue-600 hover:bg-blue-700 text-white">
                 <PlusCircle className="h-3.5 w-3.5 mr-1.5" />
-                Khởi tạo Chi hội đầu tiên
+                Khởi tạo Đơn vị đầu tiên
               </Button>
             </Link>
           </div>
@@ -161,7 +161,7 @@ export function MyOrganizationsCard({
                     {isActive ? (
                       <span className="text-xs font-semibold text-blue-600 flex items-center gap-1">
                         <CheckCircle2 className="h-3.5 w-3.5" />
-                        Chi hội hiện tại
+                        Đơn vị hiện tại
                       </span>
                     ) : (
                       <Button
@@ -176,7 +176,7 @@ export function MyOrganizationsCard({
                         ) : (
                           <ArrowRight className="h-3.5 w-3.5 mr-1" />
                         )}
-                        {isSwitching ? 'Đang chuyển...' : 'Chuyển sang Chi hội này'}
+                        {isSwitching ? 'Đang chuyển...' : 'Chuyển sang Đơn vị này'}
                       </Button>
                     )}
                   </div>

@@ -120,17 +120,17 @@ export function formatErrorMessage(error: unknown, fallbackMessage = 'Đã xảy
     lowerMsg.includes('đã tồn tại') ||
     lowerMsg.includes('duplicate key')
   ) {
-    let duplicateDetail = 'Dữ liệu này đã tồn tại trong Chi hội.';
+    let duplicateDetail = 'Dữ liệu này đã tồn tại trong Đơn vị.';
     if (lowerMsg.includes('student_id') || lowerMsg.includes('mssv')) {
-      duplicateDetail = 'Mã số sinh viên này đã được đăng ký cho một hội viên trong Chi hội.';
+      duplicateDetail = 'Mã số sinh viên này đã được đăng ký cho một hội viên trong Đơn vị.';
     } else if (lowerMsg.includes('email')) {
       duplicateDetail = 'Địa chỉ email này đã tồn tại trong hệ thống.';
     } else if (lowerMsg.includes('drive_file_id') || lowerMsg.includes('uq_docs_org_drive')) {
-      duplicateDetail = 'Tệp Google Drive này đã được liên kết trong Chi hội hoặc hoạt động tương ứng.';
+      duplicateDetail = 'Tệp Google Drive này đã được liên kết trong Đơn vị hoặc hoạt động tương ứng.';
     } else if (lowerMsg.includes('participant') || lowerMsg.includes('uq_activity_member_participant')) {
       duplicateDetail = 'Hội viên này đã có tên trong danh sách tham gia hoạt động.';
     } else if (lowerMsg.includes('finance_category') || lowerMsg.includes('uq_org_finance_category')) {
-      duplicateDetail = 'Danh mục thu/chi cùng tên và loại đã tồn tại trong Chi hội.';
+      duplicateDetail = 'Danh mục thu/chi cùng tên và loại đã tồn tại trong Đơn vị.';
     }
 
     return {

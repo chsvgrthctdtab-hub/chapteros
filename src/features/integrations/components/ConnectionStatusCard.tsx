@@ -170,7 +170,7 @@ export function ConnectionStatusCard({
             <div className="rounded-lg border border-dashed border-slate-200 bg-slate-50/40 p-4 text-center space-y-2">
               <p className="text-slate-600 text-xs">
                 {isOrg
-                  ? 'Chưa kết nối tài khoản Google chung của Chi hội. Kết nối để sẵn sàng đồng bộ Google Workspace (Drive, Sheets, Forms, Calendar).'
+                  ? 'Chưa kết nối tài khoản Google chung của Đơn vị. Kết nối để sẵn sàng đồng bộ Google Workspace (Drive, Sheets, Forms, Calendar).'
                   : 'Chưa liên kết tài khoản Google cá nhân. Liên kết để đăng nhập 1-chạm an toàn và đồng bộ dữ liệu tác vụ.'}
               </p>
               <div className="text-[11px] text-slate-400 flex items-center justify-center gap-1">

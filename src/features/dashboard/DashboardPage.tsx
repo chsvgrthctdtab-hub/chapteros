@@ -146,7 +146,7 @@ export function DashboardPage() {
         </div>
         <div className="space-y-1">
           <h3 className="text-base font-bold text-slate-900">
-            Chưa chọn Chi hội hoạt động
+            Chưa chọn Đơn vị hoạt động
           </h3>
           <p className="text-xs text-slate-500">
             Tài khoản của bạn chưa được liên kết hoặc chưa chọn Chi hội quản lý. Vui lòng chuyển đổi hoặc liên kết Chi hội trong mục Cài đặt.

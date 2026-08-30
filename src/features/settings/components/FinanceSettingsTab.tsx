@@ -124,7 +124,7 @@ export function FinanceSettingsTab({
                 Hạn Mức Phê Duyệt Chi Tiêu (Approval Threshold)
               </CardTitle>
               <CardDescription className="text-xs text-slate-500 mt-0.5">
-                Các khoản chi vượt hạn mức này bắt buộc phải có phê duyệt của Chi hội trưởng hoặc Quản trị viên
+                Các khoản chi vượt hạn mức này bắt buộc phải có phê duyệt của Đơn vị trưởng hoặc Quản trị viên
               </CardDescription>
             </div>
             <Badge variant="outline" className="text-[11px] font-mono text-amber-700 bg-amber-50 border-amber-200">

@@ -33,7 +33,7 @@ export async function uploadDocumentToStorage(
       throw new Error('Kích thước tệp vượt quá giới hạn cấu hình Storage.');
     }
     if (error.message?.includes('row-level security') || error.message?.includes('policy') || (error as any).statusCode === '403') {
-      throw new Error('Bạn không có quyền tải tệp lên thư mục của Chi hội này.');
+      throw new Error('Bạn không có quyền tải tệp lên thư mục của Đơn vị này.');
     }
     throw new Error(error.message || 'Lỗi khi tải tệp lên hệ thống lưu trữ.');
   }

@@ -312,7 +312,7 @@ export function MemberDetailDialog({
                     Chưa có lịch sử nhiệm kỳ nào được ghi nhận.
                   </p>
                   <p className="text-[11px] text-slate-400">
-                    Hội viên này chưa được phân công vào nhiệm kỳ cụ thể nào của Chi hội.
+                    Hội viên này chưa được phân công vào nhiệm kỳ cụ thể nào của Đơn vị.
                   </p>
                   {canManage && (
                     <Button
@@ -435,7 +435,7 @@ export function MemberDetailDialog({
                     <MemberStatusBadge status={member.status} />
                   </div>
                   <div className="flex items-center justify-between py-1.5">
-                    <span className="text-slate-500">Quyền hạn trong Chi hội:</span>
+                    <span className="text-slate-500">Quyền hạn trong Đơn vị:</span>
                     <span className="text-slate-700 font-medium">
                       {member.position?.toLowerCase().includes('trưởng')
                         ? 'Toàn quyền quản trị & điều hành'

@@ -374,7 +374,7 @@ export const organizationRepository = {
     if (error) {
       console.error('Failed to remove membership:', error);
       if (error.code === '42501') {
-        throw new Error('Bạn không có quyền Quản trị viên để xóa thành viên khỏi Chi hội.');
+        throw new Error('Bạn không có quyền Quản trị viên để xóa thành viên khỏi Đơn vị.');
       }
       throw error;
     }
@@ -407,7 +407,7 @@ export const organizationRepository = {
         uploadError.message?.includes('violates row-level security') ||
         (uploadError as unknown as { statusCode?: string }).statusCode === '403'
       ) {
-        throw new Error('Bạn không có quyền Quản trị viên để tải lên biểu trưng cho Chi hội này.');
+        throw new Error('Bạn không có quyền Quản trị viên để tải lên biểu trưng cho Đơn vị này.');
       }
       throw uploadError;
     }

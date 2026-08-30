@@ -177,7 +177,7 @@ export function GoogleSheetsExportModal({
                     <ExternalLink className="w-4 h-4 text-emerald-600" /> Ghi vào Bảng tính đã liên kết
                   </div>
                   <p className="text-[11px] text-slate-500 mt-1">
-                    Cập nhật vào tab "{moduleInfo?.tabName}" trong Google Spreadsheet của Chi hội.
+                    Cập nhật vào tab "{moduleInfo?.tabName}" trong Google Spreadsheet của Đơn vị.
                   </p>
                 </button>
               </div>

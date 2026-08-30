@@ -100,8 +100,8 @@ export function OrganizationMembershipsCard({
   const handleRemoveClick = async (membership: OrganizationMembership) => {
     const isSelf = currentUserId === membership.userId;
     const confirmMessage = isSelf
-      ? 'Bạn có chắc chắn muốn tự rời khỏi Chi hội này? Bạn sẽ mất quyền truy cập vào các dữ liệu nội bộ.'
-      : `Bạn có chắc chắn muốn xóa thành viên "${membership.profile?.fullName || membership.profile?.email}" khỏi Chi hội?`;
+      ? 'Bạn có chắc chắn muốn tự rời khỏi Đơn vị này? Bạn sẽ mất quyền truy cập vào các dữ liệu nội bộ.'
+      : `Bạn có chắc chắn muốn xóa thành viên "${membership.profile?.fullName || membership.profile?.email}" khỏi Đơn vị?`;
 
     if (!window.confirm(confirmMessage)) return;
 
@@ -111,10 +111,10 @@ export function OrganizationMembershipsCard({
 
     try {
       await onRemoveMembership(membership.id);
-      setActionSuccess('Đã xóa thành viên khỏi Chi hội thành công.');
+      setActionSuccess('Đã xóa thành viên khỏi Đơn vị thành công.');
       setTimeout(() => setActionSuccess(null), 3000);
     } catch (err) {
-      setActionError((err as Error).message || 'Không thể xóa thành viên khỏi Chi hội.');
+      setActionError((err as Error).message || 'Không thể xóa thành viên khỏi Đơn vị.');
     } finally {
       setRemovingId(null);
     }
@@ -138,7 +138,7 @@ export function OrganizationMembershipsCard({
                 </Badge>
               </div>
               <CardDescription className="text-xs text-slate-500 mt-0.5">
-                Danh sách tài khoản được cấp quyền truy cập vào không gian làm việc của Chi hội
+                Danh sách tài khoản được cấp quyền truy cập vào không gian làm việc của Đơn vị
               </CardDescription>
             </div>
           </div>
@@ -355,7 +355,7 @@ export function OrganizationMembershipsCard({
                                 onClick={() => handleRemoveClick(membership)}
                                 disabled={isRemoving}
                                 className="h-7 px-2 text-xs text-rose-600 hover:text-rose-700 hover:bg-rose-50"
-                                title="Xóa khỏi Chi hội"
+                                title="Xóa khỏi Đơn vị"
                               >
                                 {isRemoving ? (
                                   <Loader2 className="h-3.5 w-3.5 animate-spin" />

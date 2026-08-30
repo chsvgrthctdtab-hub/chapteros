@@ -107,7 +107,7 @@ export function TermFormDialog({
               <DialogDescription className="text-xs text-slate-500">
                 {isEditing
                   ? 'Cập nhật thông tin mốc thời gian và trạng thái nhiệm kỳ'
-                  : 'Thiết lập thông tin nhiệm kỳ hoạt động mới cho Chi hội'}
+                  : 'Thiết lập thông tin nhiệm kỳ hoạt động mới cho Đơn vị'}
               </DialogDescription>
             </div>
           </div>

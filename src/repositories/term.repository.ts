@@ -201,7 +201,7 @@ export const termRepository = {
     }
 
     if (!payload.organization_id) {
-      throw new Error('Không xác định được Chi hội hiện tại.');
+      throw new Error('Không xác định được Đơn vị hiện tại.');
     }
 
     const trimmedName = (payload.name || '').trim();
@@ -246,7 +246,7 @@ export const termRepository = {
       console.error('Failed to create term:', error);
 
       if (error.code === '23505' || error.message?.includes('uq_terms_org_name')) {
-        throw new Error('Tên nhiệm kỳ này đã tồn tại trong Chi hội.');
+        throw new Error('Tên nhiệm kỳ này đã tồn tại trong Đơn vị.');
       }
       if (error.code === '23514' || error.message?.includes('chk_term_dates')) {
         throw new Error('Ngày bắt đầu và ngày kết thúc của nhiệm kỳ không hợp lệ.');
@@ -257,7 +257,7 @@ export const termRepository = {
         error.message?.includes('permission') ||
         error.message?.includes('policy')
       ) {
-        throw new Error('Bạn không có quyền tạo nhiệm kỳ trong Chi hội này.');
+        throw new Error('Bạn không có quyền tạo nhiệm kỳ trong Đơn vị này.');
       }
 
       throw new Error(error.message || 'Có lỗi xảy ra khi tạo nhiệm kỳ mới.');
@@ -295,7 +295,7 @@ export const termRepository = {
       });
 
       if (error.code === '23505' || error.message?.includes('uq_terms_org_name')) {
-        throw new Error('Tên nhiệm kỳ này đã tồn tại trong Chi hội.');
+        throw new Error('Tên nhiệm kỳ này đã tồn tại trong Đơn vị.');
       }
       if (error.code === '23514' || error.message?.includes('chk_term_dates')) {
         throw new Error('Ngày bắt đầu và ngày kết thúc của nhiệm kỳ không hợp lệ.');
@@ -306,7 +306,7 @@ export const termRepository = {
         error.message?.includes('permission') ||
         error.message?.includes('policy')
       ) {
-        throw new Error('Bạn không có quyền cập nhật nhiệm kỳ trong Chi hội này.');
+        throw new Error('Bạn không có quyền cập nhật nhiệm kỳ trong Đơn vị này.');
       }
       throw new Error(error.message || 'Có lỗi xảy ra khi cập nhật nhiệm kỳ.');
     }
@@ -342,7 +342,7 @@ export const termRepository = {
 
     // Step 2: ORGANIZATION CHECK
     if (targetTerm.organization_id !== organizationId) {
-      throw new Error('Nhiệm kỳ không thuộc Chi hội hiện tại.');
+      throw new Error('Nhiệm kỳ không thuộc Đơn vị hiện tại.');
     }
 
     // 1. Try atomic database RPC function first
@@ -428,7 +428,7 @@ export const termRepository = {
     const targetTerm = targetTermRaw as unknown as DbTerm;
 
     if (targetTerm.organization_id !== organizationId) {
-      throw new Error('Nhiệm kỳ không thuộc Chi hội hiện tại.');
+      throw new Error('Nhiệm kỳ không thuộc Đơn vị hiện tại.');
     }
 
     const updatePayload: Record<string, unknown> = {
@@ -545,7 +545,7 @@ export const termRepository = {
     // 1. Fetch term
     const term = await this.getById(termId);
     if (!term || term.organizationId !== organizationId) {
-      throw new Error('Không tìm thấy nhiệm kỳ hoặc nhiệm kỳ không thuộc Chi hội hiện tại.');
+      throw new Error('Không tìm thấy nhiệm kỳ hoặc nhiệm kỳ không thuộc Đơn vị hiện tại.');
     }
 
     // 2. Fetch term members
@@ -1050,7 +1050,7 @@ export const termRepository = {
       sourceTerm.organization_id !== targetTerm.organization_id ||
       (organizationId && sourceTerm.organization_id !== organizationId)
     ) {
-      throw new Error('Không thể bàn giao hội viên thuộc Chi hội khác.');
+      throw new Error('Không thể bàn giao hội viên thuộc Đơn vị khác.');
     }
 
     // Step 3: MEMBER CHECK
@@ -1108,7 +1108,7 @@ export const termRepository = {
     const memberOrgRows = (membersOrgCheckRaw as unknown as { id: string; organization_id: string }[]) || [];
     const hasAlienMember = memberOrgRows.some((m) => m.organization_id !== sourceTerm.organization_id);
     if (hasAlienMember) {
-      throw new Error('Không thể bàn giao hội viên thuộc Chi hội khác.');
+      throw new Error('Không thể bàn giao hội viên thuộc Đơn vị khác.');
     }
 
     // Filter out members who already exist in target term

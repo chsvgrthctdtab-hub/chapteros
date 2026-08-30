@@ -171,7 +171,7 @@ export function ActivityFormDialog({
             <p className="text-xs text-slate-500 mt-0.5">
               {isEditMode
                 ? 'Cập nhật thông tin chi tiết, kế hoạch và thời gian tổ chức'
-                : 'Lập kế hoạch tổ chức chương trình mới cho Chi hội'}
+                : 'Lập kế hoạch tổ chức chương trình mới cho Đơn vị'}
             </p>
           </div>
           <button
@@ -201,7 +201,7 @@ export function ActivityFormDialog({
               <Lock className="w-4 h-4 shrink-0 mt-0.5 text-amber-600" />
               <div>
                 <span className="font-bold">Hoạt động đã ở trạng thái kết thúc ({activityToEdit?.status === 'completed' ? 'Đã hoàn thành' : 'Đã hủy'}).</span>
-                <p className="mt-0.5 text-amber-700">Dữ liệu cốt lõi đã được lưu trữ an toàn trong lịch sử Chi hội.</p>
+                <p className="mt-0.5 text-amber-700">Dữ liệu cốt lõi đã được lưu trữ an toàn trong lịch sử Đơn vị.</p>
               </div>
             </div>
           )}

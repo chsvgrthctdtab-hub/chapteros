@@ -132,7 +132,7 @@ export const organizationService = {
         ).length;
 
         if (activeAdminCount === 0) {
-          throw new Error('Không thể hạ quyền hoặc vô hiệu hóa Quản trị viên duy nhất của Chi hội.');
+          throw new Error('Không thể hạ quyền hoặc vô hiệu hóa Quản trị viên duy nhất của Đơn vị.');
         }
       }
     }
@@ -179,7 +179,7 @@ export const organizationService = {
       ).length;
 
       if (activeAdminCount === 0) {
-        throw new Error('Không thể xóa Quản trị viên duy nhất của Chi hội.');
+        throw new Error('Không thể xóa Quản trị viên duy nhất của Đơn vị.');
       }
     }
 
@@ -253,7 +253,7 @@ export const organizationService = {
     );
 
     if (!authorized) {
-      throw new Error('Bạn không có quyền Quản trị viên để tải lên biểu trưng cho Chi hội này.');
+      throw new Error('Bạn không có quyền Quản trị viên để tải lên biểu trưng cho Đơn vị này.');
     }
 
     // 2. Client & Service Validation
@@ -373,7 +373,7 @@ export const organizationService = {
     );
 
     if (!authorized) {
-      throw new Error('Bạn không có quyền Quản trị viên để xóa biểu trưng của Chi hội này.');
+      throw new Error('Bạn không có quyền Quản trị viên để xóa biểu trưng của Đơn vị này.');
     }
 
     // 1. Read current logo URL if not provided

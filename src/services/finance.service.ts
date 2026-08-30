@@ -150,7 +150,7 @@ export const financeService = {
       data.type
     );
     if (existing) {
-      throw new Error(`Danh mục "${trimmedName}" thuộc loại ${data.type === 'income' ? 'Thu' : 'Chi'} đã tồn tại trong Chi hội`);
+      throw new Error(`Danh mục "${trimmedName}" thuộc loại ${data.type === 'income' ? 'Thu' : 'Chi'} đã tồn tại trong Đơn vị`);
     }
 
     const payload: DbCategoryInsert = {
@@ -355,7 +355,7 @@ export const financeService = {
     }
     const term = await termRepository.getById(data.termId);
     if (!term || term.organizationId !== organizationId) {
-      throw new Error('Nhiệm kỳ đã chọn không thuộc Chi hội hiện tại hoặc không hợp lệ');
+      throw new Error('Nhiệm kỳ đã chọn không thuộc Đơn vị hiện tại hoặc không hợp lệ');
     }
     validateFinanceTermLock(term.status, 'tạo giao dịch mới');
 
@@ -365,7 +365,7 @@ export const financeService = {
     }
     const category = await financeRepository.getCategoryById(data.categoryId, organizationId);
     if (!category || category.organizationId !== organizationId) {
-      throw new Error('Danh mục thu chi đã chọn không thuộc Chi hội hiện tại');
+      throw new Error('Danh mục thu chi đã chọn không thuộc Đơn vị hiện tại');
     }
     if (category.type !== data.transactionType) {
       throw new Error(
@@ -377,7 +377,7 @@ export const financeService = {
     if (data.activityId) {
       const activity = await activityRepository.getById(data.activityId);
       if (!activity || activity.organizationId !== organizationId) {
-        throw new Error('Hoạt động đã chọn không thuộc Chi hội hiện tại');
+        throw new Error('Hoạt động đã chọn không thuộc Đơn vị hiện tại');
       }
     }
 
@@ -553,7 +553,7 @@ export const financeService = {
     if (data.termId !== undefined && data.termId !== existing.termId) {
       const term = await termRepository.getById(data.termId);
       if (!term || term.organizationId !== organizationId) {
-        throw new Error('Nhiệm kỳ đã chọn không thuộc Chi hội hiện tại');
+        throw new Error('Nhiệm kỳ đã chọn không thuộc Đơn vị hiện tại');
       }
       validateFinanceTermLock(term.status, 'chuyển giao dịch vào nhiệm kỳ đã khóa');
       payload.term_id = data.termId;
@@ -563,7 +563,7 @@ export const financeService = {
     if (data.categoryId !== undefined || data.transactionType !== undefined) {
       const category = await financeRepository.getCategoryById(targetCategoryId, organizationId);
       if (!category || category.organizationId !== organizationId) {
-        throw new Error('Danh mục thu chi đã chọn không thuộc Chi hội hiện tại');
+        throw new Error('Danh mục thu chi đã chọn không thuộc Đơn vị hiện tại');
       }
       if (category.type !== targetType) {
         throw new Error(
@@ -578,7 +578,7 @@ export const financeService = {
       if (data.activityId) {
         const activity = await activityRepository.getById(data.activityId);
         if (!activity || activity.organizationId !== organizationId) {
-          throw new Error('Hoạt động đã chọn không thuộc Chi hội hiện tại');
+          throw new Error('Hoạt động đã chọn không thuộc Đơn vị hiện tại');
         }
         payload.activity_id = data.activityId;
       } else {
@@ -626,7 +626,7 @@ export const financeService = {
 
     const existing = await financeRepository.getTransactionById(transactionId, organizationId);
     if (!existing || existing.organizationId !== organizationId) {
-      throw new Error('Giao dịch không tồn tại trong Chi hội');
+      throw new Error('Giao dịch không tồn tại trong Đơn vị');
     }
 
     if (existing.status === 'approved' || existing.status === 'posted') {
@@ -720,7 +720,7 @@ export const financeService = {
 
     const existing = await financeRepository.getTransactionById(transactionId, organizationId);
     if (!existing || existing.organizationId !== organizationId) {
-      throw new Error('Giao dịch không tồn tại trong Chi hội');
+      throw new Error('Giao dịch không tồn tại trong Đơn vị');
     }
 
     const rejected = await financeRepository.rejectTransaction(

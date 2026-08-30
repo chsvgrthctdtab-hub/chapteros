@@ -170,7 +170,7 @@ export const googleDriveService = {
                 ? `Tệp này đã được liên kết trong Hoạt động "${match.activity?.title || 'đang chọn'}"`
                 : match.taskId
                 ? `Tệp này đã được liên kết trong Công việc "${match.task?.title || 'đang chọn'}"`
-                : 'Tệp này đã có trong danh mục Tài liệu chung của Chi hội',
+                : 'Tệp này đã có trong danh mục Tài liệu chung của Đơn vị',
             };
           }
         } catch {
@@ -225,7 +225,7 @@ export const googleDriveService = {
             ? `Tệp này đã được liên kết trong Hoạt động "${doc.activity.title}"`
             : doc.task?.title
             ? `Tệp này đã được liên kết trong Công việc "${doc.task.title}"`
-            : 'Tệp này đã có trong danh mục Tài liệu chung của Chi hội',
+            : 'Tệp này đã có trong danh mục Tài liệu chung của Đơn vị',
         };
       }
 

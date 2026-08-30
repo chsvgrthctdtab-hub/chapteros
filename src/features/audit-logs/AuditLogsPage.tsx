@@ -77,7 +77,7 @@ export function AuditLogsPage() {
       <div id="audit-logs-page" className="space-y-6">
         <PageHeader
           title="Nhật ký kiểm toán (Audit Logs)"
-          description="Lịch sử truy vết thao tác và các sự kiện quan trọng trong Chi hội."
+          description="Lịch sử truy vết thao tác và các sự kiện quan trọng trong Đơn vị."
           breadcrumbs={[
             { label: 'Cài đặt hệ thống', href: '/settings' },
             { label: 'Nhật ký kiểm toán' },
@@ -118,7 +118,7 @@ export function AuditLogsPage() {
         </div>
         <div className="space-y-1">
           <h3 className="text-base font-bold text-slate-900">
-            Chưa chọn Chi hội hoạt động
+            Chưa chọn Đơn vị hoạt động
           </h3>
           <p className="text-xs text-slate-500">
             Vui lòng chọn hoặc liên kết Chi hội để xem nhật ký hoạt động tương ứng.

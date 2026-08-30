@@ -584,7 +584,7 @@ export function TermDetailModal({
               <strong className="text-slate-900">{term?.name}</strong>?
             </p>
             <p className="text-xs text-slate-500 bg-slate-50 p-2.5 rounded border border-slate-200">
-              Thao tác này chỉ xóa phân công của hội viên trong nhiệm kỳ hiện tại. Hồ sơ hội viên trong Chi hội vẫn được giữ nguyên.
+              Thao tác này chỉ xóa phân công của hội viên trong nhiệm kỳ hiện tại. Hồ sơ hội viên trong Đơn vị vẫn được giữ nguyên.
             </p>
           </div>
 

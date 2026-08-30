@@ -28,7 +28,7 @@ export const GOOGLE_SCOPES_CATALOGUE: GoogleScopeDefinition[] = [
     name: 'Google Email',
     category: 'identity',
     description: 'Xem địa chỉ email chính thức của tài khoản Google.',
-    purpose: 'Định danh tài khoản, liên kết hồ sơ Chi hội và gửi thông báo hệ thống.',
+    purpose: 'Định danh tài khoản, liên kết hồ sơ Đơn vị và gửi thông báo hệ thống.',
     isRequired: true,
     securityImpact: 'low',
   },

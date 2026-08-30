@@ -24,10 +24,10 @@ export function getRoleVietnameseLabel(role?: string | null): string {
   switch (role) {
     case 'leader':
     case 'lead':
-      return 'Chi hội trưởng';
+      return 'Trưởng Đơn vị';
     case 'deputy':
     case 'vice_lead':
-      return 'Chi hội phó';
+      return 'Phó Đơn vị';
     case 'admin':
       return 'Quản trị viên';
     case 'treasurer':
@@ -1538,11 +1538,22 @@ export const activityRepository = {
       }
     }
 
-    // Priority 2: Add all remaining members from members roster
+    // Priority 2: Add members from roster who hold an Executive Board / BCH position
+    const boardKeywords = [
+      'trưởng', 'phó', 'chủ nhiệm', 'ủy viên', 'uy vien',
+      'thủ quỹ', 'thu quy', 'thư ký', 'thu ky', 'bch', 'ban chấp hành',
+      'ban chap hanh', 'quản trị', 'quan tri', 'leader', 'deputy', 'admin',
+      'treasurer', 'secretary', 'board'
+    ];
+
     rosterList.forEach((m) => {
       if (!seenMemberIds.has(m.id) && (!m.user_id || !seenUserIds.has(m.user_id))) {
-        seenMemberIds.add(m.id);
-        candidates.push(mapMemberFromDb(m));
+        const p = (m.position || '').toLowerCase();
+        const isBoardPosition = boardKeywords.some((kw) => p.includes(kw));
+        if (isBoardPosition) {
+          seenMemberIds.add(m.id);
+          candidates.push(mapMemberFromDb(m));
+        }
       }
     });
 

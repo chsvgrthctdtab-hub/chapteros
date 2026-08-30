@@ -71,7 +71,7 @@ export function MemberListTable({
         <div className="space-y-1 max-w-md mx-auto">
           <h3 className="text-sm font-semibold text-slate-900">Không tìm thấy hội viên nào</h3>
           <p className="text-xs text-slate-500">
-            Chưa có hồ sơ hội viên nào trong Chi hội hoặc không có kết quả phù hợp với tiêu chí tìm kiếm và bộ lọc hiện tại.
+            Chưa có hồ sơ hội viên nào trong Đơn vị hoặc không có kết quả phù hợp với tiêu chí tìm kiếm và bộ lọc hiện tại.
           </p>
         </div>
         {canManage && onAddNew && (

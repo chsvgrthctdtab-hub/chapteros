@@ -178,7 +178,7 @@ export function SecurityTab({ organization }: SecurityTabProps) {
             <div>
               <p className="font-bold text-slate-800">Cách ly đa tổ chức (Multi-Tenant Isolation)</p>
               <p className="text-[11px] text-slate-500 mt-0.5">
-                Mỗi Chi hội hoạt động trong một không gian dữ liệu riêng biệt. Truy vấn từ người dùng Chi hội này không thể đọc hoặc sửa đổi dữ liệu của Chi hội khác.
+                Mỗi Đơn vị hoạt động trong một không gian dữ liệu riêng biệt. Truy vấn từ người dùng Đơn vị này không thể đọc hoặc sửa đổi dữ liệu của Đơn vị khác.
               </p>
             </div>
           </div>

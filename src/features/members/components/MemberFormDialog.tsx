@@ -140,8 +140,8 @@ export function MemberFormDialog({
               </DialogTitle>
               <DialogDescription className="text-xs text-slate-500">
                 {isEditing
-                  ? 'Cập nhật thông tin lý lịch và trạng thái hội viên trong Chi hội.'
-                  : 'Tạo hồ sơ hội viên mới và liên kết dữ liệu vào Chi hội.'}
+                  ? 'Cập nhật thông tin lý lịch và trạng thái hội viên trong Đơn vị.'
+                  : 'Tạo hồ sơ hội viên mới và liên kết dữ liệu vào Đơn vị.'}
               </DialogDescription>
             </div>
           </div>

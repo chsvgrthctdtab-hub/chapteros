@@ -116,7 +116,7 @@ export function AddParticipantDialog({
             </div>
             <div>
               <h2 className="text-base font-bold text-slate-900">Thêm người tham gia</h2>
-              <p className="text-xs text-slate-500">Ghi danh hội viên Chi hội vào hoạt động</p>
+              <p className="text-xs text-slate-500">Ghi danh hội viên Đơn vị vào hoạt động</p>
             </div>
           </div>
           <button
@@ -195,7 +195,7 @@ export function AddParticipantDialog({
                 ) : filteredMembers.length === 0 ? (
                   <div className="p-4 text-center text-xs text-slate-500">
                     {availableMembers.length === 0
-                      ? 'Tất cả hội viên trong Chi hội đã có trong hoạt động này'
+                      ? 'Tất cả hội viên trong Đơn vị đã có trong hoạt động này'
                       : 'Không tìm thấy hội viên phù hợp với từ khóa'}
                   </div>
                 ) : (

@@ -414,7 +414,7 @@ export function FinancePage() {
       <div className="p-8 text-center space-y-4">
         <AlertCircle className="w-10 h-10 text-amber-500 mx-auto" />
         <h3 className="text-lg font-bold text-slate-800">
-          Chưa chọn Chi hội làm việc
+          Chưa chọn Đơn vị làm việc
         </h3>
         <p className="text-sm text-slate-500">
           Vui lòng chọn hoặc tham gia một Chi hội để truy cập sổ quỹ tài chính.

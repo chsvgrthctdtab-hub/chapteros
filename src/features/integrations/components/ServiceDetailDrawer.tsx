@@ -84,7 +84,7 @@ export function ServiceDetailDrawer({
           colorBg: 'bg-emerald-50 border-emerald-100',
           scope: 'https://www.googleapis.com/auth/spreadsheets.readonly',
           description:
-            'Liên kết bảng tính Google Sheets của Chi hội, xuất dữ liệu snapshot chuẩn hóa UTF-8 BOM và quy trình nhập dữ liệu 4 bước có đối soát trùng lặp & giải quyết xung đột trước khi lưu.',
+            'Liên kết bảng tính Google Sheets của Đơn vị, xuất dữ liệu snapshot chuẩn hóa UTF-8 BOM và quy trình nhập dữ liệu 4 bước có đối soát trùng lặp & giải quyết xung đột trước khi lưu.',
           howItWorks: [
             '1. Ban Chấp Hành liên kết Google Spreadsheet thông qua ID bảng tính và cấp quyền đọc.',
             '2. Xuất dữ liệu snapshot (Hội viên, Tài chính, Hoạt động, Nhiệm vụ) chuẩn mã hóa UTF-8 BOM.',
@@ -129,7 +129,7 @@ export function ServiceDetailDrawer({
             'Tự động tạo cây thư mục chuẩn theo từng nhiệm kỳ Chi hội. Sao lưu quyết định, kế hoạch, biên bản họp và tài liệu chứng từ có chữ ký số an toàn.',
           howItWorks: [
             '1. Khởi tạo cấu trúc 4 thư mục chuẩn: Kế hoạch, Biên bản, Tài chính, Quyết định.',
-            '2. Phân quyền truy cập dựa trên vai trò trong Chi hội (Leader, Deputy, Treasurer, Secretary).',
+            '2. Phân quyền truy cập dựa trên vai trò trong Đơn vị (Leader, Deputy, Treasurer, Secretary).',
             '3. Lưu trữ liên kết tệp đính kèm và tài liệu nhiệm kỳ với URL an toàn.',
             '4. Đồng bộ siêu dữ liệu (metadata) hai chiều có kiểm soát.',
           ],
@@ -277,7 +277,7 @@ export function ServiceDetailDrawer({
                     )}
                   </div>
                   <p className="text-[11px] text-slate-500">
-                    Tuân thủ tiêu chuẩn phân quyền tối thiểu (Least Privilege). Chỉ đọc dữ liệu cần thiết cho Chi hội.
+                    Tuân thủ tiêu chuẩn phân quyền tối thiểu (Least Privilege). Chỉ đọc dữ liệu cần thiết cho Đơn vị.
                   </p>
                 </div>
               </div>

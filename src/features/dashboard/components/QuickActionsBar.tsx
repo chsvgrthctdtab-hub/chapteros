@@ -30,7 +30,7 @@ export function QuickActionsBar({
           <span>Thao tác nhanh cho Ban Chấp Hành</span>
         </div>
         <h3 className="text-sm font-bold text-white">
-          Khởi tạo & Cập nhật dữ liệu Chi hội
+          Khởi tạo & Cập nhật dữ liệu Đơn vị
         </h3>
       </div>
 

@@ -22,7 +22,7 @@ export const auditLogService = {
 
     // Role check at service layer (RBAC enforcement)
     if (userRole && !['admin', 'leader', 'deputy'].includes(userRole)) {
-      throw new Error('Bạn không có quyền truy cập nhật ký hoạt động của Chi hội.');
+      throw new Error('Bạn không có quyền truy cập nhật ký hoạt động của Đơn vị.');
     }
 
     return auditLogRepository.list(organizationId, params);

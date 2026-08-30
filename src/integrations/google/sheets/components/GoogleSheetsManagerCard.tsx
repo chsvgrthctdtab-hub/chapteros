@@ -302,7 +302,7 @@ export function GoogleSheetsManagerCard() {
               Hủy liên kết Bảng tính
             </DialogTitle>
             <DialogDescription className="text-xs text-slate-500">
-              Bạn có chắc chắn muốn hủy liên kết bảng tính &quot;{sheetToUnlink?.spreadsheetName}&quot; khỏi Chi hội? Dữ liệu trên Google Sheets sẽ không bị xóa.
+              Bạn có chắc chắn muốn hủy liên kết bảng tính &quot;{sheetToUnlink?.spreadsheetName}&quot; khỏi Đơn vị? Dữ liệu trên Google Sheets sẽ không bị xóa.
             </DialogDescription>
           </DialogHeader>
           <DialogFooter className="gap-2 sm:gap-0 mt-3">

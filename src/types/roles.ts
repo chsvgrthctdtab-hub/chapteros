@@ -69,7 +69,7 @@ export const ROLES: Record<OrganizationRole, RoleDefinition> = {
     key: 'leader',
     label: 'Chi hội trưởng',
     shortLabel: 'Trưởng',
-    description: 'Điều hành chung các hoạt động, phê duyệt kế hoạch, nhân sự và tài chính của Chi hội.',
+    description: 'Điều hành chung các hoạt động, phê duyệt kế hoạch, nhân sự và tài chính của Đơn vị.',
     level: 2,
     badgeVariant: 'default',
     colorClasses: {

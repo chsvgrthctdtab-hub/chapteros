@@ -56,7 +56,7 @@ export function ActivateTermDialog({
                 Kích hoạt Nhiệm kỳ hoạt động
               </DialogTitle>
               <DialogDescription className="text-xs text-slate-500">
-                Xác nhận đặt làm nhiệm kỳ hiện tại của Chi hội
+                Xác nhận đặt làm nhiệm kỳ hiện tại của Đơn vị
               </DialogDescription>
             </div>
           </div>
@@ -93,7 +93,7 @@ export function ActivateTermDialog({
           )}
 
           <p className="text-xs text-slate-500">
-            Sau khi kích hoạt, toàn bộ các hoạt động, báo cáo và phân loại mặc định trong Chi hội sẽ tự động liên kết với nhiệm kỳ này.
+            Sau khi kích hoạt, toàn bộ các hoạt động, báo cáo và phân loại mặc định trong Đơn vị sẽ tự động liên kết với nhiệm kỳ này.
           </p>
         </div>
 

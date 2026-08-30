@@ -91,7 +91,7 @@ export function EditMembershipDialog({
             </div>
             <div>
               <DialogTitle className="text-base font-bold text-slate-900">
-                Phân quyền thành viên Chi hội
+                Phân quyền thành viên Đơn vị
               </DialogTitle>
               <DialogDescription className="text-xs text-slate-500">
                 Cập nhật vai trò hệ thống và trạng thái hoạt động
@@ -173,7 +173,7 @@ export function EditMembershipDialog({
             <div className="p-3 bg-amber-50 border border-amber-200 rounded-lg text-amber-800 text-xs flex items-start gap-2">
               <ShieldAlert className="h-4 w-4 shrink-0 text-amber-600 mt-0.5" />
               <p>
-                <strong>Cảnh báo:</strong> Bạn đang tự hạ quyền Quản trị viên của chính mình. Sau khi lưu, bạn sẽ không thể chỉnh sửa cài đặt Chi hội nữa.
+                <strong>Cảnh báo:</strong> Bạn đang tự hạ quyền Quản trị viên của chính mình. Sau khi lưu, bạn sẽ không thể chỉnh sửa cài đặt Đơn vị nữa.
               </p>
             </div>
           )}

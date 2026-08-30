@@ -45,7 +45,7 @@ export function useCreateActivity(organizationId?: string) {
   return useMutation({
     mutationFn: async (formData: ActivityFormData) => {
       if (!organizationId) {
-        throw new Error('Chưa chọn Chi hội làm việc');
+        throw new Error('Chưa chọn Đơn vị làm việc');
       }
 
       try {
@@ -78,7 +78,7 @@ export function useUpdateActivity(activityId: string, organizationId?: string) {
         throw new Error('Thiếu ID hoạt động cần cập nhật');
       }
       if (!organizationId) {
-        throw new Error('Chưa chọn Chi hội làm việc');
+        throw new Error('Chưa chọn Đơn vị làm việc');
       }
 
       try {
@@ -137,7 +137,7 @@ export function useUpdateActivityStatus(activityId: string, organizationId?: str
         throw new Error('Thiếu ID hoạt động');
       }
       if (!organizationId) {
-        throw new Error('Chưa chọn Chi hội làm việc');
+        throw new Error('Chưa chọn Đơn vị làm việc');
       }
 
       try {
@@ -198,7 +198,7 @@ export function useDeleteOrArchiveActivity(organizationId?: string) {
         throw new Error('Thiếu ID hoạt động');
       }
       if (!organizationId) {
-        throw new Error('Chưa chọn Chi hội làm việc');
+        throw new Error('Chưa chọn Đơn vị làm việc');
       }
 
       try {
@@ -230,7 +230,7 @@ export function useAddActivityParticipant(activityId: string, organizationId?: s
   return useMutation({
     mutationFn: async (formData: AddParticipantFormData) => {
       if (!activityId) throw new Error('Thiếu ID hoạt động');
-      if (!organizationId) throw new Error('Chưa chọn Chi hội làm việc');
+      if (!organizationId) throw new Error('Chưa chọn Đơn vị làm việc');
 
       try {
         const participant = await activityService.addParticipant(
@@ -269,7 +269,7 @@ export function useUpdateActivityParticipant(activityId: string, organizationId?
       data: Partial<UpdateParticipantFormData>;
     }) => {
       if (!activityId) throw new Error('Thiếu ID hoạt động');
-      if (!organizationId) throw new Error('Chưa chọn Chi hội làm việc');
+      if (!organizationId) throw new Error('Chưa chọn Đơn vị làm việc');
 
       try {
         const participant = await activityService.updateParticipant(
@@ -368,7 +368,7 @@ export function useRemoveActivityParticipant(activityId: string, organizationId?
   return useMutation({
     mutationFn: async (participantId: string) => {
       if (!activityId) throw new Error('Thiếu ID hoạt động');
-      if (!organizationId) throw new Error('Chưa chọn Chi hội làm việc');
+      if (!organizationId) throw new Error('Chưa chọn Đơn vị làm việc');
 
       try {
         await activityService.removeParticipant(
@@ -409,7 +409,7 @@ export function useBulkUpdateAttendance(activityId: string, organizationId?: str
       attendanceStatus: AttendanceStatus;
     }) => {
       if (!activityId) throw new Error('Thiếu ID hoạt động');
-      if (!organizationId) throw new Error('Chưa chọn Chi hội làm việc');
+      if (!organizationId) throw new Error('Chưa chọn Đơn vị làm việc');
       if (participantIds.length === 0) return { success: true, count: 0 };
 
       try {
@@ -508,7 +508,7 @@ export function useBulkAddActivityParticipants(activityId: string, organizationI
       attendanceStatus?: AttendanceStatus;
     }) => {
       if (!activityId) throw new Error('Thiếu ID hoạt động');
-      if (!organizationId) throw new Error('Chưa chọn Chi hội làm việc');
+      if (!organizationId) throw new Error('Chưa chọn Đơn vị làm việc');
 
       try {
         const added = await activityService.bulkAddParticipants(

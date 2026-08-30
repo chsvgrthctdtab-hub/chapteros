@@ -158,7 +158,7 @@ export function CategoryManagementModal({
                 Danh mục Thu - Chi
               </h3>
               <p className="text-xs text-slate-500">
-                Quản lý các hạng mục phân loại tài chính trong Chi hội
+                Quản lý các hạng mục phân loại tài chính trong Đơn vị
               </p>
             </div>
           </div>

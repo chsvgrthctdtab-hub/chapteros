@@ -115,7 +115,7 @@ export const taskService = {
     if (formData.termId) {
       const term = await termRepository.getById(formData.termId);
       if (!term || term.organizationId !== organizationId) {
-        throw new Error('Nhiệm kỳ không thuộc Chi hội hiện tại');
+        throw new Error('Nhiệm kỳ không thuộc Đơn vị hiện tại');
       }
       validateTermMutation(term.status, 'tạo công việc trong nhiệm kỳ đã khóa');
     } else {
@@ -126,7 +126,7 @@ export const taskService = {
     if (formData.activityId) {
       const activity = await activityRepository.getById(formData.activityId);
       if (!activity || activity.organizationId !== organizationId) {
-        throw new Error('Hoạt động không thuộc Chi hội hiện tại');
+        throw new Error('Hoạt động không thuộc Đơn vị hiện tại');
       }
     }
 
@@ -137,7 +137,7 @@ export const taskService = {
         formData.assignedTo
       );
       if (!isValidAssignee) {
-        throw new Error('Hội viên được giao nhiệm vụ không thuộc Chi hội hiện tại');
+        throw new Error('Hội viên được giao nhiệm vụ không thuộc Đơn vị hiện tại');
       }
     }
 
@@ -212,7 +212,7 @@ export const taskService = {
     if (formData.termId !== undefined && formData.termId !== existing.termId) {
       const term = await termRepository.getById(formData.termId);
       if (!term || term.organizationId !== organizationId) {
-        throw new Error('Nhiệm kỳ không thuộc Chi hội hiện tại');
+        throw new Error('Nhiệm kỳ không thuộc Đơn vị hiện tại');
       }
       validateTermMutation(term.status, 'chuyển công việc sang nhiệm kỳ đã khóa');
     }
@@ -222,7 +222,7 @@ export const taskService = {
       if (formData.activityId) {
         const activity = await activityRepository.getById(formData.activityId);
         if (!activity || activity.organizationId !== organizationId) {
-          throw new Error('Hoạt động không thuộc Chi hội hiện tại');
+          throw new Error('Hoạt động không thuộc Đơn vị hiện tại');
         }
       }
     }
@@ -235,7 +235,7 @@ export const taskService = {
           formData.assignedTo
         );
         if (!isValidAssignee) {
-          throw new Error('Hội viên được giao nhiệm vụ không thuộc Chi hội hiện tại');
+          throw new Error('Hội viên được giao nhiệm vụ không thuộc Đơn vị hiện tại');
         }
       }
     }

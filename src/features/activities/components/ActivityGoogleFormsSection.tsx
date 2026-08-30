@@ -271,7 +271,7 @@ export function ActivityGoogleFormsSection({
                   )}
                 </div>
                 <p className="text-xs text-slate-500 line-clamp-2">
-                  {primaryForm.description || 'Biểu mẫu thu thập đăng ký tham gia sự kiện của Chi hội.'}
+                  {primaryForm.description || 'Biểu mẫu thu thập đăng ký tham gia sự kiện của Đơn vị.'}
                 </p>
               </div>
             </div>

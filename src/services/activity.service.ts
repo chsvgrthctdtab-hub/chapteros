@@ -92,7 +92,7 @@ export const activityService = {
     actorUserId?: string
   ): Promise<Activity> {
     if (!organizationId) {
-      throw new Error('Chưa chọn Chi hội làm việc');
+      throw new Error('Chưa chọn Đơn vị làm việc');
     }
 
     const cleanTitle = formData.title?.trim();
@@ -128,7 +128,7 @@ export const activityService = {
     }
     const term = await termRepository.getById(formData.termId);
     if (!term || term.organizationId !== organizationId) {
-      throw new Error('Nhiệm kỳ đã chọn không tồn tại hoặc không thuộc Chi hội hiện tại');
+      throw new Error('Nhiệm kỳ đã chọn không tồn tại hoặc không thuộc Đơn vị hiện tại');
     }
     validateTermMutation(term.status, 'tạo hoạt động trong nhiệm kỳ đã khóa');
 
@@ -143,7 +143,7 @@ export const activityService = {
     if (cleanCode) {
       const existingWithCode = await activityRepository.findByCode(organizationId, cleanCode);
       if (existingWithCode) {
-        throw new Error(`Mã hoạt động "${cleanCode}" đã được sử dụng trong Chi hội. Vui lòng chọn mã khác.`);
+        throw new Error(`Mã hoạt động "${cleanCode}" đã được sử dụng trong Đơn vị. Vui lòng chọn mã khác.`);
       }
     }
 
@@ -206,7 +206,7 @@ export const activityService = {
       throw new Error('Thiếu ID hoạt động cần cập nhật');
     }
     if (!organizationId) {
-      throw new Error('Chưa chọn Chi hội làm việc');
+      throw new Error('Chưa chọn Đơn vị làm việc');
     }
 
     // 1. Verify existence & tenant ownership
@@ -242,7 +242,7 @@ export const activityService = {
     if (formData.termId !== undefined) {
       const term = await termRepository.getById(formData.termId);
       if (!term || term.organizationId !== organizationId) {
-        throw new Error('Nhiệm kỳ đã chọn không tồn tại hoặc không thuộc Chi hội hiện tại');
+        throw new Error('Nhiệm kỳ đã chọn không tồn tại hoặc không thuộc Đơn vị hiện tại');
       }
       validateTermMutation(term.status, 'chuyển hoạt động sang nhiệm kỳ đã khóa');
       payload.term_id = formData.termId;
@@ -253,7 +253,7 @@ export const activityService = {
       if (cleanCode && cleanCode !== existing.code) {
         const existingWithCode = await activityRepository.findByCode(organizationId, cleanCode);
         if (existingWithCode && existingWithCode.id !== id) {
-          throw new Error(`Mã hoạt động "${cleanCode}" đã được sử dụng trong Chi hội.`);
+          throw new Error(`Mã hoạt động "${cleanCode}" đã được sử dụng trong Đơn vị.`);
         }
       }
       payload.code = cleanCode;
@@ -438,7 +438,7 @@ export const activityService = {
 
     // Hard Delete: If completed or cancelled, disallow hard delete to protect history
     if (existing.status === 'completed') {
-      throw new Error('Hoạt động đã hoàn thành không thể xóa. Dữ liệu đã được lưu trữ vào lịch sử Chi hội.');
+      throw new Error('Hoạt động đã hoàn thành không thể xóa. Dữ liệu đã được lưu trữ vào lịch sử Đơn vị.');
     }
 
     await activityRepository.delete(id);
@@ -516,7 +516,7 @@ export const activityService = {
     // 2. Verify Activity belongs to current organization and check lifecycle lock
     const activity = await activityRepository.getById(activityId, organizationId);
     if (!activity) {
-      throw new Error('Hoạt động không tồn tại hoặc không thuộc Chi hội hiện tại');
+      throw new Error('Hoạt động không tồn tại hoặc không thuộc Đơn vị hiện tại');
     }
 
     if (activity.termId) {
@@ -529,7 +529,7 @@ export const activityService = {
     // 3. Verify Member belongs to current organization
     const member = await memberRepository.getById(data.memberId, organizationId);
     if (!member) {
-      throw new Error('Hội viên được chọn không thuộc Chi hội hiện tại');
+      throw new Error('Hội viên được chọn không thuộc Đơn vị hiện tại');
     }
 
     // 4. Check duplicate participant
@@ -607,7 +607,7 @@ export const activityService = {
     // 2. Verify activity ownership and status lock
     const activity = await activityRepository.getById(activityId, organizationId);
     if (!activity) {
-      throw new Error('Hoạt động không tồn tại hoặc không thuộc Chi hội hiện tại');
+      throw new Error('Hoạt động không tồn tại hoặc không thuộc Đơn vị hiện tại');
     }
 
     if (activity.termId) {
@@ -696,7 +696,7 @@ export const activityService = {
 
     const activity = await activityRepository.getById(activityId, organizationId);
     if (!activity) {
-      throw new Error('Hoạt động không tồn tại hoặc không thuộc Chi hội hiện tại');
+      throw new Error('Hoạt động không tồn tại hoặc không thuộc Đơn vị hiện tại');
     }
 
     if (activity.termId) {
@@ -752,7 +752,7 @@ export const activityService = {
 
     const activity = await activityRepository.getById(activityId, organizationId);
     if (!activity) {
-      throw new Error('Hoạt động không tồn tại hoặc không thuộc Chi hội hiện tại');
+      throw new Error('Hoạt động không tồn tại hoặc không thuộc Đơn vị hiện tại');
     }
 
     if (activity.termId) {
@@ -821,7 +821,7 @@ export const activityService = {
 
     const activity = await activityRepository.getById(activityId, organizationId);
     if (!activity) {
-      throw new Error('Hoạt động không tồn tại hoặc không thuộc Chi hội hiện tại');
+      throw new Error('Hoạt động không tồn tại hoặc không thuộc Đơn vị hiện tại');
     }
 
     if (activity.termId) {

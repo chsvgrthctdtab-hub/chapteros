@@ -1407,7 +1407,7 @@ export const googleFormsService = {
       member = list.find((m) => m.id === payload.memberId && m.organizationId === payload.organizationId) || null;
     }
 
-    if (!member) throw new Error('Không tìm thấy thông tin hội viên trong Chi hội');
+    if (!member) throw new Error('Không tìm thấy thông tin hội viên trong Đơn vị');
 
     let participantId: string | null = null;
 

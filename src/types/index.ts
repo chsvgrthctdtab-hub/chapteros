@@ -78,7 +78,7 @@ export interface Organization {
 // Backward compatible alias
 export type Chapter = Organization;
 
-// Organization Membership (Phân quyền trong Chi hội)
+// Organization Membership (Phân quyền trong Đơn vị)
 export interface OrganizationMembership {
   id: string;
   organizationId: string;
@@ -108,7 +108,7 @@ export interface Term {
   memberCount?: number;
 }
 
-// Member Roster (Hồ sơ hội viên gốc của Chi hội)
+// Member Roster (Hồ sơ hội viên gốc của Đơn vị)
 export interface Member {
   id: string;
   organizationId: string;

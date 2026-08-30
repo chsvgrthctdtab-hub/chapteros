@@ -174,7 +174,7 @@ export function ChaptersPage() {
     <div id="chapters-page" className="space-y-6">
       <PageHeader
         title="Chapters"
-        description="Quản lý thông tin định danh, biểu trưng chính thức, danh sách tài khoản thành viên và chuyển đổi Chi hội hoạt động."
+        description="Quản lý thông tin định danh, biểu trưng chính thức, danh sách tài khoản thành viên và chuyển đổi Đơn vị hoạt động."
         breadcrumbs={[
           { label: 'Dashboard', href: '/' },
           { label: 'Chapters' },
@@ -196,7 +196,7 @@ export function ChaptersPage() {
             )}
           </div>
           <div className="min-w-0">
-            <span className="text-[11px] text-slate-500 block">Chi hội đang kích hoạt</span>
+            <span className="text-[11px] text-slate-500 block">Đơn vị đang kích hoạt</span>
             <span className="text-xs font-bold text-slate-900 truncate block">
               {currentOrg?.name || 'Đang tải...'}
             </span>
@@ -237,7 +237,7 @@ export function ChaptersPage() {
               )}
             </div>
             <span className="text-[10px] text-slate-400 block mt-0.5">
-              {userOrganizations.length} Chi hội liên kết
+              {userOrganizations.length} Đơn vị liên kết
             </span>
           </div>
         </div>
@@ -248,7 +248,7 @@ export function ChaptersPage() {
         <TabsList className="grid grid-cols-3 max-w-lg mb-6">
           <TabsTrigger value="info" className="text-xs flex items-center gap-1.5">
             <Building2 className="h-3.5 w-3.5" />
-            Thông tin Chi hội
+            Thông tin Đơn vị
           </TabsTrigger>
           <TabsTrigger value="memberships" className="text-xs flex items-center gap-1.5">
             <Users className="h-3.5 w-3.5" />
@@ -256,7 +256,7 @@ export function ChaptersPage() {
           </TabsTrigger>
           <TabsTrigger value="my-orgs" className="text-xs flex items-center gap-1.5">
             <Network className="h-3.5 w-3.5" />
-            Chi hội của tôi
+            Đơn vị của tôi
           </TabsTrigger>
         </TabsList>
 

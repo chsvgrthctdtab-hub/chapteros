@@ -82,7 +82,7 @@ export const MEMBER_FIELDS: ColumnMappingField[] = [
     aliases: ['chức vụ', 'chức vụ chi hội', 'vai trò', 'position', 'role'],
     dataType: 'string',
     isRequired: false,
-    description: 'Chức vụ trong Chi hội (Hội viên, Chi hội trưởng...)',
+    description: 'Chức vụ trong Đơn vị (Hội viên, Chi hội trưởng...)',
     sampleValue: 'Hội viên',
   },
   {

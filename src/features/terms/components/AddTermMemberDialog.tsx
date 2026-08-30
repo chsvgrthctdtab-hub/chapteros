@@ -191,7 +191,7 @@ export function AddTermMemberDialog({
                         ? 'Đang tải danh sách hội viên...'
                         : filteredMembers.length === 0
                         ? '-- Không còn hội viên nào khả dụng --'
-                        : '-- Chọn hội viên trong Chi hội --'
+                        : '-- Chọn hội viên trong Đơn vị --'
                     }
                   />
                 </SelectTrigger>
@@ -205,7 +205,7 @@ export function AddTermMemberDialog({
               </Select>
               {filteredMembers.length === 0 && !isLoadingMembers && (
                 <p className="text-[11px] text-slate-500 mt-1">
-                  Tất cả hội viên của Chi hội đã được thêm vào nhiệm kỳ này hoặc chưa có hồ sơ hội viên.
+                  Tất cả hội viên của Đơn vị đã được thêm vào nhiệm kỳ này hoặc chưa có hồ sơ hội viên.
                 </p>
               )}
               {errors.memberId && (

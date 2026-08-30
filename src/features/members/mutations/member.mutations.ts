@@ -10,7 +10,7 @@ function formatDbError(err: unknown, defaultMsg: string): string {
   const message = errorObj?.message || '';
   
   if (message.includes('uq_org_student_id') || errorObj.code === '23505' || message.includes('đã tồn tại')) {
-    return message || 'Mã số sinh viên (MSSV) này đã tồn tại trong Chi hội. Vui lòng kiểm tra lại.';
+    return message || 'Mã số sinh viên (MSSV) này đã tồn tại trong Đơn vị. Vui lòng kiểm tra lại.';
   }
   if (message.includes('uq_term_member')) {
     return 'Hội viên này đã được phân công trong nhiệm kỳ đã chọn. Bạn có thể chỉnh sửa phân công thay vì thêm mới.';
@@ -31,7 +31,7 @@ export function useCreateMember(organizationId?: string) {
   return useMutation({
     mutationFn: async (formData: MemberFormData) => {
       if (!organizationId) {
-        throw new Error('Chưa chọn Chi hội làm việc');
+        throw new Error('Chưa chọn Đơn vị làm việc');
       }
 
       try {
@@ -77,7 +77,7 @@ export function useUpdateMember(memberId: string, organizationId?: string) {
   return useMutation({
     mutationFn: async (formData: Partial<MemberFormData>) => {
       if (!organizationId) {
-        throw new Error('Chưa chọn Chi hội làm việc');
+        throw new Error('Chưa chọn Đơn vị làm việc');
       }
 
       try {
@@ -116,7 +116,7 @@ export function useSetMemberStatus(memberId: string, organizationId?: string) {
   return useMutation({
     mutationFn: async (status: MemberStatus) => {
       if (!organizationId) {
-        throw new Error('Chưa chọn Chi hội làm việc');
+        throw new Error('Chưa chọn Đơn vị làm việc');
       }
       try {
         return await memberService.setMemberStatus(memberId, organizationId, status, user?.id);
@@ -141,7 +141,7 @@ export function useDeleteMember(organizationId?: string) {
   return useMutation({
     mutationFn: async (memberId: string) => {
       if (!organizationId) {
-        throw new Error('Chưa chọn Chi hội làm việc');
+        throw new Error('Chưa chọn Đơn vị làm việc');
       }
 
       try {
@@ -167,7 +167,7 @@ export function useAssignTermMember(memberId: string, organizationId?: string) {
   return useMutation({
     mutationFn: async (formData: TermMemberFormData) => {
       if (!organizationId) {
-        throw new Error('Chưa chọn Chi hội làm việc');
+        throw new Error('Chưa chọn Đơn vị làm việc');
       }
 
       try {
@@ -205,7 +205,7 @@ export function useUpdateTermMember(memberId: string, termMemberId: string, orga
   return useMutation({
     mutationFn: async (formData: Partial<TermMemberFormData>) => {
       if (!organizationId) {
-        throw new Error('Chưa chọn Chi hội làm việc');
+        throw new Error('Chưa chọn Đơn vị làm việc');
       }
 
       try {
@@ -238,7 +238,7 @@ export function useRemoveTermMember(memberId: string, organizationId?: string) {
   return useMutation({
     mutationFn: async (termMemberId: string) => {
       if (!organizationId) {
-        throw new Error('Chưa chọn Chi hội làm việc');
+        throw new Error('Chưa chọn Đơn vị làm việc');
       }
 
       try {
