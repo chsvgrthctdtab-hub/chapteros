@@ -1,4 +1,4 @@
-import { useState, type FormEvent } from 'react';
+import { useState, useEffect, type FormEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import { 
@@ -36,6 +36,13 @@ export function OnboardingPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
+
+  // Auto-redirect to dashboard if user has active organization
+  useEffect(() => {
+    if (memberships && memberships.length > 0) {
+      navigate('/', { replace: true });
+    }
+  }, [memberships, navigate]);
 
   // Auto-generate code when orgType changes
   const handleTypeChange = (newType: string) => {
