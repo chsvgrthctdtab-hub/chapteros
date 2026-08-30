@@ -84,7 +84,11 @@ export const memberRepository = {
     }
 
     if (position && position !== 'all') {
-      query = query.ilike('position', `%${position}%`);
+      if (position === 'bch') {
+        query = query.or('position.ilike.%trưởng%,position.ilike.%phó%,position.ilike.%chủ nhiệm%,position.ilike.%ủy viên%,position.ilike.%uy vien%,position.ilike.%thủ quỹ%,position.ilike.%thu quy%,position.ilike.%thư ký%,position.ilike.%thu ky%,position.ilike.%bch%,position.ilike.%ban chấp hành%,position.ilike.%ban chap hanh%,position.ilike.%admin%,position.ilike.%leader%,position.ilike.%deputy%');
+      } else {
+        query = query.ilike('position', `%${position}%`);
+      }
     }
 
     if (search.trim()) {
@@ -455,20 +459,20 @@ export const memberRepository = {
   /**
    * Fetch total KPI statistics for an organization (not limited to paginated slice)
    */
-  async getStats(organizationId: string, activeTermId?: string): Promise<{ total: number; active: number; alumni: number; assignedToTerm: number }> {
+  async getStats(organizationId: string, activeTermId?: string): Promise<{ total: number; active: number; alumni: number; assignedToTerm: number; boardCount: number }> {
     if (!isSupabaseConfigured || !organizationId) {
-      return { total: 0, active: 0, alumni: 0, assignedToTerm: 0 };
+      return { total: 0, active: 0, alumni: 0, assignedToTerm: 0, boardCount: 0 };
     }
 
-    // 1. Fetch all members with status for this org
+    // 1. Fetch all members with status, position, user_id for this org
     const { data: members, error: mError } = await supabase
       .from('members')
-      .select('id, status')
+      .select('id, status, position, user_id')
       .eq('organization_id', organizationId);
 
     if (mError) {
       console.warn('Could not fetch member stats:', mError.message);
-      return { total: 0, active: 0, alumni: 0, assignedToTerm: 0 };
+      return { total: 0, active: 0, alumni: 0, assignedToTerm: 0, boardCount: 0 };
     }
 
     const memberList = (members || []) as DbMember[];
@@ -499,6 +503,33 @@ export const memberRepository = {
       }
     }
 
-    return { total, active, alumni, assignedToTerm };
+    // 3. Fetch Organization Memberships with board roles
+    const boardRoles = ['admin', 'leader', 'deputy', 'treasurer', 'secretary'];
+    const { data: memberships } = await supabase
+      .from('organization_memberships')
+      .select('user_id, role')
+      .eq('organization_id', organizationId)
+      .in('role', boardRoles);
+
+    const boardUserIds = new Set((memberships || []).map((m: { user_id: string }) => m.user_id));
+
+    // 4. Calculate boardCount: any member whose position matches board keywords OR whose user_id has a board role
+    const boardKeywords = [
+      'trưởng', 'phó', 'chủ nhiệm', 'ủy viên', 'uy vien',
+      'thủ quỹ', 'thu quy', 'thư ký', 'thu ky', 'bch', 'ban chấp hành',
+      'ban chap hanh', 'quản trị', 'quan tri', 'leader', 'deputy', 'admin',
+      'treasurer', 'secretary', 'board'
+    ];
+
+    const boardMembers = memberList.filter((m) => {
+      const p = (m.position || '').toLowerCase();
+      const hasBoardPosition = boardKeywords.some((kw) => p.includes(kw));
+      const hasBoardAccount = m.user_id && boardUserIds.has(m.user_id);
+      return hasBoardPosition || hasBoardAccount;
+    });
+
+    const boardCount = boardMembers.length;
+
+    return { total, active, alumni, assignedToTerm, boardCount };
   },
 };

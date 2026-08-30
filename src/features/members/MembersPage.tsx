@@ -120,19 +120,15 @@ export function MembersPage() {
   const { data: memberStats } = useMemberKPIStats(orgId, currentTerm?.id);
 
   // Computed Stats for Quick Operational Strip
-  // BAN CHẤP HÀNH must count from organization_memberships of active org
   const stats = useMemo(() => {
     const total = memberStats?.total ?? (membersResponse?.totalCount || 0);
     const active = memberStats?.active ?? 0;
     const alumni = memberStats?.alumni ?? 0;
     const assignedToTerm = memberStats?.assignedToTerm ?? 0;
-    
-    // Domain Rule: BCH count is strictly from organization_memberships with role < admin (leader, deputy, treasurer, secretary)
-    const boardRoles: OrganizationRole[] = ['leader', 'deputy', 'treasurer', 'secretary'];
-    const boardCount = bchMemberships.filter((m) => m.role !== 'admin' && boardRoles.includes(m.role)).length;
+    const boardCount = memberStats?.boardCount ?? 0;
 
     return { total, active, alumni, assignedToTerm, boardCount };
-  }, [memberStats, membersResponse?.totalCount, bchMemberships]);
+  }, [memberStats, membersResponse?.totalCount]);
 
   // Handlers
   const handleFilterChange = (newFilters: Partial<MemberFilterParams>) => {

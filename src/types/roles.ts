@@ -382,7 +382,7 @@ export function getOrgBoardTitle(orgType?: string | null, lang: Language = 'vi')
       return 'Ban Chấp Hành Đoàn Khoa';
     case 'chi_hoi':
     default:
-      return 'Ban Chấp Hành Chi hội';
+      return 'Ban Chấp Hành Đơn vị';
   }
 }
 

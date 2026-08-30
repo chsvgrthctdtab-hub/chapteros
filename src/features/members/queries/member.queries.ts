@@ -24,6 +24,7 @@ export interface MemberKPIStatsResponse {
   active: number;
   alumni: number;
   assignedToTerm: number;
+  boardCount: number;
 }
 
 export interface MembersListResponse {
@@ -52,14 +53,14 @@ export function useMembersList(organizationId?: string, params: MemberFilterPara
 }
 
 /**
- * Fetch total organizational KPI stats for member strip (active, alumni, assigned to term)
+ * Fetch total organizational KPI stats for member strip (active, alumni, assigned to term, board count)
  */
 export function useMemberKPIStats(organizationId?: string, activeTermId?: string) {
   return useQuery<MemberKPIStatsResponse>({
     queryKey: memberKeys.stats(organizationId || '', activeTermId),
     queryFn: async () => {
       if (!organizationId) {
-        return { total: 0, active: 0, alumni: 0, assignedToTerm: 0 };
+        return { total: 0, active: 0, alumni: 0, assignedToTerm: 0, boardCount: 0 };
       }
       return memberService.getMemberStats(organizationId, activeTermId);
     },
