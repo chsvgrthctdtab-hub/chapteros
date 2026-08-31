@@ -129,10 +129,11 @@ export function PlansPage() {
             <Button
               id="btn-create-plan"
               onClick={() => setIsCreateOpen(true)}
-              className="h-9 text-xs font-semibold bg-blue-600 hover:bg-blue-700 text-white gap-1.5 shadow-2xs cursor-pointer"
+              title="Tạo chiến dịch Collab mới"
+              className="h-8 sm:h-9 px-2.5 sm:px-4 text-xs font-semibold bg-blue-600 hover:bg-blue-700 text-white gap-1 sm:gap-1.5 shadow-2xs cursor-pointer"
             >
-              <Plus className="h-4 w-4" />
-              Tạo Collab mới
+              <Plus className="h-4 w-4 shrink-0" />
+              <span className="hidden sm:inline">Tạo Collab mới</span>
             </Button>
           )}
         </div>

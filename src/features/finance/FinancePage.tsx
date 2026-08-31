@@ -437,15 +437,16 @@ export function FinancePage() {
         </div>
 
         {/* Top Actions Row */}
-        <div className="flex flex-wrap items-center gap-2">
+        {/* Top Actions Row */}
+        <div className="flex flex-wrap items-center gap-1.5 sm:gap-2">
           <Button
             type="button"
             variant="outline"
             size="icon"
             onClick={handleRefreshAll}
             disabled={isTransactionsFetching}
-            title="Refresh Ledger"
-            className="h-8 w-8 text-slate-600 hover:text-slate-900 bg-white hover:bg-slate-50 border-slate-200 shadow-2xs"
+            title="Làm mới sổ quỹ"
+            className="h-8 w-8 text-slate-600 hover:text-slate-900 bg-white hover:bg-slate-50 border-slate-200 shadow-2xs shrink-0"
           >
             <RefreshCw
               className={`w-3.5 h-3.5 ${isTransactionsFetching ? 'animate-spin text-emerald-600' : ''}`}
@@ -458,11 +459,11 @@ export function FinancePage() {
               variant="outline"
               size="sm"
               onClick={() => setIsThresholdModalOpen(true)}
-              title="Approval limit settings"
-              className="h-8 text-xs font-semibold text-slate-700 bg-white hover:bg-slate-50 border-slate-200 shadow-2xs"
+              title={`Hạn mức duyệt chi: ${formatVND(threshold)}`}
+              className="h-8 px-2 sm:px-2.5 text-xs font-semibold text-slate-700 bg-white hover:bg-slate-50 border-slate-200 shadow-2xs"
             >
-              <ShieldCheck className="w-3.5 h-3.5 text-emerald-600 mr-1" />
-              <span>Threshold: {formatVND(threshold)}</span>
+              <ShieldCheck className="w-3.5 h-3.5 text-emerald-600 sm:mr-1 shrink-0" />
+              <span className="hidden sm:inline">Hạn mức: {formatVND(threshold)}</span>
             </Button>
           )}
 
@@ -471,10 +472,11 @@ export function FinancePage() {
             variant="outline"
             size="sm"
             onClick={() => setIsCategoryModalOpen(true)}
-            className="h-8 text-xs font-semibold text-slate-700 bg-white hover:bg-slate-50 border-slate-200 shadow-2xs"
+            title={`Danh mục thu chi (${categories.length})`}
+            className="h-8 px-2 sm:px-2.5 text-xs font-semibold text-slate-700 bg-white hover:bg-slate-50 border-slate-200 shadow-2xs"
           >
-            <Layers className="w-3.5 h-3.5 text-slate-500 mr-1" />
-            <span>Categories ({categories.length})</span>
+            <Layers className="w-3.5 h-3.5 text-slate-500 sm:mr-1 shrink-0" />
+            <span className="hidden sm:inline">Danh mục ({categories.length})</span>
           </Button>
 
           <Button
@@ -482,10 +484,11 @@ export function FinancePage() {
             variant="outline"
             size="sm"
             onClick={() => setSheetsExportOpen(true)}
-            className="h-8 text-xs font-semibold text-slate-700 bg-white hover:bg-slate-50 border-slate-200 shadow-2xs"
+            title="Xuất Google Sheets"
+            className="h-8 px-2 sm:px-2.5 text-xs font-semibold text-slate-700 bg-white hover:bg-slate-50 border-slate-200 shadow-2xs"
           >
-            <FileSpreadsheet className="w-3.5 h-3.5 text-emerald-600 mr-1" />
-            <span>Export Sheets</span>
+            <FileSpreadsheet className="w-3.5 h-3.5 text-emerald-600 sm:mr-1 shrink-0" />
+            <span className="hidden sm:inline">Xuất Sheets</span>
           </Button>
 
           {canManage && (
@@ -494,10 +497,11 @@ export function FinancePage() {
               variant="outline"
               size="sm"
               onClick={() => setSheetsImportOpen(true)}
-              className="h-8 text-xs font-semibold text-slate-700 bg-white hover:bg-slate-50 border-slate-200 shadow-2xs"
+              title="Nhập Google Sheets"
+              className="h-8 px-2 sm:px-2.5 text-xs font-semibold text-slate-700 bg-white hover:bg-slate-50 border-slate-200 shadow-2xs"
             >
-              <FileSpreadsheet className="w-3.5 h-3.5 text-blue-600 mr-1" />
-              <span>Import Sheets</span>
+              <FileSpreadsheet className="w-3.5 h-3.5 text-blue-600 sm:mr-1 shrink-0" />
+              <span className="hidden sm:inline">Nhập Sheets</span>
             </Button>
           )}
 
@@ -505,10 +509,11 @@ export function FinancePage() {
             <Button
               size="sm"
               onClick={() => handleOpenCreate('income')}
-              className="bg-emerald-700 hover:bg-emerald-800 text-white text-xs h-8 shadow-xs font-semibold"
+              title="Ghi thu / chi mới"
+              className="bg-emerald-700 hover:bg-emerald-800 text-white text-xs h-8 px-2.5 sm:px-3 shadow-xs font-semibold flex items-center gap-1 shrink-0"
             >
-              <Plus className="w-3.5 h-3.5 mr-1" />
-              <span>New Transaction</span>
+              <Plus className="w-3.5 h-3.5 shrink-0" />
+              <span className="hidden sm:inline">Ghi thu / chi</span>
             </Button>
           )}
         </div>

@@ -313,11 +313,12 @@ export function MembersPage() {
               <Button
                 variant="outline"
                 size="sm"
-                className="text-xs h-8 px-2.5 text-slate-700 hover:text-emerald-800 hover:bg-emerald-50 border-slate-200 cursor-pointer flex items-center gap-1 font-medium"
+                title={t('members.action.export', 'Xuất')}
+                className="text-xs h-8 px-2 sm:px-2.5 text-slate-700 hover:text-emerald-800 hover:bg-emerald-50 border-slate-200 cursor-pointer flex items-center gap-1 font-medium"
               >
-                <Download className="h-3.5 w-3.5 text-emerald-700" />
-                <span>{t('members.action.export', 'Xuất')}</span>
-                <ChevronDown className="h-3 w-3 opacity-60 ml-0.5" />
+                <Download className="h-3.5 w-3.5 text-emerald-700 shrink-0" />
+                <span className="hidden sm:inline">{t('members.action.export', 'Xuất')}</span>
+                <ChevronDown className="h-3 w-3 opacity-60 ml-0.5 shrink-0" />
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" className="w-48 shadow-lg">
@@ -339,11 +340,12 @@ export function MembersPage() {
                 <Button
                   variant="outline"
                   size="sm"
-                  className="text-xs h-8 px-2.5 text-slate-700 hover:text-blue-700 hover:bg-blue-50 border-slate-200 cursor-pointer flex items-center gap-1 font-medium"
+                  title={t('members.action.import', 'Nhập')}
+                  className="text-xs h-8 px-2 sm:px-2.5 text-slate-700 hover:text-blue-700 hover:bg-blue-50 border-slate-200 cursor-pointer flex items-center gap-1 font-medium"
                 >
-                  <Upload className="h-3.5 w-3.5 text-blue-600" />
-                  <span>{t('members.action.import', 'Nhập')}</span>
-                  <ChevronDown className="h-3 w-3 opacity-60 ml-0.5" />
+                  <Upload className="h-3.5 w-3.5 text-blue-600 shrink-0" />
+                  <span className="hidden sm:inline">{t('members.action.import', 'Nhập')}</span>
+                  <ChevronDown className="h-3 w-3 opacity-60 ml-0.5 shrink-0" />
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end" className="w-52 shadow-lg">
@@ -370,10 +372,11 @@ export function MembersPage() {
             <Button
               size="sm"
               onClick={handleOpenCreateDialog}
-              className="bg-emerald-700 hover:bg-emerald-800 text-white text-xs h-8 px-3 shadow-xs cursor-pointer font-medium shrink-0 flex items-center gap-1.5"
+              title={language === 'vi' ? `Thêm ${memberNoun.toLowerCase()}` : `Add ${memberNoun.toLowerCase()}`}
+              className="bg-emerald-700 hover:bg-emerald-800 text-white text-xs h-8 px-2.5 sm:px-3 shadow-xs cursor-pointer font-medium shrink-0 flex items-center gap-1.5"
             >
-              <UserPlus className="h-3.5 w-3.5" />
-              <span className="whitespace-nowrap">{language === 'vi' ? `Thêm ${memberNoun.toLowerCase()}` : `Add ${memberNoun.toLowerCase()}`}</span>
+              <UserPlus className="h-3.5 w-3.5 shrink-0" />
+              <span className="hidden sm:inline whitespace-nowrap">{language === 'vi' ? `Thêm ${memberNoun.toLowerCase()}` : `Add ${memberNoun.toLowerCase()}`}</span>
             </Button>
           )}
         </div>

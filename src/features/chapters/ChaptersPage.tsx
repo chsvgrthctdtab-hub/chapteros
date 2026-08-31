@@ -247,16 +247,19 @@ export function ChaptersPage() {
       <Tabs value={activeTab} onValueChange={(v) => setActiveTab(v as 'info' | 'memberships' | 'my-orgs')}>
         <TabsList className="grid grid-cols-3 max-w-lg mb-6">
           <TabsTrigger value="info" className="text-xs flex items-center gap-1.5">
-            <Building2 className="h-3.5 w-3.5" />
-            Thông tin Đơn vị
+            <Building2 className="h-3.5 w-3.5 shrink-0" />
+            <span className="hidden sm:inline">Thông tin Đơn vị</span>
+            <span className="sm:hidden">Thông tin</span>
           </TabsTrigger>
           <TabsTrigger value="memberships" className="text-xs flex items-center gap-1.5">
-            <Users className="h-3.5 w-3.5" />
-            Phân quyền hệ thống
+            <Users className="h-3.5 w-3.5 shrink-0" />
+            <span className="hidden sm:inline">Phân quyền hệ thống</span>
+            <span className="sm:hidden">Phân quyền</span>
           </TabsTrigger>
           <TabsTrigger value="my-orgs" className="text-xs flex items-center gap-1.5">
-            <Network className="h-3.5 w-3.5" />
-            Đơn vị của tôi
+            <Network className="h-3.5 w-3.5 shrink-0" />
+            <span className="hidden sm:inline">Đơn vị của tôi</span>
+            <span className="sm:hidden">Đơn vị</span>
           </TabsTrigger>
         </TabsList>
 

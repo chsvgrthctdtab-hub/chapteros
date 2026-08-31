@@ -103,11 +103,12 @@ export function ReportExportDropdown({
           variant="outline"
           size="sm"
           onClick={() => setIsOpen(!isOpen)}
-          className="h-9 px-3 text-xs font-semibold bg-white border-slate-200 text-slate-700 hover:bg-slate-50 hover:text-slate-900 rounded-lg shadow-2xs"
+          title="Xuất báo cáo dữ liệu"
+          className="h-8 sm:h-9 px-2 sm:px-3 text-xs font-semibold bg-white border-slate-200 text-slate-700 hover:bg-slate-50 hover:text-slate-900 rounded-lg shadow-2xs"
         >
-          <Download className="w-3.5 h-3.5 mr-1.5 text-emerald-600" />
-          <span>Xuất dữ liệu</span>
-          <ChevronDown className="w-3.5 h-3.5 ml-1.5 text-slate-400" />
+          <Download className="w-3.5 h-3.5 sm:mr-1.5 text-emerald-600 shrink-0" />
+          <span className="hidden sm:inline">Xuất dữ liệu</span>
+          <ChevronDown className="w-3.5 h-3.5 ml-0.5 sm:ml-1.5 text-slate-400 shrink-0" />
         </Button>
       </div>
 

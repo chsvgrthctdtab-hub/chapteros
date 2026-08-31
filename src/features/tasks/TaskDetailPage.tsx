@@ -201,19 +201,21 @@ export function TaskDetailPage() {
               type="button"
               id="edit-task-detail-btn"
               onClick={() => setIsEditModalOpen(true)}
-              className="inline-flex items-center gap-1.5 px-3 py-2 text-xs font-semibold text-slate-700 bg-white hover:bg-slate-50 border border-slate-200/90 rounded-lg shadow-2xs transition-colors cursor-pointer"
+              title="Chỉnh sửa nhiệm vụ"
+              className="inline-flex items-center gap-1 px-2.5 sm:px-3 py-1.5 sm:py-2 text-xs font-semibold text-slate-700 bg-white hover:bg-slate-50 border border-slate-200/90 rounded-lg shadow-2xs transition-colors cursor-pointer"
             >
-              <Edit2 className="w-3.5 h-3.5" />
-              <span>Edit</span>
+              <Edit2 className="w-3.5 h-3.5 shrink-0" />
+              <span className="hidden sm:inline">Chỉnh sửa</span>
             </button>
             <button
               type="button"
               id="delete-task-detail-btn"
               onClick={() => setIsDeleteDialogOpen(true)}
-              className="inline-flex items-center gap-1.5 px-3 py-2 text-xs font-semibold text-rose-700 bg-rose-50 hover:bg-rose-100 border border-rose-200 rounded-lg transition-colors cursor-pointer"
+              title="Xóa nhiệm vụ"
+              className="inline-flex items-center gap-1 px-2.5 sm:px-3 py-1.5 sm:py-2 text-xs font-semibold text-rose-700 bg-rose-50 hover:bg-rose-100 border border-rose-200 rounded-lg transition-colors cursor-pointer"
             >
-              <Trash2 className="w-3.5 h-3.5" />
-              <span>Delete</span>
+              <Trash2 className="w-3.5 h-3.5 shrink-0" />
+              <span className="hidden sm:inline">Xóa</span>
             </button>
           </div>
         )}

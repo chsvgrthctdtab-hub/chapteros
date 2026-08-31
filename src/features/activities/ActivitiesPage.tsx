@@ -173,7 +173,7 @@ export function ActivitiesPage() {
         </div>
 
         {/* Header Action Buttons */}
-        <div className="flex items-center gap-2 flex-wrap">
+        <div className="flex items-center gap-1.5 sm:gap-2 flex-wrap shrink-0">
           {/* Export Sheets */}
           <Button
             type="button"
@@ -181,10 +181,11 @@ export function ActivitiesPage() {
             size="sm"
             id="activity-export-sheets-header-btn"
             onClick={() => setSheetsExportOpen(true)}
-            className="h-8 text-xs font-semibold text-slate-700 bg-white hover:bg-slate-50 border-slate-200 shadow-2xs"
+            title="Xuất Google Sheets"
+            className="h-8 px-2 sm:px-2.5 text-xs font-semibold text-slate-700 bg-white hover:bg-slate-50 border-slate-200 shadow-2xs"
           >
-            <Download className="w-3.5 h-3.5 mr-1 text-emerald-600" />
-            <span>Export Sheets</span>
+            <Download className="w-3.5 h-3.5 sm:mr-1 text-emerald-600 shrink-0" />
+            <span className="hidden sm:inline">Xuất Sheets</span>
           </Button>
 
           {/* Import Sheets (Board only) */}
@@ -195,10 +196,11 @@ export function ActivitiesPage() {
               size="sm"
               id="activity-import-sheets-header-btn"
               onClick={() => setSheetsImportOpen(true)}
-              className="h-8 text-xs font-semibold text-slate-700 bg-white hover:bg-slate-50 border-slate-200 shadow-2xs"
+              title="Nhập Google Sheets"
+              className="h-8 px-2 sm:px-2.5 text-xs font-semibold text-slate-700 bg-white hover:bg-slate-50 border-slate-200 shadow-2xs"
             >
-              <Upload className="w-3.5 h-3.5 mr-1 text-blue-600" />
-              <span>Import</span>
+              <Upload className="w-3.5 h-3.5 sm:mr-1 text-blue-600 shrink-0" />
+              <span className="hidden sm:inline">Nhập Sheets</span>
             </Button>
           )}
 
@@ -209,10 +211,11 @@ export function ActivitiesPage() {
               size="sm"
               id="create-new-activity-btn"
               onClick={handleOpenCreate}
-              className="h-8 text-xs font-bold text-white bg-emerald-700 hover:bg-emerald-800 shadow-xs"
+              title="Tạo hoạt động mới"
+              className="h-8 px-2.5 sm:px-3 text-xs font-bold text-white bg-emerald-700 hover:bg-emerald-800 shadow-xs flex items-center gap-1"
             >
-              <Plus className="w-3.5 h-3.5 mr-1" />
-              <span>New Activity</span>
+              <Plus className="w-3.5 h-3.5 shrink-0" />
+              <span className="hidden sm:inline">Tạo hoạt động</span>
             </Button>
           )}
         </div>

@@ -72,9 +72,9 @@ export function ReportsPage() {
     return (
       <div className="rounded-xl border border-amber-200 bg-amber-50 p-6 text-center space-y-3" id="reports-page-empty">
         <AlertCircle className="w-8 h-8 text-amber-600 mx-auto" />
-        <h2 className="text-base font-bold text-amber-900">Vui lòng chọn Chi hội</h2>
+        <h2 className="text-base font-bold text-amber-900">Vui lòng chọn Đơn vị</h2>
         <p className="text-sm text-amber-700 max-w-md mx-auto">
-          Bạn cần chọn một Chi hội đang quản lý để xem báo cáo và số liệu thống kê.
+          Bạn cần chọn một Đơn vị đang quản lý để xem báo cáo và số liệu thống kê.
         </p>
       </div>
     );
@@ -91,27 +91,27 @@ export function ReportsPage() {
             </div>
             <div>
               <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-slate-900">
-                Reports & Analytics
+                Báo cáo & Thống kê
               </h1>
             </div>
           </div>
           <p className="text-sm text-slate-500 mt-1">
-            Executive performance reporting, operations tracking, and financial analytics for the Chapter Board.
+            Tổng hợp dữ liệu hiệu suất hoạt động, quản trị nhân sự và tài chính của Đơn vị.
           </p>
         </div>
 
         {/* Executive Action Controls */}
-        <div className="flex flex-wrap items-center gap-2 self-start md:self-auto print:hidden">
+        <div className="flex flex-wrap items-center gap-1.5 sm:gap-2 self-start md:self-auto print:hidden">
           <Button
             variant="outline"
             size="sm"
             onClick={handleRefresh}
             disabled={isRefreshing}
-            className="h-8 text-xs font-semibold border-slate-200 text-slate-700 hover:bg-slate-50 bg-white shadow-2xs"
-            title="Refresh statistics"
+            className="h-8 px-2 sm:px-2.5 text-xs font-semibold border-slate-200 text-slate-700 hover:bg-slate-50 bg-white shadow-2xs"
+            title="Làm mới số liệu"
           >
-            <RefreshCw className={`w-3.5 h-3.5 mr-1.5 ${isRefreshing ? 'animate-spin text-blue-600' : ''}`} />
-            <span>{isRefreshing ? 'Refreshing...' : 'Refresh'}</span>
+            <RefreshCw className={`w-3.5 h-3.5 sm:mr-1.5 shrink-0 ${isRefreshing ? 'animate-spin text-blue-600' : ''}`} />
+            <span className="hidden sm:inline">{isRefreshing ? 'Đang tải...' : 'Làm mới'}</span>
           </Button>
 
           <ReportExportDropdown

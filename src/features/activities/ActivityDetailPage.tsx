@@ -284,16 +284,17 @@ export function ActivityDetailPage() {
         </div>
 
         {/* Action Buttons for Board */}
-        <div className="flex items-center gap-2 flex-wrap">
+        <div className="flex items-center gap-1.5 sm:gap-2 flex-wrap shrink-0">
           {/* Export Sheets */}
           <button
             type="button"
             id="activity-detail-export-sheets-btn"
             onClick={() => setSheetsExportOpen(true)}
-            className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-slate-700 bg-white hover:bg-slate-50 border border-slate-200/90 rounded-lg shadow-2xs transition-colors cursor-pointer"
+            title="Xuất Google Sheets"
+            className="inline-flex items-center gap-1 px-2.5 sm:px-3 py-1.5 text-xs font-semibold text-slate-700 bg-white hover:bg-slate-50 border border-slate-200/90 rounded-lg shadow-2xs transition-colors cursor-pointer"
           >
-            <Download className="w-3.5 h-3.5 text-emerald-600" />
-            <span>Xuất Sheets</span>
+            <Download className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
+            <span className="hidden sm:inline">Xuất Sheets</span>
           </button>
 
           {canManage && (
@@ -303,10 +304,11 @@ export function ActivityDetailPage() {
                   type="button"
                   id="edit-activity-header-btn"
                   onClick={() => setIsEditOpen(true)}
-                  className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-bold text-slate-700 bg-white border border-slate-200/90 rounded-lg hover:bg-slate-50 shadow-2xs transition-colors cursor-pointer"
+                  title="Chỉnh sửa hoạt động"
+                  className="inline-flex items-center gap-1 px-2.5 sm:px-3 py-1.5 text-xs font-bold text-slate-700 bg-white border border-slate-200/90 rounded-lg hover:bg-slate-50 shadow-2xs transition-colors cursor-pointer"
                 >
-                  <Edit3 className="w-3.5 h-3.5 text-slate-500" />
-                  <span>Chỉnh sửa</span>
+                  <Edit3 className="w-3.5 h-3.5 text-slate-500 shrink-0" />
+                  <span className="hidden sm:inline">Chỉnh sửa</span>
                 </button>
               )}
 
@@ -314,10 +316,11 @@ export function ActivityDetailPage() {
                 type="button"
                 id="open-delete-activity-modal-btn"
                 onClick={() => setIsDeleteModalOpen(true)}
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-rose-700 bg-rose-50 border border-rose-200/80 rounded-lg hover:bg-rose-100 transition-colors cursor-pointer"
+                title="Đóng hoặc xóa hoạt động"
+                className="inline-flex items-center gap-1 px-2.5 sm:px-3 py-1.5 text-xs font-semibold text-rose-700 bg-rose-50 border border-rose-200/80 rounded-lg hover:bg-rose-100 transition-colors cursor-pointer"
               >
-                <Trash2 className="w-3.5 h-3.5" />
-                <span>Đóng / Xóa</span>
+                <Trash2 className="w-3.5 h-3.5 shrink-0" />
+                <span className="hidden sm:inline">Đóng / Xóa</span>
               </button>
             </>
           )}

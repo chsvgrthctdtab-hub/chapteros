@@ -94,7 +94,7 @@ export function AuditLogsPage() {
                 Quyền truy cập bị giới hạn
               </CardTitle>
               <p className="text-xs text-slate-600 max-w-md mx-auto leading-relaxed">
-                Nhật ký kiểm toán hệ thống chứa thông tin nhạy cảm và chỉ dành riêng cho Quản trị viên (Admin), Chi hội trưởng (Leader) và Chi hội phó (Deputy).
+                Nhật ký kiểm toán hệ thống chứa thông tin nhạy cảm và chỉ dành riêng cho Quản trị viên (Admin), Trưởng đơn vị (Leader) và Phó đơn vị (Deputy).
               </p>
             </div>
             <div className="pt-2">
@@ -121,7 +121,7 @@ export function AuditLogsPage() {
             Chưa chọn Đơn vị hoạt động
           </h3>
           <p className="text-xs text-slate-500">
-            Vui lòng chọn hoặc liên kết Chi hội để xem nhật ký hoạt động tương ứng.
+            Vui lòng chọn hoặc liên kết Đơn vị để xem nhật ký hoạt động tương ứng.
           </p>
         </div>
       </div>
@@ -132,23 +132,24 @@ export function AuditLogsPage() {
     <div id="audit-logs-page" className="space-y-5">
       {/* Page Header */}
       <PageHeader
-        title="Audit Logs"
-        description="Immutable system audit trail tracking administrative actions, mutations, and permissions."
+        title="Nhật ký Hoạt động"
+        description="Lịch sử truy vết thao tác và các sự kiện quan trọng trong Đơn vị."
         breadcrumbs={[
-          { label: 'Settings', href: '/settings' },
-          { label: 'Audit Logs' },
+          { label: 'Cài đặt', href: '/settings' },
+          { label: 'Nhật ký' },
         ]}
         actions={
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-1.5 sm:gap-2">
             <Button
               variant="outline"
               size="sm"
               onClick={handleExportCSV}
               disabled={isLoading || !result?.data?.length}
-              className="text-xs h-8 bg-white hover:bg-slate-50 border-slate-200 shadow-2xs font-semibold"
+              title="Xuất file CSV nhật ký"
+              className="text-xs h-8 px-2 sm:px-2.5 bg-white hover:bg-slate-50 border-slate-200 shadow-2xs font-semibold"
             >
-              <Download className="w-3.5 h-3.5 mr-1.5 text-slate-500" />
-              <span>Export CSV</span>
+              <Download className="w-3.5 h-3.5 sm:mr-1.5 text-slate-500 shrink-0" />
+              <span className="hidden sm:inline">Xuất CSV</span>
             </Button>
 
             <Button
@@ -156,10 +157,11 @@ export function AuditLogsPage() {
               size="sm"
               onClick={() => refetch()}
               disabled={isFetching}
-              className="text-xs h-8 bg-white hover:bg-slate-50 border-slate-200 shadow-2xs font-semibold"
+              title="Làm mới nhật ký"
+              className="text-xs h-8 px-2 sm:px-2.5 bg-white hover:bg-slate-50 border-slate-200 shadow-2xs font-semibold"
             >
-              <RotateCcw className={`w-3.5 h-3.5 mr-1.5 ${isFetching ? 'animate-spin text-blue-600' : ''}`} />
-              <span>{isFetching ? 'Refreshing...' : 'Refresh'}</span>
+              <RotateCcw className={`w-3.5 h-3.5 sm:mr-1.5 shrink-0 ${isFetching ? 'animate-spin text-blue-600' : ''}`} />
+              <span className="hidden sm:inline">{isFetching ? 'Đang tải...' : 'Làm mới'}</span>
             </Button>
           </div>
         }

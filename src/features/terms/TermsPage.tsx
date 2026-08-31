@@ -373,25 +373,27 @@ export function TermsPage() {
           { label: 'Terms' },
         ]}
         actions={
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-1.5 sm:gap-2">
             <Button
               variant="outline"
               size="sm"
               onClick={() => refetchTerms()}
               disabled={isFetchingTerms}
-              className="h-9 px-3 text-xs text-slate-700 bg-white border-slate-200 hover:bg-slate-50 cursor-pointer shadow-2xs"
+              title="Làm mới danh sách nhiệm kỳ"
+              className="h-8 sm:h-9 px-2 sm:px-3 text-xs text-slate-700 bg-white border-slate-200 hover:bg-slate-50 cursor-pointer shadow-2xs"
             >
-              <RefreshCw className={`h-3.5 w-3.5 mr-1.5 ${isFetchingTerms ? 'animate-spin' : ''}`} />
-              Refresh
+              <RefreshCw className={`h-3.5 w-3.5 sm:mr-1.5 shrink-0 ${isFetchingTerms ? 'animate-spin' : ''}`} />
+              <span className="hidden sm:inline">Làm mới</span>
             </Button>
 
             {canManage && (
               <Button
                 onClick={() => setIsCreateOpen(true)}
-                className="bg-emerald-600 hover:bg-emerald-700 text-white text-xs h-9 px-4 font-medium shadow-2xs cursor-pointer"
+                title="Tạo nhiệm kỳ mới"
+                className="bg-emerald-600 hover:bg-emerald-700 text-white text-xs h-8 sm:h-9 px-2.5 sm:px-4 font-medium shadow-2xs cursor-pointer flex items-center gap-1"
               >
-                <Plus className="h-4 w-4 mr-1.5" />
-                Create Term
+                <Plus className="h-3.5 w-3.5 sm:h-4 sm:w-4 shrink-0" />
+                <span className="hidden sm:inline">Tạo nhiệm kỳ</span>
               </Button>
             )}
           </div>
