@@ -28,6 +28,10 @@ import {
   ShieldCheck,
   Percent,
   FileSpreadsheet,
+  Sparkles,
+  Phone,
+  Flag,
+  Share2,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -58,6 +62,7 @@ import { useActivityForms } from '@/integrations/google/forms/google-forms.queri
 import { ActivityGoogleFormsSection } from '@/features/activities/components/ActivityGoogleFormsSection';
 import { CreateCollabTaskDialog } from '@/features/plans/components/CreateCollabTaskDialog';
 import { AddCollabParticipantDialog } from '@/features/plans/components/AddCollabParticipantDialog';
+import { CollabTimelineExportModal } from '@/features/plans/components/CollabTimelineExportModal';
 import { useAuth } from '@/contexts/AuthContext';
 import { isOrgBoard } from '@/types/roles';
 import { formatError } from '@/lib/error-formatter';
@@ -74,7 +79,8 @@ export function CollabActivityDetailPage() {
   const { activeRole, activeOrganization } = useAuth();
 
   const [activeTab, setActiveTab] = useState<CollabActivityTab>('tasks');
-  const [viewMode, setViewMode] = useState<'table' | 'kanban'>('table');
+  const [viewMode, setViewMode] = useState<'table' | 'kanban' | 'timeline'>('table');
+  const [isExportPosterOpen, setIsExportPosterOpen] = useState(false);
 
   // Task filters
   const [taskSearch, setTaskSearch] = useState('');
@@ -685,7 +691,29 @@ export function CollabActivityDetailPage() {
                   >
                     <Kanban className="h-3.5 w-3.5" />
                   </button>
+                  <button
+                    type="button"
+                    onClick={() => setViewMode('timeline')}
+                    className={`p-1.5 rounded-md transition-colors ${
+                      viewMode === 'timeline' ? 'bg-white shadow-xs text-purple-700 font-medium' : 'text-slate-500 hover:text-slate-700'
+                    }`}
+                    title="Xem dòng thời gian Timeline"
+                  >
+                    <Clock className="h-3.5 w-3.5" />
+                  </button>
                 </div>
+
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => setIsExportPosterOpen(true)}
+                  className="h-8 text-xs bg-purple-50 text-purple-700 border-purple-200 hover:bg-purple-100 flex items-center gap-1.5 font-semibold cursor-pointer shadow-2xs"
+                  title="Xuất ảnh infographic kế hoạch tác chiến gửi Zalo"
+                >
+                  <Sparkles className="w-3.5 h-3.5 text-purple-600 shrink-0" />
+                  <span className="hidden sm:inline">Xuất Poster (Zalo)</span>
+                  <span className="sm:hidden">Poster</span>
+                </Button>
 
                 {canManageOperational && (
                   <Button
@@ -812,7 +840,24 @@ export function CollabActivityDetailPage() {
                                 </div>
 
                                 <div className="pt-2 border-t border-slate-100 flex items-center justify-between gap-2 text-[11px] min-w-0">
-                                  {assigneePerson ? (
+                                  {task.externalAssignee ? (
+                                    <div className="min-w-0 flex-1">
+                                      <div className="flex items-center gap-1">
+                                        <Badge className="bg-purple-100 text-purple-800 border-none text-[9px] px-1 py-0.2 shrink-0">
+                                          Đối tác ngoài
+                                        </Badge>
+                                        <span className="text-purple-950 font-semibold truncate block text-[11px]" title={task.externalAssignee}>
+                                          {task.externalAssignee}
+                                        </span>
+                                      </div>
+                                      {task.externalContact && (
+                                        <span className="text-[10px] text-slate-500 font-mono flex items-center gap-0.5 mt-0.5">
+                                          <Phone className="w-2.5 h-2.5 text-slate-400" />
+                                          {task.externalContact}
+                                        </span>
+                                      )}
+                                    </div>
+                                  ) : assigneePerson ? (
                                     <div className="flex items-center gap-1.5 min-w-0 flex-1">
                                       <div className="w-5 h-5 rounded-full bg-purple-100 text-purple-700 font-bold text-[9px] flex items-center justify-center shrink-0">
                                         {assigneePerson.fullName.slice(0, 1)}
@@ -863,6 +908,162 @@ export function CollabActivityDetailPage() {
                   );
                 })}
               </div>
+            ) : viewMode === 'timeline' ? (
+              /* Timeline View */
+              <div className="space-y-6 pt-2">
+                {filteredTasks.length === 0 ? (
+                  <div className="text-center py-12 bg-slate-50/60 rounded-xl border border-dashed border-slate-200 text-xs text-slate-400 italic">
+                    Không có công việc nào phù hợp với bộ lọc
+                  </div>
+                ) : (
+                  Object.entries(
+                    filteredTasks.reduce((acc, task) => {
+                      const pName = task.phase?.trim() || 'Hạng mục công việc chung';
+                      if (!acc[pName]) acc[pName] = [];
+                      acc[pName].push(task);
+                      return acc;
+                    }, {} as Record<string, CollabTask[]>)
+                  ).map(([phaseName, phaseTasks]) => (
+                    <div key={phaseName} className="bg-slate-50/70 border border-slate-200/80 rounded-2xl p-4 sm:p-5 space-y-3">
+                      <div className="flex items-center justify-between gap-2 pb-2 border-b border-slate-200/60 flex-wrap">
+                        <div className="flex items-center gap-2">
+                          <div className="w-6 h-6 rounded-lg bg-purple-100 text-purple-700 flex items-center justify-center">
+                            <Flag className="w-3.5 h-3.5" />
+                          </div>
+                          <h3 className="text-xs sm:text-sm font-bold text-slate-900 uppercase tracking-wide">
+                            {phaseName}
+                          </h3>
+                        </div>
+                        <Badge className="bg-white text-purple-700 border border-purple-200 text-[10px] font-mono">
+                          {phaseTasks.length} nhiệm vụ
+                        </Badge>
+                      </div>
+
+                      <div className="relative pl-6 sm:pl-8 border-l-2 border-purple-200 ml-3 sm:ml-4 space-y-3 pt-1">
+                        {phaseTasks.map((task) => {
+                          const assigneePerson = personnel.find((p) => p.userId === task.assignedTo);
+                          const isOverdue =
+                            task.dueDate &&
+                            task.dueDate < new Date().toISOString().split('T')[0] &&
+                            task.status !== 'done';
+
+                          return (
+                            <div
+                              key={task.id}
+                              className="relative bg-white border border-slate-200 rounded-xl p-3.5 shadow-2xs hover:border-purple-300 transition-all space-y-2"
+                            >
+                              {/* Timeline bullet */}
+                              <div className="absolute -left-[31px] sm:-left-[39px] top-4 w-3.5 h-3.5 rounded-full bg-white border-3 border-purple-600 shadow-xs" />
+
+                              <div className="flex items-center justify-between gap-2 flex-wrap">
+                                <div className="flex items-center gap-2 flex-wrap">
+                                  {(task.dueTime || task.dueDate) && (
+                                    <span className="inline-flex items-center gap-1 font-mono text-xs font-semibold text-indigo-700 bg-indigo-50 border border-indigo-200/80 px-2 py-0.5 rounded-md">
+                                      <Clock className="w-3 h-3 text-indigo-600" />
+                                      <span>
+                                        {task.dueTime ? `${task.dueTime} ` : ''}
+                                        {task.dueDate ? `(${formatDate(task.dueDate)})` : ''}
+                                      </span>
+                                    </span>
+                                  )}
+                                  <Badge
+                                    className={`text-[10px] px-1.5 py-0.2 border-none ${
+                                      task.priority === 'urgent'
+                                        ? 'bg-rose-100 text-rose-800'
+                                        : task.priority === 'high'
+                                        ? 'bg-amber-100 text-amber-800'
+                                        : task.priority === 'medium'
+                                        ? 'bg-blue-100 text-blue-800'
+                                        : 'bg-slate-100 text-slate-700'
+                                    }`}
+                                  >
+                                    {task.priority === 'urgent' ? 'Khẩn cấp' : task.priority === 'high' ? 'Cao' : task.priority === 'medium' ? 'Trung bình' : 'Thấp'}
+                                  </Badge>
+                                </div>
+
+                                <div className="flex items-center gap-1.5">
+                                  {canManageOperational && (
+                                    <Select
+                                      value={task.status}
+                                      onValueChange={(val: CollabTaskStatus) => handleTaskStatusChange(task, val)}
+                                    >
+                                      <SelectTrigger className="h-6 w-24 text-[10px] bg-slate-50 border-slate-200">
+                                        <SelectValue />
+                                      </SelectTrigger>
+                                      <SelectContent className="bg-white border-slate-200">
+                                        <SelectItem value="todo" className="text-[10px]">Cần làm</SelectItem>
+                                        <SelectItem value="in_progress" className="text-[10px]">Đang làm</SelectItem>
+                                        <SelectItem value="review" className="text-[10px]">Chờ duyệt</SelectItem>
+                                        <SelectItem value="done" className="text-[10px]">Hoàn thành</SelectItem>
+                                      </SelectContent>
+                                    </Select>
+                                  )}
+                                  {canManageOperational && (
+                                    <>
+                                      <Button
+                                        variant="ghost"
+                                        size="sm"
+                                        onClick={() => {
+                                          setEditingTask(task);
+                                          setIsTaskDialogOpen(true);
+                                        }}
+                                        className="h-6 w-6 p-0 text-slate-400 hover:text-slate-700"
+                                      >
+                                        <Edit className="h-3 w-3" />
+                                      </Button>
+                                      <Button
+                                        variant="ghost"
+                                        size="sm"
+                                        onClick={() => handleDeleteTask(task.id)}
+                                        className="h-6 w-6 p-0 text-slate-400 hover:text-rose-600"
+                                      >
+                                        <Trash2 className="h-3 w-3" />
+                                      </Button>
+                                    </>
+                                  )}
+                                </div>
+                              </div>
+
+                              <div>
+                                <h4 className="font-bold text-slate-900 text-xs sm:text-sm">{task.title}</h4>
+                                {task.description && (
+                                  <p className="text-xs text-slate-500 mt-0.5 leading-relaxed">{task.description}</p>
+                                )}
+                              </div>
+
+                              {/* Assignee Footer */}
+                              <div className="pt-1.5 border-t border-slate-100 flex items-center justify-between gap-2 text-xs flex-wrap">
+                                {task.externalAssignee ? (
+                                  <div className="inline-flex items-center gap-1.5 text-xs text-purple-900 bg-purple-50 px-2 py-0.5 rounded-lg border border-purple-200/70 font-semibold">
+                                    <Share2 className="w-3 h-3 text-purple-600" />
+                                    <span>Đối tác: <strong>{task.externalAssignee}</strong></span>
+                                    {task.externalContact && (
+                                      <span className="text-[11px] text-slate-500 font-mono flex items-center gap-0.5 ml-1">
+                                        <Phone className="w-2.5 h-2.5" />
+                                        {task.externalContact}
+                                      </span>
+                                    )}
+                                  </div>
+                                ) : assigneePerson ? (
+                                  <div className="flex items-center gap-1.5">
+                                    <div className="w-5 h-5 rounded-full bg-blue-100 text-blue-700 font-bold text-[9px] flex items-center justify-center">
+                                      {assigneePerson.fullName.slice(0, 1)}
+                                    </div>
+                                    <span className="font-medium text-slate-800">{assigneePerson.fullName}</span>
+                                    <span className="text-[10px] text-slate-500">({assigneePerson.organizationCode})</span>
+                                  </div>
+                                ) : (
+                                  <span className="text-slate-400 italic text-[11px]">Chưa phân công</span>
+                                )}
+                              </div>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  ))
+                )}
+              </div>
             ) : (
               /* Table View */
               <div className="overflow-x-auto border border-slate-200/80 rounded-xl">
@@ -895,16 +1096,40 @@ export function CollabActivityDetailPage() {
                         return (
                           <tr key={task.id} className="hover:bg-slate-50/60 transition-colors">
                             <td className="px-4 py-3 font-semibold text-slate-900 min-w-[200px] max-w-[320px]">
-                              <div className="break-words break-all">{task.title}</div>
+                              <div className="flex items-center gap-1.5 flex-wrap">
+                                {task.phase && (
+                                  <Badge className="bg-purple-50 text-purple-700 border-purple-200 text-[9px] px-1.5 py-0">
+                                    {task.phase}
+                                  </Badge>
+                                )}
+                                <span className="break-words break-all">{task.title}</span>
+                              </div>
                               {task.description && (
-                                <p className="text-[11px] text-slate-500 font-normal line-clamp-1 break-words break-all">
+                                <p className="text-[11px] text-slate-500 font-normal line-clamp-1 break-words break-all mt-0.5">
                                   {task.description}
                                 </p>
                               )}
                             </td>
 
                             <td className="px-4 py-3 min-w-[180px]">
-                              {assigneePerson ? (
+                              {task.externalAssignee ? (
+                                <div className="min-w-0">
+                                  <div className="flex items-center gap-1">
+                                    <Badge className="bg-purple-100 text-purple-800 border-purple-200 text-[9px] px-1.5 py-0.2 shrink-0">
+                                      Đối tác ngoài
+                                    </Badge>
+                                    <span className="font-semibold text-purple-950 truncate block text-[11px]" title={task.externalAssignee}>
+                                      {task.externalAssignee}
+                                    </span>
+                                  </div>
+                                  {task.externalContact && (
+                                    <div className="text-[10px] text-slate-500 font-mono flex items-center gap-1 mt-0.5">
+                                      <Phone className="w-2.5 h-2.5 text-slate-400" />
+                                      <span>{task.externalContact}</span>
+                                    </div>
+                                  )}
+                                </div>
+                              ) : assigneePerson ? (
                                 <div className="flex items-center gap-2 min-w-0">
                                   <div className="w-5 h-5 rounded-full bg-purple-100 text-purple-700 font-bold text-[9px] flex items-center justify-center shrink-0">
                                     {assigneePerson.fullName.slice(0, 1)}
@@ -949,13 +1174,18 @@ export function CollabActivityDetailPage() {
                             </td>
 
                             <td className="px-4 py-3 whitespace-nowrap font-mono text-[11px]">
+                              {task.dueTime && (
+                                <span className="block text-[10px] font-semibold text-indigo-700">
+                                  {task.dueTime}
+                                </span>
+                              )}
                               {task.dueDate ? (
                                 <span className={isOverdue ? 'text-rose-600 font-bold' : 'text-slate-600'}>
                                   {formatDate(task.dueDate)}
                                 </span>
-                              ) : (
+                              ) : !task.dueTime ? (
                                 <span className="text-slate-400 italic">--</span>
-                              )}
+                              ) : null}
                             </td>
 
                             <td className="px-4 py-3 whitespace-nowrap">
@@ -1456,6 +1686,17 @@ export function CollabActivityDetailPage() {
         defaultOrganizationId={activity.leadOrganizationId || activeOrganization?.id}
         participatingOrganizations={participatingOrganizations}
       />
+
+      {/* Poster Infographic Export Modal */}
+      {activity && (
+        <CollabTimelineExportModal
+          isOpen={isExportPosterOpen}
+          onClose={() => setIsExportPosterOpen(false)}
+          activity={activity}
+          plan={plan}
+          tasks={tasks}
+        />
+      )}
     </div>
   );
 }

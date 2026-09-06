@@ -21,7 +21,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { CheckSquare, Calendar, User, Building2, AlertCircle, Loader2, Sparkles } from 'lucide-react';
+import { CheckSquare, Calendar, User, Building2, AlertCircle, Loader2, Sparkles, Users, Phone, Clock, Flag } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import {
   useCreateCollabTask,
@@ -33,13 +33,25 @@ import { formatError } from '@/lib/error-formatter';
 import { getOrgTypeLabel, getOrgTypeBadgeClass } from '@/lib/organization.utils';
 import type { CollabTask, CollabTaskStatus, TaskPriority } from '@/types';
 
+const SUGGESTED_PHASES = [
+  'Giai đoạn 1: Chuẩn bị & Tiền trạm',
+  'Giai đoạn 2: Triển khai chính thức',
+  'Giai đoạn 3: Bế mạc & Tổng kết',
+  'Hậu cần & Vật phẩm',
+  'Truyền thông & Báo chí',
+];
+
 const collabTaskSchema = z.object({
   title: z.string().min(3, 'Tên công việc phải có ít nhất 3 ký tự'),
   description: z.string().optional(),
   status: z.enum(['todo', 'in_progress'] as const),
   priority: z.enum(['low', 'medium', 'high', 'urgent'] as const),
   dueDate: z.string().optional(),
+  dueTime: z.string().optional(),
+  phase: z.string().optional(),
   assignedTo: z.string().optional().nullable(),
+  externalAssignee: z.string().optional().nullable(),
+  externalContact: z.string().optional().nullable(),
   organizationId: z.string().optional().nullable(),
   collabActivityId: z.string().optional().nullable(),
 });
@@ -68,6 +80,7 @@ export function CreateCollabTaskDialog({
   const { data: personnel = [] } = useCollabPlanPersonnel(planId);
   const { data: activities = [] } = useCollabActivities(planId);
   const [submitError, setSubmitError] = useState<string | null>(null);
+  const [assigneeType, setAssigneeType] = useState<'internal' | 'external'>('internal');
 
   const {
     register,
@@ -85,7 +98,11 @@ export function CreateCollabTaskDialog({
       status: 'todo',
       priority: 'medium',
       dueDate: '',
+      dueTime: '',
+      phase: '',
       assignedTo: null,
+      externalAssignee: '',
+      externalContact: '',
       organizationId: null,
       collabActivityId: collabActivityId || (activities[0]?.id ?? null),
     },
@@ -96,24 +113,36 @@ export function CreateCollabTaskDialog({
       setSubmitError(null);
       if (editingTask) {
         const validStatus = editingTask.status === 'in_progress' ? 'in_progress' : 'todo';
+        const isExternal = Boolean(editingTask.externalAssignee);
+        setAssigneeType(isExternal ? 'external' : 'internal');
+
         reset({
           title: editingTask.title,
           description: editingTask.description || '',
           status: validStatus,
           priority: editingTask.priority || 'medium',
           dueDate: editingTask.dueDate ? editingTask.dueDate.split('T')[0] : '',
+          dueTime: editingTask.dueTime || '',
+          phase: editingTask.phase || '',
           assignedTo: editingTask.assignedTo || null,
+          externalAssignee: editingTask.externalAssignee || '',
+          externalContact: editingTask.externalContact || '',
           organizationId: editingTask.organizationId || null,
           collabActivityId: editingTask.collabActivityId || collabActivityId || null,
         });
       } else {
+        setAssigneeType('internal');
         reset({
           title: '',
           description: '',
           status: 'todo',
           priority: 'medium',
           dueDate: '',
+          dueTime: '',
+          phase: '',
           assignedTo: null,
+          externalAssignee: '',
+          externalContact: '',
           organizationId: null,
           collabActivityId: collabActivityId || (activities[0]?.id ?? null),
         });
@@ -137,31 +166,29 @@ export function CreateCollabTaskDialog({
       setSubmitError(null);
       const targetActivityId = collabActivityId || data.collabActivityId || null;
 
+      const payload = {
+        collab_activity_id: targetActivityId,
+        title: data.title.trim(),
+        description: data.description?.trim() || null,
+        status: data.status,
+        priority: data.priority,
+        due_date: data.dueDate || null,
+        due_time: data.dueTime?.trim() || null,
+        phase: data.phase?.trim() || null,
+        assigned_to: assigneeType === 'internal' ? (data.assignedTo || null) : null,
+        external_assignee: assigneeType === 'external' ? (data.externalAssignee?.trim() || null) : null,
+        external_contact: assigneeType === 'external' ? (data.externalContact?.trim() || null) : null,
+        organization_id: assigneeType === 'internal' ? (data.organizationId || null) : null,
+      };
+
       if (editingTask) {
         await updateMutation.mutateAsync({
           id: editingTask.id,
-          payload: {
-            title: data.title.trim(),
-            description: data.description?.trim() || null,
-            status: data.status,
-            priority: data.priority,
-            due_date: data.dueDate || null,
-            assigned_to: data.assignedTo || null,
-            organization_id: data.organizationId || null,
-          },
+          payload,
         });
       } else {
         await createMutation.mutateAsync({
-          payload: {
-            collab_activity_id: targetActivityId,
-            title: data.title.trim(),
-            description: data.description?.trim() || null,
-            status: data.status,
-            priority: data.priority,
-            due_date: data.dueDate || null,
-            assigned_to: data.assignedTo || null,
-            organization_id: data.organizationId || null,
-          },
+          payload,
         });
       }
 
@@ -245,69 +272,156 @@ export function CreateCollabTaskDialog({
             )}
           </div>
 
-          {/* Người phụ trách */}
-          <div className="space-y-1.5 p-3 bg-purple-50/40 rounded-xl border border-purple-100">
-            <label htmlFor="collab-task-assignee" className="block text-xs font-semibold text-purple-900 flex items-center gap-1.5">
-              <User className="h-3.5 w-3.5 text-purple-600" />
-              Người phụ trách
+          {/* Giai đoạn / Chặng triển khai */}
+          <div className="space-y-1.5">
+            <label htmlFor="collab-task-phase" className="block text-xs font-semibold text-slate-700 flex items-center justify-between">
+              <span className="flex items-center gap-1.5">
+                <Flag className="h-3.5 w-3.5 text-purple-600" />
+                Giai đoạn / Chặng triển khai (Tùy chọn)
+              </span>
+              <span className="text-[10px] text-slate-400 font-normal">Gợi ý phân loại timeline</span>
             </label>
-
-            <Controller
-              name="assignedTo"
-              control={control}
-              render={({ field }) => (
-                <Select
-                  value={field.value || 'none'}
-                  onValueChange={(val) => {
-                    handleAssigneeChange(val);
-                    field.onChange(val === 'none' ? null : val);
-                  }}
-                >
-                  <SelectTrigger id="collab-task-assignee" className="h-9 text-xs bg-white border-purple-200 min-w-0">
-                    <SelectValue placeholder="Chọn nhân sự phụ trách" />
-                  </SelectTrigger>
-                  <SelectContent className="bg-white border-slate-200 max-h-56">
-                    <SelectItem value="none" className="text-xs text-slate-400">
-                      -- Chưa phân công --
-                    </SelectItem>
-                    {personnel.map((p) => {
-                      const typeLabel = getOrgTypeLabel(p.organizationType);
-                      const typeBadgeClass = getOrgTypeBadgeClass(p.organizationType);
-                      const studentInfo = [p.studentId, p.className, p.cohort ? `K${p.cohort}` : null]
-                        .filter(Boolean)
-                        .join(' • ');
-                      return (
-                        <SelectItem key={`${p.userId}-${p.organizationId}`} value={p.userId} className="text-xs">
-                          <div className="flex items-center justify-between w-full gap-2 min-w-0">
-                            <div className="flex items-center gap-1.5 truncate">
-                              <span className="font-semibold text-slate-900">{p.fullName}</span>
-                              {studentInfo && (
-                                <span className="text-[10px] text-slate-400 font-mono">({studentInfo})</span>
-                              )}
-                            </div>
-                            <div className="flex items-center gap-1 shrink-0">
-                              <span className={`text-[9px] px-1.5 py-0.2 rounded font-semibold border ${typeBadgeClass}`}>
-                                {typeLabel}
-                              </span>
-                              <span className="text-[10px] bg-slate-100 text-slate-700 px-1.5 py-0.5 rounded font-medium truncate max-w-[130px]" title={`${p.organizationName} (${p.organizationCode})`}>
-                                {p.organizationCode}
-                              </span>
-                            </div>
-                          </div>
-                        </SelectItem>
-                      );
-                    })}
-                  </SelectContent>
-                </Select>
-              )}
+            <Input
+              id="collab-task-phase"
+              {...register('phase')}
+              placeholder="Nhập tên giai đoạn hoặc bấm gợi ý bên dưới..."
+              className="h-9 text-xs bg-slate-50/50 focus:bg-white"
             />
+            <div className="flex items-center gap-1.5 flex-wrap pt-0.5">
+              {SUGGESTED_PHASES.map((sPhase) => (
+                <button
+                  key={sPhase}
+                  type="button"
+                  onClick={() => setValue('phase', sPhase)}
+                  className="text-[10px] px-2 py-0.5 rounded-md bg-slate-100 hover:bg-purple-50 hover:text-purple-700 text-slate-600 border border-slate-200/80 transition-colors cursor-pointer"
+                >
+                  + {sPhase}
+                </button>
+              ))}
+            </div>
           </div>
 
-          {/* Mức độ ưu tiên, Hạn hoàn thành & Trạng thái (khi sửa) */}
-          <div className={cn(
-            'grid gap-3',
-            editingTask ? 'grid-cols-1 sm:grid-cols-3' : 'grid-cols-1 sm:grid-cols-2'
-          )}>
+          {/* Người phụ trách */}
+          <div className="space-y-2.5 p-3.5 bg-purple-50/40 rounded-xl border border-purple-100">
+            <div className="flex items-center justify-between gap-2 flex-wrap">
+              <label className="block text-xs font-semibold text-purple-900 flex items-center gap-1.5">
+                <User className="h-3.5 w-3.5 text-purple-600" />
+                Người phụ trách
+              </label>
+
+              {/* Chuyển đổi giữa nhân sự nội bộ và đối tác ngoài */}
+              <div className="flex items-center p-0.5 bg-purple-100/70 rounded-lg text-[11px] font-medium">
+                <button
+                  type="button"
+                  onClick={() => setAssigneeType('internal')}
+                  className={cn(
+                    'px-2.5 py-1 rounded-md transition-all flex items-center gap-1 cursor-pointer',
+                    assigneeType === 'internal'
+                      ? 'bg-white text-purple-700 shadow-2xs font-semibold'
+                      : 'text-slate-600 hover:text-slate-900'
+                  )}
+                >
+                  <Building2 className="w-3 h-3" />
+                  <span>Đơn vị tham gia</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setAssigneeType('external')}
+                  className={cn(
+                    'px-2.5 py-1 rounded-md transition-all flex items-center gap-1 cursor-pointer',
+                    assigneeType === 'external'
+                      ? 'bg-purple-600 text-white shadow-2xs font-semibold'
+                      : 'text-slate-600 hover:text-slate-900'
+                  )}
+                >
+                  <Users className="w-3 h-3" />
+                  <span>Đối tác ngoài (Đoàn xã, Trường bạn...)</span>
+                </button>
+              </div>
+            </div>
+
+            {assigneeType === 'internal' ? (
+              <Controller
+                name="assignedTo"
+                control={control}
+                render={({ field }) => (
+                  <Select
+                    value={field.value || 'none'}
+                    onValueChange={(val) => {
+                      handleAssigneeChange(val);
+                      field.onChange(val === 'none' ? null : val);
+                    }}
+                  >
+                    <SelectTrigger id="collab-task-assignee" className="h-9 text-xs bg-white border-purple-200 min-w-0">
+                      <SelectValue placeholder="Chọn nhân sự phụ trách từ các đơn vị tham gia" />
+                    </SelectTrigger>
+                    <SelectContent className="bg-white border-slate-200 max-h-56">
+                      <SelectItem value="none" className="text-xs text-slate-400">
+                        -- Chưa phân công --
+                      </SelectItem>
+                      {personnel.map((p) => {
+                        const typeLabel = getOrgTypeLabel(p.organizationType);
+                        const typeBadgeClass = getOrgTypeBadgeClass(p.organizationType);
+                        const studentInfo = [p.studentId, p.className, p.cohort ? `K${p.cohort}` : null]
+                          .filter(Boolean)
+                          .join(' • ');
+                        return (
+                          <SelectItem key={`${p.userId}-${p.organizationId}`} value={p.userId} className="text-xs">
+                            <div className="flex items-center justify-between w-full gap-2 min-w-0">
+                              <div className="flex items-center gap-1.5 truncate">
+                                <span className="font-semibold text-slate-900">{p.fullName}</span>
+                                {studentInfo && (
+                                  <span className="text-[10px] text-slate-400 font-mono">({studentInfo})</span>
+                                )}
+                              </div>
+                              <div className="flex items-center gap-1 shrink-0">
+                                <span className={`text-[9px] px-1.5 py-0.2 rounded font-semibold border ${typeBadgeClass}`}>
+                                  {typeLabel}
+                                </span>
+                                <span className="text-[10px] bg-slate-100 text-slate-700 px-1.5 py-0.5 rounded font-medium truncate max-w-[130px]" title={`${p.organizationName} (${p.organizationCode})`}>
+                                  {p.organizationCode}
+                                </span>
+                              </div>
+                            </div>
+                          </SelectItem>
+                        );
+                      })}
+                    </SelectContent>
+                  </Select>
+                )}
+              />
+            ) : (
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-0.5">
+                <div className="space-y-1">
+                  <label htmlFor="collab-task-ext-name" className="block text-[11px] font-semibold text-purple-900 flex items-center gap-1">
+                    <User className="w-3 h-3 text-purple-600" />
+                    Họ tên / Đơn vị ngoài phụ trách
+                  </label>
+                  <Input
+                    id="collab-task-ext-name"
+                    {...register('externalAssignee')}
+                    placeholder="VD: Đ/c Nam (Bí thư Đoàn xã Long Bình), Đội SVTN..."
+                    className="h-8.5 text-xs bg-white border-purple-200"
+                  />
+                </div>
+                <div className="space-y-1">
+                  <label htmlFor="collab-task-ext-phone" className="block text-[11px] font-semibold text-purple-900 flex items-center gap-1">
+                    <Phone className="w-3 h-3 text-purple-600" />
+                    Số điện thoại / Zalo liên hệ
+                  </label>
+                  <Input
+                    id="collab-task-ext-phone"
+                    {...register('externalContact')}
+                    placeholder="VD: 0912.345.678"
+                    className="h-8.5 text-xs bg-white border-purple-200"
+                  />
+                </div>
+              </div>
+            )}
+          </div>
+
+          {/* Mức độ ưu tiên, Ngày deadline & Khung giờ & Trạng thái (khi sửa) */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             {editingTask && (
               <div className="space-y-1.5">
                 <label htmlFor="collab-task-status" className="block text-xs font-semibold text-slate-700">
@@ -361,8 +475,9 @@ export function CreateCollabTaskDialog({
             </div>
 
             <div className="space-y-1.5">
-              <label className="block text-xs font-semibold text-slate-700">
-                Hạn chót (Deadline)
+              <label className="block text-xs font-semibold text-slate-700 flex items-center gap-1">
+                <Calendar className="w-3.5 h-3.5 text-slate-400" />
+                Hạn chót (Ngày)
               </label>
               <Controller
                 name="dueDate"
@@ -371,9 +486,22 @@ export function CreateCollabTaskDialog({
                   <DatePicker
                     value={field.value}
                     onChange={field.onChange}
-                    placeholder="Chọn hạn chót"
+                    placeholder="Chọn ngày hoàn thành"
                   />
                 )}
+              />
+            </div>
+
+            <div className="space-y-1.5">
+              <label htmlFor="collab-task-time" className="block text-xs font-semibold text-slate-700 flex items-center gap-1">
+                <Clock className="w-3.5 h-3.5 text-slate-400" />
+                Khung giờ thực hiện (Tùy chọn)
+              </label>
+              <Input
+                id="collab-task-time"
+                {...register('dueTime')}
+                placeholder="VD: 07:30 - 08:30 hoặc trước 17:00"
+                className="h-9 text-xs bg-slate-50/50"
               />
             </div>
           </div>

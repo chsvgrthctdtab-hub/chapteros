@@ -238,7 +238,11 @@ export interface CollabTask {
   status: CollabTaskStatus;
   priority: TaskPriority;
   dueDate?: string | null;
+  dueTime?: string | null;
+  phase?: string | null;
   assignedTo?: string | null;
+  externalAssignee?: string | null;
+  externalContact?: string | null;
   organizationId?: string | null;
   createdAt: string;
   assignee?: Profile;
