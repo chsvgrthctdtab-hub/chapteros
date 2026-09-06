@@ -26,7 +26,7 @@ export const memberService = {
    */
   async getMemberStats(organizationId: string, activeTermId?: string) {
     if (!organizationId) {
-      return { total: 0, active: 0, alumni: 0, assignedToTerm: 0 };
+      return { total: 0, active: 0, alumni: 0, assignedToTerm: 0, boardCount: 0 };
     }
     return memberRepository.getStats(organizationId, activeTermId);
   },

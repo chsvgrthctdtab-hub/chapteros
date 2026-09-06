@@ -261,7 +261,7 @@ export function CollabTimelineExportModal({
                   <div className="flex items-center gap-2">
                     <Layers className={cn('w-3.5 h-3.5 shrink-0', theme === 'navy' ? 'text-indigo-400' : 'text-indigo-600')} />
                     <span className="truncate">
-                      <strong>Kế hoạch:</strong> {plan.title}
+                      <strong>Kế hoạch:</strong> {plan.name}
                     </span>
                   </div>
                 )}
@@ -405,7 +405,7 @@ export function CollabTimelineExportModal({
                                         : 'bg-blue-50 text-blue-800 border border-blue-200'
                                     )}>
                                       <User className="w-3 h-3" />
-                                      <span>Phụ trách: <strong>{t.assignee.full_name}</strong></span>
+                                      <span>Phụ trách: <strong>{t.assignee.fullName}</strong></span>
                                       {t.organization && (
                                         <span className="opacity-75 font-normal">({t.organization.name})</span>
                                       )}

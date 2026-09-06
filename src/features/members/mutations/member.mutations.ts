@@ -1,6 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { memberService } from '@/services/member.service';
 import { useAuth } from '@/contexts/AuthContext';
+import { supabase } from '@/lib/supabase';
 import { memberKeys } from '../queries/member.queries';
 import type { MemberFormData, TermMemberFormData } from '../schemas/member.schema';
 import type { MemberStatus } from '@/types';
@@ -280,7 +281,6 @@ export interface BulkImportResult {
 
 export function useBulkImportMembers(organizationId?: string) {
   const queryClient = useQueryClient();
-  const { supabase } = useAuth();
 
   return useMutation({
     mutationFn: async (rows: BulkImportMemberPayload[]): Promise<BulkImportResult> => {
@@ -302,8 +302,7 @@ export function useBulkImportMembers(organizationId?: string) {
           const existingId = existingMap.get(row.student_id);
           if (existingId) {
             // Ghi đè
-            const { error } = await supabase
-              .from('members')
+            const { error } = await (supabase.from('members') as any)
               .update({
                 full_name: row.full_name,
                 class_name: row.class_name,
@@ -320,8 +319,7 @@ export function useBulkImportMembers(organizationId?: string) {
             result.updated++;
           } else {
             // Thêm mới
-            const { error } = await supabase
-              .from('members')
+            const { error } = await (supabase.from('members') as any)
               .insert({
                 organization_id: organizationId,
                 student_id: row.student_id,
