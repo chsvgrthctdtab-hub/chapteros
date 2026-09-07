@@ -461,11 +461,29 @@ export const collabRepository = {
     const sanitizedPayload = sanitizeCollabTaskPayload(payload);
 
     // Step 1: Exactly ONE single INSERT mutation to prevent any duplicate insertion
-    const { data: insertedRow, error: insertError } = await supabase
+    let { data: insertedRow, error: insertError } = await supabase
       .from('collab_tasks')
       .insert(sanitizedPayload as any)
       .select('*')
       .single();
+
+    // Fallback: If database table has not been migrated yet (missing due_time, phase, etc.)
+    if (insertError && (insertError.message?.includes('schema cache') || insertError.message?.includes('column') || insertError.code === 'PGRST204')) {
+      console.warn('collab_tasks table is missing new columns, falling back to base columns:', insertError.message);
+      const basePayload = { ...sanitizedPayload };
+      delete (basePayload as any).due_time;
+      delete (basePayload as any).phase;
+      delete (basePayload as any).external_assignee;
+      delete (basePayload as any).external_contact;
+
+      const retry = await supabase
+        .from('collab_tasks')
+        .insert(basePayload as any)
+        .select('*')
+        .single();
+      insertedRow = retry.data;
+      insertError = retry.error;
+    }
 
     if (insertError) throw insertError;
     if (!insertedRow) throw new Error('Failed to create task: No data returned from insert');
@@ -600,12 +618,31 @@ export const collabRepository = {
       console.warn('Initial select join for updateCollabTask failed, falling back:', err);
     }
 
-    const { data: rawData, error: rawError } = await supabase
+    let effectivePayload = sanitizedPayload;
+    let { data: rawData, error: rawError } = await supabase
       .from('collab_tasks')
-      .update(sanitizedPayload as never)
+      .update(effectivePayload as never)
       .eq('id', id)
       .select('*')
       .single();
+
+    if (rawError && (rawError.message?.includes('schema cache') || rawError.message?.includes('column') || rawError.code === 'PGRST204')) {
+      console.warn('collab_tasks update failed due to missing columns, retrying with base columns:', rawError.message);
+      const basePayload = { ...sanitizedPayload };
+      delete (basePayload as any).due_time;
+      delete (basePayload as any).phase;
+      delete (basePayload as any).external_assignee;
+      delete (basePayload as any).external_contact;
+
+      const retry = await supabase
+        .from('collab_tasks')
+        .update(basePayload as never)
+        .eq('id', id)
+        .select('*')
+        .single();
+      rawData = retry.data;
+      rawError = retry.error;
+    }
 
     if (rawError) throw rawError;
     const row = rawData as any;
