@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
@@ -21,7 +21,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { CheckSquare, Calendar, User, Building2, AlertCircle, Loader2, Sparkles, Users, Phone, Clock, Flag } from 'lucide-react';
+import { AlertCircle, Loader2, Sparkles, Plus } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import {
   useCreateCollabTask,
@@ -29,26 +29,39 @@ import {
   useCollabPlanPersonnel,
   useCollabActivities,
 } from '../queries/collab.queries';
+import { usePlanDetail } from '../queries/plan.queries';
 import { formatError } from '@/lib/error-formatter';
-import { getOrgTypeLabel, getOrgTypeBadgeClass } from '@/lib/organization.utils';
-import type { CollabTask, CollabTaskStatus, TaskPriority } from '@/types';
+import type { CollabTask, TaskPriority } from '@/types';
 
-const SUGGESTED_PHASES = [
+export const CATEGORY_OPTIONS = [
+  'Thiết kế & Truyền thông',
+  'Tiền trạm & Địa phương',
+  'Chương trình & Sân khấu',
+  'Trạm trò chơi & Gian hàng',
+  'Hậu cần & Vật phẩm',
+  'Tài chính & Quyên góp',
+  'Công việc chung',
+];
+
+export const PHASE_OPTIONS = [
   'Giai đoạn 1: Chuẩn bị (Trước chương trình)',
   'Giai đoạn 2: Thực hiện (Trong chương trình)',
   'Giai đoạn 3: Tổng kết và Đánh giá (Sau chương trình)',
 ];
 
 const collabTaskSchema = z.object({
-  title: z.string().min(3, 'Tên công việc phải có ít nhất 3 ký tự'),
+  title: z.string().min(2, 'Tên công việc phải có ít nhất 2 ký tự'),
   description: z.string().optional(),
   status: z.enum(['todo', 'in_progress'] as const),
   priority: z.enum(['low', 'medium', 'high', 'urgent'] as const),
+  category: z.string().optional(),
+  phase: z.string().optional(),
+  deliverable: z.string().optional(),
   dueDate: z.string().optional(),
   dueTime: z.string().optional(),
-  phase: z.string().optional(),
   assignedTo: z.string().optional().nullable(),
   externalAssignee: z.string().optional().nullable(),
+  externalOrganization: z.string().optional().nullable(),
   externalContact: z.string().optional().nullable(),
   organizationId: z.string().optional().nullable(),
   collabActivityId: z.string().optional().nullable(),
@@ -75,10 +88,42 @@ export function CreateCollabTaskDialog({
 }: CreateCollabTaskDialogProps) {
   const createMutation = useCreateCollabTask();
   const updateMutation = useUpdateCollabTask();
+  const { data: plan } = usePlanDetail(planId);
   const { data: personnel = [] } = useCollabPlanPersonnel(planId);
   const { data: activities = [] } = useCollabActivities(planId);
+
   const [submitError, setSubmitError] = useState<string | null>(null);
   const [assigneeType, setAssigneeType] = useState<'internal' | 'external'>('internal');
+  const [selectedOrgId, setSelectedOrgId] = useState<string | null>(null);
+
+  // Danh sách các đơn vị tham gia trong kế hoạch
+  const participatingOrgs = useMemo(() => {
+    const list: { id: string; name: string; code: string; color: string; isLead: boolean }[] = [];
+    if (plan?.leadOrganization) {
+      list.push({
+        id: plan.leadOrganization.id,
+        name: plan.leadOrganization.name,
+        code: plan.leadOrganization.code || 'CHỦ TRÌ',
+        color: 'rose',
+        isLead: true,
+      });
+    }
+    const colorPalette = ['blue', 'emerald', 'purple', 'amber', 'indigo'];
+    let idx = 0;
+    (plan?.organizations || []).forEach((po) => {
+      if (po.organization && po.organizationId !== plan?.leadOrganizationId && po.status === 'active') {
+        list.push({
+          id: po.organization.id,
+          name: po.organization.name,
+          code: po.organization.code || 'PHỐI HỢP',
+          color: colorPalette[idx % colorPalette.length],
+          isLead: false,
+        });
+        idx++;
+      }
+    });
+    return list;
+  }, [plan]);
 
   const {
     register,
@@ -95,86 +140,113 @@ export function CreateCollabTaskDialog({
       description: '',
       status: 'todo',
       priority: 'medium',
+      category: CATEGORY_OPTIONS[0],
+      phase: PHASE_OPTIONS[0],
+      deliverable: '',
       dueDate: '',
       dueTime: '',
-      phase: '',
       assignedTo: null,
       externalAssignee: '',
+      externalOrganization: '',
       externalContact: '',
       organizationId: null,
       collabActivityId: collabActivityId || (activities[0]?.id ?? null),
     },
   });
 
+  // Khởi tạo form khi mở dialog
   useEffect(() => {
     if (isOpen) {
       setSubmitError(null);
       if (editingTask) {
         const validStatus = editingTask.status === 'in_progress' ? 'in_progress' : 'todo';
-        const isExternal = Boolean(editingTask.externalAssignee);
+        const isExternal = Boolean(editingTask.externalAssignee || editingTask.externalOrganization);
         setAssigneeType(isExternal ? 'external' : 'internal');
+        setSelectedOrgId(editingTask.organizationId || null);
 
         reset({
           title: editingTask.title,
           description: editingTask.description || '',
           status: validStatus,
           priority: editingTask.priority || 'medium',
+          category: editingTask.category || CATEGORY_OPTIONS[0],
+          phase: editingTask.phase || PHASE_OPTIONS[0],
+          deliverable: editingTask.deliverable || '',
           dueDate: editingTask.dueDate ? editingTask.dueDate.split('T')[0] : '',
           dueTime: editingTask.dueTime || '',
-          phase: editingTask.phase || '',
           assignedTo: editingTask.assignedTo || null,
           externalAssignee: editingTask.externalAssignee || '',
+          externalOrganization: editingTask.externalOrganization || '',
           externalContact: editingTask.externalContact || '',
           organizationId: editingTask.organizationId || null,
           collabActivityId: editingTask.collabActivityId || collabActivityId || null,
         });
       } else {
+        const defaultLeadOrgId = plan?.leadOrganizationId || participatingOrgs[0]?.id || null;
+        setSelectedOrgId(defaultLeadOrgId);
         setAssigneeType('internal');
         reset({
           title: '',
           description: '',
           status: 'todo',
           priority: 'medium',
+          category: CATEGORY_OPTIONS[0],
+          phase: PHASE_OPTIONS[0],
+          deliverable: '',
           dueDate: '',
           dueTime: '',
-          phase: '',
           assignedTo: null,
           externalAssignee: '',
+          externalOrganization: '',
           externalContact: '',
-          organizationId: null,
+          organizationId: defaultLeadOrgId,
           collabActivityId: collabActivityId || (activities[0]?.id ?? null),
         });
       }
     }
-  }, [isOpen, editingTask, collabActivityId, reset]);
+  }, [isOpen, editingTask, collabActivityId, reset, plan, participatingOrgs]);
 
-  // Tự động gán hoạt động đầu tiên khi danh sách activities tải xong nếu chưa có giá trị
+  // Tự động gán hoạt động đầu tiên khi activities tải xong
   useEffect(() => {
     if (isOpen && !collabActivityId && activities.length > 0) {
-      const currentActivity = watch('collabActivityId');
-      if (!currentActivity) {
+      const currentAct = watch('collabActivityId');
+      if (!currentAct) {
         setValue('collabActivityId', activities[0].id);
       }
     }
   }, [isOpen, activities, collabActivityId, setValue, watch]);
 
-  const handleAssigneeChange = (userIdOrNone: string) => {
-    if (userIdOrNone === 'none') {
-      setValue('assignedTo', null);
-      setValue('organizationId', null);
-    } else {
-      const selectedPerson = personnel.find((p) => p.userId === userIdOrNone);
-      setValue('assignedTo', userIdOrNone);
-      setValue('organizationId', selectedPerson?.organizationId || null);
-    }
+  // Xử lý chọn đơn vị nhanh qua badge
+  const handleSelectOrgBadge = (orgId: string) => {
+    setSelectedOrgId(orgId);
+    setAssigneeType('internal');
+    setValue('organizationId', orgId);
+    setValue('externalOrganization', '');
+    setValue('externalAssignee', '');
+    setValue('externalContact', '');
   };
+
+  const handleSelectExternalMode = () => {
+    setAssigneeType('external');
+    setSelectedOrgId(null);
+    setValue('organizationId', null);
+    setValue('assignedTo', null);
+  };
+
+  // Lọc nhân sự theo đơn vị được chọn
+  const filteredPersonnel = useMemo(() => {
+    if (!selectedOrgId) return personnel;
+    const matched = personnel.filter((p) => p.organizationId === selectedOrgId);
+    return matched.length > 0 ? matched : personnel;
+  }, [personnel, selectedOrgId]);
 
   const hasNoActivities = !collabActivityId && activities.length === 0;
 
   const onSubmit = async (data: CollabTaskFormData) => {
     try {
       setSubmitError(null);
-      const targetActivityId = collabActivityId || data.collabActivityId || (activities.length > 0 ? activities[0]?.id : null);
+      const targetActivityId =
+        collabActivityId || data.collabActivityId || (activities.length > 0 ? activities[0]?.id : null);
 
       if (!targetActivityId) {
         setSubmitError('Kế hoạch này chưa có hoạt động nào để gắn nhiệm vụ. Vui lòng tạo ít nhất một hoạt động trước khi phân công.');
@@ -187,13 +259,16 @@ export function CreateCollabTaskDialog({
         description: data.description?.trim() || null,
         status: data.status,
         priority: data.priority,
+        category: data.category?.trim() || null,
+        phase: data.phase?.trim() || null,
+        deliverable: data.deliverable?.trim() || null,
         due_date: data.dueDate || null,
         due_time: data.dueTime?.trim() || null,
-        phase: data.phase?.trim() || null,
         assigned_to: assigneeType === 'internal' ? (data.assignedTo || null) : null,
         external_assignee: assigneeType === 'external' ? (data.externalAssignee?.trim() || null) : null,
+        external_organization: assigneeType === 'external' ? (data.externalOrganization?.trim() || null) : null,
         external_contact: assigneeType === 'external' ? (data.externalContact?.trim() || null) : null,
-        organization_id: assigneeType === 'internal' ? (data.organizationId || null) : null,
+        organization_id: assigneeType === 'internal' ? (data.organizationId || selectedOrgId || null) : null,
       };
 
       if (editingTask) {
@@ -218,47 +293,44 @@ export function CreateCollabTaskDialog({
 
   return (
     <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
-      <DialogContent className="sm:max-w-2xl md:max-w-3xl max-h-[92vh] overflow-y-auto bg-white border border-slate-200/80 shadow-2xl rounded-3xl p-6 sm:p-8 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
-        <DialogHeader className="space-y-1 text-left pb-1">
-          <div className="flex items-center gap-2 text-purple-600 font-semibold text-xs mb-0.5">
-            <CheckSquare className="h-4 w-4" />
-            <span>Nhiệm vụ Hoạt động</span>
-          </div>
-          <DialogTitle className="text-lg font-bold text-slate-900">
-            {editingTask ? 'Chỉnh Sửa Nhiệm Vụ' : 'Giao Việc Mới'}
+      <DialogContent className="sm:max-w-xl md:max-w-2xl max-h-[92vh] overflow-y-auto bg-white border border-slate-200/80 shadow-2xl rounded-2xl p-5 sm:p-7 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+        {/* Header tối giản */}
+        <DialogHeader className="space-y-1 text-left pb-2 border-b border-slate-100">
+          <DialogTitle className="text-base sm:text-lg font-bold text-slate-900">
+            {editingTask ? 'Chỉnh sửa nhiệm vụ' : 'Giao việc mới'}
           </DialogTitle>
           <DialogDescription className="text-xs text-slate-500">
-            Phân công nhiệm vụ cho nhân sự thuộc các đơn vị tham gia.
+            Phân công theo mảng phụ trách và đơn vị tham gia chiến dịch.
           </DialogDescription>
         </DialogHeader>
 
         {submitError && (
-          <div className="p-3 bg-rose-50 border border-rose-200 rounded-xl flex items-start gap-2 text-xs text-rose-800">
+          <div className="p-3 bg-rose-50 border border-rose-200 rounded-xl flex items-start gap-2 text-xs text-rose-800 my-2">
             <AlertCircle className="h-4 w-4 text-rose-600 shrink-0 mt-0.5" />
             <div>{submitError}</div>
           </div>
         )}
 
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 py-2 text-left">
-          {/* Cảnh báo nếu kế hoạch chưa có hoạt động nào */}
+          {/* Cảnh báo nếu chưa có hoạt động nào */}
           {hasNoActivities && (
-            <div className="p-3.5 bg-amber-50 border border-amber-200 rounded-2xl flex items-start gap-2.5 text-xs text-amber-900">
+            <div className="p-3 bg-amber-50 border border-amber-200 rounded-xl flex items-start gap-2.5 text-xs text-amber-900">
               <AlertCircle className="h-4 w-4 text-amber-600 shrink-0 mt-0.5" />
-              <div className="space-y-1">
-                <div className="font-semibold text-amber-950">Kế hoạch này chưa có Hoạt động phối hợp nào</div>
-                <div className="text-amber-800 leading-relaxed">
-                  Mỗi nhiệm vụ cần trực thuộc một hoạt động cụ thể trong Kế hoạch. Vui lòng tạo ít nhất một hoạt động trong tab <strong>"Hoạt động"</strong> trước khi phân công giao việc.
+              <div className="space-y-0.5">
+                <div className="font-semibold text-amber-950">Chưa có hoạt động phối hợp nào</div>
+                <div className="text-amber-800 leading-relaxed text-[11px]">
+                  Mỗi nhiệm vụ phải gắn liền với một hoạt động trong Kế hoạch. Vui lòng tạo hoạt động trong tab <strong>"Hoạt động"</strong> trước khi giao việc.
                 </div>
               </div>
             </div>
           )}
 
-          {/* Chọn hoạt động collab nếu chưa chỉ định */}
+          {/* Chọn Hoạt động (chỉ hiện khi chưa chỉ định từ trước) */}
           {!collabActivityId && activities.length > 0 && (
-            <div className="space-y-1.5">
+            <div className="space-y-1">
               <label htmlFor="collab-task-act" className="block text-xs font-semibold text-slate-700 flex items-center gap-1">
-                <Sparkles className="h-3.5 w-3.5 text-purple-600" />
-                Hoạt động phối hợp thuộc chiến dịch <span className="text-rose-500">*</span>
+                <Sparkles className="h-3 w-3 text-purple-600" />
+                Hoạt động phối hợp <span className="text-rose-500">*</span>
               </label>
               <Controller
                 name="collabActivityId"
@@ -284,91 +356,130 @@ export function CreateCollabTaskDialog({
             </div>
           )}
 
-          {/* Tên công việc */}
-          <div className="space-y-1.5">
+          {/* Tiêu đề công việc */}
+          <div className="space-y-1">
             <label htmlFor="collab-task-title" className="block text-xs font-semibold text-slate-700">
-              Tiêu đề công việc <span className="text-rose-500">*</span>
+              Nội dung công việc <span className="text-rose-500">*</span>
             </label>
             <Input
               id="collab-task-title"
               {...register('title')}
-              placeholder="Ví dụ: Thiết kế ấn phẩm truyền thông, Chuẩn bị 50 phần quà..."
-              className="h-9 text-xs bg-slate-50/50 focus:bg-white"
+              placeholder="VD: Poster chương trình, Đặt đồ ăn TNV, Kịch bản MC..."
+              className="h-10 text-sm font-medium bg-slate-50/50 focus:bg-white border-slate-200 focus:border-purple-400"
             />
             {errors.title && (
               <p className="text-[11px] text-rose-500">{errors.title.message}</p>
             )}
           </div>
 
-          {/* Giai đoạn / Chặng triển khai */}
-          <div className="space-y-1.5">
-            <label htmlFor="collab-task-phase" className="block text-xs font-semibold text-slate-700 flex items-center justify-between">
-              <span className="flex items-center gap-1.5">
-                <Flag className="h-3.5 w-3.5 text-purple-600" />
-                Giai đoạn / Chặng triển khai (Tùy chọn)
+          {/* 1-Click Badges: Đơn vị phụ trách */}
+          <div className="space-y-1.5 pt-1">
+            <div className="flex items-center justify-between">
+              <span className="block text-xs font-semibold text-slate-700">
+                Đơn vị phụ trách
               </span>
-              <span className="text-[10px] text-slate-400 font-normal">Gợi ý phân loại timeline</span>
-            </label>
-            <Input
-              id="collab-task-phase"
-              {...register('phase')}
-              placeholder="Nhập tên giai đoạn hoặc bấm gợi ý bên dưới..."
-              className="h-9 text-xs bg-slate-50/50 focus:bg-white"
-            />
-            <div className="flex items-center gap-1.5 flex-wrap pt-0.5">
-              {SUGGESTED_PHASES.map((sPhase) => (
-                <button
-                  key={sPhase}
-                  type="button"
-                  onClick={() => setValue('phase', sPhase)}
-                  className="text-[10px] px-2 py-0.5 rounded-md bg-slate-100 hover:bg-purple-50 hover:text-purple-700 text-slate-600 border border-slate-200/80 transition-colors cursor-pointer"
-                >
-                  + {sPhase}
-                </button>
-              ))}
+              <span className="text-[11px] text-slate-400">
+                {assigneeType === 'internal' ? 'Đơn vị trong chiến dịch' : 'Đối tác ngoài'}
+              </span>
+            </div>
+
+            <div className="flex items-center gap-1.5 flex-wrap">
+              {participatingOrgs.map((org) => {
+                const isSelected = selectedOrgId === org.id && assigneeType === 'internal';
+                return (
+                  <button
+                    key={org.id}
+                    type="button"
+                    onClick={() => handleSelectOrgBadge(org.id)}
+                    className={cn(
+                      "px-3 py-1.5 rounded-full text-xs font-semibold transition-all border inline-flex items-center gap-1.5 cursor-pointer shadow-2xs",
+                      isSelected
+                        ? org.color === 'rose'
+                          ? 'bg-rose-600 text-white border-rose-600 ring-2 ring-rose-200'
+                          : org.color === 'blue'
+                          ? 'bg-blue-600 text-white border-blue-600 ring-2 ring-blue-200'
+                          : org.color === 'emerald'
+                          ? 'bg-emerald-600 text-white border-emerald-600 ring-2 ring-emerald-200'
+                          : 'bg-purple-600 text-white border-purple-600 ring-2 ring-purple-200'
+                        : org.color === 'rose'
+                        ? 'bg-rose-50 text-rose-700 border-rose-200 hover:bg-rose-100'
+                        : org.color === 'blue'
+                        ? 'bg-blue-50 text-blue-700 border-blue-200 hover:bg-blue-100'
+                        : org.color === 'emerald'
+                        ? 'bg-emerald-50 text-emerald-700 border-emerald-200 hover:bg-emerald-100'
+                        : 'bg-purple-50 text-purple-700 border-purple-200 hover:bg-purple-100'
+                    )}
+                  >
+                    <span className="w-2 h-2 rounded-full bg-current opacity-80" />
+                    <span>{org.code}</span>
+                    <span className="text-[10px] opacity-75 font-normal max-w-[120px] truncate hidden sm:inline">
+                      {org.name}
+                    </span>
+                  </button>
+                );
+              })}
+
+              {/* Nút Đối tác ngoài */}
+              <button
+                type="button"
+                onClick={handleSelectExternalMode}
+                className={cn(
+                  "px-3 py-1.5 rounded-full text-xs font-semibold transition-all border inline-flex items-center gap-1.5 cursor-pointer shadow-2xs",
+                  assigneeType === 'external'
+                    ? 'bg-amber-600 text-white border-amber-600 ring-2 ring-amber-200'
+                    : 'bg-amber-50 text-amber-800 border-amber-200 hover:bg-amber-100'
+                )}
+              >
+                <Plus className="w-3 h-3" />
+                <span>Đối tác ngoài</span>
+                <span className="text-[10px] opacity-75 font-normal hidden sm:inline">
+                  (Xã Đoàn, Trường bạn...)
+                </span>
+              </button>
             </div>
           </div>
 
-          {/* Người phụ trách */}
-          <div className="space-y-2.5 p-3.5 bg-purple-50/40 rounded-xl border border-purple-100">
-            <div className="flex items-center justify-between gap-2 flex-wrap">
-              <label className="block text-xs font-semibold text-purple-900 flex items-center gap-1.5">
-                <User className="h-3.5 w-3.5 text-purple-600" />
-                Người phụ trách
-              </label>
+          {/* Chi tiết người & đơn vị phụ trách */}
+          {assigneeType === 'external' ? (
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 p-3 bg-amber-50/50 rounded-xl border border-amber-200/80 animate-in fade-in-50 duration-150">
+              <div className="space-y-1">
+                <label className="block text-[11px] font-semibold text-amber-900">
+                  Tên Đơn vị ngoài <span className="text-rose-500">*</span>
+                </label>
+                <Input
+                  {...register('externalOrganization')}
+                  placeholder="VD: Xã Đoàn An Bình, THPT Hùng Vương..."
+                  className="h-8 text-xs bg-white border-amber-200 focus:border-amber-500"
+                />
+              </div>
 
-              {/* Chuyển đổi giữa nhân sự nội bộ và đối tác ngoài */}
-              <div className="flex items-center p-0.5 bg-purple-100/70 rounded-lg text-[11px] font-medium">
-                <button
-                  type="button"
-                  onClick={() => setAssigneeType('internal')}
-                  className={cn(
-                    'px-2.5 py-1 rounded-md transition-all flex items-center gap-1 cursor-pointer',
-                    assigneeType === 'internal'
-                      ? 'bg-white text-purple-700 shadow-2xs font-semibold'
-                      : 'text-slate-600 hover:text-slate-900'
-                  )}
-                >
-                  <Building2 className="w-3 h-3" />
-                  <span>Đơn vị tham gia</span>
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setAssigneeType('external')}
-                  className={cn(
-                    'px-2.5 py-1 rounded-md transition-all flex items-center gap-1 cursor-pointer',
-                    assigneeType === 'external'
-                      ? 'bg-purple-600 text-white shadow-2xs font-semibold'
-                      : 'text-slate-600 hover:text-slate-900'
-                  )}
-                >
-                  <Users className="w-3 h-3" />
-                  <span>Đối tác ngoài (Đoàn xã, Trường bạn...)</span>
-                </button>
+              <div className="space-y-1">
+                <label className="block text-[11px] font-semibold text-amber-900">
+                  Người phụ trách (Họ tên)
+                </label>
+                <Input
+                  {...register('externalAssignee')}
+                  placeholder="VD: Anh Tuấn, Chị Hoa..."
+                  className="h-8 text-xs bg-white border-amber-200 focus:border-amber-500"
+                />
+              </div>
+
+              <div className="sm:col-span-2 space-y-1">
+                <label className="block text-[11px] font-semibold text-amber-900">
+                  Số điện thoại / Zalo liên hệ (Tùy chọn)
+                </label>
+                <Input
+                  {...register('externalContact')}
+                  placeholder="VD: 0912.345.678"
+                  className="h-8 text-xs bg-white border-amber-200 focus:border-amber-500"
+                />
               </div>
             </div>
-
-            {assigneeType === 'internal' ? (
+          ) : (
+            <div className="space-y-1">
+              <label className="block text-xs font-semibold text-slate-700">
+                Người phụ trách cụ thể
+              </label>
               <Controller
                 name="assignedTo"
                 control={control}
@@ -376,179 +487,178 @@ export function CreateCollabTaskDialog({
                   <Select
                     value={field.value || 'none'}
                     onValueChange={(val) => {
-                      handleAssigneeChange(val);
                       field.onChange(val === 'none' ? null : val);
+                      if (val !== 'none') {
+                        const person = personnel.find((p) => p.userId === val);
+                        if (person?.organizationId) {
+                          setValue('organizationId', person.organizationId);
+                          setSelectedOrgId(person.organizationId);
+                        }
+                      }
                     }}
                   >
-                    <SelectTrigger id="collab-task-assignee" className="h-9 text-xs bg-white border-purple-200 min-w-0">
-                      <SelectValue placeholder="Chọn nhân sự phụ trách từ các đơn vị tham gia" />
+                    <SelectTrigger className="h-9 text-xs bg-slate-50/50">
+                      <SelectValue placeholder="Đơn vị tự phân công (hoặc chọn cá nhân cụ thể)" />
                     </SelectTrigger>
                     <SelectContent className="bg-white border-slate-200 max-h-56">
-                      <SelectItem value="none" className="text-xs text-slate-400">
-                        -- Chưa phân công --
+                      <SelectItem value="none" className="text-xs text-slate-500 italic">
+                        -- Đơn vị tự phụ trách (Chưa chỉ định người cụ thể) --
                       </SelectItem>
-                      {personnel.map((p) => {
-                        const typeLabel = getOrgTypeLabel(p.organizationType);
-                        const typeBadgeClass = getOrgTypeBadgeClass(p.organizationType);
-                        const studentInfo = [p.studentId, p.className, p.cohort ? `K${p.cohort}` : null]
-                          .filter(Boolean)
-                          .join(' • ');
-                        return (
-                          <SelectItem key={`${p.userId}-${p.organizationId}`} value={p.userId} className="text-xs">
-                            <div className="flex items-center justify-between w-full gap-2 min-w-0">
-                              <div className="flex items-center gap-1.5 truncate">
-                                <span className="font-semibold text-slate-900">{p.fullName}</span>
-                                {studentInfo && (
-                                  <span className="text-[10px] text-slate-400 font-mono">({studentInfo})</span>
-                                )}
-                              </div>
-                              <div className="flex items-center gap-1 shrink-0">
-                                <span className={`text-[9px] px-1.5 py-0.2 rounded font-semibold border ${typeBadgeClass}`}>
-                                  {typeLabel}
-                                </span>
-                                <span className="text-[10px] bg-slate-100 text-slate-700 px-1.5 py-0.5 rounded font-medium truncate max-w-[130px]" title={`${p.organizationName} (${p.organizationCode})`}>
-                                  {p.organizationCode}
-                                </span>
-                              </div>
-                            </div>
-                          </SelectItem>
-                        );
-                      })}
+                      {filteredPersonnel.map((p) => (
+                        <SelectItem key={p.userId} value={p.userId} className="text-xs">
+                          {p.fullName} ({p.organizationCode})
+                        </SelectItem>
+                      ))}
                     </SelectContent>
                   </Select>
                 )}
               />
-            ) : (
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-0.5">
-                <div className="space-y-1">
-                  <label htmlFor="collab-task-ext-name" className="block text-[11px] font-semibold text-purple-900 flex items-center gap-1">
-                    <User className="w-3 h-3 text-purple-600" />
-                    Họ tên / Đơn vị ngoài phụ trách
-                  </label>
-                  <Input
-                    id="collab-task-ext-name"
-                    {...register('externalAssignee')}
-                    placeholder="VD: Đ/c Nam (Bí thư Đoàn xã Long Bình), Đội SVTN..."
-                    className="h-8.5 text-xs bg-white border-purple-200"
-                  />
-                </div>
-                <div className="space-y-1">
-                  <label htmlFor="collab-task-ext-phone" className="block text-[11px] font-semibold text-purple-900 flex items-center gap-1">
-                    <Phone className="w-3 h-3 text-purple-600" />
-                    Số điện thoại / Zalo liên hệ
-                  </label>
-                  <Input
-                    id="collab-task-ext-phone"
-                    {...register('externalContact')}
-                    placeholder="VD: 0912.345.678"
-                    className="h-8.5 text-xs bg-white border-purple-200"
-                  />
-                </div>
-              </div>
-            )}
-          </div>
+            </div>
+          )}
 
-          {/* Mức độ ưu tiên, Ngày deadline & Khung giờ & Trạng thái (khi sửa) */}
+          {/* Mảng công việc & Giai đoạn (2 cột ngang gọn gàng) */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            {editingTask && (
-              <div className="space-y-1.5">
-                <label htmlFor="collab-task-status" className="block text-xs font-semibold text-slate-700">
-                  Trạng thái
-                </label>
-                <Controller
-                  name="status"
-                  control={control}
-                  render={({ field }) => (
-                    <Select
-                      value={field.value || 'todo'}
-                      onValueChange={field.onChange}
-                    >
-                      <SelectTrigger id="collab-task-status" className="h-9 text-xs bg-slate-50/50">
-                        <SelectValue placeholder="Trạng thái" />
-                      </SelectTrigger>
-                      <SelectContent className="bg-white border-slate-200">
-                        <SelectItem value="todo" className="text-xs">Cần làm</SelectItem>
-                        <SelectItem value="in_progress" className="text-xs">Đang thực hiện</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  )}
-                />
-              </div>
-            )}
-
-            <div className="space-y-1.5">
-              <label htmlFor="collab-task-priority" className="block text-xs font-semibold text-slate-700">
-                Mức độ ưu tiên
+            <div className="space-y-1">
+              <label className="block text-xs font-semibold text-slate-700">
+                Mảng công việc
               </label>
               <Controller
-                name="priority"
+                name="category"
                 control={control}
                 render={({ field }) => (
                   <Select
-                    value={field.value || 'medium'}
+                    value={field.value || CATEGORY_OPTIONS[0]}
                     onValueChange={field.onChange}
                   >
-                    <SelectTrigger id="collab-task-priority" className="h-9 text-xs bg-slate-50/50">
-                      <SelectValue placeholder="Ưu tiên" />
+                    <SelectTrigger className="h-9 text-xs bg-slate-50/50">
+                      <SelectValue placeholder="Chọn mảng công việc" />
                     </SelectTrigger>
                     <SelectContent className="bg-white border-slate-200">
-                      <SelectItem value="low" className="text-xs text-slate-600">Thấp</SelectItem>
-                      <SelectItem value="medium" className="text-xs text-blue-600">Trung bình</SelectItem>
-                      <SelectItem value="high" className="text-xs text-amber-600">Cao</SelectItem>
-                      <SelectItem value="urgent" className="text-xs text-rose-600 font-bold">Khẩn cấp</SelectItem>
+                      {CATEGORY_OPTIONS.map((cat) => (
+                        <SelectItem key={cat} value={cat} className="text-xs">
+                          {cat}
+                        </SelectItem>
+                      ))}
                     </SelectContent>
                   </Select>
                 )}
               />
             </div>
 
-            <div className="space-y-1.5">
-              <label className="block text-xs font-semibold text-slate-700 flex items-center gap-1">
-                <Calendar className="w-3.5 h-3.5 text-slate-400" />
-                Hạn chót (Ngày)
+            <div className="space-y-1">
+              <label className="block text-xs font-semibold text-slate-700">
+                Giai đoạn
+              </label>
+              <Controller
+                name="phase"
+                control={control}
+                render={({ field }) => (
+                  <Select
+                    value={field.value || PHASE_OPTIONS[0]}
+                    onValueChange={field.onChange}
+                  >
+                    <SelectTrigger className="h-9 text-xs bg-slate-50/50">
+                      <SelectValue placeholder="Chọn giai đoạn" />
+                    </SelectTrigger>
+                    <SelectContent className="bg-white border-slate-200">
+                      {PHASE_OPTIONS.map((ph) => (
+                        <SelectItem key={ph} value={ph} className="text-xs">
+                          {ph}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                )}
+              />
+            </div>
+          </div>
+
+          {/* Sản phẩm bàn giao (Cột H trên Google Sheet) */}
+          <div className="space-y-1">
+            <div className="flex items-center justify-between">
+              <label htmlFor="collab-task-deliverable" className="block text-xs font-semibold text-slate-700">
+                Sản phẩm bàn giao / Đầu ra
+              </label>
+              <span className="text-[10px] text-slate-400">Kết quả cụ thể cần nộp</span>
+            </div>
+            <Input
+              id="collab-task-deliverable"
+              {...register('deliverable')}
+              placeholder="VD: Poster in ấn & file gốc, 50 suất cơm & nước, Kịch bản Word, Đồ Bowling..."
+              className="h-9 text-xs bg-slate-50/50 focus:bg-white"
+            />
+          </div>
+
+          {/* Hạn chót & Mức độ ưu tiên */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            <div className="space-y-1">
+              <label className="block text-xs font-semibold text-slate-700">
+                Hạn chót
               </label>
               <Controller
                 name="dueDate"
                 control={control}
                 render={({ field }) => (
                   <DatePicker
-                    value={field.value}
+                    value={field.value || ''}
                     onChange={field.onChange}
-                    placeholder="Chọn ngày hoàn thành"
+                    className="h-9 text-xs"
                   />
                 )}
               />
             </div>
 
-            <div className="space-y-1.5">
-              <label htmlFor="collab-task-time" className="block text-xs font-semibold text-slate-700 flex items-center gap-1">
-                <Clock className="w-3.5 h-3.5 text-slate-400" />
-                Khung giờ thực hiện (Tùy chọn)
+            <div className="space-y-1">
+              <label className="block text-xs font-semibold text-slate-700">
+                Khung giờ (Tùy chọn)
               </label>
               <Input
-                id="collab-task-time"
                 {...register('dueTime')}
-                placeholder="VD: 07:30 - 08:30 hoặc trước 17:00"
-                className="h-9 text-xs bg-slate-50/50"
+                placeholder="VD: 07:30 - 08:30"
+                className="h-9 text-xs bg-slate-50/50 focus:bg-white"
+              />
+            </div>
+
+            <div className="space-y-1">
+              <label className="block text-xs font-semibold text-slate-700">
+                Mức ưu tiên
+              </label>
+              <Controller
+                name="priority"
+                control={control}
+                render={({ field }) => (
+                  <Select value={field.value} onValueChange={field.onChange}>
+                    <SelectTrigger className="h-9 text-xs bg-slate-50/50">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent className="bg-white border-slate-200">
+                      <SelectItem value="low" className="text-xs">Thấp</SelectItem>
+                      <SelectItem value="medium" className="text-xs">Trung bình</SelectItem>
+                      <SelectItem value="high" className="text-xs">Cao</SelectItem>
+                      <SelectItem value="urgent" className="text-xs text-rose-600 font-semibold">Khẩn cấp</SelectItem>
+                    </SelectContent>
+                  </Select>
+                )}
               />
             </div>
           </div>
 
-          {/* Mô tả chi tiết */}
-          <div className="space-y-1.5">
+          {/* Ghi chú chi tiết */}
+          <div className="space-y-1">
             <label htmlFor="collab-task-desc" className="block text-xs font-semibold text-slate-700">
-              Yêu cầu & Ghi chú thực hiện
+              Ghi chú thêm (Tùy chọn)
             </label>
             <Textarea
               id="collab-task-desc"
               {...register('description')}
               rows={2}
-              placeholder="Ghi rõ yêu cầu đầu ra, các lưu ý về thời gian hoặc địa điểm bàn giao..."
-              className="text-xs bg-slate-50/50 resize-none"
+              placeholder="Ghi rõ lưu ý địa điểm, yêu cầu vận chuyển hoặc lưu ý người tham gia..."
+              className="text-xs bg-slate-50/50 focus:bg-white resize-none"
             />
           </div>
 
-          <DialogFooter className="pt-3 gap-2">
+          {/* Footer nút bấm */}
+          <DialogFooter className="pt-2 gap-2 border-t border-slate-100">
             <Button
               type="button"
               variant="outline"

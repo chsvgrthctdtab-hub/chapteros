@@ -65,6 +65,9 @@ const VALID_COLLAB_TASK_COLUMNS = new Set([
   'priority',
   'due_date',
   'created_at',
+  'category',
+  'deliverable',
+  'external_organization',
 ]);
 
 function sanitizeCollabTaskPayload<T extends Record<string, any>>(input: T): Partial<T> {
@@ -419,8 +422,11 @@ export const collabRepository = {
           dueDate: row.due_date,
           dueTime: row.due_time,
           phase: row.phase,
+          category: row.category || null,
+          deliverable: row.deliverable || null,
           assignedTo: row.assigned_to,
           externalAssignee: row.external_assignee,
+          externalOrganization: row.external_organization || null,
           externalContact: row.external_contact,
           organizationId: row.organization_id,
           createdAt: row.created_at,
@@ -440,8 +446,11 @@ export const collabRepository = {
         dueDate: row.due_date,
         dueTime: row.due_time,
         phase: row.phase,
+        category: row.category || null,
+        deliverable: row.deliverable || null,
         assignedTo: row.assigned_to,
         externalAssignee: row.external_assignee,
+        externalOrganization: row.external_organization || null,
         externalContact: row.external_contact,
         organizationId: row.organization_id,
         createdAt: row.created_at,
@@ -473,7 +482,10 @@ export const collabRepository = {
       const basePayload = { ...sanitizedPayload };
       delete (basePayload as any).due_time;
       delete (basePayload as any).phase;
+      delete (basePayload as any).category;
+      delete (basePayload as any).deliverable;
       delete (basePayload as any).external_assignee;
+      delete (basePayload as any).external_organization;
       delete (basePayload as any).external_contact;
 
       const retry = await supabase
@@ -497,7 +509,14 @@ export const collabRepository = {
       status: raw.status,
       priority: raw.priority,
       dueDate: raw.due_date,
+      dueTime: raw.due_time,
+      phase: raw.phase,
+      category: raw.category || null,
+      deliverable: raw.deliverable || null,
       assignedTo: raw.assigned_to,
+      externalAssignee: raw.external_assignee,
+      externalOrganization: raw.external_organization || null,
+      externalContact: raw.external_contact,
       organizationId: raw.organization_id,
       createdAt: raw.created_at,
     };
@@ -542,8 +561,11 @@ export const collabRepository = {
           dueDate: row.due_date,
           dueTime: row.due_time,
           phase: row.phase,
+          category: row.category || null,
+          deliverable: row.deliverable || null,
           assignedTo: row.assigned_to,
           externalAssignee: row.external_assignee,
+          externalOrganization: row.external_organization || null,
           externalContact: row.external_contact,
           organizationId: row.organization_id,
           createdAt: row.created_at,
@@ -604,8 +626,11 @@ export const collabRepository = {
           dueDate: row.due_date,
           dueTime: row.due_time,
           phase: row.phase,
+          category: row.category || null,
+          deliverable: row.deliverable || null,
           assignedTo: row.assigned_to,
           externalAssignee: row.external_assignee,
+          externalOrganization: row.external_organization || null,
           externalContact: row.external_contact,
           organizationId: row.organization_id,
           createdAt: row.created_at,
@@ -631,7 +656,10 @@ export const collabRepository = {
       const basePayload = { ...sanitizedPayload };
       delete (basePayload as any).due_time;
       delete (basePayload as any).phase;
+      delete (basePayload as any).category;
+      delete (basePayload as any).deliverable;
       delete (basePayload as any).external_assignee;
+      delete (basePayload as any).external_organization;
       delete (basePayload as any).external_contact;
 
       const retry = await supabase

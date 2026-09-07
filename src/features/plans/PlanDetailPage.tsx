@@ -1283,14 +1283,16 @@ export function PlanDetailPage() {
           ) : (
             <div className="overflow-x-auto border border-slate-200/80 rounded-xl">
               <table className="w-full text-left text-xs text-slate-700">
-                <thead className="bg-slate-50/80 text-[11px] font-semibold text-slate-500 uppercase tracking-wider border-b border-slate-200">
+                <thead className="bg-slate-50/90 text-[11px] font-semibold text-slate-500 uppercase tracking-wider border-b border-slate-200">
                   <tr>
                     <th className="px-4 py-3">Công việc</th>
+                    <th className="px-4 py-3">Đơn vị phụ trách</th>
                     <th className="px-4 py-3">Hoạt động</th>
-                    <th className="px-4 py-3">Trạng thái</th>
-                    <th className="px-4 py-3">Ưu tiên</th>
                     <th className="px-4 py-3">Người phụ trách</th>
+                    <th className="px-4 py-3">Sản phẩm đầu ra</th>
                     <th className="px-4 py-3">Hạn chót</th>
+                    <th className="px-4 py-3">Ưu tiên</th>
+                    <th className="px-4 py-3">Trạng thái</th>
                     {canManageOperational && <th className="px-4 py-3 text-right">Thao tác</th>}
                   </tr>
                 </thead>
@@ -1298,15 +1300,48 @@ export function PlanDetailPage() {
                   {filteredTasks.map((task) => {
                     const assigneePerson = personnel.find((p) => p.userId === task.assignedTo);
                     const act = collabActivities.find((a) => a.id === task.collabActivityId);
+                    const isLeadOrg = task.organizationId && plan?.leadOrganizationId === task.organizationId;
 
                     return (
                       <tr key={task.id} className="hover:bg-slate-50/60 transition-colors">
-                        <td className="px-4 py-3 font-semibold text-slate-900 min-w-[180px] max-w-[300px]">
-                          <div className="break-words break-all">{task.title}</div>
+                        <td className="px-4 py-3 font-semibold text-slate-900 min-w-[180px] max-w-[280px]">
+                          <div className="flex items-center gap-1.5 flex-wrap mb-0.5">
+                            {task.category && (
+                              <span className="text-[9px] px-1.5 py-0.2 rounded font-semibold bg-purple-50 text-purple-700 border border-purple-200">
+                                {task.category}
+                              </span>
+                            )}
+                          </div>
+                          <div className="break-words font-semibold text-xs sm:text-sm">{task.title}</div>
                           {task.description && (
-                            <p className="text-[11px] text-slate-500 font-normal line-clamp-1 break-words break-all">
+                            <p className="text-[11px] text-slate-500 font-normal line-clamp-1 break-words mt-0.5">
                               {task.description}
                             </p>
+                          )}
+                        </td>
+
+                        {/* Đơn vị phụ trách */}
+                        <td className="px-4 py-3 whitespace-nowrap min-w-[120px]">
+                          {task.externalOrganization ? (
+                            <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-800 border border-emerald-200">
+                              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+                              <span>{task.externalOrganization}</span>
+                            </span>
+                          ) : task.organization ? (
+                            <span className={cn(
+                              "inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold border",
+                              isLeadOrg
+                                ? "bg-rose-50 text-rose-700 border-rose-200"
+                                : "bg-blue-50 text-blue-700 border-blue-200"
+                            )}>
+                              <span className={cn(
+                                "w-1.5 h-1.5 rounded-full",
+                                isLeadOrg ? "bg-rose-500" : "bg-blue-500"
+                              )} />
+                              <span>{task.organization.code || task.organization.name}</span>
+                            </span>
+                          ) : (
+                            <span className="text-slate-400 italic text-[11px]">Chưa chỉ định</span>
                           )}
                         </td>
 
@@ -1325,33 +1360,53 @@ export function PlanDetailPage() {
                           )}
                         </td>
 
-                        <td className="px-4 py-3 whitespace-nowrap">
-                          {canManageOperational ? (
-                            <Select
-                              value={task.status}
-                              onValueChange={(val: CollabTaskStatus) => handleTaskStatusChange(task, val)}
-                            >
-                              <SelectTrigger className="h-7 text-xs w-[120px] bg-slate-50 border-slate-200">
-                                <SelectValue />
-                              </SelectTrigger>
-                              <SelectContent className="bg-white border-slate-200">
-                                <SelectItem value="todo" className="text-xs">Cần làm</SelectItem>
-                                <SelectItem value="in_progress" className="text-xs">Đang làm</SelectItem>
-                                <SelectItem value="review" className="text-xs">Chờ duyệt</SelectItem>
-                                <SelectItem value="done" className="text-xs">Hoàn thành</SelectItem>
-                              </SelectContent>
-                            </Select>
+                        {/* Người phụ trách */}
+                        <td className="px-4 py-3 min-w-[150px]">
+                          {task.externalAssignee ? (
+                            <div className="min-w-0">
+                              <span className="font-semibold text-slate-800 text-xs truncate block" title={task.externalAssignee}>
+                                {task.externalAssignee}
+                              </span>
+                              {task.externalContact && (
+                                <span className="text-[10px] text-slate-500 font-mono block">
+                                  {task.externalContact}
+                                </span>
+                              )}
+                            </div>
+                          ) : assigneePerson ? (
+                            <div className="flex items-center gap-1.5 min-w-0">
+                              <div className="w-5 h-5 rounded-full bg-purple-100 text-purple-700 font-bold text-[9px] flex items-center justify-center shrink-0">
+                                {assigneePerson.fullName.slice(0, 1)}
+                              </div>
+                              <div className="min-w-0">
+                                <span className="font-medium text-slate-900 block truncate text-xs">
+                                  {assigneePerson.fullName}
+                                </span>
+                                <span className="text-[10px] text-slate-500 block truncate" title={assigneePerson.organizationName}>
+                                  {assigneePerson.organizationCode}
+                                </span>
+                              </div>
+                            </div>
                           ) : (
-                            <Badge className="text-[10px]">
-                              {task.status === 'done'
-                                ? 'Đã hoàn thành'
-                                : task.status === 'in_progress'
-                                ? 'Đang thực hiện'
-                                : task.status === 'review'
-                                ? 'Chờ duyệt'
-                                : 'Chưa làm'}
-                            </Badge>
+                            <span className="text-slate-400 italic text-[11px]">Đơn vị tự phân công</span>
                           )}
+                        </td>
+
+                        {/* Sản phẩm đầu ra */}
+                        <td className="px-4 py-3 min-w-[140px] max-w-[200px]">
+                          {task.deliverable ? (
+                            <div className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-indigo-50 border border-indigo-200/70 text-indigo-900 font-medium text-[11px] max-w-full">
+                              <span className="shrink-0">📦</span>
+                              <span className="truncate block" title={task.deliverable}>{task.deliverable}</span>
+                            </div>
+                          ) : (
+                            <span className="text-slate-300 italic text-[11px]">--</span>
+                          )}
+                        </td>
+
+                        <td className="px-4 py-3 whitespace-nowrap font-mono text-slate-600 text-xs">
+                          {task.dueTime && <span className="text-indigo-700 font-semibold mr-1">{task.dueTime}</span>}
+                          {task.dueDate ? formatDate(task.dueDate) : '--'}
                         </td>
 
                         <td className="px-4 py-3 whitespace-nowrap">
@@ -1376,28 +1431,33 @@ export function PlanDetailPage() {
                           </Badge>
                         </td>
 
-                        <td className="px-4 py-3 min-w-[160px]">
-                          {assigneePerson ? (
-                            <div className="flex items-center gap-1.5 min-w-0">
-                              <div className="w-5 h-5 rounded-full bg-purple-100 text-purple-700 font-bold text-[9px] flex items-center justify-center shrink-0">
-                                {assigneePerson.fullName.slice(0, 1)}
-                              </div>
-                              <div className="min-w-0">
-                                <span className="font-medium text-slate-900 block truncate">
-                                  {assigneePerson.fullName}
-                                </span>
-                                <span className="text-[10px] text-slate-600 block truncate" title={assigneePerson.organizationName}>
-                                  {assigneePerson.organizationName}
-                                </span>
-                              </div>
-                            </div>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          {canManageOperational ? (
+                            <Select
+                              value={task.status}
+                              onValueChange={(val: CollabTaskStatus) => handleTaskStatusChange(task, val)}
+                            >
+                              <SelectTrigger className="h-7 text-xs w-[110px] bg-slate-50 border-slate-200">
+                                <SelectValue />
+                              </SelectTrigger>
+                              <SelectContent className="bg-white border-slate-200">
+                                <SelectItem value="todo" className="text-xs">Cần làm</SelectItem>
+                                <SelectItem value="in_progress" className="text-xs">Đang làm</SelectItem>
+                                <SelectItem value="review" className="text-xs">Chờ duyệt</SelectItem>
+                                <SelectItem value="done" className="text-xs">Hoàn thành</SelectItem>
+                              </SelectContent>
+                            </Select>
                           ) : (
-                            <span className="text-slate-400 italic text-[11px]">Chưa phân công</span>
+                            <Badge className="text-[10px]">
+                              {task.status === 'done'
+                                ? 'Đã hoàn thành'
+                                : task.status === 'in_progress'
+                                ? 'Đang thực hiện'
+                                : task.status === 'review'
+                                ? 'Chờ duyệt'
+                                : 'Chưa làm'}
+                            </Badge>
                           )}
-                        </td>
-
-                        <td className="px-4 py-3 whitespace-nowrap font-mono text-slate-600">
-                          {task.dueDate ? formatDate(task.dueDate) : '--'}
                         </td>
 
                         {canManageOperational && (

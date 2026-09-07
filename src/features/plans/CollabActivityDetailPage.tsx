@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, Fragment } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import {
   ArrowLeft,
@@ -219,6 +219,17 @@ export function CollabActivityDetailPage() {
       return true;
     });
   }, [tasks, taskStatusFilter, taskPriorityFilter, taskOrgFilter, taskSearch]);
+
+  // Gom nhóm công việc theo Mảng (Category) tương tự Google Sheet
+  const groupedTasksByCategory = useMemo(() => {
+    const groups: Record<string, CollabTask[]> = {};
+    filteredTasks.forEach((task) => {
+      const cat = task.category?.trim() || 'Công việc chung';
+      if (!groups[cat]) groups[cat] = [];
+      groups[cat].push(task);
+    });
+    return groups;
+  }, [filteredTasks]);
 
   // Filtered Participants
   const filteredParticipants = useMemo(() => {
@@ -1068,12 +1079,14 @@ export function CollabActivityDetailPage() {
               /* Table View */
               <div className="overflow-x-auto border border-slate-200/80 rounded-xl">
                 <table className="w-full text-left text-xs text-slate-700">
-                  <thead className="bg-slate-50/80 text-[11px] font-semibold text-slate-500 uppercase tracking-wider border-b border-slate-200">
+                  <thead className="bg-slate-50/90 text-[11px] font-semibold text-slate-500 uppercase tracking-wider border-b border-slate-200">
                     <tr>
-                      <th className="px-4 py-3">Tiêu đề công việc</th>
+                      <th className="px-4 py-3">Nội dung công việc</th>
+                      <th className="px-4 py-3">Đơn vị phụ trách</th>
                       <th className="px-4 py-3">Người phụ trách</th>
-                      <th className="px-4 py-3">Mức ưu tiên</th>
-                      <th className="px-4 py-3">Hạn chót</th>
+                      <th className="px-4 py-3">Sản phẩm đầu ra</th>
+                      <th className="px-4 py-3">Deadline</th>
+                      <th className="px-4 py-3">Ưu tiên</th>
                       <th className="px-4 py-3">Trạng thái</th>
                       {canManageOperational && <th className="px-4 py-3 text-right">Thao tác</th>}
                     </tr>
@@ -1081,170 +1094,223 @@ export function CollabActivityDetailPage() {
                   <tbody className="divide-y divide-slate-100 bg-white">
                     {filteredTasks.length === 0 ? (
                       <tr>
-                        <td colSpan={6} className="px-4 py-8 text-center text-slate-400 italic">
+                        <td colSpan={canManageOperational ? 8 : 7} className="px-4 py-8 text-center text-slate-400 italic">
                           Không có công việc nào phù hợp với bộ lọc
                         </td>
                       </tr>
                     ) : (
-                      filteredTasks.map((task) => {
-                        const assigneePerson = personnel.find((p) => p.userId === task.assignedTo);
-                        const isOverdue =
-                          task.dueDate &&
-                          task.dueDate < new Date().toISOString().split('T')[0] &&
-                          task.status !== 'done';
-
-                        return (
-                          <tr key={task.id} className="hover:bg-slate-50/60 transition-colors">
-                            <td className="px-4 py-3 font-semibold text-slate-900 min-w-[200px] max-w-[320px]">
-                              <div className="flex items-center gap-1.5 flex-wrap">
-                                {task.phase && (
-                                  <Badge className="bg-purple-50 text-purple-700 border-purple-200 text-[9px] px-1.5 py-0">
-                                    {task.phase}
-                                  </Badge>
-                                )}
-                                <span className="break-words break-all">{task.title}</span>
+                      Object.entries(groupedTasksByCategory).map(([categoryName, catTasks]) => (
+                        <Fragment key={categoryName}>
+                          {/* Dòng tiêu đề Mảng công việc như Google Sheet */}
+                          <tr className="bg-slate-50/90 border-t border-b border-slate-200/80">
+                            <td colSpan={canManageOperational ? 8 : 7} className="px-4 py-2 font-bold text-xs text-purple-950 bg-gradient-to-r from-purple-50/80 via-indigo-50/30 to-transparent">
+                              <div className="flex items-center gap-2">
+                                <span className="w-2.5 h-2.5 rounded-full bg-purple-600 shrink-0" />
+                                <span className="uppercase tracking-wider font-extrabold">{categoryName}</span>
+                                <span className="text-[10px] font-mono font-medium px-1.5 py-0.5 rounded-md bg-white border border-purple-200 text-purple-700">
+                                  {catTasks.length} việc
+                                </span>
                               </div>
-                              {task.description && (
-                                <p className="text-[11px] text-slate-500 font-normal line-clamp-1 break-words break-all mt-0.5">
-                                  {task.description}
-                                </p>
-                              )}
                             </td>
-
-                            <td className="px-4 py-3 min-w-[180px]">
-                              {task.externalAssignee ? (
-                                <div className="min-w-0">
-                                  <div className="flex items-center gap-1">
-                                    <Badge className="bg-purple-100 text-purple-800 border-purple-200 text-[9px] px-1.5 py-0.2 shrink-0">
-                                      Đối tác ngoài
-                                    </Badge>
-                                    <span className="font-semibold text-purple-950 truncate block text-[11px]" title={task.externalAssignee}>
-                                      {task.externalAssignee}
-                                    </span>
-                                  </div>
-                                  {task.externalContact && (
-                                    <div className="text-[10px] text-slate-500 font-mono flex items-center gap-1 mt-0.5">
-                                      <Phone className="w-2.5 h-2.5 text-slate-400" />
-                                      <span>{task.externalContact}</span>
-                                    </div>
-                                  )}
-                                </div>
-                              ) : assigneePerson ? (
-                                <div className="flex items-center gap-2 min-w-0">
-                                  <div className="w-5 h-5 rounded-full bg-purple-100 text-purple-700 font-bold text-[9px] flex items-center justify-center shrink-0">
-                                    {assigneePerson.fullName.slice(0, 1)}
-                                  </div>
-                                  <div className="min-w-0">
-                                    <span className="font-medium text-slate-900 block truncate">{assigneePerson.fullName}</span>
-                                    <div className="flex items-center gap-1 mt-0.5 min-w-0 flex-wrap">
-                                      <span className={`text-[8px] px-1 py-0.2 rounded font-semibold border shrink-0 ${getOrgTypeBadgeClass(assigneePerson.organizationType)}`}>
-                                        {getOrgTypeLabel(assigneePerson.organizationType)}
-                                      </span>
-                                      <span className="text-[10px] text-slate-600 truncate block min-w-0" title={assigneePerson.organizationName}>
-                                        {assigneePerson.organizationCode}
-                                      </span>
-                                    </div>
-                                  </div>
-                                </div>
-                              ) : (
-                                <span className="text-slate-400 italic text-[11px]">Chưa phân công</span>
-                              )}
-                            </td>
-
-                            <td className="px-4 py-3 whitespace-nowrap">
-                              <Badge
-                                className={`text-[10px] px-1.5 py-0.5 border-none ${
-                                  task.priority === 'urgent'
-                                    ? 'bg-rose-100 text-rose-800'
-                                    : task.priority === 'high'
-                                    ? 'bg-amber-100 text-amber-800'
-                                    : task.priority === 'medium'
-                                    ? 'bg-blue-100 text-blue-800'
-                                    : 'bg-slate-100 text-slate-700'
-                                }`}
-                              >
-                                {task.priority === 'urgent'
-                                  ? 'Khẩn cấp'
-                                  : task.priority === 'high'
-                                  ? 'Cao'
-                                  : task.priority === 'medium'
-                                  ? 'Trung bình'
-                                  : 'Thấp'}
-                              </Badge>
-                            </td>
-
-                            <td className="px-4 py-3 whitespace-nowrap font-mono text-[11px]">
-                              {task.dueTime && (
-                                <span className="block text-[10px] font-semibold text-indigo-700">
-                                  {task.dueTime}
-                                </span>
-                              )}
-                              {task.dueDate ? (
-                                <span className={isOverdue ? 'text-rose-600 font-bold' : 'text-slate-600'}>
-                                  {formatDate(task.dueDate)}
-                                </span>
-                              ) : !task.dueTime ? (
-                                <span className="text-slate-400 italic">--</span>
-                              ) : null}
-                            </td>
-
-                            <td className="px-4 py-3 whitespace-nowrap">
-                              {canManageOperational ? (
-                                <Select
-                                  value={task.status}
-                                  onValueChange={(val: CollabTaskStatus) => handleTaskStatusChange(task, val)}
-                                >
-                                  <SelectTrigger className="h-7 text-xs w-[120px] bg-slate-50 border-slate-200">
-                                    <SelectValue />
-                                  </SelectTrigger>
-                                  <SelectContent className="bg-white border-slate-200">
-                                    <SelectItem value="todo" className="text-xs">Cần làm</SelectItem>
-                                    <SelectItem value="in_progress" className="text-xs">Đang làm</SelectItem>
-                                    <SelectItem value="review" className="text-xs">Chờ duyệt</SelectItem>
-                                    <SelectItem value="done" className="text-xs">Hoàn thành</SelectItem>
-                                  </SelectContent>
-                                </Select>
-                              ) : (
-                                <Badge className="text-[10px]">
-                                  {task.status === 'done'
-                                    ? 'Đã hoàn thành'
-                                    : task.status === 'in_progress'
-                                    ? 'Đang thực hiện'
-                                    : task.status === 'review'
-                                    ? 'Chờ duyệt'
-                                    : 'Chưa làm'}
-                                </Badge>
-                              )}
-                            </td>
-
-                            {canManageOperational && (
-                              <td className="px-4 py-3 text-right whitespace-nowrap">
-                                <div className="flex items-center justify-end gap-1">
-                                  <Button
-                                    variant="ghost"
-                                    size="sm"
-                                    onClick={() => {
-                                      setEditingTask(task);
-                                      setIsTaskDialogOpen(true);
-                                    }}
-                                    className="h-7 w-7 p-0 text-slate-400 hover:text-purple-600"
-                                  >
-                                    <Edit className="h-3.5 w-3.5" />
-                                  </Button>
-                                  <Button
-                                    variant="ghost"
-                                    size="sm"
-                                    onClick={() => handleDeleteTask(task.id)}
-                                    className="h-7 w-7 p-0 text-slate-400 hover:text-rose-600"
-                                  >
-                                    <Trash2 className="h-3.5 w-3.5" />
-                                  </Button>
-                                </div>
-                              </td>
-                            )}
                           </tr>
-                        );
-                      })
+
+                          {catTasks.map((task) => {
+                            const assigneePerson = personnel.find((p) => p.userId === task.assignedTo);
+                            const isOverdue =
+                              task.dueDate &&
+                              task.dueDate < new Date().toISOString().split('T')[0] &&
+                              task.status !== 'done';
+                            const isLeadOrg = task.organizationId && plan?.leadOrganizationId === task.organizationId;
+
+                            return (
+                              <tr key={task.id} className="hover:bg-slate-50/60 transition-colors">
+                                {/* 1. Nội dung công việc */}
+                                <td className="px-4 py-3 font-semibold text-slate-900 min-w-[200px] max-w-[320px]">
+                                  <div className="flex items-center gap-1.5 flex-wrap mb-0.5">
+                                    {task.phase && (
+                                      <span className="inline-flex items-center text-[9px] px-1.5 py-0.2 rounded font-medium bg-purple-50 text-purple-700 border border-purple-200">
+                                        {task.phase.split(':')[0] || task.phase}
+                                      </span>
+                                    )}
+                                  </div>
+                                  <div className="text-xs sm:text-sm font-semibold text-slate-900 break-words">{task.title}</div>
+                                  {task.description && (
+                                    <p className="text-[11px] text-slate-500 font-normal line-clamp-1 break-words mt-0.5">
+                                      {task.description}
+                                    </p>
+                                  )}
+                                </td>
+
+                                {/* 2. Đơn vị phụ trách (Pill Badge màu sắc nổi bật như Sheet) */}
+                                <td className="px-4 py-3 whitespace-nowrap min-w-[130px]">
+                                  {task.externalOrganization ? (
+                                    <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-800 border border-emerald-200 shadow-2xs">
+                                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+                                      <span>{task.externalOrganization}</span>
+                                    </span>
+                                  ) : task.organization ? (
+                                    <span className={cn(
+                                      "inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold border shadow-2xs",
+                                      isLeadOrg
+                                        ? "bg-rose-50 text-rose-700 border-rose-200"
+                                        : "bg-blue-50 text-blue-700 border-blue-200"
+                                    )}>
+                                      <span className={cn(
+                                        "w-1.5 h-1.5 rounded-full",
+                                        isLeadOrg ? "bg-rose-500" : "bg-blue-500"
+                                      )} />
+                                      <span>{task.organization.code || task.organization.name}</span>
+                                    </span>
+                                  ) : (
+                                    <span className="text-slate-400 italic text-[11px]">Chưa chỉ định</span>
+                                  )}
+                                </td>
+
+                                {/* 3. Người phụ trách */}
+                                <td className="px-4 py-3 min-w-[150px]">
+                                  {task.externalAssignee ? (
+                                    <div className="min-w-0">
+                                      <span className="font-semibold text-slate-800 text-xs truncate block" title={task.externalAssignee}>
+                                        {task.externalAssignee}
+                                      </span>
+                                      {task.externalContact && (
+                                        <span className="text-[10px] text-slate-500 font-mono flex items-center gap-1 mt-0.5">
+                                          <Phone className="w-2.5 h-2.5 text-slate-400" />
+                                          <span>{task.externalContact}</span>
+                                        </span>
+                                      )}
+                                    </div>
+                                  ) : assigneePerson ? (
+                                    <div className="flex items-center gap-2 min-w-0">
+                                      <div className="w-6 h-6 rounded-full bg-purple-100 text-purple-700 font-bold text-[10px] flex items-center justify-center shrink-0">
+                                        {assigneePerson.fullName.slice(0, 1)}
+                                      </div>
+                                      <div className="min-w-0">
+                                        <span className="font-medium text-slate-900 block truncate text-xs">{assigneePerson.fullName}</span>
+                                        <span className="text-[10px] text-slate-500 truncate block min-w-0">
+                                          {assigneePerson.organizationCode}
+                                        </span>
+                                      </div>
+                                    </div>
+                                  ) : (
+                                    <span className="text-slate-400 italic text-[11px]">Đơn vị tự phân công</span>
+                                  )}
+                                </td>
+
+                                {/* 4. Sản phẩm đầu ra (Cột H như trên Sheet) */}
+                                <td className="px-4 py-3 min-w-[150px] max-w-[220px]">
+                                  {task.deliverable ? (
+                                    <div className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-indigo-50 border border-indigo-200/70 text-indigo-900 font-medium text-[11px] max-w-full">
+                                      <span className="shrink-0">📦</span>
+                                      <span className="truncate block" title={task.deliverable}>{task.deliverable}</span>
+                                    </div>
+                                  ) : (
+                                    <span className="text-slate-300 italic text-[11px]">--</span>
+                                  )}
+                                </td>
+
+                                {/* 5. Deadline */}
+                                <td className="px-4 py-3 whitespace-nowrap font-mono text-[11px]">
+                                  {task.dueTime && (
+                                    <span className="block text-[10px] font-semibold text-indigo-700">
+                                      {task.dueTime}
+                                    </span>
+                                  )}
+                                  {task.dueDate ? (
+                                    <span className={isOverdue ? 'text-rose-600 font-bold' : 'text-slate-600'}>
+                                      {formatDate(task.dueDate)}
+                                    </span>
+                                  ) : !task.dueTime ? (
+                                    <span className="text-slate-400 italic">--</span>
+                                  ) : null}
+                                </td>
+
+                                {/* 6. Mức ưu tiên */}
+                                <td className="px-4 py-3 whitespace-nowrap">
+                                  <Badge
+                                    className={`text-[10px] px-1.5 py-0.5 border-none ${
+                                      task.priority === 'urgent'
+                                        ? 'bg-rose-100 text-rose-800'
+                                        : task.priority === 'high'
+                                        ? 'bg-amber-100 text-amber-800'
+                                        : task.priority === 'medium'
+                                        ? 'bg-blue-100 text-blue-800'
+                                        : 'bg-slate-100 text-slate-700'
+                                    }`}
+                                  >
+                                    {task.priority === 'urgent'
+                                      ? 'Khẩn cấp'
+                                      : task.priority === 'high'
+                                      ? 'Cao'
+                                      : task.priority === 'medium'
+                                      ? 'Trung bình'
+                                      : 'Thấp'}
+                                  </Badge>
+                                </td>
+
+                                {/* 7. Trạng thái */}
+                                <td className="px-4 py-3 whitespace-nowrap">
+                                  {canManageOperational ? (
+                                    <Select
+                                      value={task.status}
+                                      onValueChange={(val: CollabTaskStatus) => handleTaskStatusChange(task, val)}
+                                    >
+                                      <SelectTrigger className="h-7 text-xs w-[115px] bg-slate-50 border-slate-200">
+                                        <SelectValue />
+                                      </SelectTrigger>
+                                      <SelectContent className="bg-white border-slate-200">
+                                        <SelectItem value="todo" className="text-xs">Cần làm</SelectItem>
+                                        <SelectItem value="in_progress" className="text-xs">Đang làm</SelectItem>
+                                        <SelectItem value="review" className="text-xs">Chờ duyệt</SelectItem>
+                                        <SelectItem value="done" className="text-xs">Hoàn thành</SelectItem>
+                                      </SelectContent>
+                                    </Select>
+                                  ) : (
+                                    <Badge className="text-[10px]">
+                                      {task.status === 'done'
+                                        ? 'Đã hoàn thành'
+                                        : task.status === 'in_progress'
+                                        ? 'Đang thực hiện'
+                                        : task.status === 'review'
+                                        ? 'Chờ duyệt'
+                                        : 'Chưa làm'}
+                                    </Badge>
+                                  )}
+                                </td>
+
+                                {/* 8. Thao tác */}
+                                {canManageOperational && (
+                                  <td className="px-4 py-3 text-right whitespace-nowrap">
+                                    <div className="flex items-center justify-end gap-1">
+                                      <Button
+                                        variant="ghost"
+                                        size="sm"
+                                        onClick={() => {
+                                          setEditingTask(task);
+                                          setIsTaskDialogOpen(true);
+                                        }}
+                                        className="h-7 w-7 p-0 text-slate-400 hover:text-purple-600"
+                                        title="Chỉnh sửa"
+                                      >
+                                        <Edit className="h-3.5 w-3.5" />
+                                      </Button>
+                                      <Button
+                                        variant="ghost"
+                                        size="sm"
+                                        onClick={() => handleDeleteTask(task.id)}
+                                        className="h-7 w-7 p-0 text-slate-400 hover:text-rose-600"
+                                        title="Xóa"
+                                      >
+                                        <Trash2 className="h-3.5 w-3.5" />
+                                      </Button>
+                                    </div>
+                                  </td>
+                                )}
+                              </tr>
+                            );
+                          })}
+                        </Fragment>
+                      ))
                     )}
                   </tbody>
                 </table>

@@ -355,6 +355,33 @@ export function CollabTimelineExportModal({
                                   <span className={cn('text-[9px] px-1.5 py-0.2 rounded font-bold uppercase', priority.color)}>
                                     {priority.label}
                                   </span>
+
+                                  {/* Pill badge đơn vị phụ trách */}
+                                  {t.externalOrganization ? (
+                                    <span className="text-[10px] px-2 py-0.5 rounded-full font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/40">
+                                      🏷️ {t.externalOrganization}
+                                    </span>
+                                  ) : t.organization ? (
+                                    <span className={cn(
+                                      'text-[10px] px-2 py-0.5 rounded-full font-bold border',
+                                      theme === 'navy'
+                                        ? 'bg-rose-500/20 text-rose-300 border-rose-500/40'
+                                        : 'bg-rose-50 text-rose-700 border-rose-200'
+                                    )}>
+                                      🏷️ {t.organization.code || t.organization.name}
+                                    </span>
+                                  ) : null}
+
+                                  {t.category && (
+                                    <span className={cn(
+                                      'text-[9px] px-1.5 py-0.2 rounded font-semibold',
+                                      theme === 'navy'
+                                        ? 'bg-purple-950 text-purple-300 border border-purple-500/30'
+                                        : 'bg-purple-50 text-purple-800 border border-purple-200'
+                                    )}>
+                                      {t.category}
+                                    </span>
+                                  )}
                                 </div>
 
                                 <div className={cn('font-semibold flex items-center gap-1 text-[11px]', status.color)}>
@@ -367,6 +394,19 @@ export function CollabTimelineExportModal({
                               <div className="font-bold text-sm leading-snug">
                                 {t.title}
                               </div>
+
+                              {/* Deliverable Product if available */}
+                              {t.deliverable && (
+                                <div className={cn(
+                                  'inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-[11px] font-semibold mt-0.5',
+                                  theme === 'navy'
+                                    ? 'bg-indigo-950/90 text-indigo-200 border border-indigo-500/40'
+                                    : 'bg-indigo-50 text-indigo-900 border border-indigo-200'
+                                )}>
+                                  <span>📦</span>
+                                  <span>Sản phẩm: <strong>{t.deliverable}</strong></span>
+                                </div>
+                              )}
 
                               {/* Description if available */}
                               {t.description && (
