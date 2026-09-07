@@ -61,7 +61,7 @@ export const TRANSLATIONS: Record<Language, Record<string, string>> = {
     'status.cancelled': 'Đã hủy',
 
     // Roles (Exact Domain Spec)
-    'role.admin': 'Quản trị viên Chi hội',
+    'role.admin': 'Quản trị viên Đơn vị',
     'role.leader': 'Chi hội trưởng',
     'role.deputy': 'Chi hội phó',
     'role.treasurer': 'Thủ quỹ',

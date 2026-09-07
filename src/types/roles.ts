@@ -19,14 +19,14 @@ export interface RoleDefinition {
 
 export const ROLE_LABELS: Record<Language, Record<OrganizationRole, string>> = {
   vi: {
-    admin: 'Quản trị viên Chi hội',
+    admin: 'Quản trị viên Đơn vị',
     leader: 'Chi hội trưởng',
     deputy: 'Chi hội phó',
     treasurer: 'Thủ quỹ',
     secretary: 'Thư ký / Ủy viên',
   },
   en: {
-    admin: 'Chapter Administrator',
+    admin: 'Organization Administrator',
     leader: 'Chapter Leader',
     deputy: 'Deputy Leader',
     treasurer: 'Treasurer',
@@ -54,9 +54,9 @@ export const ROLE_SHORT_LABELS: Record<Language, Record<OrganizationRole, string
 export const ROLES: Record<OrganizationRole, RoleDefinition> = {
   admin: {
     key: 'admin',
-    label: 'Quản trị viên Chi hội',
+    label: 'Quản trị viên Đơn vị',
     shortLabel: 'Admin',
-    description: 'Toàn quyền cấu hình Chi hội, phân quyền thành viên và quản lý hệ thống.',
+    description: 'Toàn quyền cấu hình Đơn vị, phân quyền thành viên và quản lý hệ thống.',
     level: 1,
     badgeVariant: 'destructive',
     colorClasses: {
@@ -270,7 +270,7 @@ export function getRoleLabel(
       if (doanMap[role]) return doanMap[role];
     } else if (!t || t === 'chi_hoi' || t === 'chihoi' || t === 'ch') {
       const chMap: Record<OrganizationRole, string> = {
-        admin: 'Quản trị viên Chi hội',
+        admin: 'Quản trị viên Đơn vị',
         leader: 'Chi hội trưởng',
         deputy: 'Chi hội phó',
         treasurer: 'Thủ quỹ',

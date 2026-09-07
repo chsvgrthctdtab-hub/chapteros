@@ -104,7 +104,7 @@ export function formatErrorMessage(error: unknown, fallbackMessage = 'Đã xảy
   ) {
     return {
       title: 'Không có quyền truy cập',
-      message: 'Bạn không có quyền thực hiện thao tác này. Vui lòng liên hệ Ban Chấp Hành hoặc Quản trị viên Chi hội.',
+      message: 'Bạn không có quyền thực hiện thao tác này. Vui lòng liên hệ Ban Chấp Hành hoặc Quản trị viên Đơn vị.',
       isPermissionError: true,
       isNetworkError: false,
       isDuplicateError: false,

@@ -41,7 +41,7 @@ interface DashboardHeaderProps {
 }
 
 const ROLE_DISPLAY_NAMES: Record<string, string> = {
-  admin: 'Quản trị viên Chi hội',
+  admin: 'Quản trị viên Đơn vị',
   leader: 'Chi hội trưởng',
   deputy: 'Chi hội phó',
   treasurer: 'Ủy viên / Thủ quỹ',
