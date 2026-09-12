@@ -406,7 +406,7 @@ export function CollabActivityDetailPage() {
   ];
 
   return (
-    <div id="collab-activity-detail-page" className="p-4 sm:p-6 lg:p-8 max-w-7xl mx-auto space-y-6">
+    <div id="collab-activity-detail-page" className="w-full space-y-5">
       {/* Top breadcrumb & Actions Bar */}
       <div className="flex items-center justify-between flex-wrap gap-3">
         <Button
