@@ -18,17 +18,13 @@ import {
   CheckCircle2,
   DollarSign,
   Users,
-  UserCheck,
-  UserX,
   UserPlus,
   Download,
   Check,
   X,
   Loader2,
   ShieldCheck,
-  Percent,
   FileSpreadsheet,
-  Sparkles,
   Phone,
   Flag,
   Share2,
@@ -63,7 +59,6 @@ import { ActivityGoogleFormsSection } from '@/features/activities/components/Act
 import { CreateCollabTaskDialog } from '@/features/plans/components/CreateCollabTaskDialog';
 import { AddCollabParticipantDialog } from '@/features/plans/components/AddCollabParticipantDialog';
 import { ImportCollabParticipantsModal } from '@/features/plans/components/ImportCollabParticipantsModal';
-import { CollabTimelineExportModal } from '@/features/plans/components/CollabTimelineExportModal';
 import { useAuth } from '@/contexts/AuthContext';
 import { isOrgBoard } from '@/types/roles';
 import { formatError } from '@/lib/error-formatter';
@@ -81,7 +76,6 @@ export function CollabActivityDetailPage() {
 
   const [activeTab, setActiveTab] = useState<CollabActivityTab>('tasks');
   const [viewMode, setViewMode] = useState<'table' | 'kanban' | 'timeline'>('table');
-  const [isExportPosterOpen, setIsExportPosterOpen] = useState(false);
 
   // Task filters
   const [taskSearch, setTaskSearch] = useState('');
@@ -206,7 +200,14 @@ export function CollabActivityDetailPage() {
   // Filtered Tasks
   const filteredTasks = useMemo(() => {
     return tasks.filter((task) => {
-      if (taskStatusFilter !== 'all' && task.status !== taskStatusFilter) return false;
+      if (taskStatusFilter !== 'all') {
+        if (taskStatusFilter === 'overdue') {
+          const today = new Date().toISOString().split('T')[0];
+          if (!(task.dueDate && task.dueDate < today && task.status !== 'done')) return false;
+        } else if (task.status !== taskStatusFilter) {
+          return false;
+        }
+      }
       if (taskPriorityFilter !== 'all' && task.priority !== taskPriorityFilter) return false;
       if (taskOrgFilter !== 'all' && task.organizationId !== taskOrgFilter) return false;
 
@@ -566,206 +567,318 @@ export function CollabActivityDetailPage() {
         </div>
       </div>
 
-      {/* Tabs Navigation Header */}
-      <div className="flex items-center gap-2 border-b border-slate-200 pb-1 overflow-x-auto">
+      {/* Tabs Navigation Header - Minimal Underline Style */}
+      <div className="flex items-center gap-1 border-b border-slate-200 overflow-x-auto scrollbar-none">
         <button
+          type="button"
           onClick={() => setActiveTab('tasks')}
           className={cn(
-            'px-4 py-2 text-xs font-bold rounded-xl flex items-center gap-2 transition-all whitespace-nowrap cursor-pointer',
+            'flex items-center gap-2 py-3 px-3.5 text-xs font-semibold border-b-2 transition-all whitespace-nowrap cursor-pointer -mb-px',
             activeTab === 'tasks'
-              ? 'bg-purple-600 text-white shadow-xs'
-              : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
+              ? 'border-purple-600 text-purple-700 font-bold'
+              : 'border-transparent text-slate-500 hover:text-slate-900 hover:border-slate-300'
           )}
         >
-          <CheckSquare className="h-4 w-4" />
-          <span>Nhiệm Vụ ({tasks.length})</span>
+          <CheckSquare className="h-4 w-4 shrink-0" />
+          <span>Nhiệm vụ</span>
+          <span
+            className={cn(
+              'text-[10px] px-1.5 py-0.2 rounded-full font-mono font-medium',
+              activeTab === 'tasks' ? 'bg-purple-100 text-purple-800' : 'bg-slate-100 text-slate-600'
+            )}
+          >
+            {tasks.length}
+          </span>
         </button>
 
         <button
+          type="button"
           onClick={() => setActiveTab('participants')}
           className={cn(
-            'px-4 py-2 text-xs font-bold rounded-xl flex items-center gap-2 transition-all whitespace-nowrap cursor-pointer',
+            'flex items-center gap-2 py-3 px-3.5 text-xs font-semibold border-b-2 transition-all whitespace-nowrap cursor-pointer -mb-px',
             activeTab === 'participants'
-              ? 'bg-purple-600 text-white shadow-xs'
-              : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
+              ? 'border-purple-600 text-purple-700 font-bold'
+              : 'border-transparent text-slate-500 hover:text-slate-900 hover:border-slate-300'
           )}
         >
-          <Users className="h-4 w-4" />
-          <span>Người Tham Gia & Điểm Danh ({participantStats.total})</span>
+          <Users className="h-4 w-4 shrink-0" />
+          <span>Người tham gia</span>
+          <span
+            className={cn(
+              'text-[10px] px-1.5 py-0.2 rounded-full font-mono font-medium',
+              activeTab === 'participants' ? 'bg-purple-100 text-purple-800' : 'bg-slate-100 text-slate-600'
+            )}
+          >
+            {participantStats.total}
+          </span>
         </button>
 
         <button
+          type="button"
           onClick={() => setActiveTab('forms')}
           className={cn(
-            'px-4 py-2 text-xs font-bold rounded-xl flex items-center gap-2 transition-all whitespace-nowrap cursor-pointer',
+            'flex items-center gap-2 py-3 px-3.5 text-xs font-semibold border-b-2 transition-all whitespace-nowrap cursor-pointer -mb-px',
             activeTab === 'forms'
-              ? 'bg-purple-600 text-white shadow-xs'
-              : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
+              ? 'border-purple-600 text-purple-700 font-bold'
+              : 'border-transparent text-slate-500 hover:text-slate-900 hover:border-slate-300'
           )}
         >
-          <FileSpreadsheet className="h-4 w-4" />
-          <span>Biểu Mẫu Google Form ({forms.length})</span>
+          <FileSpreadsheet className="h-4 w-4 shrink-0" />
+          <span>Google Form</span>
+          {forms.length > 0 && (
+            <span
+              className={cn(
+                'text-[10px] px-1.5 py-0.2 rounded-full font-mono font-medium',
+                activeTab === 'forms' ? 'bg-purple-100 text-purple-800' : 'bg-slate-100 text-slate-600'
+              )}
+            >
+              {forms.length}
+            </span>
+          )}
         </button>
 
         <button
+          type="button"
           onClick={() => setActiveTab('finance')}
           className={cn(
-            'px-4 py-2 text-xs font-bold rounded-xl flex items-center gap-2 transition-all whitespace-nowrap cursor-pointer',
+            'flex items-center gap-2 py-3 px-3.5 text-xs font-semibold border-b-2 transition-all whitespace-nowrap cursor-pointer -mb-px',
             activeTab === 'finance'
-              ? 'bg-purple-600 text-white shadow-xs'
-              : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
+              ? 'border-purple-600 text-purple-700 font-bold'
+              : 'border-transparent text-slate-500 hover:text-slate-900 hover:border-slate-300'
           )}
         >
-          <DollarSign className="h-4 w-4" />
-          <span>Chi Phí & Thu Chi ({transactions.length})</span>
+          <DollarSign className="h-4 w-4 shrink-0" />
+          <span>Thu chi</span>
+          {transactions.length > 0 && (
+            <span
+              className={cn(
+                'text-[10px] px-1.5 py-0.2 rounded-full font-mono font-medium',
+                activeTab === 'finance' ? 'bg-purple-100 text-purple-800' : 'bg-slate-100 text-slate-600'
+              )}
+            >
+              {transactions.length}
+            </span>
+          )}
         </button>
       </div>
 
       {/* TAB CONTENT 1: TASKS */}
       {activeTab === 'tasks' && (
-        <div className="space-y-4">
-          {/* Task Stat Cards */}
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
-            <div className="bg-white border border-slate-200/80 rounded-xl p-3 text-center">
-              <span className="text-[11px] text-slate-500 font-medium block">Tổng Công Việc</span>
-              <span className="text-lg font-bold text-slate-900 font-mono mt-0.5 block">{stats.total}</span>
+        <div className="bg-white border border-slate-200/80 rounded-2xl p-4 sm:p-5 shadow-sm space-y-4">
+          {/* Top Bar: Interactive Status Chips + Progress Indicator */}
+          <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-3 pb-3 border-b border-slate-100">
+            {/* Quick Interactive Status Filter Chips */}
+            <div className="flex items-center gap-1.5 flex-wrap">
+              <button
+                type="button"
+                onClick={() => setTaskStatusFilter('all')}
+                className={cn(
+                  'h-7 px-2.5 rounded-lg text-xs font-semibold flex items-center gap-1.5 transition-all cursor-pointer',
+                  taskStatusFilter === 'all'
+                    ? 'bg-slate-900 text-white shadow-xs'
+                    : 'bg-slate-100 text-slate-600 hover:bg-slate-200/70'
+                )}
+              >
+                <span>Tất cả</span>
+                <span className={cn('text-[10px] font-mono px-1 rounded', taskStatusFilter === 'all' ? 'bg-slate-800 text-slate-200' : 'bg-slate-200/80 text-slate-600')}>
+                  {stats.total}
+                </span>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => setTaskStatusFilter(taskStatusFilter === 'todo' ? 'all' : 'todo')}
+                className={cn(
+                  'h-7 px-2.5 rounded-lg text-xs font-semibold flex items-center gap-1.5 transition-all cursor-pointer',
+                  taskStatusFilter === 'todo'
+                    ? 'bg-slate-700 text-white shadow-xs'
+                    : 'bg-slate-50 text-slate-600 hover:bg-slate-100 border border-slate-200/70'
+                )}
+              >
+                <span className="w-1.5 h-1.5 rounded-full bg-slate-400" />
+                <span>Cần làm</span>
+                <span className="text-[10px] font-mono text-slate-500">
+                  {stats.todo}
+                </span>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => setTaskStatusFilter(taskStatusFilter === 'in_progress' ? 'all' : 'in_progress')}
+                className={cn(
+                  'h-7 px-2.5 rounded-lg text-xs font-semibold flex items-center gap-1.5 transition-all cursor-pointer',
+                  taskStatusFilter === 'in_progress'
+                    ? 'bg-blue-600 text-white shadow-xs'
+                    : 'bg-blue-50/70 text-blue-700 hover:bg-blue-100/80 border border-blue-200/60'
+                )}
+              >
+                <span className="w-1.5 h-1.5 rounded-full bg-blue-500" />
+                <span>Đang làm</span>
+                <span className={cn('text-[10px] font-mono px-1 rounded', taskStatusFilter === 'in_progress' ? 'bg-blue-700 text-blue-100' : 'text-blue-700')}>
+                  {stats.inProgress}
+                </span>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => setTaskStatusFilter(taskStatusFilter === 'review' ? 'all' : 'review')}
+                className={cn(
+                  'h-7 px-2.5 rounded-lg text-xs font-semibold flex items-center gap-1.5 transition-all cursor-pointer',
+                  taskStatusFilter === 'review'
+                    ? 'bg-amber-600 text-white shadow-xs'
+                    : 'bg-amber-50/70 text-amber-700 hover:bg-amber-100/80 border border-amber-200/60'
+                )}
+              >
+                <span className="w-1.5 h-1.5 rounded-full bg-amber-500" />
+                <span>Chờ duyệt</span>
+                <span className={cn('text-[10px] font-mono px-1 rounded', taskStatusFilter === 'review' ? 'bg-amber-700 text-amber-100' : 'text-amber-700')}>
+                  {stats.review}
+                </span>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => setTaskStatusFilter(taskStatusFilter === 'done' ? 'all' : 'done')}
+                className={cn(
+                  'h-7 px-2.5 rounded-lg text-xs font-semibold flex items-center gap-1.5 transition-all cursor-pointer',
+                  taskStatusFilter === 'done'
+                    ? 'bg-emerald-600 text-white shadow-xs'
+                    : 'bg-emerald-50/70 text-emerald-700 hover:bg-emerald-100/80 border border-emerald-200/60'
+                )}
+              >
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+                <span>Đã xong</span>
+                <span className={cn('text-[10px] font-mono px-1 rounded', taskStatusFilter === 'done' ? 'bg-emerald-700 text-emerald-100' : 'text-emerald-700')}>
+                  {stats.completed}
+                </span>
+              </button>
+
+              {stats.overdue > 0 && (
+                <button
+                  type="button"
+                  onClick={() => setTaskStatusFilter(taskStatusFilter === 'overdue' ? 'all' : 'overdue')}
+                  className={cn(
+                    'h-7 px-2.5 rounded-lg text-xs font-semibold flex items-center gap-1.5 transition-all cursor-pointer',
+                    taskStatusFilter === 'overdue'
+                      ? 'bg-rose-600 text-white shadow-xs'
+                      : 'bg-rose-50 text-rose-700 hover:bg-rose-100 border border-rose-200'
+                  )}
+                >
+                  <span className="w-1.5 h-1.5 rounded-full bg-rose-500 animate-pulse" />
+                  <span>Trễ hạn</span>
+                  <span className="text-[10px] font-mono font-bold text-rose-700">
+                    {stats.overdue}
+                  </span>
+                </button>
+              )}
             </div>
 
-            <div className="bg-emerald-50/60 border border-emerald-200/80 rounded-xl p-3 text-center">
-              <span className="text-[11px] text-emerald-800 font-medium block">Đã Hoàn Thành</span>
-              <span className="text-lg font-bold text-emerald-700 font-mono mt-0.5 block">{stats.completed}</span>
-            </div>
-
-            <div className="bg-blue-50/60 border border-blue-200/80 rounded-xl p-3 text-center">
-              <span className="text-[11px] text-blue-800 font-medium block">Đang Thực Hiện</span>
-              <span className="text-lg font-bold text-blue-700 font-mono mt-0.5 block">{stats.inProgress}</span>
-            </div>
-
-            <div className="bg-amber-50/60 border border-amber-200/80 rounded-xl p-3 text-center">
-              <span className="text-[11px] text-amber-800 font-medium block">Chờ Duyệt</span>
-              <span className="text-lg font-bold text-amber-700 font-mono mt-0.5 block">{stats.review}</span>
-            </div>
-
-            <div className="bg-rose-50/60 border border-rose-200/80 rounded-xl p-3 text-center">
-              <span className="text-[11px] text-rose-800 font-medium block">Trễ Hạn (Overdue)</span>
-              <span className="text-lg font-bold text-rose-700 font-mono mt-0.5 block">{stats.overdue}</span>
+            {/* Completion Rate indicator */}
+            <div className="flex items-center gap-2.5 text-xs text-slate-500 self-end lg:self-auto shrink-0">
+              <span className="text-[11px] font-medium text-slate-500">Tiến độ:</span>
+              <div className="w-24 h-2 bg-slate-100 rounded-full overflow-hidden border border-slate-200/70">
+                <div
+                  className="h-full bg-gradient-to-r from-purple-500 to-emerald-500 rounded-full transition-all duration-300"
+                  style={{ width: `${stats.total > 0 ? Math.round((stats.completed / stats.total) * 100) : 0}%` }}
+                />
+              </div>
+              <span className="text-[11px] font-mono font-bold text-slate-700">
+                {stats.completed}/{stats.total} ({stats.total > 0 ? Math.round((stats.completed / stats.total) * 100) : 0}%)
+              </span>
             </div>
           </div>
 
-          {/* Task Management Dashboard */}
-          <div className="bg-white border border-slate-200/80 rounded-2xl p-5 shadow-sm space-y-4">
-            <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 pb-3 border-b border-slate-100">
-              <div>
-                <h2 className="text-sm font-bold text-slate-900 flex items-center gap-2">
-                  <CheckSquare className="h-4 w-4 text-purple-600" />
-                  Nhiệm Vụ ({filteredTasks.length})
-                </h2>
-                <p className="text-[11px] text-slate-500 mt-0.5">
-                  Quản lý và phân công công việc liên đơn vị.
-                </p>
-              </div>
+          {/* Action Row: Search, Filters, View Modes & Giao việc */}
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-3">
+            <div className="relative flex-1 max-w-sm">
+              <Search className="absolute left-2.5 top-2 h-3.5 w-3.5 text-slate-400" />
+              <Input
+                value={taskSearch}
+                onChange={(e) => setTaskSearch(e.target.value)}
+                placeholder="Tìm việc, người phụ trách..."
+                className="pl-8 h-8 text-xs bg-slate-50 border-slate-200"
+              />
+            </div>
 
-              <div className="flex items-center gap-2 flex-wrap">
-                <div className="relative min-w-[180px]">
-                  <Search className="absolute left-2.5 top-2 h-3.5 w-3.5 text-slate-400" />
-                  <Input
-                    value={taskSearch}
-                    onChange={(e) => setTaskSearch(e.target.value)}
-                    placeholder="Tìm việc, người phụ trách..."
-                    className="pl-8 h-8 text-xs bg-slate-50 border-slate-200"
-                  />
-                </div>
+            <div className="flex items-center gap-2 flex-wrap sm:flex-nowrap">
+              <Select value={taskPriorityFilter} onValueChange={setTaskPriorityFilter}>
+                <SelectTrigger className="h-8 text-xs w-[110px] bg-slate-50">
+                  <SelectValue placeholder="Ưu tiên" />
+                </SelectTrigger>
+                <SelectContent className="bg-white border-slate-200">
+                  <SelectItem value="all" className="text-xs">Tất cả ưu tiên</SelectItem>
+                  <SelectItem value="urgent" className="text-xs">Khẩn cấp</SelectItem>
+                  <SelectItem value="high" className="text-xs">Cao</SelectItem>
+                  <SelectItem value="medium" className="text-xs">Trung bình</SelectItem>
+                  <SelectItem value="low" className="text-xs">Thấp</SelectItem>
+                </SelectContent>
+              </Select>
 
-                <Select value={taskPriorityFilter} onValueChange={setTaskPriorityFilter}>
-                  <SelectTrigger className="h-8 text-xs w-[110px] bg-slate-50">
-                    <SelectValue placeholder="Ưu tiên" />
+              {participatingOrganizations.length > 1 && (
+                <Select value={taskOrgFilter} onValueChange={setTaskOrgFilter}>
+                  <SelectTrigger className="h-8 text-xs w-[130px] bg-slate-50">
+                    <SelectValue placeholder="Đơn vị phụ trách" />
                   </SelectTrigger>
                   <SelectContent className="bg-white border-slate-200">
-                    <SelectItem value="all" className="text-xs">Tất cả ưu tiên</SelectItem>
-                    <SelectItem value="urgent" className="text-xs">Khẩn cấp</SelectItem>
-                    <SelectItem value="high" className="text-xs">Cao</SelectItem>
-                    <SelectItem value="medium" className="text-xs">Trung bình</SelectItem>
-                    <SelectItem value="low" className="text-xs">Thấp</SelectItem>
+                    <SelectItem value="all" className="text-xs">Tất cả đơn vị</SelectItem>
+                    {participatingOrganizations.map((org) => (
+                      <SelectItem key={org.id} value={org.id} className="text-xs">
+                        {org.code} - {org.name}
+                      </SelectItem>
+                    ))}
                   </SelectContent>
                 </Select>
+              )}
 
-                {participatingOrganizations.length > 1 && (
-                  <Select value={taskOrgFilter} onValueChange={setTaskOrgFilter}>
-                    <SelectTrigger className="h-8 text-xs w-[130px] bg-slate-50">
-                      <SelectValue placeholder="Đơn vị phụ trách" />
-                    </SelectTrigger>
-                    <SelectContent className="bg-white border-slate-200">
-                      <SelectItem value="all" className="text-xs">Tất cả đơn vị</SelectItem>
-                      {participatingOrganizations.map((org) => (
-                        <SelectItem key={org.id} value={org.id} className="text-xs">
-                          {org.code} - {org.name}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                )}
-
-                <div className="flex items-center border border-slate-200 rounded-lg p-0.5 bg-slate-50">
-                  <button
-                    type="button"
-                    onClick={() => setViewMode('table')}
-                    className={`p-1.5 rounded-md transition-colors ${
-                      viewMode === 'table' ? 'bg-white shadow-xs text-purple-700 font-medium' : 'text-slate-500 hover:text-slate-700'
-                    }`}
-                    title="Xem dạng bảng"
-                  >
-                    <List className="h-3.5 w-3.5" />
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => setViewMode('kanban')}
-                    className={`p-1.5 rounded-md transition-colors ${
-                      viewMode === 'kanban' ? 'bg-white shadow-xs text-purple-700 font-medium' : 'text-slate-500 hover:text-slate-700'
-                    }`}
-                    title="Xem dạng bảng Kanban"
-                  >
-                    <Kanban className="h-3.5 w-3.5" />
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => setViewMode('timeline')}
-                    className={`p-1.5 rounded-md transition-colors ${
-                      viewMode === 'timeline' ? 'bg-white shadow-xs text-purple-700 font-medium' : 'text-slate-500 hover:text-slate-700'
-                    }`}
-                    title="Xem dòng thời gian Timeline"
-                  >
-                    <Clock className="h-3.5 w-3.5" />
-                  </button>
-                </div>
-
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() => setIsExportPosterOpen(true)}
-                  className="h-8 text-xs bg-purple-50 text-purple-700 border-purple-200 hover:bg-purple-100 flex items-center gap-1.5 font-semibold cursor-pointer shadow-2xs"
-                  title="Xuất ảnh infographic kế hoạch tác chiến gửi Zalo"
+              <div className="flex items-center border border-slate-200 rounded-lg p-0.5 bg-slate-50">
+                <button
+                  type="button"
+                  onClick={() => setViewMode('table')}
+                  className={`p-1.5 rounded-md transition-colors cursor-pointer ${
+                    viewMode === 'table' ? 'bg-white shadow-xs text-purple-700 font-medium' : 'text-slate-500 hover:text-slate-700'
+                  }`}
+                  title="Xem dạng bảng"
                 >
-                  <Sparkles className="w-3.5 h-3.5 text-purple-600 shrink-0" />
-                  <span className="hidden sm:inline">Xuất Poster (Zalo)</span>
-                  <span className="sm:hidden">Poster</span>
-                </Button>
-
-                {canManageOperational && (
-                  <Button
-                    id="btn-add-collab-task-main"
-                    size="sm"
-                    onClick={() => {
-                      setEditingTask(null);
-                      setIsTaskDialogOpen(true);
-                    }}
-                    className="h-8 text-xs bg-purple-600 hover:bg-purple-700 text-white shadow-sm font-semibold"
-                  >
-                    <Plus className="h-3.5 w-3.5 mr-1" />
-                    Giao việc
-                  </Button>
-                )}
+                  <List className="h-3.5 w-3.5" />
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setViewMode('kanban')}
+                  className={`p-1.5 rounded-md transition-colors cursor-pointer ${
+                    viewMode === 'kanban' ? 'bg-white shadow-xs text-purple-700 font-medium' : 'text-slate-500 hover:text-slate-700'
+                  }`}
+                  title="Xem dạng bảng Kanban"
+                >
+                  <Kanban className="h-3.5 w-3.5" />
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setViewMode('timeline')}
+                  className={`p-1.5 rounded-md transition-colors cursor-pointer ${
+                    viewMode === 'timeline' ? 'bg-white shadow-xs text-purple-700 font-medium' : 'text-slate-500 hover:text-slate-700'
+                  }`}
+                  title="Xem dòng thời gian Timeline"
+                >
+                  <Clock className="h-3.5 w-3.5" />
+                </button>
               </div>
+
+              {canManageOperational && (
+                <Button
+                  id="btn-add-collab-task-main"
+                  size="sm"
+                  onClick={() => {
+                    setEditingTask(null);
+                    setIsTaskDialogOpen(true);
+                  }}
+                  className="h-8 text-xs bg-purple-600 hover:bg-purple-700 text-white shadow-sm font-semibold cursor-pointer"
+                >
+                  <Plus className="h-3.5 w-3.5 mr-1" />
+                  Giao việc
+                </Button>
+              )}
             </div>
+          </div>
 
             {/* Kanban Board View */}
             {viewMode === 'kanban' ? (
@@ -1340,117 +1453,127 @@ export function CollabActivityDetailPage() {
                 </table>
               </div>
             )}
-          </div>
         </div>
       )}
 
       {/* TAB CONTENT 2: PARTICIPANTS & INSTANT 0ms ATTENDANCE */}
       {activeTab === 'participants' && (
-        <div className="space-y-4">
-          {/* KPI Stat Cards (Standard 4 Cards) */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-            <Card className="p-4 border-slate-200/80 shadow-2xs">
-              <div className="flex items-center justify-between text-slate-500 text-xs font-semibold">
-                <span>Tổng người tham gia</span>
-                <Users className="h-4 w-4 text-purple-600" />
-              </div>
-              <div className="mt-2 text-2xl font-black text-slate-900 font-mono">
-                {participantStats.total}
-              </div>
-              <div className="text-[11px] text-slate-400 mt-0.5">Hội viên & Tình nguyện viên</div>
-            </Card>
+        <div className="bg-white border border-slate-200/80 rounded-2xl p-4 sm:p-5 shadow-sm space-y-4">
+          {/* Top Bar: Interactive Participant Status Chips + Attendance Rate */}
+          <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-3 pb-3 border-b border-slate-100">
+            {/* Quick Interactive Status Filter Chips */}
+            <div className="flex items-center gap-1.5 flex-wrap">
+              <button
+                type="button"
+                onClick={() => setParticipantStatusFilter('all')}
+                className={cn(
+                  'h-7 px-2.5 rounded-lg text-xs font-semibold flex items-center gap-1.5 transition-all cursor-pointer',
+                  participantStatusFilter === 'all'
+                    ? 'bg-slate-900 text-white shadow-xs'
+                    : 'bg-slate-100 text-slate-600 hover:bg-slate-200/70'
+                )}
+              >
+                <span>Tất cả</span>
+                <span className={cn('text-[10px] font-mono px-1 rounded', participantStatusFilter === 'all' ? 'bg-slate-800 text-slate-200' : 'bg-slate-200/80 text-slate-600')}>
+                  {participantStats.total}
+                </span>
+              </button>
 
-            <Card className="p-4 border-emerald-200/80 bg-emerald-50/40 shadow-2xs">
-              <div className="flex items-center justify-between text-emerald-800 text-xs font-semibold">
+              <button
+                type="button"
+                onClick={() => setParticipantStatusFilter(participantStatusFilter === 'present' ? 'all' : 'present')}
+                className={cn(
+                  'h-7 px-2.5 rounded-lg text-xs font-semibold flex items-center gap-1.5 transition-all cursor-pointer',
+                  participantStatusFilter === 'present'
+                    ? 'bg-emerald-600 text-white shadow-xs'
+                    : 'bg-emerald-50/70 text-emerald-700 hover:bg-emerald-100/80 border border-emerald-200/60'
+                )}
+              >
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
                 <span>Có mặt</span>
-                <UserCheck className="h-4 w-4 text-emerald-600" />
-              </div>
-              <div className="mt-2 text-2xl font-black text-emerald-700 font-mono">
-                {participantStats.present}
-              </div>
-              <div className="text-[11px] text-emerald-600/80 mt-0.5">Đã xác nhận tham gia</div>
-            </Card>
+                <span className={cn('text-[10px] font-mono px-1 rounded', participantStatusFilter === 'present' ? 'bg-emerald-700 text-emerald-100' : 'text-emerald-700')}>
+                  {participantStats.present}
+                </span>
+              </button>
 
-            <Card className="p-4 border-rose-200/80 bg-rose-50/40 shadow-2xs">
-              <div className="flex items-center justify-between text-rose-800 text-xs font-semibold">
+              <button
+                type="button"
+                onClick={() => setParticipantStatusFilter(participantStatusFilter === 'absent' ? 'all' : 'absent')}
+                className={cn(
+                  'h-7 px-2.5 rounded-lg text-xs font-semibold flex items-center gap-1.5 transition-all cursor-pointer',
+                  participantStatusFilter === 'absent'
+                    ? 'bg-rose-600 text-white shadow-xs'
+                    : 'bg-rose-50/70 text-rose-700 hover:bg-rose-100/80 border border-rose-200/60'
+                )}
+              >
+                <span className="w-1.5 h-1.5 rounded-full bg-rose-500" />
                 <span>Vắng</span>
-                <UserX className="h-4 w-4 text-rose-600" />
-              </div>
-              <div className="mt-2 text-2xl font-black text-rose-700 font-mono">
-                {participantStats.absent}
-              </div>
-              <div className="text-[11px] text-rose-600/80 mt-0.5">Vắng mặt</div>
-            </Card>
+                <span className={cn('text-[10px] font-mono px-1 rounded', participantStatusFilter === 'absent' ? 'bg-rose-700 text-rose-100' : 'text-rose-700')}>
+                  {participantStats.absent}
+                </span>
+              </button>
 
-            <Card className="p-4 border-blue-200/80 bg-blue-50/40 shadow-2xs">
-              <div className="flex items-center justify-between text-blue-800 text-xs font-semibold">
-                <span>Tỉ lệ có mặt</span>
-                <Percent className="h-4 w-4 text-blue-600" />
+              <button
+                type="button"
+                onClick={() => setParticipantStatusFilter(participantStatusFilter === 'unmarked' ? 'all' : 'unmarked')}
+                className={cn(
+                  'h-7 px-2.5 rounded-lg text-xs font-semibold flex items-center gap-1.5 transition-all cursor-pointer',
+                  participantStatusFilter === 'unmarked'
+                    ? 'bg-slate-700 text-white shadow-xs'
+                    : 'bg-slate-50 text-slate-600 hover:bg-slate-100 border border-slate-200/70'
+                )}
+              >
+                <span className="w-1.5 h-1.5 rounded-full bg-slate-400" />
+                <span>Chưa điểm danh</span>
+                <span className="text-[10px] font-mono text-slate-500">
+                  {participantStats.unmarked}
+                </span>
+              </button>
+            </div>
+
+            {/* Attendance Rate */}
+            <div className="flex items-center gap-2.5 text-xs text-slate-500 self-end lg:self-auto shrink-0">
+              <span className="text-[11px] font-medium text-slate-500">Tỉ lệ có mặt:</span>
+              <div className="w-24 h-2 bg-slate-100 rounded-full overflow-hidden border border-slate-200/70">
+                <div
+                  className="h-full bg-emerald-500 rounded-full transition-all duration-300"
+                  style={{ width: `${participantStats.participationRate}%` }}
+                />
               </div>
-              <div className="mt-2 text-2xl font-black text-blue-700 font-mono">
+              <span className="text-[11px] font-mono font-bold text-emerald-700">
                 {participantStats.participationRate}%
-              </div>
-              <div className="text-[11px] text-blue-600/80 mt-0.5">
-                {participantStats.unmarked} chưa điểm danh
-              </div>
-            </Card>
+              </span>
+            </div>
           </div>
 
-          {/* Participant Table Container */}
-          <div className="bg-white border border-slate-200/80 rounded-2xl p-5 shadow-sm space-y-4">
-            {/* Action Bar */}
-            <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 pb-3 border-b border-slate-100">
-              <div>
-                <h2 className="text-sm font-bold text-slate-900 flex items-center gap-2">
-                  <ShieldCheck className="h-4 w-4 text-purple-600" />
-                  Danh Sách Điểm Danh ({filteredParticipants.length})
-                </h2>
-                <p className="text-[11px] text-slate-500 mt-0.5">
-                  Điểm danh 1 chạm phản hồi tức thì cho tất cả hội viên và người đăng ký.
-                </p>
-              </div>
+          {/* Action Row */}
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-3">
+            <div className="relative flex-1 max-w-sm">
+              <Search className="absolute left-2.5 top-2 h-3.5 w-3.5 text-slate-400" />
+              <Input
+                value={participantSearch}
+                onChange={(e) => setParticipantSearch(e.target.value)}
+                placeholder="Tìm tên, MSSV, lớp..."
+                className="pl-8 h-8 text-xs bg-slate-50 border-slate-200"
+              />
+            </div>
 
-              <div className="flex items-center gap-2 flex-wrap">
-                {/* Search */}
-                <div className="relative min-w-[180px]">
-                  <Search className="absolute left-2.5 top-2 h-3.5 w-3.5 text-slate-400" />
-                  <Input
-                    value={participantSearch}
-                    onChange={(e) => setParticipantSearch(e.target.value)}
-                    placeholder="Tìm tên, MSSV, lớp..."
-                    className="pl-8 h-8 text-xs bg-slate-50 border-slate-200"
-                  />
-                </div>
-
-                {/* Status Filter */}
-                <Select value={participantStatusFilter} onValueChange={setParticipantStatusFilter}>
+            <div className="flex items-center gap-2 flex-wrap">
+              {participatingOrganizations.length > 1 && (
+                <Select value={participantOrgFilter} onValueChange={setParticipantOrgFilter}>
                   <SelectTrigger className="h-8 text-xs w-[120px] bg-slate-50">
-                    <SelectValue placeholder="Trạng thái" />
+                    <SelectValue placeholder="Đơn vị" />
                   </SelectTrigger>
                   <SelectContent className="bg-white border-slate-200">
-                    <SelectItem value="all" className="text-xs">Tất cả</SelectItem>
-                    <SelectItem value="present" className="text-xs text-emerald-700 font-semibold">Có mặt</SelectItem>
-                    <SelectItem value="absent" className="text-xs text-rose-700 font-semibold">Vắng</SelectItem>
-                    <SelectItem value="unmarked" className="text-xs text-slate-500">Chưa điểm danh</SelectItem>
+                    <SelectItem value="all" className="text-xs">Tất cả đơn vị</SelectItem>
+                    {participatingOrganizations.map((org) => (
+                      <SelectItem key={org.id} value={org.id} className="text-xs">
+                        {org.code} - {org.name}
+                      </SelectItem>
+                    ))}
                   </SelectContent>
                 </Select>
-
-                {/* Org Filter */}
-                {participatingOrganizations.length > 1 && (
-                  <Select value={participantOrgFilter} onValueChange={setParticipantOrgFilter}>
-                    <SelectTrigger className="h-8 text-xs w-[120px] bg-slate-50">
-                      <SelectValue placeholder="Đơn vị" />
-                    </SelectTrigger>
-                    <SelectContent className="bg-white border-slate-200">
-                      <SelectItem value="all" className="text-xs">Tất cả đơn vị</SelectItem>
-                      {participatingOrganizations.map((org) => (
-                        <SelectItem key={org.id} value={org.id} className="text-xs">
-                          {org.code} - {org.name}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                )}
+              )}
 
                 {/* Batch Action Toolbar */}
                 {selectedParticipantIds.length > 0 && canManageOperational && (
@@ -1727,7 +1850,6 @@ export function CollabActivityDetailPage() {
                 </table>
               </div>
             )}
-          </div>
         </div>
       )}
 
@@ -1830,16 +1952,7 @@ export function CollabActivityDetailPage() {
         participatingOrganizations={participatingOrganizations}
       />
 
-      {/* Poster Infographic Export Modal */}
-      {activity && (
-        <CollabTimelineExportModal
-          isOpen={isExportPosterOpen}
-          onClose={() => setIsExportPosterOpen(false)}
-          activity={activity}
-          plan={plan}
-          tasks={tasks}
-        />
-      )}
+
     </div>
   );
 }
