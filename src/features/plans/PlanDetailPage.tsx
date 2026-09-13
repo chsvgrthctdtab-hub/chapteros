@@ -36,6 +36,7 @@ import {
   Download,
   Check,
   X,
+  FileSpreadsheet,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -65,12 +66,16 @@ import {
   useDeleteCollabTask,
   useCollabParticipants,
   useUpdateCollabParticipantStatus,
+  useRemoveCollabParticipant,
+  useBulkUpdateCollabAttendance,
 } from '@/features/plans/queries/collab.queries';
 import { CreateCollabActivityDialog } from '@/features/plans/components/CreateCollabActivityDialog';
 import { CreateCollabTaskDialog } from '@/features/plans/components/CreateCollabTaskDialog';
 import { InviteCohostDialog } from '@/features/plans/components/InviteCohostDialog';
 import { EditPlanDialog } from '@/features/plans/components/EditPlanDialog';
 import { DeletePlanDialog } from '@/features/plans/components/DeletePlanDialog';
+import { AddCollabParticipantDialog } from '@/features/plans/components/AddCollabParticipantDialog';
+import { ImportCollabParticipantsModal } from '@/features/plans/components/ImportCollabParticipantsModal';
 import { CollabFinanceModule } from '@/features/plans/components/CollabFinanceModule';
 import { isOrgBoard } from '@/types/roles';
 import { formatError } from '@/lib/error-formatter';
@@ -101,6 +106,8 @@ export function PlanDetailPage() {
   const [editingTask, setEditingTask] = useState<CollabTask | null>(null);
   const [isEditPlanOpen, setIsEditPlanOpen] = useState(false);
   const [isDeletePlanOpen, setIsDeletePlanOpen] = useState(false);
+  const [isAddParticipantOpen, setIsAddParticipantOpen] = useState(false);
+  const [isImportParticipantsOpen, setIsImportParticipantsOpen] = useState(false);
 
   // Filters for campaign-wide tasks
   const [taskSearch, setTaskSearch] = useState('');
@@ -109,10 +116,12 @@ export function PlanDetailPage() {
   const [personnelSearch, setPersonnelSearch] = useState('');
   const [personnelOrgFilter, setPersonnelOrgFilter] = useState<string>('all');
 
-  // Filters for campaign-wide participants
+  // Filters and selection for campaign-wide participants
   const [participantSearch, setParticipantSearch] = useState('');
   const [participantStatusFilter, setParticipantStatusFilter] = useState<string>('all');
   const [participantOrgFilter, setParticipantOrgFilter] = useState<string>('all');
+  const [participantActivityFilter, setParticipantActivityFilter] = useState<string>('all');
+  const [selectedParticipantIds, setSelectedParticipantIds] = useState<string[]>([]);
 
   // Plan & Collab queries
   const { data: plan, isLoading: isPlanLoading, refetch: refetchPlan } = usePlanDetail(planId);
@@ -143,6 +152,8 @@ export function PlanDetailPage() {
   const updateTaskMutation = useUpdateCollabTask();
   const deleteTaskMutation = useDeleteCollabTask();
   const updateParticipantMutation = useUpdateCollabParticipantStatus(undefined, planId);
+  const removeParticipantMutation = useRemoveCollabParticipant(undefined, planId);
+  const bulkAttendanceMutation = useBulkUpdateCollabAttendance(undefined, planId);
 
   // BCH role check
   const isBch = isOrgBoard(activeRole);
@@ -400,18 +411,33 @@ export function PlanDetailPage() {
   const filteredCampaignParticipants = useMemo(() => {
     return campaignParticipants.filter((p: any) => {
       if (participantStatusFilter !== 'all' && p.attendanceStatus !== participantStatusFilter) return false;
-      if (participantOrgFilter !== 'all' && p.member?.organizationId !== participantOrgFilter) return false;
+      if (participantOrgFilter !== 'all') {
+        if (participantOrgFilter === 'external') {
+          if (!p.externalOrganization && p.organizationId) return false;
+        } else if (p.organizationId !== participantOrgFilter) {
+          return false;
+        }
+      }
+      if (participantActivityFilter !== 'all') {
+        if (participantActivityFilter === 'campaign_wide') {
+          if (p.collabActivityId) return false;
+        } else if (p.collabActivityId !== participantActivityFilter) {
+          return false;
+        }
+      }
       if (participantSearch.trim()) {
         const q = participantSearch.toLowerCase();
-        const nameMatch = p.member?.fullName?.toLowerCase().includes(q);
-        const idMatch = p.member?.studentId?.toLowerCase().includes(q);
-        const classMatch = p.member?.className?.toLowerCase().includes(q);
-        const emailMatch = p.member?.email?.toLowerCase().includes(q);
-        return nameMatch || idMatch || classMatch || emailMatch;
+        const nameMatch = (p.fullName || p.member?.fullName || '').toLowerCase().includes(q);
+        const idMatch = (p.studentId || p.member?.studentId || '').toLowerCase().includes(q);
+        const classMatch = (p.className || p.member?.className || '').toLowerCase().includes(q);
+        const emailMatch = (p.email || p.member?.email || '').toLowerCase().includes(q);
+        const roleMatch = (p.roleTitle || '').toLowerCase().includes(q);
+        const extMatch = (p.externalOrganization || '').toLowerCase().includes(q);
+        return nameMatch || idMatch || classMatch || emailMatch || roleMatch || extMatch;
       }
       return true;
     });
-  }, [campaignParticipants, participantStatusFilter, participantOrgFilter, participantSearch]);
+  }, [campaignParticipants, participantStatusFilter, participantOrgFilter, participantActivityFilter, participantSearch]);
 
   const handleCampaignAttendanceToggle = (participantId: string, currentStatus: string, targetStatus: 'present' | 'absent') => {
     if (!canManageOperational) {
@@ -425,22 +451,64 @@ export function PlanDetailPage() {
     });
   };
 
+  const handleSelectAllParticipants = () => {
+    if (selectedParticipantIds.length === filteredCampaignParticipants.length) {
+      setSelectedParticipantIds([]);
+    } else {
+      setSelectedParticipantIds(filteredCampaignParticipants.map((p) => p.id));
+    }
+  };
+
+  const handleToggleSelectParticipant = (id: string) => {
+    setSelectedParticipantIds((prev) =>
+      prev.includes(id) ? prev.filter((i) => i !== id) : [...prev, id]
+    );
+  };
+
+  const handleBulkAttendanceAction = (status: 'present' | 'absent') => {
+    if (!canManageOperational || selectedParticipantIds.length === 0) return;
+    bulkAttendanceMutation.mutate(
+      { participantIds: selectedParticipantIds, status },
+      {
+        onSuccess: () => {
+          setSelectedParticipantIds([]);
+        },
+      }
+    );
+  };
+
+  const handleDeleteParticipant = (id: string) => {
+    if (!canManageOperational) return;
+    if (window.confirm('Bạn có chắc chắn muốn xóa người này khỏi danh sách tham gia?')) {
+      removeParticipantMutation.mutate(id, {
+        onSuccess: () => {
+          setSelectedParticipantIds((prev) => prev.filter((i) => i !== id));
+        },
+      });
+    }
+  };
+
   const handleExportCampaignParticipantsCSV = () => {
     if (filteredCampaignParticipants.length === 0) return;
-    const headers = ['STT', 'Ho va ten', 'MSSV', 'Lop', 'Khoa', 'Don vi', 'Diem danh', 'Email', 'So dien thoai'];
+    const headers = ['STT', 'Ho va ten', 'MSSV', 'Lop', 'Khoa', 'Don vi', 'Doi hinh', 'Hoat dong phan cong', 'Diem danh', 'Email', 'So dien thoai'];
     const rows = filteredCampaignParticipants.map((p: any, idx: number) => {
-      const orgName = participatingOrganizations.find((o) => o.id === p.member?.organizationId)?.name || 'Đơn vị';
+      const orgName = p.externalOrganization
+        ? p.externalOrganization
+        : participatingOrganizations.find((o) => o.id === p.organizationId || o.id === p.member?.organizationId)?.name || 'Đơn vị';
+      const actTitle = p.collabActivity?.title || 'Toàn chiến dịch';
       const attStatus = p.attendanceStatus === 'present' ? 'Co mat' : p.attendanceStatus === 'absent' ? 'Vang' : 'Chua diem danh';
       return [
         idx + 1,
-        `"${p.member?.fullName || ''}"`,
-        `"${p.member?.studentId || ''}"`,
-        `"${p.member?.className || ''}"`,
-        `"${p.member?.cohort || ''}"`,
+        `"${p.fullName || p.member?.fullName || ''}"`,
+        `"${p.studentId || p.member?.studentId || ''}"`,
+        `"${p.className || p.member?.className || ''}"`,
+        `"${p.cohort || p.member?.cohort || ''}"`,
         `"${orgName}"`,
+        `"${p.roleTitle || 'Tình nguyện viên'}"`,
+        `"${actTitle}"`,
         `"${attStatus}"`,
-        `"${p.member?.email || ''}"`,
-        `"${p.member?.phone || ''}"`,
+        `"${p.email || p.member?.email || ''}"`,
+        `"${p.phone || p.member?.phone || ''}"`,
       ];
     });
 
@@ -1553,28 +1621,28 @@ export function PlanDetailPage() {
               <div>
                 <h2 className="text-sm font-bold text-slate-900 flex items-center gap-2">
                   <ShieldCheck className="h-4 w-4 text-purple-600" />
-                  Danh Sách Người Tham Gia Toàn Chiến Dịch ({filteredCampaignParticipants.length})
+                  Danh Sách Lực Lượng Toàn Chiến Dịch ({filteredCampaignParticipants.length})
                 </h2>
                 <p className="text-[11px] text-slate-500 mt-0.5">
-                  Tổng hợp người tham gia, sinh viên và tình nguyện viên đăng ký từ tất cả các đơn vị.
+                  Tổng hợp danh sách chiến sĩ, tình nguyện viên đăng ký từ tất cả các đơn vị phối hợp.
                 </p>
               </div>
 
               <div className="flex items-center gap-2 flex-wrap">
                 {/* Search */}
-                <div className="relative min-w-[180px]">
+                <div className="relative min-w-[170px]">
                   <Search className="absolute left-2.5 top-2 h-3.5 w-3.5 text-slate-400" />
                   <Input
                     value={participantSearch}
                     onChange={(e) => setParticipantSearch(e.target.value)}
-                    placeholder="Tìm tên, MSSV, lớp..."
+                    placeholder="Tìm tên, MSSV, đội hình..."
                     className="pl-8 h-8 text-xs bg-slate-50 border-slate-200"
                   />
                 </div>
 
                 {/* Status Filter */}
                 <Select value={participantStatusFilter} onValueChange={setParticipantStatusFilter}>
-                  <SelectTrigger className="h-8 text-xs w-[120px] bg-slate-50">
+                  <SelectTrigger className="h-8 text-xs w-[110px] bg-slate-50">
                     <SelectValue placeholder="Trạng thái" />
                   </SelectTrigger>
                   <SelectContent className="bg-white border-slate-200">
@@ -1586,20 +1654,64 @@ export function PlanDetailPage() {
                 </Select>
 
                 {/* Org Filter */}
-                {participatingOrganizations.length > 1 && (
-                  <Select value={participantOrgFilter} onValueChange={setParticipantOrgFilter}>
-                    <SelectTrigger className="h-8 text-xs w-[120px] bg-slate-50">
-                      <SelectValue placeholder="Đơn vị" />
+                <Select value={participantOrgFilter} onValueChange={setParticipantOrgFilter}>
+                  <SelectTrigger className="h-8 text-xs w-[120px] bg-slate-50">
+                    <SelectValue placeholder="Đơn vị" />
+                  </SelectTrigger>
+                  <SelectContent className="bg-white border-slate-200">
+                    <SelectItem value="all" className="text-xs">Tất cả đơn vị</SelectItem>
+                    {participatingOrganizations.map((org) => (
+                      <SelectItem key={org.id} value={org.id} className="text-xs">
+                        {org.code}
+                      </SelectItem>
+                    ))}
+                    <SelectItem value="external" className="text-xs text-emerald-700 font-medium">
+                      Đối tác ngoài
+                    </SelectItem>
+                  </SelectContent>
+                </Select>
+
+                {/* Activity Filter */}
+                {collabActivities.length > 0 && (
+                  <Select value={participantActivityFilter} onValueChange={setParticipantActivityFilter}>
+                    <SelectTrigger className="h-8 text-xs w-[130px] bg-slate-50">
+                      <SelectValue placeholder="Hoạt động" />
                     </SelectTrigger>
                     <SelectContent className="bg-white border-slate-200">
-                      <SelectItem value="all" className="text-xs">Tất cả đơn vị</SelectItem>
-                      {participatingOrganizations.map((org) => (
-                        <SelectItem key={org.id} value={org.id} className="text-xs">
-                          {org.code} - {org.name}
+                      <SelectItem value="all" className="text-xs">Tất cả hoạt động</SelectItem>
+                      <SelectItem value="campaign_wide" className="text-xs font-semibold text-purple-700">
+                        Toàn chiến dịch
+                      </SelectItem>
+                      {collabActivities.map((act) => (
+                        <SelectItem key={act.id} value={act.id} className="text-xs truncate">
+                          {act.title}
                         </SelectItem>
                       ))}
                     </SelectContent>
                   </Select>
+                )}
+
+                {/* Batch Action Toolbar */}
+                {selectedParticipantIds.length > 0 && canManageOperational && (
+                  <div className="flex items-center gap-1 bg-purple-50 px-2 py-1 rounded-xl border border-purple-200">
+                    <span className="text-[11px] font-bold text-purple-900">
+                      Đã chọn {selectedParticipantIds.length}:
+                    </span>
+                    <Button
+                      size="sm"
+                      onClick={() => handleBulkAttendanceAction('present')}
+                      className="h-6 text-[10px] px-2 bg-emerald-600 hover:bg-emerald-700 text-white"
+                    >
+                      Có mặt
+                    </Button>
+                    <Button
+                      size="sm"
+                      onClick={() => handleBulkAttendanceAction('absent')}
+                      className="h-6 text-[10px] px-2 bg-rose-600 hover:bg-rose-700 text-white"
+                    >
+                      Vắng
+                    </Button>
+                  </div>
                 )}
 
                 {/* Export CSV Button */}
@@ -1612,6 +1724,31 @@ export function PlanDetailPage() {
                   <Download className="h-3.5 w-3.5 mr-1" />
                   Xuất CSV
                 </Button>
+
+                {/* Paste & Import Button */}
+                {canManageOperational && (
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => setIsImportParticipantsOpen(true)}
+                    className="h-8 text-xs border-emerald-200 text-emerald-700 bg-emerald-50 hover:bg-emerald-100 font-semibold gap-1.5 shadow-2xs cursor-pointer"
+                  >
+                    <FileSpreadsheet className="h-3.5 w-3.5 text-emerald-600" />
+                    <span>⚡ Nhập từ Sheet</span>
+                  </Button>
+                )}
+
+                {/* Add Participant Button */}
+                {canManageOperational && (
+                  <Button
+                    size="sm"
+                    onClick={() => setIsAddParticipantOpen(true)}
+                    className="h-8 text-xs bg-purple-600 hover:bg-purple-700 text-white shadow-xs font-semibold gap-1.5 cursor-pointer"
+                  >
+                    <Plus className="h-3.5 w-3.5" />
+                    <span>Thêm người</span>
+                  </Button>
+                )}
               </div>
             </div>
 
@@ -1622,41 +1759,91 @@ export function PlanDetailPage() {
                 <span>Đang tải danh sách người tham gia...</span>
               </div>
             ) : filteredCampaignParticipants.length === 0 ? (
-              <div className="p-10 text-center text-slate-400 text-xs">
-                Chưa có người tham gia nào trong các hoạt động của chiến dịch.
+              <div className="p-10 text-center text-slate-400 text-xs space-y-3">
+                <div className="w-10 h-10 rounded-full bg-slate-100 text-slate-400 flex items-center justify-center mx-auto">
+                  <Users className="h-5 w-5" />
+                </div>
+                <p>Chưa có người tham gia nào trong danh sách lực lượng chiến dịch.</p>
+                {canManageOperational && (
+                  <div className="flex items-center justify-center gap-2 pt-1">
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => setIsImportParticipantsOpen(true)}
+                      className="text-xs gap-1 border-emerald-200 text-emerald-700 bg-emerald-50 hover:bg-emerald-100"
+                    >
+                      <FileSpreadsheet className="h-3.5 w-3.5" />
+                      Dán từ Google Sheet
+                    </Button>
+                    <Button
+                      size="sm"
+                      onClick={() => setIsAddParticipantOpen(true)}
+                      className="text-xs bg-purple-600 hover:bg-purple-700 text-white gap-1"
+                    >
+                      <Plus className="h-3.5 w-3.5" />
+                      Thêm người đầu tiên
+                    </Button>
+                  </div>
+                )}
               </div>
             ) : (
               <div className="overflow-x-auto border border-slate-200/80 rounded-xl">
                 <table className="w-full text-left text-xs text-slate-700">
                   <thead className="bg-slate-50/80 text-[11px] font-semibold text-slate-500 uppercase tracking-wider border-b border-slate-200">
                     <tr>
-                      <th className="px-4 py-3">Họ và tên</th>
-                      <th className="w-28 px-3 py-3 text-center">MSSV</th>
+                      <th className="w-10 px-3 py-3 text-center">
+                        <input
+                          type="checkbox"
+                          checked={
+                            filteredCampaignParticipants.length > 0 &&
+                            selectedParticipantIds.length === filteredCampaignParticipants.length
+                          }
+                          onChange={handleSelectAllParticipants}
+                          className="rounded border-slate-300 text-purple-600 focus:ring-purple-500 cursor-pointer"
+                        />
+                      </th>
+                      <th className="px-4 py-3 min-w-[180px]">Họ và tên</th>
+                      <th className="w-24 px-3 py-3 text-center">MSSV</th>
                       <th className="w-20 px-3 py-3 text-center">Lớp</th>
-                      <th className="w-16 px-3 py-3 text-center">Khóa</th>
-                      <th className="w-32 px-3 py-3">Đơn vị</th>
-                      <th className="w-60 px-4 py-3 text-center">Điểm danh</th>
+                      <th className="w-28 px-3 py-3">Đơn vị</th>
+                      <th className="w-36 px-3 py-3">Đội hình / Vai trò</th>
+                      <th className="w-36 px-3 py-3">Hoạt động phân bổ</th>
+                      <th className="w-48 px-3 py-3 text-center">Điểm danh</th>
+                      {canManageOperational && (
+                        <th className="w-12 px-2 py-3 text-center">Xóa</th>
+                      )}
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-slate-100 bg-white">
                     {filteredCampaignParticipants.map((p: any) => {
                       const isPresent = p.attendanceStatus === 'present';
                       const isAbsent = p.attendanceStatus === 'absent';
-                      const memOrg = participatingOrganizations.find((o) => o.id === p.member?.organizationId);
+                      const isSelected = selectedParticipantIds.includes(p.id);
+                      const memOrg = participatingOrganizations.find((o) => o.id === p.organizationId || o.id === p.member?.organizationId);
 
                       return (
-                        <tr key={p.id} className="hover:bg-slate-50/60 transition-colors">
+                        <tr key={p.id} className={cn('hover:bg-slate-50/60 transition-colors', isSelected && 'bg-purple-50/30')}>
+                          {/* Checkbox */}
+                          <td className="w-10 px-3 py-3 text-center">
+                            <input
+                              type="checkbox"
+                              checked={isSelected}
+                              onChange={() => handleToggleSelectParticipant(p.id)}
+                              className="rounded border-slate-300 text-purple-600 focus:ring-purple-500 cursor-pointer"
+                            />
+                          </td>
+
                           {/* Họ và tên */}
                           <td className="px-4 py-3 font-semibold text-slate-900 min-w-[180px]">
                             <div className="flex items-center gap-2">
                               <div className="w-6 h-6 rounded-full bg-purple-100 text-purple-700 font-bold text-[10px] flex items-center justify-center shrink-0">
-                                {(p.member?.fullName || 'N').slice(0, 1)}
+                                {(p.fullName || p.member?.fullName || 'N').slice(0, 1)}
                               </div>
                               <div className="min-w-0">
-                                <span className="block truncate">{p.member?.fullName || 'Người tham gia'}</span>
-                                {p.member?.email && (
+                                <span className="block truncate">{p.fullName || p.member?.fullName || 'Người tham gia'}</span>
+                                {(p.email || p.phone) && (
                                   <span className="text-[10px] text-slate-400 font-normal block truncate">
-                                    {p.member.email}
+                                    {[p.email, p.phone].filter(Boolean).join(' • ')}
                                   </span>
                                 )}
                               </div>
@@ -1664,63 +1851,96 @@ export function PlanDetailPage() {
                           </td>
 
                           {/* MSSV */}
-                          <td className="w-28 px-3 py-3 text-center font-mono font-medium text-slate-700">
-                            {p.member?.studentId || '--'}
+                          <td className="w-24 px-3 py-3 text-center font-mono font-medium text-slate-700">
+                            {p.studentId || p.member?.studentId || '--'}
                           </td>
 
                           {/* Lớp */}
                           <td className="w-20 px-3 py-3 text-center font-medium text-slate-700">
-                            {p.member?.className || '--'}
-                          </td>
-
-                          {/* Khóa */}
-                          <td className="w-16 px-3 py-3 text-center font-mono text-slate-600">
-                            {p.member?.cohort || '--'}
+                            {p.className || p.member?.className || '--'}
                           </td>
 
                           {/* Đơn vị */}
-                          <td className="w-32 px-3 py-3">
-                            <span className="text-[10px] bg-slate-100 text-slate-700 px-2 py-0.5 rounded font-medium truncate block max-w-[120px]">
-                              {memOrg?.code || 'Đơn vị'}
+                          <td className="w-28 px-3 py-3">
+                            {p.externalOrganization ? (
+                              <span className="inline-flex items-center gap-1 text-[10px] bg-emerald-50 text-emerald-800 border border-emerald-200 px-2 py-0.5 rounded-full font-medium truncate max-w-[130px]" title={p.externalOrganization}>
+                                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 shrink-0" />
+                                <span className="truncate">{p.externalOrganization}</span>
+                              </span>
+                            ) : (
+                              <span className="inline-flex items-center gap-1 text-[10px] bg-purple-50 text-purple-800 border border-purple-200 px-2 py-0.5 rounded-full font-semibold truncate max-w-[120px]">
+                                <span className="w-1.5 h-1.5 rounded-full bg-purple-600 shrink-0" />
+                                <span>{memOrg?.code || p.organization?.code || 'Đơn vị'}</span>
+                              </span>
+                            )}
+                          </td>
+
+                          {/* Đội hình / Vai trò */}
+                          <td className="w-36 px-3 py-3">
+                            <span className="inline-block text-[10px] bg-slate-100 text-slate-700 px-2 py-0.5 rounded-md font-medium truncate max-w-[130px]">
+                              {p.roleTitle || 'Tình nguyện viên'}
                             </span>
                           </td>
 
-                          {/* Điểm danh: Instant 0ms Flat 2-Button Group */}
-                          <td className="w-60 px-4 py-3 text-center">
-                            <div className="inline-flex items-center justify-center gap-1.5 p-1 bg-slate-100/90 rounded-xl">
-                              {/* Có mặt Button */}
+                          {/* Hoạt động phân bổ */}
+                          <td className="w-36 px-3 py-3 text-slate-600 text-[11px]">
+                            {p.collabActivity?.title ? (
+                              <span className="truncate block max-w-[130px] font-medium text-purple-700" title={p.collabActivity.title}>
+                                {p.collabActivity.title}
+                              </span>
+                            ) : (
+                              <span className="text-slate-400 italic">Toàn chiến dịch</span>
+                            )}
+                          </td>
+
+                          {/* Điểm danh 1-chạm */}
+                          <td className="w-48 px-3 py-3 text-center">
+                            <div className="inline-flex items-center justify-center gap-1 p-0.5 bg-slate-100/90 rounded-lg">
                               <button
                                 type="button"
                                 disabled={!canManageOperational}
                                 onClick={() => handleCampaignAttendanceToggle(p.id, p.attendanceStatus, 'present')}
                                 className={cn(
-                                  'h-7 px-3 rounded-lg font-bold text-[11px] flex items-center gap-1.5 transition-all',
+                                  'h-6 px-2.5 rounded-md font-bold text-[10px] flex items-center gap-1 transition-all',
                                   isPresent
                                     ? 'bg-emerald-600 text-white shadow-xs'
                                     : 'text-emerald-700 hover:bg-emerald-100/70 bg-transparent'
                                 )}
                               >
-                                <Check className="h-3.5 w-3.5 stroke-[2.5]" />
+                                <Check className="h-3 w-3 stroke-[2.5]" />
                                 <span>Có mặt</span>
                               </button>
 
-                              {/* Vắng Button */}
                               <button
                                 type="button"
                                 disabled={!canManageOperational}
                                 onClick={() => handleCampaignAttendanceToggle(p.id, p.attendanceStatus, 'absent')}
                                 className={cn(
-                                  'h-7 px-3 rounded-lg font-bold text-[11px] flex items-center gap-1.5 transition-all',
+                                  'h-6 px-2.5 rounded-md font-bold text-[10px] flex items-center gap-1 transition-all',
                                   isAbsent
                                     ? 'bg-rose-600 text-white shadow-xs'
                                     : 'text-rose-700 hover:bg-rose-100/70 bg-transparent'
                                 )}
                               >
-                                <X className="h-3.5 w-3.5 stroke-[2.5]" />
+                                <X className="h-3 w-3 stroke-[2.5]" />
                                 <span>Vắng</span>
                               </button>
                             </div>
                           </td>
+
+                          {/* Thao tác xóa */}
+                          {canManageOperational && (
+                            <td className="w-12 px-2 py-3 text-center">
+                              <button
+                                type="button"
+                                onClick={() => handleDeleteParticipant(p.id)}
+                                className="h-6 w-6 inline-flex items-center justify-center text-slate-400 hover:text-rose-600 rounded transition-colors"
+                                title="Xóa người tham gia"
+                              >
+                                <Trash2 className="h-3.5 w-3.5" />
+                              </button>
+                            </td>
+                          )}
                         </tr>
                       );
                     })}
@@ -1911,6 +2131,24 @@ export function PlanDetailPage() {
         onSuccess={() => {
           navigate('/plans');
         }}
+      />
+
+      {/* Dialog: Add Collab Participant */}
+      <AddCollabParticipantDialog
+        isOpen={isAddParticipantOpen}
+        onClose={() => setIsAddParticipantOpen(false)}
+        planId={plan.id}
+        activities={collabActivities}
+        participatingOrganizations={participatingOrganizations}
+      />
+
+      {/* Modal: Import Collab Participants from Google Sheet / Excel */}
+      <ImportCollabParticipantsModal
+        isOpen={isImportParticipantsOpen}
+        onClose={() => setIsImportParticipantsOpen(false)}
+        planId={plan.id}
+        activities={collabActivities}
+        participatingOrganizations={participatingOrganizations}
       />
     </div>
   );

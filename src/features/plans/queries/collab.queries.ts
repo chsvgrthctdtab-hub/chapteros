@@ -336,19 +336,56 @@ export function useAddCollabParticipant(activityId?: string, planId?: string) {
 
   return useMutation({
     mutationFn: async (data: {
-      activityId: string;
-      organizationId: string;
-      memberId?: string;
+      planId: string;
+      activityId?: string;
+      organizationId?: string | null;
+      externalOrganization?: string | null;
+      memberId?: string | null;
       fullName: string;
-      studentId?: string;
-      className?: string;
-      cohort?: string;
-      phone?: string;
-      email?: string;
-      notes?: string;
-      attendanceStatus?: string;
+      studentId?: string | null;
+      className?: string | null;
+      cohort?: string | null;
+      phone?: string | null;
+      email?: string | null;
+      roleTitle?: string | null;
+      attendanceStatus?: 'unmarked' | 'present' | 'absent';
+      notes?: string | null;
+      source?: 'manual' | 'import' | 'google_form' | 'system';
     }) => {
-      return collabRepository.addCollabParticipant(data.activityId, data.organizationId, data);
+      return collabRepository.addCollabParticipant(data.planId, data.activityId, data);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['collab', 'participants'] });
+    },
+  });
+}
+
+export function useBulkAddCollabParticipants(activityId?: string, planId?: string) {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async ({
+      planId,
+      activityId,
+      participants,
+    }: {
+      planId: string;
+      activityId?: string;
+      participants: Array<{
+        fullName: string;
+        studentId?: string | null;
+        className?: string | null;
+        cohort?: string | null;
+        phone?: string | null;
+        email?: string | null;
+        roleTitle?: string | null;
+        organizationId?: string | null;
+        externalOrganization?: string | null;
+        memberId?: string | null;
+        notes?: string | null;
+      }>;
+    }) => {
+      return collabRepository.bulkAddCollabParticipants(planId, activityId, participants);
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['collab', 'participants'] });
@@ -365,7 +402,12 @@ export function useUpdateCollabParticipantStatus(activityId?: string, planId?: s
       data,
     }: {
       participantId: string;
-      data: { attendanceStatus?: string; notes?: string };
+      data: {
+        attendanceStatus?: 'unmarked' | 'present' | 'absent';
+        notes?: string;
+        roleTitle?: string;
+        collabActivityId?: string | null;
+      };
     }) => {
       return collabRepository.updateCollabParticipant(participantId, data);
     },
@@ -382,7 +424,9 @@ export function useUpdateCollabParticipantStatus(activityId?: string, planId?: s
             ...p,
             attendanceStatus: data.attendanceStatus ?? p.attendanceStatus,
             notes: data.notes !== undefined ? data.notes : p.notes,
-            attendedAt: data.attendanceStatus === 'present' ? new Date().toISOString() : null,
+            roleTitle: data.roleTitle !== undefined ? data.roleTitle : p.roleTitle,
+            collabActivityId: data.collabActivityId !== undefined ? data.collabActivityId : p.collabActivityId,
+            attendedAt: data.attendanceStatus === 'present' ? new Date().toISOString() : data.attendanceStatus === 'unmarked' || data.attendanceStatus === 'absent' ? null : p.attendedAt,
           };
         });
 
@@ -443,7 +487,7 @@ export function useBulkUpdateCollabAttendance(activityId?: string, planId?: stri
       status,
     }: {
       participantIds: string[];
-      status: string;
+      status: 'unmarked' | 'present' | 'absent';
     }) => {
       return collabRepository.bulkUpdateCollabAttendance(participantIds, status);
     },

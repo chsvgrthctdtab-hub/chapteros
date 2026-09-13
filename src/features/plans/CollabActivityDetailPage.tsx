@@ -62,6 +62,7 @@ import { useActivityForms } from '@/integrations/google/forms/google-forms.queri
 import { ActivityGoogleFormsSection } from '@/features/activities/components/ActivityGoogleFormsSection';
 import { CreateCollabTaskDialog } from '@/features/plans/components/CreateCollabTaskDialog';
 import { AddCollabParticipantDialog } from '@/features/plans/components/AddCollabParticipantDialog';
+import { ImportCollabParticipantsModal } from '@/features/plans/components/ImportCollabParticipantsModal';
 import { CollabTimelineExportModal } from '@/features/plans/components/CollabTimelineExportModal';
 import { useAuth } from '@/contexts/AuthContext';
 import { isOrgBoard } from '@/types/roles';
@@ -98,6 +99,7 @@ export function CollabActivityDetailPage() {
   const [isTaskDialogOpen, setIsTaskDialogOpen] = useState(false);
   const [editingTask, setEditingTask] = useState<CollabTask | null>(null);
   const [isAddParticipantOpen, setIsAddParticipantOpen] = useState(false);
+  const [isImportParticipantsOpen, setIsImportParticipantsOpen] = useState(false);
   const [actionError, setActionError] = useState<string | null>(null);
 
   // Queries
@@ -235,15 +237,23 @@ export function CollabActivityDetailPage() {
   const filteredParticipants = useMemo(() => {
     return participants.filter((p: any) => {
       if (participantStatusFilter !== 'all' && p.attendanceStatus !== participantStatusFilter) return false;
-      if (participantOrgFilter !== 'all' && p.member?.organizationId !== participantOrgFilter) return false;
+      if (participantOrgFilter !== 'all') {
+        if (participantOrgFilter === 'external') {
+          if (!p.externalOrganization && p.organizationId) return false;
+        } else if (p.organizationId !== participantOrgFilter && p.member?.organizationId !== participantOrgFilter) {
+          return false;
+        }
+      }
 
       if (participantSearch.trim()) {
         const q = participantSearch.toLowerCase();
-        const nameMatch = p.member?.fullName?.toLowerCase().includes(q);
-        const idMatch = p.member?.studentId?.toLowerCase().includes(q);
-        const classMatch = p.member?.className?.toLowerCase().includes(q);
-        const emailMatch = p.member?.email?.toLowerCase().includes(q);
-        return nameMatch || idMatch || classMatch || emailMatch;
+        const nameMatch = (p.fullName || p.member?.fullName || '').toLowerCase().includes(q);
+        const idMatch = (p.studentId || p.member?.studentId || '').toLowerCase().includes(q);
+        const classMatch = (p.className || p.member?.className || '').toLowerCase().includes(q);
+        const emailMatch = (p.email || p.member?.email || '').toLowerCase().includes(q);
+        const roleMatch = (p.roleTitle || '').toLowerCase().includes(q);
+        const extMatch = (p.externalOrganization || '').toLowerCase().includes(q);
+        return nameMatch || idMatch || classMatch || emailMatch || roleMatch || extMatch;
       }
       return true;
     });
@@ -335,20 +345,23 @@ export function CollabActivityDetailPage() {
   // CSV Export for Collab participants
   const handleExportCSV = () => {
     if (filteredParticipants.length === 0) return;
-    const headers = ['STT', 'Ho va ten', 'MSSV', 'Lop', 'Khoa', 'Don vi', 'Diem danh', 'Email', 'So dien thoai'];
+    const headers = ['STT', 'Ho va ten', 'MSSV', 'Lop', 'Khoa', 'Don vi', 'Doi hinh', 'Diem danh', 'Email', 'So dien thoai'];
     const rows = filteredParticipants.map((p: any, idx: number) => {
-      const orgName = participatingOrganizations.find((o) => o.id === p.member?.organizationId)?.name || 'Đơn vị';
+      const orgName = p.externalOrganization
+        ? p.externalOrganization
+        : participatingOrganizations.find((o) => o.id === p.organizationId || o.id === p.member?.organizationId)?.name || 'Đơn vị';
       const attStatus = p.attendanceStatus === 'present' ? 'Co mat' : p.attendanceStatus === 'absent' ? 'Vang' : 'Chua diem danh';
       return [
         idx + 1,
-        `"${p.member?.fullName || ''}"`,
-        `"${p.member?.studentId || ''}"`,
-        `"${p.member?.className || ''}"`,
-        `"${p.member?.cohort || ''}"`,
+        `"${p.fullName || p.member?.fullName || ''}"`,
+        `"${p.studentId || p.member?.studentId || ''}"`,
+        `"${p.className || p.member?.className || ''}"`,
+        `"${p.cohort || p.member?.cohort || ''}"`,
         `"${orgName}"`,
+        `"${p.roleTitle || 'Tình nguyện viên'}"`,
         `"${attStatus}"`,
-        `"${p.member?.email || ''}"`,
-        `"${p.member?.phone || ''}"`,
+        `"${p.email || p.member?.email || ''}"`,
+        `"${p.phone || p.member?.phone || ''}"`,
       ];
     });
 
@@ -361,6 +374,17 @@ export function CollabActivityDetailPage() {
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
+  };
+
+  const handleDeleteParticipant = async (participantId: string) => {
+    if (!canManageOperational) return;
+    if (!confirm('Bạn có chắc chắn muốn xóa người này khỏi danh sách tham gia?')) return;
+    try {
+      await removeParticipantMutation.mutateAsync(participantId);
+      setSelectedParticipantIds((prev) => prev.filter((id) => id !== participantId));
+    } catch (err) {
+      console.error('Failed to remove participant:', err);
+    }
   };
 
   const formatVND = (num: number) => {
@@ -1463,6 +1487,7 @@ export function CollabActivityDetailPage() {
                 </Button>
 
                 {/* Export CSV Button */}
+                {/* Export CSV Button */}
                 <Button
                   variant="outline"
                   size="sm"
@@ -1473,15 +1498,28 @@ export function CollabActivityDetailPage() {
                   Xuất CSV
                 </Button>
 
+                {/* Paste & Import Button */}
+                {canManageOperational && (
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => setIsImportParticipantsOpen(true)}
+                    className="h-8 text-xs border-emerald-200 text-emerald-700 bg-emerald-50 hover:bg-emerald-100 font-semibold gap-1.5 shadow-2xs cursor-pointer"
+                  >
+                    <FileSpreadsheet className="h-3.5 w-3.5 text-emerald-600" />
+                    <span>⚡ Nhập từ Sheet</span>
+                  </Button>
+                )}
+
                 {/* Add Participant Button */}
                 {canManageOperational && (
                   <Button
                     size="sm"
                     onClick={() => setIsAddParticipantOpen(true)}
-                    className="h-8 text-xs bg-purple-600 hover:bg-purple-700 text-white shadow-sm font-semibold gap-1"
+                    className="h-8 text-xs bg-purple-600 hover:bg-purple-700 text-white shadow-sm font-semibold gap-1.5 cursor-pointer"
                   >
                     <UserPlus className="h-3.5 w-3.5" />
-                    Thêm người tham gia
+                    <span>Thêm người</span>
                   </Button>
                 )}
               </div>
@@ -1494,8 +1532,32 @@ export function CollabActivityDetailPage() {
                 <span>Đang tải danh sách người tham gia...</span>
               </div>
             ) : filteredParticipants.length === 0 ? (
-              <div className="p-10 text-center text-slate-400 text-xs">
-                Chưa có người tham gia nào được ghi nhận cho hoạt động này.
+              <div className="p-10 text-center text-slate-400 text-xs space-y-3">
+                <div className="w-10 h-10 rounded-full bg-slate-100 text-slate-400 flex items-center justify-center mx-auto">
+                  <Users className="h-5 w-5" />
+                </div>
+                <p>Chưa có người tham gia nào được ghi nhận cho hoạt động này.</p>
+                {canManageOperational && (
+                  <div className="flex items-center justify-center gap-2 pt-1">
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => setIsImportParticipantsOpen(true)}
+                      className="text-xs gap-1 border-emerald-200 text-emerald-700 bg-emerald-50 hover:bg-emerald-100"
+                    >
+                      <FileSpreadsheet className="h-3.5 w-3.5" />
+                      Dán từ Google Sheet
+                    </Button>
+                    <Button
+                      size="sm"
+                      onClick={() => setIsAddParticipantOpen(true)}
+                      className="text-xs bg-purple-600 hover:bg-purple-700 text-white gap-1"
+                    >
+                      <UserPlus className="h-3.5 w-3.5" />
+                      Thêm người đầu tiên
+                    </Button>
+                  </div>
+                )}
               </div>
             ) : (
               <div className="overflow-x-auto border border-slate-200/80 rounded-xl">
@@ -1516,16 +1578,16 @@ export function CollabActivityDetailPage() {
                               setSelectedParticipantIds([]);
                             }
                           }}
-                          className="rounded border-slate-300 text-purple-600 focus:ring-purple-500"
+                          className="rounded border-slate-300 text-purple-600 focus:ring-purple-500 cursor-pointer"
                         />
                       </th>
-                      <th className="px-4 py-3">Họ và tên</th>
-                      <th className="w-28 px-3 py-3 text-center">MSSV</th>
+                      <th className="px-4 py-3 min-w-[180px]">Họ và tên</th>
+                      <th className="w-24 px-3 py-3 text-center">MSSV</th>
                       <th className="w-20 px-3 py-3 text-center">Lớp</th>
-                      <th className="w-16 px-3 py-3 text-center">Khóa</th>
-                      <th className="w-32 px-3 py-3">Đơn vị</th>
-                      <th className="w-60 px-4 py-3 text-center">Điểm danh</th>
-                      {canManageOperational && <th className="w-14 px-3 py-3 text-right">Thao tác</th>}
+                      <th className="w-28 px-3 py-3">Đơn vị</th>
+                      <th className="w-36 px-3 py-3">Đội hình / Vai trò</th>
+                      <th className="w-48 px-3 py-3 text-center">Điểm danh</th>
+                      {canManageOperational && <th className="w-12 px-2 py-3 text-center">Xóa</th>}
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-slate-100 bg-white">
@@ -1533,7 +1595,7 @@ export function CollabActivityDetailPage() {
                       const isSelected = selectedParticipantIds.includes(p.id);
                       const isPresent = p.attendanceStatus === 'present';
                       const isAbsent = p.attendanceStatus === 'absent';
-                      const memOrg = participatingOrganizations.find((o) => o.id === p.member?.organizationId);
+                      const memOrg = participatingOrganizations.find((o) => o.id === p.organizationId || o.id === p.member?.organizationId);
 
                       return (
                         <tr
@@ -1555,7 +1617,7 @@ export function CollabActivityDetailPage() {
                                   setSelectedParticipantIds((prev) => prev.filter((id) => id !== p.id));
                                 }
                               }}
-                              className="rounded border-slate-300 text-purple-600 focus:ring-purple-500"
+                              className="rounded border-slate-300 text-purple-600 focus:ring-purple-500 cursor-pointer"
                             />
                           </td>
 
@@ -1563,13 +1625,13 @@ export function CollabActivityDetailPage() {
                           <td className="px-4 py-3 font-semibold text-slate-900 min-w-[180px]">
                             <div className="flex items-center gap-2">
                               <div className="w-6 h-6 rounded-full bg-purple-100 text-purple-700 font-bold text-[10px] flex items-center justify-center shrink-0">
-                                {(p.member?.fullName || 'N').slice(0, 1)}
+                                {(p.fullName || p.member?.fullName || 'N').slice(0, 1)}
                               </div>
                               <div className="min-w-0">
-                                <span className="block truncate">{p.member?.fullName || 'Người tham gia'}</span>
-                                {p.member?.email && (
+                                <span className="block truncate">{p.fullName || p.member?.fullName || 'Người tham gia'}</span>
+                                {(p.email || p.phone) && (
                                   <span className="text-[10px] text-slate-400 font-normal block truncate">
-                                    {p.member.email}
+                                    {[p.email, p.phone].filter(Boolean).join(' • ')}
                                   </span>
                                 )}
                               </div>
@@ -1577,43 +1639,53 @@ export function CollabActivityDetailPage() {
                           </td>
 
                           {/* MSSV */}
-                          <td className="w-28 px-3 py-3 text-center font-mono font-medium text-slate-700">
-                            {p.member?.studentId || '--'}
+                          <td className="w-24 px-3 py-3 text-center font-mono font-medium text-slate-700">
+                            {p.studentId || p.member?.studentId || '--'}
                           </td>
 
                           {/* Lớp */}
                           <td className="w-20 px-3 py-3 text-center font-medium text-slate-700">
-                            {p.member?.className || '--'}
-                          </td>
-
-                          {/* Khóa */}
-                          <td className="w-16 px-3 py-3 text-center font-mono text-slate-600">
-                            {p.member?.cohort || '--'}
+                            {p.className || p.member?.className || '--'}
                           </td>
 
                           {/* Đơn vị */}
-                          <td className="w-32 px-3 py-3">
-                            <span className="text-[10px] bg-slate-100 text-slate-700 px-2 py-0.5 rounded font-medium truncate block max-w-[120px]">
-                              {memOrg?.code || 'Đơn vị'}
+                          <td className="w-28 px-3 py-3">
+                            {p.externalOrganization ? (
+                              <span className="inline-flex items-center gap-1 text-[10px] bg-emerald-50 text-emerald-800 border border-emerald-200 px-2 py-0.5 rounded-full font-medium truncate max-w-[130px]" title={p.externalOrganization}>
+                                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 shrink-0" />
+                                <span className="truncate">{p.externalOrganization}</span>
+                              </span>
+                            ) : (
+                              <span className="inline-flex items-center gap-1 text-[10px] bg-purple-50 text-purple-800 border border-purple-200 px-2 py-0.5 rounded-full font-semibold truncate max-w-[120px]">
+                                <span className="w-1.5 h-1.5 rounded-full bg-purple-600 shrink-0" />
+                                <span>{memOrg?.code || p.organization?.code || 'Đơn vị'}</span>
+                              </span>
+                            )}
+                          </td>
+
+                          {/* Đội hình / Vai trò */}
+                          <td className="w-36 px-3 py-3">
+                            <span className="inline-block text-[10px] bg-slate-100 text-slate-700 px-2 py-0.5 rounded-md font-medium truncate max-w-[130px]">
+                              {p.roleTitle || 'Tình nguyện viên'}
                             </span>
                           </td>
 
                           {/* Điểm danh: Instant 0ms Flat 2-Button Group */}
-                          <td className="w-60 px-4 py-3 text-center">
-                            <div className="inline-flex items-center justify-center gap-1.5 p-1 bg-slate-100/90 rounded-xl">
+                          <td className="w-48 px-3 py-3 text-center">
+                            <div className="inline-flex items-center justify-center gap-1 p-0.5 bg-slate-100/90 rounded-lg">
                               {/* Có mặt Button */}
                               <button
                                 type="button"
                                 disabled={!canManageOperational}
                                 onClick={() => handleAttendanceToggle(p.id, p.attendanceStatus, 'present')}
                                 className={cn(
-                                  'h-7 px-3 rounded-lg font-bold text-[11px] flex items-center gap-1.5 transition-all',
+                                  'h-6 px-2.5 rounded-md font-bold text-[10px] flex items-center gap-1 transition-all',
                                   isPresent
                                     ? 'bg-emerald-600 text-white shadow-xs'
                                     : 'text-emerald-700 hover:bg-emerald-100/70 bg-transparent'
                                 )}
                               >
-                                <Check className="h-3.5 w-3.5 stroke-[2.5]" />
+                                <Check className="h-3 w-3 stroke-[2.5]" />
                                 <span>Có mặt</span>
                               </button>
 
@@ -1623,13 +1695,13 @@ export function CollabActivityDetailPage() {
                                 disabled={!canManageOperational}
                                 onClick={() => handleAttendanceToggle(p.id, p.attendanceStatus, 'absent')}
                                 className={cn(
-                                  'h-7 px-3 rounded-lg font-bold text-[11px] flex items-center gap-1.5 transition-all',
+                                  'h-6 px-2.5 rounded-md font-bold text-[10px] flex items-center gap-1 transition-all',
                                   isAbsent
                                     ? 'bg-rose-600 text-white shadow-xs'
                                     : 'text-rose-700 hover:bg-rose-100/70 bg-transparent'
                                 )}
                               >
-                                <X className="h-3.5 w-3.5 stroke-[2.5]" />
+                                <X className="h-3 w-3 stroke-[2.5]" />
                                 <span>Vắng</span>
                               </button>
                             </div>
@@ -1637,19 +1709,15 @@ export function CollabActivityDetailPage() {
 
                           {/* Thao tác */}
                           {canManageOperational && (
-                            <td className="w-14 px-3 py-3 text-right">
-                              <Button
-                                variant="ghost"
-                                size="sm"
-                                onClick={() => {
-                                  if (confirm('Bạn có chắc muốn xóa người này khỏi danh sách tham gia?')) {
-                                    removeParticipantMutation.mutate(p.id);
-                                  }
-                                }}
-                                className="h-7 w-7 p-0 text-slate-400 hover:text-rose-600"
+                            <td className="w-12 px-2 py-3 text-center">
+                              <button
+                                type="button"
+                                onClick={() => handleDeleteParticipant(p.id)}
+                                className="h-6 w-6 inline-flex items-center justify-center text-slate-400 hover:text-rose-600 rounded transition-colors"
+                                title="Xóa người tham gia"
                               >
                                 <Trash2 className="h-3.5 w-3.5" />
-                              </Button>
+                              </button>
                             </td>
                           )}
                         </tr>
@@ -1750,6 +1818,15 @@ export function CollabActivityDetailPage() {
         activityId={activityId!}
         planId={planId!}
         defaultOrganizationId={activity.leadOrganizationId || activeOrganization?.id}
+        participatingOrganizations={participatingOrganizations}
+      />
+
+      {/* Modal for Import Collab Participants from Sheet/Excel */}
+      <ImportCollabParticipantsModal
+        isOpen={isImportParticipantsOpen}
+        onClose={() => setIsImportParticipantsOpen(false)}
+        planId={planId!}
+        activityId={activityId!}
         participatingOrganizations={participatingOrganizations}
       />
 

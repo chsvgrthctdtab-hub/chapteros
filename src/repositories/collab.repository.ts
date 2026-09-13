@@ -5,6 +5,7 @@ import type {
   CollabTask,
   CollabTransaction,
   CollabMemberOption,
+  CollabParticipant,
   OrganizationRole,
 } from '@/types';
 
@@ -968,13 +969,13 @@ export const collabRepository = {
   },
 
   // ==========================================
-  // 5. COLLAB ACTIVITY PARTICIPANTS & ATTENDANCE
+  // 5. COLLAB PARTICIPANTS & ATTENDANCE
   // ==========================================
   /**
    * List participants for a collab activity (or aggregated for a whole plan)
    */
   async listCollabParticipants(activityId?: string, planId?: string): Promise<{
-    data: any[];
+    data: CollabParticipant[];
     totalCount: number;
     stats: {
       total: number;
@@ -993,19 +994,35 @@ export const collabRepository = {
     }
 
     try {
-      // 1. If planId provided without activityId, gather all activity IDs of the plan
-      let targetActivityIds: string[] = [];
+      // 1. Primary: Query dedicated collab_participants table
+      let query = supabase
+        .from('collab_participants')
+        .select(`
+          *,
+          organization:organizations(
+            id,
+            name,
+            code
+          ),
+          collab_activity:collab_activities(
+            id,
+            title,
+            code
+          )
+        `)
+        .order('created_at', { ascending: false });
+
       if (activityId) {
-        targetActivityIds = [activityId];
+        query = query.eq('collab_activity_id', activityId);
       } else if (planId) {
-        const { data: actRows } = await supabase
-          .from('collab_activities')
-          .select('id')
-          .eq('plan_id', planId);
-        targetActivityIds = (actRows || []).map((r: any) => r.id);
+        query = query.eq('plan_id', planId);
       }
 
-      if (targetActivityIds.length === 0) {
+      const { data: rows, error } = await query;
+
+      // Defensive fallback if collab_participants table has not been created yet in DB
+      if (error) {
+        console.warn('collab_participants table error, checking fallback:', error.message);
         return {
           data: [],
           totalCount: 0,
@@ -1013,90 +1030,29 @@ export const collabRepository = {
         };
       }
 
-      // 2. Query activity_form_responses and activity_participants
-      const { data: formResponses = [] } = await supabase
-        .from('activity_form_responses')
-        .select('*')
-        .in('activity_id', targetActivityIds)
-        .order('submitted_at', { ascending: false });
-
-      const { data: participantsData = [] } = await supabase
-        .from('activity_participants')
-        .select('*, member:members (*)')
-        .in('activity_id', targetActivityIds)
-        .order('created_at', { ascending: false });
-
-      // Build unified list
-      const seenIds = new Set<string>();
-      const list: any[] = [];
-
-      // Add direct participants
-      (participantsData || []).forEach((p: any) => {
-        const mem = p.member || {};
-        seenIds.add(p.id);
-        if (p.member_id) seenIds.add(p.member_id);
-
-        list.push({
-          id: p.id,
-          activityId: p.activity_id,
-          memberId: p.member_id,
-          registrationStatus: p.registration_status || 'registered',
-          attendanceStatus: p.attendance_status || 'unmarked',
-          attendedAt: p.attended_at,
-          notes: p.notes,
-          source: 'manual',
-          member: {
-            id: mem.id || p.member_id,
-            fullName: mem.full_name || 'Người tham gia',
-            studentId: mem.student_id || null,
-            className: mem.class_name || null,
-            cohort: mem.cohort || null,
-            email: mem.email || null,
-            phone: mem.phone || null,
-            organizationId: mem.organization_id || '',
-          },
-        });
-      });
-
-      // Add form responses
-      (formResponses || []).forEach((fr: any) => {
-        const synthId = `resp_${fr.id}`;
-        if (fr.matched_participant_id && seenIds.has(fr.matched_participant_id)) return;
-        if (fr.matched_member_id && seenIds.has(fr.matched_member_id)) return;
-
-        // Parse attendance status from notes if embedded
-        let attendanceStatus = 'unmarked';
-        if (fr.notes) {
-          if (/\[attendance:present\]/i.test(fr.notes)) attendanceStatus = 'present';
-          else if (/\[attendance:absent\]/i.test(fr.notes)) attendanceStatus = 'absent';
-        }
-
-        const sId = fr.parsed_student_id || fr.student_id || null;
-        const fName = fr.parsed_full_name || fr.full_name || fr.respondent_email || 'Người đăng ký';
-        const phone = fr.parsed_phone || fr.phone_number || null;
-        const cName = fr.parsed_class_name || fr.class_name || null;
-
-        list.push({
-          id: synthId,
-          activityId: fr.activity_id,
-          memberId: fr.matched_member_id || synthId,
-          registrationStatus: 'registered',
-          attendanceStatus,
-          attendedAt: attendanceStatus === 'present' ? fr.updated_at || fr.submitted_at : null,
-          notes: fr.notes,
-          source: 'google_form',
-          member: {
-            id: fr.matched_member_id || synthId,
-            fullName: fName,
-            studentId: sId,
-            className: cName,
-            cohort: null,
-            email: fr.respondent_email,
-            phone,
-            organizationId: fr.organization_id || '',
-          },
-        });
-      });
+      const list: CollabParticipant[] = (rows || []).map((row: any) => ({
+        id: row.id,
+        planId: row.plan_id,
+        collabActivityId: row.collab_activity_id || null,
+        organizationId: row.organization_id || null,
+        externalOrganization: row.external_organization || null,
+        memberId: row.member_id || null,
+        fullName: row.full_name || 'Người tham gia',
+        studentId: row.student_id || null,
+        className: row.class_name || null,
+        cohort: row.cohort || null,
+        phone: row.phone || null,
+        email: row.email || null,
+        roleTitle: row.role_title || 'Tình nguyện viên',
+        attendanceStatus: (row.attendance_status as 'unmarked' | 'present' | 'absent') || 'unmarked',
+        attendedAt: row.attended_at || null,
+        notes: row.notes || null,
+        source: (row.source as 'manual' | 'import' | 'google_form' | 'system') || 'manual',
+        createdAt: row.created_at,
+        updatedAt: row.updated_at,
+        organization: row.organization || null,
+        collabActivity: row.collab_activity || null,
+      }));
 
       const total = list.length;
       const present = list.filter((p) => p.attendanceStatus === 'present').length;
@@ -1126,91 +1082,168 @@ export const collabRepository = {
   },
 
   /**
-   * Add participant to collab activity
+   * Add a single participant to a collab plan / activity
    */
   async addCollabParticipant(
-    activityId: string,
-    organizationId: string,
+    planId: string,
+    activityId: string | undefined,
     data: {
-      memberId?: string;
+      organizationId?: string | null;
+      externalOrganization?: string | null;
+      memberId?: string | null;
       fullName: string;
-      studentId?: string;
-      className?: string;
-      cohort?: string;
-      phone?: string;
-      email?: string;
-      notes?: string;
-      attendanceStatus?: string;
+      studentId?: string | null;
+      className?: string | null;
+      cohort?: string | null;
+      phone?: string | null;
+      email?: string | null;
+      roleTitle?: string | null;
+      attendanceStatus?: 'unmarked' | 'present' | 'absent';
+      notes?: string | null;
+      source?: 'manual' | 'import' | 'google_form' | 'system';
     }
-  ): Promise<any> {
+  ): Promise<CollabParticipant> {
     if (!isSupabaseConfigured) throw new Error('Supabase is not configured');
 
-    const noteSegments: string[] = [];
-    if (data.cohort) noteSegments.push(`Khóa: ${data.cohort.trim()}`);
-    if (data.notes) noteSegments.push(data.notes.trim());
-    if (data.attendanceStatus === 'present') noteSegments.push('[attendance:present]');
-    else if (data.attendanceStatus === 'absent') noteSegments.push('[attendance:absent]');
+    const payload = {
+      plan_id: planId,
+      collab_activity_id: activityId || null,
+      organization_id: data.organizationId || null,
+      external_organization: data.externalOrganization || null,
+      member_id: data.memberId || null,
+      full_name: data.fullName.trim(),
+      student_id: data.studentId?.trim() || null,
+      class_name: data.className?.trim() || null,
+      cohort: data.cohort?.trim() || null,
+      phone: data.phone?.trim() || null,
+      email: data.email?.trim() || null,
+      role_title: data.roleTitle?.trim() || 'Tình nguyện viên',
+      attendance_status: data.attendanceStatus || 'unmarked',
+      attended_at: data.attendanceStatus === 'present' ? new Date().toISOString() : null,
+      notes: data.notes?.trim() || null,
+      source: data.source || 'manual',
+    };
 
-    const { data: newResp, error } = await supabase
-      .from('activity_form_responses')
-      .insert({
-        activity_form_id: '00000000-0000-0000-0000-000000000000',
-        activity_id: activityId,
-        organization_id: organizationId,
-        google_response_id: `collab_manual_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`,
-        respondent_email: data.email?.trim() || null,
-        submitted_at: new Date().toISOString(),
-        raw_answers: {},
-        parsed_student_id: data.studentId?.trim() || null,
-        parsed_full_name: data.fullName?.trim() || 'Người tham gia',
-        parsed_phone: data.phone?.trim() || null,
-        parsed_class_name: data.className?.trim() || null,
-        matched_member_id: data.memberId || null,
-        match_status: data.memberId ? 'matched' : 'unmatched',
-        notes: noteSegments.join(', ') || null,
-      } as never)
-      .select()
+    const { data: insertedRow, error } = await supabase
+      .from('collab_participants')
+      .insert(payload as never)
+      .select(`
+        *,
+        organization:organizations(
+          id,
+          name,
+          code
+        ),
+        collab_activity:collab_activities(
+          id,
+          title,
+          code
+        )
+      `)
       .single();
 
     if (error) throw error;
-    return newResp;
+    if (!insertedRow) throw new Error('Không thể tạo người tham gia: không có dữ liệu trả về');
+
+    const row = insertedRow as any;
+    return {
+      id: row.id,
+      planId: row.plan_id,
+      collabActivityId: row.collab_activity_id || null,
+      organizationId: row.organization_id || null,
+      externalOrganization: row.external_organization || null,
+      memberId: row.member_id || null,
+      fullName: row.full_name,
+      studentId: row.student_id || null,
+      className: row.class_name || null,
+      cohort: row.cohort || null,
+      phone: row.phone || null,
+      email: row.email || null,
+      roleTitle: row.role_title || 'Tình nguyện viên',
+      attendanceStatus: row.attendance_status || 'unmarked',
+      attendedAt: row.attended_at || null,
+      notes: row.notes || null,
+      source: row.source || 'manual',
+      createdAt: row.created_at,
+      updatedAt: row.updated_at,
+      organization: row.organization || null,
+      collabActivity: row.collab_activity || null,
+    };
   },
 
   /**
-   * Update collab participant attendance status
+   * Bulk add participants to collab plan / activity (used by Google Sheet import)
+   */
+  async bulkAddCollabParticipants(
+    planId: string,
+    activityId: string | undefined,
+    participants: Array<{
+      fullName: string;
+      studentId?: string | null;
+      className?: string | null;
+      cohort?: string | null;
+      phone?: string | null;
+      email?: string | null;
+      roleTitle?: string | null;
+      organizationId?: string | null;
+      externalOrganization?: string | null;
+      memberId?: string | null;
+      notes?: string | null;
+    }>
+  ): Promise<number> {
+    if (!isSupabaseConfigured) throw new Error('Supabase is not configured');
+    if (participants.length === 0) return 0;
+
+    const payloadList = participants.map((p) => ({
+      plan_id: planId,
+      collab_activity_id: activityId || null,
+      organization_id: p.organizationId || null,
+      external_organization: p.externalOrganization || null,
+      member_id: p.memberId || null,
+      full_name: p.fullName.trim(),
+      student_id: p.studentId?.trim() || null,
+      class_name: p.className?.trim() || null,
+      cohort: p.cohort?.trim() || null,
+      phone: p.phone?.trim() || null,
+      email: p.email?.trim() || null,
+      role_title: p.roleTitle?.trim() || 'Tình nguyện viên',
+      attendance_status: 'unmarked',
+      notes: p.notes?.trim() || null,
+      source: 'import',
+    }));
+
+    // Chunk insertions into batches of 50 to avoid network payload limits
+    const CHUNK_SIZE = 50;
+    let insertedCount = 0;
+
+    for (let i = 0; i < payloadList.length; i += CHUNK_SIZE) {
+      const chunk = payloadList.slice(i, i + CHUNK_SIZE);
+      const { data, error } = await supabase
+        .from('collab_participants')
+        .insert(chunk as never)
+        .select('id');
+
+      if (error) throw error;
+      insertedCount += data?.length || chunk.length;
+    }
+
+    return insertedCount;
+  },
+
+  /**
+   * Update collab participant attendance status & details
    */
   async updateCollabParticipant(
     participantId: string,
-    data: { attendanceStatus?: string; notes?: string }
+    data: {
+      attendanceStatus?: 'unmarked' | 'present' | 'absent';
+      notes?: string;
+      roleTitle?: string;
+      collabActivityId?: string | null;
+    }
   ): Promise<void> {
     if (!isSupabaseConfigured || !participantId) return;
 
-    if (participantId.startsWith('resp_')) {
-      const rawId = participantId.replace('resp_', '');
-      const { data: existingData } = await supabase
-        .from('activity_form_responses')
-        .select('notes')
-        .eq('id', rawId)
-        .single();
-
-      const existing = existingData as any;
-      let currentNotes = existing?.notes || '';
-      currentNotes = currentNotes.replace(/\[attendance:[a-z]+\]/gi, '').trim();
-
-      if (data.attendanceStatus === 'present') {
-        currentNotes = currentNotes ? `${currentNotes} [attendance:present]` : '[attendance:present]';
-      } else if (data.attendanceStatus === 'absent') {
-        currentNotes = currentNotes ? `${currentNotes} [attendance:absent]` : '[attendance:absent]';
-      }
-
-      await supabase
-        .from('activity_form_responses')
-        .update({ notes: currentNotes.trim() || null } as never)
-        .eq('id', rawId);
-      return;
-    }
-
-    // Direct UUID update on activity_participants
     const payload: any = {};
     if (data.attendanceStatus !== undefined) {
       payload.attendance_status = data.attendanceStatus;
@@ -1219,23 +1252,28 @@ export const collabRepository = {
     if (data.notes !== undefined) {
       payload.notes = data.notes;
     }
+    if (data.roleTitle !== undefined) {
+      payload.role_title = data.roleTitle;
+    }
+    if (data.collabActivityId !== undefined) {
+      payload.collab_activity_id = data.collabActivityId;
+    }
 
-    await supabase.from('activity_participants').update(payload as never).eq('id', participantId);
+    const { error } = await supabase
+      .from('collab_participants')
+      .update(payload as never)
+      .eq('id', participantId);
+
+    if (error) throw error;
   },
 
   /**
-   * Remove participant from collab activity
+   * Remove participant from collab activity or plan
    */
   async removeCollabParticipant(participantId: string): Promise<void> {
     if (!isSupabaseConfigured || !participantId) return;
-
-    if (participantId.startsWith('resp_')) {
-      const rawId = participantId.replace('resp_', '');
-      await supabase.from('activity_form_responses').delete().eq('id', rawId);
-      return;
-    }
-
-    await supabase.from('activity_participants').delete().eq('id', participantId);
+    const { error } = await supabase.from('collab_participants').delete().eq('id', participantId);
+    if (error) throw error;
   },
 
   /**
@@ -1243,29 +1281,18 @@ export const collabRepository = {
    */
   async bulkUpdateCollabAttendance(
     participantIds: string[],
-    status: string
+    status: 'unmarked' | 'present' | 'absent'
   ): Promise<void> {
     if (!isSupabaseConfigured || participantIds.length === 0) return;
 
-    const respIds = participantIds
-      .filter((id) => id.startsWith('resp_'))
-      .map((id) => id.replace('resp_', ''));
-    const directIds = participantIds.filter((id) => !id.startsWith('resp_'));
+    const { error } = await supabase
+      .from('collab_participants')
+      .update({
+        attendance_status: status,
+        attended_at: status === 'present' ? new Date().toISOString() : null,
+      } as never)
+      .in('id', participantIds);
 
-    if (directIds.length > 0) {
-      await supabase
-        .from('activity_participants')
-        .update({
-          attendance_status: status,
-          attended_at: status === 'present' ? new Date().toISOString() : null,
-        } as never)
-        .in('id', directIds);
-    }
-
-    if (respIds.length > 0) {
-      for (const id of respIds) {
-        await this.updateCollabParticipant(`resp_${id}`, { attendanceStatus: status });
-      }
-    }
+    if (error) throw error;
   },
 };

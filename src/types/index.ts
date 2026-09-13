@@ -293,6 +293,40 @@ export interface CollabMemberOption {
   position?: string | null;
 }
 
+// Collab Participant (Tình nguyện viên / Người tham gia chiến dịch liên đơn vị)
+export interface CollabParticipant {
+  id: string;
+  planId: string;
+  collabActivityId?: string | null;
+  organizationId?: string | null;
+  externalOrganization?: string | null;
+  memberId?: string | null;
+  fullName: string;
+  studentId?: string | null;
+  className?: string | null;
+  cohort?: string | null;
+  phone?: string | null;
+  email?: string | null;
+  roleTitle?: string | null;
+  attendanceStatus: 'unmarked' | 'present' | 'absent';
+  attendedAt?: string | null;
+  notes?: string | null;
+  source: 'manual' | 'import' | 'google_form' | 'system';
+  createdAt: string;
+  updatedAt?: string;
+  organization?: {
+    id: string;
+    name: string;
+    code: string;
+  } | null;
+  collabActivity?: {
+    id: string;
+    title: string;
+    code?: string;
+  } | null;
+  member?: Member | null;
+}
+
 // Activity Participant (Tham gia & Điểm danh)
 export interface ActivityParticipant {
   id: string;
