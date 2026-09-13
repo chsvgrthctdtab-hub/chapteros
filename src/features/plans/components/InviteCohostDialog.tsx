@@ -119,7 +119,7 @@ export function InviteCohostDialog({
         className="sm:max-w-2xl md:max-w-3xl max-h-[92vh] overflow-y-auto bg-white border border-slate-200/80 shadow-2xl rounded-3xl p-6 sm:p-8 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
       >
         <DialogHeader className="space-y-1 text-left pb-1">
-          <div className="flex items-center gap-2 text-purple-600 font-semibold text-xs mb-0.5">
+          <div className="flex items-center gap-2 text-violet-600 font-semibold text-xs mb-0.5">
             <Users2 className="h-4 w-4" />
             <span>Mời đơn vị phối hợp</span>
           </div>
@@ -164,7 +164,7 @@ export function InviteCohostDialog({
             <div className="flex items-center justify-between text-[11px] font-semibold text-slate-600 px-0.5">
               <span>Danh sách kết quả ({eligibleOrganizations.length})</span>
               {selectedOrg && (
-                <span className="text-purple-600 font-medium truncate max-w-[240px]">
+                <span className="text-violet-600 font-medium truncate max-w-[240px]">
                   Đã chọn: <span className="font-semibold">{selectedOrg.name}</span>
                 </span>
               )}
@@ -173,7 +173,7 @@ export function InviteCohostDialog({
             <div className="max-h-56 overflow-y-auto border border-slate-200 rounded-xl divide-y divide-slate-100 bg-slate-50/30">
               {isSearching ? (
                 <div className="p-6 text-center text-xs text-slate-400 flex items-center justify-center gap-2">
-                  <Loader2 className="h-4 w-4 animate-spin text-purple-600" />
+                  <Loader2 className="h-4 w-4 animate-spin text-violet-600" />
                   <span>Đang tìm kiếm đơn vị...</span>
                 </div>
               ) : eligibleOrganizations.length === 0 ? (
@@ -197,7 +197,7 @@ export function InviteCohostDialog({
                       onClick={() => handleSelectOrg(org)}
                       className={`p-3 flex items-center justify-between cursor-pointer transition-colors text-left ${
                         isSelected
-                          ? 'bg-purple-50/80 border-purple-200 text-purple-900'
+                          ? 'bg-violet-50/80 border-violet-200 text-violet-900'
                           : 'hover:bg-slate-100/70 text-slate-800'
                       }`}
                     >
@@ -205,7 +205,7 @@ export function InviteCohostDialog({
                         <div
                           className={`w-8 h-8 rounded-lg flex items-center justify-center font-bold text-xs shrink-0 ${
                             isSelected
-                              ? 'bg-purple-600 text-white shadow-sm'
+                              ? 'bg-violet-600 text-white shadow-2xs'
                               : 'bg-white border border-slate-200 text-slate-700'
                           }`}
                         >
@@ -241,7 +241,7 @@ export function InviteCohostDialog({
 
                       <div className="shrink-0 ml-2">
                         {isSelected ? (
-                          <div className="w-6 h-6 rounded-full bg-purple-600 text-white flex items-center justify-center shadow-sm">
+                          <div className="w-6 h-6 rounded-full bg-violet-600 text-white flex items-center justify-center shadow-2xs">
                             <Check className="h-3.5 w-3.5" />
                           </div>
                         ) : (
@@ -249,7 +249,7 @@ export function InviteCohostDialog({
                             type="button"
                             variant="ghost"
                             size="sm"
-                            className="h-7 text-xs text-slate-600 hover:text-purple-700 hover:bg-purple-50"
+                            className="h-7 text-xs text-slate-600 hover:text-violet-700 hover:bg-violet-50 active:scale-[0.98]"
                           >
                             Chọn
                           </Button>
@@ -264,9 +264,9 @@ export function InviteCohostDialog({
 
           {/* Role / Responsibility in Campaign */}
           {selectedOrg && (
-            <div className="space-y-3 pt-1 bg-purple-50/40 p-3.5 rounded-xl border border-purple-100">
+            <div className="space-y-3 pt-1 bg-violet-50/40 p-3.5 rounded-xl border border-violet-100">
               <div className="space-y-1.5">
-                <label htmlFor="cohost-role-in-plan" className="block text-xs font-semibold text-purple-900">
+                <label htmlFor="cohost-role-in-plan" className="block text-xs font-semibold text-violet-900">
                   Phân loại vai trò tham gia <span className="text-rose-500">*</span>
                 </label>
                 <Select
@@ -279,7 +279,7 @@ export function InviteCohostDialog({
                     if (val === 'observer') setRoleDescription('Đơn vị quan sát');
                   }}
                 >
-                  <SelectTrigger id="cohost-role-in-plan" className="h-9 bg-white border-purple-200 text-xs">
+                  <SelectTrigger id="cohost-role-in-plan" className="h-9 bg-white border-violet-200 text-xs">
                     <SelectValue placeholder="Chọn vai trò tham gia" />
                   </SelectTrigger>
                   <SelectContent>
@@ -296,7 +296,7 @@ export function InviteCohostDialog({
               </div>
 
               <div className="space-y-1.5">
-                <label htmlFor="cohost-role-input" className="block text-xs font-semibold text-purple-900">
+                <label htmlFor="cohost-role-input" className="block text-xs font-semibold text-violet-900">
                   Nội dung trách nhiệm / Mô tả phân công
                 </label>
                 <Input
@@ -304,7 +304,7 @@ export function InviteCohostDialog({
                   value={roleDescription}
                   onChange={(e) => setRoleDescription(e.target.value)}
                   placeholder="Ví dụ: Phụ trách mảng Tình nguyện, Hậu cần & Truyền thông..."
-                  className="h-9 bg-white border-purple-200 text-xs focus:border-purple-400"
+                  className="h-9 bg-white border-violet-200 text-xs focus:border-violet-400"
                 />
                 <p className="text-[11px] text-slate-500">
                   Mô tả này sẽ hiển thị công khai trên danh sách ban tổ chức chiến dịch.
@@ -319,7 +319,7 @@ export function InviteCohostDialog({
             variant="outline"
             size="sm"
             onClick={handleClose}
-            className="text-xs"
+            className="text-xs h-8 px-3 border-slate-200 hover:bg-slate-50 active:scale-[0.98]"
           >
             Hủy
           </Button>
@@ -328,7 +328,7 @@ export function InviteCohostDialog({
             size="sm"
             onClick={handleConfirmInvite}
             disabled={!selectedOrg || addCohostMutation.isPending}
-            className="text-xs bg-purple-600 hover:bg-purple-700 text-white shadow-sm"
+            className="text-xs h-8 px-3.5 bg-violet-600 hover:bg-violet-700 text-white font-semibold shadow-2xs active:scale-[0.98]"
           >
             {addCohostMutation.isPending ? (
               <>

@@ -454,7 +454,7 @@ export function CollabFinanceModule({
         <div className="bg-slate-50/70 border border-slate-200 rounded-2xl p-4">
           <div className="flex items-center justify-between mb-3">
             <div className="flex items-center gap-2 text-xs font-bold text-slate-800">
-              <PieChart className="h-4 w-4 text-purple-600" />
+              <PieChart className="h-4 w-4 text-violet-600" />
               <span>Phân bổ Thu / Chi theo Đơn vị tham gia</span>
             </div>
             <span className="text-[11px] text-slate-500">
@@ -471,11 +471,11 @@ export function CollabFinanceModule({
               return (
                 <div
                   key={org.id}
-                  className="bg-white border border-slate-200/80 rounded-xl p-3.5 text-xs space-y-2 shadow-xs"
+                  className="bg-white border border-slate-200/80 rounded-xl p-3.5 text-xs space-y-2 shadow-2xs"
                 >
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2 min-w-0">
-                      <div className="w-6 h-6 rounded-md bg-purple-100 text-purple-700 font-bold flex items-center justify-center text-[10px] shrink-0">
+                      <div className="w-6 h-6 rounded-md bg-violet-100 text-violet-700 font-bold flex items-center justify-center text-[10px] shrink-0">
                         {org.code.slice(0, 2)}
                       </div>
                       <span className="font-semibold text-slate-900 truncate">
@@ -483,7 +483,7 @@ export function CollabFinanceModule({
                       </span>
                     </div>
                     {isLead && (
-                      <Badge className="bg-purple-100 text-purple-800 border-none text-[10px] px-1.5 py-0.5 shrink-0">
+                      <Badge className="bg-violet-50 text-violet-700 border border-violet-200/80 text-[10px] px-1.5 py-0.5 shrink-0 font-semibold">
                         Chủ trì
                       </Badge>
                     )}
@@ -525,7 +525,7 @@ export function CollabFinanceModule({
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-2 border-b border-slate-100">
           <div>
             <h3 className="text-sm font-bold text-slate-900 flex items-center gap-2">
-              <DollarSign className="h-4 w-4 text-purple-600" />
+              <DollarSign className="h-4 w-4 text-violet-600" />
               Sổ Nhật Ký Thu - Chi & Chứng Từ
             </h3>
             <p className="text-xs text-slate-500 mt-0.5">
@@ -541,13 +541,13 @@ export function CollabFinanceModule({
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Tìm nội dung, danh mục..."
-                className="pl-8 h-8 text-xs bg-slate-50 border-slate-200"
+                className="pl-8 h-8 text-xs bg-slate-50/70 border-slate-200/90 focus:bg-white"
               />
             </div>
 
             {/* Filter by Type */}
             <Select value={filterType} onValueChange={setFilterType}>
-              <SelectTrigger className="h-8 text-xs w-[110px] bg-slate-50">
+              <SelectTrigger className="h-8 text-xs w-[110px] bg-slate-50/70 border-slate-200/90">
                 <SelectValue placeholder="Loại" />
               </SelectTrigger>
               <SelectContent className="bg-white border-slate-200">
@@ -560,7 +560,7 @@ export function CollabFinanceModule({
             {/* Filter by Org */}
             {participatingOrganizations.length > 1 && (
               <Select value={filterOrg} onValueChange={setFilterOrg}>
-                <SelectTrigger className="h-8 text-xs w-[130px] bg-slate-50">
+                <SelectTrigger className="h-8 text-xs w-[130px] bg-slate-50/70 border-slate-200/90">
                   <SelectValue placeholder="Đơn vị" />
                 </SelectTrigger>
                 <SelectContent className="bg-white border-slate-200">
@@ -579,7 +579,7 @@ export function CollabFinanceModule({
         {/* Transactions Table */}
         {isLoading ? (
           <div className="p-12 text-center text-xs text-slate-400 flex items-center justify-center gap-2">
-            <Loader2 className="h-4 w-4 animate-spin text-purple-600" />
+            <Loader2 className="h-4 w-4 animate-spin text-violet-600" />
             <span>Đang tải dữ liệu thu chi...</span>
           </div>
         ) : filteredTransactions.length === 0 ? (
@@ -593,7 +593,7 @@ export function CollabFinanceModule({
               <Button
                 size="sm"
                 onClick={() => openCreateDialog('expense')}
-                className="mt-3 text-xs bg-purple-600 hover:bg-purple-700 text-white"
+                className="mt-3 text-xs h-8 px-3.5 bg-violet-600 hover:bg-violet-700 text-white font-semibold shadow-2xs active:scale-[0.98]"
               >
                 <Plus className="h-3.5 w-3.5 mr-1" />
                 Ghi nhận giao dịch đầu tiên
@@ -654,7 +654,7 @@ export function CollabFinanceModule({
                           </span>
                         </div>
                         {tx.collabActivity && (
-                          <span className="text-[10px] text-purple-600 block mt-0.5 truncate max-w-[150px]">
+                          <span className="text-[10px] text-violet-700 block mt-0.5 truncate max-w-[150px]">
                             ↳ {tx.collabActivity.title}
                           </span>
                         )}
@@ -683,7 +683,7 @@ export function CollabFinanceModule({
                             href={tx.receiptUrl}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="inline-flex items-center gap-1 text-[11px] font-medium text-purple-600 hover:text-purple-800 hover:underline bg-purple-50 px-2 py-1 rounded-lg border border-purple-200/60"
+                            className="inline-flex items-center gap-1 text-[11px] font-medium text-violet-700 hover:text-violet-900 hover:underline bg-violet-50 px-2 py-1 rounded-lg border border-violet-200/70 active:scale-[0.98]"
                             title="Xem hóa đơn / chứng từ minh bạch"
                           >
                             <FileText className="h-3 w-3" />
@@ -705,7 +705,7 @@ export function CollabFinanceModule({
                               variant="ghost"
                               size="sm"
                               onClick={() => openEditDialog(tx)}
-                              className="h-7 w-7 p-0 text-slate-400 hover:text-purple-600 hover:bg-purple-50 rounded-lg"
+                              className="h-7 w-7 p-0 text-slate-400 hover:text-violet-700 hover:bg-violet-50 rounded-lg active:scale-[0.95]"
                               title="Sửa giao dịch"
                             >
                               <Edit className="h-3.5 w-3.5" />
@@ -714,7 +714,7 @@ export function CollabFinanceModule({
                               variant="ghost"
                               size="sm"
                               onClick={() => handleDelete(tx.id)}
-                              className="h-7 w-7 p-0 text-slate-400 hover:text-rose-600 hover:bg-rose-50 rounded-lg"
+                              className="h-7 w-7 p-0 text-slate-400 hover:text-rose-600 hover:bg-rose-50 rounded-lg active:scale-[0.95]"
                               title="Xóa giao dịch"
                             >
                               <Trash2 className="h-3.5 w-3.5" />
@@ -736,7 +736,7 @@ export function CollabFinanceModule({
         <DialogContent className="sm:max-w-lg bg-white border border-slate-200 rounded-2xl p-6 shadow-2xl">
           <DialogHeader className="space-y-1 text-left">
             <DialogTitle className="text-base font-bold text-slate-900 flex items-center gap-2">
-              <DollarSign className="h-4 w-4 text-purple-600" />
+              <DollarSign className="h-4 w-4 text-violet-600" />
               {editingTransaction ? 'Chỉnh Sửa Giao Dịch' : 'Ghi Nhận Thu / Chi Chiến Dịch'}
             </DialogTitle>
             <DialogDescription className="text-xs text-slate-500">

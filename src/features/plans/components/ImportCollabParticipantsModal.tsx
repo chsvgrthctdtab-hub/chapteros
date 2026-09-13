@@ -286,7 +286,7 @@ export function ImportCollabParticipantsModal({
               </div>
               <span>Nhập Danh Sách từ Google Sheet / Excel</span>
             </DialogTitle>
-            <Badge className="bg-purple-50 text-purple-700 border-purple-200 text-xs px-2.5 py-0.5 font-medium">
+            <Badge className="bg-violet-50 text-violet-700 border-violet-200/80 text-xs px-2.5 py-0.5 font-semibold">
               Copy - Paste Tức thì
             </Badge>
           </div>
@@ -309,7 +309,7 @@ export function ImportCollabParticipantsModal({
             <div className="space-y-1.5">
               <div className="flex items-center justify-between">
                 <label className="text-xs font-bold text-slate-800 flex items-center gap-1.5">
-                  <ClipboardPaste className="h-3.5 w-3.5 text-purple-600" />
+                  <ClipboardPaste className="h-3.5 w-3.5 text-violet-600" />
                   <span>Dán dữ liệu từ Sheet (Ctrl + V):</span>
                 </label>
                 <span className="text-[11px] text-slate-400">Hỗ trợ phân tách Tab, Dấu phẩy hoặc Dấu chấm phẩy</span>
@@ -319,7 +319,7 @@ export function ImportCollabParticipantsModal({
                 onChange={(e) => setPastedText(e.target.value)}
                 rows={10}
                 placeholder={`Ví dụ sao chép từ Google Sheet:\nNguyễn Văn A\tB2101234\tDI21V7A1\tĐHYD\t0912345678\tĐội Y tế\nTrần Thị B\tB2205678\tQT22A2\tĐHKG\t0987654321\tĐội Hậu cần\nLê Hoàng Nam\tB2009876\tCN20\tXã Đoàn\t0903123456\tTiếp sức`}
-                className="w-full p-3 font-mono text-xs bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-purple-500/20 focus:border-purple-500 leading-relaxed resize-none placeholder:text-slate-400"
+                className="w-full p-3 font-mono text-xs bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-violet-500/20 focus:border-violet-500 leading-relaxed resize-none placeholder:text-slate-400"
               />
             </div>
 
@@ -359,10 +359,10 @@ export function ImportCollabParticipantsModal({
               )}
             </div>
 
-            <div className="p-3 bg-purple-50/50 rounded-xl border border-purple-100 flex items-start gap-2 text-xs text-purple-900">
-              <HelpCircle className="h-4 w-4 text-purple-600 shrink-0 mt-0.5" />
+            <div className="p-3 bg-violet-50/50 rounded-xl border border-violet-100 flex items-start gap-2 text-xs text-violet-900">
+              <HelpCircle className="h-4 w-4 text-violet-600 shrink-0 mt-0.5" />
               <div className="leading-relaxed">
-                <span className="font-bold">Mẹo sao chép nhanh:</span> Bạn có thể bôi đen nhiều ô trên Google Sheet (bao gồm cột Họ tên, MSSV, Lớp, Đơn vị, SĐT) rồi nhấn <code className="bg-purple-100 px-1 rounded text-purple-800 font-mono">Ctrl + C</code> và dán thẳng vào đây. Hệ thống tự nhận diện thứ tự cột thông minh.
+                <span className="font-bold">Mẹo sao chép nhanh:</span> Bạn có thể bôi đen nhiều ô trên Google Sheet (bao gồm cột Họ tên, MSSV, Lớp, Đơn vị, SĐT) rồi nhấn <code className="bg-violet-100 px-1 rounded text-violet-800 font-mono">Ctrl + C</code> và dán thẳng vào đây. Hệ thống tự nhận diện thứ tự cột thông minh.
               </div>
             </div>
           </div>
@@ -384,7 +384,7 @@ export function ImportCollabParticipantsModal({
                 variant="ghost"
                 size="sm"
                 onClick={() => setStep('paste')}
-                className="h-7 text-xs text-purple-700 hover:bg-purple-50"
+                className="h-7 text-xs text-violet-700 hover:bg-violet-50 active:scale-[0.98] font-medium"
               >
                 ← Dán lại nội dung
               </Button>
@@ -415,7 +415,7 @@ export function ImportCollabParticipantsModal({
                           type="text"
                           value={row.fullName}
                           onChange={(e) => handleUpdateRowField(row.id, 'fullName', e.target.value)}
-                          className="w-full h-7 px-2 text-xs border border-transparent hover:border-slate-200 focus:border-purple-400 rounded bg-transparent focus:bg-white font-medium text-slate-900"
+                          className="w-full h-7 px-2 text-xs border border-transparent hover:border-slate-200 focus:border-violet-400 rounded bg-transparent focus:bg-white font-medium text-slate-900"
                         />
                       </td>
                       <td className="px-2 py-1.5 font-mono">
@@ -424,7 +424,7 @@ export function ImportCollabParticipantsModal({
                           value={row.studentId}
                           onChange={(e) => handleUpdateRowField(row.id, 'studentId', e.target.value)}
                           placeholder="MSSV"
-                          className="w-full h-7 px-1.5 text-xs font-mono border border-transparent hover:border-slate-200 focus:border-purple-400 rounded bg-transparent focus:bg-white text-slate-700"
+                          className="w-full h-7 px-1.5 text-xs font-mono border border-transparent hover:border-slate-200 focus:border-violet-400 rounded bg-transparent focus:bg-white text-slate-700"
                         />
                       </td>
                       <td className="px-2 py-1.5">
@@ -433,7 +433,7 @@ export function ImportCollabParticipantsModal({
                           value={row.className}
                           onChange={(e) => handleUpdateRowField(row.id, 'className', e.target.value)}
                           placeholder="Lớp"
-                          className="w-full h-7 px-1.5 text-xs border border-transparent hover:border-slate-200 focus:border-purple-400 rounded bg-transparent focus:bg-white text-slate-700"
+                          className="w-full h-7 px-1.5 text-xs border border-transparent hover:border-slate-200 focus:border-violet-400 rounded bg-transparent focus:bg-white text-slate-700"
                         />
                       </td>
                       <td className="px-2 py-1.5">
@@ -455,7 +455,7 @@ export function ImportCollabParticipantsModal({
                           value={row.roleTitle}
                           onChange={(e) => handleUpdateRowField(row.id, 'roleTitle', e.target.value)}
                           placeholder="Đội hình"
-                          className="w-full h-7 px-1.5 text-xs border border-transparent hover:border-slate-200 focus:border-purple-400 rounded bg-transparent focus:bg-white text-slate-700"
+                          className="w-full h-7 px-1.5 text-xs border border-transparent hover:border-slate-200 focus:border-violet-400 rounded bg-transparent focus:bg-white text-slate-700"
                         />
                       </td>
                       <td className="px-2 py-1.5 font-mono">
@@ -464,14 +464,14 @@ export function ImportCollabParticipantsModal({
                           value={row.phone}
                           onChange={(e) => handleUpdateRowField(row.id, 'phone', e.target.value)}
                           placeholder="SĐT"
-                          className="w-full h-7 px-1.5 text-xs font-mono border border-transparent hover:border-slate-200 focus:border-purple-400 rounded bg-transparent focus:bg-white text-slate-700"
+                          className="w-full h-7 px-1.5 text-xs font-mono border border-transparent hover:border-slate-200 focus:border-violet-400 rounded bg-transparent focus:bg-white text-slate-700"
                         />
                       </td>
                       <td className="px-2 py-1.5 text-center">
                         <button
                           type="button"
                           onClick={() => handleRemoveRow(row.id)}
-                          className="h-6 w-6 inline-flex items-center justify-center text-slate-400 hover:text-rose-600 rounded transition-colors"
+                          className="h-6 w-6 inline-flex items-center justify-center text-slate-400 hover:text-rose-600 hover:bg-rose-50 rounded transition-colors active:scale-[0.95]"
                         >
                           <Trash2 className="h-3.5 w-3.5" />
                         </button>
@@ -491,7 +491,7 @@ export function ImportCollabParticipantsModal({
             variant="outline"
             size="sm"
             onClick={handleClose}
-            className="text-xs"
+            className="text-xs h-8 px-3 border-slate-200 hover:bg-slate-50 active:scale-[0.98]"
           >
             Hủy
           </Button>
@@ -502,7 +502,7 @@ export function ImportCollabParticipantsModal({
               size="sm"
               onClick={handleParseText}
               disabled={!pastedText.trim()}
-              className="text-xs bg-purple-600 hover:bg-purple-700 text-white font-semibold gap-1.5"
+              className="text-xs h-8 px-3.5 bg-violet-600 hover:bg-violet-700 text-white font-semibold gap-1.5 shadow-2xs active:scale-[0.98]"
             >
               <span>Phân tích dữ liệu</span>
               <ArrowRight className="h-3.5 w-3.5" />
@@ -513,7 +513,7 @@ export function ImportCollabParticipantsModal({
               size="sm"
               disabled={bulkAddMutation.isPending || parsedRows.length === 0}
               onClick={handleBulkSubmit}
-              className="text-xs bg-emerald-600 hover:bg-emerald-700 text-white font-semibold gap-1.5 shadow-sm"
+              className="text-xs h-8 px-3.5 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold gap-1.5 shadow-2xs active:scale-[0.98]"
             >
               {bulkAddMutation.isPending ? (
                 <Loader2 className="h-3.5 w-3.5 animate-spin" />
