@@ -136,7 +136,7 @@ function ToastCard({ toast, onDismiss }: { toast: ToastItem; onDismiss: () => vo
     switch (toast.type) {
       case 'success':
         return {
-          icon: <CheckCircle2 className="w-5 h-5 text-emerald-600 shrink-0 mt-0.5" />,
+          icon: <CheckCircle2 strokeWidth={1.5} className="w-5 h-5 text-emerald-600 shrink-0 mt-0.5" />,
           containerClass: 'bg-white border-emerald-200 shadow-emerald-500/10',
           badgeClass: 'bg-emerald-50 text-emerald-800 border-emerald-100',
           titleColor: 'text-emerald-950',
@@ -161,7 +161,7 @@ function ToastCard({ toast, onDismiss }: { toast: ToastItem; onDismiss: () => vo
       case 'info':
       default:
         return {
-          icon: <Info className="w-5 h-5 text-sky-600 shrink-0 mt-0.5" />,
+          icon: <Info strokeWidth={1.5} className="w-5 h-5 text-sky-600 shrink-0 mt-0.5" />,
           containerClass: 'bg-white border-sky-200 shadow-sky-500/10',
           badgeClass: 'bg-sky-50 text-sky-800 border-sky-100',
           titleColor: 'text-sky-950',

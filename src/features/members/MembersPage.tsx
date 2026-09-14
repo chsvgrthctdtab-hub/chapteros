@@ -459,7 +459,7 @@ export function MembersPage() {
               {membersList.length === 0 ? (
                 <div className="bg-white border border-slate-200/90 rounded-xl p-12 text-center shadow-2xs space-y-4">
                   <div className="h-14 w-14 bg-slate-50 text-slate-400 rounded-2xl flex items-center justify-center mx-auto border border-slate-200">
-                    <Users className="h-7 w-7 text-slate-400" />
+                    <Users strokeWidth={1.5} className="h-7 w-7 text-slate-400" />
                   </div>
                   <div className="space-y-1 max-w-md mx-auto">
                     <h3 className="text-sm font-semibold text-slate-900">

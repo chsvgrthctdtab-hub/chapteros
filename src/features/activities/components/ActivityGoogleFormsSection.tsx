@@ -191,7 +191,7 @@ export function ActivityGoogleFormsSection({
     return (
       <div className="p-8 sm:p-12 text-center max-w-lg mx-auto space-y-4">
         <div className="w-14 h-14 rounded-2xl bg-indigo-50 border border-indigo-100 text-indigo-600 flex items-center justify-center mx-auto shadow-xs">
-          <FileSpreadsheet className="w-7 h-7" />
+          <FileSpreadsheet strokeWidth={1.5} className="w-7 h-7" />
         </div>
 
         <div className="space-y-1.5">
@@ -257,7 +257,7 @@ export function ActivityGoogleFormsSection({
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pb-4 border-b border-slate-100">
             <div className="flex items-start gap-3.5">
               <div className="w-11 h-11 rounded-xl bg-indigo-600 text-white flex items-center justify-center shrink-0 shadow-xs">
-                <FileSpreadsheet className="w-6 h-6" />
+                <FileSpreadsheet strokeWidth={1.5} className="w-6 h-6" />
               </div>
               <div className="space-y-1">
                 <div className="flex items-center gap-2 flex-wrap">

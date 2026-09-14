@@ -178,7 +178,7 @@ export function TransferTermMembersDialog({
           <DialogHeader>
             <div className="flex items-center gap-3">
               <div className="h-10 w-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center shrink-0">
-                <ArrowRightLeft className="h-5 w-5" />
+                <ArrowRightLeft strokeWidth={1.5} className="h-5 w-5" />
               </div>
               <div>
                 <DialogTitle className="text-lg font-bold text-slate-900">

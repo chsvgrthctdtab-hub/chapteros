@@ -59,7 +59,7 @@ export function ServiceDetailDrawer({
         return {
           name: 'Google Forms Automation',
           subtitle: 'Thu thập đơn đăng ký, khảo sát ý kiến & đối soát MSSV',
-          icon: <FileText className="h-6 w-6 text-purple-600" />,
+          icon: <FileText strokeWidth={1.5} className="h-6 w-6 text-purple-600" />,
           colorBg: 'bg-purple-50 border-purple-100',
           scope: 'https://www.googleapis.com/auth/forms.responses.readonly',
           description:
@@ -80,7 +80,7 @@ export function ServiceDetailDrawer({
         return {
           name: 'Google Sheets Integration',
           subtitle: 'Quản lý bảng tính, xuất snapshot & nhập đối soát 4 bước',
-          icon: <FileSpreadsheet className="h-6 w-6 text-emerald-600" />,
+          icon: <FileSpreadsheet strokeWidth={1.5} className="h-6 w-6 text-emerald-600" />,
           colorBg: 'bg-emerald-50 border-emerald-100',
           scope: 'https://www.googleapis.com/auth/spreadsheets.readonly',
           description:
@@ -122,7 +122,7 @@ export function ServiceDetailDrawer({
         return {
           name: 'Google Drive Knowledge Repository',
           subtitle: 'Cấu trúc thư mục nhiệm kỳ & sao lưu chứng từ bảo mật',
-          icon: <FolderSync className="h-6 w-6 text-teal-600" />,
+          icon: <FolderSync strokeWidth={1.5} className="h-6 w-6 text-teal-600" />,
           colorBg: 'bg-teal-50 border-teal-100',
           scope: 'https://www.googleapis.com/auth/drive.file',
           description:

@@ -142,7 +142,7 @@ export function DashboardPage() {
     return (
       <div className="py-16 px-4 text-center max-w-md mx-auto space-y-4">
         <div className="w-12 h-12 rounded-2xl bg-amber-100 text-amber-700 flex items-center justify-center mx-auto border border-amber-200">
-          <Building2 className="w-6 h-6" />
+          <Building2 strokeWidth={1.5} className="w-6 h-6" />
         </div>
         <div className="space-y-1">
           <h3 className="text-base font-bold text-slate-900">

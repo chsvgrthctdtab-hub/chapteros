@@ -158,7 +158,7 @@ export function ActivityDocumentsSection({
       ) : documents.length === 0 ? (
         <div className="bg-white border border-slate-200 rounded-xl p-8 text-center shadow-2xs">
           <div className="w-10 h-10 rounded-xl bg-slate-100 text-slate-400 flex items-center justify-center mx-auto mb-2.5">
-            <FileText className="w-5 h-5" />
+            <FileText strokeWidth={1.5} className="w-5 h-5" />
           </div>
           <h4 className="text-xs font-bold text-slate-800">No Attached Documents</h4>
           <p className="text-[11px] text-slate-500 max-w-sm mx-auto mt-0.5">

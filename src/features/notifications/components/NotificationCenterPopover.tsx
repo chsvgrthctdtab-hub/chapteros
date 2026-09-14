@@ -198,7 +198,7 @@ export function NotificationCenterPopover() {
           ) : (
             <div className="py-8 px-4 text-center">
               <div className="w-10 h-10 rounded-full bg-slate-100 text-slate-400 flex items-center justify-center mx-auto mb-2">
-                <Inbox className="w-5 h-5" />
+                <Inbox strokeWidth={1.5} className="w-5 h-5" />
               </div>
               <p className="text-xs font-semibold text-slate-700">
                 No notifications

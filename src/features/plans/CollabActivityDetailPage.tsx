@@ -403,7 +403,7 @@ export function CollabActivityDetailPage() {
   if (isActivityLoading || isPlanLoading) {
     return (
       <div className="p-12 text-center text-xs text-slate-400 flex items-center justify-center gap-2">
-        <Loader2 className="h-5 w-5 animate-spin text-violet-600" />
+        <Loader2 strokeWidth={1.5} className="h-5 w-5 animate-spin text-violet-600" />
         <span>Đang tải thông tin hoạt động Collab...</span>
       </div>
     );
@@ -1652,7 +1652,7 @@ export function CollabActivityDetailPage() {
             ) : filteredParticipants.length === 0 ? (
               <div className="p-10 text-center text-slate-400 text-xs space-y-3">
                 <div className="w-10 h-10 rounded-full bg-slate-100 text-slate-400 flex items-center justify-center mx-auto">
-                  <Users className="h-5 w-5" />
+                  <Users strokeWidth={1.5} className="h-5 w-5" />
                 </div>
                 <p>Chưa có người tham gia nào được ghi nhận cho hoạt động này.</p>
                 {canManageOperational && (

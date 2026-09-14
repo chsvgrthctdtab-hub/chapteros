@@ -90,7 +90,7 @@ export function MemberDetailDialog({
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div className="flex items-center space-x-3.5">
               <div className="h-12 w-12 rounded-xl bg-slate-200 text-slate-800 font-bold text-base flex items-center justify-center shadow-2xs border border-slate-300/80 shrink-0">
-                {initials || <User className="h-6 w-6" />}
+                {initials || <User strokeWidth={1.5} className="h-6 w-6" />}
               </div>
               <div className="space-y-1 min-w-0">
                 <div className="flex flex-wrap items-center gap-2">
@@ -307,7 +307,7 @@ export function MemberDetailDialog({
                 </div>
               ) : termHistory.length === 0 ? (
                 <div className="p-6 text-center border border-dashed border-slate-200 rounded-xl bg-slate-50 space-y-2">
-                  <Clock className="h-7 w-7 text-slate-300 mx-auto" />
+                  <Clock strokeWidth={1.5} className="h-7 w-7 text-slate-300 mx-auto" />
                   <p className="text-xs text-slate-600 font-medium">
                     Chưa có lịch sử nhiệm kỳ nào được ghi nhận.
                   </p>

@@ -305,7 +305,7 @@ export function DataQualityIssueList({
         {paginatedIssues.length === 0 ? (
           <div className="rounded-xl border border-dashed border-slate-200 bg-slate-50/50 p-8 text-center flex flex-col items-center justify-center">
             <div className="w-12 h-12 rounded-xl bg-white border border-slate-200 text-emerald-600 flex items-center justify-center mb-3 shadow-2xs">
-              <CheckCircle2 className="w-6 h-6" />
+              <CheckCircle2 strokeWidth={1.5} className="w-6 h-6" />
             </div>
             <h3 className="text-sm font-bold text-slate-800 mb-1">
               {searchTerm || selectedCategory !== 'all' || selectedSeverity !== 'all'

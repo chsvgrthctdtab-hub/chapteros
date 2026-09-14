@@ -584,7 +584,7 @@ export function CollabFinanceModule({
           </div>
         ) : filteredTransactions.length === 0 ? (
           <div className="p-12 text-center bg-slate-50/50 rounded-xl border border-dashed border-slate-200 text-slate-500 text-xs">
-            <Wallet className="h-8 w-8 text-slate-300 mx-auto mb-2" />
+            <Wallet strokeWidth={1.5} className="h-8 w-8 text-slate-300 mx-auto mb-2" />
             <p className="font-semibold text-slate-700">Chưa có giao dịch tài chính nào</p>
             <p className="mt-1">
               Bắt đầu ghi nhận các khoản thu gây quỹ hoặc chi phí triển khai chiến dịch.

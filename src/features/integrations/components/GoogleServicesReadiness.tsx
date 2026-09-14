@@ -111,15 +111,15 @@ export function GoogleServicesReadiness({
   const getServiceIcon = (key: string) => {
     switch (key) {
       case 'drive':
-        return <FolderSync className="h-5 w-5 text-emerald-600" />;
+        return <FolderSync strokeWidth={1.5} className="h-5 w-5 text-emerald-600" />;
       case 'sheets':
         return <Table className="h-5 w-5 text-emerald-700" />;
       case 'forms':
-        return <FileText className="h-5 w-5 text-purple-600" />;
+        return <FileText strokeWidth={1.5} className="h-5 w-5 text-purple-600" />;
       case 'calendar':
         return <CalendarDays className="h-5 w-5 text-blue-600" />;
       default:
-        return <FolderSync className="h-5 w-5 text-blue-600" />;
+        return <FolderSync strokeWidth={1.5} className="h-5 w-5 text-blue-600" />;
     }
   };
 

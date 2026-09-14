@@ -604,7 +604,7 @@ export function PlanDetailPage() {
           <div className="bg-gradient-to-r from-violet-600 via-indigo-600 to-violet-700 px-6 py-4 text-white flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-inner">
             <div className="flex items-center gap-3">
               <div className="h-9 w-9 rounded-xl bg-white/20 flex items-center justify-center shrink-0">
-                <Sparkles className="h-5 w-5 text-white" />
+                <Sparkles strokeWidth={1.5} className="h-5 w-5 text-white" />
               </div>
               <div>
                 <div className="font-bold text-sm">
@@ -1105,7 +1105,7 @@ export function PlanDetailPage() {
             <div className="flex items-center justify-between">
               <div>
                 <h2 className="text-base font-bold text-slate-900 flex items-center gap-2">
-                  <Building2 className="h-5 w-5 text-violet-600" />
+                  <Building2 strokeWidth={1.5} className="h-5 w-5 text-violet-600" />
                   Đơn Vị Tham Gia ({cohosts.length})
                 </h2>
                 <p className="text-[11px] text-slate-500">Chỉ những đơn vị được mời mới có quyền phân công</p>
@@ -1349,7 +1349,7 @@ export function PlanDetailPage() {
             </div>
           ) : filteredTasks.length === 0 ? (
             <div className="p-10 text-center bg-slate-50/50 rounded-xl border border-dashed border-slate-200 text-slate-500 text-xs">
-              <CheckSquare className="h-8 w-8 text-slate-300 mx-auto mb-2" />
+              <CheckSquare strokeWidth={1.5} className="h-8 w-8 text-slate-300 mx-auto mb-2" />
               <p className="font-semibold text-slate-700">Chưa có công việc nào</p>
               <p className="mt-0.5">Danh sách nhiệm vụ của các hoạt động trong chiến dịch.</p>
               {canManageOperational && (
@@ -1787,7 +1787,7 @@ export function PlanDetailPage() {
             ) : filteredCampaignParticipants.length === 0 ? (
               <div className="p-10 text-center text-slate-400 text-xs space-y-3">
                 <div className="w-10 h-10 rounded-full bg-slate-100 text-slate-400 flex items-center justify-center mx-auto">
-                  <Users className="h-5 w-5" />
+                  <Users strokeWidth={1.5} className="h-5 w-5" />
                 </div>
                 <p>Chưa có người tham gia nào trong danh sách lực lượng chiến dịch.</p>
                 {canManageOperational && (

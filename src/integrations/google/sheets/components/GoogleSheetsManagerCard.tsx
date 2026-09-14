@@ -109,7 +109,7 @@ export function GoogleSheetsManagerCard() {
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
             <div className="flex items-center gap-3">
               <div className="h-11 w-11 rounded-xl bg-emerald-600 text-white flex items-center justify-center shadow-xs">
-                <FileSpreadsheet className="w-6 h-6" />
+                <FileSpreadsheet strokeWidth={1.5} className="w-6 h-6" />
               </div>
               <div>
                 <CardTitle className="text-base font-semibold text-slate-900 flex items-center gap-2.5 flex-wrap">
@@ -218,7 +218,7 @@ export function GoogleSheetsManagerCard() {
               <div className="py-6 text-center text-xs text-slate-500">Đang tải danh sách bảng tính...</div>
             ) : spreadsheets.length === 0 ? (
               <div className="p-6 text-center border border-dashed border-slate-200 rounded-lg text-slate-500 text-xs space-y-2">
-                <FileSpreadsheet className="w-8 h-8 text-slate-400 mx-auto" />
+                <FileSpreadsheet strokeWidth={1.5} className="w-8 h-8 text-slate-400 mx-auto" />
                 <p>Chưa có bảng tính Google Sheets nào được liên kết với Chi hội.</p>
                 {canManage && (
                   <Button

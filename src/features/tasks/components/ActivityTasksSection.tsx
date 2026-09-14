@@ -125,7 +125,7 @@ export function ActivityTasksSection({
       {tasks.length === 0 ? (
         <div className="py-12 px-4 text-center bg-white rounded-xl border border-slate-200 space-y-3">
           <div className="w-12 h-12 rounded-2xl bg-indigo-50 text-indigo-600 flex items-center justify-center mx-auto border border-indigo-100">
-            <CheckSquare className="w-6 h-6" />
+            <CheckSquare strokeWidth={1.5} className="w-6 h-6" />
           </div>
           <h5 className="text-sm font-bold text-slate-900">Chưa có công việc nào</h5>
           <p className="text-xs text-slate-500 max-w-sm mx-auto leading-relaxed">

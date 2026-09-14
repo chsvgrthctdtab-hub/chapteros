@@ -197,7 +197,7 @@ export function OrganizationSettingsTab({
     return (
       <Card className="border-slate-200 shadow-2xs">
         <CardContent className="py-12 text-center text-slate-500 text-xs">
-          <Building2 className="h-8 w-8 text-slate-300 mx-auto mb-2" />
+          <Building2 strokeWidth={1.5} className="h-8 w-8 text-slate-300 mx-auto mb-2" />
           <p className="font-medium text-slate-700">Chưa chọn Đơn vị hoạt động</p>
           <p className="text-[11px] text-slate-400 mt-1">
             Vui lòng chọn một Chi hội trong thanh điều hướng để cấu hình thông tin.
@@ -222,7 +222,7 @@ export function OrganizationSettingsTab({
                   className="h-full w-full object-cover"
                 />
               ) : (
-                <Building2 className="h-8 w-8 text-slate-400" />
+                <Building2 strokeWidth={1.5} className="h-8 w-8 text-slate-400" />
               )}
             </div>
             <div className="space-y-1">
@@ -400,7 +400,7 @@ export function OrganizationSettingsTab({
                 <div className="flex items-center gap-3 min-w-0">
                   <div className="h-12 w-12 rounded-lg border border-slate-200 bg-white overflow-hidden flex items-center justify-center shrink-0 shadow-2xs">
                     {uploadLogoMutation.isPending || deleteLogoMutation.isPending ? (
-                      <Loader2 className="h-5 w-5 animate-spin text-emerald-600" />
+                      <Loader2 strokeWidth={1.5} className="h-5 w-5 animate-spin text-emerald-600" />
                     ) : organization.logoUrl && !imgError ? (
                       <img
                         src={organization.logoUrl}
@@ -409,7 +409,7 @@ export function OrganizationSettingsTab({
                         className="h-full w-full object-contain p-1"
                       />
                     ) : (
-                      <Building2 className="h-6 w-6 text-slate-300" />
+                      <Building2 strokeWidth={1.5} className="h-6 w-6 text-slate-300" />
                     )}
                   </div>
 

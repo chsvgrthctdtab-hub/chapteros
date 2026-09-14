@@ -67,7 +67,7 @@ export function AuditLogTable({
     return (
       <div className="bg-white rounded-xl border border-slate-200/90 p-8 shadow-2xs">
         <EmptyState
-          icon={<History className="w-9 h-9 text-slate-400" />}
+          icon={<History strokeWidth={1.5} className="w-9 h-9 text-slate-400" />}
           title="Không tìm thấy nhật ký kiểm toán"
           description="Chưa có thao tác nào được ghi nhận hoặc không khớp với tiêu chí tìm kiếm hiện tại."
         />

@@ -55,13 +55,13 @@ export function ServiceCommandCard({
   const getServiceIcon = () => {
     switch (data.key) {
       case 'forms':
-        return <FileText className="h-5 w-5 text-purple-600" />;
+        return <FileText strokeWidth={1.5} className="h-5 w-5 text-purple-600" />;
       case 'sheets':
-        return <FileSpreadsheet className="h-5 w-5 text-emerald-600" />;
+        return <FileSpreadsheet strokeWidth={1.5} className="h-5 w-5 text-emerald-600" />;
       case 'calendar':
         return <CalendarDays className="h-5 w-5 text-blue-600" />;
       case 'drive':
-        return <FolderSync className="h-5 w-5 text-teal-600" />;
+        return <FolderSync strokeWidth={1.5} className="h-5 w-5 text-teal-600" />;
     }
   };
 

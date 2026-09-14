@@ -79,7 +79,7 @@ export function IntegrationsSummaryStrip({
                 : 'bg-slate-100 text-slate-400 border-slate-200'
             }`}
           >
-            <Boxes className="h-5 w-5" />
+            <Boxes strokeWidth={1.5} className="h-5 w-5" />
           </div>
         </CardContent>
       </Card>
@@ -102,7 +102,7 @@ export function IntegrationsSummaryStrip({
             </p>
           </div>
           <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-emerald-50 text-emerald-600 border border-emerald-100">
-            <Activity className="h-5 w-5" />
+            <Activity strokeWidth={1.5} className="h-5 w-5" />
           </div>
         </CardContent>
       </Card>
@@ -152,7 +152,7 @@ export function IntegrationsSummaryStrip({
             </p>
           </div>
           <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-purple-50 text-purple-600 border border-purple-100">
-            <Clock className="h-5 w-5" />
+            <Clock strokeWidth={1.5} className="h-5 w-5" />
           </div>
         </CardContent>
       </Card>

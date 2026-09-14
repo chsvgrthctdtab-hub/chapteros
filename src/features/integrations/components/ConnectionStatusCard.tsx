@@ -73,7 +73,7 @@ export function ConnectionStatusCard({
                     : 'bg-indigo-50 text-indigo-600 border-indigo-100'
                 }`}
               >
-                {isOrg ? <Building2 className="h-5 w-5" /> : <UserIcon className="h-5 w-5" />}
+                {isOrg ? <Building2 strokeWidth={1.5} className="h-5 w-5" /> : <UserIcon className="h-5 w-5" />}
               </div>
               <div>
                 <div className="flex items-center gap-2">

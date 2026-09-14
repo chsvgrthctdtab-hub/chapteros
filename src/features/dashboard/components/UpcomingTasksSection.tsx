@@ -165,7 +165,7 @@ export function UpcomingTasksSection({
         ) : (
           <EmptyState
             compact
-            icon={<CheckCircle2 className="w-5 h-5 text-emerald-500" />}
+            icon={<CheckCircle2 strokeWidth={1.5} className="w-5 h-5 text-emerald-500" />}
             title="Không có công việc đang xử lý"
             description="Mọi công việc đã được hoàn thành đúng hạn hoặc chưa có phân công mới."
             actionLabel={canCreateTask ? 'Giao nhiệm vụ mới' : undefined}

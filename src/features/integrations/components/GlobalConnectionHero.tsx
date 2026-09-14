@@ -95,7 +95,7 @@ export function GlobalConnectionHero({
                   : 'bg-slate-100 text-slate-400 border-slate-200'
               }`}
             >
-              <Building2 className="h-6 w-6" />
+              <Building2 strokeWidth={1.5} className="h-6 w-6" />
             </div>
 
             <div className="space-y-1">

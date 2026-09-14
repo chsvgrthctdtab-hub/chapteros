@@ -453,7 +453,7 @@ export function TermDetailDrawer({
                 <div className="p-8 text-center text-xs text-slate-400">Loading members roster...</div>
               ) : filteredMembers.length === 0 ? (
                 <div className="rounded-xl border border-dashed border-slate-200 p-8 text-center">
-                  <Users className="h-8 w-8 text-slate-300 mx-auto mb-2" />
+                  <Users strokeWidth={1.5} className="h-8 w-8 text-slate-300 mx-auto mb-2" />
                   <p className="text-xs text-slate-500 font-medium">No members match the query</p>
                 </div>
               ) : (

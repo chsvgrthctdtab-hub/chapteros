@@ -135,7 +135,7 @@ export function DocumentEditModal({
         <DialogHeader className="pb-2">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-2xl bg-amber-50 text-amber-600 flex items-center justify-center border border-amber-100 shrink-0">
-              <Edit3 className="w-5 h-5" />
+              <Edit3 strokeWidth={1.5} className="w-5 h-5" />
             </div>
             <div>
               <DialogTitle className="text-lg font-bold text-slate-900 tracking-tight">

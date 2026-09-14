@@ -46,7 +46,7 @@ export function MyOrganizationsCard({
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
           <div className="flex items-center gap-2.5">
             <div className="h-10 w-10 rounded-xl bg-blue-600 flex items-center justify-center text-white shadow-xs">
-              <Building2 className="h-5 w-5" />
+              <Building2 strokeWidth={1.5} className="h-5 w-5" />
             </div>
             <div>
               <div className="flex items-center gap-2">
@@ -75,12 +75,12 @@ export function MyOrganizationsCard({
       <CardContent className="pt-5 space-y-3">
         {isLoading ? (
           <div className="py-8 text-center text-slate-400 text-xs">
-            <Loader2 className="h-5 w-5 animate-spin mx-auto mb-2 text-blue-600" />
+            <Loader2 strokeWidth={1.5} className="h-5 w-5 animate-spin mx-auto mb-2 text-blue-600" />
             Đang tải danh sách Chi hội...
           </div>
         ) : userOrganizations.length === 0 ? (
           <div className="text-center py-8 space-y-3">
-            <Building2 className="h-8 w-8 text-slate-300 mx-auto" />
+            <Building2 strokeWidth={1.5} className="h-8 w-8 text-slate-300 mx-auto" />
             <p className="text-xs text-slate-500">Bạn chưa là thành viên của Đơn vị nào.</p>
             <Link to="/onboarding">
               <Button size="sm" className="text-xs bg-blue-600 hover:bg-blue-700 text-white">

@@ -309,7 +309,7 @@ B2102222\tTrần Thị Mai Anh\tĐã xác nhận\tCó mặt\tgoogle_form\tTrư�
             <div className="flex items-center justify-between pr-6">
               <div className="flex items-center gap-2.5">
                 <div className="h-9 w-9 rounded-lg bg-blue-600 text-white flex items-center justify-center shadow-xs">
-                  <Upload className="w-5 h-5" />
+                  <Upload strokeWidth={1.5} className="w-5 h-5" />
                 </div>
                 <div>
                   <DialogTitle className="text-base font-semibold text-slate-900">
@@ -374,7 +374,7 @@ B2102222\tTrần Thị Mai Anh\tĐã xác nhận\tCó mặt\tgoogle_form\tTrư�
                       : 'border-slate-300 bg-slate-50/60 hover:bg-slate-50'
                   }`}
                 >
-                  <Upload className="w-6 h-6 text-slate-400 mx-auto mb-1.5" />
+                  <Upload strokeWidth={1.5} className="w-6 h-6 text-slate-400 mx-auto mb-1.5" />
                   <p className="text-xs font-medium text-slate-700">
                     Kéo và thả tệp CSV, TSV hoặc TXT vào đây, hoặc{' '}
                     <label className="text-blue-600 font-semibold cursor-pointer hover:underline">

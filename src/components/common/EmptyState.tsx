@@ -34,7 +34,7 @@ export function EmptyState({
           compact ? 'w-8 h-8 mb-2' : 'w-10 h-10 mb-3'
         } rounded-lg bg-white border border-slate-200 text-slate-400 flex items-center justify-center shadow-2xs`}
       >
-        {icon || <FolderOpen className={compact ? 'w-4 h-4' : 'w-5 h-5'} />}
+        {icon || <FolderOpen strokeWidth={1.5} className={compact ? 'w-4 h-4' : 'w-5 h-5'} />}
       </div>
 
       <h3 className="text-xs sm:text-sm font-semibold text-slate-800 mb-0.5">

@@ -209,7 +209,7 @@ export function ActivityFinanceSection({
       {transactions.length === 0 ? (
         <div className="py-12 px-4 text-center max-w-md mx-auto space-y-3 bg-slate-50/50 rounded-2xl border border-dashed border-slate-200">
           <div className="w-12 h-12 rounded-2xl bg-white text-slate-400 flex items-center justify-center mx-auto border border-slate-200 shadow-xs">
-            <DollarSign className="w-6 h-6" />
+            <DollarSign strokeWidth={1.5} className="w-6 h-6" />
           </div>
           <h4 className="text-sm font-bold text-slate-800">
             Chưa có phiếu thu chi nào cho hoạt động này

@@ -95,7 +95,7 @@ export function AcceptInvitePage() {
       {/* Brand Header */}
       <div className="flex items-center gap-3 mb-8">
         <div className="h-11 w-11 rounded-2xl bg-indigo-600 flex items-center justify-center text-white shadow-xs ring-4 ring-indigo-50">
-          <GraduationCap className="h-6 w-6" />
+          <GraduationCap strokeWidth={1.5} className="h-6 w-6" />
         </div>
         <div>
           <h1 className="text-lg font-bold text-slate-900 leading-tight">ChapterOS</h1>
@@ -109,7 +109,7 @@ export function AcceptInvitePage() {
           <>
             <CardHeader className="text-center pb-2 pt-8">
               <div className="h-16 w-16 rounded-2xl bg-indigo-50 border border-indigo-100 flex items-center justify-center mx-auto mb-4 text-indigo-600">
-                <Loader2 className="h-8 w-8 animate-spin" />
+                <Loader2 strokeWidth={1.5} className="h-8 w-8 animate-spin" />
               </div>
               <h2 className="text-xl font-bold text-slate-900">Đang xử lý lời mời</h2>
               <p className="text-xs text-slate-500 mt-1 max-w-xs mx-auto leading-relaxed">
@@ -130,7 +130,7 @@ export function AcceptInvitePage() {
           <>
             <CardHeader className="text-center pb-2 pt-8">
               <div className="h-16 w-16 rounded-2xl bg-emerald-50 border border-emerald-100 flex items-center justify-center mx-auto mb-4 text-emerald-600">
-                <CheckCircle2 className="h-8 w-8 animate-bounce" />
+                <CheckCircle2 strokeWidth={1.5} className="h-8 w-8 animate-bounce" />
               </div>
               <h2 className="text-xl font-bold text-slate-900">Gia nhập thành công!</h2>
               <p className="text-xs text-slate-500 mt-1 max-w-xs mx-auto leading-relaxed">
@@ -161,7 +161,7 @@ export function AcceptInvitePage() {
 
             <CardContent className="py-4">
               <div className="bg-rose-50/70 border border-rose-200/80 rounded-2xl p-4 flex items-start gap-3">
-                <ShieldAlert className="h-5 w-5 text-rose-600 shrink-0 mt-0.5" />
+                <ShieldAlert strokeWidth={1.5} className="h-5 w-5 text-rose-600 shrink-0 mt-0.5" />
                 <div className="text-xs text-rose-900 space-y-1">
                   <p className="font-semibold">Chi tiết thông báo:</p>
                   <p className="text-rose-800 leading-relaxed">

@@ -125,7 +125,7 @@ export function FinanceSummaryCards({
               Số dư quỹ hiện tại
             </span>
             <div className="w-9 h-9 rounded-xl bg-white/10 flex items-center justify-center text-white backdrop-blur-sm">
-              <Wallet className="w-5 h-5" />
+              <Wallet strokeWidth={1.5} className="w-5 h-5" />
             </div>
           </div>
 
@@ -157,7 +157,7 @@ export function FinanceSummaryCards({
               Tổng các khoản thu
             </span>
             <div className="w-9 h-9 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center border border-emerald-100">
-              <TrendingUp className="w-5 h-5" />
+              <TrendingUp strokeWidth={1.5} className="w-5 h-5" />
             </div>
           </div>
 
@@ -187,7 +187,7 @@ export function FinanceSummaryCards({
               Tổng các khoản chi
             </span>
             <div className="w-9 h-9 rounded-xl bg-rose-50 text-rose-600 flex items-center justify-center border border-rose-100">
-              <TrendingDown className="w-5 h-5" />
+              <TrendingDown strokeWidth={1.5} className="w-5 h-5" />
             </div>
           </div>
 

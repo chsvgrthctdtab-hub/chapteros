@@ -12,7 +12,7 @@ export function ScopesAuditCard({ grantedScopes }: ScopesAuditCardProps) {
     <Card className="border-slate-200 shadow-2xs">
       <CardHeader>
         <div className="flex items-center gap-2">
-          <ShieldCheck className="h-5 w-5 text-blue-600" />
+          <ShieldCheck strokeWidth={1.5} className="h-5 w-5 text-blue-600" />
           <CardTitle className="text-base font-semibold text-slate-900">
             Kiểm toán Quyền hạn & Bảo mật (Least Privilege Principle)
           </CardTitle>

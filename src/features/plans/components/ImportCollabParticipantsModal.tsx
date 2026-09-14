@@ -335,7 +335,7 @@ export function ImportCollabParticipantsModal({
         <DialogHeader className="pb-3 border-b border-slate-100 shrink-0">
           <DialogTitle className="text-base sm:text-lg font-bold text-slate-900 flex items-center gap-2">
             <div className="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0">
-              <FileSpreadsheet className="h-5 w-5" />
+              <FileSpreadsheet strokeWidth={1.5} className="h-5 w-5" />
             </div>
             <span>Nhập Danh Sách từ Google Sheet / Excel</span>
           </DialogTitle>

@@ -137,7 +137,7 @@ export function MembersRolesTab({ organization, canManage: propCanManage }: Memb
             </div>
           ) : boardMembers.length === 0 ? (
             <div className="py-8 text-center text-slate-500 text-xs">
-              <Users className="h-8 w-8 text-slate-300 mx-auto mb-2" />
+              <Users strokeWidth={1.5} className="h-8 w-8 text-slate-300 mx-auto mb-2" />
               <p className="font-medium text-slate-700">Chưa có thành viên Ban Chấp Hành</p>
               <p className="text-[11px] text-slate-400 mt-1">
                 Gán vai trò quản trị cho hội viên tại mục Quản lý Hội viên.

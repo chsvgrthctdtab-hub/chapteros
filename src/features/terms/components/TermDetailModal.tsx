@@ -387,12 +387,12 @@ export function TermDetailModal({
             {/* Members Roster Table */}
             {isLoadingMembers || isLoadingTerm ? (
               <div className="py-16 flex flex-col items-center justify-center text-slate-500 gap-2 bg-white rounded-xl border border-slate-200">
-                <Loader2 className="h-6 w-6 animate-spin text-blue-600" />
+                <Loader2 strokeWidth={1.5} className="h-6 w-6 animate-spin text-blue-600" />
                 <p className="text-xs">Đang tải danh sách hội viên nhiệm kỳ...</p>
               </div>
             ) : filteredMembers.length === 0 ? (
               <div className="py-14 text-center bg-white rounded-xl border border-slate-200 p-6">
-                <Users className="h-10 w-10 text-slate-300 mx-auto mb-2" />
+                <Users strokeWidth={1.5} className="h-10 w-10 text-slate-300 mx-auto mb-2" />
                 <p className="text-sm font-semibold text-slate-700">
                   {searchQuery || statusFilter !== 'all'
                     ? 'Không tìm thấy hội viên phù hợp với bộ lọc'
@@ -564,7 +564,7 @@ export function TermDetailModal({
           <DialogHeader>
             <div className="flex items-center gap-2.5">
               <div className="h-9 w-9 rounded-lg bg-red-50 text-red-600 flex items-center justify-center">
-                <Trash2 className="h-5 w-5" />
+                <Trash2 strokeWidth={1.5} className="h-5 w-5" />
               </div>
               <div>
                 <DialogTitle className="text-lg font-bold text-slate-900">

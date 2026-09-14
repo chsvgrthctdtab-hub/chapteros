@@ -116,7 +116,7 @@ export function AuditLogSummaryCards({
             </div>
           </div>
           <div className="w-10 h-10 rounded-xl bg-slate-100/90 text-slate-700 flex items-center justify-center border border-slate-200/60 shrink-0">
-            <Activity className="w-5 h-5 text-slate-700" />
+            <Activity strokeWidth={1.5} className="w-5 h-5 text-slate-700" />
           </div>
         </CardContent>
       </Card>
@@ -136,7 +136,7 @@ export function AuditLogSummaryCards({
             </div>
           </div>
           <div className="w-10 h-10 rounded-xl bg-blue-50 text-blue-700 flex items-center justify-center border border-blue-200/60 shrink-0">
-            <Users className="w-5 h-5 text-blue-600" />
+            <Users strokeWidth={1.5} className="w-5 h-5 text-blue-600" />
           </div>
         </CardContent>
       </Card>
@@ -156,7 +156,7 @@ export function AuditLogSummaryCards({
             </div>
           </div>
           <div className="w-10 h-10 rounded-xl bg-amber-50 text-amber-700 flex items-center justify-center border border-amber-200/60 shrink-0">
-            <ShieldAlert className="w-5 h-5 text-amber-600" />
+            <ShieldAlert strokeWidth={1.5} className="w-5 h-5 text-amber-600" />
           </div>
         </CardContent>
       </Card>
@@ -183,7 +183,7 @@ export function AuditLogSummaryCards({
             </div>
           </div>
           <div className="w-10 h-10 rounded-xl bg-indigo-50 text-indigo-700 flex items-center justify-center border border-indigo-200/60 shrink-0">
-            <Layers className="w-5 h-5 text-indigo-600" />
+            <Layers strokeWidth={1.5} className="w-5 h-5 text-indigo-600" />
           </div>
         </CardContent>
       </Card>

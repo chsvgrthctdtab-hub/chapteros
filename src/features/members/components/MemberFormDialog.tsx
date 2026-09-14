@@ -132,7 +132,7 @@ export function MemberFormDialog({
         <DialogHeader className="pb-1">
           <div className="flex items-center space-x-3">
             <div className="h-10 w-10 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center border border-blue-100 shrink-0">
-              <User className="h-5 w-5" />
+              <User strokeWidth={1.5} className="h-5 w-5" />
             </div>
             <div>
               <DialogTitle className="text-lg sm:text-xl font-bold text-slate-900">

@@ -115,7 +115,7 @@ export function TermTimeline({
 
                 {index < sortedTerms.length - 1 && (
                   <div className="flex items-center justify-center text-slate-300 px-1">
-                    <ChevronRight className="h-5 w-5" />
+                    <ChevronRight strokeWidth={1.5} className="h-5 w-5" />
                   </div>
                 )}
               </React.Fragment>

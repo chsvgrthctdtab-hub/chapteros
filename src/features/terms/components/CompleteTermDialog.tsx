@@ -107,7 +107,7 @@ export function CompleteTermDialog({
           <DialogHeader>
             <div className="flex items-center gap-3">
               <div className="h-10 w-10 rounded-xl bg-amber-50 text-amber-700 flex items-center justify-center shrink-0 border border-amber-200/80">
-                <Lock className="h-5 w-5" />
+                <Lock strokeWidth={1.5} className="h-5 w-5" />
               </div>
               <div>
                 <DialogTitle className="text-lg font-bold text-slate-900">
@@ -133,7 +133,7 @@ export function CompleteTermDialog({
           {/* Checklist loading state */}
           {isLoadingChecklist ? (
             <div className="py-12 flex flex-col items-center justify-center text-slate-500 gap-2 bg-white rounded-xl border border-slate-200">
-              <Loader2 className="h-6 w-6 animate-spin text-blue-600" />
+              <Loader2 strokeWidth={1.5} className="h-6 w-6 animate-spin text-blue-600" />
               <p className="text-xs">Đang tổng hợp dữ liệu kiểm tra nhiệm kỳ...</p>
             </div>
           ) : checklist ? (
@@ -147,7 +147,7 @@ export function CompleteTermDialog({
                 }`}
               >
                 {checklist.ready ? (
-                  <CheckCircle className="h-5 w-5 text-emerald-600 shrink-0 mt-0.5" />
+                  <CheckCircle strokeWidth={1.5} className="h-5 w-5 text-emerald-600 shrink-0 mt-0.5" />
                 ) : (
                   <AlertTriangle className="h-5 w-5 text-amber-600 shrink-0 mt-0.5" />
                 )}

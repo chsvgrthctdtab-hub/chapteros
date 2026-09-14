@@ -308,21 +308,21 @@ export function GoogleDriveExplorer({
     const path = (filePath || '').toLowerCase();
 
     if (mime.includes('spreadsheet') || path.endsWith('.gsheet') || path.endsWith('.xlsx') || path.endsWith('.csv')) {
-      return <FileSpreadsheet className="w-5 h-5 text-emerald-600 shrink-0" />;
+      return <FileSpreadsheet strokeWidth={1.5} className="w-5 h-5 text-emerald-600 shrink-0" />;
     }
     if (mime.includes('form') || path.endsWith('.gform')) {
-      return <CheckSquare className="w-5 h-5 text-purple-600 shrink-0" />;
+      return <CheckSquare strokeWidth={1.5} className="w-5 h-5 text-purple-600 shrink-0" />;
     }
     if (mime.includes('presentation') || path.endsWith('.gslide') || path.endsWith('.pptx')) {
-      return <Presentation className="w-5 h-5 text-amber-600 shrink-0" />;
+      return <Presentation strokeWidth={1.5} className="w-5 h-5 text-amber-600 shrink-0" />;
     }
     if (mime.includes('pdf') || path.endsWith('.pdf')) {
-      return <FileText className="w-5 h-5 text-rose-600 shrink-0" />;
+      return <FileText strokeWidth={1.5} className="w-5 h-5 text-rose-600 shrink-0" />;
     }
     if (mime.includes('document') || path.endsWith('.gdoc') || path.endsWith('.docx') || path.endsWith('.doc')) {
-      return <FileText className="w-5 h-5 text-blue-600 shrink-0" />;
+      return <FileText strokeWidth={1.5} className="w-5 h-5 text-blue-600 shrink-0" />;
     }
-    return <File className="w-5 h-5 text-slate-500 shrink-0" />;
+    return <File strokeWidth={1.5} className="w-5 h-5 text-slate-500 shrink-0" />;
   };
 
   const getFileTypeLabel = (mimeType?: string | null, filePath?: string) => {
@@ -681,7 +681,7 @@ export function GoogleDriveExplorer({
         {filteredDocs.length === 0 ? (
           <div className="py-16 bg-white rounded-3xl border-2 border-dashed border-slate-200/90 text-center p-8 space-y-4 shadow-2xs">
             <div className="w-14 h-14 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center mx-auto border border-blue-100">
-              <UploadCloud className="w-7 h-7 text-blue-600" />
+              <UploadCloud strokeWidth={1.5} className="w-7 h-7 text-blue-600" />
             </div>
             <div className="space-y-1">
               <p className="text-sm font-bold text-slate-900">
@@ -852,7 +852,7 @@ export function GoogleDriveExplorer({
           <DialogHeader>
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 rounded-2xl bg-amber-50 text-amber-600 flex items-center justify-center border border-amber-200 shrink-0">
-                <FolderPlus className="w-5 h-5" />
+                <FolderPlus strokeWidth={1.5} className="w-5 h-5" />
               </div>
               <div>
                 <DialogTitle className="text-base font-bold text-slate-900">

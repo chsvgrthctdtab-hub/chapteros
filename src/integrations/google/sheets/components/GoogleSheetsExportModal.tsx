@@ -128,7 +128,7 @@ export function GoogleSheetsExportModal({
         <DialogHeader>
           <div className="flex items-center gap-2.5">
             <div className="h-9 w-9 rounded-lg bg-emerald-600 text-white flex items-center justify-center shadow-xs">
-              <FileSpreadsheet className="w-5 h-5" />
+              <FileSpreadsheet strokeWidth={1.5} className="w-5 h-5" />
             </div>
             <div>
               <DialogTitle className="text-base font-semibold text-slate-900">
@@ -249,7 +249,7 @@ export function GoogleSheetsExportModal({
           /* Result View */
           <div className="py-4 space-y-4 text-center">
             <div className="h-12 w-12 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center mx-auto">
-              <CheckCircle2 className="w-6 h-6" />
+              <CheckCircle2 strokeWidth={1.5} className="w-6 h-6" />
             </div>
 
             <div>

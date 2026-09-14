@@ -49,7 +49,7 @@ export function ActivateTermDialog({
         <DialogHeader>
           <div className="flex items-center gap-2.5">
             <div className="h-9 w-9 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center">
-              <Sparkles className="h-5 w-5" />
+              <Sparkles strokeWidth={1.5} className="h-5 w-5" />
             </div>
             <div>
               <DialogTitle className="text-lg font-bold text-slate-900">

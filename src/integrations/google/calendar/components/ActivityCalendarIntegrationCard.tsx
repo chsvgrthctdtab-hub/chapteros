@@ -276,7 +276,7 @@ export function ActivityCalendarIntegrationCard({
       {/* Main State Box */}
       {isLoadingEvent ? (
         <div className="py-12 flex flex-col items-center justify-center gap-2">
-          <Loader2 className="w-6 h-6 animate-spin text-blue-600" />
+          <Loader2 strokeWidth={1.5} className="w-6 h-6 animate-spin text-blue-600" />
           <p className="text-xs text-slate-500 font-medium">Đang kiểm tra liên kết Google Calendar...</p>
         </div>
       ) : isLinked && calendarEvent ? (
@@ -608,7 +608,7 @@ export function ActivityCalendarIntegrationCard({
         <DialogContent className="sm:max-w-md">
           <DialogHeader>
             <div className="flex items-center gap-2 text-slate-700">
-              <Unlink className="w-5 h-5 text-amber-600" />
+              <Unlink strokeWidth={1.5} className="w-5 h-5 text-amber-600" />
               <DialogTitle className="text-base font-bold text-slate-900">
                 Ngắt liên kết Google Calendar
               </DialogTitle>
@@ -658,7 +658,7 @@ export function ActivityCalendarIntegrationCard({
         <DialogContent className="sm:max-w-md">
           <DialogHeader>
             <div className="flex items-center gap-2 text-rose-600">
-              <Trash2 className="w-5 h-5" />
+              <Trash2 strokeWidth={1.5} className="w-5 h-5" />
               <DialogTitle className="text-base font-bold text-slate-900">
                 Xóa bản ghi liên kết Google Calendar
               </DialogTitle>

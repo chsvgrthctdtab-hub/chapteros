@@ -192,7 +192,7 @@ export function ChaptersPage() {
                 className="h-full w-full object-cover"
               />
             ) : (
-              <Building2 className="h-5 w-5" />
+              <Building2 strokeWidth={1.5} className="h-5 w-5" />
             )}
           </div>
           <div className="min-w-0">
@@ -208,7 +208,7 @@ export function ChaptersPage() {
 
         <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-2xs flex items-center gap-3">
           <div className="h-10 w-10 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center shrink-0">
-            <Users className="h-5 w-5" />
+            <Users strokeWidth={1.5} className="h-5 w-5" />
           </div>
           <div>
             <span className="text-[11px] text-slate-500 block">Tổng tài khoản thành viên</span>
@@ -221,7 +221,7 @@ export function ChaptersPage() {
 
         <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-2xs flex items-center gap-3">
           <div className="h-10 w-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0">
-            <Shield className="h-5 w-5" />
+            <Shield strokeWidth={1.5} className="h-5 w-5" />
           </div>
           <div>
             <span className="text-[11px] text-slate-500 block">Vai trò của bạn</span>

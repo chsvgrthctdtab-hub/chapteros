@@ -59,7 +59,7 @@ export function LoginPage() {
           {/* Brand header */}
           <div className="text-center space-y-3">
             <div className="inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-indigo-600 text-white shadow-sm ring-4 ring-indigo-50">
-              <GraduationCap className="h-7 w-7" />
+              <GraduationCap strokeWidth={1.5} className="h-7 w-7" />
             </div>
             <div className="space-y-1">
               <h1 className="text-2xl font-bold tracking-tight text-slate-900">ChapterOS</h1>

@@ -87,7 +87,7 @@ export function AuditLogsPage() {
         <Card className="border-rose-200 bg-rose-50/30 max-w-2xl mx-auto my-12 shadow-2xs">
           <CardContent className="p-8 text-center space-y-4">
             <div className="w-12 h-12 rounded-2xl bg-rose-100 text-rose-700 flex items-center justify-center mx-auto border border-rose-200">
-              <ShieldAlert className="w-6 h-6" />
+              <ShieldAlert strokeWidth={1.5} className="w-6 h-6" />
             </div>
             <div className="space-y-1">
               <CardTitle className="text-base font-bold text-slate-900">
@@ -114,7 +114,7 @@ export function AuditLogsPage() {
     return (
       <div className="py-16 px-4 text-center max-w-md mx-auto space-y-4">
         <div className="w-12 h-12 rounded-2xl bg-amber-100 text-amber-700 flex items-center justify-center mx-auto border border-amber-200">
-          <Building2 className="w-6 h-6" />
+          <Building2 strokeWidth={1.5} className="w-6 h-6" />
         </div>
         <div className="space-y-1">
           <h3 className="text-base font-bold text-slate-900">

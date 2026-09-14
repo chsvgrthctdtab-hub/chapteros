@@ -41,7 +41,7 @@ export function ConfirmDialog({
     switch (variant) {
       case 'destructive':
         return {
-          icon: <Trash2 className="w-5 h-5" />,
+          icon: <Trash2 strokeWidth={1.5} className="w-5 h-5" />,
           iconBg: 'bg-rose-50 text-rose-600 border-rose-100',
           confirmBtn: 'bg-rose-600 hover:bg-rose-700 text-white shadow-rose-500/10',
         };
@@ -54,7 +54,7 @@ export function ConfirmDialog({
       case 'primary':
       default:
         return {
-          icon: <HelpCircle className="w-5 h-5" />,
+          icon: <HelpCircle strokeWidth={1.5} className="w-5 h-5" />,
           iconBg: 'bg-emerald-50 text-emerald-600 border-emerald-100',
           confirmBtn: 'bg-emerald-600 hover:bg-emerald-700 text-white shadow-emerald-500/10',
         };

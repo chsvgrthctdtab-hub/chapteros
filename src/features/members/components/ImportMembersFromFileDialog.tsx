@@ -110,7 +110,7 @@ export function ImportMembersFromFileDialog({
       <DialogContent className="max-w-2xl">
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">
-            <FileSpreadsheet className="h-5 w-5 text-emerald-600" />
+            <FileSpreadsheet strokeWidth={1.5} className="h-5 w-5 text-emerald-600" />
             Nhập hội viên từ file Excel / CSV
           </DialogTitle>
           <DialogDescription>
@@ -133,7 +133,7 @@ export function ImportMembersFromFileDialog({
               onDrop={handleDrop}
               onClick={() => fileInputRef.current?.click()}
             >
-              <Upload className="h-10 w-10 mx-auto mb-3 text-slate-400" />
+              <Upload strokeWidth={1.5} className="h-10 w-10 mx-auto mb-3 text-slate-400" />
               <p className="text-sm font-medium text-slate-700">Kéo thả file vào đây hoặc bấm để chọn</p>
               <p className="text-xs text-slate-400 mt-1">Hỗ trợ: .xlsx, .xls, .csv — Tối đa 10MB</p>
               <input
@@ -253,7 +253,7 @@ export function ImportMembersFromFileDialog({
         {step === 'result' && importResult && (
           <div className="space-y-4 py-2">
             <div className="flex items-center justify-center">
-              <CheckCircle2 className="h-12 w-12 text-emerald-500" />
+              <CheckCircle2 strokeWidth={1.5} className="h-12 w-12 text-emerald-500" />
             </div>
             <div className="grid grid-cols-3 gap-3 text-center">
               <div className="bg-emerald-50 border border-emerald-200 rounded-lg p-3">

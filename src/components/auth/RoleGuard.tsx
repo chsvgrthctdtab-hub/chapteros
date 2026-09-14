@@ -46,7 +46,7 @@ export function RoleGuard({
   return (
     <div className="flex flex-col items-center justify-center p-8 rounded-xl border border-slate-200 bg-white text-center space-y-4 max-w-lg mx-auto my-8 shadow-sm">
       <div className="h-12 w-12 rounded-full bg-rose-50 flex items-center justify-center text-rose-600">
-        <ShieldAlert className="h-6 w-6" />
+        <ShieldAlert strokeWidth={1.5} className="h-6 w-6" />
       </div>
       <div className="space-y-1.5">
         <h3 className="text-base font-semibold text-slate-900">Giới hạn quyền truy cập</h3>

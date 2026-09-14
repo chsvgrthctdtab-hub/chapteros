@@ -87,7 +87,7 @@ export function EditMembershipDialog({
         <DialogHeader>
           <div className="flex items-center gap-2.5">
             <div className="h-9 w-9 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center">
-              <UserCog className="h-5 w-5" />
+              <UserCog strokeWidth={1.5} className="h-5 w-5" />
             </div>
             <div>
               <DialogTitle className="text-base font-bold text-slate-900">

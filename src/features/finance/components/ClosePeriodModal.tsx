@@ -360,7 +360,7 @@ export function ClosePeriodModal({
                 {hasDiscrepancy ? (
                   <AlertTriangle className="w-5 h-5 text-rose-600 flex-shrink-0" />
                 ) : (
-                  <CheckCircle2 className="w-5 h-5 text-emerald-600 flex-shrink-0" />
+                  <CheckCircle2 strokeWidth={1.5} className="w-5 h-5 text-emerald-600 flex-shrink-0" />
                 )}
                 <div>
                   <div className="text-xs font-bold">

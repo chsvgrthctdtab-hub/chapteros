@@ -136,7 +136,7 @@ export function PeriodClosingSection({
       ) : periods.length === 0 ? (
         <div className="bg-white border border-slate-200 rounded-xl p-10 text-center space-y-2 shadow-2xs">
           <div className="h-10 w-10 rounded-full bg-slate-100 text-slate-400 flex items-center justify-center mx-auto">
-            <Lock className="h-5 w-5" />
+            <Lock strokeWidth={1.5} className="h-5 w-5" />
           </div>
           <h3 className="text-sm font-bold text-slate-800">
             No closed periods found

@@ -657,7 +657,7 @@ export function FinancePage() {
             />
           ) : transactions.length === 0 ? (
             <EmptyState
-              icon={<Receipt className="w-8 h-8 text-slate-400" />}
+              icon={<Receipt strokeWidth={1.5} className="w-8 h-8 text-slate-400" />}
               title={
                 filters.search ||
                 filters.type !== 'all' ||

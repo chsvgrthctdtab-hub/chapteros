@@ -18,7 +18,7 @@ export function ProtectedRoute({ children, allowNoOrganization = false }: Protec
       <div className="min-h-screen flex flex-col items-center justify-center bg-slate-50 text-slate-700 p-4">
         <div className="flex flex-col items-center space-y-4 max-w-sm text-center">
           <div className="relative flex items-center justify-center h-16 w-16 rounded-2xl bg-blue-600 text-white shadow-lg">
-            <GraduationCap className="h-9 w-9 animate-pulse" />
+            <GraduationCap strokeWidth={1.5} className="h-9 w-9 animate-pulse" />
             <div className="absolute -bottom-1 -right-1 bg-white rounded-full p-0.5 shadow">
               <Loader2 className="h-4 w-4 animate-spin text-blue-600" />
             </div>

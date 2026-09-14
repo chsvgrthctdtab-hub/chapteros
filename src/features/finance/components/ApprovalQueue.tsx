@@ -149,7 +149,7 @@ export function ApprovalQueue({
       ) : pendingTransactions.length === 0 ? (
         <div className="bg-white border border-slate-200 rounded-xl p-10 text-center space-y-2 shadow-2xs">
           <div className="h-10 w-10 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200 flex items-center justify-center mx-auto">
-            <CheckCircle2 className="h-5 w-5 text-emerald-700" />
+            <CheckCircle2 strokeWidth={1.5} className="h-5 w-5 text-emerald-700" />
           </div>
           <h3 className="text-sm font-bold text-slate-800">
             All caught up!

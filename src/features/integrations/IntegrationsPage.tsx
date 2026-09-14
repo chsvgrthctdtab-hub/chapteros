@@ -92,7 +92,7 @@ export function IntegrationsPage() {
     return (
       <div className="max-w-xl mx-auto py-16 px-4 text-center space-y-4">
         <div className="h-16 w-16 bg-amber-50 text-amber-600 rounded-3xl flex items-center justify-center mx-auto border border-amber-200/60 shadow-2xs">
-          <ShieldAlert className="h-8 w-8" />
+          <ShieldAlert strokeWidth={1.5} className="h-8 w-8" />
         </div>
         <div className="space-y-2">
           <h2 className="text-lg font-bold text-slate-900 tracking-tight">
@@ -125,7 +125,7 @@ export function IntegrationsPage() {
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-white border border-slate-200/80 rounded-3xl p-5 sm:p-6 shadow-xs">
         <div className="flex items-start gap-3.5">
           <div className="w-11 h-11 rounded-2xl bg-blue-50 text-blue-700 flex items-center justify-center border border-blue-200/80 shrink-0">
-            <Building2 className="w-5 h-5" />
+            <Building2 strokeWidth={1.5} className="w-5 h-5" />
           </div>
           <div>
             <div className="flex items-center gap-2 flex-wrap">
@@ -170,7 +170,7 @@ export function IntegrationsPage() {
         <div className="p-5 sm:p-6 bg-white border border-emerald-200/80 rounded-3xl shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-4 border-l-4 border-l-emerald-500">
           <div className="flex items-center gap-3.5">
             <div className="w-11 h-11 rounded-2xl bg-emerald-50 text-emerald-600 border border-emerald-200 flex items-center justify-center shrink-0">
-              <CheckCircle2 className="w-6 h-6 text-emerald-600" />
+              <CheckCircle2 strokeWidth={1.5} className="w-6 h-6 text-emerald-600" />
             </div>
             <div>
               <div className="flex items-center gap-2">
@@ -202,7 +202,7 @@ export function IntegrationsPage() {
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
             <div className="flex items-start gap-3.5">
               <div className="w-12 h-12 rounded-2xl bg-blue-500/20 text-blue-400 border border-blue-400/30 flex items-center justify-center shrink-0 shadow-inner">
-                <Sparkles className="w-6 h-6" />
+                <Sparkles strokeWidth={1.5} className="w-6 h-6" />
               </div>
               <div>
                 <div className="flex items-center gap-2.5 flex-wrap">
@@ -264,7 +264,7 @@ export function IntegrationsPage() {
             <div className="space-y-3">
               <div className="flex items-center justify-between">
                 <div className="w-10 h-10 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center border border-emerald-200 shrink-0">
-                  <FolderArchive className="w-5 h-5" />
+                  <FolderArchive strokeWidth={1.5} className="w-5 h-5" />
                 </div>
                 <Badge variant="outline" className="text-[10px] bg-emerald-50 text-emerald-700 border-emerald-200">
                   Google Drive
@@ -304,7 +304,7 @@ export function IntegrationsPage() {
             <div className="space-y-3">
               <div className="flex items-center justify-between">
                 <div className="w-10 h-10 rounded-2xl bg-emerald-50 text-emerald-700 flex items-center justify-center border border-emerald-300 shrink-0">
-                  <FileSpreadsheet className="w-5 h-5" />
+                  <FileSpreadsheet strokeWidth={1.5} className="w-5 h-5" />
                 </div>
                 <Badge variant="outline" className="text-[10px] bg-emerald-50 text-emerald-800 border-emerald-200">
                   Google Sheets
@@ -347,7 +347,7 @@ export function IntegrationsPage() {
             <div className="space-y-3">
               <div className="flex items-center justify-between">
                 <div className="w-10 h-10 rounded-2xl bg-purple-50 text-purple-600 flex items-center justify-center border border-purple-200 shrink-0">
-                  <FileText className="w-5 h-5" />
+                  <FileText strokeWidth={1.5} className="w-5 h-5" />
                 </div>
                 <Badge variant="outline" className="text-[10px] bg-purple-50 text-purple-700 border-purple-200">
                   Google Forms

@@ -84,7 +84,7 @@ export function SyncActivityCenter({
         <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-3.5">
           <div className="flex items-center gap-3 min-w-0 flex-1">
             <div className="h-10 w-10 rounded-xl bg-blue-50 border border-blue-100 flex items-center justify-center text-blue-600 shrink-0">
-              <Activity className="h-5 w-5" />
+              <Activity strokeWidth={1.5} className="h-5 w-5" />
             </div>
             <div className="min-w-0">
               <CardTitle className="text-base font-bold text-slate-900 tracking-tight">
@@ -173,7 +173,7 @@ export function SyncActivityCenter({
       <CardContent className="p-0">
         {filteredActivities.length === 0 ? (
           <div className="p-8 text-center space-y-2">
-            <Clock className="h-8 w-8 text-slate-300 mx-auto" />
+            <Clock strokeWidth={1.5} className="h-8 w-8 text-slate-300 mx-auto" />
             <p className="text-xs font-medium text-slate-600">
               Chưa có nhật ký đồng bộ nào cho bộ lọc đã chọn.
             </p>

@@ -126,7 +126,7 @@ export function OrganizationMembershipsCard({
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
           <div className="flex items-center gap-2.5">
             <div className="h-10 w-10 rounded-xl bg-indigo-600 flex items-center justify-center text-white shadow-xs">
-              <Users className="h-5 w-5" />
+              <Users strokeWidth={1.5} className="h-5 w-5" />
             </div>
             <div>
               <div className="flex items-center gap-2">
@@ -223,14 +223,14 @@ export function OrganizationMembershipsCard({
                 {isLoading ? (
                   <tr>
                     <td colSpan={isAdmin ? 6 : 5} className="py-8 text-center text-slate-400">
-                      <Loader2 className="h-5 w-5 animate-spin mx-auto mb-2 text-blue-600" />
+                      <Loader2 strokeWidth={1.5} className="h-5 w-5 animate-spin mx-auto mb-2 text-blue-600" />
                       Đang tải danh sách thành viên...
                     </td>
                   </tr>
                 ) : filteredMemberships.length === 0 ? (
                   <tr>
                     <td colSpan={isAdmin ? 6 : 5} className="py-8 text-center text-slate-400">
-                      <HelpCircle className="h-6 w-6 mx-auto mb-1 text-slate-300" />
+                      <HelpCircle strokeWidth={1.5} className="h-6 w-6 mx-auto mb-1 text-slate-300" />
                       Không tìm thấy thành viên nào phù hợp
                     </td>
                   </tr>

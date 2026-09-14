@@ -91,7 +91,7 @@ export function DocumentsPage() {
     return (
       <div className="flex flex-col items-center justify-center min-h-[50vh] p-8 text-center bg-white rounded-3xl border border-slate-200 shadow-2xs">
         <div className="w-14 h-14 rounded-2xl bg-slate-100 text-slate-500 flex items-center justify-center mb-3 border border-slate-200">
-          <Building2 className="w-7 h-7" />
+          <Building2 strokeWidth={1.5} className="w-7 h-7" />
         </div>
         <h3 className="text-base font-bold text-slate-900">Chưa chọn Đơn vị</h3>
         <p className="text-xs text-slate-500 max-w-sm mt-1">
@@ -116,7 +116,7 @@ export function DocumentsPage() {
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-white border border-slate-200/80 rounded-3xl p-5 sm:p-6 shadow-xs">
         <div className="flex items-start gap-3.5">
           <div className="w-11 h-11 rounded-2xl bg-emerald-50 text-emerald-700 flex items-center justify-center border border-emerald-200/80 shrink-0">
-            <FolderArchive className="w-5 h-5" />
+            <FolderArchive strokeWidth={1.5} className="w-5 h-5" />
           </div>
           <div>
             <div className="flex items-center gap-2 flex-wrap">
@@ -162,7 +162,7 @@ export function DocumentsPage() {
         <div className="p-4 rounded-2xl bg-amber-50/90 border border-amber-200/80 text-amber-900 text-xs flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 shadow-2xs">
           <div className="flex items-center gap-3">
             <div className="w-9 h-9 rounded-xl bg-amber-100 border border-amber-200 text-amber-700 flex items-center justify-center shrink-0">
-              <Cloud className="w-5 h-5" />
+              <Cloud strokeWidth={1.5} className="w-5 h-5" />
             </div>
             <div>
               <p className="font-bold text-xs">Đơn vị chưa kết nối tài khoản Google Workspace chung</p>

@@ -458,7 +458,7 @@ export function TermsPage() {
       {/* 7. Main View: Table / Grid / Comparison */}
       {isLoadingTerms ? (
         <div className="py-20 flex flex-col items-center justify-center text-slate-500 gap-3 bg-white rounded-2xl border border-slate-200 shadow-2xs">
-          <Loader2 className="h-7 w-7 animate-spin text-emerald-600" />
+          <Loader2 strokeWidth={1.5} className="h-7 w-7 animate-spin text-emerald-600" />
           <p className="text-sm font-medium">Loading organizational terms...</p>
         </div>
       ) : termsError ? (

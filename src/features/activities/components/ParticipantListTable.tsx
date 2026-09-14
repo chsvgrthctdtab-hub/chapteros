@@ -334,7 +334,7 @@ export function ParticipantListTable({
                 <tr>
                   <td colSpan={canManage ? 7 : 6} className="py-8 text-center text-slate-500">
                     <div className="flex flex-col items-center justify-center gap-1.5">
-                      <UserX className="w-6 h-6 text-slate-300" />
+                      <UserX strokeWidth={1.5} className="w-6 h-6 text-slate-300" />
                       <p className="font-medium text-slate-600">Không tìm thấy người tham gia nào</p>
                       <p className="text-[11px] text-slate-400">
                         {searchTerm || attFilter !== 'all'

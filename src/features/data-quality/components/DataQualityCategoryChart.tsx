@@ -61,7 +61,7 @@ export function DataQualityCategoryChart({
       {totalIssues === 0 || chartData.length === 0 ? (
         <div className="flex flex-col items-center justify-center py-8 text-center bg-slate-50/60 rounded-xl border border-dashed border-slate-200">
           <div className="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center mb-2">
-            <CheckCircle2 className="w-5 h-5" />
+            <CheckCircle2 strokeWidth={1.5} className="w-5 h-5" />
           </div>
           <span className="text-sm font-semibold text-slate-800">Không có dữ liệu lệch chuẩn</span>
           <span className="text-xs text-slate-500 mt-0.5">Tất cả các danh mục đều đạt chuẩn 100%</span>

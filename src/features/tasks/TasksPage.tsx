@@ -396,7 +396,7 @@ export function TasksPage() {
         </div>
       ) : tasksList.length === 0 ? (
         <EmptyState
-          icon={<ListTodo className="w-8 h-8 text-slate-400" />}
+          icon={<ListTodo strokeWidth={1.5} className="w-8 h-8 text-slate-400" />}
           title={hasActiveFilters ? 'No tasks found' : 'No tasks created yet'}
           description={
             hasActiveFilters

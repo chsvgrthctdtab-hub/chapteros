@@ -118,7 +118,7 @@ export function DashboardChartsSection({ chartData, isLoading = false }: Dashboa
             </div>
           ) : (
             <div className="h-64 flex flex-col items-center justify-center text-center">
-              <BarChart3 className="w-9 h-9 text-slate-300 mb-2" />
+              <BarChart3 strokeWidth={1.5} className="w-9 h-9 text-slate-300 mb-2" />
               <p className="text-xs sm:text-sm font-semibold text-slate-700">Chưa có dữ liệu phát sinh giao dịch thu chi</p>
               <p className="text-xs text-slate-400 mt-0.5">Các giao dịch 6 tháng gần nhất sẽ hiển thị tại đây</p>
             </div>
@@ -204,7 +204,7 @@ export function DashboardChartsSection({ chartData, isLoading = false }: Dashboa
             </div>
           ) : (
             <div className="h-64 flex flex-col items-center justify-center text-center">
-              <PieIcon className="w-9 h-9 text-slate-300 mb-2" />
+              <PieIcon strokeWidth={1.5} className="w-9 h-9 text-slate-300 mb-2" />
               <p className="text-xs sm:text-sm font-semibold text-slate-700">Chưa có dữ liệu công việc</p>
               <p className="text-xs text-slate-400 mt-0.5">Phân bố trạng thái sẽ tự động xuất hiện khi giao việc</p>
             </div>

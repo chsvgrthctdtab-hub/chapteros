@@ -134,7 +134,7 @@ export function AuthCallbackPage() {
       <div className="w-full max-w-md space-y-6">
         <div className="text-center space-y-2">
           <div className="inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-indigo-600 text-white shadow-xs ring-4 ring-indigo-50">
-            <GraduationCap className="h-7 w-7" />
+            <GraduationCap strokeWidth={1.5} className="h-7 w-7" />
           </div>
           <h1 className="text-2xl font-bold tracking-tight text-slate-900">ChapterOS</h1>
           <p className="text-xs text-slate-500">Nền tảng số Quản trị & Điều hành Đơn vị Sinh viên</p>
@@ -161,7 +161,7 @@ export function AuthCallbackPage() {
               </div>
             ) : (
               <div className="py-6 flex flex-col items-center justify-center space-y-3">
-                <Loader2 className="h-8 w-8 animate-spin text-indigo-600" />
+                <Loader2 strokeWidth={1.5} className="h-8 w-8 animate-spin text-indigo-600" />
                 <p className="text-xs font-medium text-slate-600">{statusText}</p>
               </div>
             )}

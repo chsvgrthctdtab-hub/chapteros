@@ -93,13 +93,13 @@ export function Sidebar({ collapsed, onToggleCollapse, mobileOpen, onCloseMobile
               title="Expand navigation sidebar"
               aria-label="Expand navigation sidebar"
             >
-              <GraduationCap className="h-5 w-5" />
+              <GraduationCap strokeWidth={1.5} className="h-5 w-5" />
             </button>
           ) : (
             <>
               <div className="flex items-center gap-3 overflow-hidden">
                 <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-emerald-700 text-white shadow-2xs font-bold ring-1 ring-emerald-800/20">
-                  <GraduationCap className="h-5 w-5" />
+                  <GraduationCap strokeWidth={1.5} className="h-5 w-5" />
                 </div>
                 <div className="flex flex-col truncate">
                   <span className="font-bold tracking-tight text-slate-900 text-base leading-tight truncate">

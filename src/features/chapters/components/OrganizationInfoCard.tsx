@@ -239,7 +239,7 @@ export function OrganizationInfoCard({
                   className="h-full w-full object-cover"
                 />
               ) : (
-                <Building2 className="h-6 w-6" />
+                <Building2 strokeWidth={1.5} className="h-6 w-6" />
               )}
             </div>
             <div>
@@ -356,7 +356,7 @@ export function OrganizationInfoCard({
             >
               {isUploadingLogo || isDeletingLogo ? (
                 <div className="flex flex-col items-center justify-center p-2 text-slate-500 space-y-1">
-                  <Loader2 className="h-6 w-6 animate-spin text-blue-600" />
+                  <Loader2 strokeWidth={1.5} className="h-6 w-6 animate-spin text-blue-600" />
                   <span className="text-[10px] font-medium text-slate-600">
                     {isUploadingLogo ? 'Đang tải lên...' : 'Đang xóa...'}
                   </span>
@@ -369,7 +369,7 @@ export function OrganizationInfoCard({
                 />
               ) : (
                 <div className="flex flex-col items-center justify-center p-3 text-slate-400 space-y-1">
-                  <Building2 className="h-7 w-7 text-slate-300" />
+                  <Building2 strokeWidth={1.5} className="h-7 w-7 text-slate-300" />
                   <span className="text-[11px] font-medium text-slate-500 leading-tight">
                     Chưa có biểu trưng
                   </span>

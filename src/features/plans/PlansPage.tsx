@@ -115,7 +115,7 @@ export function PlansPage() {
         <div>
           <div className="flex items-center gap-2">
             <h1 className="text-xl sm:text-2xl font-bold text-slate-900 tracking-tight flex items-center gap-2.5">
-              <FolderKanban className="h-6 w-6 text-blue-600" />
+              <FolderKanban strokeWidth={1.5} className="h-6 w-6 text-blue-600" />
               Collab
             </h1>
           </div>
@@ -186,7 +186,7 @@ export function PlansPage() {
       ) : plans.length === 0 ? (
         <Card className="bg-white border border-slate-200/80 rounded-2xl p-12 text-center shadow-2xs">
           <div className="h-16 w-16 bg-blue-50 border border-blue-100 rounded-2xl flex items-center justify-center mx-auto mb-4 text-blue-600">
-            <FolderKanban className="h-8 w-8" />
+            <FolderKanban strokeWidth={1.5} className="h-8 w-8" />
           </div>
           <h3 className="text-base font-bold text-slate-900">Không tìm thấy chiến dịch nào</h3>
           <p className="text-xs text-slate-500 max-w-md mx-auto mt-1 mb-6">

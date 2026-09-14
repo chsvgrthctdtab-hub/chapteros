@@ -116,7 +116,7 @@ export function IntegrationsTab({ organization }: IntegrationsTabProps) {
           <div className="divide-y divide-slate-100 text-xs">
             <div className="p-4 flex items-center justify-between hover:bg-slate-50/50">
               <div className="flex items-center gap-3">
-                <HardDrive className="h-5 w-5 text-amber-600" />
+                <HardDrive strokeWidth={1.5} className="h-5 w-5 text-amber-600" />
                 <div>
                   <p className="font-bold text-slate-900">Google Drive API</p>
                   <p className="text-[11px] text-slate-500">Lưu trữ văn bản, biểu mẫu, hóa đơn chứng từ và cây thư mục</p>
@@ -129,7 +129,7 @@ export function IntegrationsTab({ organization }: IntegrationsTabProps) {
 
             <div className="p-4 flex items-center justify-between hover:bg-slate-50/50">
               <div className="flex items-center gap-3">
-                <FileSpreadsheet className="h-5 w-5 text-emerald-600" />
+                <FileSpreadsheet strokeWidth={1.5} className="h-5 w-5 text-emerald-600" />
                 <div>
                   <p className="font-bold text-slate-900">Google Sheets API</p>
                   <p className="text-[11px] text-slate-500">Đồng bộ danh sách điểm danh hội viên và xuất sổ quỹ tài chính</p>

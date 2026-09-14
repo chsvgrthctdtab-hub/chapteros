@@ -72,7 +72,7 @@ export function IntegrationHealthCard({
       <CardHeader className="pb-3">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <Activity className="h-5 w-5 text-blue-600" />
+            <Activity strokeWidth={1.5} className="h-5 w-5 text-blue-600" />
             <div>
               <CardTitle className="text-base font-semibold text-slate-900">
                 Chẩn đoán & Giám sát Hạ tầng Tích hợp

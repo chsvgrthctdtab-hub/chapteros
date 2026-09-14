@@ -114,7 +114,7 @@ export function OnboardingPage() {
       <header className="max-w-3xl mx-auto w-full flex items-center justify-between py-2 border-b border-slate-200/80 mb-6 gap-4">
         <div className="flex items-center gap-3 min-w-0">
           <div className="h-10 w-10 rounded-2xl bg-indigo-600 flex items-center justify-center text-white shadow-xs shrink-0 ring-4 ring-indigo-50">
-            <GraduationCap className="h-5 w-5" />
+            <GraduationCap strokeWidth={1.5} className="h-5 w-5" />
           </div>
           <div className="min-w-0">
             <h1 className="text-sm font-bold text-slate-900 leading-tight truncate">ChapterOS</h1>
@@ -176,7 +176,7 @@ export function OnboardingPage() {
           <div className="p-6 sm:p-8 pb-4 sm:pb-6 border-b border-slate-100">
             <div className="flex items-center gap-3">
               <div className="h-10 w-10 rounded-2xl bg-indigo-50 text-indigo-700 flex items-center justify-center shrink-0 border border-indigo-100">
-                <Building2 className="h-5 w-5" />
+                <Building2 strokeWidth={1.5} className="h-5 w-5" />
               </div>
               <div>
                 <h2 className="text-base font-bold text-slate-900">Thiết lập Đơn vị mới</h2>

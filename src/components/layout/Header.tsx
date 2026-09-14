@@ -74,7 +74,7 @@ export function Header({ onOpenMobileMenu }: HeaderProps) {
           onClick={onOpenMobileMenu}
           aria-label="Toggle navigation menu"
         >
-          <Menu className="h-5 w-5" />
+          <Menu strokeWidth={1.5} className="h-5 w-5" />
         </Button>
 
         {/* Current Active Chapter & Selector */}

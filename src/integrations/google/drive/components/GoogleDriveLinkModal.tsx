@@ -262,7 +262,7 @@ export function GoogleDriveLinkModal({
         <DialogHeader className="pb-1">
           <div className="flex items-center gap-3">
             <div className="w-11 h-11 rounded-2xl bg-emerald-50 border border-emerald-200 flex items-center justify-center text-emerald-600 shrink-0">
-              <HardDrive className="w-5 h-5" />
+              <HardDrive strokeWidth={1.5} className="w-5 h-5" />
             </div>
             <div>
               <DialogTitle className="text-lg font-bold text-slate-900 tracking-tight">
@@ -418,7 +418,7 @@ export function GoogleDriveLinkModal({
               <div className="border border-slate-200 rounded-lg max-h-52 overflow-y-auto divide-y divide-slate-100 bg-slate-50/50">
                 {isSearching ? (
                   <div className="p-6 text-center text-slate-500">
-                    <Loader2 className="w-5 h-5 animate-spin mx-auto mb-1 text-emerald-600" />
+                    <Loader2 strokeWidth={1.5} className="w-5 h-5 animate-spin mx-auto mb-1 text-emerald-600" />
                     Đang tải danh sách tệp Google Drive...
                   </div>
                 ) : !searchResults?.files.length ? (

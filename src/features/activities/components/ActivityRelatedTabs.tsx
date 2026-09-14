@@ -343,7 +343,7 @@ export function ActivityRelatedTabs({
                     </div>
                   ) : (
                     <div className="text-center py-3 text-slate-400 space-y-1">
-                      <User className="w-6 h-6 mx-auto opacity-40" />
+                      <User strokeWidth={1.5} className="w-6 h-6 mx-auto opacity-40" />
                       <p className="text-xs italic">Chưa phân công người phụ trách</p>
                     </div>
                   )}
