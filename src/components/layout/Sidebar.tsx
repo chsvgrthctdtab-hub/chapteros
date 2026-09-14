@@ -1,43 +1,56 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import {
+  LayoutDashboard,
+  FolderKanban,
+  CalendarDays,
+  CheckSquare,
+  Users,
+  Wallet,
+  FileText,
+  BarChart3,
+  CalendarRange,
+  ShieldCheck,
+  History,
+  Puzzle,
+  Settings,
   ChevronLeft,
   ChevronRight,
   Shield,
   GraduationCap,
+  type LucideIcon,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Icon } from '@/components/ui/icon';
 
 import { useAuth } from '@/hooks/useAuth';
 
 export interface NavItem {
   name: string;
   href: string;
-  symbol: string;
+  icon: LucideIcon;
   badge?: string;
   badgeVariant?: 'default' | 'secondary' | 'outline' | 'warning';
 }
 
 const operationsNavItems: NavItem[] = [
-  { name: 'Tổng quan', href: '/', symbol: 'dashboard' },
-  { name: 'Collab', href: '/plans', symbol: 'folder_shared' },
-  { name: 'Hoạt động', href: '/activities', symbol: 'event_available' },
-  { name: 'Nhiệm vụ', href: '/tasks', symbol: 'task_alt' },
-  { name: 'Hội viên', href: '/members', symbol: 'group' },
-  { name: 'Tài chính', href: '/finance', symbol: 'account_balance_wallet' },
-  { name: 'Văn bản', href: '/documents', symbol: 'folder' },
-  { name: 'Báo cáo', href: '/reports', symbol: 'analytics' },
+  { name: 'Tổng quan', href: '/', icon: LayoutDashboard },
+  { name: 'Collab', href: '/plans', icon: FolderKanban },
+  { name: 'Hoạt động', href: '/activities', icon: CalendarDays },
+  { name: 'Nhiệm vụ', href: '/tasks', icon: CheckSquare },
+  { name: 'Hội viên', href: '/members', icon: Users },
+  { name: 'Tài chính', href: '/finance', icon: Wallet },
+  { name: 'Văn bản', href: '/documents', icon: FileText },
+  { name: 'Báo cáo', href: '/reports', icon: BarChart3 },
 ];
 
 const systemNavItems: NavItem[] = [
-  { name: 'Nhiệm kỳ', href: '/terms', symbol: 'date_range' },
-  { name: 'Kiểm tra dữ liệu', href: '/data-quality', symbol: 'verified_user' },
-  { name: 'Nhật ký kiểm toán', href: '/audit-logs', symbol: 'history' },
-  { name: 'Tích hợp Google', href: '/integrations', symbol: 'extension' },
-  { name: 'Cài đặt', href: '/settings', symbol: 'settings' },
+  { name: 'Nhiệm kỳ', href: '/terms', icon: CalendarRange },
+  { name: 'Kiểm tra dữ liệu', href: '/data-quality', icon: ShieldCheck },
+  { name: 'Nhật ký kiểm toán', href: '/audit-logs', icon: History },
+  { name: 'Tích hợp Google', href: '/integrations', icon: Puzzle },
+  { name: 'Cài đặt', href: '/settings', icon: Settings },
 ];
 
 interface SidebarProps {
@@ -145,38 +158,40 @@ export function Sidebar({ collapsed, onToggleCollapse, mobileOpen, onCloseMobile
                     onClick={onCloseMobile}
                     className={({ isActive }) =>
                       cn(
-                        "group flex items-center text-sm font-semibold transition-all duration-200 relative",
+                        "group flex items-center text-xs font-medium transition-all duration-150 relative",
                         isActive
-                          ? "bg-emerald-100/90 text-emerald-950 font-bold shadow-2xs"
-                          : "text-slate-700 hover:bg-slate-200/60 hover:text-slate-950",
+                          ? "bg-emerald-50/90 text-emerald-900 font-semibold border border-emerald-200/60 shadow-2xs"
+                          : "text-slate-600 hover:bg-slate-100/80 hover:text-slate-900",
                         collapsed
-                          ? "justify-center w-12 h-9 mx-auto px-0 rounded-full"
-                          : "gap-3.5 px-4 py-2.5 rounded-full"
+                          ? "justify-center w-10 h-10 mx-auto rounded-xl"
+                          : "gap-3 px-3 py-2 rounded-xl"
                       )
                     }
                     title={collapsed ? item.name : undefined}
                   >
-                    {({ isActive }) => (
-                      <>
-                        <Icon
-                          name={item.symbol}
-                          filled={isActive}
-                          size={22}
-                          className={cn(
-                            "shrink-0 transition-all duration-150",
-                            isActive ? "text-emerald-900" : "text-slate-500 group-hover:text-slate-800"
+                    {({ isActive }) => {
+                      const IconComponent = item.icon;
+                      return (
+                        <>
+                          <IconComponent
+                            size={18}
+                            strokeWidth={isActive ? 2 : 1.75}
+                            className={cn(
+                              "shrink-0 transition-colors duration-150",
+                              isActive ? "text-emerald-700" : "text-slate-400 group-hover:text-slate-700"
+                            )}
+                          />
+                          {!collapsed && (
+                            <span className="flex-1 truncate">{item.name}</span>
                           )}
-                        />
-                        {!collapsed && (
-                          <span className="flex-1 truncate">{item.name}</span>
-                        )}
-                        {!collapsed && item.badge && (
-                          <Badge variant={item.badgeVariant || 'secondary'} className="text-[11px] px-2 py-0.5 rounded-full">
-                            {item.badge}
-                          </Badge>
-                        )}
-                      </>
-                    )}
+                          {!collapsed && item.badge && (
+                            <Badge variant={item.badgeVariant || 'secondary'} className="text-[10px] px-1.5 py-0.5 rounded-md font-semibold">
+                              {item.badge}
+                            </Badge>
+                          )}
+                        </>
+                      );
+                    }}
                   </NavLink>
                 );
               })}
@@ -186,7 +201,7 @@ export function Sidebar({ collapsed, onToggleCollapse, mobileOpen, onCloseMobile
           {/* System & Tools Section */}
           <div>
             {!collapsed && (
-              <p className="px-4 pb-2 text-[10px] font-bold tracking-wider text-slate-400 uppercase">
+              <p className="px-3 pb-2 text-[10px] font-bold tracking-wider text-slate-400 uppercase">
                 Hệ thống & Tiện ích
               </p>
             )}
@@ -200,31 +215,33 @@ export function Sidebar({ collapsed, onToggleCollapse, mobileOpen, onCloseMobile
                     onClick={onCloseMobile}
                     className={({ isActive }) =>
                       cn(
-                        "group flex items-center text-sm font-semibold transition-all duration-200 relative",
+                        "group flex items-center text-xs font-medium transition-all duration-150 relative",
                         isActive
-                          ? "bg-emerald-100/90 text-emerald-950 font-bold shadow-2xs"
-                          : "text-slate-700 hover:bg-slate-200/60 hover:text-slate-950",
+                          ? "bg-emerald-50/90 text-emerald-900 font-semibold border border-emerald-200/60 shadow-2xs"
+                          : "text-slate-600 hover:bg-slate-100/80 hover:text-slate-900",
                         collapsed
-                          ? "justify-center w-12 h-9 mx-auto px-0 rounded-full"
-                          : "gap-3.5 px-4 py-2.5 rounded-full"
+                          ? "justify-center w-10 h-10 mx-auto rounded-xl"
+                          : "gap-3 px-3 py-2 rounded-xl"
                       )
                     }
                     title={collapsed ? item.name : undefined}
                   >
-                    {({ isActive }) => (
-                      <>
-                        <Icon
-                          name={item.symbol}
-                          filled={isActive}
-                          size={22}
-                          className={cn(
-                            "shrink-0 transition-all duration-150",
-                            isActive ? "text-emerald-900" : "text-slate-500 group-hover:text-slate-800"
-                          )}
-                        />
-                        {!collapsed && <span className="flex-1 truncate">{item.name}</span>}
-                      </>
-                    )}
+                    {({ isActive }) => {
+                      const IconComponent = item.icon;
+                      return (
+                        <>
+                          <IconComponent
+                            size={18}
+                            strokeWidth={isActive ? 2 : 1.75}
+                            className={cn(
+                              "shrink-0 transition-colors duration-150",
+                              isActive ? "text-emerald-700" : "text-slate-400 group-hover:text-slate-700"
+                            )}
+                          />
+                          {!collapsed && <span className="flex-1 truncate">{item.name}</span>}
+                        </>
+                      );
+                    }}
                   </NavLink>
                 );
               })}
