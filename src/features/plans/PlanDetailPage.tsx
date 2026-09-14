@@ -431,10 +431,12 @@ export function PlanDetailPage() {
         const nameMatch = (p.fullName || p.member?.fullName || '').toLowerCase().includes(q);
         const idMatch = (p.studentId || p.member?.studentId || '').toLowerCase().includes(q);
         const classMatch = (p.className || p.member?.className || '').toLowerCase().includes(q);
+        const cohortVal = String(p.cohort || p.member?.cohort || '');
+        const cohortMatch = cohortVal.toLowerCase().includes(q) || `k${cohortVal}`.toLowerCase().includes(q);
         const emailMatch = (p.email || p.member?.email || '').toLowerCase().includes(q);
         const roleMatch = (p.roleTitle || '').toLowerCase().includes(q);
         const extMatch = (p.externalOrganization || '').toLowerCase().includes(q);
-        return nameMatch || idMatch || classMatch || emailMatch || roleMatch || extMatch;
+        return nameMatch || idMatch || classMatch || cohortMatch || emailMatch || roleMatch || extMatch;
       }
       return true;
     });
@@ -1828,7 +1830,7 @@ export function PlanDetailPage() {
                       </th>
                       <th className="px-4 py-3 min-w-[180px]">Họ và tên</th>
                       <th className="w-24 px-3 py-3 text-center">MSSV</th>
-                      <th className="w-20 px-3 py-3 text-center">Lớp</th>
+                      <th className="w-24 px-3 py-3 text-center">Lớp / Khóa</th>
                       <th className="w-28 px-3 py-3">Đơn vị</th>
                       <th className="w-36 px-3 py-3">Đội hình / Vai trò</th>
                       <th className="w-36 px-3 py-3">Hoạt động phân bổ</th>
@@ -1879,9 +1881,18 @@ export function PlanDetailPage() {
                             {p.studentId || p.member?.studentId || '--'}
                           </td>
 
-                          {/* Lớp */}
-                          <td className="w-20 px-3 py-3 text-center font-medium text-slate-700">
-                            {p.className || p.member?.className || '--'}
+                          {/* Lớp / Khóa */}
+                          <td className="w-24 px-3 py-3 text-center">
+                            <span className="font-medium text-slate-700 block truncate">
+                              {p.className || p.member?.className || '--'}
+                            </span>
+                            {(p.cohort || p.member?.cohort) && (
+                              <span className="text-[10px] text-slate-400 font-mono block">
+                                {String(p.cohort || p.member?.cohort).toUpperCase().startsWith('K')
+                                  ? (p.cohort || p.member?.cohort)
+                                  : `K${p.cohort || p.member?.cohort}`}
+                              </span>
+                            )}
                           </td>
 
                           {/* Đơn vị */}

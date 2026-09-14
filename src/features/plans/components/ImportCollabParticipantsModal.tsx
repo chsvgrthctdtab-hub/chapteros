@@ -105,17 +105,17 @@ export function ImportCollabParticipantsModal({
       parts = parts.filter(Boolean);
       if (parts.length === 0) return;
 
-      // Skip header row if it contains keywords like "Họ và tên", "MSSV", "STT"
+      // Skip header row if it contains keywords like "Họ và tên", "MSSV", "STT", "Khóa"
       const lineLower = line.toLowerCase();
       if (
-        (lineLower.includes('họ và tên') || lineLower.includes('họ tên') || lineLower.includes('stt')) &&
-        (lineLower.includes('mssv') || lineLower.includes('lớp') || lineLower.includes('đơn vị'))
+        (lineLower.includes('họ và tên') || lineLower.includes('họ tên') || lineLower.includes('stt') || lineLower.includes('họ & tên')) &&
+        (lineLower.includes('mssv') || lineLower.includes('lớp') || lineLower.includes('đơn vị') || lineLower.includes('khóa') || lineLower.includes('khoá'))
       ) {
         return;
       }
 
-      // If the first item is a numeric index (STT like "1", "2"), remove it
-      if (/^\d{1,4}$/.test(parts[0]) && parts.length > 1) {
+      // If the first item is a numeric index (STT like "1", "2"), remove it if there are at least 3 other items
+      if (/^\d{1,4}$/.test(parts[0]) && parts.length >= 4) {
         parts.shift();
       }
 
@@ -127,61 +127,115 @@ export function ImportCollabParticipantsModal({
       let email = '';
       let roleTitle = 'Tình nguyện viên';
       let organizationId = defaultOrgId;
-      let organizationCode = participatingOrganizations[0]?.code || 'Đơn vị';
+      const defaultOrgObj = participatingOrganizations.find((o) => o.id === defaultOrgId);
+      let organizationCode = defaultOrgObj?.code || participatingOrganizations[0]?.code || 'Đơn vị';
       let externalOrganization = '';
       let notes = '';
 
       // Pattern matchers
-      const studentIdRegex = /\b[A-Za-z]\d{7}\b/i;
+      const studentIdRegex = /\b([A-Za-z]\d{7}|\d{8,10})\b/i;
       const phoneRegex = /\b(0|\+84)\d{9,10}\b/;
       const emailRegex = /\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b/;
-      const cohortRegex = /\b[Kk](\d{2})\b/;
+      const cohortRegex = /^(?:k|khóa|khoá)?\s*([345]\d|\d{2})$/i;
 
-      // Extract known tokens
-      const remainingTokens: string[] = [];
+      // Special handling: Standard 4-column format: [Họ và tên, MSSV, Lớp, Khóa]
+      const looksLikeStandard4Col =
+        parts.length >= 4 &&
+        !studentIdRegex.test(parts[0]) &&
+        studentIdRegex.test(parts[1]);
 
-      parts.forEach((token) => {
-        if (!studentId && studentIdRegex.test(token)) {
-          studentId = token.toUpperCase();
-        } else if (!phone && phoneRegex.test(token)) {
-          phone = token;
-        } else if (!email && emailRegex.test(token)) {
-          email = token;
-        } else if (!cohort && cohortRegex.test(token)) {
-          cohort = token.toUpperCase();
+      if (looksLikeStandard4Col) {
+        fullName = parts[0];
+        studentId = parts[1].toUpperCase();
+        className = parts[2].toUpperCase();
+
+        // Extract cohort from parts[3] (e.g. "47", "K47", "Khóa 48")
+        const cohortMatch = parts[3].match(cohortRegex);
+        if (cohortMatch) {
+          cohort = cohortMatch[1];
+        } else if (/^\d{1,3}$/.test(parts[3])) {
+          cohort = parts[3];
         } else {
-          // Check if token matches an organization
-          const matchedOrg = orgLookup.get(token.toLowerCase());
-          if (matchedOrg) {
-            organizationId = matchedOrg.id;
-            organizationCode = matchedOrg.code;
+          cohort = parts[3];
+        }
+
+        // Check if there are extra columns (e.g. 5: Đơn vị, 6: SĐT, 7: Đội hình)
+        const extraParts = parts.slice(4);
+        extraParts.forEach((extraToken) => {
+          if (!phone && phoneRegex.test(extraToken)) {
+            phone = extraToken;
+          } else if (!email && emailRegex.test(extraToken)) {
+            email = extraToken;
           } else {
-            remainingTokens.push(token);
+            const matchedOrg = orgLookup.get(extraToken.toLowerCase());
+            if (matchedOrg) {
+              organizationId = matchedOrg.id;
+              organizationCode = matchedOrg.code;
+            } else if (roleTitle === 'Tình nguyện viên') {
+              roleTitle = extraToken;
+            } else {
+              notes = notes ? `${notes} - ${extraToken}` : extraToken;
+            }
+          }
+        });
+      } else {
+        // Fallback: Smart token detection
+        const remainingTokens: string[] = [];
+
+        parts.forEach((token) => {
+          if (!studentId && studentIdRegex.test(token)) {
+            studentId = token.toUpperCase();
+          } else if (!phone && phoneRegex.test(token)) {
+            phone = token;
+          } else if (!email && emailRegex.test(token)) {
+            email = token;
+          } else if (!cohort && cohortRegex.test(token)) {
+            const match = token.match(cohortRegex);
+            cohort = match ? match[1] : token.toUpperCase();
+          } else {
+            // Check if token matches an organization
+            const matchedOrg = orgLookup.get(token.toLowerCase());
+            if (matchedOrg) {
+              organizationId = matchedOrg.id;
+              organizationCode = matchedOrg.code;
+            } else {
+              remainingTokens.push(token);
+            }
+          }
+        });
+
+        // Assign remaining tokens to fullName, className, cohort, roleTitle
+        if (remainingTokens.length > 0) {
+          fullName = remainingTokens[0];
+        }
+        if (remainingTokens.length > 1) {
+          // If second token looks like class code (e.g. DI21V7A1, QT22)
+          if (/^[A-Za-z]{2,4}\d{2}/i.test(remainingTokens[1])) {
+            className = remainingTokens[1].toUpperCase();
+          } else if (!cohort && /^\d{2}$/.test(remainingTokens[1])) {
+            cohort = remainingTokens[1];
+          } else {
+            roleTitle = remainingTokens[1];
           }
         }
-      });
-
-      // Assign remaining tokens to fullName, className, roleTitle
-      if (remainingTokens.length > 0) {
-        fullName = remainingTokens[0];
-      }
-      if (remainingTokens.length > 1) {
-        // If second token looks like class code (e.g. DI21V7A1, QT22)
-        if (/^[A-Za-z]{2,4}\d{2}/i.test(remainingTokens[1])) {
-          className = remainingTokens[1].toUpperCase();
-        } else {
-          roleTitle = remainingTokens[1];
+        if (remainingTokens.length > 2) {
+          if (!className && /^[A-Za-z]{2,4}\d{2}/i.test(remainingTokens[2])) {
+            className = remainingTokens[2].toUpperCase();
+          } else if (!cohort && /^\d{2}$/.test(remainingTokens[2])) {
+            cohort = remainingTokens[2];
+          } else if (roleTitle === 'Tình nguyện viên') {
+            roleTitle = remainingTokens[2];
+          } else {
+            notes = remainingTokens[2];
+          }
         }
-      }
-      if (remainingTokens.length > 2) {
-        if (!className && /^[A-Za-z]{2,4}\d{2}/i.test(remainingTokens[2])) {
-          className = remainingTokens[2].toUpperCase();
-        } else {
-          roleTitle = remainingTokens[2];
+        if (remainingTokens.length > 3) {
+          if (!cohort && /^\d{2}$/.test(remainingTokens[3])) {
+            cohort = remainingTokens[3];
+          } else {
+            notes = remainingTokens.slice(3).join(' - ');
+          }
         }
-      }
-      if (remainingTokens.length > 3) {
-        notes = remainingTokens.slice(3).join(' - ');
       }
 
       if (fullName) {
@@ -287,12 +341,11 @@ export function ImportCollabParticipantsModal({
               <span>Nhập Danh Sách từ Google Sheet / Excel</span>
             </DialogTitle>
             <Badge className="bg-violet-50 text-violet-700 border-violet-200/80 text-xs px-2.5 py-0.5 font-semibold">
-              Copy - Paste Tức thì
+              Format: Họ tên • MSSV • Lớp • Khóa
             </Badge>
           </div>
           <DialogDescription className="text-xs text-slate-500 mt-1">
-            Copy các cột từ Google Sheet hoặc Excel và dán trực tiếp. Hệ thống tự động bóc tách Họ tên,
-            MSSV, Lớp, Đơn vị, SĐT và Đội hình.
+            Copy danh sách theo format chuẩn <strong className="text-slate-700 font-semibold">Họ và tên, MSSV, Lớp, Khóa</strong> từ Google Sheet hoặc Excel và dán trực tiếp. Hệ thống tự động nhận diện và bóc tách dữ liệu tức thì.
           </DialogDescription>
         </DialogHeader>
 
@@ -318,7 +371,7 @@ export function ImportCollabParticipantsModal({
                 value={pastedText}
                 onChange={(e) => setPastedText(e.target.value)}
                 rows={10}
-                placeholder={`Ví dụ sao chép từ Google Sheet:\nNguyễn Văn A\tB2101234\tDI21V7A1\tĐHYD\t0912345678\tĐội Y tế\nTrần Thị B\tB2205678\tQT22A2\tĐHKG\t0987654321\tĐội Hậu cần\nLê Hoàng Nam\tB2009876\tCN20\tXã Đoàn\t0903123456\tTiếp sức`}
+                placeholder={`Ví dụ sao chép theo format chuẩn (Họ và tên\tMSSV\tLớp\tKhóa):\nNguyễn Văn A\tB2101234\tDI21V7A1\t47\nTrần Thị B\tB2205678\tQT22A2\t48\nLê Hoàng Nam\tB2009876\tCN20V7\t46\nPhạm Minh C\tB2301122\tTN23A1\t49`}
                 className="w-full p-3 font-mono text-xs bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-violet-500/20 focus:border-violet-500 leading-relaxed resize-none placeholder:text-slate-400"
               />
             </div>
@@ -362,7 +415,7 @@ export function ImportCollabParticipantsModal({
             <div className="p-3 bg-violet-50/50 rounded-xl border border-violet-100 flex items-start gap-2 text-xs text-violet-900">
               <HelpCircle className="h-4 w-4 text-violet-600 shrink-0 mt-0.5" />
               <div className="leading-relaxed">
-                <span className="font-bold">Mẹo sao chép nhanh:</span> Bạn có thể bôi đen nhiều ô trên Google Sheet (bao gồm cột Họ tên, MSSV, Lớp, Đơn vị, SĐT) rồi nhấn <code className="bg-violet-100 px-1 rounded text-violet-800 font-mono">Ctrl + C</code> và dán thẳng vào đây. Hệ thống tự nhận diện thứ tự cột thông minh.
+                <span className="font-bold">Mẹo sao chép nhanh:</span> Chọn và bôi đen các cột theo thứ tự <code className="bg-violet-100 px-1 rounded text-violet-800 font-mono">Họ và tên | MSSV | Lớp | Khóa</code> trên Google Sheet rồi nhấn <code className="bg-violet-100 px-1 rounded text-violet-800 font-mono">Ctrl + C</code> và dán thẳng vào đây. Bạn cũng có thể dán kèm các cột Đơn vị, SĐT nếu có.
               </div>
             </div>
           </div>
@@ -398,6 +451,7 @@ export function ImportCollabParticipantsModal({
                     <th className="px-3 py-2 min-w-[150px]">Họ và tên *</th>
                     <th className="w-24 px-2 py-2">MSSV</th>
                     <th className="w-20 px-2 py-2">Lớp</th>
+                    <th className="w-16 px-2 py-2 text-center">Khóa</th>
                     <th className="w-32 px-2 py-2">Đơn vị</th>
                     <th className="w-28 px-2 py-2">Đội hình / Vai trò</th>
                     <th className="w-28 px-2 py-2">Số điện thoại</th>
@@ -434,6 +488,15 @@ export function ImportCollabParticipantsModal({
                           onChange={(e) => handleUpdateRowField(row.id, 'className', e.target.value)}
                           placeholder="Lớp"
                           className="w-full h-7 px-1.5 text-xs border border-transparent hover:border-slate-200 focus:border-violet-400 rounded bg-transparent focus:bg-white text-slate-700"
+                        />
+                      </td>
+                      <td className="px-2 py-1.5 font-mono text-center">
+                        <input
+                          type="text"
+                          value={row.cohort}
+                          onChange={(e) => handleUpdateRowField(row.id, 'cohort', e.target.value)}
+                          placeholder="Khóa"
+                          className="w-full h-7 px-1 text-xs font-mono text-center border border-transparent hover:border-slate-200 focus:border-violet-400 rounded bg-transparent focus:bg-white text-slate-700"
                         />
                       </td>
                       <td className="px-2 py-1.5">
