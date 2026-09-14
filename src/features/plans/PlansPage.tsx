@@ -153,21 +153,20 @@ export function PlansPage() {
           />
         </div>
 
-        <div className="flex items-center gap-1.5 overflow-x-auto w-full sm:w-auto pb-1 sm:pb-0 scrollbar-none">
+        <div className="flex items-center gap-1 p-1 bg-slate-100/90 border border-slate-200/60 rounded-xl overflow-x-auto w-full sm:w-auto scrollbar-none">
           {(['all', 'active', 'planning', 'completed', 'draft'] as const).map((status) => (
-            <Button
+            <button
               key={status}
-              variant={selectedStatus === status ? 'default' : 'ghost'}
-              size="sm"
+              type="button"
               onClick={() => setSelectedStatus(status)}
-              className={`h-8 text-xs font-medium rounded-lg px-3 transition-colors ${
+              className={`h-7 px-3 text-xs font-semibold rounded-lg transition-all cursor-pointer whitespace-nowrap ${
                 selectedStatus === status
-                  ? 'bg-slate-900 text-white hover:bg-slate-800'
-                  : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900'
+                  ? 'bg-white text-slate-900 shadow-2xs border border-slate-200/60'
+                  : 'text-slate-600 hover:text-slate-900 hover:bg-slate-200/50'
               }`}
             >
               {status === 'all' ? 'Tất cả' : PLAN_STATUS_CONFIG[status]?.label}
-            </Button>
+            </button>
           ))}
         </div>
       </div>

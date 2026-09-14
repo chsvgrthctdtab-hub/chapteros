@@ -1813,174 +1813,290 @@ export function PlanDetailPage() {
                 )}
               </div>
             ) : (
-              <div className="overflow-x-auto border border-slate-200/80 rounded-xl">
-                <table className="w-full text-left text-xs text-slate-700">
-                  <thead className="bg-slate-50/80 text-[11px] font-semibold text-slate-500 uppercase tracking-wider border-b border-slate-200">
-                    <tr>
-                      <th className="w-10 px-3 py-3 text-center">
-                        <input
-                          type="checkbox"
-                          checked={
-                            filteredCampaignParticipants.length > 0 &&
-                            selectedParticipantIds.length === filteredCampaignParticipants.length
-                          }
-                          onChange={handleSelectAllParticipants}
-                          className="rounded border-slate-300 text-violet-600 focus:ring-violet-500 cursor-pointer"
-                        />
-                      </th>
-                      <th className="px-4 py-3 min-w-[180px]">Họ và tên</th>
-                      <th className="w-24 px-3 py-3 text-center">MSSV</th>
-                      <th className="w-24 px-3 py-3 text-center">Lớp / Khóa</th>
-                      <th className="w-28 px-3 py-3">Đơn vị</th>
-                      <th className="w-36 px-3 py-3">Đội hình / Vai trò</th>
-                      <th className="w-36 px-3 py-3">Hoạt động phân bổ</th>
-                      <th className="w-48 px-3 py-3 text-center">Điểm danh</th>
-                      {canManageOperational && (
-                        <th className="w-12 px-2 py-3 text-center">Xóa</th>
-                      )}
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-slate-100 bg-white">
-                    {filteredCampaignParticipants.map((p: any) => {
-                      const isPresent = p.attendanceStatus === 'present';
-                      const isAbsent = p.attendanceStatus === 'absent';
-                      const isSelected = selectedParticipantIds.includes(p.id);
-                      const memOrg = participatingOrganizations.find((o) => o.id === p.organizationId || o.id === p.member?.organizationId);
+              <div className="border border-slate-200/80 rounded-xl overflow-hidden shadow-2xs">
+                {/* Desktop View */}
+                <div className="hidden md:block max-h-[620px] overflow-y-auto overflow-x-auto">
+                  <table className="w-full text-left text-xs text-slate-700">
+                    <thead className="sticky top-0 z-10 bg-slate-50/95 backdrop-blur-xs text-[11px] font-semibold text-slate-500 uppercase tracking-wider border-b border-slate-200 shadow-2xs">
+                      <tr>
+                        <th className="w-10 px-3 py-3 text-center">
+                          <input
+                            type="checkbox"
+                            checked={
+                              filteredCampaignParticipants.length > 0 &&
+                              selectedParticipantIds.length === filteredCampaignParticipants.length
+                            }
+                            onChange={handleSelectAllParticipants}
+                            className="rounded border-slate-300 text-violet-600 focus:ring-violet-500 cursor-pointer"
+                          />
+                        </th>
+                        <th className="px-4 py-3 min-w-[180px]">Họ và tên</th>
+                        <th className="w-24 px-3 py-3 text-center">MSSV</th>
+                        <th className="w-24 px-3 py-3 text-center">Lớp / Khóa</th>
+                        <th className="w-28 px-3 py-3">Đơn vị</th>
+                        <th className="w-36 px-3 py-3">Đội hình / Vai trò</th>
+                        <th className="w-36 px-3 py-3">Hoạt động phân bổ</th>
+                        <th className="w-48 px-3 py-3 text-center">Điểm danh</th>
+                        {canManageOperational && (
+                          <th className="w-12 px-2 py-3 text-center">Xóa</th>
+                        )}
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-slate-100 bg-white">
+                      {filteredCampaignParticipants.map((p: any) => {
+                        const isPresent = p.attendanceStatus === 'present';
+                        const isAbsent = p.attendanceStatus === 'absent';
+                        const isSelected = selectedParticipantIds.includes(p.id);
+                        const memOrg = participatingOrganizations.find((o) => o.id === p.organizationId || o.id === p.member?.organizationId);
 
-                      return (
-                        <tr key={p.id} className={cn('hover:bg-slate-50/60 transition-colors', isSelected && 'bg-violet-50/40')}>
-                          {/* Checkbox */}
-                          <td className="w-10 px-3 py-3 text-center">
+                        return (
+                          <tr key={p.id} className={cn('hover:bg-slate-50/60 transition-colors', isSelected && 'bg-violet-50/40')}>
+                            {/* Checkbox */}
+                            <td className="w-10 px-3 py-3 text-center">
+                              <input
+                                type="checkbox"
+                                checked={isSelected}
+                                onChange={() => handleToggleSelectParticipant(p.id)}
+                                className="rounded border-slate-300 text-violet-600 focus:ring-violet-500 cursor-pointer"
+                              />
+                            </td>
+
+                            {/* Họ và tên */}
+                            <td className="px-4 py-3 font-semibold text-slate-900 min-w-[180px]">
+                              <div className="flex items-center gap-2">
+                                <div className="w-6 h-6 rounded-full bg-violet-100 text-violet-700 font-bold text-[10px] flex items-center justify-center shrink-0">
+                                  {(p.fullName || p.member?.fullName || 'N').slice(0, 1)}
+                                </div>
+                                <div className="min-w-0">
+                                  <span className="block truncate">{p.fullName || p.member?.fullName || 'Người tham gia'}</span>
+                                  {(p.email || p.phone) && (
+                                    <span className="text-[10px] text-slate-400 font-normal block truncate">
+                                      {[p.email, p.phone].filter(Boolean).join(' • ')}
+                                    </span>
+                                  )}
+                                </div>
+                              </div>
+                            </td>
+
+                            {/* MSSV */}
+                            <td className="w-24 px-3 py-3 text-center font-mono font-medium text-slate-700">
+                              {p.studentId || p.member?.studentId || '--'}
+                            </td>
+
+                            {/* Lớp / Khóa */}
+                            <td className="w-24 px-3 py-3 text-center">
+                              <span className="font-medium text-slate-700 block truncate">
+                                {p.className || p.member?.className || '--'}
+                              </span>
+                              {(p.cohort || p.member?.cohort) && (
+                                <span className="text-[10px] text-slate-400 font-mono block">
+                                  {String(p.cohort || p.member?.cohort).toUpperCase().startsWith('K')
+                                    ? (p.cohort || p.member?.cohort)
+                                    : `K${p.cohort || p.member?.cohort}`}
+                                </span>
+                              )}
+                            </td>
+
+                            {/* Đơn vị */}
+                            <td className="w-28 px-3 py-3">
+                              {p.externalOrganization ? (
+                                <span className="inline-flex items-center gap-1 text-[10px] bg-emerald-50 text-emerald-800 border border-emerald-200 px-2 py-0.5 rounded-full font-medium truncate max-w-[130px]" title={p.externalOrganization}>
+                                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 shrink-0" />
+                                  <span className="truncate">{p.externalOrganization}</span>
+                                </span>
+                              ) : (
+                                <span className="inline-flex items-center gap-1 text-[10px] bg-violet-50 text-violet-800 border border-violet-200/80 px-2 py-0.5 rounded-full font-semibold truncate max-w-[120px]">
+                                  <span className="w-1.5 h-1.5 rounded-full bg-violet-600 shrink-0" />
+                                  <span>{memOrg?.code || p.organization?.code || 'Đơn vị'}</span>
+                                </span>
+                              )}
+                            </td>
+
+                            {/* Đội hình / Vai trò */}
+                            <td className="w-36 px-3 py-3">
+                              <span className="inline-block text-[10px] bg-slate-100 text-slate-700 px-2 py-0.5 rounded-md font-medium truncate max-w-[130px]">
+                                {p.roleTitle || 'Tình nguyện viên'}
+                              </span>
+                            </td>
+
+                            {/* Hoạt động phân bổ */}
+                            <td className="w-36 px-3 py-3 text-slate-600 text-[11px]">
+                              {p.collabActivity?.title ? (
+                                <span className="truncate block max-w-[130px] font-medium text-violet-700" title={p.collabActivity.title}>
+                                  {p.collabActivity.title}
+                                </span>
+                              ) : (
+                                <span className="text-slate-400 italic">Toàn chiến dịch</span>
+                              )}
+                            </td>
+
+                            {/* Điểm danh 1-chạm */}
+                            <td className="w-48 px-3 py-3 text-center">
+                              <div className="inline-flex items-center justify-center gap-1 p-0.5 bg-slate-100/90 rounded-lg">
+                                <button
+                                  type="button"
+                                  disabled={!canManageOperational}
+                                  onClick={() => handleCampaignAttendanceToggle(p.id, p.attendanceStatus, 'present')}
+                                  className={cn(
+                                    'h-6 px-2.5 rounded-md font-semibold text-[10px] flex items-center gap-1 transition-all active:scale-[0.98]',
+                                    isPresent
+                                      ? 'bg-emerald-600 text-white shadow-2xs'
+                                      : 'text-emerald-700 hover:bg-emerald-100/70 bg-transparent'
+                                  )}
+                                >
+                                  <Check className="h-3 w-3 stroke-[2.5]" />
+                                  <span>Có mặt</span>
+                                </button>
+
+                                <button
+                                  type="button"
+                                  disabled={!canManageOperational}
+                                  onClick={() => handleCampaignAttendanceToggle(p.id, p.attendanceStatus, 'absent')}
+                                  className={cn(
+                                    'h-6 px-2.5 rounded-md font-semibold text-[10px] flex items-center gap-1 transition-all active:scale-[0.98]',
+                                    isAbsent
+                                      ? 'bg-rose-600 text-white shadow-2xs'
+                                      : 'text-rose-700 hover:bg-rose-100/70 bg-transparent'
+                                  )}
+                                >
+                                  <X className="h-3 w-3 stroke-[2.5]" />
+                                  <span>Vắng</span>
+                                </button>
+                              </div>
+                            </td>
+
+                            {/* Thao tác xóa */}
+                            {canManageOperational && (
+                              <td className="w-12 px-2 py-3 text-center">
+                                <button
+                                  type="button"
+                                  onClick={() => handleDeleteParticipant(p.id)}
+                                  className="h-6 w-6 inline-flex items-center justify-center text-slate-400 hover:text-rose-600 hover:bg-rose-50 rounded transition-colors active:scale-[0.95]"
+                                  title="Xóa người tham gia"
+                                >
+                                  <Trash2 className="h-3.5 w-3.5" />
+                                </button>
+                              </td>
+                            )}
+                          </tr>
+                        );
+                      })}
+                    </tbody>
+                  </table>
+                </div>
+
+                {/* Mobile Responsive Thumb-Friendly Card View */}
+                <div className="block md:hidden divide-y divide-slate-100 bg-white max-h-[620px] overflow-y-auto p-3 space-y-3">
+                  {filteredCampaignParticipants.map((p: any) => {
+                    const isPresent = p.attendanceStatus === 'present';
+                    const isAbsent = p.attendanceStatus === 'absent';
+                    const isSelected = selectedParticipantIds.includes(p.id);
+                    const memOrg = participatingOrganizations.find((o) => o.id === p.organizationId || o.id === p.member?.organizationId);
+
+                    return (
+                      <div
+                        key={p.id}
+                        className={cn(
+                          'p-3.5 rounded-xl border border-slate-200/80 bg-slate-50/40 space-y-2.5 transition-colors',
+                          isSelected && 'bg-violet-50/50 border-violet-200'
+                        )}
+                      >
+                        <div className="flex items-start justify-between gap-2">
+                          <div className="flex items-center gap-2.5 min-w-0">
                             <input
                               type="checkbox"
                               checked={isSelected}
                               onChange={() => handleToggleSelectParticipant(p.id)}
-                              className="rounded border-slate-300 text-violet-600 focus:ring-violet-500 cursor-pointer"
+                              className="rounded border-slate-300 text-violet-600 focus:ring-violet-500 cursor-pointer h-4 w-4 shrink-0"
                             />
-                          </td>
-
-                          {/* Họ và tên */}
-                          <td className="px-4 py-3 font-semibold text-slate-900 min-w-[180px]">
-                            <div className="flex items-center gap-2">
-                              <div className="w-6 h-6 rounded-full bg-violet-100 text-violet-700 font-bold text-[10px] flex items-center justify-center shrink-0">
-                                {(p.fullName || p.member?.fullName || 'N').slice(0, 1)}
-                              </div>
-                              <div className="min-w-0">
-                                <span className="block truncate">{p.fullName || p.member?.fullName || 'Người tham gia'}</span>
-                                {(p.email || p.phone) && (
-                                  <span className="text-[10px] text-slate-400 font-normal block truncate">
-                                    {[p.email, p.phone].filter(Boolean).join(' • ')}
-                                  </span>
-                                )}
+                            <div className="w-8 h-8 rounded-full bg-violet-100 text-violet-700 font-bold text-xs flex items-center justify-center shrink-0">
+                              {(p.fullName || p.member?.fullName || 'N').slice(0, 1)}
+                            </div>
+                            <div className="min-w-0">
+                              <p className="font-bold text-slate-900 text-xs truncate">
+                                {p.fullName || p.member?.fullName || 'Người tham gia'}
+                              </p>
+                              <div className="flex items-center gap-1.5 text-[11px] text-slate-500">
+                                <span className="font-mono font-medium">{p.studentId || p.member?.studentId || '--'}</span>
+                                <span>•</span>
+                                <span>{p.className || p.member?.className || '--'}</span>
                               </div>
                             </div>
-                          </td>
+                          </div>
 
-                          {/* MSSV */}
-                          <td className="w-24 px-3 py-3 text-center font-mono font-medium text-slate-700">
-                            {p.studentId || p.member?.studentId || '--'}
-                          </td>
-
-                          {/* Lớp / Khóa */}
-                          <td className="w-24 px-3 py-3 text-center">
-                            <span className="font-medium text-slate-700 block truncate">
-                              {p.className || p.member?.className || '--'}
-                            </span>
-                            {(p.cohort || p.member?.cohort) && (
-                              <span className="text-[10px] text-slate-400 font-mono block">
-                                {String(p.cohort || p.member?.cohort).toUpperCase().startsWith('K')
-                                  ? (p.cohort || p.member?.cohort)
-                                  : `K${p.cohort || p.member?.cohort}`}
-                              </span>
-                            )}
-                          </td>
-
-                          {/* Đơn vị */}
-                          <td className="w-28 px-3 py-3">
-                            {p.externalOrganization ? (
-                              <span className="inline-flex items-center gap-1 text-[10px] bg-emerald-50 text-emerald-800 border border-emerald-200 px-2 py-0.5 rounded-full font-medium truncate max-w-[130px]" title={p.externalOrganization}>
-                                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 shrink-0" />
-                                <span className="truncate">{p.externalOrganization}</span>
-                              </span>
-                            ) : (
-                              <span className="inline-flex items-center gap-1 text-[10px] bg-violet-50 text-violet-800 border border-violet-200/80 px-2 py-0.5 rounded-full font-semibold truncate max-w-[120px]">
-                                <span className="w-1.5 h-1.5 rounded-full bg-violet-600 shrink-0" />
-                                <span>{memOrg?.code || p.organization?.code || 'Đơn vị'}</span>
-                              </span>
-                            )}
-                          </td>
-
-                          {/* Đội hình / Vai trò */}
-                          <td className="w-36 px-3 py-3">
-                            <span className="inline-block text-[10px] bg-slate-100 text-slate-700 px-2 py-0.5 rounded-md font-medium truncate max-w-[130px]">
-                              {p.roleTitle || 'Tình nguyện viên'}
-                            </span>
-                          </td>
-
-                          {/* Hoạt động phân bổ */}
-                          <td className="w-36 px-3 py-3 text-slate-600 text-[11px]">
-                            {p.collabActivity?.title ? (
-                              <span className="truncate block max-w-[130px] font-medium text-violet-700" title={p.collabActivity.title}>
-                                {p.collabActivity.title}
-                              </span>
-                            ) : (
-                              <span className="text-slate-400 italic">Toàn chiến dịch</span>
-                            )}
-                          </td>
-
-                          {/* Điểm danh 1-chạm */}
-                          <td className="w-48 px-3 py-3 text-center">
-                            <div className="inline-flex items-center justify-center gap-1 p-0.5 bg-slate-100/90 rounded-lg">
-                              <button
-                                type="button"
-                                disabled={!canManageOperational}
-                                onClick={() => handleCampaignAttendanceToggle(p.id, p.attendanceStatus, 'present')}
-                                className={cn(
-                                  'h-6 px-2.5 rounded-md font-semibold text-[10px] flex items-center gap-1 transition-all active:scale-[0.98]',
-                                  isPresent
-                                    ? 'bg-emerald-600 text-white shadow-2xs'
-                                    : 'text-emerald-700 hover:bg-emerald-100/70 bg-transparent'
-                                )}
-                              >
-                                <Check className="h-3 w-3 stroke-[2.5]" />
-                                <span>Có mặt</span>
-                              </button>
-
-                              <button
-                                type="button"
-                                disabled={!canManageOperational}
-                                onClick={() => handleCampaignAttendanceToggle(p.id, p.attendanceStatus, 'absent')}
-                                className={cn(
-                                  'h-6 px-2.5 rounded-md font-semibold text-[10px] flex items-center gap-1 transition-all active:scale-[0.98]',
-                                  isAbsent
-                                    ? 'bg-rose-600 text-white shadow-2xs'
-                                    : 'text-rose-700 hover:bg-rose-100/70 bg-transparent'
-                                )}
-                              >
-                                <X className="h-3 w-3 stroke-[2.5]" />
-                                <span>Vắng</span>
-                              </button>
-                            </div>
-                          </td>
-
-                          {/* Thao tác xóa */}
                           {canManageOperational && (
-                            <td className="w-12 px-2 py-3 text-center">
-                              <button
-                                type="button"
-                                onClick={() => handleDeleteParticipant(p.id)}
-                                className="h-6 w-6 inline-flex items-center justify-center text-slate-400 hover:text-rose-600 hover:bg-rose-50 rounded transition-colors active:scale-[0.95]"
-                                title="Xóa người tham gia"
-                              >
-                                <Trash2 className="h-3.5 w-3.5" />
-                              </button>
-                            </td>
+                            <button
+                              type="button"
+                              onClick={() => handleDeleteParticipant(p.id)}
+                              className="p-1.5 text-slate-400 hover:text-rose-600 hover:bg-rose-50 rounded-lg transition-colors shrink-0"
+                              title="Xóa người tham gia"
+                            >
+                              <Trash2 className="h-4 w-4" />
+                            </button>
                           )}
-                        </tr>
-                      );
-                    })}
-                  </tbody>
-                </table>
+                        </div>
+
+                        {/* Metadata tags */}
+                        <div className="flex flex-wrap items-center gap-1.5 text-xs">
+                          {p.externalOrganization ? (
+                            <span className="inline-flex items-center gap-1 text-[10px] bg-emerald-50 text-emerald-800 border border-emerald-200 px-2 py-0.5 rounded-full font-medium">
+                              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 shrink-0" />
+                              <span className="truncate">{p.externalOrganization}</span>
+                            </span>
+                          ) : (
+                            <span className="inline-flex items-center gap-1 text-[10px] bg-violet-50 text-violet-800 border border-violet-200/80 px-2 py-0.5 rounded-full font-semibold">
+                              <span className="w-1.5 h-1.5 rounded-full bg-violet-600 shrink-0" />
+                              <span>{memOrg?.code || p.organization?.code || 'Đơn vị'}</span>
+                            </span>
+                          )}
+
+                          <span className="inline-block text-[10px] bg-slate-100 text-slate-700 px-2 py-0.5 rounded-md font-medium">
+                            {p.roleTitle || 'Tình nguyện viên'}
+                          </span>
+
+                          {p.collabActivity?.title && (
+                            <span className="inline-block text-[10px] bg-violet-50 text-violet-700 border border-violet-200/60 px-2 py-0.5 rounded-md font-medium truncate max-w-[200px]">
+                              {p.collabActivity.title}
+                            </span>
+                          )}
+                        </div>
+
+                        {/* Fast Attendance Bar on Mobile (Large Thumb Target) */}
+                        <div className="grid grid-cols-2 gap-2 pt-1 border-t border-slate-100">
+                          <button
+                            type="button"
+                            disabled={!canManageOperational}
+                            onClick={() => handleCampaignAttendanceToggle(p.id, p.attendanceStatus, 'present')}
+                            className={cn(
+                              'h-8 rounded-lg font-bold text-xs flex items-center justify-center gap-1.5 transition-all active:scale-[0.98] cursor-pointer',
+                              isPresent
+                                ? 'bg-emerald-600 text-white shadow-xs'
+                                : 'bg-slate-100 text-emerald-700 hover:bg-emerald-50 border border-slate-200/60'
+                            )}
+                          >
+                            <Check className="h-3.5 w-3.5 stroke-[2.5]" />
+                            <span>Có mặt</span>
+                          </button>
+
+                          <button
+                            type="button"
+                            disabled={!canManageOperational}
+                            onClick={() => handleCampaignAttendanceToggle(p.id, p.attendanceStatus, 'absent')}
+                            className={cn(
+                              'h-8 rounded-lg font-bold text-xs flex items-center justify-center gap-1.5 transition-all active:scale-[0.98] cursor-pointer',
+                              isAbsent
+                                ? 'bg-rose-600 text-white shadow-xs'
+                                : 'bg-slate-100 text-rose-700 hover:bg-rose-50 border border-slate-200/60'
+                            )}
+                          >
+                            <X className="h-3.5 w-3.5 stroke-[2.5]" />
+                            <span>Vắng</span>
+                          </button>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
               </div>
             )}
           </div>

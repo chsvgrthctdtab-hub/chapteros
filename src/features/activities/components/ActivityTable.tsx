@@ -55,10 +55,10 @@ export function ActivityTable({
 
   return (
     <div className="bg-white rounded-2xl border border-slate-200/80 shadow-2xs overflow-hidden">
-      <div className="overflow-x-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+      <div className="overflow-x-auto overflow-y-auto max-h-[640px] [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
         <table className="w-full text-left text-xs border-collapse">
           {/* Table Header */}
-          <thead className="bg-slate-50/90 text-slate-600 font-bold border-b border-slate-200/90 uppercase tracking-wider text-[11px]">
+          <thead className="sticky top-0 z-10 bg-slate-50/95 backdrop-blur-xs text-slate-600 font-bold border-b border-slate-200/90 uppercase tracking-wider text-[11px] shadow-2xs">
             <tr>
               <th className="py-3.5 px-4 min-w-[220px]">Hoạt động</th>
               <th className="py-3.5 px-3 w-28 text-center">Trạng thái</th>
@@ -103,7 +103,7 @@ export function ActivityTable({
                       <div className="space-y-1 min-w-0">
                         <Link
                           to={`/activities/${activity.id}`}
-                          className="font-bold text-slate-900 hover:text-emerald-700 transition-colors text-xs leading-snug line-clamp-1 block"
+                          className="font-bold text-slate-900 hover:text-blue-600 transition-colors text-xs leading-snug line-clamp-1 block"
                         >
                           {activity.title}
                         </Link>
@@ -128,7 +128,7 @@ export function ActivityTable({
                   <td className="py-3 px-3">
                     {activity.leadMember ? (
                       <div className="flex items-center gap-2 min-w-0">
-                        <div className="w-6 h-6 rounded-full bg-emerald-700 text-white text-[10px] font-bold flex items-center justify-center shrink-0">
+                        <div className="w-6 h-6 rounded-full bg-blue-600 text-white text-[10px] font-bold flex items-center justify-center shrink-0">
                           {leadInitials || <User className="w-3 h-3" />}
                         </div>
                         <div className="min-w-0 truncate">

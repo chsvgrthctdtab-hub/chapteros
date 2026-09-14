@@ -78,7 +78,7 @@ export function MemberListTable({
           <Button
             onClick={onAddNew}
             size="sm"
-            className="bg-emerald-700 hover:bg-emerald-800 text-white text-xs h-8 shadow-xs cursor-pointer"
+            className="bg-blue-600 hover:bg-blue-700 text-white text-xs h-8 shadow-xs cursor-pointer"
           >
             <UserPlus className="h-3.5 w-3.5 mr-1.5" />
             Thêm hội viên đầu tiên
@@ -90,9 +90,9 @@ export function MemberListTable({
 
   return (
     <div className="bg-white border border-slate-200/80 rounded-2xl overflow-hidden shadow-2xs flex flex-col">
-      <div className="overflow-x-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+      <div className="overflow-x-auto overflow-y-auto max-h-[640px] [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
         <table className="w-full text-left text-xs text-slate-600">
-          <thead className="bg-slate-50/90 text-[11px] font-bold text-slate-600 border-b border-slate-200/90 uppercase tracking-wider">
+          <thead className="sticky top-0 z-10 bg-slate-50/95 backdrop-blur-xs text-[11px] font-bold text-slate-600 border-b border-slate-200/90 uppercase tracking-wider shadow-2xs">
             <tr>
               <th className="py-3.5 px-4 min-w-[200px]">Hội viên</th>
               <th className="py-3.5 px-3 min-w-[100px]">MSSV</th>
