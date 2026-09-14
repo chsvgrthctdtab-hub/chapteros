@@ -9,7 +9,7 @@
     --card-foreground: 222 47% 11%;
     --popover: 0 0% 100%;
     --popover-foreground: 222 47% 11%;
-    --primary: 160 84% 28%;
+    --primary: 221.2 83.2% 53.3%;
     --primary-foreground: 210 40% 98%;
     --secondary: 210 40% 96.1%;
     --secondary-foreground: 222 47% 11.2%;
@@ -21,21 +21,21 @@
     --destructive-foreground: 210 40% 98%;
     --border: 214.3 31.8% 91.4%;
     --input: 214.3 31.8% 91.4%;
-    --ring: 160 84% 28%;
+    --ring: 221.2 83.2% 53.3%;
     --radius: 0.75rem;
 
     /* ==========================================================================
        MATERIAL DESIGN 3 (M3) SEMANTIC DESIGN TOKENS - LIGHT THEME
        ========================================================================== */
-    --md-sys-color-primary: #047857;
+    --md-sys-color-primary: #2563eb;
     --md-sys-color-on-primary: #ffffff;
-    --md-sys-color-primary-container: #d1fae5;
-    --md-sys-color-on-primary-container: #064e3b;
+    --md-sys-color-primary-container: #dbeafe;
+    --md-sys-color-on-primary-container: #1e3a8a;
 
-    --md-sys-color-secondary: #0f766e;
+    --md-sys-color-secondary: #1d4ed8;
     --md-sys-color-on-secondary: #ffffff;
-    --md-sys-color-secondary-container: #ccfbf1;
-    --md-sys-color-on-secondary-container: #115e59;
+    --md-sys-color-secondary-container: #eff6ff;
+    --md-sys-color-on-secondary-container: #1e40af;
 
     --md-sys-color-tertiary: #1d4ed8;
     --md-sys-color-on-tertiary: #ffffff;
@@ -110,7 +110,7 @@
     --card-foreground: 210 40% 98%;
     --popover: 222 47% 9%;
     --popover-foreground: 210 40% 98%;
-    --primary: 158 64% 52%;
+    --primary: 217.2 91.2% 59.8%;
     --primary-foreground: 222 47% 11.2%;
     --secondary: 217.2 32.6% 17.5%;
     --secondary-foreground: 210 40% 98%;
@@ -122,18 +122,18 @@
     --destructive-foreground: 210 40% 98%;
     --border: 217.2 32.6% 17.5%;
     --input: 217.2 32.6% 17.5%;
-    --ring: 158 64% 52%;
+    --ring: 217.2 91.2% 59.8%;
 
     /* M3 Dark Tokens */
-    --md-sys-color-primary: #34d399;
-    --md-sys-color-on-primary: #064e3b;
-    --md-sys-color-primary-container: #065f46;
-    --md-sys-color-on-primary-container: #a7f3d0;
+    --md-sys-color-primary: #3b82f6;
+    --md-sys-color-on-primary: #1e3a8a;
+    --md-sys-color-primary-container: #1d4ed8;
+    --md-sys-color-on-primary-container: #dbeafe;
 
-    --md-sys-color-secondary: #2dd4bf;
-    --md-sys-color-on-secondary: #134e4a;
-    --md-sys-color-secondary-container: #115e59;
-    --md-sys-color-on-secondary-container: #99f6e4;
+    --md-sys-color-secondary: #60a5fa;
+    --md-sys-color-on-secondary: #172554;
+    --md-sys-color-secondary-container: #1e40af;
+    --md-sys-color-on-secondary-container: #bfdbfe;
 
     --md-sys-color-tertiary: #60a5fa;
     --md-sys-color-on-tertiary: #1e3a8a;

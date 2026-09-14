@@ -102,7 +102,7 @@ export function Sidebar({ collapsed, onToggleCollapse, mobileOpen, onCloseMobile
               type="button"
               id="btn-sidebar-expand"
               onClick={onToggleCollapse}
-              className="flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-700 text-white shadow-2xs font-bold ring-1 ring-emerald-800/20 hover:bg-emerald-800 active:scale-95 transition-all cursor-pointer"
+              className="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-600 text-white shadow-2xs font-bold ring-1 ring-blue-700/20 hover:bg-blue-700 active:scale-95 transition-all cursor-pointer"
               title="Expand navigation sidebar"
               aria-label="Expand navigation sidebar"
             >
@@ -111,14 +111,14 @@ export function Sidebar({ collapsed, onToggleCollapse, mobileOpen, onCloseMobile
           ) : (
             <>
               <div className="flex items-center gap-3 overflow-hidden">
-                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-emerald-700 text-white shadow-2xs font-bold ring-1 ring-emerald-800/20">
+                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-blue-600 text-white shadow-2xs font-bold ring-1 ring-blue-700/20">
                   <GraduationCap strokeWidth={1.5} className="h-5 w-5" />
                 </div>
                 <div className="flex flex-col truncate">
                   <span className="font-bold tracking-tight text-slate-900 text-base leading-tight truncate">
                     ChapterOS
                   </span>
-                  <span className="text-[11px] text-emerald-700/90 font-semibold tracking-wider uppercase truncate">
+                  <span className="text-[11px] text-blue-600 font-semibold tracking-wider uppercase truncate">
                     Operations Suite
                   </span>
                 </div>
@@ -160,7 +160,7 @@ export function Sidebar({ collapsed, onToggleCollapse, mobileOpen, onCloseMobile
                       cn(
                         "group flex items-center text-xs font-medium transition-all duration-150 relative",
                         isActive
-                          ? "bg-emerald-50/90 text-emerald-900 font-semibold border border-emerald-200/60 shadow-2xs"
+                          ? "bg-blue-50/90 text-blue-950 font-semibold border border-blue-200/60 shadow-2xs"
                           : "text-slate-600 hover:bg-slate-100/80 hover:text-slate-900",
                         collapsed
                           ? "justify-center w-10 h-10 mx-auto rounded-xl"
@@ -178,7 +178,7 @@ export function Sidebar({ collapsed, onToggleCollapse, mobileOpen, onCloseMobile
                             strokeWidth={isActive ? 2 : 1.75}
                             className={cn(
                               "shrink-0 transition-colors duration-150",
-                              isActive ? "text-emerald-700" : "text-slate-400 group-hover:text-slate-700"
+                              isActive ? "text-blue-600" : "text-slate-400 group-hover:text-slate-700"
                             )}
                           />
                           {!collapsed && (
@@ -217,7 +217,7 @@ export function Sidebar({ collapsed, onToggleCollapse, mobileOpen, onCloseMobile
                       cn(
                         "group flex items-center text-xs font-medium transition-all duration-150 relative",
                         isActive
-                          ? "bg-emerald-50/90 text-emerald-900 font-semibold border border-emerald-200/60 shadow-2xs"
+                          ? "bg-blue-50/90 text-blue-950 font-semibold border border-blue-200/60 shadow-2xs"
                           : "text-slate-600 hover:bg-slate-100/80 hover:text-slate-900",
                         collapsed
                           ? "justify-center w-10 h-10 mx-auto rounded-xl"
@@ -235,7 +235,7 @@ export function Sidebar({ collapsed, onToggleCollapse, mobileOpen, onCloseMobile
                             strokeWidth={isActive ? 2 : 1.75}
                             className={cn(
                               "shrink-0 transition-colors duration-150",
-                              isActive ? "text-emerald-700" : "text-slate-400 group-hover:text-slate-700"
+                              isActive ? "text-blue-600" : "text-slate-400 group-hover:text-slate-700"
                             )}
                           />
                           {!collapsed && <span className="flex-1 truncate">{item.name}</span>}
@@ -253,10 +253,10 @@ export function Sidebar({ collapsed, onToggleCollapse, mobileOpen, onCloseMobile
         <div className="border-t border-slate-100 p-2.5 bg-slate-50/60 shrink-0">
           {!collapsed ? (
             <div className="flex items-center gap-2.5 rounded-xl p-2.5 text-xs text-slate-500 bg-white border border-slate-200/80 shadow-2xs">
-              <Shield className="h-4 w-4 text-emerald-700 shrink-0" />
+              <Shield className="h-4 w-4 text-blue-600 shrink-0" />
               <div className="truncate">
                 <p className="font-bold text-slate-800 text-xs leading-tight truncate">ChapterOS</p>
-                <p className="text-[11px] text-slate-500 truncate">Tác giả: <span className="font-semibold text-emerald-800">tienthuan_0909</span></p>
+                <p className="text-[11px] text-slate-500 truncate">Tác giả: <span className="font-semibold text-blue-700">tienthuan_0909</span></p>
               </div>
             </div>
           ) : (

@@ -50,7 +50,7 @@ export function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen w-full flex flex-col justify-between items-center p-4 sm:p-6 bg-slate-50/80 text-slate-900 font-sans selection:bg-indigo-100 selection:text-indigo-900">
+    <div className="min-h-screen w-full flex flex-col justify-between items-center p-4 sm:p-6 bg-slate-50/80 text-slate-900 font-sans selection:bg-blue-100 selection:text-blue-900">
       <div />
 
       {/* Main Material 3 Minimal Container */}
@@ -58,7 +58,7 @@ export function LoginPage() {
         <div className="bg-white rounded-3xl border border-slate-200/80 p-8 sm:p-10 shadow-xs space-y-8">
           {/* Brand header */}
           <div className="text-center space-y-3">
-            <div className="inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-indigo-600 text-white shadow-sm ring-4 ring-indigo-50">
+            <div className="inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-blue-600 text-white shadow-sm ring-4 ring-blue-50">
               <GraduationCap strokeWidth={1.5} className="h-7 w-7" />
             </div>
             <div className="space-y-1">

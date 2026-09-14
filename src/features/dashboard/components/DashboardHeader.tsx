@@ -87,13 +87,13 @@ export function DashboardHeader({
         <div className="space-y-2">
           {/* Metadata badges */}
           <div className="flex items-center gap-2.5 flex-wrap text-xs sm:text-sm">
-            <div className="flex items-center gap-1.5 font-medium text-emerald-800 bg-emerald-50 border border-emerald-200/70 px-2.5 py-1 rounded-md">
-              <Building2 className="w-4 h-4 text-emerald-700" />
+            <div className="flex items-center gap-1.5 font-medium text-blue-800 bg-blue-50 border border-blue-200/70 px-2.5 py-1 rounded-md">
+              <Building2 className="w-4 h-4 text-blue-700" />
               <span>{organizationName}</span>
             </div>
 
             <Badge variant="outline" className="text-xs sm:text-sm text-slate-700 bg-slate-50 border-slate-200/80 py-1 px-2.5 font-medium">
-              <ShieldCheck className="w-4 h-4 mr-1 text-emerald-600" />
+              <ShieldCheck className="w-4 h-4 mr-1 text-blue-600" />
               {roleName}
             </Badge>
 
@@ -103,7 +103,7 @@ export function DashboardHeader({
             </div>
 
             {selectedTerm?.isCurrent && (
-              <Badge variant="default" className="bg-emerald-700 hover:bg-emerald-800 text-white text-xs sm:text-sm py-1 px-2.5 font-medium">
+              <Badge variant="default" className="bg-blue-600 hover:bg-blue-700 text-white text-xs sm:text-sm py-1 px-2.5 font-medium">
                 Active Term: {selectedTerm.name}
               </Badge>
             )}
@@ -207,9 +207,9 @@ export function DashboardHeader({
               <Link to="/finance">
                 <Button
                   size="sm"
-                  className="bg-emerald-700 hover:bg-emerald-600 text-white text-xs sm:text-sm h-8 px-3 border border-emerald-600/40 rounded-lg cursor-pointer font-medium"
+                  className="bg-blue-600 hover:bg-blue-500 text-white text-xs sm:text-sm h-8 px-3 border border-blue-500/40 rounded-lg cursor-pointer font-medium"
                 >
-                  <DollarSign className="w-3.5 h-3.5 mr-1.5 text-emerald-200" />
+                  <DollarSign className="w-3.5 h-3.5 mr-1.5 text-blue-200" />
                   <span>Transaction</span>
                 </Button>
               </Link>

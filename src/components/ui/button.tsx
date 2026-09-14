@@ -4,33 +4,33 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center whitespace-nowrap rounded-full text-sm font-semibold transition-colors duration-150 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-emerald-600/40 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-40 select-none cursor-pointer tracking-wide",
+  "inline-flex items-center justify-center whitespace-nowrap rounded-xl text-sm font-semibold transition-all duration-150 active:scale-[0.98] focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-blue-500/40 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-40 select-none cursor-pointer tracking-wide",
   {
     variants: {
       variant: {
         default:
-          "bg-emerald-700 text-white hover:bg-emerald-800 active:bg-emerald-900 border border-transparent font-semibold",
+          "bg-blue-600 text-white hover:bg-blue-700 active:bg-blue-800 border border-transparent font-semibold shadow-2xs",
         destructive:
-          "bg-rose-600 text-white hover:bg-rose-700 active:bg-rose-800 border border-transparent font-semibold",
+          "bg-rose-600 text-white hover:bg-rose-700 active:bg-rose-800 border border-transparent font-semibold shadow-2xs",
         outline:
-          "border border-slate-300 bg-white text-slate-800 hover:bg-slate-50 hover:border-slate-400 active:bg-slate-100 font-semibold",
+          "border border-slate-300 bg-white text-slate-800 hover:bg-slate-50 hover:border-slate-400 active:bg-slate-100 font-semibold shadow-2xs",
         secondary:
-          "bg-emerald-100 text-emerald-950 hover:bg-emerald-200 active:bg-emerald-300/80 border border-transparent font-semibold",
+          "bg-blue-50 text-blue-900 hover:bg-blue-100 active:bg-blue-200 border border-blue-200/60 font-semibold",
         ghost:
           "text-slate-700 hover:bg-slate-100 active:bg-slate-200 hover:text-slate-950 font-medium",
         link:
-          "text-emerald-700 underline-offset-4 hover:underline p-0 h-auto font-medium",
+          "text-blue-600 underline-offset-4 hover:underline p-0 h-auto font-medium",
         success:
-          "bg-emerald-600 text-white hover:bg-emerald-700 active:bg-emerald-800 border border-transparent font-semibold",
+          "bg-emerald-600 text-white hover:bg-emerald-700 active:bg-emerald-800 border border-transparent font-semibold shadow-2xs",
       },
       size: {
-        default: "h-10 px-5 py-2 text-sm",
-        xs: "h-7.5 px-3 text-xs font-semibold",
-        sm: "h-9 px-4 text-xs font-semibold",
-        lg: "h-12 px-7 text-base font-semibold",
-        icon: "h-10 w-10 p-0 rounded-full shrink-0",
-        "icon-sm": "h-9 w-9 p-0 rounded-full shrink-0",
-        "icon-xs": "h-7.5 w-7.5 p-0 rounded-full shrink-0",
+        default: "h-10 px-4 py-2 text-sm",
+        xs: "h-7.5 px-2.5 text-xs font-semibold rounded-lg",
+        sm: "h-8.5 px-3.5 text-xs font-semibold rounded-lg",
+        lg: "h-11 px-6 text-base font-semibold",
+        icon: "h-9 w-9 p-0 rounded-xl shrink-0",
+        "icon-sm": "h-8 w-8 p-0 rounded-lg shrink-0",
+        "icon-xs": "h-7 w-7 p-0 rounded-lg shrink-0",
       },
     },
     defaultVariants: {

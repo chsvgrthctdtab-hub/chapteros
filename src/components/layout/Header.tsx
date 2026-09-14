@@ -86,7 +86,7 @@ export function Header({ onOpenMobileMenu }: HeaderProps) {
                 className="h-8 py-1 pl-1.5 pr-2.5 -ml-1 text-left bg-white hover:bg-slate-50 border border-slate-200/90 shadow-2xs rounded-full flex items-center gap-2 group transition-all cursor-pointer"
                 title={activeOrganization.name}
               >
-                <div className="h-5.5 w-5.5 rounded-full bg-emerald-100 border border-emerald-300/80 flex items-center justify-center text-emerald-900 font-bold text-[10px] shrink-0 overflow-hidden shadow-2xs">
+                <div className="h-5.5 w-5.5 rounded-full bg-blue-100 border border-blue-300/80 flex items-center justify-center text-blue-900 font-bold text-[10px] shrink-0 overflow-hidden shadow-2xs">
                   {activeOrganization.logoUrl ? (
                     <img
                       src={activeOrganization.logoUrl}
@@ -97,10 +97,10 @@ export function Header({ onOpenMobileMenu }: HeaderProps) {
                     activeOrganization.code ? activeOrganization.code.slice(0, 2).toUpperCase() : (activeOrgTypeShort || 'CH')
                   )}
                 </div>
-                <span className="text-xs font-bold text-slate-800 font-mono tracking-tight group-hover:text-emerald-700 transition-colors">
+                <span className="text-xs font-bold text-slate-800 font-mono tracking-tight group-hover:text-blue-700 transition-colors">
                   {activeOrganization.code || activeOrganization.name}
                 </span>
-                <ChevronDown className="h-3.5 w-3.5 text-slate-400 group-hover:text-emerald-700 transition-colors shrink-0 -ml-0.5" />
+                <ChevronDown className="h-3.5 w-3.5 text-slate-400 group-hover:text-blue-700 transition-colors shrink-0 -ml-0.5" />
               </Button>
             </DropdownMenuTrigger>
 
@@ -117,7 +117,7 @@ export function Header({ onOpenMobileMenu }: HeaderProps) {
                       key={m.id}
                       onClick={() => setActiveOrganizationId(m.organizationId)}
                       className={`flex items-center justify-between py-2.5 text-xs cursor-pointer ${
-                        isSelected ? 'bg-emerald-50 text-emerald-900 font-medium' : ''
+                        isSelected ? 'bg-blue-50 text-blue-900 font-medium' : ''
                       }`}
                     >
                       <div className="flex items-center gap-2.5 min-w-0 flex-1">
@@ -141,7 +141,7 @@ export function Header({ onOpenMobileMenu }: HeaderProps) {
                           </p>
                         </div>
                       </div>
-                      {isSelected && <Check className="h-4 w-4 text-emerald-700 shrink-0 ml-2" />}
+                      {isSelected && <Check className="h-4 w-4 text-blue-600 shrink-0 ml-2" />}
                     </DropdownMenuItem>
                   );
                 })}
@@ -151,7 +151,7 @@ export function Header({ onOpenMobileMenu }: HeaderProps) {
 
               <DropdownMenuItem
                 onClick={() => navigate('/onboarding')}
-                className="text-xs text-emerald-700 cursor-pointer flex items-center gap-2 py-2 font-medium"
+                className="text-xs text-blue-600 cursor-pointer flex items-center gap-2 py-2 font-medium"
               >
                 <PlusCircle className="h-4 w-4" />
                 <span>Tạo hoặc tham gia đơn vị khác</span>
