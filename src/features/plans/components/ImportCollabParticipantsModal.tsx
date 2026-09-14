@@ -331,16 +331,16 @@ export function ImportCollabParticipantsModal({
 
   return (
     <Dialog open={isOpen} onOpenChange={(open) => !open && handleClose()}>
-      <DialogContent className="max-w-4xl w-full bg-white rounded-2xl p-6 shadow-2xl border border-slate-100 max-h-[90vh] flex flex-col">
+      <DialogContent className="max-w-4xl w-full bg-white rounded-2xl p-6 pr-10 shadow-2xl border border-slate-100 max-h-[90vh] flex flex-col">
         <DialogHeader className="pb-3 border-b border-slate-100 shrink-0">
-          <div className="flex items-center justify-between">
-            <DialogTitle className="text-base sm:text-lg font-bold text-slate-900 flex items-center gap-2">
-              <div className="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center">
-                <FileSpreadsheet className="h-5 w-5" />
-              </div>
-              <span>Nhập Danh Sách từ Google Sheet / Excel</span>
-            </DialogTitle>
-            <Badge className="bg-violet-50 text-violet-700 border-violet-200/80 text-xs px-2.5 py-0.5 font-semibold">
+          <DialogTitle className="text-base sm:text-lg font-bold text-slate-900 flex items-center gap-2">
+            <div className="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0">
+              <FileSpreadsheet className="h-5 w-5" />
+            </div>
+            <span>Nhập Danh Sách từ Google Sheet / Excel</span>
+          </DialogTitle>
+          <div className="flex items-center gap-2 mt-1.5">
+            <Badge className="bg-violet-50 text-violet-700 border-violet-200/80 text-[10px] px-2 py-0.5 font-semibold">
               Format: Họ tên • MSSV • Lớp • Khóa
             </Badge>
           </div>

@@ -733,7 +733,7 @@ export function CollabFinanceModule({
 
       {/* Dialog: Create / Edit Transaction */}
       <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-        <DialogContent className="sm:max-w-lg bg-white border border-slate-200 rounded-2xl p-6 shadow-2xl">
+        <DialogContent className="sm:max-w-lg bg-white border border-slate-200 rounded-2xl p-6 pr-10 shadow-2xl">
           <DialogHeader className="space-y-1 text-left">
             <DialogTitle className="text-base font-bold text-slate-900 flex items-center gap-2">
               <DollarSign className="h-4 w-4 text-violet-600" />

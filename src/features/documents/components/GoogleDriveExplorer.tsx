@@ -848,7 +848,7 @@ export function GoogleDriveExplorer({
 
       {/* 4. New Folder Modal */}
       <Dialog open={newFolderModalOpen} onOpenChange={setNewFolderModalOpen}>
-        <DialogContent className="sm:max-w-xl p-6 sm:p-7 rounded-3xl border border-slate-200/80 shadow-xl">
+        <DialogContent className="sm:max-w-xl p-6 pr-10 sm:p-7 sm:pr-12 rounded-3xl border border-slate-200/80 shadow-xl">
           <DialogHeader>
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 rounded-2xl bg-amber-50 text-amber-600 flex items-center justify-center border border-amber-200 shrink-0">

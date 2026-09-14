@@ -328,7 +328,7 @@ export function GoogleSheetsManagerCard() {
 
       {/* Link Spreadsheet Dialog */}
       <Dialog open={linkDialogOpen} onOpenChange={setLinkDialogOpen}>
-        <DialogContent className="sm:max-w-lg rounded-3xl p-5 sm:p-6 border border-slate-200/80 shadow-xl">
+        <DialogContent className="sm:max-w-lg rounded-3xl p-5 pr-10 sm:p-6 sm:pr-12 border border-slate-200/80 shadow-xl">
           <form onSubmit={handleLinkSubmit}>
             <DialogHeader className="pb-1">
               <DialogTitle className="text-lg font-bold text-slate-900 tracking-tight">

@@ -204,7 +204,7 @@ export function AddCollabParticipantDialog({
 
   return (
     <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
-      <DialogContent className="max-w-xl w-full bg-white rounded-2xl p-6 shadow-2xl border border-slate-100 max-h-[90vh] overflow-y-auto">
+      <DialogContent className="max-w-xl w-full bg-white rounded-2xl p-6 pr-10 shadow-2xl border border-slate-100 max-h-[90vh] overflow-y-auto">
         <DialogHeader className="pb-3 border-b border-slate-100">
           <DialogTitle className="text-base font-bold text-slate-900 flex items-center gap-2">
             <div className="w-8 h-8 rounded-lg bg-violet-50 text-violet-600 flex items-center justify-center">

@@ -293,7 +293,7 @@ export function CreateCollabTaskDialog({
 
   return (
     <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
-      <DialogContent className="sm:max-w-xl md:max-w-2xl max-h-[92vh] overflow-y-auto bg-white border border-slate-200/80 shadow-2xl rounded-2xl p-5 sm:p-7 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+      <DialogContent className="sm:max-w-xl md:max-w-2xl max-h-[92vh] overflow-y-auto bg-white border border-slate-200/80 shadow-2xl rounded-2xl p-5 pr-10 sm:p-7 sm:pr-12 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
         {/* Header tối giản */}
         <DialogHeader className="space-y-1 text-left pb-2 border-b border-slate-100">
           <DialogTitle className="text-base sm:text-lg font-bold text-slate-900">

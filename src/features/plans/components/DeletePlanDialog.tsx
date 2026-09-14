@@ -49,7 +49,7 @@ export function DeletePlanDialog({
 
   return (
     <Dialog open={isOpen} onOpenChange={(open) => !deletePlanMutation.isPending && !open && onClose()}>
-      <DialogContent className="sm:max-w-xl md:max-w-2xl p-6 sm:p-8 rounded-3xl border border-slate-200/80 shadow-2xl">
+      <DialogContent className="sm:max-w-xl md:max-w-2xl p-6 pr-10 sm:p-8 sm:pr-12 rounded-3xl border border-slate-200/80 shadow-2xl">
         <DialogHeader className="space-y-3">
           <div className="flex items-center gap-3.5">
             <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-rose-100/80 text-rose-700 border border-rose-200/60">

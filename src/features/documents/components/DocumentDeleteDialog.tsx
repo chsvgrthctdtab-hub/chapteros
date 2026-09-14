@@ -82,7 +82,7 @@ export function DocumentDeleteDialog({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-lg md:max-w-xl p-6 sm:p-7 rounded-3xl border border-slate-200/80 shadow-2xl">
+      <DialogContent className="sm:max-w-lg md:max-w-xl p-6 pr-10 sm:p-7 sm:pr-12 rounded-3xl border border-slate-200/80 shadow-2xl">
         <DialogHeader>
           <div className="flex items-center gap-3.5">
             <div className="w-10 h-10 rounded-2xl flex items-center justify-center border shrink-0 bg-rose-50 text-rose-600 border-rose-100">
