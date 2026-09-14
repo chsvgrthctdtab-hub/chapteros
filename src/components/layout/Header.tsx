@@ -83,9 +83,10 @@ export function Header({ onOpenMobileMenu }: HeaderProps) {
             <DropdownMenuTrigger asChild>
               <Button
                 variant="ghost"
-                className="h-10 py-1.5 px-3 -ml-1 text-left bg-white hover:bg-slate-50 border border-slate-200/90 shadow-2xs rounded-full flex items-center gap-2.5 group transition-all cursor-pointer max-w-[240px] sm:max-w-md"
+                className="h-8 py-1 px-2.5 -ml-1 text-left bg-white hover:bg-slate-50 border border-slate-200/90 shadow-2xs rounded-lg flex items-center gap-2 group transition-all cursor-pointer"
+                title={activeOrganization.name}
               >
-                <div className="h-7 w-7 rounded-full bg-emerald-100 border border-emerald-300/80 flex items-center justify-center text-emerald-900 font-bold text-xs shrink-0 overflow-hidden shadow-2xs">
+                <div className="h-5 w-5 rounded-md bg-emerald-100 border border-emerald-300/80 flex items-center justify-center text-emerald-900 font-bold text-[10px] shrink-0 overflow-hidden shadow-2xs">
                   {activeOrganization.logoUrl ? (
                     <img
                       src={activeOrganization.logoUrl}
@@ -93,20 +94,13 @@ export function Header({ onOpenMobileMenu }: HeaderProps) {
                       className="h-full w-full object-cover"
                     />
                   ) : (
-                    activeOrgTypeShort || activeOrganization.code.slice(0, 2)
+                    activeOrganization.code ? activeOrganization.code.slice(0, 2).toUpperCase() : (activeOrgTypeShort || 'CH')
                   )}
                 </div>
-                <div className="flex flex-col text-left min-w-0">
-                  <div className="flex items-center gap-1.5 leading-tight">
-                    <span className="text-xs sm:text-sm font-semibold text-slate-900 group-hover:text-emerald-700 transition-colors truncate max-w-[140px] sm:max-w-[260px]">
-                      {activeOrganization.name}
-                    </span>
-                    <ChevronDown className="h-3.5 w-3.5 text-slate-400 group-hover:text-emerald-700 transition-colors shrink-0" />
-                  </div>
-                  <span className="text-[11px] text-slate-500 font-medium font-mono truncate">
-                    {activeOrganization.code}
-                  </span>
-                </div>
+                <span className="text-xs font-bold text-slate-800 font-mono tracking-tight group-hover:text-emerald-700 transition-colors">
+                  {activeOrganization.code || activeOrganization.name}
+                </span>
+                <ChevronDown className="h-3.5 w-3.5 text-slate-400 group-hover:text-emerald-700 transition-colors shrink-0" />
               </Button>
             </DropdownMenuTrigger>
 
