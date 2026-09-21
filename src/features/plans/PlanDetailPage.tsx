@@ -867,13 +867,13 @@ export function PlanDetailPage() {
                 </div>
               </div>
               <div className="mt-2 flex items-baseline gap-2">
-                <span className="text-2xl font-black text-slate-900 font-mono">
+                <span className="text-2xl font-black text-slate-900 tabular-nums">
                   {campaignMetrics.totalActivities}
                 </span>
                 <span className="text-xs font-medium text-slate-500">hoạt động</span>
               </div>
               <div className="mt-2 flex items-center gap-1.5 text-xs">
-                <span className="inline-flex items-center gap-1 text-emerald-600 font-semibold bg-emerald-50 px-2 py-0.5 rounded-md text-[11px]">
+                <span className="inline-flex items-center gap-1 text-emerald-600 font-semibold bg-emerald-50 px-2 py-0.5 rounded-md text-[11px] tabular-nums">
                   <CheckCircle2 className="h-3 w-3" />
                   {campaignMetrics.readyActivitiesCount}/{campaignMetrics.totalActivities} sẵn sàng
                 </span>
@@ -889,25 +889,25 @@ export function PlanDetailPage() {
                 </div>
               </div>
               <div className="mt-2 flex items-baseline gap-2">
-                <span className="text-2xl font-black text-slate-900 font-mono">
+                <span className="text-2xl font-black text-slate-900 tabular-nums">
                   {campaignMetrics.totalTasksCount}
                 </span>
                 <span className="text-xs font-medium text-slate-500">nhiệm vụ</span>
               </div>
               <div className="mt-2 flex items-center gap-2 text-[11px] flex-wrap font-medium">
-                <span className="text-emerald-700 bg-emerald-50 px-1.5 py-0.5 rounded">
+                <span className="text-emerald-700 bg-emerald-50 px-1.5 py-0.5 rounded tabular-nums">
                   {campaignMetrics.doneTasksCount} xong
                 </span>
-                <span className="text-blue-700 bg-blue-50 px-1.5 py-0.5 rounded">
+                <span className="text-blue-700 bg-blue-50 px-1.5 py-0.5 rounded tabular-nums">
                   {campaignMetrics.inProgressTasksCount} đang làm
                 </span>
                 {campaignMetrics.overdueTasksCount > 0 ? (
-                  <span className="text-rose-700 bg-rose-50 px-1.5 py-0.5 rounded font-bold flex items-center gap-0.5">
+                  <span className="text-rose-700 bg-rose-50 px-1.5 py-0.5 rounded font-bold flex items-center gap-0.5 tabular-nums">
                     <AlertTriangle className="h-3 w-3" />
                     {campaignMetrics.overdueTasksCount} quá hạn
                   </span>
                 ) : (
-                  <span className="text-slate-600 bg-slate-100 px-1.5 py-0.5 rounded">
+                  <span className="text-slate-600 bg-slate-100 px-1.5 py-0.5 rounded tabular-nums">
                     {campaignMetrics.todoTasksCount} cần làm
                   </span>
                 )}
@@ -924,12 +924,12 @@ export function PlanDetailPage() {
               </div>
               <div className="mt-2 flex items-baseline justify-between">
                 <div className="flex items-baseline gap-1">
-                  <span className="text-2xl font-black text-slate-900 font-mono">
+                  <span className="text-2xl font-black text-slate-900 tabular-nums">
                     {campaignMetrics.readinessPercent}%
                   </span>
                   <span className="text-xs text-slate-500 font-medium">hoàn thành</span>
                 </div>
-                <span className="text-xs font-bold text-slate-700 font-mono">
+                <span className="text-xs font-bold text-slate-700 tabular-nums">
                   {campaignMetrics.doneTasksCount}/{campaignMetrics.totalTasksCount} việc
                 </span>
               </div>
@@ -1593,7 +1593,7 @@ export function PlanDetailPage() {
                   <Users className="h-4 w-4" />
                 </div>
               </div>
-              <div className="mt-2 text-2xl font-bold tracking-tight text-slate-900 font-mono">
+              <div className="mt-2 text-2xl font-bold tracking-tight text-slate-900 tabular-nums">
                 {campaignParticipantStats.total}
               </div>
               <div className="text-[11px] text-slate-400 mt-0.5">Toàn bộ chiến dịch</div>
@@ -1606,7 +1606,7 @@ export function PlanDetailPage() {
                   <UserCheck className="h-4 w-4" />
                 </div>
               </div>
-              <div className="mt-2 text-2xl font-bold tracking-tight text-emerald-700 font-mono">
+              <div className="mt-2 text-2xl font-bold tracking-tight text-emerald-700 tabular-nums">
                 {campaignParticipantStats.present}
               </div>
               <div className="text-[11px] text-emerald-600/80 mt-0.5">Đã điểm danh có mặt</div>
@@ -1619,7 +1619,7 @@ export function PlanDetailPage() {
                   <UserX className="h-4 w-4" />
                 </div>
               </div>
-              <div className="mt-2 text-2xl font-bold tracking-tight text-rose-700 font-mono">
+              <div className="mt-2 text-2xl font-bold tracking-tight text-rose-700 tabular-nums">
                 {campaignParticipantStats.absent}
               </div>
               <div className="text-[11px] text-rose-600/80 mt-0.5">Vắng mặt</div>
@@ -1632,11 +1632,11 @@ export function PlanDetailPage() {
                   <Percent className="h-4 w-4" />
                 </div>
               </div>
-              <div className="mt-2 text-2xl font-bold tracking-tight text-blue-700 font-mono">
+              <div className="mt-2 text-2xl font-bold tracking-tight text-blue-700 tabular-nums">
                 {campaignParticipantStats.participationRate}%
               </div>
               <div className="text-[11px] text-blue-600/80 mt-0.5">
-                {campaignParticipantStats.unmarked} chưa điểm danh
+                <span className="tabular-nums font-semibold">{campaignParticipantStats.unmarked}</span> chưa điểm danh
               </div>
             </Card>
           </div>

@@ -40,12 +40,12 @@ export function KpiCardsSection({ stats }: KpiCardsSectionProps) {
               </div>
 
               <div className="mt-2.5">
-                <div className="text-2xl sm:text-[28px] font-bold font-mono text-slate-900 tracking-tight leading-tight">
+                <div className="text-2xl sm:text-[28px] font-bold text-slate-900 tracking-tight leading-tight tabular-nums">
                   {members.active}
-                  <span className="text-xs font-normal text-slate-400 ml-1.5 font-sans">active</span>
+                  <span className="text-xs font-normal text-slate-400 ml-1.5">active</span>
                 </div>
                 <div className="text-xs text-slate-500 mt-1">
-                  Total records: <span className="font-semibold text-slate-700">{members.total}</span>
+                  Total records: <span className="font-semibold text-slate-700 tabular-nums">{members.total}</span>
                 </div>
               </div>
             </div>
@@ -73,18 +73,18 @@ export function KpiCardsSection({ stats }: KpiCardsSectionProps) {
               </div>
 
               <div className="mt-2.5">
-                <div className="text-2xl sm:text-[28px] font-bold font-mono text-slate-900 tracking-tight leading-tight">
+                <div className="text-2xl sm:text-[28px] font-bold text-slate-900 tracking-tight leading-tight tabular-nums">
                   {activities.total}
-                  <span className="text-xs font-normal text-slate-400 ml-1.5 font-sans">total</span>
+                  <span className="text-xs font-normal text-slate-400 ml-1.5">total</span>
                 </div>
                 <div className="flex items-center gap-1 text-xs text-slate-500 mt-1">
                   {activities.upcoming > 0 ? (
-                    <span className="inline-flex items-center text-blue-700 font-semibold bg-blue-50 px-2 py-0.5 rounded-md text-[11px]">
+                    <span className="inline-flex items-center text-blue-700 font-semibold bg-blue-50 px-2 py-0.5 rounded-md text-[11px] tabular-nums">
                       <Sparkles className="w-3 h-3 mr-1 text-blue-600" />
                       {activities.upcoming} upcoming
                     </span>
                   ) : (
-                    <span>{activities.completed} completed</span>
+                    <span><span className="tabular-nums font-semibold">{activities.completed}</span> completed</span>
                   )}
                 </div>
               </div>
@@ -113,13 +113,13 @@ export function KpiCardsSection({ stats }: KpiCardsSectionProps) {
               </div>
 
               <div className="mt-2.5">
-                <div className="text-2xl sm:text-[28px] font-bold font-mono text-slate-900 tracking-tight leading-tight">
+                <div className="text-2xl sm:text-[28px] font-bold text-slate-900 tracking-tight leading-tight tabular-nums">
                   {tasks.active}
-                  <span className="text-xs font-normal text-slate-400 ml-1.5 font-sans">in progress</span>
+                  <span className="text-xs font-normal text-slate-400 ml-1.5">in progress</span>
                 </div>
                 <div className="flex items-center gap-1.5 text-xs text-slate-500 mt-1">
                   <span>Rate:</span>
-                  <span className="font-semibold text-amber-700">{tasks.completionRate}%</span>
+                  <span className="font-semibold text-amber-700 tabular-nums">{tasks.completionRate}%</span>
                 </div>
               </div>
             </div>
@@ -153,11 +153,11 @@ export function KpiCardsSection({ stats }: KpiCardsSectionProps) {
               </div>
 
               <div className="mt-2.5">
-                <div className={`text-2xl sm:text-[28px] font-bold font-mono tracking-tight leading-tight ${
+                <div className={`text-2xl sm:text-[28px] font-bold tracking-tight leading-tight tabular-nums ${
                   tasks.overdue > 0 ? 'text-rose-700' : 'text-slate-900'
                 }`}>
                   {tasks.overdue}
-                  <span className="text-xs font-normal text-slate-400 ml-1.5 font-sans">overdue</span>
+                  <span className="text-xs font-normal text-slate-400 ml-1.5">overdue</span>
                 </div>
                 <div className="text-xs text-slate-500 mt-1">
                   {tasks.overdue > 0 ? (
@@ -196,13 +196,13 @@ export function KpiCardsSection({ stats }: KpiCardsSectionProps) {
               </div>
 
               <div className="mt-2.5">
-                <div className={`text-lg sm:text-xl font-bold font-mono tracking-tight truncate leading-tight ${
+                <div className={`text-lg sm:text-xl font-bold tracking-tight truncate leading-tight tabular-nums ${
                   finance.balance >= 0 ? 'text-slate-900' : 'text-rose-700'
                 }`}>
                   {formatVND(finance.balance)}
                 </div>
                 <div className="text-xs text-slate-500 mt-1 flex items-center gap-1.5 flex-wrap">
-                  <span className="text-emerald-700 font-semibold truncate">In: {formatVND(finance.totalIncome)}</span>
+                  <span className="text-emerald-700 font-semibold truncate tabular-nums">In: {formatVND(finance.totalIncome)}</span>
                 </div>
               </div>
             </div>
@@ -230,12 +230,12 @@ export function KpiCardsSection({ stats }: KpiCardsSectionProps) {
               </div>
 
               <div className="mt-2.5">
-                <div className="text-2xl sm:text-[28px] font-bold font-mono text-slate-900 tracking-tight leading-tight">
+                <div className="text-2xl sm:text-[28px] font-bold text-slate-900 tracking-tight leading-tight tabular-nums">
                   {participation.overallRate}%
                 </div>
                 <div className="text-xs text-slate-500 mt-1 flex items-center gap-1">
                   <TrendingUp className="w-3.5 h-3.5 text-emerald-600" />
-                  <span className="truncate">Avg: {participation.averagePerActivity} members</span>
+                  <span className="truncate">Avg: <span className="tabular-nums font-semibold">{participation.averagePerActivity}</span> members</span>
                 </div>
               </div>
             </div>

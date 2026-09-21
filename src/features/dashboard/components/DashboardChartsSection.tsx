@@ -96,7 +96,7 @@ export function DashboardChartsSection({ chartData, isLoading = false }: Dashboa
                                   <span className="w-2 h-2 rounded-full" style={{ backgroundColor: entry.color }} />
                                   {entry.name === 'income' ? 'Tổng thu' : 'Tổng chi'}:
                                 </span>
-                                <span className="font-bold font-mono text-slate-900">
+                                <span className="font-bold text-slate-900 tabular-nums">
                                   {formatVND(entry.value)}
                                 </span>
                               </div>
@@ -173,7 +173,7 @@ export function DashboardChartsSection({ chartData, isLoading = false }: Dashboa
                           return (
                             <div className="rounded-xl border border-slate-200 bg-white p-2.5 shadow-md text-xs">
                               <span className="font-semibold text-slate-800">{data.name}: </span>
-                              <span className="font-bold font-mono text-slate-900">{data.count} ({percentage}%)</span>
+                              <span className="font-bold text-slate-900 tabular-nums">{data.count} ({percentage}%)</span>
                             </div>
                           );
                         }
@@ -192,9 +192,9 @@ export function DashboardChartsSection({ chartData, isLoading = false }: Dashboa
                       <span className="w-2.5 h-2.5 rounded-full shrink-0" style={{ backgroundColor: item.color }} />
                       <span className="text-slate-600 font-medium">{item.name}</span>
                     </div>
-                    <span className="font-bold font-mono text-slate-900">
+                    <span className="font-bold text-slate-900 tabular-nums">
                       {item.count}{' '}
-                      <span className="text-[11px] font-normal text-slate-400">
+                      <span className="text-[11px] font-normal text-slate-400 tabular-nums">
                         ({totalTasks > 0 ? Math.round((item.count / totalTasks) * 100) : 0}%)
                       </span>
                     </span>

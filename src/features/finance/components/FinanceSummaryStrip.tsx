@@ -87,7 +87,7 @@ export function FinanceSummaryStrip({
 
         <div className="mt-2 space-y-0.5">
           <div
-            className={`font-mono text-base sm:text-lg font-bold tracking-tight ${
+            className={`text-base sm:text-lg font-bold tracking-tight tabular-nums ${
               isBalanceNegative ? 'text-rose-700' : 'text-slate-900'
             }`}
           >
@@ -124,7 +124,7 @@ export function FinanceSummaryStrip({
         </div>
 
         <div className="mt-2 space-y-0.5">
-          <div className="font-mono text-base sm:text-lg font-bold text-emerald-800 tracking-tight">
+          <div className="text-base sm:text-lg font-bold text-emerald-800 tracking-tight tabular-nums">
             +{formatVND(totalIncome)}
           </div>
           <div className="text-[11px] text-slate-500">
@@ -151,7 +151,7 @@ export function FinanceSummaryStrip({
         </div>
 
         <div className="mt-2 space-y-0.5">
-          <div className="font-mono text-base sm:text-lg font-bold text-rose-800 tracking-tight">
+          <div className="text-base sm:text-lg font-bold text-rose-800 tracking-tight tabular-nums">
             −{formatVND(totalExpense)}
           </div>
           <div className="text-[11px] text-slate-500">
@@ -179,11 +179,11 @@ export function FinanceSummaryStrip({
 
         <div className="mt-2 space-y-0.5">
           <div className="flex items-baseline gap-1.5">
-            <span className="font-mono text-base sm:text-lg font-bold text-amber-950">
+            <span className="text-base sm:text-lg font-bold text-amber-950 tabular-nums">
               {pendingApprovalCount}
             </span>
             {pendingApprovalCount > 0 && (
-              <span className="text-[10px] text-amber-800 font-medium">
+              <span className="text-[10px] text-amber-800 font-medium tabular-nums">
                 ({formatVND(pendingApprovalAmount)})
               </span>
             )}

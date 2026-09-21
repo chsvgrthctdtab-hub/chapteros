@@ -45,14 +45,14 @@ export function FinanceSummaryCard({ finance }: FinanceSummaryCardProps) {
         <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200/80 flex items-center justify-between">
           <div>
             <div className="text-[11px] text-slate-500 font-semibold uppercase tracking-wider">Current Balance</div>
-            <div className={`text-lg sm:text-xl font-bold font-mono tracking-tight mt-0.5 ${isPositive ? 'text-emerald-700' : 'text-rose-700'}`}>
+            <div className={`text-lg sm:text-xl font-bold tracking-tight mt-0.5 tabular-nums ${isPositive ? 'text-emerald-700' : 'text-rose-700'}`}>
               {formatVND(balance)}
             </div>
           </div>
 
           <div className="text-right">
             <div className="text-[11px] text-slate-500 font-semibold uppercase tracking-wider">This Month</div>
-            <div className={`font-mono font-bold text-xs sm:text-sm mt-0.5 ${thisMonthBalance >= 0 ? 'text-emerald-700' : 'text-rose-600'}`}>
+            <div className={`font-bold text-xs sm:text-sm mt-0.5 tabular-nums ${thisMonthBalance >= 0 ? 'text-emerald-700' : 'text-rose-600'}`}>
               {thisMonthBalance >= 0 ? '+' : ''}{formatVND(thisMonthBalance)}
             </div>
           </div>
@@ -65,10 +65,10 @@ export function FinanceSummaryCard({ finance }: FinanceSummaryCardProps) {
               <span className="font-semibold">Total In</span>
               <TrendingUp className="w-3.5 h-3.5 text-emerald-600" />
             </div>
-            <div className="text-sm sm:text-base font-bold font-mono text-emerald-950">
+            <div className="text-sm sm:text-base font-bold text-emerald-950 tabular-nums">
               {formatVND(totalIncome)}
             </div>
-            <div className="text-[11px] text-emerald-700 font-mono mt-0.5">
+            <div className="text-[11px] text-emerald-700 mt-0.5 tabular-nums">
               +{formatVND(thisMonthIncome)} this month
             </div>
           </div>
@@ -78,10 +78,10 @@ export function FinanceSummaryCard({ finance }: FinanceSummaryCardProps) {
               <span className="font-semibold">Total Out</span>
               <TrendingDown className="w-3.5 h-3.5 text-rose-600" />
             </div>
-            <div className="text-sm sm:text-base font-bold font-mono text-rose-950">
+            <div className="text-sm sm:text-base font-bold text-rose-950 tabular-nums">
               {formatVND(totalExpense)}
             </div>
-            <div className="text-[11px] text-rose-700 font-mono mt-0.5">
+            <div className="text-[11px] text-rose-700 mt-0.5 tabular-nums">
               -{formatVND(thisMonthExpense)} this month
             </div>
           </div>

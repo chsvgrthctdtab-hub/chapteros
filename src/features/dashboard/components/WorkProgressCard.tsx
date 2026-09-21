@@ -31,7 +31,7 @@ export function WorkProgressCard({ tasks }: WorkProgressCardProps) {
 
           {hasData ? (
             <div className="text-right">
-              <span className="text-lg sm:text-xl font-bold font-mono text-emerald-700">{completionRate}%</span>
+              <span className="text-lg sm:text-xl font-bold text-emerald-700 tabular-nums">{completionRate}%</span>
               <span className="text-[11px] text-slate-400 block -mt-0.5">completed</span>
             </div>
           ) : (
@@ -56,9 +56,9 @@ export function WorkProgressCard({ tasks }: WorkProgressCardProps) {
           />
           <div className="flex items-center justify-between text-xs text-slate-500">
             <span>
-              Đã xong: <strong className="text-slate-800 font-mono">{completed}</strong> / {total} công việc
+              Đã xong: <strong className="text-slate-800 tabular-nums">{completed}</strong> / <span className="tabular-nums">{total}</span> công việc
             </span>
-            <span>Đang làm: <strong className="text-slate-800 font-mono">{active}</strong></span>
+            <span>Đang làm: <strong className="text-slate-800 tabular-nums">{active}</strong></span>
           </div>
         </div>
 
@@ -68,7 +68,7 @@ export function WorkProgressCard({ tasks }: WorkProgressCardProps) {
             <Clock className="w-3.5 h-3.5 text-slate-500 shrink-0" />
             <div className="truncate">
               <div className="text-[11px] text-slate-500 font-medium">Đang làm</div>
-              <div className="font-bold font-mono text-slate-800 text-xs sm:text-sm">{active}</div>
+              <div className="font-bold text-slate-800 text-xs sm:text-sm tabular-nums">{active}</div>
             </div>
           </div>
 
@@ -76,7 +76,7 @@ export function WorkProgressCard({ tasks }: WorkProgressCardProps) {
             <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
             <div className="truncate">
               <div className="text-[11px] text-emerald-800 font-medium">Hoàn thành</div>
-              <div className="font-bold font-mono text-emerald-900 text-xs sm:text-sm">{completed}</div>
+              <div className="font-bold text-emerald-900 text-xs sm:text-sm tabular-nums">{completed}</div>
             </div>
           </div>
 
@@ -84,7 +84,7 @@ export function WorkProgressCard({ tasks }: WorkProgressCardProps) {
             <AlertCircle className="w-3.5 h-3.5 text-rose-600 shrink-0" />
             <div className="truncate">
               <div className="text-[11px] text-rose-800 font-medium">Quá hạn</div>
-              <div className="font-bold font-mono text-rose-900 text-xs sm:text-sm">{overdue}</div>
+              <div className="font-bold text-rose-900 text-xs sm:text-sm tabular-nums">{overdue}</div>
             </div>
           </div>
 
@@ -92,7 +92,7 @@ export function WorkProgressCard({ tasks }: WorkProgressCardProps) {
             <AlertCircle className="w-3.5 h-3.5 text-amber-600 shrink-0" />
             <div className="truncate">
               <div className="text-[11px] text-amber-800 font-medium">Ưu tiên cao</div>
-              <div className="font-bold font-mono text-amber-900 text-xs sm:text-sm">{highOrUrgent}</div>
+              <div className="font-bold text-amber-900 text-xs sm:text-sm tabular-nums">{highOrUrgent}</div>
             </div>
           </div>
         </div>

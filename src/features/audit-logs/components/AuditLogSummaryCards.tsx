@@ -109,7 +109,7 @@ export function AuditLogSummaryCards({
               <span>Tổng sự kiện ghi nhận</span>
             </p>
             <div className="flex items-baseline gap-2">
-              <span className="text-2xl font-bold tracking-tight text-slate-900 font-mono">
+              <span className="text-2xl font-bold tracking-tight text-slate-900 tabular-nums">
                 {new Intl.NumberFormat('vi-VN').format(totalCount)}
               </span>
               <span className="text-[11px] font-medium text-emerald-600">bất biến</span>
@@ -129,7 +129,7 @@ export function AuditLogSummaryCards({
               <span>Người thao tác (Trang hiện tại)</span>
             </p>
             <div className="flex items-baseline gap-2">
-              <span className="text-2xl font-bold tracking-tight text-slate-900 font-mono">
+              <span className="text-2xl font-bold tracking-tight text-slate-900 tabular-nums">
                 {stats.uniqueActorsCount}
               </span>
               <span className="text-[11px] text-slate-500 font-medium">cán bộ/hệ thống</span>
@@ -149,7 +149,7 @@ export function AuditLogSummaryCards({
               <span>Tác vụ trọng yếu / Rủi ro</span>
             </p>
             <div className="flex items-baseline gap-2">
-              <span className="text-2xl font-bold tracking-tight text-slate-900 font-mono">
+              <span className="text-2xl font-bold tracking-tight text-slate-900 tabular-nums">
                 {stats.highImpactCount}
               </span>
               <span className="text-[11px] text-amber-600 font-medium">xóa / duyệt / quyền</span>
