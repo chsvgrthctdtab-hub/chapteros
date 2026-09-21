@@ -87,7 +87,7 @@ import type { CollabTask, CollabTaskStatus, TaskPriority, PlanStatus } from '@/t
 
 const PLAN_STATUS_CONFIG: Record<string, { label: string; colorClasses: string }> = {
   draft: { label: 'Bản nháp', colorClasses: 'bg-slate-100 text-slate-700 border-slate-200' },
-  planning: { label: 'Đang lập kế hoạch', colorClasses: 'bg-violet-50 text-violet-700 border-violet-200' },
+  planning: { label: 'Đang lập kế hoạch', colorClasses: 'bg-amber-50 text-amber-700 border-amber-200' },
   active: { label: 'Đang thực hiện', colorClasses: 'bg-emerald-50 text-emerald-700 border-emerald-200' },
   completed: { label: 'Đã hoàn thành', colorClasses: 'bg-blue-50 text-blue-700 border-blue-200' },
   cancelled: { label: 'Đã hủy', colorClasses: 'bg-rose-50 text-rose-700 border-rose-200' },
@@ -592,7 +592,7 @@ export function PlanDetailPage() {
           <span>Danh sách Chiến dịch</span>
         </Button>
 
-        <Badge className="bg-violet-50 text-violet-700 border border-violet-200/80 text-xs px-2.5 py-1 font-semibold rounded-full">
+        <Badge className="bg-blue-50 text-blue-700 border border-blue-200/80 text-xs px-2.5 py-1 font-semibold rounded-full">
           Chiến Dịch Liên Đơn Vị (Collab)
         </Badge>
       </div>
@@ -601,7 +601,7 @@ export function PlanDetailPage() {
       <Card className="bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-2xs">
         {/* Pending Invitation Alert for current user's organization */}
         {myOrgPendingInvitation && (
-          <div className="bg-gradient-to-r from-violet-600 via-indigo-600 to-violet-700 px-6 py-4 text-white flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-inner">
+          <div className="bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-700 px-6 py-4 text-white flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-inner">
             <div className="flex items-center gap-3">
               <div className="h-9 w-9 rounded-xl bg-white/20 flex items-center justify-center shrink-0">
                 <Sparkles strokeWidth={1.5} className="h-5 w-5 text-white" />
@@ -610,7 +610,7 @@ export function PlanDetailPage() {
                 <div className="font-bold text-sm">
                   Đơn vị của bạn được mời tham gia Chiến dịch này!
                 </div>
-                <div className="text-xs text-violet-100">
+                <div className="text-xs text-blue-100">
                   Vai trò đề xuất: <span className="font-semibold underline">{myOrgPendingInvitation.roleDescription || 'Đơn vị đồng tổ chức'}</span>
                 </div>
               </div>
@@ -628,7 +628,7 @@ export function PlanDetailPage() {
                 size="sm"
                 onClick={handleAcceptInvitation}
                 disabled={acceptInvitationMutation.isPending}
-                className="text-xs bg-white text-violet-900 hover:bg-violet-50 font-bold shadow-sm rounded-lg active:scale-[0.98]"
+                className="text-xs bg-white text-blue-900 hover:bg-blue-50 font-bold shadow-sm rounded-lg active:scale-[0.98]"
               >
                 {acceptInvitationMutation.isPending ? (
                   <Loader2 className="h-3.5 w-3.5 animate-spin mr-1.5" />
@@ -645,7 +645,7 @@ export function PlanDetailPage() {
           <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4">
             <div className="space-y-1.5">
               <div className="flex items-center gap-2.5 flex-wrap">
-                <span className="px-2.5 py-1 rounded-md text-xs font-bold tracking-tight bg-violet-50 text-violet-800 border border-violet-200/80">
+                <span className="px-2.5 py-1 rounded-md text-xs font-bold tracking-tight bg-blue-50 text-blue-800 border border-blue-200/80">
                   {plan.code}
                 </span>
                 <span className={`px-3 py-1 rounded-full text-xs font-semibold border ${statusConfig.colorClasses}`}>
@@ -674,7 +674,7 @@ export function PlanDetailPage() {
                     onClick={() => setIsInviteCohostOpen(true)}
                     className="text-xs h-8 gap-1.5 rounded-lg border-slate-200/90 hover:bg-slate-50 font-medium cursor-pointer shadow-2xs"
                   >
-                    <UserPlus className="h-3.5 w-3.5 text-violet-600" />
+                    <UserPlus className="h-3.5 w-3.5 text-blue-600" />
                     <span>Mời đơn vị</span>
                   </Button>
 
@@ -702,7 +702,7 @@ export function PlanDetailPage() {
                 <Button
                   id="btn-create-collab-activity"
                   onClick={() => setIsCreateActivityOpen(true)}
-                  className="text-xs h-8 bg-violet-600 hover:bg-violet-700 text-white gap-1.5 shadow-xs rounded-lg font-semibold cursor-pointer"
+                  className="text-xs h-8 bg-blue-600 hover:bg-blue-700 text-white gap-1.5 shadow-xs rounded-lg font-semibold cursor-pointer"
                 >
                   <Plus className="h-3.5 w-3.5" />
                   Tạo hoạt động Collab
@@ -715,7 +715,7 @@ export function PlanDetailPage() {
           <div className="flex items-center gap-2 flex-wrap pt-4 border-t border-slate-100 text-xs">
             {/* Đơn vị chủ trì */}
             <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-50/80 border border-slate-200/70 text-slate-700">
-              <Building2 className="w-3.5 h-3.5 text-violet-600 shrink-0" />
+              <Building2 className="w-3.5 h-3.5 text-blue-600 shrink-0" />
               <span className="text-slate-400 font-medium">Chủ trì:</span>
               <span className={`text-[10px] px-1.5 py-0.2 rounded font-semibold border ${getOrgTypeBadgeClass(plan.leadOrganization?.type)}`}>
                 {getOrgTypeLabel(plan.leadOrganization?.type)}
@@ -765,13 +765,13 @@ export function PlanDetailPage() {
           className={cn(
             'flex items-center gap-2 py-3 px-3.5 text-xs font-semibold border-b-2 transition-all whitespace-nowrap cursor-pointer -mb-px',
             activeTab === 'activities'
-              ? 'border-violet-600 text-violet-700 font-bold'
+              ? 'border-blue-600 text-blue-700 font-bold'
               : 'border-transparent text-slate-500 hover:text-slate-900 hover:border-slate-300'
           )}
         >
           <CalendarCheck className="h-4 w-4 shrink-0" />
           <span>Hoạt động trực thuộc</span>
-          <span className={cn('text-[10px] px-1.5 py-0.2 rounded-full tabular-nums font-semibold', activeTab === 'activities' ? 'bg-violet-100 text-violet-800' : 'bg-slate-100 text-slate-600')}>
+          <span className={cn('text-[10px] px-1.5 py-0.2 rounded-full tabular-nums font-semibold', activeTab === 'activities' ? 'bg-blue-100 text-blue-800' : 'bg-slate-100 text-slate-600')}>
             {collabActivities.length}
           </span>
         </button>
@@ -783,13 +783,13 @@ export function PlanDetailPage() {
           className={cn(
             'flex items-center gap-2 py-3 px-3.5 text-xs font-semibold border-b-2 transition-all whitespace-nowrap cursor-pointer -mb-px',
             activeTab === 'participants'
-              ? 'border-violet-600 text-violet-700 font-bold'
+              ? 'border-blue-600 text-blue-700 font-bold'
               : 'border-transparent text-slate-500 hover:text-slate-900 hover:border-slate-300'
           )}
         >
           <Users className="h-4 w-4 shrink-0" />
           <span>Người tham gia</span>
-          <span className={cn('text-[10px] px-1.5 py-0.2 rounded-full tabular-nums font-semibold', activeTab === 'participants' ? 'bg-violet-100 text-violet-800' : 'bg-slate-100 text-slate-600')}>
+          <span className={cn('text-[10px] px-1.5 py-0.2 rounded-full tabular-nums font-semibold', activeTab === 'participants' ? 'bg-blue-100 text-blue-800' : 'bg-slate-100 text-slate-600')}>
             {campaignParticipantStats.total}
           </span>
         </button>
@@ -801,13 +801,13 @@ export function PlanDetailPage() {
           className={cn(
             'flex items-center gap-2 py-3 px-3.5 text-xs font-semibold border-b-2 transition-all whitespace-nowrap cursor-pointer -mb-px',
             activeTab === 'tasks'
-              ? 'border-violet-600 text-violet-700 font-bold'
+              ? 'border-blue-600 text-blue-700 font-bold'
               : 'border-transparent text-slate-500 hover:text-slate-900 hover:border-slate-300'
           )}
         >
           <CheckSquare className="h-4 w-4 shrink-0" />
           <span>Tất cả nhiệm vụ</span>
-          <span className={cn('text-[10px] px-1.5 py-0.2 rounded-full tabular-nums font-semibold', activeTab === 'tasks' ? 'bg-violet-100 text-violet-800' : 'bg-slate-100 text-slate-600')}>
+          <span className={cn('text-[10px] px-1.5 py-0.2 rounded-full tabular-nums font-semibold', activeTab === 'tasks' ? 'bg-blue-100 text-blue-800' : 'bg-slate-100 text-slate-600')}>
             {collabTasks.length}
           </span>
         </button>
@@ -819,14 +819,14 @@ export function PlanDetailPage() {
           className={cn(
             'flex items-center gap-2 py-3 px-3.5 text-xs font-semibold border-b-2 transition-all whitespace-nowrap cursor-pointer -mb-px',
             activeTab === 'finance'
-              ? 'border-violet-600 text-violet-700 font-bold'
+              ? 'border-blue-600 text-blue-700 font-bold'
               : 'border-transparent text-slate-500 hover:text-slate-900 hover:border-slate-300'
           )}
         >
           <DollarSign className="h-4 w-4 shrink-0" />
           <span>Tài chính & Gây quỹ</span>
           {transactions.length > 0 && (
-            <span className={cn('text-[10px] px-1.5 py-0.2 rounded-full tabular-nums font-semibold', activeTab === 'finance' ? 'bg-violet-100 text-violet-800' : 'bg-slate-100 text-slate-600')}>
+            <span className={cn('text-[10px] px-1.5 py-0.2 rounded-full tabular-nums font-semibold', activeTab === 'finance' ? 'bg-blue-100 text-blue-800' : 'bg-slate-100 text-slate-600')}>
               {transactions.length}
             </span>
           )}
@@ -839,14 +839,14 @@ export function PlanDetailPage() {
           className={cn(
             'flex items-center gap-2 py-3 px-3.5 text-xs font-semibold border-b-2 transition-all whitespace-nowrap cursor-pointer -mb-px',
             activeTab === 'personnel'
-              ? 'border-violet-600 text-violet-700 font-bold'
+              ? 'border-blue-600 text-blue-700 font-bold'
               : 'border-transparent text-slate-500 hover:text-slate-900 hover:border-slate-300'
           )}
         >
           <Building2 className="h-4 w-4 shrink-0" />
           <span>Ban Tổ Chức</span>
           {personnel.length > 0 && (
-            <span className={cn('text-[10px] px-1.5 py-0.2 rounded-full tabular-nums font-semibold', activeTab === 'personnel' ? 'bg-violet-100 text-violet-800' : 'bg-slate-100 text-slate-600')}>
+            <span className={cn('text-[10px] px-1.5 py-0.2 rounded-full tabular-nums font-semibold', activeTab === 'personnel' ? 'bg-blue-100 text-blue-800' : 'bg-slate-100 text-slate-600')}>
               {personnel.length}
             </span>
           )}
@@ -862,7 +862,7 @@ export function PlanDetailPage() {
             <Card className="bg-white border border-slate-200/80 rounded-2xl p-4 shadow-2xs">
               <div className="flex items-center justify-between">
                 <span className="text-xs font-semibold text-slate-500">Hoạt động Collab</span>
-                <div className="h-8 w-8 rounded-xl bg-violet-50 text-violet-600 flex items-center justify-center">
+                <div className="h-8 w-8 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center">
                   <CalendarCheck className="h-4 w-4" />
                 </div>
               </div>
@@ -939,7 +939,7 @@ export function PlanDetailPage() {
                     campaignMetrics.readinessPercent === 100
                       ? 'bg-emerald-600'
                       : campaignMetrics.readinessPercent > 50
-                      ? 'bg-violet-600'
+                      ? 'bg-blue-600'
                       : 'bg-blue-600'
                   }`}
                   style={{ width: `${campaignMetrics.readinessPercent}%` }}
@@ -954,7 +954,7 @@ export function PlanDetailPage() {
               <div className="flex items-center justify-between">
                 <div>
                   <h2 className="text-base font-bold text-slate-900 flex items-center gap-2">
-                    <CalendarCheck className="h-5 w-5 text-violet-600" />
+                    <CalendarCheck className="h-5 w-5 text-blue-600" />
                     Danh Sách Hoạt Động Phối Hợp ({collabActivities.length})
                   </h2>
                   <p className="text-xs text-slate-500 mt-0.5">
@@ -971,7 +971,7 @@ export function PlanDetailPage() {
                 </div>
               ) : collabActivities.length === 0 ? (
                 <Card className="bg-white border border-slate-200/80 rounded-2xl p-8 text-center shadow-2xs">
-                  <div className="h-12 w-12 bg-violet-50 border border-violet-100 rounded-xl flex items-center justify-center mx-auto mb-3 text-violet-600">
+                  <div className="h-12 w-12 bg-blue-50 border border-blue-100 rounded-xl flex items-center justify-center mx-auto mb-3 text-blue-600">
                     <CalendarCheck className="h-6 w-6" />
                   </div>
                   <h3 className="text-sm font-bold text-slate-800">Chưa có hoạt động collab nào</h3>
@@ -982,7 +982,7 @@ export function PlanDetailPage() {
                     <Button
                       onClick={() => setIsCreateActivityOpen(true)}
                       size="sm"
-                      className="text-xs bg-violet-600 hover:bg-violet-700 text-white gap-1.5 shadow-2xs font-semibold rounded-lg active:scale-[0.98]"
+                      className="text-xs bg-blue-600 hover:bg-blue-700 text-white gap-1.5 shadow-2xs font-semibold rounded-lg active:scale-[0.98]"
                     >
                       <Plus className="h-3.5 w-3.5" />
                       Tạo hoạt động Collab
@@ -1005,7 +1005,7 @@ export function PlanDetailPage() {
                         key={act.id}
                         id={`collab-act-card-${act.id}`}
                         onClick={() => navigate(`/plans/${planId}/collab-activities/${act.id}`)}
-                        className="group bg-white hover:bg-violet-50/30 border border-slate-200 hover:border-violet-300 rounded-2xl p-5 transition-all duration-200 shadow-2xs hover:shadow-sm cursor-pointer flex flex-col md:flex-row md:items-center justify-between gap-4 min-w-0"
+                        className="group bg-white hover:bg-blue-50/30 border border-slate-200 hover:border-blue-300 rounded-2xl p-5 transition-all duration-200 shadow-2xs hover:shadow-sm cursor-pointer flex flex-col md:flex-row md:items-center justify-between gap-4 min-w-0"
                       >
                         {/* Left: Activity Details */}
                         <div className="space-y-2 min-w-0 flex-1">
@@ -1013,7 +1013,7 @@ export function PlanDetailPage() {
                             <span className="text-[10px] font-bold tabular-nums bg-slate-100 text-slate-800 px-2 py-0.5 rounded border border-slate-200 shrink-0">
                               {act.code}
                             </span>
-                            <Badge className="bg-violet-50 text-violet-700 border border-violet-200/70 text-[10px] shrink-0 font-medium">
+                            <Badge className="bg-blue-50 text-blue-700 border border-blue-200/70 text-[10px] shrink-0 font-medium">
                               {act.category === 'volunteer'
                                 ? 'Tình nguyện'
                                 : act.category === 'academic'
@@ -1029,14 +1029,14 @@ export function PlanDetailPage() {
                                 : 'Sự kiện'}
                             </Badge>
                             {act.leadOrganization && (
-                              <span className="text-[11px] text-violet-700 font-semibold flex items-center gap-1 min-w-0 truncate" title={act.leadOrganization.name}>
-                                <Building2 className="h-3 w-3 text-violet-500 shrink-0" />
+                              <span className="text-[11px] text-blue-700 font-semibold flex items-center gap-1 min-w-0 truncate" title={act.leadOrganization.name}>
+                                <Building2 className="h-3 w-3 text-blue-500 shrink-0" />
                                 <span className="truncate">{act.leadOrganization.name}</span>
                               </span>
                             )}
                           </div>
 
-                          <h3 className="text-sm sm:text-base font-bold text-slate-900 group-hover:text-violet-700 transition-colors break-words break-all min-w-0">
+                          <h3 className="text-sm sm:text-base font-bold text-slate-900 group-hover:text-blue-700 transition-colors break-words break-all min-w-0">
                             {act.title}
                           </h3>
 
@@ -1063,7 +1063,7 @@ export function PlanDetailPage() {
                                 {totalTasks > 0 ? `${completedTasks}/${totalTasks} việc` : '0 việc'}
                               </span>
                               {totalTasks > 0 && (
-                                <span className={`text-[10px] font-bold ${isAllDone ? 'text-emerald-600' : 'text-violet-600'}`}>
+                                <span className={`text-[10px] font-bold ${isAllDone ? 'text-emerald-600' : 'text-blue-600'}`}>
                                   ({percent}%)
                                 </span>
                               )}
@@ -1078,7 +1078,7 @@ export function PlanDetailPage() {
                               ) : totalTasks > 0 ? (
                                 <div className="w-24 bg-slate-100 rounded-full h-1.5 overflow-hidden">
                                   <div
-                                    className="bg-violet-600 h-full rounded-full transition-all duration-300"
+                                    className="bg-blue-600 h-full rounded-full transition-all duration-300"
                                     style={{ width: `${percent}%` }}
                                   />
                                 </div>
@@ -1089,7 +1089,7 @@ export function PlanDetailPage() {
                           </div>
 
                           {/* Navigation Indicator Arrow */}
-                          <div className="w-8 h-8 rounded-full bg-slate-50 group-hover:bg-violet-100 text-slate-400 group-hover:text-violet-700 flex items-center justify-center transition-colors">
+                          <div className="w-8 h-8 rounded-full bg-slate-50 group-hover:bg-blue-100 text-slate-400 group-hover:text-blue-700 flex items-center justify-center transition-colors">
                             <ChevronRight className="h-4 w-4 group-hover:translate-x-0.5 transition-transform" />
                           </div>
                         </div>
@@ -1105,7 +1105,7 @@ export function PlanDetailPage() {
             <div className="flex items-center justify-between">
               <div>
                 <h2 className="text-base font-bold text-slate-900 flex items-center gap-2">
-                  <Building2 strokeWidth={1.5} className="h-5 w-5 text-violet-600" />
+                  <Building2 strokeWidth={1.5} className="h-5 w-5 text-blue-600" />
                   Đơn Vị Tham Gia ({cohosts.length})
                 </h2>
                 <p className="text-[11px] text-slate-500">Chỉ những đơn vị được mời mới có quyền phân công</p>
@@ -1117,7 +1117,7 @@ export function PlanDetailPage() {
                   variant="ghost"
                   size="sm"
                   onClick={() => setIsInviteCohostOpen(true)}
-                  className="text-xs text-violet-600 hover:text-violet-700 gap-1.5 hover:bg-violet-50 rounded-lg active:scale-[0.98]"
+                  className="text-xs text-blue-600 hover:text-blue-700 gap-1.5 hover:bg-blue-50 rounded-lg active:scale-[0.98]"
                 >
                   <UserPlus className="h-3.5 w-3.5" />
                   Mời đơn vị
@@ -1155,7 +1155,7 @@ export function PlanDetailPage() {
                     key={cohost.id}
                     className={`bg-white border rounded-2xl p-3.5 transition-all shadow-2xs ${
                       cohost.isHost
-                        ? 'border-violet-200 bg-violet-50/20'
+                        ? 'border-blue-200 bg-blue-50/20'
                         : isPending
                         ? 'border-amber-200 bg-amber-50/20'
                         : 'border-slate-200'
@@ -1166,7 +1166,7 @@ export function PlanDetailPage() {
                         <div
                           className={`h-9 w-9 rounded-xl flex items-center justify-center font-bold text-xs shrink-0 ${
                             cohost.isHost
-                              ? 'bg-violet-600 text-white'
+                              ? 'bg-blue-600 text-white'
                               : isPending
                               ? 'bg-amber-100 text-amber-800'
                               : 'bg-slate-100 text-slate-700'
@@ -1185,7 +1185,7 @@ export function PlanDetailPage() {
                             </span>
                             <span className={`px-1.5 py-0.2 rounded text-[10px] font-semibold shrink-0 ${
                               cohost.isHost
-                                ? 'bg-violet-100 text-violet-800'
+                                ? 'bg-blue-100 text-blue-800'
                                 : 'bg-indigo-50 text-indigo-700 border border-indigo-100'
                             }`}>
                               {roleLabel}
@@ -1276,7 +1276,7 @@ export function PlanDetailPage() {
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 pb-3 border-b border-slate-100">
             <div>
               <h2 className="text-sm font-bold text-slate-900 flex items-center gap-2">
-                <CheckSquare className="h-4 w-4 text-violet-600" />
+                <CheckSquare className="h-4 w-4 text-blue-600" />
                 Tất Cả Nhiệm Vụ ({filteredTasks.length})
               </h2>
               <p className="text-xs text-slate-500 mt-0.5">
@@ -1332,7 +1332,7 @@ export function PlanDetailPage() {
                     setEditingTask(null);
                     setIsTaskDialogOpen(true);
                   }}
-                  className="h-8 text-xs bg-violet-600 hover:bg-violet-700 text-white shadow-2xs font-semibold rounded-lg active:scale-[0.98] transition-all cursor-pointer"
+                  className="h-8 text-xs bg-blue-600 hover:bg-blue-700 text-white shadow-2xs font-semibold rounded-lg active:scale-[0.98] transition-all cursor-pointer"
                 >
                   <Plus className="h-3.5 w-3.5 mr-1" />
                   Giao việc mới
@@ -1344,7 +1344,7 @@ export function PlanDetailPage() {
           {/* Task Table */}
           {isTasksLoading ? (
             <div className="p-8 text-center text-xs text-slate-400 flex items-center justify-center gap-2">
-              <Loader2 className="h-4 w-4 animate-spin text-violet-600" />
+              <Loader2 className="h-4 w-4 animate-spin text-blue-600" />
               <span>Đang tải danh sách công việc...</span>
             </div>
           ) : filteredTasks.length === 0 ? (
@@ -1359,7 +1359,7 @@ export function PlanDetailPage() {
                     setEditingTask(null);
                     setIsTaskDialogOpen(true);
                   }}
-                  className="mt-3 text-xs bg-violet-600 hover:bg-violet-700 text-white shadow-2xs font-semibold rounded-lg active:scale-[0.98]"
+                  className="mt-3 text-xs bg-blue-600 hover:bg-blue-700 text-white shadow-2xs font-semibold rounded-lg active:scale-[0.98]"
                 >
                   <Plus className="h-3.5 w-3.5 mr-1" />
                   Giao việc ngay
@@ -1393,7 +1393,7 @@ export function PlanDetailPage() {
                         <td className="px-4 py-3 font-semibold text-slate-900 min-w-[180px] max-w-[280px]">
                           <div className="flex items-center gap-1.5 flex-wrap mb-0.5">
                             {task.category && (
-                              <span className="text-[9px] px-1.5 py-0.2 rounded font-semibold bg-violet-50 text-violet-700 border border-violet-200/70">
+                              <span className="text-[9px] px-1.5 py-0.2 rounded font-semibold bg-blue-50 text-blue-700 border border-blue-200/70">
                                 {task.category}
                               </span>
                             )}
@@ -1431,12 +1431,12 @@ export function PlanDetailPage() {
                           )}
                         </td>
 
-                        <td className="px-4 py-3 whitespace-nowrap text-violet-700 font-medium">
+                        <td className="px-4 py-3 whitespace-nowrap text-blue-700 font-medium">
                           {act ? (
                             <button
                               type="button"
                               onClick={() => navigate(`/plans/${planId}/collab-activities/${act.id}`)}
-                              className="text-violet-700 hover:text-violet-900 font-medium hover:underline text-left inline-flex items-center gap-1 max-w-[160px] truncate"
+                              className="text-blue-700 hover:text-blue-900 font-medium hover:underline text-left inline-flex items-center gap-1 max-w-[160px] truncate"
                               title={`Xem hoạt động: ${act.title}`}
                             >
                               <span className="truncate">{act.title}</span>
@@ -1461,7 +1461,7 @@ export function PlanDetailPage() {
                             </div>
                           ) : assigneePerson ? (
                             <div className="flex items-center gap-1.5 min-w-0">
-                              <div className="w-5 h-5 rounded-full bg-violet-100 text-violet-700 font-bold text-[9px] flex items-center justify-center shrink-0">
+                              <div className="w-5 h-5 rounded-full bg-blue-100 text-blue-700 font-bold text-[9px] flex items-center justify-center shrink-0">
                                 {assigneePerson.fullName.slice(0, 1)}
                               </div>
                               <div className="min-w-0">
@@ -1482,7 +1482,7 @@ export function PlanDetailPage() {
                         <td className="px-4 py-3 min-w-[140px] max-w-[200px]">
                           {task.deliverable ? (
                             <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-slate-50 border border-slate-200/80 text-slate-800 font-medium text-xs max-w-full shadow-2xs">
-                              <Package className="w-3.5 h-3.5 text-violet-600 shrink-0" />
+                              <Package className="w-3.5 h-3.5 text-blue-600 shrink-0" />
                               <span className="truncate block" title={task.deliverable}>{task.deliverable}</span>
                             </div>
                           ) : (
@@ -1556,7 +1556,7 @@ export function PlanDetailPage() {
                                   setEditingTask(task);
                                   setIsTaskDialogOpen(true);
                                 }}
-                                className="h-7 w-7 p-0 text-slate-400 hover:text-violet-600"
+                                className="h-7 w-7 p-0 text-slate-400 hover:text-blue-600"
                               >
                                 <Edit className="h-3.5 w-3.5" />
                               </Button>
@@ -1589,7 +1589,7 @@ export function PlanDetailPage() {
             <Card className="p-3.5 bg-white border border-slate-200/80 shadow-2xs rounded-xl flex flex-col justify-between">
               <div className="flex items-center justify-between text-slate-500 text-xs font-semibold">
                 <span>Tổng người tham gia</span>
-                <div className="w-7 h-7 rounded-lg bg-violet-50 text-violet-600 flex items-center justify-center">
+                <div className="w-7 h-7 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center">
                   <Users className="h-4 w-4" />
                 </div>
               </div>
@@ -1646,7 +1646,7 @@ export function PlanDetailPage() {
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 pb-3 border-b border-slate-100">
               <div>
                 <h2 className="text-sm font-bold text-slate-900 flex items-center gap-2">
-                  <ShieldCheck className="h-4 w-4 text-violet-600" />
+                  <ShieldCheck className="h-4 w-4 text-blue-600" />
                   Danh Sách Lực Lượng Toàn Chiến Dịch ({filteredCampaignParticipants.length})
                 </h2>
                 <p className="text-[11px] text-slate-500 mt-0.5">
@@ -1705,7 +1705,7 @@ export function PlanDetailPage() {
                     </SelectTrigger>
                     <SelectContent className="bg-white border-slate-200">
                       <SelectItem value="all" className="text-xs">Tất cả hoạt động</SelectItem>
-                      <SelectItem value="campaign_wide" className="text-xs font-semibold text-violet-700">
+                      <SelectItem value="campaign_wide" className="text-xs font-semibold text-blue-700">
                         Toàn chiến dịch
                       </SelectItem>
                       {collabActivities.map((act) => (
@@ -1719,8 +1719,8 @@ export function PlanDetailPage() {
 
                 {/* Batch Action Toolbar */}
                 {selectedParticipantIds.length > 0 && canManageOperational && (
-                  <div className="flex items-center gap-1.5 bg-violet-50 px-2.5 py-1 rounded-xl border border-violet-200/80 text-violet-900 shadow-2xs">
-                    <span className="text-[11px] font-bold text-violet-900">
+                  <div className="flex items-center gap-1.5 bg-blue-50 px-2.5 py-1 rounded-xl border border-blue-200/80 text-blue-900 shadow-2xs">
+                    <span className="text-[11px] font-bold text-blue-900">
                       Đã chọn {selectedParticipantIds.length}:
                     </span>
                     <Button
@@ -1769,7 +1769,7 @@ export function PlanDetailPage() {
                   <Button
                     size="sm"
                     onClick={() => setIsAddParticipantOpen(true)}
-                    className="h-8 text-xs bg-violet-600 hover:bg-violet-700 text-white shadow-2xs font-semibold gap-1.5 active:scale-[0.98] cursor-pointer"
+                    className="h-8 text-xs bg-blue-600 hover:bg-blue-700 text-white shadow-2xs font-semibold gap-1.5 active:scale-[0.98] cursor-pointer"
                   >
                     <Plus className="h-3.5 w-3.5" />
                     <span>Thêm người</span>
@@ -1781,7 +1781,7 @@ export function PlanDetailPage() {
             {/* Attendance Table */}
             {isParticipantsLoading ? (
               <div className="p-8 text-center text-xs text-slate-400 flex items-center justify-center gap-2">
-                <Loader2 className="h-4 w-4 animate-spin text-violet-600" />
+                <Loader2 className="h-4 w-4 animate-spin text-blue-600" />
                 <span>Đang tải danh sách người tham gia...</span>
               </div>
             ) : filteredCampaignParticipants.length === 0 ? (
@@ -1804,7 +1804,7 @@ export function PlanDetailPage() {
                     <Button
                       size="sm"
                       onClick={() => setIsAddParticipantOpen(true)}
-                      className="h-8 text-xs bg-violet-600 hover:bg-violet-700 text-white gap-1.5 active:scale-[0.98] font-semibold shadow-2xs"
+                      className="h-8 text-xs bg-blue-600 hover:bg-blue-700 text-white gap-1.5 active:scale-[0.98] font-semibold shadow-2xs"
                     >
                       <Plus className="h-3.5 w-3.5" />
                       Thêm người đầu tiên
@@ -1827,7 +1827,7 @@ export function PlanDetailPage() {
                               selectedParticipantIds.length === filteredCampaignParticipants.length
                             }
                             onChange={handleSelectAllParticipants}
-                            className="rounded border-slate-300 text-violet-600 focus:ring-violet-500 cursor-pointer"
+                            className="rounded border-slate-300 text-blue-600 focus:ring-blue-500 cursor-pointer"
                           />
                         </th>
                         <th className="px-4 py-3 min-w-[180px]">Họ và tên</th>
@@ -1850,21 +1850,21 @@ export function PlanDetailPage() {
                         const memOrg = participatingOrganizations.find((o) => o.id === p.organizationId || o.id === p.member?.organizationId);
 
                         return (
-                          <tr key={p.id} className={cn('hover:bg-slate-50/60 transition-colors', isSelected && 'bg-violet-50/40')}>
+                          <tr key={p.id} className={cn('hover:bg-slate-50/60 transition-colors', isSelected && 'bg-blue-50/40')}>
                             {/* Checkbox */}
                             <td className="w-10 px-3 py-3 text-center">
                               <input
                                 type="checkbox"
                                 checked={isSelected}
                                 onChange={() => handleToggleSelectParticipant(p.id)}
-                                className="rounded border-slate-300 text-violet-600 focus:ring-violet-500 cursor-pointer"
+                                className="rounded border-slate-300 text-blue-600 focus:ring-blue-500 cursor-pointer"
                               />
                             </td>
 
                             {/* Họ và tên */}
                             <td className="px-4 py-3 font-semibold text-slate-900 min-w-[180px]">
                               <div className="flex items-center gap-2">
-                                <div className="w-6 h-6 rounded-full bg-violet-100 text-violet-700 font-bold text-[10px] flex items-center justify-center shrink-0">
+                                <div className="w-6 h-6 rounded-full bg-blue-100 text-blue-700 font-bold text-[10px] flex items-center justify-center shrink-0">
                                   {(p.fullName || p.member?.fullName || 'N').slice(0, 1)}
                                 </div>
                                 <div className="min-w-0">
@@ -1905,8 +1905,8 @@ export function PlanDetailPage() {
                                   <span className="truncate">{p.externalOrganization}</span>
                                 </span>
                               ) : (
-                                <span className="inline-flex items-center gap-1 text-[10px] bg-violet-50 text-violet-800 border border-violet-200/80 px-2 py-0.5 rounded-full font-semibold truncate max-w-[120px]">
-                                  <span className="w-1.5 h-1.5 rounded-full bg-violet-600 shrink-0" />
+                                <span className="inline-flex items-center gap-1 text-[10px] bg-blue-50 text-blue-800 border border-blue-200/80 px-2 py-0.5 rounded-full font-semibold truncate max-w-[120px]">
+                                  <span className="w-1.5 h-1.5 rounded-full bg-blue-600 shrink-0" />
                                   <span>{memOrg?.code || p.organization?.code || 'Đơn vị'}</span>
                                 </span>
                               )}
@@ -1922,7 +1922,7 @@ export function PlanDetailPage() {
                             {/* Hoạt động phân bổ */}
                             <td className="w-36 px-3 py-3 text-slate-600 text-[11px]">
                               {p.collabActivity?.title ? (
-                                <span className="truncate block max-w-[130px] font-medium text-violet-700" title={p.collabActivity.title}>
+                                <span className="truncate block max-w-[130px] font-medium text-blue-700" title={p.collabActivity.title}>
                                   {p.collabActivity.title}
                                 </span>
                               ) : (
@@ -1998,7 +1998,7 @@ export function PlanDetailPage() {
                         key={p.id}
                         className={cn(
                           'p-3.5 rounded-xl border border-slate-200/80 bg-slate-50/40 space-y-2.5 transition-colors',
-                          isSelected && 'bg-violet-50/50 border-violet-200'
+                          isSelected && 'bg-blue-50/50 border-blue-200'
                         )}
                       >
                         <div className="flex items-start justify-between gap-2">
@@ -2007,9 +2007,9 @@ export function PlanDetailPage() {
                               type="checkbox"
                               checked={isSelected}
                               onChange={() => handleToggleSelectParticipant(p.id)}
-                              className="rounded border-slate-300 text-violet-600 focus:ring-violet-500 cursor-pointer h-4 w-4 shrink-0"
+                              className="rounded border-slate-300 text-blue-600 focus:ring-blue-500 cursor-pointer h-4 w-4 shrink-0"
                             />
-                            <div className="w-8 h-8 rounded-full bg-violet-100 text-violet-700 font-bold text-xs flex items-center justify-center shrink-0">
+                            <div className="w-8 h-8 rounded-full bg-blue-100 text-blue-700 font-bold text-xs flex items-center justify-center shrink-0">
                               {(p.fullName || p.member?.fullName || 'N').slice(0, 1)}
                             </div>
                             <div className="min-w-0">
@@ -2044,8 +2044,8 @@ export function PlanDetailPage() {
                               <span className="truncate">{p.externalOrganization}</span>
                             </span>
                           ) : (
-                            <span className="inline-flex items-center gap-1 text-[10px] bg-violet-50 text-violet-800 border border-violet-200/80 px-2 py-0.5 rounded-full font-semibold">
-                              <span className="w-1.5 h-1.5 rounded-full bg-violet-600 shrink-0" />
+                            <span className="inline-flex items-center gap-1 text-[10px] bg-blue-50 text-blue-800 border border-blue-200/80 px-2 py-0.5 rounded-full font-semibold">
+                              <span className="w-1.5 h-1.5 rounded-full bg-blue-600 shrink-0" />
                               <span>{memOrg?.code || p.organization?.code || 'Đơn vị'}</span>
                             </span>
                           )}
@@ -2055,7 +2055,7 @@ export function PlanDetailPage() {
                           </span>
 
                           {p.collabActivity?.title && (
-                            <span className="inline-block text-[10px] bg-violet-50 text-violet-700 border border-violet-200/60 px-2 py-0.5 rounded-md font-medium truncate max-w-[200px]">
+                            <span className="inline-block text-[10px] bg-blue-50 text-blue-700 border border-blue-200/60 px-2 py-0.5 rounded-md font-medium truncate max-w-[200px]">
                               {p.collabActivity.title}
                             </span>
                           )}
@@ -2118,7 +2118,7 @@ export function PlanDetailPage() {
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 pb-3 border-b border-slate-100">
             <div>
               <h2 className="text-sm font-bold text-slate-900 flex items-center gap-2">
-                <Building2 className="h-4 w-4 text-violet-600" />
+                <Building2 className="h-4 w-4 text-blue-600" />
                 Ban Tổ Chức ({filteredPersonnel.length})
               </h2>
               <p className="text-xs text-slate-500 mt-0.5">
@@ -2158,7 +2158,7 @@ export function PlanDetailPage() {
                   id="btn-btc-invite-cohost"
                   size="sm"
                   onClick={() => setIsInviteCohostOpen(true)}
-                  className="h-8 text-xs bg-violet-600 hover:bg-violet-700 text-white font-semibold gap-1.5 shadow-2xs active:scale-[0.98] cursor-pointer"
+                  className="h-8 text-xs bg-blue-600 hover:bg-blue-700 text-white font-semibold gap-1.5 shadow-2xs active:scale-[0.98] cursor-pointer"
                 >
                   <UserPlus className="h-3.5 w-3.5" />
                   <span>Mời đơn vị</span>
@@ -2169,7 +2169,7 @@ export function PlanDetailPage() {
 
           {isPersonnelLoading ? (
             <div className="p-8 text-center text-xs text-slate-400 flex items-center justify-center gap-2">
-              <Loader2 className="h-4 w-4 animate-spin text-violet-600" />
+              <Loader2 className="h-4 w-4 animate-spin text-blue-600" />
               <span>Đang tải danh sách Ban tổ chức...</span>
             </div>
           ) : filteredPersonnel.length === 0 ? (
@@ -2186,11 +2186,11 @@ export function PlanDetailPage() {
                 return (
                   <div
                     key={`${person.userId}-${person.organizationId}`}
-                    className="p-4 bg-slate-50/60 border border-slate-200/80 rounded-2xl flex flex-col justify-between gap-3 hover:border-violet-200 hover:shadow-2xs transition-all text-xs"
+                    className="p-4 bg-slate-50/60 border border-slate-200/80 rounded-2xl flex flex-col justify-between gap-3 hover:border-blue-200 hover:shadow-2xs transition-all text-xs"
                   >
                     <div className="flex items-start justify-between gap-2.5">
                       <div className="flex items-center gap-3 min-w-0">
-                        <div className="w-10 h-10 rounded-xl bg-violet-100 text-violet-700 font-bold flex items-center justify-center text-sm shrink-0">
+                        <div className="w-10 h-10 rounded-xl bg-blue-100 text-blue-700 font-bold flex items-center justify-center text-sm shrink-0">
                           {person.fullName.slice(0, 1).toUpperCase()}
                         </div>
                         <div className="min-w-0">
@@ -2203,7 +2203,7 @@ export function PlanDetailPage() {
                         </div>
                       </div>
 
-                      <Badge className="bg-violet-50 text-violet-700 border border-violet-200/80 font-semibold text-[10px] px-2 py-0.5 shrink-0 rounded-full">
+                      <Badge className="bg-blue-50 text-blue-700 border border-blue-200/80 font-semibold text-[10px] px-2 py-0.5 shrink-0 rounded-full">
                         {assignedCount} việc
                       </Badge>
                     </div>

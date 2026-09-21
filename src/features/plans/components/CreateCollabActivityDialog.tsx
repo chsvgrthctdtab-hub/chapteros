@@ -163,7 +163,7 @@ export function CreateCollabActivityDialog({
     <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
       <DialogContent className="sm:max-w-2xl md:max-w-3xl max-h-[92vh] overflow-y-auto bg-white border border-slate-200/80 shadow-2xl rounded-3xl p-6 pr-10 sm:p-8 sm:pr-12 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
         <DialogHeader className="space-y-1 text-left pb-1">
-          <div className="flex items-center gap-2 text-violet-600 font-semibold text-xs mb-0.5">
+          <div className="flex items-center gap-2 text-blue-600 font-semibold text-xs mb-0.5">
             <Sparkles className="h-4 w-4" />
             <span>Chiến dịch: {plan?.name}</span>
           </div>
@@ -276,9 +276,9 @@ export function CreateCollabActivityDialog({
           </div>
 
           {/* Đơn vị phụ trách chính */}
-          <div className="p-3 bg-violet-50/40 rounded-xl border border-violet-100 space-y-1.5">
-            <label htmlFor="collab-act-org" className="block text-xs font-semibold text-violet-900 flex items-center gap-1.5">
-              <Building2 className="h-3.5 w-3.5 text-violet-600" />
+          <div className="p-3 bg-blue-50/40 rounded-xl border border-blue-100 space-y-1.5">
+            <label htmlFor="collab-act-org" className="block text-xs font-semibold text-blue-900 flex items-center gap-1.5">
+              <Building2 className="h-3.5 w-3.5 text-blue-600" />
               Đơn vị phụ trách chính (Lead Unit) <span className="text-rose-500">*</span>
             </label>
             <Controller
@@ -289,7 +289,7 @@ export function CreateCollabActivityDialog({
                   value={field.value || ''}
                   onValueChange={field.onChange}
                 >
-                  <SelectTrigger id="collab-act-org" className="h-9 text-xs bg-white border-violet-200">
+                  <SelectTrigger id="collab-act-org" className="h-9 text-xs bg-white border-blue-200">
                     <SelectValue placeholder="Chọn đơn vị phụ trách" />
                   </SelectTrigger>
                   <SelectContent className="bg-white border-slate-200 max-h-60">
@@ -306,7 +306,7 @@ export function CreateCollabActivityDialog({
                               <span className="font-medium text-slate-900 truncate">{org.name}</span>
                             </div>
                             <span className={`text-[10px] px-1.5 py-0.5 rounded font-semibold shrink-0 ${
-                              org.isHost ? 'bg-violet-100 text-violet-700' : 'bg-slate-100 text-slate-600'
+                              org.isHost ? 'bg-blue-100 text-blue-700' : 'bg-slate-100 text-slate-600'
                             }`}>
                               {org.roleTag}
                             </span>
@@ -422,7 +422,7 @@ export function CreateCollabActivityDialog({
               type="submit"
               size="sm"
               disabled={createMutation.isPending}
-              className="text-xs h-8 px-3.5 bg-violet-600 hover:bg-violet-700 text-white font-semibold shadow-2xs active:scale-[0.98]"
+              className="text-xs h-8 px-3.5 bg-blue-600 hover:bg-blue-700 text-white font-semibold shadow-2xs active:scale-[0.98]"
             >
               {createMutation.isPending ? (
                 <>

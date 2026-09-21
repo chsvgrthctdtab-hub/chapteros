@@ -108,7 +108,7 @@ export function CreateCollabTaskDialog({
         isLead: true,
       });
     }
-    const colorPalette = ['blue', 'emerald', 'violet', 'amber', 'indigo'];
+    const colorPalette = ['blue', 'emerald', 'sky', 'amber', 'indigo'];
     let idx = 0;
     (plan?.organizations || []).forEach((po) => {
       if (po.organization && po.organizationId !== plan?.leadOrganizationId && po.status === 'active') {
@@ -329,7 +329,7 @@ export function CreateCollabTaskDialog({
           {!collabActivityId && activities.length > 0 && (
             <div className="space-y-1">
               <label htmlFor="collab-task-act" className="block text-xs font-semibold text-slate-700 flex items-center gap-1">
-                <Sparkles className="h-3 w-3 text-violet-600" />
+                <Sparkles className="h-3 w-3 text-blue-600" />
                 Hoạt động phối hợp <span className="text-rose-500">*</span>
               </label>
               <Controller
@@ -365,7 +365,7 @@ export function CreateCollabTaskDialog({
               id="collab-task-title"
               {...register('title')}
               placeholder="VD: Poster chương trình, Đặt đồ ăn TNV, Kịch bản MC..."
-              className="h-10 text-sm font-medium bg-slate-50/50 focus:bg-white border-slate-200 focus:border-violet-400"
+              className="h-10 text-sm font-medium bg-slate-50/50 focus:bg-white border-slate-200 focus:border-blue-400"
             />
             {errors.title && (
               <p className="text-[11px] text-rose-500">{errors.title.message}</p>
@@ -400,14 +400,14 @@ export function CreateCollabTaskDialog({
                           ? 'bg-blue-600 text-white border-blue-600 ring-2 ring-blue-200'
                           : org.color === 'emerald'
                           ? 'bg-emerald-600 text-white border-emerald-600 ring-2 ring-emerald-200'
-                          : 'bg-violet-600 text-white border-violet-600 ring-2 ring-violet-200'
+                          : 'bg-blue-600 text-white border-blue-600 ring-2 ring-blue-200'
                         : org.color === 'rose'
                         ? 'bg-rose-50 text-rose-700 border-rose-200 hover:bg-rose-100'
                         : org.color === 'blue'
                         ? 'bg-blue-50 text-blue-700 border-blue-200 hover:bg-blue-100'
                         : org.color === 'emerald'
                         ? 'bg-emerald-50 text-emerald-700 border-emerald-200 hover:bg-emerald-100'
-                        : 'bg-violet-50 text-violet-700 border-violet-200 hover:bg-violet-100'
+                        : 'bg-blue-50 text-blue-700 border-blue-200 hover:bg-blue-100'
                     )}
                   >
                     <span className="w-2 h-2 rounded-full bg-current opacity-80" />
@@ -672,7 +672,7 @@ export function CreateCollabTaskDialog({
               type="submit"
               size="sm"
               disabled={createMutation.isPending || updateMutation.isPending || hasNoActivities}
-              className="text-xs h-8 px-3.5 bg-violet-600 hover:bg-violet-700 text-white font-semibold shadow-2xs active:scale-[0.98] disabled:opacity-50"
+              className="text-xs h-8 px-3.5 bg-blue-600 hover:bg-blue-700 text-white font-semibold shadow-2xs active:scale-[0.98] disabled:opacity-50"
             >
               {createMutation.isPending || updateMutation.isPending ? (
                 <>

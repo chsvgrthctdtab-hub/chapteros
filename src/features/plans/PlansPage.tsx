@@ -290,7 +290,7 @@ export function PlansPage() {
 
                     <div className="flex items-center justify-between text-slate-600">
                       <span className="flex items-center gap-1.5 font-medium text-slate-500 text-[11px]">
-                        <Users2 className="h-3.5 w-3.5 text-violet-600" />
+                        <Users2 className="h-3.5 w-3.5 text-blue-600" />
                         Đồng tổ chức:
                       </span>
                       <span className="font-semibold text-slate-800">

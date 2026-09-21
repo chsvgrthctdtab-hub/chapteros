@@ -454,7 +454,7 @@ export function CollabFinanceModule({
         <div className="bg-slate-50/70 border border-slate-200 rounded-2xl p-4">
           <div className="flex items-center justify-between mb-3">
             <div className="flex items-center gap-2 text-xs font-bold text-slate-800">
-              <PieChart className="h-4 w-4 text-violet-600" />
+              <PieChart className="h-4 w-4 text-blue-600" />
               <span>Phân bổ Thu / Chi theo Đơn vị tham gia</span>
             </div>
             <span className="text-[11px] text-slate-500">
@@ -475,7 +475,7 @@ export function CollabFinanceModule({
                 >
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2 min-w-0">
-                      <div className="w-6 h-6 rounded-md bg-violet-100 text-violet-700 font-bold flex items-center justify-center text-[10px] shrink-0">
+                      <div className="w-6 h-6 rounded-md bg-blue-100 text-blue-700 font-bold flex items-center justify-center text-[10px] shrink-0">
                         {org.code.slice(0, 2)}
                       </div>
                       <span className="font-semibold text-slate-900 truncate">
@@ -483,7 +483,7 @@ export function CollabFinanceModule({
                       </span>
                     </div>
                     {isLead && (
-                      <Badge className="bg-violet-50 text-violet-700 border border-violet-200/80 text-[10px] px-1.5 py-0.5 shrink-0 font-semibold">
+                      <Badge className="bg-blue-50 text-blue-700 border border-blue-200/80 text-[10px] px-1.5 py-0.5 shrink-0 font-semibold">
                         Chủ trì
                       </Badge>
                     )}
@@ -525,7 +525,7 @@ export function CollabFinanceModule({
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-2 border-b border-slate-100">
           <div>
             <h3 className="text-sm font-bold text-slate-900 flex items-center gap-2">
-              <DollarSign className="h-4 w-4 text-violet-600" />
+              <DollarSign className="h-4 w-4 text-blue-600" />
               Sổ Nhật Ký Thu - Chi & Chứng Từ
             </h3>
             <p className="text-xs text-slate-500 mt-0.5">
@@ -579,7 +579,7 @@ export function CollabFinanceModule({
         {/* Transactions Table */}
         {isLoading ? (
           <div className="p-12 text-center text-xs text-slate-400 flex items-center justify-center gap-2">
-            <Loader2 className="h-4 w-4 animate-spin text-violet-600" />
+            <Loader2 className="h-4 w-4 animate-spin text-blue-600" />
             <span>Đang tải dữ liệu thu chi...</span>
           </div>
         ) : filteredTransactions.length === 0 ? (
@@ -593,7 +593,7 @@ export function CollabFinanceModule({
               <Button
                 size="sm"
                 onClick={() => openCreateDialog('expense')}
-                className="mt-3 text-xs h-8 px-3.5 bg-violet-600 hover:bg-violet-700 text-white font-semibold shadow-2xs active:scale-[0.98]"
+                className="mt-3 text-xs h-8 px-3.5 bg-blue-600 hover:bg-blue-700 text-white font-semibold shadow-2xs active:scale-[0.98]"
               >
                 <Plus className="h-3.5 w-3.5 mr-1" />
                 Ghi nhận giao dịch đầu tiên
@@ -654,7 +654,7 @@ export function CollabFinanceModule({
                           </span>
                         </div>
                         {tx.collabActivity && (
-                          <span className="text-[10px] text-violet-700 block mt-0.5 truncate max-w-[150px]">
+                          <span className="text-[10px] text-blue-700 block mt-0.5 truncate max-w-[150px]">
                             ↳ {tx.collabActivity.title}
                           </span>
                         )}
@@ -683,7 +683,7 @@ export function CollabFinanceModule({
                             href={tx.receiptUrl}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="inline-flex items-center gap-1 text-[11px] font-medium text-violet-700 hover:text-violet-900 hover:underline bg-violet-50 px-2 py-1 rounded-lg border border-violet-200/70 active:scale-[0.98]"
+                            className="inline-flex items-center gap-1 text-[11px] font-medium text-blue-700 hover:text-blue-900 hover:underline bg-blue-50 px-2 py-1 rounded-lg border border-blue-200/70 active:scale-[0.98]"
                             title="Xem hóa đơn / chứng từ minh bạch"
                           >
                             <FileText className="h-3 w-3" />
@@ -705,7 +705,7 @@ export function CollabFinanceModule({
                               variant="ghost"
                               size="sm"
                               onClick={() => openEditDialog(tx)}
-                              className="h-7 w-7 p-0 text-slate-400 hover:text-violet-700 hover:bg-violet-50 rounded-lg active:scale-[0.95]"
+                              className="h-7 w-7 p-0 text-slate-400 hover:text-blue-700 hover:bg-blue-50 rounded-lg active:scale-[0.95]"
                               title="Sửa giao dịch"
                             >
                               <Edit className="h-3.5 w-3.5" />
@@ -736,7 +736,7 @@ export function CollabFinanceModule({
         <DialogContent className="sm:max-w-lg bg-white border border-slate-200 rounded-2xl p-6 pr-10 shadow-2xl">
           <DialogHeader className="space-y-1 text-left">
             <DialogTitle className="text-base font-bold text-slate-900 flex items-center gap-2">
-              <DollarSign className="h-4 w-4 text-violet-600" />
+              <DollarSign className="h-4 w-4 text-blue-600" />
               {editingTransaction ? 'Chỉnh Sửa Giao Dịch' : 'Ghi Nhận Thu / Chi Chiến Dịch'}
             </DialogTitle>
             <DialogDescription className="text-xs text-slate-500">

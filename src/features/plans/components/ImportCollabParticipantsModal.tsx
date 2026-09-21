@@ -362,7 +362,7 @@ export function ImportCollabParticipantsModal({
             <div className="space-y-1.5">
               <div className="flex items-center justify-between">
                 <label className="text-xs font-bold text-slate-800 flex items-center gap-1.5">
-                  <ClipboardPaste className="h-3.5 w-3.5 text-violet-600" />
+                  <ClipboardPaste className="h-3.5 w-3.5 text-blue-600" />
                   <span>Dán dữ liệu từ Sheet (Ctrl + V):</span>
                 </label>
                 <span className="text-[11px] text-slate-400">Hỗ trợ phân tách Tab, Dấu phẩy hoặc Dấu chấm phẩy</span>
@@ -372,7 +372,7 @@ export function ImportCollabParticipantsModal({
                 onChange={(e) => setPastedText(e.target.value)}
                 rows={10}
                 placeholder={`Ví dụ sao chép theo format chuẩn (Họ và tên\tMSSV\tLớp\tKhóa):\nNguyễn Văn A\tB2101234\tDI21V7A1\t47\nTrần Thị B\tB2205678\tQT22A2\t48\nLê Hoàng Nam\tB2009876\tCN20V7\t46\nPhạm Minh C\tB2301122\tTN23A1\t49`}
-                className="w-full p-3 font-mono text-xs bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-violet-500/20 focus:border-violet-500 leading-relaxed resize-none placeholder:text-slate-400"
+                className="w-full p-3 font-mono text-xs bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 leading-relaxed resize-none placeholder:text-slate-400"
               />
             </div>
 
@@ -412,10 +412,10 @@ export function ImportCollabParticipantsModal({
               )}
             </div>
 
-            <div className="p-3 bg-violet-50/50 rounded-xl border border-violet-100 flex items-start gap-2 text-xs text-violet-900">
-              <HelpCircle className="h-4 w-4 text-violet-600 shrink-0 mt-0.5" />
+            <div className="p-3 bg-blue-50/50 rounded-xl border border-blue-100 flex items-start gap-2 text-xs text-blue-900">
+              <HelpCircle className="h-4 w-4 text-blue-600 shrink-0 mt-0.5" />
               <div className="leading-relaxed">
-                <span className="font-bold">Mẹo sao chép nhanh:</span> Chọn và bôi đen các cột theo thứ tự <code className="bg-violet-100 px-1 rounded text-violet-800 font-mono">Họ và tên | MSSV | Lớp | Khóa</code> trên Google Sheet rồi nhấn <code className="bg-violet-100 px-1 rounded text-violet-800 font-mono">Ctrl + C</code> và dán thẳng vào đây. Bạn cũng có thể dán kèm các cột Đơn vị, SĐT nếu có.
+                <span className="font-bold">Mẹo sao chép nhanh:</span> Chọn và bôi đen các cột theo thứ tự <code className="bg-blue-100 px-1 rounded text-blue-800 font-mono">Họ và tên | MSSV | Lớp | Khóa</code> trên Google Sheet rồi nhấn <code className="bg-blue-100 px-1 rounded text-blue-800 font-mono">Ctrl + C</code> và dán thẳng vào đây. Bạn cũng có thể dán kèm các cột Đơn vị, SĐT nếu có.
               </div>
             </div>
           </div>
@@ -437,7 +437,7 @@ export function ImportCollabParticipantsModal({
                 variant="ghost"
                 size="sm"
                 onClick={() => setStep('paste')}
-                className="h-7 text-xs text-violet-700 hover:bg-violet-50 active:scale-[0.98] font-medium"
+                className="h-7 text-xs text-blue-700 hover:bg-blue-50 active:scale-[0.98] font-medium"
               >
                 ← Dán lại nội dung
               </Button>
@@ -469,7 +469,7 @@ export function ImportCollabParticipantsModal({
                           type="text"
                           value={row.fullName}
                           onChange={(e) => handleUpdateRowField(row.id, 'fullName', e.target.value)}
-                          className="w-full h-7 px-2 text-xs border border-transparent hover:border-slate-200 focus:border-violet-400 rounded bg-transparent focus:bg-white font-medium text-slate-900"
+                          className="w-full h-7 px-2 text-xs border border-transparent hover:border-slate-200 focus:border-blue-400 rounded bg-transparent focus:bg-white font-medium text-slate-900"
                         />
                       </td>
                       <td className="px-2 py-1.5 font-mono">
@@ -478,7 +478,7 @@ export function ImportCollabParticipantsModal({
                           value={row.studentId}
                           onChange={(e) => handleUpdateRowField(row.id, 'studentId', e.target.value)}
                           placeholder="MSSV"
-                          className="w-full h-7 px-1.5 text-xs font-mono border border-transparent hover:border-slate-200 focus:border-violet-400 rounded bg-transparent focus:bg-white text-slate-700"
+                          className="w-full h-7 px-1.5 text-xs font-mono border border-transparent hover:border-slate-200 focus:border-blue-400 rounded bg-transparent focus:bg-white text-slate-700"
                         />
                       </td>
                       <td className="px-2 py-1.5">
@@ -487,7 +487,7 @@ export function ImportCollabParticipantsModal({
                           value={row.className}
                           onChange={(e) => handleUpdateRowField(row.id, 'className', e.target.value)}
                           placeholder="Lớp"
-                          className="w-full h-7 px-1.5 text-xs border border-transparent hover:border-slate-200 focus:border-violet-400 rounded bg-transparent focus:bg-white text-slate-700"
+                          className="w-full h-7 px-1.5 text-xs border border-transparent hover:border-slate-200 focus:border-blue-400 rounded bg-transparent focus:bg-white text-slate-700"
                         />
                       </td>
                       <td className="px-2 py-1.5 font-mono text-center">
@@ -496,7 +496,7 @@ export function ImportCollabParticipantsModal({
                           value={row.cohort}
                           onChange={(e) => handleUpdateRowField(row.id, 'cohort', e.target.value)}
                           placeholder="Khóa"
-                          className="w-full h-7 px-1 text-xs font-mono text-center border border-transparent hover:border-slate-200 focus:border-violet-400 rounded bg-transparent focus:bg-white text-slate-700"
+                          className="w-full h-7 px-1 text-xs font-mono text-center border border-transparent hover:border-slate-200 focus:border-blue-400 rounded bg-transparent focus:bg-white text-slate-700"
                         />
                       </td>
                       <td className="px-2 py-1.5">
@@ -518,7 +518,7 @@ export function ImportCollabParticipantsModal({
                           value={row.roleTitle}
                           onChange={(e) => handleUpdateRowField(row.id, 'roleTitle', e.target.value)}
                           placeholder="Đội hình"
-                          className="w-full h-7 px-1.5 text-xs border border-transparent hover:border-slate-200 focus:border-violet-400 rounded bg-transparent focus:bg-white text-slate-700"
+                          className="w-full h-7 px-1.5 text-xs border border-transparent hover:border-slate-200 focus:border-blue-400 rounded bg-transparent focus:bg-white text-slate-700"
                         />
                       </td>
                       <td className="px-2 py-1.5 font-mono">
@@ -527,7 +527,7 @@ export function ImportCollabParticipantsModal({
                           value={row.phone}
                           onChange={(e) => handleUpdateRowField(row.id, 'phone', e.target.value)}
                           placeholder="SĐT"
-                          className="w-full h-7 px-1.5 text-xs font-mono border border-transparent hover:border-slate-200 focus:border-violet-400 rounded bg-transparent focus:bg-white text-slate-700"
+                          className="w-full h-7 px-1.5 text-xs font-mono border border-transparent hover:border-slate-200 focus:border-blue-400 rounded bg-transparent focus:bg-white text-slate-700"
                         />
                       </td>
                       <td className="px-2 py-1.5 text-center">
@@ -565,7 +565,7 @@ export function ImportCollabParticipantsModal({
               size="sm"
               onClick={handleParseText}
               disabled={!pastedText.trim()}
-              className="text-xs h-8 px-3.5 bg-violet-600 hover:bg-violet-700 text-white font-semibold gap-1.5 shadow-2xs active:scale-[0.98]"
+              className="text-xs h-8 px-3.5 bg-blue-600 hover:bg-blue-700 text-white font-semibold gap-1.5 shadow-2xs active:scale-[0.98]"
             >
               <span>Phân tích dữ liệu</span>
               <ArrowRight className="h-3.5 w-3.5" />

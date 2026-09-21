@@ -207,7 +207,7 @@ export function AddCollabParticipantDialog({
       <DialogContent className="max-w-xl w-full bg-white rounded-2xl p-6 pr-10 shadow-2xl border border-slate-100 max-h-[90vh] overflow-y-auto">
         <DialogHeader className="pb-3 border-b border-slate-100">
           <DialogTitle className="text-base font-bold text-slate-900 flex items-center gap-2">
-            <div className="w-8 h-8 rounded-lg bg-violet-50 text-violet-600 flex items-center justify-center">
+            <div className="w-8 h-8 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center">
               <UserPlus className="h-4 w-4" />
             </div>
             <span>Thêm Người Tham Gia / Tình Nguyện Viên</span>
@@ -233,7 +233,7 @@ export function AddCollabParticipantDialog({
               className={cn(
                 'flex-1 py-1.5 text-xs font-semibold rounded-lg transition-all active:scale-[0.98]',
                 mode === 'existing_member'
-                  ? 'bg-white text-violet-700 shadow-2xs font-bold'
+                  ? 'bg-white text-blue-700 shadow-2xs font-bold'
                   : 'text-slate-600 hover:text-slate-900'
               )}
             >
@@ -248,7 +248,7 @@ export function AddCollabParticipantDialog({
               className={cn(
                 'flex-1 py-1.5 text-xs font-semibold rounded-lg transition-all active:scale-[0.98]',
                 mode === 'manual'
-                  ? 'bg-white text-violet-700 shadow-2xs font-bold'
+                  ? 'bg-white text-blue-700 shadow-2xs font-bold'
                   : 'text-slate-600 hover:text-slate-900'
               )}
             >
@@ -258,13 +258,13 @@ export function AddCollabParticipantDialog({
 
           {/* Quick Picker from Unit Directory */}
           {mode === 'existing_member' && (
-            <div className="space-y-1.5 p-3 bg-violet-50/50 rounded-xl border border-violet-100">
-              <label className="block text-xs font-semibold text-violet-900 flex items-center gap-1.5">
-                <Sparkles className="h-3.5 w-3.5 text-violet-600" />
+            <div className="space-y-1.5 p-3 bg-blue-50/50 rounded-xl border border-blue-100">
+              <label className="block text-xs font-semibold text-blue-900 flex items-center gap-1.5">
+                <Sparkles className="h-3.5 w-3.5 text-blue-600" />
                 Chọn nhanh từ nhân sự BCH / Thành viên các đơn vị
               </label>
               <Select onValueChange={handleSelectMember}>
-                <SelectTrigger className="h-9 text-xs bg-white border-violet-200">
+                <SelectTrigger className="h-9 text-xs bg-white border-blue-200">
                   <SelectValue placeholder="-- Chọn từ danh bạ các đơn vị --" />
                 </SelectTrigger>
                 <SelectContent className="bg-white border-slate-200 max-h-56">
@@ -316,7 +316,7 @@ export function AddCollabParticipantDialog({
                     className={cn(
                       'px-3 py-1.5 rounded-xl text-xs font-semibold transition-all border inline-flex items-center gap-1.5 active:scale-[0.98]',
                       isSelected
-                        ? 'bg-violet-600 text-white border-violet-600 shadow-2xs font-bold'
+                        ? 'bg-blue-600 text-white border-blue-600 shadow-2xs font-bold'
                         : 'bg-white text-slate-700 border-slate-200 hover:bg-slate-50'
                     )}
                   >
@@ -410,7 +410,7 @@ export function AddCollabParticipantDialog({
                   className={cn(
                     'px-2.5 py-1 rounded-lg text-[11px] font-medium transition-all border active:scale-[0.98]',
                     selectedRole === role
-                      ? 'bg-violet-50 text-violet-700 border-violet-300 font-bold shadow-2xs'
+                      ? 'bg-blue-50 text-blue-700 border-blue-300 font-bold shadow-2xs'
                       : 'bg-white text-slate-600 border-slate-200 hover:bg-slate-50'
                   )}
                 >
@@ -528,7 +528,7 @@ export function AddCollabParticipantDialog({
               type="submit"
               size="sm"
               disabled={addMutation.isPending}
-              className="text-xs h-8 px-3.5 bg-violet-600 hover:bg-violet-700 text-white font-semibold gap-1.5 shadow-2xs active:scale-[0.98]"
+              className="text-xs h-8 px-3.5 bg-blue-600 hover:bg-blue-700 text-white font-semibold gap-1.5 shadow-2xs active:scale-[0.98]"
             >
               {addMutation.isPending && <Loader2 className="h-3.5 w-3.5 animate-spin" />}
               <span>Lưu người tham gia</span>
