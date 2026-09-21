@@ -291,7 +291,7 @@ export function DatePicker({
                 <select
                   value={selectedHour}
                   onChange={(e) => handleTimeChange(e.target.value, selectedMinute)}
-                  className="h-7 rounded-lg border border-slate-200 bg-slate-50 px-1 text-xs font-mono font-semibold"
+                  className="h-7 rounded-lg border border-slate-200 bg-slate-50 px-1 text-xs tabular-nums font-semibold"
                 >
                   {Array.from({ length: 24 }).map((_, i) => {
                     const val = i.toString().padStart(2, '0');
@@ -302,7 +302,7 @@ export function DatePicker({
                 <select
                   value={selectedMinute}
                   onChange={(e) => handleTimeChange(selectedHour, e.target.value)}
-                  className="h-7 rounded-lg border border-slate-200 bg-slate-50 px-1 text-xs font-mono font-semibold"
+                  className="h-7 rounded-lg border border-slate-200 bg-slate-50 px-1 text-xs tabular-nums font-semibold"
                 >
                   {Array.from({ length: 12 }).map((_, i) => {
                     const val = (i * 5).toString().padStart(2, '0');

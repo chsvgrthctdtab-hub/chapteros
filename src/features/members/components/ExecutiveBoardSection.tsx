@@ -102,7 +102,7 @@ export function ExecutiveBoardSection({
             </div>
             <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-white flex items-center gap-2">
               {boardTitle}
-              <span className="text-xs font-mono font-normal px-2.5 py-0.5 rounded-full bg-white/20 text-white">
+              <span className="text-xs font-semibold tabular-nums px-2.5 py-0.5 rounded-full bg-white/20 text-white">
                 {validBoardMembers.length}
               </span>
             </h2>
@@ -289,7 +289,7 @@ export function ExecutiveBoardSection({
                   <span>
                     {organizationCode ? `${organizationCode}` : 'Chi hội'}
                   </span>
-                  <span className="font-mono text-[10px]">
+                  <span className="tabular-nums text-[10px]">
                     ID: {membership.userId.slice(0, 8)}...
                   </span>
                 </div>

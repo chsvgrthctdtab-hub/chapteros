@@ -246,7 +246,7 @@ export function TransactionFormModal({
                   min="1"
                   placeholder="e.g. 500000"
                   {...register('amount')}
-                  className={`w-full pl-3 pr-12 py-2 text-sm font-mono font-bold bg-slate-50 border rounded-lg focus:bg-white focus:outline-none focus:ring-1 focus:ring-slate-900 transition-all ${
+                  className={`w-full pl-3 pr-12 py-2 text-sm font-bold tabular-nums bg-slate-50 border rounded-lg focus:bg-white focus:outline-none focus:ring-1 focus:ring-slate-900 transition-all ${
                     errors.amount ? 'border-rose-300 bg-rose-50/30' : 'border-slate-200'
                   }`}
                 />
@@ -256,7 +256,7 @@ export function TransactionFormModal({
               </div>
               <div className="flex items-center justify-between text-[11px] pt-1 px-1">
                 <span className="text-slate-500">Standard preview:</span>
-                <span className="font-mono font-bold text-slate-900">
+                <span className="font-bold text-slate-900 tabular-nums">
                   {selectedType === 'income' ? '+' : '−'}
                   {formatVND(watchAmount)}
                 </span>

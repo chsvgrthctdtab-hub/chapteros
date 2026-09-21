@@ -200,7 +200,7 @@ export function ChaptersPage() {
             <span className="text-xs font-bold text-slate-900 truncate block">
               {currentOrg?.name || 'Đang tải...'}
             </span>
-            <span className="font-mono text-[10px] text-slate-400">
+            <span className="tabular-nums text-[10px] text-slate-400">
               {currentOrg?.code || '—'}
             </span>
           </div>

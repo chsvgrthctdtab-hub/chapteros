@@ -97,7 +97,7 @@ export function Header({ onOpenMobileMenu }: HeaderProps) {
                     activeOrganization.code ? activeOrganization.code.slice(0, 2).toUpperCase() : (activeOrgTypeShort || 'CH')
                   )}
                 </div>
-                <span className="text-xs font-bold text-slate-800 font-mono tracking-tight group-hover:text-blue-700 transition-colors">
+                <span className="text-xs font-bold text-slate-800 tracking-tight group-hover:text-blue-700 transition-colors">
                   {activeOrganization.code || activeOrganization.name}
                 </span>
                 <ChevronDown className="h-3.5 w-3.5 text-slate-400 group-hover:text-blue-700 transition-colors shrink-0 -ml-0.5" />

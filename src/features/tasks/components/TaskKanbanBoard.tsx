@@ -160,7 +160,7 @@ export function TaskKanbanBoard({
                   </h3>
                   <span
                     className={cn(
-                      'inline-flex items-center justify-center px-1.5 py-0.2 text-[10px] font-bold rounded-full font-mono',
+                      'inline-flex items-center justify-center px-1.5 py-0.2 text-[10px] font-bold rounded-full tabular-nums',
                       col.badgeBg,
                       col.badgeText
                     )}

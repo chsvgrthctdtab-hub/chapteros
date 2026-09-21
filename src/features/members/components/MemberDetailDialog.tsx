@@ -100,7 +100,7 @@ export function MemberDetailDialog({
                   <MemberStatusBadge status={member.status} />
                 </div>
                 <div className="flex flex-wrap items-center gap-2 text-xs text-slate-500">
-                  <span className="font-mono bg-white px-2 py-0.5 rounded text-slate-800 font-semibold border border-slate-200 shadow-2xs">
+                  <span className="tabular-nums bg-white px-2 py-0.5 rounded text-slate-800 font-semibold border border-slate-200 shadow-2xs">
                     MSSV: {member.studentId || 'Chưa cập nhật'}
                   </span>
                   <MemberRoleBadge position={member.position} />
@@ -194,7 +194,7 @@ export function MemberDetailDialog({
                   <div className="space-y-1.5 text-xs">
                     <div className="flex justify-between py-1 border-b border-slate-200/60">
                       <span className="text-slate-500">Mã số sinh viên:</span>
-                      <span className="font-mono font-semibold text-slate-900">
+                      <span className="tabular-nums font-semibold text-slate-900">
                         {member.studentId || 'Chưa cập nhật'}
                       </span>
                     </div>
@@ -234,7 +234,7 @@ export function MemberDetailDialog({
                     </div>
                     <div className="flex justify-between py-1 border-b border-slate-200/60">
                       <span className="text-slate-500">Số điện thoại:</span>
-                      <span className="font-medium text-slate-800 font-mono">
+                      <span className="font-medium text-slate-800 tabular-nums">
                         {member.phone || 'Chưa cập nhật'}
                       </span>
                     </div>

@@ -645,7 +645,7 @@ export function PlanDetailPage() {
           <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4">
             <div className="space-y-1.5">
               <div className="flex items-center gap-2.5 flex-wrap">
-                <span className="px-2.5 py-1 rounded-md text-xs font-mono font-bold bg-violet-50 text-violet-800 border border-violet-200/80">
+                <span className="px-2.5 py-1 rounded-md text-xs font-bold tracking-tight bg-violet-50 text-violet-800 border border-violet-200/80">
                   {plan.code}
                 </span>
                 <span className={`px-3 py-1 rounded-full text-xs font-semibold border ${statusConfig.colorClasses}`}>
@@ -738,7 +738,7 @@ export function PlanDetailPage() {
             <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-50/80 border border-slate-200/70 text-slate-700">
               <Calendar className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
               <span className="text-slate-400 font-medium">Thời gian:</span>
-              <span className="font-medium text-slate-900 font-mono">
+              <span className="font-medium text-slate-900 tabular-nums">
                 {plan.startDate ? formatDate(plan.startDate) : 'Chưa rõ'}
                 {plan.endDate ? ` – ${formatDate(plan.endDate)}` : ''}
               </span>
@@ -748,7 +748,7 @@ export function PlanDetailPage() {
             <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-50/80 border border-slate-200/70 text-slate-700">
               <DollarSign className="w-3.5 h-3.5 text-amber-600 shrink-0" />
               <span className="text-slate-400 font-medium">Quỹ:</span>
-              <span className="font-bold text-slate-900 font-mono">
+              <span className="font-bold text-slate-900 tabular-nums">
                 {formatVND(netBalance)}
               </span>
             </div>

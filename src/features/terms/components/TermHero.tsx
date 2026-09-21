@@ -250,7 +250,7 @@ export function TermHero({
             <Wallet className="h-3.5 w-3.5 text-emerald-600" />
             <span>Treasury Balance</span>
           </div>
-          <p className="text-lg sm:text-xl font-bold text-slate-900 tracking-tight font-mono">
+          <p className="text-lg sm:text-xl font-bold text-slate-900 tracking-tight tabular-nums">
             {formattedBalance}
           </p>
           <span className="text-[11px] text-slate-400">Net term funds</span>

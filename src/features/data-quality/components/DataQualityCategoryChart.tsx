@@ -122,7 +122,7 @@ export function DataQualityCategoryChart({
 
             {/* Inner text */}
             <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
-              <span className="text-2xl font-bold font-mono text-slate-800">{totalIssues}</span>
+              <span className="text-2xl font-bold text-slate-800 tabular-nums">{totalIssues}</span>
               <span className="text-[10px] font-semibold text-slate-400 uppercase tracking-wider">
                 Vấn đề
               </span>

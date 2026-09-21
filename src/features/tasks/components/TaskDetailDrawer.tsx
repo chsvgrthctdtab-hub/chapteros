@@ -256,7 +256,7 @@ export function TaskDetailDrawer({
           <h3 className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider">
             Progress
           </h3>
-          <span className="text-xs font-mono font-bold text-slate-800">
+          <span className="text-xs font-bold text-slate-800 tabular-nums">
             {task.progress}%
           </span>
         </div>

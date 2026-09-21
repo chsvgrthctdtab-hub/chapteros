@@ -405,7 +405,7 @@ export function TaskDetailPage() {
                 <span>Execution Progress</span>
               </h3>
 
-              <span className="text-xs font-mono font-bold text-slate-800">
+              <span className="text-xs font-bold text-slate-800 tabular-nums">
                 {task.progress}%
               </span>
             </div>
@@ -423,7 +423,7 @@ export function TaskDetailPage() {
                       type="button"
                       onClick={() => handleProgressUpdate(val)}
                       className={cn(
-                        'px-2.5 py-1 text-xs font-semibold rounded-lg border transition-all cursor-pointer font-mono',
+                        'px-2.5 py-1 text-xs font-semibold rounded-lg border transition-all cursor-pointer tabular-nums',
                         task.progress === val
                           ? 'bg-emerald-700 text-white border-emerald-800'
                           : 'bg-slate-50 hover:bg-slate-100 text-slate-700 border-slate-200'

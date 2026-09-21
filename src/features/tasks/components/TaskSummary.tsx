@@ -113,7 +113,7 @@ export function TaskSummary({
                 </span>
               </div>
               <div className="flex items-baseline gap-1.5">
-                <span className={cn('text-base sm:text-xl font-bold font-mono tracking-tight leading-none', item.accentColor)}>
+                <span className={cn('text-base sm:text-xl font-bold tracking-tight leading-none tabular-nums', item.accentColor)}>
                   {item.value}
                 </span>
                 <span className="text-[11px] text-slate-400 font-normal truncate hidden sm:inline">

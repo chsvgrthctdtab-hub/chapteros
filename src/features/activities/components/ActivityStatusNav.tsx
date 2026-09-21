@@ -116,7 +116,7 @@ export function ActivityStatusNav({
             {count !== undefined && (
               <span
                 className={cn(
-                  'text-[10px] font-bold px-1.5 py-0.2 rounded-full font-mono',
+                  'text-[10px] font-bold px-1.5 py-0.2 rounded-full tabular-nums',
                   isActive
                     ? 'bg-white/20 text-white'
                     : 'bg-slate-100 text-slate-600 group-hover:bg-slate-200'

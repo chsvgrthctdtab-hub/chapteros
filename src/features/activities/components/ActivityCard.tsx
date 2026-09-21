@@ -50,7 +50,7 @@ export function ActivityCard({ activity, onEdit, canEdit = false }: ActivityCard
           <div className="flex items-center gap-1.5 flex-wrap">
             <ActivityCategoryBadge category={activity.category} />
             {activity.code && (
-              <span className="font-mono text-[10px] font-bold text-slate-500 bg-slate-100 px-1.5 py-0.2 rounded border border-slate-200/80">
+              <span className="tabular-nums text-[10px] font-semibold text-slate-600 bg-slate-100 px-1.5 py-0.5 rounded border border-slate-200/80">
                 {activity.code}
               </span>
             )}

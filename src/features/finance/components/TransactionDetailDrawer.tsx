@@ -176,7 +176,7 @@ export function TransactionDetailDrawer({
           Số tiền giao dịch
         </span>
         <div
-          className={`font-mono text-xl font-bold ${
+          className={`text-xl font-bold tabular-nums ${
             isIncome ? 'text-emerald-800' : 'text-rose-800'
           }`}
         >

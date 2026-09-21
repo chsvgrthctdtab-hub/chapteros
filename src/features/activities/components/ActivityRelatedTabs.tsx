@@ -192,7 +192,7 @@ export function ActivityRelatedTabs({
                 {tab.count !== undefined && (
                   <span
                     className={cn(
-                      'text-[10px] font-bold px-1.5 py-0.2 rounded-full font-mono shrink-0',
+                      'text-[10px] font-bold px-1.5 py-0.2 rounded-full tabular-nums shrink-0',
                       isActive ? 'bg-emerald-100 text-emerald-800' : 'bg-slate-200/80 text-slate-600'
                     )}
                   >
@@ -325,7 +325,7 @@ export function ActivityRelatedTabs({
                           {activity.leadMember.fullName}
                         </p>
                         {activity.leadMember.studentId && (
-                          <p className="text-[10px] text-slate-500 font-mono">
+                          <p className="text-[10px] text-slate-500 tabular-nums">
                             MSSV: {activity.leadMember.studentId}
                           </p>
                         )}
@@ -335,7 +335,7 @@ export function ActivityRelatedTabs({
                           </p>
                         )}
                         {activity.leadMember.phone && (
-                          <p className="text-[10px] text-slate-500 font-mono">
+                          <p className="text-[10px] text-slate-500 tabular-nums">
                             {activity.leadMember.phone}
                           </p>
                         )}
@@ -417,7 +417,7 @@ export function ActivityRelatedTabs({
 
                     <div className="flex items-center justify-between text-xs text-slate-600">
                       <span>Số phản hồi đã đồng bộ:</span>
-                      <strong className="text-slate-900 font-mono">
+                      <strong className="text-slate-900 tabular-nums">
                         {primaryForm.responseCount}
                       </strong>
                     </div>

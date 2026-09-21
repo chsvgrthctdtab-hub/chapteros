@@ -250,7 +250,7 @@ export function OrganizationInfoCard({
                 <CardTitle className="text-base font-bold text-slate-900">
                   {organization?.name || `Thông tin ${orgTypeLabel}`}
                 </CardTitle>
-                <Badge variant="outline" className="font-mono text-[11px] bg-white text-slate-700">
+                <Badge variant="outline" className="tabular-nums font-semibold text-[11px] bg-white text-slate-700">
                   {organization?.code || 'N/A'}
                 </Badge>
               </div>

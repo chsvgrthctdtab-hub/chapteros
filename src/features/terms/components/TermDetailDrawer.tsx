@@ -328,7 +328,7 @@ export function TermDetailDrawer({
                     </span>
                     <ExternalLink className="h-3 w-3 text-slate-400 group-hover:text-emerald-600 transition-colors" />
                   </div>
-                  <p className="text-xl font-bold text-slate-900 mt-2 font-mono truncate">
+                  <p className="text-xl font-bold text-slate-900 mt-2 tabular-nums truncate">
                     {formattedBalance}
                   </p>
                   <span className="text-[11px] text-emerald-700 font-medium mt-1 inline-block">
@@ -614,7 +614,7 @@ export function TermDetailDrawer({
               <div className="rounded-xl border border-slate-200 bg-white p-4 space-y-3">
                 <div className="flex items-center justify-between">
                   <span className="text-xs text-slate-500 font-medium">Net Term Balance</span>
-                  <span className="text-lg font-bold font-mono text-emerald-700">
+                  <span className="text-lg font-bold text-emerald-700 tabular-nums">
                     {formattedBalance}
                   </span>
                 </div>

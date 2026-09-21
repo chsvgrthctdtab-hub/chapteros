@@ -36,7 +36,7 @@ export function TaskProgressBar({
       {showLabel && (
         <div className="flex items-center justify-between text-[11px] mb-1">
           <span className="text-slate-500 font-medium">Tiến độ</span>
-          <span className="font-semibold text-slate-700 font-mono">{cleanProgress}%</span>
+          <span className="font-semibold text-slate-700 tabular-nums">{cleanProgress}%</span>
         </div>
       )}
       <div className={cn('w-full bg-slate-100 rounded-full overflow-hidden', heightClasses)}>

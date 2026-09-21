@@ -294,7 +294,7 @@ export function MembersPage() {
             <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-slate-900">
               {language === 'vi' ? `${memberNoun} & ${boardTitle}` : `${memberNoun} & ${boardTitle}`}
             </h1>
-            <span className="text-xs font-semibold text-slate-600 bg-slate-100 border border-slate-200/80 px-2.5 py-0.5 rounded-full font-mono">
+            <span className="text-xs font-semibold text-slate-600 bg-slate-100 border border-slate-200/80 px-2.5 py-0.5 rounded-full tabular-nums">
               {stats.total} {memberNoun.toLowerCase()} • {stats.boardCount} {boardTitle}
             </span>
           </div>

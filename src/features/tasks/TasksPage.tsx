@@ -292,7 +292,7 @@ export function TasksPage() {
             <h1 className="text-2xl font-bold tracking-tight text-slate-900">
               Tasks
             </h1>
-            <span className="text-xs font-semibold text-slate-600 bg-slate-100 border border-slate-200/80 px-2.5 py-0.5 rounded-full font-mono">
+            <span className="text-xs font-semibold text-slate-600 bg-slate-100 border border-slate-200/80 px-2.5 py-0.5 rounded-full tabular-nums">
               {stats.total} tasks
             </span>
           </div>
@@ -465,8 +465,8 @@ export function TasksPage() {
           {totalPages > 1 && viewMode !== 'kanban' && (
             <div className="bg-white rounded-xl border border-slate-200/90 p-3 sm:p-4 flex flex-col sm:flex-row items-center justify-between gap-3 shadow-2xs">
               <div className="text-xs text-slate-500">
-                Showing page <strong className="font-semibold text-slate-900 font-mono">{currentPage}</strong> of{' '}
-                <strong className="font-semibold text-slate-900 font-mono">{totalPages}</strong> ({totalCount} tasks)
+                Showing page <strong className="font-semibold text-slate-900 tabular-nums">{currentPage}</strong> of{' '}
+                <strong className="font-semibold text-slate-900 tabular-nums">{totalPages}</strong> (<span className="tabular-nums">{totalCount}</span> tasks)
               </div>
 
               <div className="flex items-center gap-1.5">
@@ -494,9 +494,9 @@ export function TasksPage() {
                         type="button"
                         onClick={() => handleFilterChange({ page: pageNum })}
                         className={cn(
-                          'w-7.5 h-7.5 rounded-lg text-xs font-semibold transition-all cursor-pointer font-mono',
+                          'w-7.5 h-7.5 rounded-lg text-xs font-semibold transition-all cursor-pointer tabular-nums',
                           currentPage === pageNum
-                            ? 'bg-emerald-700 text-white shadow-2xs'
+                            ? 'bg-blue-600 text-white shadow-2xs'
                             : 'text-slate-600 hover:bg-slate-100 border border-slate-200'
                         )}
                       >

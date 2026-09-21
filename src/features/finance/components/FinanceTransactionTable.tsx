@@ -160,10 +160,10 @@ export function FinanceTransactionTable({
                     </span>
                   </td>
 
-                  {/* 5. Amount (VND integer tabular mono right-aligned) */}
+                  {/* 5. Amount (VND integer tabular right-aligned) */}
                   <td className="py-3 px-4 whitespace-nowrap text-right">
                     <span
-                      className={`font-mono text-xs font-bold tracking-tight tabular-nums ${
+                      className={`tabular-nums text-xs font-bold ${
                         isIncome ? 'text-emerald-800' : 'text-rose-800'
                       }`}
                     >

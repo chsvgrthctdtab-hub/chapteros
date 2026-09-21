@@ -88,34 +88,34 @@ export function DataQualityHero({
           <div className="pt-2">
             <div className="flex items-center gap-2 sm:gap-3 flex-wrap">
               <div className="px-3.5 py-1.5 rounded-lg bg-slate-50 border border-slate-200 text-xs font-semibold text-slate-800 flex items-center gap-1.5">
-                <span className="text-sm font-bold font-mono text-slate-900">{totalIssues}</span>
+                <span className="text-sm font-bold text-slate-900 tabular-nums">{totalIssues}</span>
                 <span>issues detected</span>
               </div>
 
               <div className={`px-3 py-1.5 rounded-lg border text-xs font-medium flex items-center gap-1.5 ${
                 criticalCount > 0 ? 'bg-rose-50 border-rose-200 text-rose-800 font-semibold' : 'bg-slate-50 border-slate-200 text-slate-500'
               }`}>
-                <span className="font-mono font-bold">{criticalCount}</span> Critical
+                <span className="font-bold tabular-nums">{criticalCount}</span> Critical
               </div>
 
               <div className={`px-3 py-1.5 rounded-lg border text-xs font-medium flex items-center gap-1.5 ${
                 warningCount > 0 ? 'bg-amber-50 border-amber-200 text-amber-800 font-semibold' : 'bg-slate-50 border-slate-200 text-slate-500'
               }`}>
-                <span className="font-mono font-bold">{warningCount}</span> Warnings
+                <span className="font-bold tabular-nums">{warningCount}</span> Warnings
               </div>
 
               <div className="px-3 py-1.5 rounded-lg bg-slate-50 border border-slate-200 text-xs font-medium text-slate-600 flex items-center gap-1.5">
-                <span className="font-mono font-bold">{suggestionCount}</span> Suggestions
+                <span className="font-bold tabular-nums">{suggestionCount}</span> Suggestions
               </div>
 
               <div className="px-3 py-1.5 rounded-lg bg-slate-50 border border-slate-200 text-xs font-medium text-slate-600 flex items-center gap-1.5">
-                <span className="font-mono font-bold">6</span> Checks Active
+                <span className="font-bold tabular-nums">6</span> Checks Active
               </div>
 
               {/* Secondary Integrity Score Badge */}
               <div className="px-3 py-1.5 rounded-lg bg-emerald-50/70 border border-emerald-200/80 text-xs font-medium text-emerald-900 flex items-center gap-1.5">
                 <span>Score:</span>
-                <span className="font-mono font-bold text-emerald-800">{score}/100</span>
+                <span className="font-bold text-emerald-800 tabular-nums">{score}/100</span>
               </div>
             </div>
           </div>

@@ -62,7 +62,7 @@ export function DataQualityKpiGrid({
         </div>
 
         <div className="mt-4 flex items-baseline gap-2">
-          <span className="text-3xl sm:text-4xl font-bold font-mono tracking-tight">{totalIssues}</span>
+          <span className="text-3xl sm:text-4xl font-bold tracking-tight tabular-nums">{totalIssues}</span>
           <span
             className={`text-xs font-medium ${
               isAllSelected ? 'text-slate-400' : 'text-slate-500'
@@ -113,7 +113,7 @@ export function DataQualityKpiGrid({
 
         <div className="mt-4 flex items-baseline gap-2">
           <span
-            className={`text-3xl sm:text-4xl font-bold font-mono tracking-tight ${
+            className={`text-3xl sm:text-4xl font-bold tracking-tight tabular-nums ${
               isCriticalSelected ? 'text-white' : 'text-rose-600'
             }`}
           >
@@ -130,7 +130,7 @@ export function DataQualityKpiGrid({
 
         <div className="mt-4 flex items-center justify-between text-xs pt-3 border-t border-rose-100/30">
           <span className={isCriticalSelected ? 'text-rose-200' : 'text-slate-500'}>
-            {criticalCount > 0 ? 'Ưu tiên khắc phục' : 'Không có lỗi chặn'}
+            {criticalCount > 0 ? 'Cần xử lý ngay' : 'Không có lỗi nghiêm trọng'}
           </span>
           <ChevronRight
             className={`w-4 h-4 transition-transform group-hover:translate-x-0.5 ${
@@ -156,7 +156,7 @@ export function DataQualityKpiGrid({
               isWarningSelected ? 'text-amber-200' : 'text-amber-700'
             }`}
           >
-            Cần chú ý (Warnings)
+            Cảnh báo (Warnings)
           </span>
           <div
             className={`flex items-center justify-center w-9 h-9 rounded-lg ${
@@ -169,7 +169,7 @@ export function DataQualityKpiGrid({
 
         <div className="mt-4 flex items-baseline gap-2">
           <span
-            className={`text-3xl sm:text-4xl font-bold font-mono tracking-tight ${
+            className={`text-3xl sm:text-4xl font-bold tracking-tight tabular-nums ${
               isWarningSelected ? 'text-white' : 'text-amber-600'
             }`}
           >
@@ -225,7 +225,7 @@ export function DataQualityKpiGrid({
 
         <div className="mt-4 flex items-baseline gap-2">
           <span
-            className={`text-3xl sm:text-4xl font-bold font-mono tracking-tight ${
+            className={`text-3xl sm:text-4xl font-bold tracking-tight tabular-nums ${
               isInfoSelected ? 'text-white' : 'text-sky-600'
             }`}
           >

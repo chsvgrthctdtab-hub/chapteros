@@ -157,7 +157,7 @@ export function WorkspacesPage() {
                     <div className="space-y-1.5 min-w-0 flex-1">
                       <div className="flex items-center gap-1.5 flex-wrap">
                         {orgTypeShort && (
-                          <span className="text-[10px] font-mono font-bold bg-indigo-50 text-indigo-700 border border-indigo-100 px-1.5 py-0.2 rounded-md shrink-0">
+                          <span className="text-[10px] font-bold bg-indigo-50 text-indigo-700 border border-indigo-100 px-1.5 py-0.2 rounded-md shrink-0">
                             {orgTypeShort}
                           </span>
                         )}
@@ -166,7 +166,7 @@ export function WorkspacesPage() {
                         </h3>
                       </div>
                       <div className="flex items-center gap-2 flex-wrap">
-                        <span className="text-[10px] font-mono bg-slate-100 text-slate-600 border border-slate-200 px-1.5 py-0.2 rounded-md">
+                        <span className="text-[10px] font-medium tabular-nums bg-slate-100 text-slate-600 border border-slate-200 px-1.5 py-0.2 rounded-md">
                           {org?.code || 'NO-CODE'}
                         </span>
                         {getRoleBadge(m.role)}

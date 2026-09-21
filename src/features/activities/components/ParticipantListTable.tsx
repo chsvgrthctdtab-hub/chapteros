@@ -405,7 +405,7 @@ export function ParticipantListTable({
                       </td>
 
                       {/* Cohort / Khóa */}
-                      <td className="py-2.5 px-2 text-center text-slate-700 font-bold font-mono text-xs">
+                      <td className="py-2.5 px-2 text-center text-slate-700 font-semibold tabular-nums text-xs">
                         {cohortText}
                       </td>
 

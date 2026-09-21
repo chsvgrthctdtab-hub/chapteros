@@ -219,7 +219,7 @@ export function PeriodClosingSection({
                         <div className="text-[10px] uppercase font-semibold text-slate-400">
                           Book Balance
                         </div>
-                        <div className="font-mono text-xs font-bold text-slate-800">
+                        <div className="tabular-nums text-xs font-bold text-slate-800">
                           {formatVND(p.closingBalance)}
                         </div>
                       </div>
@@ -228,7 +228,7 @@ export function PeriodClosingSection({
                         <div className="text-[10px] uppercase font-semibold text-slate-400">
                           Actual Balance
                         </div>
-                        <div className="font-mono text-xs font-bold text-slate-900">
+                        <div className="tabular-nums text-xs font-bold text-slate-900">
                           {formatVND(p.actualBalance)}
                         </div>
                       </div>
@@ -238,7 +238,7 @@ export function PeriodClosingSection({
                           <div className="text-[10px] uppercase font-semibold text-rose-500">
                             Difference
                           </div>
-                          <div className="font-mono text-xs font-bold text-rose-700">
+                          <div className="tabular-nums text-xs font-bold text-rose-700">
                             {(p.discrepancy || p.reconciliationDiscrepancy || 0) > 0
                               ? `+${formatVND(p.discrepancy || p.reconciliationDiscrepancy || 0)}`
                               : formatVND(p.discrepancy || p.reconciliationDiscrepancy || 0)}
@@ -283,7 +283,7 @@ export function PeriodClosingSection({
                         <div className="text-[10px] uppercase text-slate-400 font-semibold">
                           Opening Balance
                         </div>
-                        <div className="font-mono text-xs font-bold text-slate-800 mt-0.5">
+                        <div className="tabular-nums text-xs font-bold text-slate-800 mt-0.5">
                           {formatVND(p.openingBalance)}
                         </div>
                       </div>
@@ -292,7 +292,7 @@ export function PeriodClosingSection({
                         <div className="text-[10px] uppercase text-emerald-800 font-semibold">
                           Period Inflow (Thu)
                         </div>
-                        <div className="font-mono text-xs font-bold text-emerald-800 mt-0.5">
+                        <div className="tabular-nums text-xs font-bold text-emerald-800 mt-0.5">
                           +{formatVND(p.totalIncome)}
                         </div>
                       </div>
@@ -301,7 +301,7 @@ export function PeriodClosingSection({
                         <div className="text-[10px] uppercase text-rose-800 font-semibold">
                           Period Outflow (Chi)
                         </div>
-                        <div className="font-mono text-xs font-bold text-rose-800 mt-0.5">
+                        <div className="tabular-nums text-xs font-bold text-rose-800 mt-0.5">
                           −{formatVND(p.totalExpense)}
                         </div>
                       </div>
@@ -310,7 +310,7 @@ export function PeriodClosingSection({
                         <div className="text-[10px] uppercase text-slate-400 font-semibold">
                           Transactions Locked
                         </div>
-                        <div className="font-mono text-xs font-bold text-slate-900 mt-0.5">
+                        <div className="tabular-nums text-xs font-bold text-slate-900 mt-0.5">
                           {p.transactionCount || 0} records
                         </div>
                       </div>

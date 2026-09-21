@@ -163,7 +163,7 @@ export function ActivitiesPage() {
             <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-slate-900">
               Activities
             </h1>
-            <span className="text-xs font-bold text-slate-600 bg-slate-100 px-2.5 py-0.5 rounded-full font-mono border border-slate-200">
+            <span className="text-xs font-bold text-slate-600 bg-slate-100 px-2.5 py-0.5 rounded-full tabular-nums border border-slate-200">
               {totalCount}
             </span>
           </div>

@@ -282,7 +282,7 @@ export function OrganizationMembershipsCard({
                         {/* Student ID / Contact */}
                         <td className="py-3 px-3">
                           <div className="space-y-0.5">
-                            <span className="font-mono text-[11px] text-slate-800 block">
+                            <span className="tabular-nums text-[11px] text-slate-800 block">
                               {membership.profile?.studentId || 'Chưa có MSSV'}
                             </span>
                             <span className="text-[10px] text-slate-400 block">
@@ -330,7 +330,7 @@ export function OrganizationMembershipsCard({
                         </td>
 
                         {/* Joined Date */}
-                        <td className="py-3 px-3 text-[11px] text-slate-500 font-mono">
+                        <td className="py-3 px-3 text-[11px] text-slate-500 tabular-nums">
                           {joinedDate}
                         </td>
 

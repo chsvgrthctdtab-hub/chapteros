@@ -84,7 +84,7 @@ export function MemberCard({
                 {member.fullName}
               </h3>
               <div className="flex items-center gap-1.5 mt-0.5">
-                <span className="font-mono text-xs font-medium text-slate-600 bg-slate-50 px-1.5 py-0.2 rounded border border-slate-100">
+                <span className="tabular-nums text-xs font-medium text-slate-600 bg-slate-50 px-1.5 py-0.5 rounded border border-slate-100">
                   {member.studentId || 'Chưa có MSSV'}
                 </span>
               </div>
@@ -126,7 +126,7 @@ export function MemberCard({
               <span>{member.className || 'Chưa cập nhật lớp'}</span>
             </div>
             {member.cohort && (
-              <span className="font-mono text-[10px] text-slate-500 bg-white px-1.5 py-0.2 rounded border border-slate-200">
+              <span className="tabular-nums text-[10px] text-slate-500 bg-white px-1.5 py-0.5 rounded border border-slate-200">
                 {member.cohort}
               </span>
             )}

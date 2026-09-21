@@ -101,11 +101,11 @@ export function ApprovalQueue({
             Chờ xét duyệt
           </div>
           <div className="mt-1 flex items-baseline gap-2">
-            <span className="font-mono text-xl font-bold text-amber-950">
+            <span className="text-xl font-bold text-amber-950 tabular-nums">
               {pendingTransactions.length}
             </span>
             <span className="text-xs text-slate-500">
-              tổng cộng <strong className="font-mono text-slate-800">{formatVND(totalPendingAmount)}</strong>
+              tổng cộng <strong className="text-slate-800 tabular-nums">{formatVND(totalPendingAmount)}</strong>
             </span>
           </div>
         </div>
@@ -115,7 +115,7 @@ export function ApprovalQueue({
             Vượt hạn mức
           </div>
           <div className="mt-1 flex items-baseline gap-2">
-            <span className="font-mono text-xl font-bold text-rose-900">
+            <span className="text-xl font-bold text-rose-900 tabular-nums">
               {highValueCount}
             </span>
             <span className="text-xs text-slate-500">
@@ -223,7 +223,7 @@ export function ApprovalQueue({
                       {/* Amount */}
                       <td className="py-3 px-4 whitespace-nowrap text-right">
                         <span
-                          className={`font-mono text-xs font-bold tabular-nums ${
+                          className={`tabular-nums text-xs font-bold ${
                             isIncome ? 'text-emerald-800' : 'text-rose-800'
                           }`}
                         >

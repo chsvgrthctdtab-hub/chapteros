@@ -222,7 +222,7 @@ export function PlansPage() {
                   {/* Top badges & actions */}
                   <div className="flex items-center justify-between gap-2">
                     <div className="flex items-center gap-2">
-                      <span className="inline-flex items-center px-2.5 py-1 rounded-md text-[11px] font-mono font-bold bg-slate-100 text-slate-700 border border-slate-200">
+                      <span className="inline-flex items-center px-2.5 py-1 rounded-md text-[11px] font-bold tracking-tight bg-slate-100 text-slate-700 border border-slate-200">
                         {plan.code}
                       </span>
 

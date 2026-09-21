@@ -155,10 +155,10 @@ export function MemberListTable({
                     </div>
                   </td>
 
-                  {/* 2. Student ID (Prominent monospace styling) */}
+                  {/* 2. Student ID */}
                   <td className="py-3 px-3">
                     {item.studentId ? (
-                      <span className="font-mono text-xs font-semibold text-slate-800 bg-slate-50 px-2 py-0.5 rounded border border-slate-200/80">
+                      <span className="tabular-nums text-xs font-medium text-slate-800 bg-slate-50 px-2 py-0.5 rounded border border-slate-200/80">
                         {item.studentId}
                       </span>
                     ) : (
@@ -173,7 +173,7 @@ export function MemberListTable({
                         <GraduationCap className="h-3 w-3 text-slate-400 shrink-0" />
                         <span className="truncate">{item.className || 'Chưa có lớp'}</span>
                         {item.cohort && (
-                          <span className="font-mono text-[10px] bg-slate-100 text-slate-600 px-1.5 py-0.2 rounded shrink-0">
+                          <span className="tabular-nums text-[10px] bg-slate-100 text-slate-600 px-1.5 py-0.5 rounded shrink-0">
                             {item.cohort}
                           </span>
                         )}
@@ -190,7 +190,7 @@ export function MemberListTable({
                       {item.phone ? (
                         <div className="flex items-center space-x-1 text-slate-600">
                           <Phone className="h-3 w-3 text-slate-400 shrink-0" />
-                          <span className="font-mono text-[11px]">{item.phone}</span>
+                          <span className="tabular-nums text-[11px]">{item.phone}</span>
                         </div>
                       ) : (
                         <div className="text-slate-300 italic text-[10px]">Chưa có SĐT</div>

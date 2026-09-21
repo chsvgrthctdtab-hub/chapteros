@@ -91,7 +91,7 @@ export function FinanceTransactionCard({
           </div>
 
           <div
-            className={`font-mono text-xs font-bold tracking-tight tabular-nums ${
+            className={`tabular-nums text-xs font-bold ${
               isIncome ? 'text-emerald-800' : 'text-rose-800'
             }`}
           >

@@ -148,7 +148,7 @@ export function UpcomingTasksSection({
                                 style={{ width: `${Math.min(100, Math.max(0, task.progress))}%` }}
                               />
                             </div>
-                            <span className="font-semibold text-slate-700 font-mono text-[11px]">{task.progress}%</span>
+                            <span className="font-semibold text-slate-700 tabular-nums text-[11px]">{task.progress}%</span>
                           </div>
                         )}
                       </div>

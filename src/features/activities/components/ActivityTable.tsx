@@ -109,7 +109,7 @@ export function ActivityTable({
                         </Link>
                         <div className="flex items-center gap-1.5 flex-wrap">
                           {activity.code && (
-                            <span className="font-mono text-[10px] font-bold text-slate-500 bg-slate-100 px-1.5 py-0.2 rounded border border-slate-200/80">
+                            <span className="tabular-nums text-[10px] font-semibold text-slate-600 bg-slate-100 px-1.5 py-0.5 rounded border border-slate-200/80">
                               {activity.code}
                             </span>
                           )}
@@ -136,7 +136,7 @@ export function ActivityTable({
                             {activity.leadMember.fullName}
                           </p>
                           {activity.leadMember.studentId && (
-                            <p className="text-[10px] text-slate-500 font-mono">
+                            <p className="text-[10px] text-slate-500 tabular-nums font-medium">
                               {activity.leadMember.studentId}
                             </p>
                           )}

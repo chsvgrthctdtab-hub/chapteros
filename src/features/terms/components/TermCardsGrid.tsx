@@ -166,7 +166,7 @@ export function TermCardsGrid({
                     <Wallet className="h-3 w-3 text-emerald-500" />
                     Treasury
                   </span>
-                  <span className="text-xs font-bold text-slate-800 block mt-0.5 font-mono truncate">
+                  <span className="text-xs font-bold text-slate-800 block mt-0.5 tabular-nums truncate">
                     {formattedBalance}
                   </span>
                 </div>

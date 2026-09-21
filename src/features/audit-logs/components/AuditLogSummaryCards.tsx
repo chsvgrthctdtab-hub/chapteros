@@ -175,7 +175,7 @@ export function AuditLogSummaryCards({
               {stats.topModule && (
                 <Badge
                   variant="outline"
-                  className="text-[10px] px-1.5 py-0 font-mono text-slate-600 bg-slate-50"
+                  className="text-[10px] px-1.5 py-0 tabular-nums font-semibold text-slate-600 bg-slate-50"
                 >
                   {stats.topModule.count} logs
                 </Badge>
