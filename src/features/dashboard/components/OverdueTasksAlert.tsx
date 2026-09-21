@@ -97,7 +97,7 @@ export function OverdueTasksAlert({ overdueTasks }: OverdueTasksAlertProps) {
                         {priorityMeta.label}
                       </Badge>
                       {task.activity && (
-                        <span className="text-[11px] text-slate-500 font-mono truncate">
+                        <span className="text-[11px] text-slate-500 tabular-nums font-medium truncate">
                           #{task.activity.code}
                         </span>
                       )}

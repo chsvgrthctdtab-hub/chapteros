@@ -207,7 +207,7 @@ export function ApprovalQueue({
                           <span className="font-semibold text-slate-900 line-clamp-1">
                             {tx.description}
                           </span>
-                          <span className="font-mono text-[10px] text-slate-600 mt-0.5">
+                          <span className="tabular-nums text-[10px] text-slate-500 mt-0.5">
                             {txCode}
                           </span>
                         </div>

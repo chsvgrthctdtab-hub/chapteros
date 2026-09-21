@@ -183,7 +183,7 @@ export function MemberFormDialog({
                 </label>
                 <Input
                   {...register('studentId')}
-                  className={`h-10 rounded-xl bg-slate-50/50 border-slate-200 text-xs font-mono ${errors.studentId ? 'border-rose-300' : ''}`}
+                  className={`h-10 rounded-xl bg-slate-50/50 border-slate-200 text-xs tabular-nums ${errors.studentId ? 'border-rose-300' : ''}`}
                 />
                 {errors.studentId && (
                   <p className="text-[11px] text-rose-500 font-medium">{errors.studentId.message}</p>
@@ -247,7 +247,7 @@ export function MemberFormDialog({
                 <label className="text-xs font-semibold text-slate-700 block">Số điện thoại</label>
                 <Input
                   {...register('phone')}
-                  className="h-10 rounded-xl bg-slate-50/50 border-slate-200 text-xs font-mono"
+                  className="h-10 rounded-xl bg-slate-50/50 border-slate-200 text-xs tabular-nums"
                 />
               </div>
 

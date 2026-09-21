@@ -355,7 +355,7 @@ export function CollabFinanceModule({
             </div>
           </div>
           <div className="mt-2.5">
-            <p className="text-xl font-bold text-emerald-950 font-mono">
+            <p className="text-xl font-bold text-emerald-950 tabular-nums">
               {formatVND(totalIncome)}
             </p>
             <p className="text-[11px] text-emerald-700 mt-0.5">
@@ -375,7 +375,7 @@ export function CollabFinanceModule({
             </div>
           </div>
           <div className="mt-2.5">
-            <p className="text-xl font-bold text-rose-950 font-mono">
+            <p className="text-xl font-bold text-rose-950 tabular-nums">
               {formatVND(totalExpense)}
             </p>
             <p className="text-[11px] text-rose-700 mt-0.5">
@@ -405,7 +405,7 @@ export function CollabFinanceModule({
             </div>
           </div>
           <div className="mt-2.5">
-            <p className="text-xl font-bold font-mono">
+            <p className="text-xl font-bold tabular-nums">
               {formatVND(netBalance)}
             </p>
             <p className="text-[11px] opacity-80 mt-0.5">
@@ -420,7 +420,7 @@ export function CollabFinanceModule({
             <span className="text-xs font-semibold text-slate-600 uppercase tracking-wider">
               Giao Dịch Ghi Nhận
             </span>
-            <span className="font-mono font-bold text-slate-800 text-sm">
+            <span className="tabular-nums font-bold text-slate-800 text-sm">
               {transactions.length} khoản
             </span>
           </div>
@@ -492,20 +492,20 @@ export function CollabFinanceModule({
                   <div className="grid grid-cols-3 gap-1 pt-1 text-[11px] border-t border-slate-100">
                     <div>
                       <span className="text-slate-400 block text-[10px]">Đã thu/gây</span>
-                      <span className="font-semibold text-emerald-600 font-mono">
+                      <span className="font-semibold text-emerald-600 tabular-nums">
                         {formatVND(orgStats.income)}
                       </span>
                     </div>
                     <div>
                       <span className="text-slate-400 block text-[10px]">Đã giải ngân</span>
-                      <span className="font-semibold text-rose-600 font-mono">
+                      <span className="font-semibold text-rose-600 tabular-nums">
                         {formatVND(orgStats.expense)}
                       </span>
                     </div>
                     <div>
                       <span className="text-slate-400 block text-[10px]">Chênh lệch</span>
                       <span
-                        className={`font-semibold font-mono ${
+                        className={`font-semibold tabular-nums ${
                           orgNet >= 0 ? 'text-blue-600' : 'text-amber-600'
                         }`}
                       >
@@ -621,7 +621,7 @@ export function CollabFinanceModule({
                   return (
                     <tr key={tx.id} className="hover:bg-slate-50/60 transition-colors">
                       {/* Ngày giao dịch */}
-                      <td className="px-4 py-3 font-mono whitespace-nowrap text-slate-600">
+                      <td className="px-4 py-3 tabular-nums whitespace-nowrap text-slate-600">
                         {formatDate(tx.transactionDate)}
                       </td>
 
@@ -668,7 +668,7 @@ export function CollabFinanceModule({
                       {/* Số tiền */}
                       <td className="px-4 py-3 text-right whitespace-nowrap">
                         <span
-                          className={`font-mono font-bold text-xs ${
+                          className={`tabular-nums font-bold text-xs ${
                             isIncome ? 'text-emerald-600' : 'text-rose-600'
                           }`}
                         >
@@ -797,7 +797,7 @@ export function CollabFinanceModule({
                   type="number"
                   {...register('amount')}
                   placeholder="500000"
-                  className="h-9 text-xs font-mono bg-slate-50/50"
+                  className="h-9 text-xs tabular-nums bg-slate-50/50"
                 />
                 {errors.amount && (
                   <p className="text-[11px] text-rose-500">{errors.amount.message}</p>

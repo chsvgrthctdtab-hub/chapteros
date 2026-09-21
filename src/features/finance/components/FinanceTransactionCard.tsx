@@ -105,7 +105,7 @@ export function FinanceTransactionCard({
             {tx.description}
           </p>
           <div className="flex items-center gap-2 mt-1">
-            <span className="font-mono text-[10px] text-slate-600 bg-slate-100 px-1.5 py-0.2 rounded border border-slate-200">
+            <span className="tabular-nums font-medium text-[10px] text-slate-600 bg-slate-100 px-1.5 py-0.2 rounded border border-slate-200">
               {txCode}
             </span>
             <span className="text-[11px] text-slate-500">

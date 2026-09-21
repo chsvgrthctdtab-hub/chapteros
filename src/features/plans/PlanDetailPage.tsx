@@ -771,7 +771,7 @@ export function PlanDetailPage() {
         >
           <CalendarCheck className="h-4 w-4 shrink-0" />
           <span>Hoạt động trực thuộc</span>
-          <span className={cn('text-[10px] px-1.5 py-0.2 rounded-full font-mono font-medium', activeTab === 'activities' ? 'bg-violet-100 text-violet-800' : 'bg-slate-100 text-slate-600')}>
+          <span className={cn('text-[10px] px-1.5 py-0.2 rounded-full tabular-nums font-semibold', activeTab === 'activities' ? 'bg-violet-100 text-violet-800' : 'bg-slate-100 text-slate-600')}>
             {collabActivities.length}
           </span>
         </button>
@@ -789,7 +789,7 @@ export function PlanDetailPage() {
         >
           <Users className="h-4 w-4 shrink-0" />
           <span>Người tham gia</span>
-          <span className={cn('text-[10px] px-1.5 py-0.2 rounded-full font-mono font-medium', activeTab === 'participants' ? 'bg-violet-100 text-violet-800' : 'bg-slate-100 text-slate-600')}>
+          <span className={cn('text-[10px] px-1.5 py-0.2 rounded-full tabular-nums font-semibold', activeTab === 'participants' ? 'bg-violet-100 text-violet-800' : 'bg-slate-100 text-slate-600')}>
             {campaignParticipantStats.total}
           </span>
         </button>
@@ -807,7 +807,7 @@ export function PlanDetailPage() {
         >
           <CheckSquare className="h-4 w-4 shrink-0" />
           <span>Tất cả nhiệm vụ</span>
-          <span className={cn('text-[10px] px-1.5 py-0.2 rounded-full font-mono font-medium', activeTab === 'tasks' ? 'bg-violet-100 text-violet-800' : 'bg-slate-100 text-slate-600')}>
+          <span className={cn('text-[10px] px-1.5 py-0.2 rounded-full tabular-nums font-semibold', activeTab === 'tasks' ? 'bg-violet-100 text-violet-800' : 'bg-slate-100 text-slate-600')}>
             {collabTasks.length}
           </span>
         </button>
@@ -826,7 +826,7 @@ export function PlanDetailPage() {
           <DollarSign className="h-4 w-4 shrink-0" />
           <span>Tài chính & Gây quỹ</span>
           {transactions.length > 0 && (
-            <span className={cn('text-[10px] px-1.5 py-0.2 rounded-full font-mono font-medium', activeTab === 'finance' ? 'bg-violet-100 text-violet-800' : 'bg-slate-100 text-slate-600')}>
+            <span className={cn('text-[10px] px-1.5 py-0.2 rounded-full tabular-nums font-semibold', activeTab === 'finance' ? 'bg-violet-100 text-violet-800' : 'bg-slate-100 text-slate-600')}>
               {transactions.length}
             </span>
           )}
@@ -846,7 +846,7 @@ export function PlanDetailPage() {
           <Building2 className="h-4 w-4 shrink-0" />
           <span>Ban Tổ Chức</span>
           {personnel.length > 0 && (
-            <span className={cn('text-[10px] px-1.5 py-0.2 rounded-full font-mono font-medium', activeTab === 'personnel' ? 'bg-violet-100 text-violet-800' : 'bg-slate-100 text-slate-600')}>
+            <span className={cn('text-[10px] px-1.5 py-0.2 rounded-full tabular-nums font-semibold', activeTab === 'personnel' ? 'bg-violet-100 text-violet-800' : 'bg-slate-100 text-slate-600')}>
               {personnel.length}
             </span>
           )}
@@ -1010,7 +1010,7 @@ export function PlanDetailPage() {
                         {/* Left: Activity Details */}
                         <div className="space-y-2 min-w-0 flex-1">
                           <div className="flex items-center gap-2 flex-wrap min-w-0">
-                            <span className="text-[10px] font-mono font-bold bg-slate-100 text-slate-800 px-2 py-0.5 rounded border border-slate-200 shrink-0">
+                            <span className="text-[10px] font-bold tabular-nums bg-slate-100 text-slate-800 px-2 py-0.5 rounded border border-slate-200 shrink-0">
                               {act.code}
                             </span>
                             <Badge className="bg-violet-50 text-violet-700 border border-violet-200/70 text-[10px] shrink-0 font-medium">
@@ -1059,7 +1059,7 @@ export function PlanDetailPage() {
                           {/* Progress Metric Block */}
                           <div className="flex flex-col items-start md:items-end min-w-[130px]">
                             <div className="flex items-center gap-1.5">
-                              <span className="text-xs font-bold font-mono text-slate-900">
+                              <span className="text-xs font-bold tabular-nums text-slate-900">
                                 {totalTasks > 0 ? `${completedTasks}/${totalTasks} việc` : '0 việc'}
                               </span>
                               {totalTasks > 0 && (
@@ -1454,7 +1454,7 @@ export function PlanDetailPage() {
                                 {task.externalAssignee}
                               </span>
                               {task.externalContact && (
-                                <span className="text-[10px] text-slate-500 font-mono block">
+                                <span className="text-[10px] text-slate-500 tabular-nums block">
                                   {task.externalContact}
                                 </span>
                               )}
@@ -1490,7 +1490,7 @@ export function PlanDetailPage() {
                           )}
                         </td>
 
-                        <td className="px-4 py-3 whitespace-nowrap font-mono text-slate-600 text-xs">
+                        <td className="px-4 py-3 whitespace-nowrap tabular-nums text-slate-600 text-xs">
                           {task.dueTime && <span className="text-indigo-700 font-semibold mr-1">{task.dueTime}</span>}
                           {task.dueDate ? formatDate(task.dueDate) : '--'}
                         </td>
@@ -1879,7 +1879,7 @@ export function PlanDetailPage() {
                             </td>
 
                             {/* MSSV */}
-                            <td className="w-24 px-3 py-3 text-center font-mono font-medium text-slate-700">
+                            <td className="w-24 px-3 py-3 text-center tabular-nums font-medium text-slate-700">
                               {p.studentId || p.member?.studentId || '--'}
                             </td>
 
@@ -1889,7 +1889,7 @@ export function PlanDetailPage() {
                                 {p.className || p.member?.className || '--'}
                               </span>
                               {(p.cohort || p.member?.cohort) && (
-                                <span className="text-[10px] text-slate-400 font-mono block">
+                                <span className="text-[10px] text-slate-400 tabular-nums block">
                                   {String(p.cohort || p.member?.cohort).toUpperCase().startsWith('K')
                                     ? (p.cohort || p.member?.cohort)
                                     : `K${p.cohort || p.member?.cohort}`}
@@ -2017,7 +2017,7 @@ export function PlanDetailPage() {
                                 {p.fullName || p.member?.fullName || 'Người tham gia'}
                               </p>
                               <div className="flex items-center gap-1.5 text-[11px] text-slate-500">
-                                <span className="font-mono font-medium">{p.studentId || p.member?.studentId || '--'}</span>
+                                <span className="tabular-nums font-medium">{p.studentId || p.member?.studentId || '--'}</span>
                                 <span>•</span>
                                 <span>{p.className || p.member?.className || '--'}</span>
                               </div>

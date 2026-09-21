@@ -282,7 +282,7 @@ export function AddCollabParticipantDialog({
                           <div className="flex items-center gap-1.5 truncate">
                             <span className="font-semibold text-slate-900">{p.fullName}</span>
                             {studentInfo && (
-                              <span className="text-[10px] text-slate-400 font-mono">({studentInfo})</span>
+                              <span className="text-[10px] text-slate-400 tabular-nums">({studentInfo})</span>
                             )}
                           </div>
                           <span className="text-[10px] bg-slate-100 text-slate-700 px-1.5 py-0.5 rounded font-medium shrink-0">
@@ -375,7 +375,7 @@ export function AddCollabParticipantDialog({
               <Input
                 {...register('studentId')}
                 placeholder="B2100000"
-                className="h-9 text-xs bg-slate-50/50 focus:bg-white font-mono"
+                className="h-9 text-xs bg-slate-50/50 focus:bg-white tabular-nums"
               />
             </div>
             <div className="space-y-1">
@@ -391,7 +391,7 @@ export function AddCollabParticipantDialog({
               <Input
                 {...register('cohort')}
                 placeholder="47"
-                className="h-9 text-xs bg-slate-50/50 focus:bg-white font-mono"
+                className="h-9 text-xs bg-slate-50/50 focus:bg-white tabular-nums"
               />
             </div>
           </div>
@@ -432,7 +432,7 @@ export function AddCollabParticipantDialog({
               <Input
                 {...register('phone')}
                 placeholder="0912345678"
-                className="h-9 text-xs bg-slate-50/50 focus:bg-white font-mono"
+                className="h-9 text-xs bg-slate-50/50 focus:bg-white tabular-nums"
               />
             </div>
             <div className="space-y-1">

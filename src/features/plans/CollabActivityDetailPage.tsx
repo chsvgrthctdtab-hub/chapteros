@@ -455,7 +455,7 @@ export function CollabActivityDetailPage() {
             {plan.name}
           </Link>
           <ChevronRight className="w-3.5 h-3.5 text-slate-300 shrink-0" />
-          <span className="font-mono font-semibold text-violet-700 bg-violet-50 px-2 py-0.5 rounded-md border border-violet-200/60">
+          <span className="tabular-nums font-semibold text-violet-700 bg-violet-50 px-2 py-0.5 rounded-md border border-violet-200/60">
             {activity.code}
           </span>
         </div>
@@ -548,7 +548,7 @@ export function CollabActivityDetailPage() {
           <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-50/80 border border-slate-200/70 text-slate-700">
             <Calendar className="w-3.5 h-3.5 text-sky-600 shrink-0" />
             <span className="text-slate-400 font-medium">Thời gian:</span>
-            <span className="font-medium text-slate-900 font-mono">
+            <span className="font-medium text-slate-900 tabular-nums">
               {formatDate(activity.startDate)} – {formatDate(activity.endDate)}
             </span>
           </div>
@@ -580,7 +580,7 @@ export function CollabActivityDetailPage() {
           <span>Nhiệm vụ</span>
           <span
             className={cn(
-              'text-[10px] px-1.5 py-0.2 rounded-full font-mono font-medium',
+              'text-[10px] px-1.5 py-0.2 rounded-full tabular-nums font-semibold',
               activeTab === 'tasks' ? 'bg-violet-100 text-violet-800' : 'bg-slate-100 text-slate-600'
             )}
           >
@@ -602,7 +602,7 @@ export function CollabActivityDetailPage() {
           <span>Người tham gia</span>
           <span
             className={cn(
-              'text-[10px] px-1.5 py-0.2 rounded-full font-mono font-medium',
+              'text-[10px] px-1.5 py-0.2 rounded-full tabular-nums font-semibold',
               activeTab === 'participants' ? 'bg-violet-100 text-violet-800' : 'bg-slate-100 text-slate-600'
             )}
           >
@@ -625,7 +625,7 @@ export function CollabActivityDetailPage() {
           {forms.length > 0 && (
             <span
               className={cn(
-                'text-[10px] px-1.5 py-0.2 rounded-full font-mono font-medium',
+                'text-[10px] px-1.5 py-0.2 rounded-full tabular-nums font-semibold',
                 activeTab === 'forms' ? 'bg-violet-100 text-violet-800' : 'bg-slate-100 text-slate-600'
               )}
             >
@@ -649,7 +649,7 @@ export function CollabActivityDetailPage() {
           {transactions.length > 0 && (
             <span
               className={cn(
-                'text-[10px] px-1.5 py-0.2 rounded-full font-mono font-medium',
+                'text-[10px] px-1.5 py-0.2 rounded-full tabular-nums font-semibold',
                 activeTab === 'finance' ? 'bg-violet-100 text-violet-800' : 'bg-slate-100 text-slate-600'
               )}
             >
@@ -677,7 +677,7 @@ export function CollabActivityDetailPage() {
                 )}
               >
                 <span>Tất cả</span>
-                <span className={cn('text-[10px] font-mono px-1 rounded', taskStatusFilter === 'all' ? 'bg-slate-800 text-slate-200' : 'bg-slate-200/80 text-slate-600')}>
+                <span className={cn('text-[10px] tabular-nums font-semibold px-1 rounded', taskStatusFilter === 'all' ? 'bg-slate-800 text-slate-200' : 'bg-slate-200/80 text-slate-600')}>
                   {stats.total}
                 </span>
               </button>
@@ -694,7 +694,7 @@ export function CollabActivityDetailPage() {
               >
                 <span className="w-1.5 h-1.5 rounded-full bg-slate-400" />
                 <span>Cần làm</span>
-                <span className="text-[10px] font-mono text-slate-500">
+                <span className="text-[10px] tabular-nums font-semibold text-slate-500">
                   {stats.todo}
                 </span>
               </button>
@@ -711,7 +711,7 @@ export function CollabActivityDetailPage() {
               >
                 <span className="w-1.5 h-1.5 rounded-full bg-blue-500" />
                 <span>Đang làm</span>
-                <span className={cn('text-[10px] font-mono px-1 rounded', taskStatusFilter === 'in_progress' ? 'bg-blue-700 text-blue-100' : 'text-blue-700')}>
+                <span className={cn('text-[10px] tabular-nums font-semibold px-1 rounded', taskStatusFilter === 'in_progress' ? 'bg-blue-700 text-blue-100' : 'text-blue-700')}>
                   {stats.inProgress}
                 </span>
               </button>
@@ -728,7 +728,7 @@ export function CollabActivityDetailPage() {
               >
                 <span className="w-1.5 h-1.5 rounded-full bg-amber-500" />
                 <span>Chờ duyệt</span>
-                <span className={cn('text-[10px] font-mono px-1 rounded', taskStatusFilter === 'review' ? 'bg-amber-700 text-amber-100' : 'text-amber-700')}>
+                <span className={cn('text-[10px] tabular-nums font-semibold px-1 rounded', taskStatusFilter === 'review' ? 'bg-amber-700 text-amber-100' : 'text-amber-700')}>
                   {stats.review}
                 </span>
               </button>
@@ -745,7 +745,7 @@ export function CollabActivityDetailPage() {
               >
                 <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
                 <span>Đã xong</span>
-                <span className={cn('text-[10px] font-mono px-1 rounded', taskStatusFilter === 'done' ? 'bg-emerald-700 text-emerald-100' : 'text-emerald-700')}>
+                <span className={cn('text-[10px] tabular-nums font-semibold px-1 rounded', taskStatusFilter === 'done' ? 'bg-emerald-700 text-emerald-100' : 'text-emerald-700')}>
                   {stats.completed}
                 </span>
               </button>
@@ -763,7 +763,7 @@ export function CollabActivityDetailPage() {
                 >
                   <span className="w-1.5 h-1.5 rounded-full bg-rose-500 animate-pulse" />
                   <span>Trễ hạn</span>
-                  <span className="text-[10px] font-mono font-bold text-rose-700">
+                  <span className="text-[10px] tabular-nums font-bold text-rose-700">
                     {stats.overdue}
                   </span>
                 </button>
@@ -779,7 +779,7 @@ export function CollabActivityDetailPage() {
                   style={{ width: `${stats.total > 0 ? Math.round((stats.completed / stats.total) * 100) : 0}%` }}
                 />
               </div>
-              <span className="text-[11px] font-mono font-bold text-slate-700">
+              <span className="text-[11px] tabular-nums font-bold text-slate-700">
                 {stats.completed}/{stats.total} ({stats.total > 0 ? Math.round((stats.completed / stats.total) * 100) : 0}%)
               </span>
             </div>
@@ -974,7 +974,7 @@ export function CollabActivityDetailPage() {
 
                                   {task.dueDate && (
                                     <span
-                                      className={`flex items-center gap-1 font-mono text-[10px] shrink-0 ${
+                                      className={`flex items-center gap-1 tabular-nums text-[10px] shrink-0 ${
                                         isOverdue ? 'text-rose-600 font-bold' : 'text-slate-500'
                                       }`}
                                     >
@@ -996,7 +996,7 @@ export function CollabActivityDetailPage() {
                                         </span>
                                       </div>
                                       {task.externalContact && (
-                                        <span className="text-[10px] text-slate-500 font-mono flex items-center gap-0.5 mt-0.5">
+                                        <span className="text-[10px] text-slate-500 tabular-nums flex items-center gap-0.5 mt-0.5">
                                           <Phone className="w-2.5 h-2.5 text-slate-400" />
                                           {task.externalContact}
                                         </span>
@@ -1079,7 +1079,7 @@ export function CollabActivityDetailPage() {
                             {phaseName}
                           </h3>
                         </div>
-                        <Badge className="bg-white text-violet-700 border border-violet-200 text-[10px] font-mono">
+                        <Badge className="bg-white text-violet-700 border border-violet-200 text-[10px] tabular-nums font-semibold">
                           {phaseTasks.length} nhiệm vụ
                         </Badge>
                       </div>
@@ -1103,7 +1103,7 @@ export function CollabActivityDetailPage() {
                               <div className="flex items-center justify-between gap-2 flex-wrap">
                                 <div className="flex items-center gap-2 flex-wrap">
                                   {(task.dueTime || task.dueDate) && (
-                                    <span className="inline-flex items-center gap-1 font-mono text-xs font-semibold text-indigo-700 bg-indigo-50 border border-indigo-200/80 px-2 py-0.5 rounded-md">
+                                    <span className="inline-flex items-center gap-1 tabular-nums text-xs font-semibold text-indigo-700 bg-indigo-50 border border-indigo-200/80 px-2 py-0.5 rounded-md">
                                       <Clock className="w-3 h-3 text-indigo-600" />
                                       <span>
                                         {task.dueTime ? `${task.dueTime} ` : ''}
@@ -1183,7 +1183,7 @@ export function CollabActivityDetailPage() {
                                     <Share2 className="w-3 h-3 text-violet-600" />
                                     <span>Đối tác: <strong>{task.externalAssignee}</strong></span>
                                     {task.externalContact && (
-                                      <span className="text-[11px] text-slate-500 font-mono flex items-center gap-0.5 ml-1">
+                                      <span className="text-[11px] text-slate-500 tabular-nums flex items-center gap-0.5 ml-1">
                                         <Phone className="w-2.5 h-2.5" />
                                         {task.externalContact}
                                       </span>
@@ -1241,7 +1241,7 @@ export function CollabActivityDetailPage() {
                               <div className="flex items-center gap-2">
                                 <span className="w-2 h-2 rounded-full bg-violet-600 shrink-0" />
                                 <span className="text-xs font-bold text-slate-800 tracking-wide uppercase">{categoryName}</span>
-                                <span className="text-[10px] font-mono font-semibold px-2 py-0.5 rounded-md bg-white border border-slate-200 text-slate-600 shadow-2xs">
+                                <span className="text-[10px] tabular-nums font-semibold px-2 py-0.5 rounded-md bg-white border border-slate-200 text-slate-600 shadow-2xs">
                                   {catTasks.length} việc
                                 </span>
                               </div>
@@ -1308,7 +1308,7 @@ export function CollabActivityDetailPage() {
                                         {task.externalAssignee}
                                       </span>
                                       {task.externalContact && (
-                                        <span className="text-[10px] text-slate-500 font-mono flex items-center gap-1 mt-0.5">
+                                        <span className="text-[10px] text-slate-500 tabular-nums flex items-center gap-1 mt-0.5">
                                           <Phone className="w-2.5 h-2.5 text-slate-400" />
                                           <span>{task.externalContact}</span>
                                         </span>
@@ -1339,12 +1339,12 @@ export function CollabActivityDetailPage() {
                                       <span className="truncate block" title={task.deliverable}>{task.deliverable}</span>
                                     </div>
                                   ) : (
-                                    <span className="text-slate-300 font-mono text-xs">--</span>
+                                    <span className="text-slate-300 text-xs">--</span>
                                   )}
                                 </td>
 
                                 {/* 5. Deadline */}
-                                <td className="px-4 py-3 whitespace-nowrap font-mono text-[11px]">
+                                <td className="px-4 py-3 whitespace-nowrap tabular-nums text-[11px]">
                                   {task.dueDate ? (
                                     <span className={cn(
                                       "inline-flex items-center gap-1",
@@ -1470,7 +1470,7 @@ export function CollabActivityDetailPage() {
                 )}
               >
                 <span>Tất cả</span>
-                <span className={cn('text-[10px] font-mono px-1 rounded', participantStatusFilter === 'all' ? 'bg-slate-800 text-slate-200' : 'bg-slate-200/80 text-slate-600')}>
+                <span className={cn('text-[10px] tabular-nums font-semibold px-1 rounded', participantStatusFilter === 'all' ? 'bg-slate-800 text-slate-200' : 'bg-slate-200/80 text-slate-600')}>
                   {participantStats.total}
                 </span>
               </button>
@@ -1487,7 +1487,7 @@ export function CollabActivityDetailPage() {
               >
                 <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
                 <span>Có mặt</span>
-                <span className={cn('text-[10px] font-mono px-1 rounded', participantStatusFilter === 'present' ? 'bg-emerald-700 text-emerald-100' : 'text-emerald-700')}>
+                <span className={cn('text-[10px] tabular-nums font-semibold px-1 rounded', participantStatusFilter === 'present' ? 'bg-emerald-700 text-emerald-100' : 'text-emerald-700')}>
                   {participantStats.present}
                 </span>
               </button>
@@ -1504,7 +1504,7 @@ export function CollabActivityDetailPage() {
               >
                 <span className="w-1.5 h-1.5 rounded-full bg-rose-500" />
                 <span>Vắng</span>
-                <span className={cn('text-[10px] font-mono px-1 rounded', participantStatusFilter === 'absent' ? 'bg-rose-700 text-rose-100' : 'text-rose-700')}>
+                <span className={cn('text-[10px] tabular-nums font-semibold px-1 rounded', participantStatusFilter === 'absent' ? 'bg-rose-700 text-rose-100' : 'text-rose-700')}>
                   {participantStats.absent}
                 </span>
               </button>
@@ -1521,7 +1521,7 @@ export function CollabActivityDetailPage() {
               >
                 <span className="w-1.5 h-1.5 rounded-full bg-slate-400" />
                 <span>Chưa điểm danh</span>
-                <span className="text-[10px] font-mono text-slate-500">
+                <span className="text-[10px] tabular-nums font-semibold text-slate-500">
                   {participantStats.unmarked}
                 </span>
               </button>
@@ -1536,7 +1536,7 @@ export function CollabActivityDetailPage() {
                   style={{ width: `${participantStats.participationRate}%` }}
                 />
               </div>
-              <span className="text-[11px] font-mono font-bold text-emerald-700">
+              <span className="text-[11px] tabular-nums font-bold text-emerald-700">
                 {participantStats.participationRate}%
               </span>
             </div>
@@ -1759,7 +1759,7 @@ export function CollabActivityDetailPage() {
                             </td>
 
                             {/* MSSV */}
-                            <td className="w-24 px-3 py-3 text-center font-mono font-medium text-slate-700">
+                            <td className="w-24 px-3 py-3 text-center tabular-nums font-medium text-slate-700">
                               {p.studentId || p.member?.studentId || '--'}
                             </td>
 
@@ -1769,7 +1769,7 @@ export function CollabActivityDetailPage() {
                                 {p.className || p.member?.className || '--'}
                               </span>
                               {(p.cohort || p.member?.cohort) && (
-                                <span className="text-[10px] text-slate-400 font-mono block">
+                                <span className="text-[10px] text-slate-400 tabular-nums block">
                                   {String(p.cohort || p.member?.cohort).toUpperCase().startsWith('K')
                                     ? (p.cohort || p.member?.cohort)
                                     : `K${p.cohort || p.member?.cohort}`}
@@ -1894,7 +1894,7 @@ export function CollabActivityDetailPage() {
                                 {p.fullName || p.member?.fullName || 'Người tham gia'}
                               </p>
                               <div className="flex items-center gap-1.5 text-[11px] text-slate-500">
-                                <span className="font-mono font-medium">{p.studentId || p.member?.studentId || '--'}</span>
+                                <span className="tabular-nums font-medium">{p.studentId || p.member?.studentId || '--'}</span>
                                 <span>•</span>
                                 <span>{p.className || p.member?.className || '--'}</span>
                               </div>
@@ -1988,7 +1988,7 @@ export function CollabActivityDetailPage() {
             </div>
             <div className="text-right">
               <span className="text-xs text-slate-500 block">Tổng chi phí:</span>
-              <span className="text-sm font-bold text-violet-900 font-mono">
+              <span className="text-sm font-bold text-violet-900 tabular-nums">
                 {formatVND(stats.totalExpense)}
               </span>
             </div>
@@ -2020,8 +2020,8 @@ export function CollabActivityDetailPage() {
                           {tx.organization?.code || 'Đơn vị'}
                         </span>
                       </td>
-                      <td className="px-4 py-3 font-mono">{formatDate(tx.transactionDate)}</td>
-                      <td className="px-4 py-3 text-right font-mono font-bold text-slate-900">
+                      <td className="px-4 py-3 tabular-nums">{formatDate(tx.transactionDate)}</td>
+                      <td className="px-4 py-3 text-right tabular-nums font-bold text-slate-900">
                         {formatVND(tx.amount)}
                       </td>
                     </tr>
