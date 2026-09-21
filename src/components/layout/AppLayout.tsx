@@ -27,7 +27,7 @@ export function AppLayout() {
   };
 
   return (
-    <div className="flex h-screen w-full overflow-hidden bg-[#F8FAF9] text-slate-900 antialiased font-sans">
+    <div className="flex h-screen w-full overflow-hidden bg-cloud text-ink-navy antialiased font-sans">
       {/* Sidebar */}
       <Sidebar
         collapsed={sidebarCollapsed}

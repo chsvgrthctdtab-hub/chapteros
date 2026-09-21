@@ -70,11 +70,11 @@ function NavLinkItem({ item, collapsed, onCloseMobile }: NavLinkItemProps) {
         cn(
           "group flex items-center h-10 text-xs font-medium transition-all duration-200 ease-in-out relative border select-none",
           isActive
-            ? "bg-blue-50/90 text-blue-900 font-semibold border-blue-200/80 shadow-2xs"
-            : "border-transparent text-slate-600 hover:bg-slate-100/80 hover:text-slate-900",
+            ? "bg-pebble text-ink-navy font-semibold border-hairline shadow-calendly-sm"
+            : "border-transparent text-slate-gray hover:bg-pebble/70 hover:text-ink-navy",
           collapsed
-            ? "w-10 justify-center px-0 mx-auto rounded-xl"
-            : "w-full gap-3 px-3 rounded-xl"
+            ? "w-10 justify-center px-0 mx-auto rounded-lg"
+            : "w-full gap-3 px-3 rounded-lg"
         )
       }
     >
@@ -83,7 +83,7 @@ function NavLinkItem({ item, collapsed, onCloseMobile }: NavLinkItemProps) {
           {/* Active Accent Indicator */}
           <span
             className={cn(
-              "absolute left-0 top-2 bottom-2 w-1 rounded-r-full bg-blue-600 transition-all duration-200",
+              "absolute left-0 top-2 bottom-2 w-1 rounded-r-full bg-signal-blue transition-all duration-200",
               isActive ? "opacity-100 scale-y-100" : "opacity-0 scale-y-0"
             )}
           />
@@ -93,7 +93,7 @@ function NavLinkItem({ item, collapsed, onCloseMobile }: NavLinkItemProps) {
             strokeWidth={isActive ? 2 : 1.75}
             className={cn(
               "shrink-0 transition-all duration-200",
-              isActive ? "text-blue-600 scale-[1.04]" : "text-slate-400 group-hover:text-slate-700"
+              isActive ? "text-signal-blue scale-[1.04]" : "text-slate-gray group-hover:text-ink-navy"
             )}
           />
 
@@ -124,7 +124,7 @@ function NavLinkItem({ item, collapsed, onCloseMobile }: NavLinkItemProps) {
 
           {/* Floating Tooltip when Collapsed */}
           {collapsed && (
-            <div className="absolute left-full ml-2.5 px-2.5 py-1 bg-slate-900 text-white text-xs font-medium rounded-lg shadow-lg whitespace-nowrap opacity-0 pointer-events-none group-hover:opacity-100 transition-all duration-150 z-50 group-hover:translate-x-0 -translate-x-1">
+            <div className="absolute left-full ml-2.5 px-2.5 py-1 bg-ink-navy text-white text-xs font-medium rounded-lg shadow-calendly-card whitespace-nowrap opacity-0 pointer-events-none group-hover:opacity-100 transition-all duration-150 z-50 group-hover:translate-x-0 -translate-x-1">
               {item.name}
             </div>
           )}
@@ -159,7 +159,7 @@ export function Sidebar({ collapsed, onToggleCollapse, mobileOpen, onCloseMobile
       {mobileOpen && (
         <div
           id="sidebar-mobile-backdrop"
-          className="fixed inset-0 z-40 bg-slate-900/40 backdrop-blur-xs lg:hidden transition-opacity duration-200"
+          className="fixed inset-0 z-40 bg-ink-navy/40 backdrop-blur-xs lg:hidden transition-opacity duration-200"
           onClick={onCloseMobile}
         />
       )}
@@ -167,15 +167,15 @@ export function Sidebar({ collapsed, onToggleCollapse, mobileOpen, onCloseMobile
       <aside
         id="app-sidebar"
         className={cn(
-          "fixed top-0 bottom-0 left-0 z-50 flex flex-col border-r border-slate-200/90 bg-white transition-all duration-200 ease-in-out lg:static shrink-0 select-none overflow-x-hidden",
+          "fixed top-0 bottom-0 left-0 z-50 flex flex-col border-r border-hairline bg-white transition-all duration-200 ease-in-out lg:static shrink-0 select-none overflow-x-hidden",
           collapsed ? "w-[72px]" : "w-64",
-          mobileOpen ? "translate-x-0 shadow-2xl rounded-r-3xl" : "-translate-x-full lg:translate-x-0"
+          mobileOpen ? "translate-x-0 shadow-2xl rounded-r-2xl" : "-translate-x-full lg:translate-x-0"
         )}
       >
         {/* Brand header */}
         <div
           className={cn(
-            "flex h-16 shrink-0 items-center border-b border-slate-100 transition-all duration-200 ease-in-out",
+            "flex h-16 shrink-0 items-center border-b border-hairline/60 transition-all duration-200 ease-in-out",
             collapsed ? "justify-center px-2" : "justify-between px-4"
           )}
         >
@@ -184,8 +184,8 @@ export function Sidebar({ collapsed, onToggleCollapse, mobileOpen, onCloseMobile
               type="button"
               onClick={collapsed ? onToggleCollapse : undefined}
               className={cn(
-                "flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-blue-600 text-white shadow-2xs font-bold ring-1 ring-blue-700/20 transition-all duration-200",
-                collapsed ? "hover:bg-blue-700 cursor-pointer active:scale-95" : "cursor-default"
+                "flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-signal-blue text-white shadow-calendly-btn font-bold ring-1 ring-signal-blue/20 transition-all duration-200",
+                collapsed ? "hover:bg-[#005be0] cursor-pointer active:scale-95" : "cursor-default"
               )}
               title={collapsed ? "Mở rộng thanh điều hướng" : "ChapterOS"}
               aria-label={collapsed ? "Mở rộng thanh điều hướng" : "ChapterOS"}
@@ -198,10 +198,10 @@ export function Sidebar({ collapsed, onToggleCollapse, mobileOpen, onCloseMobile
                 collapsed ? "w-0 opacity-0 -translate-x-2.5 max-w-0 pointer-events-none" : "w-auto opacity-100 translate-x-0 max-w-[160px]"
               )}
             >
-              <span className="font-bold tracking-tight text-slate-900 text-base leading-tight truncate">
+              <span className="font-bold tracking-tight text-ink-navy text-base leading-tight truncate">
                 ChapterOS
               </span>
-              <span className="text-[11px] text-blue-600 font-semibold tracking-wider uppercase truncate">
+              <span className="text-[11px] text-signal-blue font-semibold tracking-wider uppercase truncate">
                 Operations Suite
               </span>
             </div>
@@ -212,7 +212,7 @@ export function Sidebar({ collapsed, onToggleCollapse, mobileOpen, onCloseMobile
             size="icon-xs"
             onClick={onToggleCollapse}
             className={cn(
-              "hidden lg:flex text-slate-400 hover:text-slate-700 hover:bg-slate-100 rounded-lg transition-all duration-200 shrink-0",
+              "hidden lg:flex text-slate-gray hover:text-ink-navy hover:bg-pebble rounded-lg transition-all duration-200 shrink-0",
               collapsed ? "w-0 opacity-0 p-0 overflow-hidden pointer-events-none" : "w-8 h-8 opacity-100"
             )}
             aria-label="Thu gọn thanh điều hướng"
@@ -232,7 +232,7 @@ export function Sidebar({ collapsed, onToggleCollapse, mobileOpen, onCloseMobile
                 collapsed ? "max-h-0 opacity-0 mb-0 pointer-events-none" : "max-h-6 opacity-100 mb-1.5"
               )}
             >
-              <p className="px-3 text-[10px] font-bold tracking-wider text-slate-400 uppercase truncate">
+              <p className="px-3 text-[10px] font-bold tracking-wider text-slate-gray uppercase truncate">
                 Quản trị vận hành
               </p>
             </div>
@@ -256,7 +256,7 @@ export function Sidebar({ collapsed, onToggleCollapse, mobileOpen, onCloseMobile
                 collapsed ? "max-h-0 opacity-0 mb-0 pointer-events-none" : "max-h-6 opacity-100 mb-1.5"
               )}
             >
-              <p className="px-3 text-[10px] font-bold tracking-wider text-slate-400 uppercase truncate">
+              <p className="px-3 text-[10px] font-bold tracking-wider text-slate-gray uppercase truncate">
                 Hệ thống & Tiện ích
               </p>
             </div>
@@ -274,18 +274,18 @@ export function Sidebar({ collapsed, onToggleCollapse, mobileOpen, onCloseMobile
         </div>
 
         {/* Footer info */}
-        <div className="border-t border-slate-100 p-2.5 bg-slate-50/60 shrink-0">
+        <div className="border-t border-hairline/60 p-2.5 bg-cloud shrink-0">
           <div
             className={cn(
               "overflow-hidden transition-all duration-200 ease-in-out",
               collapsed ? "max-h-0 opacity-0 pointer-events-none" : "max-h-20 opacity-100"
             )}
           >
-            <div className="flex items-center gap-2.5 rounded-xl p-2.5 text-xs text-slate-500 bg-white border border-slate-200/80 shadow-2xs">
-              <Shield className="h-4 w-4 text-blue-600 shrink-0" />
+            <div className="flex items-center gap-2.5 rounded-lg p-2.5 text-xs text-slate-gray bg-white border border-hairline shadow-calendly-sm">
+              <Shield className="h-4 w-4 text-signal-blue shrink-0" />
               <div className="truncate">
-                <p className="font-bold text-slate-800 text-xs leading-tight truncate">ChapterOS</p>
-                <p className="text-[11px] text-slate-500 truncate">Tác giả: <span className="font-semibold text-blue-700">tienthuan_0909</span></p>
+                <p className="font-bold text-ink-navy text-xs leading-tight truncate">ChapterOS</p>
+                <p className="text-[11px] text-slate-gray truncate">Tác giả: <span className="font-semibold text-signal-blue">tienthuan_0909</span></p>
               </div>
             </div>
           </div>
@@ -293,7 +293,7 @@ export function Sidebar({ collapsed, onToggleCollapse, mobileOpen, onCloseMobile
             <button
               type="button"
               onClick={onToggleCollapse}
-              className="flex justify-center items-center w-10 h-8 mx-auto text-slate-400 hover:text-slate-700 transition-colors cursor-pointer"
+              className="flex justify-center items-center w-10 h-8 mx-auto text-slate-gray hover:text-ink-navy transition-colors cursor-pointer"
               title="Mở rộng thanh điều hướng"
               aria-label="Mở rộng thanh điều hướng"
             >
