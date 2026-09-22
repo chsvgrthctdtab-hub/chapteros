@@ -1699,15 +1699,15 @@ export function CollabActivityDetailPage() {
                                 setSelectedParticipantIds([]);
                               }
                             }}
-                            className="rounded border-hairline text-signal-blue focus:ring-signal-blue cursor-pointer h-3.5 w-3.5"
+                            className="rounded-[5px] border-hairline text-signal-blue focus:ring-signal-blue cursor-pointer h-4.5 w-4.5"
                           />
                         </th>
-                        <th className="w-10 px-2 py-2.5 text-center text-slate-gray">#</th>
-                        <th className="px-3 py-2.5 min-w-[190px]">Họ và tên</th>
+                        <th className="w-10 px-2 py-2.5 text-center text-slate-gray">STT</th>
+                        <th className="px-3 py-2.5 min-w-[170px]">Họ và tên</th>
                         <th className="w-28 px-3 py-2.5 text-center">MSSV</th>
-                        <th className="w-24 px-3 py-2.5 text-center">Lớp / Khóa</th>
-                        <th className="w-28 px-3 py-2.5 text-center">Đơn vị</th>
-                        <th className="w-32 px-3 py-2.5">Đội hình / Vai trò</th>
+                        <th className="w-28 px-3 py-2.5 text-center">Lớp / Khóa</th>
+                        <th className="w-24 px-3 py-2.5 text-center">Đơn vị</th>
+                        <th className="w-28 px-3 py-2.5 text-center">Vai trò</th>
                         <th className="w-44 px-3 py-2.5 text-center">Điểm danh</th>
                         {canManageOperational && <th className="w-10 px-2 py-2.5 text-center">Xóa</th>}
                       </tr>
@@ -1718,6 +1718,17 @@ export function CollabActivityDetailPage() {
                         const isPresent = p.attendanceStatus === 'present';
                         const isAbsent = p.attendanceStatus === 'absent';
                         const memOrg = participatingOrganizations.find((o) => o.id === p.organizationId || o.id === p.member?.organizationId);
+
+                        const classCohortLabel = [
+                          p.className || p.member?.className,
+                          (p.cohort || p.member?.cohort)
+                            ? String(p.cohort || p.member?.cohort).toUpperCase().startsWith('K')
+                              ? (p.cohort || p.member?.cohort)
+                              : `K${p.cohort || p.member?.cohort}`
+                            : null,
+                        ]
+                          .filter(Boolean)
+                          .join(' - ') || '--';
 
                         return (
                           <tr
@@ -1739,7 +1750,7 @@ export function CollabActivityDetailPage() {
                                     setSelectedParticipantIds((prev) => prev.filter((id) => id !== p.id));
                                   }
                                 }}
-                                className="rounded border-hairline text-signal-blue focus:ring-signal-blue cursor-pointer h-3.5 w-3.5"
+                                className="rounded-[5px] border-hairline text-signal-blue focus:ring-signal-blue cursor-pointer h-4.5 w-4.5"
                               />
                             </td>
 
@@ -1749,28 +1760,23 @@ export function CollabActivityDetailPage() {
                             </td>
 
                             {/* Họ và tên */}
-                            <td className="px-3 py-2.5 font-semibold text-ink-navy min-w-[190px]">
-                              <div className="flex items-center gap-2.5">
-                                <div className="w-7 h-7 rounded-full bg-[#e6f0ff] text-signal-blue font-bold text-xs flex items-center justify-center shrink-0 border border-[#d4e4fa]">
-                                  {(p.fullName || p.member?.fullName || 'N').slice(0, 1).toUpperCase()}
-                                </div>
-                                <div className="min-w-0">
-                                  <span className="block font-bold text-ink-navy truncate text-xs">
-                                    {p.fullName || p.member?.fullName || 'Người tham gia'}
+                            <td className="px-3 py-2.5 font-semibold text-ink-navy min-w-[170px]">
+                              <div className="min-w-0">
+                                <span className="block font-bold text-ink-navy truncate text-xs">
+                                  {p.fullName || p.member?.fullName || 'Người tham gia'}
+                                </span>
+                                {(p.email || p.phone) && (
+                                  <span className="text-[10px] text-mist-gray font-normal block truncate">
+                                    {[p.email, p.phone].filter(Boolean).join(' • ')}
                                   </span>
-                                  {(p.email || p.phone) && (
-                                    <span className="text-[10px] text-mist-gray font-normal block truncate">
-                                      {[p.email, p.phone].filter(Boolean).join(' • ')}
-                                    </span>
-                                  )}
-                                </div>
+                                )}
                               </div>
                             </td>
 
                             {/* MSSV */}
-                            <td className="w-28 px-3 py-2.5 text-center tabular-nums font-mono text-xs font-semibold text-slate-gray">
+                            <td className="w-28 px-3 py-2.5 text-center tabular-nums text-xs font-semibold text-ink-navy">
                               {p.studentId || p.member?.studentId ? (
-                                <span className="bg-pebble/70 px-2 py-0.5 rounded text-slate-gray">
+                                <span className="bg-pebble/80 px-2 py-0.5 rounded text-ink-navy font-semibold">
                                   {p.studentId || p.member?.studentId}
                                 </span>
                               ) : (
@@ -1779,21 +1785,14 @@ export function CollabActivityDetailPage() {
                             </td>
 
                             {/* Lớp / Khóa */}
-                            <td className="w-24 px-3 py-2.5 text-center">
+                            <td className="w-28 px-3 py-2.5 text-center">
                               <span className="font-semibold text-ink-navy block truncate text-xs">
-                                {p.className || p.member?.className || '--'}
+                                {classCohortLabel}
                               </span>
-                              {(p.cohort || p.member?.cohort) && (
-                                <span className="text-[10px] text-mist-gray font-medium tabular-nums block">
-                                  {String(p.cohort || p.member?.cohort).toUpperCase().startsWith('K')
-                                    ? (p.cohort || p.member?.cohort)
-                                    : `K${p.cohort || p.member?.cohort}`}
-                                </span>
-                              )}
                             </td>
 
                             {/* Đơn vị */}
-                            <td className="w-28 px-3 py-2.5 text-center">
+                            <td className="w-24 px-3 py-2.5 text-center">
                               {p.externalOrganization ? (
                                 <span className="inline-flex items-center gap-1 text-[10px] bg-emerald-50 text-emerald-800 border border-emerald-200/80 px-2 py-0.5 rounded-full font-semibold truncate max-w-[120px]" title={p.externalOrganization}>
                                   <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 shrink-0" />
@@ -1808,7 +1807,7 @@ export function CollabActivityDetailPage() {
                             </td>
 
                             {/* Đội hình / Vai trò */}
-                            <td className="w-32 px-3 py-2.5">
+                            <td className="w-28 px-3 py-2.5 text-center">
                               <span className="inline-block text-[10px] bg-pebble text-slate-gray px-2 py-0.5 rounded-md font-medium truncate max-w-[125px]">
                                 {p.roleTitle || 'Tình nguyện viên'}
                               </span>
@@ -1903,6 +1902,17 @@ export function CollabActivityDetailPage() {
                     const isAbsent = p.attendanceStatus === 'absent';
                     const memOrg = participatingOrganizations.find((o) => o.id === p.organizationId || o.id === p.member?.organizationId);
 
+                    const classCohortLabel = [
+                      p.className || p.member?.className,
+                      (p.cohort || p.member?.cohort)
+                        ? String(p.cohort || p.member?.cohort).toUpperCase().startsWith('K')
+                          ? (p.cohort || p.member?.cohort)
+                          : `K${p.cohort || p.member?.cohort}`
+                        : null,
+                    ]
+                      .filter(Boolean)
+                      .join(' - ') || '--';
+
                     return (
                       <div
                         key={p.id}
@@ -1923,19 +1933,16 @@ export function CollabActivityDetailPage() {
                                   setSelectedParticipantIds((prev) => prev.filter((id) => id !== p.id));
                                 }
                               }}
-                              className="rounded border-hairline text-signal-blue focus:ring-signal-blue cursor-pointer h-4 w-4 shrink-0"
+                              className="rounded-[5px] border-hairline text-signal-blue focus:ring-signal-blue cursor-pointer h-4.5 w-4.5 shrink-0"
                             />
-                            <div className="w-8 h-8 rounded-full bg-[#e6f0ff] text-signal-blue font-bold text-xs flex items-center justify-center shrink-0 border border-[#d4e4fa]">
-                              {(p.fullName || p.member?.fullName || 'N').slice(0, 1).toUpperCase()}
-                            </div>
                             <div className="min-w-0">
                               <p className="font-bold text-ink-navy text-xs truncate">
                                 {p.fullName || p.member?.fullName || 'Người tham gia'}
                               </p>
                               <div className="flex items-center gap-1.5 text-[11px] text-mist-gray">
-                                <span className="tabular-nums font-mono font-medium">{p.studentId || p.member?.studentId || '--'}</span>
+                                <span className="tabular-nums font-medium">{p.studentId || p.member?.studentId || '--'}</span>
                                 <span>•</span>
-                                <span>{p.className || p.member?.className || '--'}</span>
+                                <span>{classCohortLabel}</span>
                               </div>
                             </div>
                           </div>
