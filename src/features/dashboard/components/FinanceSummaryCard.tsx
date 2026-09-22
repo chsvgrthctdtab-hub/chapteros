@@ -14,25 +14,25 @@ export function FinanceSummaryCard({ finance }: FinanceSummaryCardProps) {
   const isPositive = balance >= 0;
 
   return (
-    <Card className="border-slate-200/90 shadow-2xs rounded-xl overflow-hidden bg-white">
-      <CardHeader className="p-4 sm:p-5 pb-3 border-b border-slate-100">
+    <Card className="border-hairline shadow-sm rounded-2xl overflow-hidden bg-white">
+      <CardHeader className="p-4 sm:p-5 pb-3 border-b border-hairline">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
             <div className="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-700 border border-emerald-100 flex items-center justify-center">
               <Wallet className="w-4 h-4" />
             </div>
             <div>
-              <CardTitle className="text-base sm:text-lg font-bold text-slate-900 leading-tight">
+              <CardTitle className="text-base sm:text-lg font-bold text-ink-navy leading-tight">
                 Finance Overview
               </CardTitle>
-              <p className="text-xs text-slate-500 mt-0.5">
+              <p className="text-xs text-slate-gray mt-0.5">
                 Treasury balance & cash flow summary
               </p>
             </div>
           </div>
 
           <Link to="/finance">
-            <Button variant="ghost" size="sm" className="text-xs sm:text-sm text-emerald-700 hover:text-emerald-800 hover:bg-emerald-50 h-8 px-2.5 font-semibold">
+            <Button variant="ghost" size="sm" className="text-xs sm:text-sm text-signal-blue hover:text-signal-blue/80 hover:bg-pebble h-8 px-2.5 font-semibold">
               <span>Ledger</span>
               <ArrowRight className="w-3.5 h-3.5 ml-1" />
             </Button>
@@ -42,16 +42,16 @@ export function FinanceSummaryCard({ finance }: FinanceSummaryCardProps) {
 
       <CardContent className="p-4 sm:p-5 pt-3.5 space-y-3.5">
         {/* Main Balance Banner */}
-        <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200/80 flex items-center justify-between">
+        <div className="p-3.5 rounded-xl bg-pebble border border-hairline flex items-center justify-between">
           <div>
-            <div className="text-[11px] text-slate-500 font-semibold uppercase tracking-wider">Current Balance</div>
-            <div className={`text-lg sm:text-xl font-bold tracking-tight mt-0.5 tabular-nums ${isPositive ? 'text-emerald-700' : 'text-rose-700'}`}>
+            <div className="text-[11px] text-slate-gray font-semibold uppercase tracking-wider">Current Balance</div>
+            <div className={`text-lg sm:text-xl font-bold tracking-tight mt-0.5 tabular-nums ${isPositive ? 'text-ink-navy' : 'text-rose-700'}`}>
               {formatVND(balance)}
             </div>
           </div>
 
           <div className="text-right">
-            <div className="text-[11px] text-slate-500 font-semibold uppercase tracking-wider">This Month</div>
+            <div className="text-[11px] text-slate-gray font-semibold uppercase tracking-wider">This Month</div>
             <div className={`font-bold text-xs sm:text-sm mt-0.5 tabular-nums ${thisMonthBalance >= 0 ? 'text-emerald-700' : 'text-rose-600'}`}>
               {thisMonthBalance >= 0 ? '+' : ''}{formatVND(thisMonthBalance)}
             </div>
@@ -65,7 +65,7 @@ export function FinanceSummaryCard({ finance }: FinanceSummaryCardProps) {
               <span className="font-semibold">Total In</span>
               <TrendingUp className="w-3.5 h-3.5 text-emerald-600" />
             </div>
-            <div className="text-sm sm:text-base font-bold text-emerald-950 tabular-nums">
+            <div className="text-sm sm:text-base font-bold text-ink-navy tabular-nums">
               {formatVND(totalIncome)}
             </div>
             <div className="text-[11px] text-emerald-700 mt-0.5 tabular-nums">
@@ -78,7 +78,7 @@ export function FinanceSummaryCard({ finance }: FinanceSummaryCardProps) {
               <span className="font-semibold">Total Out</span>
               <TrendingDown className="w-3.5 h-3.5 text-rose-600" />
             </div>
-            <div className="text-sm sm:text-base font-bold text-rose-950 tabular-nums">
+            <div className="text-sm sm:text-base font-bold text-ink-navy tabular-nums">
               {formatVND(totalExpense)}
             </div>
             <div className="text-[11px] text-rose-700 mt-0.5 tabular-nums">

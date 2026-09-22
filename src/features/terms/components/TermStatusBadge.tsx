@@ -19,7 +19,7 @@ export function TermStatusBadge({
   if (isCurrent) {
     return (
       <span
-        className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200/80 shadow-2xs ${className}`}
+        className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200/80 shadow-xs ${className}`}
       >
         {showIcon && <Sparkles className="h-3 w-3 text-emerald-600 shrink-0" />}
         <span>Hiện tại</span>
@@ -49,25 +49,25 @@ export function TermStatusBadge({
     case 'completed':
       return (
         <span
-          className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-medium bg-slate-100 text-slate-700 border border-slate-200/80 ${className}`}
+          className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-medium bg-cloud text-slate-gray border border-hairline ${className}`}
         >
-          {showIcon && <CheckCircle2 className="h-3 w-3 text-slate-500 shrink-0" />}
+          {showIcon && <CheckCircle2 className="h-3 w-3 text-mist-gray shrink-0" />}
           <span>Đã kết thúc</span>
         </span>
       );
     case 'archived':
       return (
         <span
-          className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-medium bg-slate-100 text-slate-500 border border-slate-200/60 ${className}`}
+          className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-medium bg-cloud text-mist-gray border border-hairline ${className}`}
         >
-          {showIcon && <Archive className="h-3 w-3 text-slate-400 shrink-0" />}
+          {showIcon && <Archive className="h-3 w-3 text-mist-gray shrink-0" />}
           <span>Lưu trữ</span>
         </span>
       );
     default:
       return (
         <span
-          className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-medium bg-slate-100 text-slate-700 border border-slate-200 ${className}`}
+          className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-medium bg-cloud text-slate-gray border border-hairline ${className}`}
         >
           <span>{status}</span>
         </span>

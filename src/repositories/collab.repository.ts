@@ -969,7 +969,7 @@ export const collabRepository = {
   },
 
   // ==========================================
-  // 5. COLLAB PARTICIPANTS & ATTENDANCE
+  // 5. COLLAB PARTICIPANTS & ATTENDANCE (WITH LOCALSTORAGE FALLBACK)
   // ==========================================
   /**
    * List participants for a collab activity (or aggregated for a whole plan)
@@ -985,7 +985,7 @@ export const collabRepository = {
       participationRate: number;
     };
   }> {
-    if (!isSupabaseConfigured || (!activityId && !planId)) {
+    if (!activityId && !planId) {
       return {
         data: [],
         totalCount: 0,
@@ -994,65 +994,85 @@ export const collabRepository = {
     }
 
     try {
-      // 1. Primary: Query dedicated collab_participants table
-      let query = supabase
-        .from('collab_participants')
-        .select(`
-          *,
-          organization:organizations(
-            id,
-            name,
-            code
-          ),
-          collab_activity:collab_activities(
-            id,
-            title,
-            code
-          )
-        `)
-        .order('created_at', { ascending: false });
+      if (isSupabaseConfigured) {
+        // 1. Primary: Query dedicated collab_participants table
+        let query = supabase
+          .from('collab_participants')
+          .select(`
+            *,
+            organization:organizations(
+              id,
+              name,
+              code
+            ),
+            collab_activity:collab_activities(
+              id,
+              title,
+              code
+            )
+          `)
+          .order('created_at', { ascending: false });
 
-      if (activityId) {
-        query = query.eq('collab_activity_id', activityId);
-      } else if (planId) {
-        query = query.eq('plan_id', planId);
+        if (activityId) {
+          query = query.eq('collab_activity_id', activityId);
+        } else if (planId) {
+          query = query.eq('plan_id', planId);
+        }
+
+        const { data: rows, error } = await query;
+
+        // If no error, parse and return Supabase data
+        if (!error && rows) {
+          const list: CollabParticipant[] = rows.map((row: any) => ({
+            id: row.id,
+            planId: row.plan_id,
+            collabActivityId: row.collab_activity_id || null,
+            organizationId: row.organization_id || null,
+            externalOrganization: row.external_organization || null,
+            memberId: row.member_id || null,
+            fullName: row.full_name || 'Người tham gia',
+            studentId: row.student_id || null,
+            className: row.class_name || null,
+            cohort: row.cohort || null,
+            phone: row.phone || null,
+            email: row.email || null,
+            roleTitle: row.role_title || 'Tình nguyện viên',
+            attendanceStatus: (row.attendance_status as 'unmarked' | 'present' | 'absent') || 'unmarked',
+            attendedAt: row.attended_at || null,
+            notes: row.notes || null,
+            source: (row.source as 'manual' | 'import' | 'google_form' | 'system') || 'manual',
+            createdAt: row.created_at,
+            updatedAt: row.updated_at,
+            organization: row.organization || null,
+            collabActivity: row.collab_activity || null,
+          }));
+
+          const total = list.length;
+          const present = list.filter((p) => p.attendanceStatus === 'present').length;
+          const absent = list.filter((p) => p.attendanceStatus === 'absent').length;
+          const unmarked = list.filter((p) => p.attendanceStatus === 'unmarked').length;
+          const participationRate = total > 0 ? Math.round((present / total) * 1000) / 10 : 0;
+
+          return {
+            data: list,
+            totalCount: total,
+            stats: { total, present, absent, unmarked, participationRate },
+          };
+        }
       }
+    } catch (err) {
+      console.warn('collab_participants remote query fallback to local cache:', err);
+    }
 
-      const { data: rows, error } = await query;
-
-      // Defensive fallback if collab_participants table has not been created yet in DB
-      if (error) {
-        console.warn('collab_participants table error, checking fallback:', error.message);
-        return {
-          data: [],
-          totalCount: 0,
-          stats: { total: 0, present: 0, absent: 0, unmarked: 0, participationRate: 0 },
-        };
-      }
-
-      const list: CollabParticipant[] = (rows || []).map((row: any) => ({
-        id: row.id,
-        planId: row.plan_id,
-        collabActivityId: row.collab_activity_id || null,
-        organizationId: row.organization_id || null,
-        externalOrganization: row.external_organization || null,
-        memberId: row.member_id || null,
-        fullName: row.full_name || 'Người tham gia',
-        studentId: row.student_id || null,
-        className: row.class_name || null,
-        cohort: row.cohort || null,
-        phone: row.phone || null,
-        email: row.email || null,
-        roleTitle: row.role_title || 'Tình nguyện viên',
-        attendanceStatus: (row.attendance_status as 'unmarked' | 'present' | 'absent') || 'unmarked',
-        attendedAt: row.attended_at || null,
-        notes: row.notes || null,
-        source: (row.source as 'manual' | 'import' | 'google_form' | 'system') || 'manual',
-        createdAt: row.created_at,
-        updatedAt: row.updated_at,
-        organization: row.organization || null,
-        collabActivity: row.collab_activity || null,
-      }));
+    // Seamless fallback to LocalStorage if table doesn't exist yet on remote DB
+    try {
+      const raw = localStorage.getItem('chapteros_collab_participants_fallback');
+      const allLocal: CollabParticipant[] = raw ? JSON.parse(raw) : [];
+      const list = allLocal.filter((p) => {
+        if (activityId) return p.collabActivityId === activityId;
+        if (planId) return p.planId === planId;
+        return false;
+      });
 
       const total = list.length;
       const present = list.filter((p) => p.attendanceStatus === 'present').length;
@@ -1063,16 +1083,9 @@ export const collabRepository = {
       return {
         data: list,
         totalCount: total,
-        stats: {
-          total,
-          present,
-          absent,
-          unmarked,
-          participationRate,
-        },
+        stats: { total, present, absent, unmarked, participationRate },
       };
-    } catch (err) {
-      console.error('Error listing collab participants:', err);
+    } catch {
       return {
         data: [],
         totalCount: 0,
@@ -1103,8 +1116,6 @@ export const collabRepository = {
       source?: 'manual' | 'import' | 'google_form' | 'system';
     }
   ): Promise<CollabParticipant> {
-    if (!isSupabaseConfigured) throw new Error('Supabase is not configured');
-
     const payload = {
       plan_id: planId,
       collab_activity_id: activityId || null,
@@ -1124,51 +1135,90 @@ export const collabRepository = {
       source: data.source || 'manual',
     };
 
-    const { data: insertedRow, error } = await supabase
-      .from('collab_participants')
-      .insert(payload as never)
-      .select(`
-        *,
-        organization:organizations(
-          id,
-          name,
-          code
-        ),
-        collab_activity:collab_activities(
-          id,
-          title,
-          code
-        )
-      `)
-      .single();
+    if (isSupabaseConfigured) {
+      try {
+        const { data: insertedRow, error } = await supabase
+          .from('collab_participants')
+          .insert(payload as never)
+          .select(`
+            *,
+            organization:organizations(
+              id,
+              name,
+              code
+            ),
+            collab_activity:collab_activities(
+              id,
+              title,
+              code
+            )
+          `)
+          .single();
 
-    if (error) throw error;
-    if (!insertedRow) throw new Error('Không thể tạo người tham gia: không có dữ liệu trả về');
+        if (!error && insertedRow) {
+          const row = insertedRow as any;
+          return {
+            id: row.id,
+            planId: row.plan_id,
+            collabActivityId: row.collab_activity_id || null,
+            organizationId: row.organization_id || null,
+            externalOrganization: row.external_organization || null,
+            memberId: row.member_id || null,
+            fullName: row.full_name,
+            studentId: row.student_id || null,
+            className: row.class_name || null,
+            cohort: row.cohort || null,
+            phone: row.phone || null,
+            email: row.email || null,
+            roleTitle: row.role_title || 'Tình nguyện viên',
+            attendanceStatus: row.attendance_status || 'unmarked',
+            attendedAt: row.attended_at || null,
+            notes: row.notes || null,
+            source: row.source || 'manual',
+            createdAt: row.created_at,
+            updatedAt: row.updated_at,
+            organization: row.organization || null,
+            collabActivity: row.collab_activity || null,
+          };
+        }
+      } catch (e) {
+        console.warn('Supabase addCollabParticipant error, falling back to local store:', e);
+      }
+    }
 
-    const row = insertedRow as any;
-    return {
-      id: row.id,
-      planId: row.plan_id,
-      collabActivityId: row.collab_activity_id || null,
-      organizationId: row.organization_id || null,
-      externalOrganization: row.external_organization || null,
-      memberId: row.member_id || null,
-      fullName: row.full_name,
-      studentId: row.student_id || null,
-      className: row.class_name || null,
-      cohort: row.cohort || null,
-      phone: row.phone || null,
-      email: row.email || null,
-      roleTitle: row.role_title || 'Tình nguyện viên',
-      attendanceStatus: row.attendance_status || 'unmarked',
-      attendedAt: row.attended_at || null,
-      notes: row.notes || null,
-      source: row.source || 'manual',
-      createdAt: row.created_at,
-      updatedAt: row.updated_at,
-      organization: row.organization || null,
-      collabActivity: row.collab_activity || null,
+    // Local fallback
+    const fallbackItem: CollabParticipant = {
+      id: (typeof crypto !== 'undefined' && crypto.randomUUID ? crypto.randomUUID() : 'p_' + Date.now()),
+      planId,
+      collabActivityId: activityId || null,
+      organizationId: data.organizationId || null,
+      externalOrganization: data.externalOrganization || null,
+      memberId: data.memberId || null,
+      fullName: data.fullName.trim(),
+      studentId: data.studentId?.trim() || null,
+      className: data.className?.trim() || null,
+      cohort: data.cohort?.trim() || null,
+      phone: data.phone?.trim() || null,
+      email: data.email?.trim() || null,
+      roleTitle: data.roleTitle?.trim() || 'Tình nguyện viên',
+      attendanceStatus: data.attendanceStatus || 'unmarked',
+      attendedAt: data.attendanceStatus === 'present' ? new Date().toISOString() : null,
+      notes: data.notes?.trim() || null,
+      source: data.source || 'manual',
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
     };
+
+    try {
+      const raw = localStorage.getItem('chapteros_collab_participants_fallback');
+      const list: CollabParticipant[] = raw ? JSON.parse(raw) : [];
+      list.unshift(fallbackItem);
+      localStorage.setItem('chapteros_collab_participants_fallback', JSON.stringify(list));
+    } catch (err) {
+      console.warn('Failed to save to localStorage fallback:', err);
+    }
+
+    return fallbackItem;
   },
 
   /**
@@ -1191,7 +1241,6 @@ export const collabRepository = {
       notes?: string | null;
     }>
   ): Promise<number> {
-    if (!isSupabaseConfigured) throw new Error('Supabase is not configured');
     if (participants.length === 0) return 0;
 
     const payloadList = participants.map((p) => ({
@@ -1212,22 +1261,68 @@ export const collabRepository = {
       source: 'import',
     }));
 
-    // Chunk insertions into batches of 50 to avoid network payload limits
-    const CHUNK_SIZE = 50;
-    let insertedCount = 0;
+    if (isSupabaseConfigured) {
+      try {
+        const CHUNK_SIZE = 50;
+        let insertedCount = 0;
+        let hasError = false;
 
-    for (let i = 0; i < payloadList.length; i += CHUNK_SIZE) {
-      const chunk = payloadList.slice(i, i + CHUNK_SIZE);
-      const { data, error } = await supabase
-        .from('collab_participants')
-        .insert(chunk as never)
-        .select('id');
+        for (let i = 0; i < payloadList.length; i += CHUNK_SIZE) {
+          const chunk = payloadList.slice(i, i + CHUNK_SIZE);
+          const { data, error } = await supabase
+            .from('collab_participants')
+            .insert(chunk as never)
+            .select('id');
 
-      if (error) throw error;
-      insertedCount += data?.length || chunk.length;
+          if (error) {
+            hasError = true;
+            break;
+          }
+          insertedCount += data?.length || chunk.length;
+        }
+
+        if (!hasError && insertedCount > 0) {
+          return insertedCount;
+        }
+      } catch (e) {
+        console.warn('Supabase bulkAddCollabParticipants error, falling back to local store:', e);
+      }
     }
 
-    return insertedCount;
+    // LocalStorage fallback
+    try {
+      const raw = localStorage.getItem('chapteros_collab_participants_fallback');
+      const list: CollabParticipant[] = raw ? JSON.parse(raw) : [];
+      const now = new Date().toISOString();
+
+      const newItems: CollabParticipant[] = participants.map((p, idx) => ({
+        id: (typeof crypto !== 'undefined' && crypto.randomUUID ? crypto.randomUUID() : `p_${Date.now()}_${idx}`),
+        planId,
+        collabActivityId: activityId || null,
+        organizationId: p.organizationId || null,
+        externalOrganization: p.externalOrganization || null,
+        memberId: p.memberId || null,
+        fullName: p.fullName.trim(),
+        studentId: p.studentId?.trim() || null,
+        className: p.className?.trim() || null,
+        cohort: p.cohort?.trim() || null,
+        phone: p.phone?.trim() || null,
+        email: p.email?.trim() || null,
+        roleTitle: p.roleTitle?.trim() || 'Tình nguyện viên',
+        attendanceStatus: 'unmarked',
+        attendedAt: null,
+        notes: p.notes?.trim() || null,
+        source: 'import',
+        createdAt: now,
+        updatedAt: now,
+      }));
+
+      list.unshift(...newItems);
+      localStorage.setItem('chapteros_collab_participants_fallback', JSON.stringify(list));
+      return newItems.length;
+    } catch {
+      return 0;
+    }
   },
 
   /**
@@ -1242,7 +1337,7 @@ export const collabRepository = {
       collabActivityId?: string | null;
     }
   ): Promise<void> {
-    if (!isSupabaseConfigured || !participantId) return;
+    if (!participantId) return;
 
     const payload: any = {};
     if (data.attendanceStatus !== undefined) {
@@ -1259,21 +1354,69 @@ export const collabRepository = {
       payload.collab_activity_id = data.collabActivityId;
     }
 
-    const { error } = await supabase
-      .from('collab_participants')
-      .update(payload as never)
-      .eq('id', participantId);
+    if (isSupabaseConfigured) {
+      try {
+        const { error } = await supabase
+          .from('collab_participants')
+          .update(payload as never)
+          .eq('id', participantId);
 
-    if (error) throw error;
+        if (!error) return;
+      } catch (e) {
+        console.warn('Supabase updateCollabParticipant fallback:', e);
+      }
+    }
+
+    // Local fallback update
+    try {
+      const raw = localStorage.getItem('chapteros_collab_participants_fallback');
+      if (raw) {
+        const list: CollabParticipant[] = JSON.parse(raw);
+        const updated = list.map((p) => {
+          if (p.id !== participantId) return p;
+          return {
+            ...p,
+            attendanceStatus: data.attendanceStatus !== undefined ? data.attendanceStatus : p.attendanceStatus,
+            attendedAt: data.attendanceStatus === 'present' ? new Date().toISOString() : data.attendanceStatus === 'unmarked' || data.attendanceStatus === 'absent' ? null : p.attendedAt,
+            notes: data.notes !== undefined ? data.notes : p.notes,
+            roleTitle: data.roleTitle !== undefined ? data.roleTitle : p.roleTitle,
+            collabActivityId: data.collabActivityId !== undefined ? data.collabActivityId : p.collabActivityId,
+            updatedAt: new Date().toISOString(),
+          };
+        });
+        localStorage.setItem('chapteros_collab_participants_fallback', JSON.stringify(updated));
+      }
+    } catch (err) {
+      console.warn('Local update participant failed:', err);
+    }
   },
 
   /**
    * Remove participant from collab activity or plan
    */
   async removeCollabParticipant(participantId: string): Promise<void> {
-    if (!isSupabaseConfigured || !participantId) return;
-    const { error } = await supabase.from('collab_participants').delete().eq('id', participantId);
-    if (error) throw error;
+    if (!participantId) return;
+
+    if (isSupabaseConfigured) {
+      try {
+        const { error } = await supabase.from('collab_participants').delete().eq('id', participantId);
+        if (!error) return;
+      } catch (e) {
+        console.warn('Supabase removeCollabParticipant fallback:', e);
+      }
+    }
+
+    // Local fallback remove
+    try {
+      const raw = localStorage.getItem('chapteros_collab_participants_fallback');
+      if (raw) {
+        const list: CollabParticipant[] = JSON.parse(raw);
+        const filtered = list.filter((p) => p.id !== participantId);
+        localStorage.setItem('chapteros_collab_participants_fallback', JSON.stringify(filtered));
+      }
+    } catch (err) {
+      console.warn('Local remove participant failed:', err);
+    }
   },
 
   /**
@@ -1283,16 +1426,43 @@ export const collabRepository = {
     participantIds: string[],
     status: 'unmarked' | 'present' | 'absent'
   ): Promise<void> {
-    if (!isSupabaseConfigured || participantIds.length === 0) return;
+    if (participantIds.length === 0) return;
 
-    const { error } = await supabase
-      .from('collab_participants')
-      .update({
-        attendance_status: status,
-        attended_at: status === 'present' ? new Date().toISOString() : null,
-      } as never)
-      .in('id', participantIds);
+    if (isSupabaseConfigured) {
+      try {
+        const { error } = await supabase
+          .from('collab_participants')
+          .update({
+            attendance_status: status,
+            attended_at: status === 'present' ? new Date().toISOString() : null,
+          } as never)
+          .in('id', participantIds);
 
-    if (error) throw error;
+        if (!error) return;
+      } catch (e) {
+        console.warn('Supabase bulkUpdateCollabAttendance fallback:', e);
+      }
+    }
+
+    // Local fallback
+    try {
+      const raw = localStorage.getItem('chapteros_collab_participants_fallback');
+      if (raw) {
+        const list: CollabParticipant[] = JSON.parse(raw);
+        const idSet = new Set(participantIds);
+        const updated = list.map((p) => {
+          if (!idSet.has(p.id)) return p;
+          return {
+            ...p,
+            attendanceStatus: status,
+            attendedAt: status === 'present' ? new Date().toISOString() : null,
+            updatedAt: new Date().toISOString(),
+          };
+        });
+        localStorage.setItem('chapteros_collab_participants_fallback', JSON.stringify(updated));
+      }
+    } catch (err) {
+      console.warn('Local bulk update attendance failed:', err);
+    }
   },
 };

@@ -83,27 +83,27 @@ export function DashboardHeader({
   return (
     <div className="space-y-4">
       {/* Top Header Card */}
-      <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-5 p-5 sm:p-6 rounded-xl bg-white border border-slate-200/90 shadow-2xs">
+      <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-5 p-5 sm:p-6 rounded-2xl bg-white border border-hairline shadow-sm">
         <div className="space-y-2">
           {/* Metadata badges */}
           <div className="flex items-center gap-2.5 flex-wrap text-xs sm:text-sm">
-            <div className="flex items-center gap-1.5 font-medium text-blue-800 bg-blue-50 border border-blue-200/70 px-2.5 py-1 rounded-md">
-              <Building2 className="w-4 h-4 text-blue-700" />
+            <div className="flex items-center gap-1.5 font-medium text-signal-blue bg-[#e6f0ff] border border-hairline px-3 py-1 rounded-full">
+              <Building2 className="w-4 h-4 text-signal-blue" />
               <span>{organizationName}</span>
             </div>
 
-            <Badge variant="outline" className="text-xs sm:text-sm text-slate-700 bg-slate-50 border-slate-200/80 py-1 px-2.5 font-medium">
-              <ShieldCheck className="w-4 h-4 mr-1 text-blue-600" />
+            <Badge variant="outline" className="text-xs sm:text-sm text-ink-navy bg-pebble border-hairline py-1 px-3 rounded-full font-medium">
+              <ShieldCheck className="w-4 h-4 mr-1 text-signal-blue" />
               {roleName}
             </Badge>
 
-            <div className="flex items-center gap-1.5 text-slate-500 font-medium bg-slate-50 border border-slate-200/60 px-2.5 py-1 rounded-md">
-              <Calendar className="w-4 h-4 text-slate-400" />
+            <div className="flex items-center gap-1.5 text-slate-gray font-medium bg-pebble border border-hairline px-3 py-1 rounded-full tabular-nums">
+              <Calendar className="w-4 h-4 text-mist-gray" />
               <span>{formattedDate}</span>
             </div>
 
             {selectedTerm?.isCurrent && (
-              <Badge variant="default" className="bg-blue-600 hover:bg-blue-700 text-white text-xs sm:text-sm py-1 px-2.5 font-medium">
+              <Badge variant="default" className="bg-signal-blue hover:bg-[#005be0] text-white text-xs sm:text-sm py-1 px-3 rounded-full font-medium shadow-sm">
                 Active Term: {selectedTerm.name}
               </Badge>
             )}
@@ -111,10 +111,10 @@ export function DashboardHeader({
 
           {/* Heading */}
           <div>
-            <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-slate-900">
+            <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-ink-navy">
               Welcome back, {userName}
             </h1>
-            <p className="text-sm text-slate-500 mt-1">
+            <p className="text-sm text-slate-gray mt-1">
               Chapter operational command center, active deliverables, and real-time treasury metrics.
             </p>
           </div>
@@ -126,13 +126,13 @@ export function DashboardHeader({
             value={selectedTermId}
             onValueChange={onSelectTerm}
           >
-            <SelectTrigger id="dashboard-term-selector" className="h-9 text-xs sm:text-sm font-medium text-slate-800 bg-slate-50 border-slate-200/90 w-auto min-w-[160px]">
+            <SelectTrigger id="dashboard-term-selector" className="h-9.5 text-xs sm:text-sm font-medium text-ink-navy bg-white border-hairline rounded-lg w-auto min-w-[160px]">
               <div className="flex items-center gap-2">
-                <CalendarRange className="w-4 h-4 text-slate-400 shrink-0" />
+                <CalendarRange className="w-4 h-4 text-mist-gray shrink-0" />
                 <SelectValue placeholder="Tất cả nhiệm kỳ" />
               </div>
             </SelectTrigger>
-            <SelectContent>
+            <SelectContent className="bg-white border-hairline rounded-xl shadow-md">
               <SelectItem value="all">Tất cả nhiệm kỳ</SelectItem>
               {terms.map((term) => (
                 <SelectItem key={term.id} value={term.id}>
@@ -148,9 +148,9 @@ export function DashboardHeader({
             size="sm"
             onClick={onRefresh}
             disabled={isRefreshing}
-            className="text-xs sm:text-sm font-semibold h-9 px-3.5 text-slate-700 bg-white hover:bg-slate-50 border-slate-200/90 rounded-lg shadow-2xs cursor-pointer"
+            className="text-xs sm:text-sm font-semibold h-9.5 px-4 text-ink-navy bg-white hover:bg-pebble border-hairline rounded-lg shadow-sm cursor-pointer"
           >
-            <RefreshCw className={`w-4 h-4 mr-2 ${isRefreshing ? 'animate-spin text-emerald-600' : 'text-slate-500'}`} />
+            <RefreshCw className={`w-4 h-4 mr-2 ${isRefreshing ? 'animate-spin text-signal-blue' : 'text-slate-gray'}`} />
             <span>{isRefreshing ? 'Đang đồng bộ...' : 'Làm mới'}</span>
           </Button>
         </div>
@@ -158,12 +158,12 @@ export function DashboardHeader({
 
       {/* Quick Actions Bar for Board & Permitted Roles */}
       {hasAnyQuickAction && (
-        <div className="p-3.5 sm:px-5 sm:py-3 rounded-xl bg-slate-900 text-white shadow-2xs flex flex-col md:flex-row md:items-center justify-between gap-3">
+        <div className="p-3.5 sm:px-5 sm:py-3.5 rounded-2xl bg-ink-navy text-white shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-3">
           <div className="flex items-center gap-2.5 text-xs sm:text-sm">
-            <span className="flex h-2.5 w-2.5 rounded-full bg-emerald-400"></span>
-            <span className="font-semibold text-slate-100">Thao tác nhanh Ban Chấp Hành</span>
-            <span className="text-slate-400 hidden sm:inline">•</span>
-            <span className="text-slate-400 text-xs sm:text-sm hidden sm:inline">Phím tắt tác vụ nhanh</span>
+            <span className="flex h-2 w-2 rounded-full bg-emerald-400"></span>
+            <span className="font-semibold text-white">Thao tác nhanh Ban Chấp Hành</span>
+            <span className="text-white/40 hidden sm:inline">•</span>
+            <span className="text-white/70 text-xs sm:text-sm hidden sm:inline">Phím tắt tác vụ nhanh</span>
           </div>
 
           <div className="flex items-center gap-2 flex-wrap">
@@ -171,7 +171,7 @@ export function DashboardHeader({
               <Link to="/members">
                 <Button
                   size="sm"
-                  className="bg-slate-800 hover:bg-slate-700 text-slate-200 hover:text-white text-xs sm:text-sm h-8 px-3 border border-slate-700/60 rounded-lg cursor-pointer font-medium"
+                  className="bg-white/10 hover:bg-white/20 text-white text-xs sm:text-sm h-8 px-3 border border-white/15 rounded-lg cursor-pointer font-medium"
                 >
                   <UserPlus className="w-3.5 h-3.5 mr-1.5 text-emerald-400" />
                   <span>Member</span>
@@ -183,9 +183,9 @@ export function DashboardHeader({
               <Link to="/activities">
                 <Button
                   size="sm"
-                  className="bg-slate-800 hover:bg-slate-700 text-slate-200 hover:text-white text-xs sm:text-sm h-8 px-3 border border-slate-700/60 rounded-lg cursor-pointer font-medium"
+                  className="bg-white/10 hover:bg-white/20 text-white text-xs sm:text-sm h-8 px-3 border border-white/15 rounded-lg cursor-pointer font-medium"
                 >
-                  <CalendarPlus className="w-3.5 h-3.5 mr-1.5 text-blue-400" />
+                  <CalendarPlus className="w-3.5 h-3.5 mr-1.5 text-sky-cyan" />
                   <span>Activity</span>
                 </Button>
               </Link>
@@ -195,7 +195,7 @@ export function DashboardHeader({
               <Link to="/tasks">
                 <Button
                   size="sm"
-                  className="bg-slate-800 hover:bg-slate-700 text-slate-200 hover:text-white text-xs sm:text-sm h-8 px-3 border border-slate-700/60 rounded-lg cursor-pointer font-medium"
+                  className="bg-white/10 hover:bg-white/20 text-white text-xs sm:text-sm h-8 px-3 border border-white/15 rounded-lg cursor-pointer font-medium"
                 >
                   <CheckSquare className="w-3.5 h-3.5 mr-1.5 text-amber-400" />
                   <span>Task</span>
@@ -207,9 +207,9 @@ export function DashboardHeader({
               <Link to="/finance">
                 <Button
                   size="sm"
-                  className="bg-blue-600 hover:bg-blue-500 text-white text-xs sm:text-sm h-8 px-3 border border-blue-500/40 rounded-lg cursor-pointer font-medium"
+                  className="bg-signal-blue hover:bg-[#005be0] text-white text-xs sm:text-sm h-8 px-3 border border-transparent rounded-lg cursor-pointer font-medium shadow-sm"
                 >
-                  <DollarSign className="w-3.5 h-3.5 mr-1.5 text-blue-200" />
+                  <DollarSign className="w-3.5 h-3.5 mr-1.5 text-white" />
                   <span>Transaction</span>
                 </Button>
               </Link>
@@ -219,7 +219,7 @@ export function DashboardHeader({
               <Link to="/documents">
                 <Button
                   size="sm"
-                  className="bg-slate-800 hover:bg-slate-700 text-slate-200 hover:text-white text-xs sm:text-sm h-8 px-3 border border-slate-700/60 rounded-lg cursor-pointer font-medium"
+                  className="bg-white/10 hover:bg-white/20 text-white text-xs sm:text-sm h-8 px-3 border border-white/15 rounded-lg cursor-pointer font-medium"
                 >
                   <FileUp className="w-3.5 h-3.5 mr-1.5 text-teal-400" />
                   <span>Document</span>

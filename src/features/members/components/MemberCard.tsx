@@ -70,21 +70,21 @@ export function MemberCard({
   return (
     <div
       onClick={() => onViewDetail(memberObj)}
-      className="bg-white border border-slate-200/90 rounded-xl p-4 shadow-2xs hover:border-slate-300 hover:shadow-sm transition-all duration-150 flex flex-col justify-between cursor-pointer group"
+      className="bg-white border border-hairline rounded-2xl p-4 shadow-xs hover:border-[#d4e4fa] hover:shadow-xs transition-all duration-150 flex flex-col justify-between cursor-pointer group"
     >
       {/* Top section: Avatar, Name, MSSV, Badges */}
       <div className="space-y-3">
         <div className="flex items-start justify-between gap-2">
           <div className="flex items-center space-x-3 min-w-0">
-            <div className="h-10 w-10 rounded-xl bg-slate-100 text-slate-700 font-bold text-xs flex items-center justify-center shrink-0 border border-slate-200/80 group-hover:border-emerald-200 group-hover:bg-emerald-50 group-hover:text-emerald-700 transition-colors">
+            <div className="h-10 w-10 rounded-xl bg-pebble text-ink-navy font-bold text-xs flex items-center justify-center shrink-0 border border-hairline group-hover:border-[#d4e4fa] group-hover:bg-[#e6f0ff] group-hover:text-signal-blue transition-colors">
               {initials || <User className="h-4 w-4" />}
             </div>
             <div className="min-w-0 flex-1">
-              <h3 className="text-sm font-semibold text-slate-900 truncate group-hover:text-emerald-700 transition-colors">
+              <h3 className="text-sm font-semibold text-ink-navy truncate group-hover:text-signal-blue transition-colors">
                 {member.fullName}
               </h3>
               <div className="flex items-center gap-1.5 mt-0.5">
-                <span className="tabular-nums text-xs font-medium text-slate-600 bg-slate-50 px-1.5 py-0.5 rounded border border-slate-100">
+                <span className="tabular-nums text-xs font-medium text-slate-gray bg-cloud px-1.5 py-0.5 rounded border border-hairline">
                   {member.studentId || 'Chưa có MSSV'}
                 </span>
               </div>
@@ -105,52 +105,52 @@ export function MemberCard({
 
           {member.currentTermAssignment ? (
             <span
-              className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[10px] font-medium bg-slate-50 text-slate-700 border border-slate-200"
+              className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-medium bg-[#e6f0ff] text-signal-blue border border-[#d4e4fa]"
               title={`Nhiệm kỳ: ${member.currentTermAssignment.termName}`}
             >
-              <Calendar className="h-2.5 w-2.5 text-slate-400" />
+              <Calendar className="h-2.5 w-2.5 text-signal-blue" />
               <span className="truncate max-w-[120px]">{member.currentTermAssignment.termName}</span>
             </span>
           ) : (
-            <span className="text-[10px] text-slate-400 italic bg-slate-50 px-1.5 py-0.5 rounded border border-dashed border-slate-200">
+            <span className="text-[10px] text-mist-gray italic bg-cloud px-1.5 py-0.5 rounded border border-dashed border-hairline">
               Chưa gán nhiệm kỳ
             </span>
           )}
         </div>
 
         {/* Academic Details */}
-        <div className="space-y-1.5 text-xs text-slate-600 bg-slate-50/60 p-2.5 rounded-lg border border-slate-100">
+        <div className="space-y-1.5 text-xs text-slate-gray bg-cloud p-2.5 rounded-xl border border-hairline">
           <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-1.5 text-slate-700 font-medium">
-              <GraduationCap className="h-3.5 w-3.5 text-slate-400" />
+            <div className="flex items-center space-x-1.5 text-ink-navy font-medium">
+              <GraduationCap className="h-3.5 w-3.5 text-mist-gray" />
               <span>{member.className || 'Chưa cập nhật lớp'}</span>
             </div>
             {member.cohort && (
-              <span className="tabular-nums text-[10px] text-slate-500 bg-white px-1.5 py-0.5 rounded border border-slate-200">
+              <span className="tabular-nums text-[10px] text-slate-gray bg-white px-1.5 py-0.5 rounded-full border border-hairline font-medium">
                 {member.cohort}
               </span>
             )}
           </div>
 
           {member.major && (
-            <div className="text-[11px] text-slate-500 truncate pl-5">
+            <div className="text-[11px] text-slate-gray truncate pl-5">
               {member.major}
             </div>
           )}
         </div>
 
         {/* Contact info */}
-        <div className="space-y-1 text-xs text-slate-500 pt-0.5">
+        <div className="space-y-1 text-xs text-slate-gray pt-0.5">
           <div className="flex items-center space-x-2 truncate">
-            <Mail className="h-3 w-3 text-slate-400 shrink-0" />
+            <Mail className="h-3 w-3 text-mist-gray shrink-0" />
             <span className="truncate text-[11px]">
-              {member.email || <span className="text-slate-300 italic">Chưa có email</span>}
+              {member.email || <span className="text-mist-gray italic">Chưa có email</span>}
             </span>
           </div>
           <div className="flex items-center space-x-2">
-            <Phone className="h-3 w-3 text-slate-400 shrink-0" />
-            <span className="text-[11px]">
-              {member.phone || <span className="text-slate-300 italic">Chưa có SĐT</span>}
+            <Phone className="h-3 w-3 text-mist-gray shrink-0" />
+            <span className="tabular-nums text-[11px]">
+              {member.phone || <span className="text-mist-gray italic">Chưa có SĐT</span>}
             </span>
           </div>
         </div>
@@ -158,16 +158,16 @@ export function MemberCard({
 
       {/* Footer Actions */}
       <div
-        className="flex items-center justify-between pt-3 mt-3 border-t border-slate-100"
+        className="flex items-center justify-between pt-3 mt-3 border-t border-hairline"
         onClick={(e) => e.stopPropagation()}
       >
         <Button
           variant="ghost"
           size="sm"
           onClick={() => onViewDetail(memberObj)}
-          className="text-xs h-7 text-slate-600 hover:text-slate-900 px-2 font-medium"
+          className="text-xs h-7 text-slate-gray hover:text-ink-navy hover:bg-cloud px-2 font-medium rounded-lg"
         >
-          <Eye className="h-3 w-3 mr-1 text-slate-400" />
+          <Eye className="h-3 w-3 mr-1 text-mist-gray" />
           Hồ sơ
         </Button>
 
@@ -178,10 +178,10 @@ export function MemberCard({
                 variant="outline"
                 size="sm"
                 onClick={() => onAssignTerm(memberObj)}
-                className="text-xs h-7 px-2 text-slate-700 hover:bg-indigo-50 hover:text-indigo-700 hover:border-indigo-200"
+                className="text-xs h-7 px-2 text-ink-navy border-hairline hover:bg-[#e6f0ff] hover:text-signal-blue hover:border-[#d4e4fa] rounded-lg"
                 title="Gán nhiệm kỳ"
               >
-                <Calendar className="h-3 w-3 mr-1 text-indigo-500" />
+                <Calendar className="h-3 w-3 mr-1 text-signal-blue" />
                 Nhiệm kỳ
               </Button>
 
@@ -190,22 +190,22 @@ export function MemberCard({
                   <Button
                     variant="ghost"
                     size="sm"
-                    className="h-7 w-7 p-0 text-slate-400 hover:text-slate-800"
+                    className="h-7 w-7 p-0 text-mist-gray hover:text-ink-navy hover:bg-cloud rounded-lg"
                   >
                     <MoreHorizontal className="h-3.5 w-3.5" />
                     <span className="sr-only">Thao tác</span>
                   </Button>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent align="end" className="w-44 text-xs">
-                  <DropdownMenuLabel>Tùy chọn</DropdownMenuLabel>
-                  <DropdownMenuItem onClick={() => onEdit(memberObj)}>
-                    <Edit2 className="h-3.5 w-3.5 mr-2 text-slate-500" />
+                <DropdownMenuContent align="end" className="w-44 text-xs rounded-xl border-hairline bg-white shadow-lg">
+                  <DropdownMenuLabel className="text-slate-gray font-medium">Tùy chọn</DropdownMenuLabel>
+                  <DropdownMenuItem onClick={() => onEdit(memberObj)} className="cursor-pointer">
+                    <Edit2 className="h-3.5 w-3.5 mr-2 text-slate-gray" />
                     Chỉnh sửa hồ sơ
                   </DropdownMenuItem>
-                  <DropdownMenuSeparator />
+                  <DropdownMenuSeparator className="bg-hairline" />
                   <DropdownMenuItem
                     onClick={() => onDelete(memberObj)}
-                    className="text-rose-600 focus:text-rose-600 focus:bg-rose-50"
+                    className="text-rose-600 focus:text-rose-700 focus:bg-rose-50 cursor-pointer"
                   >
                     <Trash2 className="h-3.5 w-3.5 mr-2" />
                     Xóa hồ sơ

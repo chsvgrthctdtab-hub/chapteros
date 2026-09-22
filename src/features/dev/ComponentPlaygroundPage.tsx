@@ -97,18 +97,18 @@ export function ComponentPlaygroundPage() {
     <TooltipProvider>
       <div className="space-y-6 pb-16">
         {/* Page Header */}
-        <div className="bg-white border border-slate-200/80 rounded-3xl p-6 shadow-2xs">
+        <div className="bg-white border border-hairline rounded-3xl p-6 shadow-xs">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div className="space-y-1">
               <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-semibold">
                 <Sparkles className="w-3.5 h-3.5 text-emerald-600" />
-                <span>Material 3 UI System</span>
+                <span>ChapterOS UI System</span>
               </div>
-              <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-slate-900">
+              <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-ink-navy">
                 Component Showcase & Playground
               </h1>
-              <p className="text-sm text-slate-500">
-                Môi trường trực quan kiểm thử và xác thực 17 Primitive UI Components và Design Tokens của ChapterOS.
+              <p className="text-sm text-slate-gray">
+                Môi trường trực quan kiểm thử và xác thực Primitive UI Components và Design Tokens của ChapterOS.
               </p>
             </div>
             <div className="flex items-center gap-2">
@@ -122,7 +122,7 @@ export function ComponentPlaygroundPage() {
 
         {/* Category Tabs */}
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-          <TabsList className="w-full justify-start overflow-x-auto p-1.5 bg-slate-100/90 rounded-2xl border border-slate-200/80">
+          <TabsList className="w-full justify-start overflow-x-auto p-1.5 bg-cloud rounded-2xl border border-hairline">
             <TabsTrigger value="foundations" className="rounded-xl px-4 text-xs font-semibold">
               <Layers className="w-4 h-4 mr-1.5" />
               Foundations
@@ -163,23 +163,23 @@ export function ComponentPlaygroundPage() {
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-6 gap-3">
-                  <div className="p-3.5 rounded-2xl bg-emerald-700 text-white space-y-1">
+                  <div className="p-3.5 rounded-2xl bg-signal-blue text-white space-y-1">
                     <p className="text-xs font-bold">Primary</p>
                     <p className="text-[10px] opacity-80">CTA & Key Actions</p>
                   </div>
-                  <div className="p-3.5 rounded-2xl bg-emerald-100 text-emerald-950 border border-emerald-300/60 space-y-1">
+                  <div className="p-3.5 rounded-2xl bg-[#e6f0ff] text-signal-blue border border-[#d4e4fa] space-y-1">
                     <p className="text-xs font-bold">Primary Container</p>
                     <p className="text-[10px] opacity-80">Active Nav & Chips</p>
                   </div>
-                  <div className="p-3.5 rounded-2xl bg-teal-700 text-white space-y-1">
-                    <p className="text-xs font-bold">Secondary</p>
-                    <p className="text-[10px] opacity-80">Auxiliary Action</p>
+                  <div className="p-3.5 rounded-2xl bg-ink-navy text-white space-y-1">
+                    <p className="text-xs font-bold">Ink Navy</p>
+                    <p className="text-[10px] opacity-80">Headings & Strong Text</p>
                   </div>
-                  <div className="p-3.5 rounded-2xl bg-teal-100 text-teal-950 border border-teal-300/60 space-y-1">
-                    <p className="text-xs font-bold">Secondary Container</p>
-                    <p className="text-[10px] opacity-80">Role & Tags</p>
+                  <div className="p-3.5 rounded-2xl bg-pebble text-ink-navy border border-hairline space-y-1">
+                    <p className="text-xs font-bold">Pebble</p>
+                    <p className="text-[10px] opacity-80">Badges & Containers</p>
                   </div>
-                  <div className="p-3.5 rounded-2xl bg-blue-700 text-white space-y-1">
+                  <div className="p-3.5 rounded-2xl bg-[#e6f0ff] text-signal-blue space-y-1">
                     <p className="text-xs font-bold">Tertiary</p>
                     <p className="text-[10px] opacity-80">Terms & Sync</p>
                   </div>
@@ -190,13 +190,13 @@ export function ComponentPlaygroundPage() {
                 </div>
 
                 <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-5 gap-3 pt-2">
-                  <div className="p-3.5 rounded-2xl bg-surface border border-slate-200 text-slate-900 space-y-1">
+                  <div className="p-3.5 rounded-2xl bg-white border border-hairline text-ink-navy space-y-1">
                     <p className="text-xs font-bold">Surface Base</p>
-                    <p className="text-[10px] text-slate-500">#F8FAF9</p>
+                    <p className="text-[10px] text-slate-gray">#FFFFFF</p>
                   </div>
-                  <div className="p-3.5 rounded-2xl bg-surface-container border border-slate-200 text-slate-900 space-y-1">
+                  <div className="p-3.5 rounded-2xl bg-cloud border border-hairline text-ink-navy space-y-1">
                     <p className="text-xs font-bold">Surface Container</p>
-                    <p className="text-[10px] text-slate-500">#F1F5F9</p>
+                    <p className="text-[10px] text-slate-gray">#F7FAFC</p>
                   </div>
                   <div className="p-3.5 rounded-2xl bg-emerald-50 border border-emerald-200 text-emerald-900 space-y-1">
                     <p className="text-xs font-bold">Success Status</p>
@@ -206,9 +206,9 @@ export function ComponentPlaygroundPage() {
                     <p className="text-xs font-bold">Warning Status</p>
                     <p className="text-[10px] text-amber-700">#D97706</p>
                   </div>
-                  <div className="p-3.5 rounded-2xl bg-blue-50 border border-blue-200 text-blue-900 space-y-1">
+                  <div className="p-3.5 rounded-2xl bg-[#e6f0ff] border border-[#d4e4fa] text-signal-blue space-y-1">
                     <p className="text-xs font-bold">Info Status</p>
-                    <p className="text-[10px] text-blue-700">#2563EB</p>
+                    <p className="text-[10px] text-signal-blue">#006BFF</p>
                   </div>
                 </div>
               </CardContent>
@@ -219,37 +219,37 @@ export function ComponentPlaygroundPage() {
               <CardHeader>
                 <CardTitle>2. Typography Hierarchy</CardTitle>
                 <CardDescription>
-                  Quy chuẩn 5 cấp độ chữ Material 3 kết hợp font-mono cho dữ liệu kỹ thuật.
+                  Quy chuẩn cấp độ chữ thiết kế kết hợp font-mono cho dữ liệu kỹ thuật.
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-3">
-                <div className="flex flex-col sm:flex-row sm:items-baseline justify-between border-b border-slate-100 pb-2">
-                  <span className="text-xs font-mono text-slate-400">Headline Large (24-30px)</span>
-                  <span className="text-2xl sm:text-3xl font-bold tracking-tight text-slate-900">
+                <div className="flex flex-col sm:flex-row sm:items-baseline justify-between border-b border-hairline pb-2">
+                  <span className="text-xs font-mono text-mist-gray">Headline Large (24-30px)</span>
+                  <span className="text-2xl sm:text-3xl font-bold tracking-tight text-ink-navy">
                     Báo cáo Tổng quan Nhiệm kỳ
                   </span>
                 </div>
-                <div className="flex flex-col sm:flex-row sm:items-baseline justify-between border-b border-slate-100 pb-2">
-                  <span className="text-xs font-mono text-slate-400">Title Medium (16-18px)</span>
-                  <span className="text-base sm:text-lg font-bold text-slate-900">
+                <div className="flex flex-col sm:flex-row sm:items-baseline justify-between border-b border-hairline pb-2">
+                  <span className="text-xs font-mono text-mist-gray">Title Medium (16-18px)</span>
+                  <span className="text-base sm:text-lg font-bold text-ink-navy">
                     Danh sách Ban Chấp Hành Chi hội
                   </span>
                 </div>
-                <div className="flex flex-col sm:flex-row sm:items-baseline justify-between border-b border-slate-100 pb-2">
-                  <span className="text-xs font-mono text-slate-400">Body Medium (14px)</span>
-                  <span className="text-sm text-slate-600">
+                <div className="flex flex-col sm:flex-row sm:items-baseline justify-between border-b border-hairline pb-2">
+                  <span className="text-xs font-mono text-mist-gray">Body Medium (14px)</span>
+                  <span className="text-sm text-slate-gray">
                     Văn bản hướng dẫn quy trình tổ chức hoạt động tình nguyện hè 2026.
                   </span>
                 </div>
-                <div className="flex flex-col sm:flex-row sm:items-baseline justify-between border-b border-slate-100 pb-2">
-                  <span className="text-xs font-mono text-slate-400">Label Small / Overline (10-11px)</span>
-                  <span className="text-[11px] font-bold text-slate-500 uppercase tracking-wider">
+                <div className="flex flex-col sm:flex-row sm:items-baseline justify-between border-b border-hairline pb-2">
+                  <span className="text-xs font-mono text-mist-gray">Label Small / Overline (10-11px)</span>
+                  <span className="text-[11px] font-bold text-slate-gray uppercase tracking-wider">
                     NGÀY TẠO • TRẠNG THÁI • VAI TRÒ
                   </span>
                 </div>
                 <div className="flex flex-col sm:flex-row sm:items-baseline justify-between">
-                  <span className="text-xs font-mono text-slate-400">Technical Identifier (Mono 12px)</span>
-                  <span className="font-mono text-xs font-semibold text-slate-800 bg-slate-100 px-2 py-0.5 rounded-md">
+                  <span className="text-xs font-mono text-mist-gray">Technical Identifier (Mono 12px)</span>
+                  <span className="font-mono text-xs font-semibold text-slate-gray bg-cloud px-2 py-0.5 rounded-md border border-hairline">
                     MSSV: B2101234 • QUỸ: +15,500,000 ₫ • TASK: #TSK-2026-08
                   </span>
                 </div>
@@ -265,22 +265,22 @@ export function ComponentPlaygroundPage() {
                 </CardDescription>
               </CardHeader>
               <CardContent className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 text-center">
-                <div className="p-4 bg-slate-100 rounded-full border border-slate-200 text-xs font-semibold">
+                <div className="p-4 bg-cloud rounded-full border border-hairline text-xs font-semibold text-ink-navy">
                   shape-full (Pill)
                 </div>
-                <div className="p-4 bg-slate-100 rounded-3xl border border-slate-200 text-xs font-semibold">
+                <div className="p-4 bg-cloud rounded-3xl border border-hairline text-xs font-semibold text-ink-navy">
                   shape-xl (28px)
                 </div>
-                <div className="p-4 bg-slate-100 rounded-2xl border border-slate-200 text-xs font-semibold">
+                <div className="p-4 bg-cloud rounded-2xl border border-hairline text-xs font-semibold text-ink-navy">
                   shape-lg (16px)
                 </div>
-                <div className="p-4 bg-slate-100 rounded-xl border border-slate-200 text-xs font-semibold">
+                <div className="p-4 bg-cloud rounded-xl border border-hairline text-xs font-semibold text-ink-navy">
                   shape-md (12px)
                 </div>
-                <div className="p-4 bg-slate-100 rounded-lg border border-slate-200 text-xs font-semibold">
+                <div className="p-4 bg-cloud rounded-lg border border-hairline text-xs font-semibold text-ink-navy">
                   shape-sm (8px)
                 </div>
-                <div className="p-4 bg-slate-100 rounded-md border border-slate-200 text-xs font-semibold">
+                <div className="p-4 bg-cloud rounded-md border border-hairline text-xs font-semibold text-ink-navy">
                   shape-xs (4px)
                 </div>
               </CardContent>
@@ -297,29 +297,29 @@ export function ComponentPlaygroundPage() {
               <CardContent className="space-y-5">
                 {/* Outlined vs Filled comparison */}
                 <div className="space-y-2">
-                  <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider">
+                  <p className="text-xs font-semibold text-slate-gray uppercase tracking-wider">
                     Chuyển đổi trạng thái (Outlined vs Filled)
                   </p>
                   <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-3">
-                    <div className="p-3 bg-slate-50 border border-slate-200 rounded-2xl flex flex-col items-center gap-1.5 text-center">
-                      <Icon name="dashboard" size={24} className="text-slate-700" />
-                      <span className="text-[11px] text-slate-500">dashboard (Line)</span>
+                    <div className="p-3 bg-cloud border border-hairline rounded-2xl flex flex-col items-center gap-1.5 text-center">
+                      <Icon name="dashboard" size={24} className="text-slate-gray" />
+                      <span className="text-[11px] text-slate-gray">dashboard (Line)</span>
                     </div>
                     <div className="p-3 bg-emerald-50 border border-emerald-200 rounded-2xl flex flex-col items-center gap-1.5 text-center">
                       <Icon name="dashboard" filled size={24} className="text-emerald-800" />
                       <span className="text-[11px] font-bold text-emerald-800">dashboard (Active)</span>
                     </div>
-                    <div className="p-3 bg-slate-50 border border-slate-200 rounded-2xl flex flex-col items-center gap-1.5 text-center">
-                      <Icon name="group" size={24} className="text-slate-700" />
-                      <span className="text-[11px] text-slate-500">group (Line)</span>
+                    <div className="p-3 bg-cloud border border-hairline rounded-2xl flex flex-col items-center gap-1.5 text-center">
+                      <Icon name="group" size={24} className="text-slate-gray" />
+                      <span className="text-[11px] text-slate-gray">group (Line)</span>
                     </div>
                     <div className="p-3 bg-emerald-50 border border-emerald-200 rounded-2xl flex flex-col items-center gap-1.5 text-center">
                       <Icon name="group" filled size={24} className="text-emerald-800" />
                       <span className="text-[11px] font-bold text-emerald-800">group (Active)</span>
                     </div>
-                    <div className="p-3 bg-slate-50 border border-slate-200 rounded-2xl flex flex-col items-center gap-1.5 text-center">
-                      <Icon name="task_alt" size={24} className="text-slate-700" />
-                      <span className="text-[11px] text-slate-500">task_alt (Line)</span>
+                    <div className="p-3 bg-cloud border border-hairline rounded-2xl flex flex-col items-center gap-1.5 text-center">
+                      <Icon name="task_alt" size={24} className="text-slate-gray" />
+                      <span className="text-[11px] text-slate-gray">task_alt (Line)</span>
                     </div>
                     <div className="p-3 bg-emerald-50 border border-emerald-200 rounded-2xl flex flex-col items-center gap-1.5 text-center">
                       <Icon name="task_alt" filled size={24} className="text-emerald-800" />
@@ -329,8 +329,8 @@ export function ComponentPlaygroundPage() {
                 </div>
 
                 {/* Icon Containers */}
-                <div className="space-y-2 pt-2 border-t border-slate-100">
-                  <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider">
+                <div className="space-y-2 pt-2 border-t border-hairline">
+                  <p className="text-xs font-semibold text-slate-gray uppercase tracking-wider">
                     Hộp chứa Tonal Icon Containers (M3 Standard)
                   </p>
                   <div className="flex flex-wrap items-center gap-4">
@@ -366,13 +366,13 @@ export function ComponentPlaygroundPage() {
               <CardHeader>
                 <CardTitle>Button Variants & States</CardTitle>
                 <CardDescription>
-                  Các biến thể nút bấm M3 truyền tải phân cấp qua màu nền và typography thay vì đổ bóng dày.
+                  Các biến thể nút bấm truyền tải phân cấp qua màu nền và typography thay vì đổ bóng dày.
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-6">
                 {/* Variants row */}
                 <div className="space-y-2">
-                  <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider">
+                  <p className="text-xs font-semibold text-slate-gray uppercase tracking-wider">
                     Phân cấp hành động (Variants)
                   </p>
                   <div className="flex flex-wrap items-center gap-3">
@@ -396,7 +396,7 @@ export function ComponentPlaygroundPage() {
 
                 {/* Sizes row */}
                 <div className="space-y-2">
-                  <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider">
+                  <p className="text-xs font-semibold text-slate-gray uppercase tracking-wider">
                     Kích cỡ (Sizes)
                   </p>
                   <div className="flex flex-wrap items-center gap-3">
@@ -409,7 +409,7 @@ export function ComponentPlaygroundPage() {
 
                 {/* States row */}
                 <div className="space-y-2">
-                  <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider">
+                  <p className="text-xs font-semibold text-slate-gray uppercase tracking-wider">
                     Trạng thái tương tác (States)
                   </p>
                   <div className="flex flex-wrap items-center gap-3">
@@ -424,7 +424,7 @@ export function ComponentPlaygroundPage() {
 
                 {/* Icon Buttons row */}
                 <div className="space-y-2">
-                  <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider">
+                  <p className="text-xs font-semibold text-slate-gray uppercase tracking-wider">
                     Nút biểu tượng (Icon Buttons)
                   </p>
                   <div className="flex flex-wrap items-center gap-3">
@@ -454,21 +454,21 @@ export function ComponentPlaygroundPage() {
               <CardHeader>
                 <CardTitle>Form Controls & Inputs</CardTitle>
                 <CardDescription>
-                  Ô nhập liệu chuẩn M3 Outlined với focus ring kép xanh ngọc và các trạng thái đầy đủ.
+                  Ô nhập liệu chuẩn với viền hairline và focus ring xanh dương đậm.
                 </CardDescription>
               </CardHeader>
               <CardContent className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {/* Text Inputs */}
                 <div className="space-y-4">
                   <div className="space-y-1.5">
-                    <label className="text-xs font-semibold text-slate-700">
+                    <label className="text-xs font-semibold text-ink-navy">
                       Standard Input (Populated)
                     </label>
                     <Input defaultValue="Nguyễn Văn A" placeholder="Nhập họ và tên..." />
                   </div>
 
                   <div className="space-y-1.5">
-                    <label className="text-xs font-semibold text-slate-700">
+                    <label className="text-xs font-semibold text-ink-navy">
                       Search Input (Clearable)
                     </label>
                     <SearchInput
@@ -480,7 +480,7 @@ export function ComponentPlaygroundPage() {
                   </div>
 
                   <div className="space-y-1.5">
-                    <label className="text-xs font-semibold text-slate-700">
+                    <label className="text-xs font-semibold text-ink-navy">
                       Disabled Input
                     </label>
                     <Input disabled value="Không thể chỉnh sửa" />
@@ -490,7 +490,7 @@ export function ComponentPlaygroundPage() {
                 {/* Select, Textarea, Selection Controls */}
                 <div className="space-y-4">
                   <div className="space-y-1.5">
-                    <label className="text-xs font-semibold text-slate-700">
+                    <label className="text-xs font-semibold text-ink-navy">
                       Select Picker (Radix UI)
                     </label>
                     <Select value={selectedRole} onValueChange={setSelectedRole}>
@@ -507,7 +507,7 @@ export function ComponentPlaygroundPage() {
                   </div>
 
                   <div className="space-y-1.5">
-                    <label className="text-xs font-semibold text-slate-700">
+                    <label className="text-xs font-semibold text-ink-navy">
                       Textarea (Min-height 80px)
                     </label>
                     <Textarea placeholder="Nhập nội dung ghi chú hoạt động..." />
@@ -520,8 +520,8 @@ export function ComponentPlaygroundPage() {
                         checked={checkboxChecked}
                         onCheckedChange={setCheckboxChecked}
                       />
-                      <label htmlFor="chk-demo" className="text-xs font-medium text-slate-700 cursor-pointer">
-                        M3 Checkbox ({checkboxChecked ? "Đã chọn" : "Bỏ chọn"})
+                      <label htmlFor="chk-demo" className="text-xs font-medium text-slate-gray cursor-pointer">
+                        Checkbox ({checkboxChecked ? "Đã chọn" : "Bỏ chọn"})
                       </label>
                     </div>
 
@@ -531,8 +531,8 @@ export function ComponentPlaygroundPage() {
                         checked={switchChecked}
                         onCheckedChange={setSwitchChecked}
                       />
-                      <label htmlFor="sw-demo" className="text-xs font-medium text-slate-700 cursor-pointer">
-                        M3 Switch ({switchChecked ? "Bật" : "Tắt"})
+                      <label htmlFor="sw-demo" className="text-xs font-medium text-slate-gray cursor-pointer">
+                        Switch ({switchChecked ? "Bật" : "Tắt"})
                       </label>
                     </div>
                   </div>
@@ -549,9 +549,9 @@ export function ComponentPlaygroundPage() {
               <Card variant="elevated">
                 <CardHeader>
                   <CardTitle>Elevated Card</CardTitle>
-                  <CardDescription>Bề mặt trắng với viền nhẹ và Level 1 shadow.</CardDescription>
+                  <CardDescription>Bề mặt trắng với viền hairline và Level 1 shadow.</CardDescription>
                 </CardHeader>
-                <CardContent className="text-xs text-slate-600">
+                <CardContent className="text-xs text-slate-gray">
                   Dùng cho nội dung chính, danh sách thực thể, khối dữ liệu nghiệp vụ.
                 </CardContent>
               </Card>
@@ -559,9 +559,9 @@ export function ComponentPlaygroundPage() {
               <Card variant="tonal">
                 <CardHeader>
                   <CardTitle>Tonal Card</CardTitle>
-                  <CardDescription>Bề mặt nền Slate/Mint nhẹ nhàng.</CardDescription>
+                  <CardDescription>Bề mặt nền Pebble nhẹ nhàng.</CardDescription>
                 </CardHeader>
-                <CardContent className="text-xs text-slate-600">
+                <CardContent className="text-xs text-slate-gray">
                   Dùng cho khối tóm tắt phụ trợ, khu vực bộ lọc, hướng dẫn nhanh.
                 </CardContent>
               </Card>
@@ -571,7 +571,7 @@ export function ComponentPlaygroundPage() {
                   <CardTitle>Outlined Card</CardTitle>
                   <CardDescription>Bề mặt có viền rõ nét không đổ bóng.</CardDescription>
                 </CardHeader>
-                <CardContent className="text-xs text-slate-600">
+                <CardContent className="text-xs text-slate-gray">
                   Dùng cho form con lồng nhau hoặc khối thông tin liên hệ.
                 </CardContent>
               </Card>
@@ -582,7 +582,7 @@ export function ComponentPlaygroundPage() {
               <CardHeader>
                 <CardTitle>Dialog Modal & Dropdown Menus</CardTitle>
                 <CardDescription>
-                  Cửa sổ bật M3 bo góc 28px kết hợp hiệu ứng kính mờ backdrop.
+                  Cửa sổ bật bo góc 16px kết hợp hiệu ứng backdrop.
                 </CardDescription>
               </CardHeader>
               <CardContent className="flex flex-wrap items-center gap-4">
@@ -597,7 +597,7 @@ export function ComponentPlaygroundPage() {
                         Bạn có chắc chắn muốn phê duyệt kế hoạch tổ chức hoạt động "Tình nguyện Mùa hè xanh 2026"?
                       </DialogDescription>
                     </DialogHeader>
-                    <div className="py-4 space-y-2 text-xs text-slate-600">
+                    <div className="py-4 space-y-2 text-xs text-slate-gray">
                       <p>• Dự toán kinh phí: <strong>5,000,000 ₫</strong></p>
                       <p>• Số lượng hội viên dự kiến: <strong>45 người</strong></p>
                     </div>
@@ -639,7 +639,7 @@ export function ComponentPlaygroundPage() {
                 <Tooltip>
                   <TooltipTrigger asChild>
                     <Button variant="ghost" size="icon-sm">
-                      <HelpCircle className="w-4 h-4 text-slate-500" />
+                      <HelpCircle className="w-4 h-4 text-slate-gray" />
                     </Button>
                   </TooltipTrigger>
                   <TooltipContent>
@@ -678,11 +678,11 @@ export function ComponentPlaygroundPage() {
               <CardHeader>
                 <CardTitle>Data Table & Reusable Pagination</CardTitle>
                 <CardDescription>
-                  Bảng dữ liệu M3 với header in hoa, hover state layer và phân trang chuẩn.
+                  Bảng dữ liệu với header in hoa, hover state layer và phân trang chuẩn.
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
-                <div className="border border-slate-200/80 rounded-2xl overflow-hidden shadow-2xs">
+                <div className="border border-hairline rounded-2xl overflow-hidden shadow-xs">
                   <Table>
                     <TableHeader>
                       <TableRow>
@@ -701,8 +701,8 @@ export function ComponentPlaygroundPage() {
                         <TableCell>
                           <Checkbox />
                         </TableCell>
-                        <TableCell className="font-semibold text-slate-900">Nguyễn Văn An</TableCell>
-                        <TableCell className="font-mono text-xs text-slate-600">B2101234</TableCell>
+                        <TableCell className="font-semibold text-ink-navy">Nguyễn Văn An</TableCell>
+                        <TableCell className="font-mono text-xs text-slate-gray">B2101234</TableCell>
                         <TableCell>Chi hội trưởng</TableCell>
                         <TableCell>
                           <Badge variant="success" showDot>Hoạt động</Badge>
@@ -715,8 +715,8 @@ export function ComponentPlaygroundPage() {
                         <TableCell>
                           <Checkbox />
                         </TableCell>
-                        <TableCell className="font-semibold text-slate-900">Trần Thị Bích</TableCell>
-                        <TableCell className="font-mono text-xs text-slate-600">B2105678</TableCell>
+                        <TableCell className="font-semibold text-ink-navy">Trần Thị Bích</TableCell>
+                        <TableCell className="font-mono text-xs text-slate-gray">B2105678</TableCell>
                         <TableCell>Thủ quỹ</TableCell>
                         <TableCell>
                           <Badge variant="purple" showDot>BCH</Badge>

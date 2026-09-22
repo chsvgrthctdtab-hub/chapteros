@@ -9,7 +9,6 @@ import {
   PlusCircle,
   Shield,
   Loader2,
-  Sparkles,
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { ROLES } from '@/types/roles';
@@ -41,31 +40,31 @@ export function MyOrganizationsCard({
   };
 
   return (
-    <Card className="border-slate-200 shadow-2xs">
-      <CardHeader className="border-b border-slate-100 bg-slate-50/40 pb-4">
+    <Card className="border-hairline shadow-xs">
+      <CardHeader className="border-b border-hairline bg-cloud pb-4">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
           <div className="flex items-center gap-2.5">
-            <div className="h-10 w-10 rounded-xl bg-blue-600 flex items-center justify-center text-white shadow-xs">
+            <div className="h-10 w-10 rounded-xl bg-signal-blue flex items-center justify-center text-white shadow-xs">
               <Building2 strokeWidth={1.5} className="h-5 w-5" />
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <CardTitle className="text-base font-bold text-slate-900">
+                <CardTitle className="text-base font-bold text-ink-navy">
                   Danh sách Đơn vị của tôi
                 </CardTitle>
-                <Badge variant="outline" className="text-[11px] bg-white text-slate-700">
+                <Badge variant="outline" className="text-[11px] bg-white text-slate-gray border-hairline">
                   {userOrganizations.length} Chi hội
                 </Badge>
               </div>
-              <CardDescription className="text-xs text-slate-500 mt-0.5">
+              <CardDescription className="text-xs text-mist-gray mt-0.5">
                 Các Chi hội bạn đang là thành viên hoặc quản trị viên (Hỗ trợ Multi-organization)
               </CardDescription>
             </div>
           </div>
 
           <Link to="/onboarding">
-            <Button size="sm" variant="outline" className="text-xs gap-1.5 h-8">
-              <PlusCircle className="h-3.5 w-3.5 text-blue-600" />
+            <Button size="sm" variant="outline" className="text-xs gap-1.5 h-8 border-hairline text-slate-gray hover:text-ink-navy hover:bg-pebble">
+              <PlusCircle className="h-3.5 w-3.5 text-signal-blue" />
               Tạo thêm Đơn vị mới
             </Button>
           </Link>
@@ -74,16 +73,16 @@ export function MyOrganizationsCard({
 
       <CardContent className="pt-5 space-y-3">
         {isLoading ? (
-          <div className="py-8 text-center text-slate-400 text-xs">
-            <Loader2 strokeWidth={1.5} className="h-5 w-5 animate-spin mx-auto mb-2 text-blue-600" />
+          <div className="py-8 text-center text-mist-gray text-xs">
+            <Loader2 strokeWidth={1.5} className="h-5 w-5 animate-spin mx-auto mb-2 text-signal-blue" />
             Đang tải danh sách Chi hội...
           </div>
         ) : userOrganizations.length === 0 ? (
           <div className="text-center py-8 space-y-3">
-            <Building2 strokeWidth={1.5} className="h-8 w-8 text-slate-300 mx-auto" />
-            <p className="text-xs text-slate-500">Bạn chưa là thành viên của Đơn vị nào.</p>
+            <Building2 strokeWidth={1.5} className="h-8 w-8 text-mist-gray mx-auto" />
+            <p className="text-xs text-mist-gray">Bạn chưa là thành viên của Đơn vị nào.</p>
             <Link to="/onboarding">
-              <Button size="sm" className="text-xs bg-blue-600 hover:bg-blue-700 text-white">
+              <Button size="sm" className="text-xs bg-signal-blue hover:bg-[#005be0] text-white">
                 <PlusCircle className="h-3.5 w-3.5 mr-1.5" />
                 Khởi tạo Đơn vị đầu tiên
               </Button>
@@ -101,13 +100,13 @@ export function MyOrganizationsCard({
                   key={organization.id}
                   className={`p-4 rounded-xl border transition-all ${
                     isActive
-                      ? 'border-blue-500 bg-blue-50/40 shadow-xs ring-1 ring-blue-500/20'
-                      : 'border-slate-200 bg-white hover:border-slate-300 hover:bg-slate-50/50'
+                      ? 'border-signal-blue bg-[#f0f6ff] shadow-xs ring-1 ring-signal-blue/20'
+                      : 'border-hairline bg-white hover:border-[#d4e4fa] hover:bg-cloud'
                   }`}
                 >
                   <div className="flex items-start justify-between gap-3">
                     <div className="flex items-start gap-2.5 min-w-0">
-                      <div className="h-9 w-9 rounded-lg bg-slate-100 border border-slate-200 flex items-center justify-center shrink-0 overflow-hidden text-slate-600 font-bold text-xs">
+                      <div className="h-9 w-9 rounded-lg bg-cloud border border-hairline flex items-center justify-center shrink-0 overflow-hidden text-slate-gray font-bold text-xs">
                         {organization.logoUrl ? (
                           <img
                             src={organization.logoUrl}
@@ -120,18 +119,18 @@ export function MyOrganizationsCard({
                       </div>
                       <div className="space-y-1 min-w-0">
                         <div className="flex items-center gap-2 flex-wrap">
-                          <span className="font-bold text-xs text-slate-900 truncate">
+                          <span className="font-bold text-xs text-ink-navy truncate">
                             {organization.name}
                           </span>
                           {isActive && (
-                            <Badge className="bg-blue-600 text-white text-[9px] py-0 px-1.5">
+                            <Badge className="bg-signal-blue text-white text-[9px] py-0 px-1.5">
                               Đang hoạt động
                             </Badge>
                           )}
                         </div>
 
-                        <div className="flex items-center gap-2 text-[11px] text-slate-500">
-                          <span className="font-mono bg-slate-100 px-1.5 py-0.5 rounded text-[10px] text-slate-700">
+                        <div className="flex items-center gap-2 text-[11px] text-mist-gray">
+                          <span className="font-mono bg-cloud px-1.5 py-0.5 rounded text-[10px] text-slate-gray border border-hairline">
                             {organization.code}
                           </span>
                           {organization.description && (
@@ -153,13 +152,13 @@ export function MyOrganizationsCard({
                     )}
                   </div>
 
-                  <div className="mt-3 pt-3 border-t border-slate-100 flex items-center justify-between">
-                    <span className="text-[10px] text-slate-400">
+                  <div className="mt-3 pt-3 border-t border-hairline flex items-center justify-between">
+                    <span className="text-[10px] text-mist-gray">
                       {isActive ? 'Không gian đang mở' : 'Nhấp để chuyển đổi'}
                     </span>
 
                     {isActive ? (
-                      <span className="text-xs font-semibold text-blue-600 flex items-center gap-1">
+                      <span className="text-xs font-semibold text-signal-blue flex items-center gap-1">
                         <CheckCircle2 className="h-3.5 w-3.5" />
                         Đơn vị hiện tại
                       </span>
@@ -169,7 +168,7 @@ export function MyOrganizationsCard({
                         variant="ghost"
                         onClick={() => handleSwitch(organization.id)}
                         disabled={isSwitching}
-                        className="text-xs h-7 px-2.5 text-blue-600 hover:text-blue-700 hover:bg-blue-50"
+                        className="text-xs h-7 px-2.5 text-signal-blue hover:text-[#005be0] hover:bg-[#e6f0ff]"
                       >
                         {isSwitching ? (
                           <Loader2 className="h-3.5 w-3.5 animate-spin mr-1" />

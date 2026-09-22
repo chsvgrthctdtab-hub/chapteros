@@ -99,25 +99,25 @@ export function DashboardCalendarPreview({ activities }: DashboardCalendarPrevie
   const dayNames = ['CN', 'T2', 'T3', 'T4', 'T5', 'T6', 'T7'];
 
   return (
-    <Card className="rounded-xl border-slate-200/90 shadow-2xs bg-white">
-      <CardHeader className="p-4 sm:p-5 pb-3 border-b border-slate-100">
+    <Card className="rounded-2xl border-hairline shadow-sm bg-white">
+      <CardHeader className="p-4 sm:p-5 pb-3 border-b border-hairline">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center">
+            <div className="w-8 h-8 rounded-lg bg-[#e6f0ff] text-signal-blue flex items-center justify-center">
               <CalendarIcon className="w-4 h-4" />
             </div>
             <div>
-              <CardTitle className="text-base sm:text-lg font-bold text-slate-900 leading-tight">
+              <CardTitle className="text-base sm:text-lg font-bold text-ink-navy leading-tight">
                 Lịch sự kiện & Hoạt động
               </CardTitle>
-              <p className="text-xs text-slate-500 mt-0.5">
+              <p className="text-xs text-slate-gray mt-0.5">
                 Lịch biểu trực quan các phong trào Chi hội
               </p>
             </div>
           </div>
 
           <Link to="/activities">
-            <Button variant="ghost" size="sm" className="text-xs sm:text-sm font-semibold text-emerald-700 hover:text-emerald-800 hover:bg-emerald-50 h-8 px-2.5">
+            <Button variant="ghost" size="sm" className="text-xs sm:text-sm font-semibold text-signal-blue hover:text-signal-blue/80 hover:bg-pebble h-8 px-2.5">
               <span>Mở rộng</span>
               <ArrowRight className="w-3.5 h-3.5 ml-1" />
             </Button>
@@ -128,7 +128,7 @@ export function DashboardCalendarPreview({ activities }: DashboardCalendarPrevie
       <CardContent className="p-4 sm:p-5 pt-3 space-y-3.5">
         {/* Month Navigation */}
         <div className="flex items-center justify-between">
-          <span className="text-xs sm:text-sm font-bold text-slate-800">
+          <span className="text-xs sm:text-sm font-bold text-ink-navy">
             Tháng {currentMonth.format('MM/YYYY')}
           </span>
 
@@ -136,7 +136,7 @@ export function DashboardCalendarPreview({ activities }: DashboardCalendarPrevie
             <Button
               variant="outline"
               size="icon"
-              className="w-7 h-7 text-slate-600 border-slate-200 rounded-lg hover:bg-slate-50"
+              className="w-7 h-7 text-ink-navy border-hairline rounded-lg hover:bg-pebble"
               onClick={() => setCurrentMonth((prev) => prev.subtract(1, 'month'))}
               title="Tháng trước"
             >
@@ -145,7 +145,7 @@ export function DashboardCalendarPreview({ activities }: DashboardCalendarPrevie
             <Button
               variant="outline"
               size="sm"
-              className="text-xs h-7 px-2 font-semibold text-slate-700 border-slate-200 rounded-lg hover:bg-slate-50"
+              className="text-xs h-7 px-2 font-semibold text-ink-navy border-hairline rounded-lg hover:bg-pebble"
               onClick={() => {
                 const now = dayjs();
                 setCurrentMonth(now);
@@ -157,7 +157,7 @@ export function DashboardCalendarPreview({ activities }: DashboardCalendarPrevie
             <Button
               variant="outline"
               size="icon"
-              className="w-7 h-7 text-slate-600 border-slate-200 rounded-lg hover:bg-slate-50"
+              className="w-7 h-7 text-ink-navy border-hairline rounded-lg hover:bg-pebble"
               onClick={() => setCurrentMonth((prev) => prev.add(1, 'month'))}
               title="Tháng sau"
             >
@@ -168,7 +168,7 @@ export function DashboardCalendarPreview({ activities }: DashboardCalendarPrevie
 
         {/* Mini Calendar Grid */}
         <div>
-          <div className="grid grid-cols-7 gap-1 text-center text-[11px] font-bold text-slate-400 mb-1">
+          <div className="grid grid-cols-7 gap-1 text-center text-[11px] font-bold text-mist-gray mb-1">
             {dayNames.map((d) => (
               <div key={d} className="py-0.5">
                 {d}
@@ -187,19 +187,19 @@ export function DashboardCalendarPreview({ activities }: DashboardCalendarPrevie
                   onClick={() => setSelectedDate(cell.dateString)}
                   className={`relative py-1.5 rounded-lg flex flex-col items-center justify-center transition-all cursor-pointer ${
                     !cell.isCurrentMonth
-                      ? 'text-slate-300 hover:text-slate-400'
+                      ? 'text-mist-gray/60 hover:text-mist-gray'
                       : isSelected
-                      ? 'bg-emerald-700 text-white font-bold shadow-xs'
+                      ? 'bg-signal-blue text-white font-bold shadow-sm'
                       : cell.isToday
-                      ? 'bg-emerald-50 text-emerald-800 font-bold border border-emerald-200'
-                      : 'text-slate-700 hover:bg-slate-100'
+                      ? 'bg-pebble text-signal-blue font-bold border border-hairline'
+                      : 'text-ink-navy hover:bg-pebble'
                   }`}
                 >
-                  <span>{cell.dayNumber}</span>
+                  <span className="tabular-nums">{cell.dayNumber}</span>
                   {cell.hasActivities && (
                     <span
                       className={`w-1.5 h-1.5 rounded-full mt-0.5 ${
-                        isSelected ? 'bg-amber-300' : 'bg-emerald-600'
+                        isSelected ? 'bg-white' : 'bg-signal-blue'
                       }`}
                     />
                   )}
@@ -210,14 +210,14 @@ export function DashboardCalendarPreview({ activities }: DashboardCalendarPrevie
         </div>
 
         {/* Selected Date or Month Activity List (Content-Driven, No Inner Scrollbar) */}
-        <div className="pt-2.5 border-t border-slate-100 space-y-1.5">
-          <div className="flex items-center justify-between text-xs text-slate-500 font-medium">
+        <div className="pt-2.5 border-t border-hairline space-y-1.5">
+          <div className="flex items-center justify-between text-xs text-slate-gray font-medium">
             <span>
               {selectedDate
                 ? `Hoạt động ngày ${dayjs(selectedDate).format('DD/MM/YYYY')}`
                 : 'Hoạt động trong tháng'}
             </span>
-            <span className="text-slate-400">
+            <span className="text-mist-gray tabular-nums">
               {selectedDateActivities.length} sự kiện
             </span>
           </div>
@@ -227,36 +227,36 @@ export function DashboardCalendarPreview({ activities }: DashboardCalendarPrevie
               {selectedDateActivities.slice(0, 3).map((act) => {
                 const statusMeta = ACTIVITY_STATUS_META[act.status] || {
                   label: act.status,
-                  colorClass: 'text-slate-700',
-                  bgClass: 'bg-slate-100 text-slate-700',
+                  colorClass: 'text-slate-gray',
+                  bgClass: 'bg-pebble text-ink-navy border-hairline',
                 };
 
                 return (
                   <Link
                     key={act.id}
                     to={`/activities/${act.id}`}
-                    className="block p-2 rounded-lg bg-slate-50 hover:bg-emerald-50/60 border border-slate-100 hover:border-emerald-200 transition-all text-left"
+                    className="block p-2 rounded-xl bg-pebble hover:bg-pebble/80 border border-hairline transition-all text-left"
                   >
                     <div className="flex items-center justify-between gap-2">
-                      <span className="text-xs font-semibold text-slate-900 truncate">
+                      <span className="text-xs font-semibold text-ink-navy truncate">
                         {act.title}
                       </span>
                       <Badge
                         variant="outline"
-                        className={`text-[10px] py-0 px-1.5 font-medium border shrink-0 ${statusMeta.bgClass}`}
+                        className={`text-[10px] py-0 px-2 rounded-full font-medium border shrink-0 ${statusMeta.bgClass}`}
                       >
                         {statusMeta.label}
                       </Badge>
                     </div>
 
-                    <div className="flex items-center gap-3 text-[11px] text-slate-500 mt-0.5 flex-wrap">
+                    <div className="flex items-center gap-3 text-[11px] text-slate-gray mt-0.5 flex-wrap">
                       <div className="flex items-center gap-1">
-                        <Clock className="w-3 h-3 text-slate-400" />
-                        <span>{formatDateTime(act.startDate)}</span>
+                        <Clock className="w-3.5 h-3.5 text-mist-gray" />
+                        <span className="tabular-nums">{formatDateTime(act.startDate)}</span>
                       </div>
                       {act.location && (
                         <div className="flex items-center gap-1 truncate max-w-[130px]">
-                          <MapPin className="w-3 h-3 text-slate-400 shrink-0" />
+                          <MapPin className="w-3.5 h-3.5 text-mist-gray shrink-0" />
                           <span className="truncate">{act.location}</span>
                         </div>
                       )}
@@ -269,16 +269,16 @@ export function DashboardCalendarPreview({ activities }: DashboardCalendarPrevie
                 <div className="text-center pt-0.5">
                   <Link
                     to="/activities"
-                    className="text-xs font-medium text-emerald-700 hover:text-emerald-800 hover:underline inline-flex items-center gap-1"
+                    className="text-xs font-medium text-signal-blue hover:underline inline-flex items-center gap-1"
                   >
                     Xem thêm {selectedDateActivities.length - 3} sự kiện
-                    <ArrowRight className="w-3 h-3" />
+                    <ArrowRight className="w-3.5 h-3.5" />
                   </Link>
                 </div>
               )}
             </div>
           ) : (
-            <div className="py-2.5 text-center text-xs text-slate-400 bg-slate-50/50 rounded-lg border border-dashed border-slate-200">
+            <div className="py-2.5 text-center text-xs text-mist-gray bg-pebble/50 rounded-xl border border-dashed border-hairline">
               Không có sự kiện nào trong ngày này
             </div>
           )}

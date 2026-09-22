@@ -37,8 +37,8 @@ export function ActivityKPIStrip({
       value: registeredCount,
       subtext: targetMembers > 0 ? `Chỉ tiêu: ${targetMembers}` : 'Tổng số đăng ký',
       icon: Users,
-      color: 'text-slate-900',
-      badgeBg: 'bg-slate-100 text-slate-700',
+      color: 'text-ink-navy',
+      badgeBg: 'bg-[#e6f0ff] text-signal-blue border-[#d4e4fa]',
     },
     {
       id: 'kpi-present',
@@ -57,8 +57,8 @@ export function ActivityKPIStrip({
       value: `${participationRate}%`,
       subtext: `${presentCount} / ${registeredCount} đã điểm danh`,
       icon: Percent,
-      color: 'text-sky-700',
-      badgeBg: 'bg-sky-50 text-sky-800 border-sky-200/80',
+      color: 'text-signal-blue',
+      badgeBg: 'bg-[#e6f0ff] text-signal-blue border-[#d4e4fa]',
     },
     {
       id: 'kpi-tasks',
@@ -90,19 +90,19 @@ export function ActivityKPIStrip({
           <div
             key={kpi.id}
             id={kpi.id}
-            className="bg-white p-3.5 rounded-2xl border border-slate-200/80 shadow-2xs hover:shadow-xs transition-shadow duration-200 flex flex-col justify-between"
+            className="bg-white p-3.5 rounded-2xl border border-hairline shadow-sm hover:shadow-md transition-shadow duration-200 flex flex-col justify-between"
           >
             <div className="flex items-center justify-between gap-1.5 mb-1.5">
-              <span className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider truncate">{kpi.label}</span>
-              <div className={cn('p-1.5 rounded-xl border shrink-0 shadow-2xs', kpi.badgeBg)}>
+              <span className="text-[11px] font-semibold text-slate-gray uppercase tracking-wider truncate">{kpi.label}</span>
+              <div className={cn('p-1.5 rounded-xl border shrink-0', kpi.badgeBg)}>
                 <Icon className="w-3.5 h-3.5" />
               </div>
             </div>
             <div>
-              <div className={cn('text-xl font-bold tracking-tight', kpi.color)}>
+              <div className={cn('text-xl font-bold tracking-tight tabular-nums', kpi.color)}>
                 {kpi.value}
               </div>
-              <p className="text-[11px] text-slate-400 font-normal truncate mt-0.5">
+              <p className="text-[11px] text-mist-gray font-normal truncate mt-0.5">
                 {kpi.subtext}
               </p>
             </div>

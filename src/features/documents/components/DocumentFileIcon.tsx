@@ -48,7 +48,7 @@ export function DocumentFileIcon({
       return (
         <div
           className={cn(
-            'flex flex-col items-center justify-center font-bold bg-blue-50 border border-blue-200 text-blue-600 shadow-xs shrink-0',
+            'flex flex-col items-center justify-center font-bold bg-[#e6f0ff] border border-[#d4e4fa] text-signal-blue shadow-xs shrink-0',
             sizeClasses[size],
             className
           )}
@@ -132,7 +132,7 @@ export function DocumentFileIcon({
       return (
         <div
           className={cn(
-            'flex flex-col items-center justify-center font-bold bg-blue-50 border border-blue-200 text-blue-600 shadow-xs shrink-0',
+            'flex flex-col items-center justify-center font-bold bg-[#e6f0ff] border border-[#d4e4fa] text-signal-blue shadow-xs shrink-0',
             sizeClasses[size],
             className
           )}
@@ -202,7 +202,7 @@ export function DocumentFileIcon({
       return (
         <div
           className={cn(
-            'flex flex-col items-center justify-center font-bold bg-slate-100 border border-slate-200 text-slate-700 shadow-xs shrink-0',
+            'flex flex-col items-center justify-center font-bold bg-cloud border border-hairline text-slate-gray shadow-xs shrink-0',
             sizeClasses[size],
             className
           )}
@@ -216,7 +216,7 @@ export function DocumentFileIcon({
       return (
         <div
           className={cn(
-            'flex flex-col items-center justify-center font-bold bg-slate-50 border border-slate-200 text-slate-600 shadow-xs shrink-0',
+            'flex flex-col items-center justify-center font-bold bg-cloud border border-hairline text-mist-gray shadow-xs shrink-0',
             sizeClasses[size],
             className
           )}

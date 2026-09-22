@@ -26,8 +26,8 @@ interface FundReportProps {
   filterParams?: ReportFilterParams;
 }
 
-const INCOME_PALETTE = ['#10b981', '#0284c7', '#6366f1', '#14b8a6', '#06b6d4', '#8b5cf6', '#3b82f6'];
-const EXPENSE_PALETTE = ['#f43f5e', '#f97316', '#f59e0b', '#ec4899', '#8b5cf6', '#a855f7', '#64748b'];
+const INCOME_PALETTE = ['#10b981', '#006bff', '#6366f1', '#14b8a6', '#06b6d4', '#8b5cf6', '#3b82f6'];
+const EXPENSE_PALETTE = ['#f43f5e', '#f97316', '#f59e0b', '#ec4899', '#8b5cf6', '#a855f7', '#6b7280'];
 
 export function FundReport({ organizationId, filterParams }: FundReportProps) {
   const {
@@ -95,42 +95,42 @@ export function FundReport({ organizationId, filterParams }: FundReportProps) {
       {/* 1. KPI Strip */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5">
         {/* Total Income */}
-        <Card className="border-slate-200/90 shadow-2xs bg-white">
+        <Card className="border-hairline shadow-xs bg-white">
           <CardContent className="p-4">
             <div className="flex items-center justify-between">
-              <span className="text-2xs font-bold uppercase tracking-wider text-slate-500">Tổng nguồn thu</span>
+              <span className="text-2xs font-bold uppercase tracking-wider text-mist-gray">Tổng nguồn thu</span>
               <div className="w-7 h-7 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center">
                 <ArrowUpRight className="w-4 h-4" />
               </div>
             </div>
             <div className="mt-2 text-xl sm:text-2xl font-black text-emerald-700">{formatVND(totalIncome)}</div>
-            <div className="mt-0.5 text-2xs text-slate-400">
+            <div className="mt-0.5 text-2xs text-mist-gray">
               {incomeTransactionCount} phiếu thu hợp lệ
             </div>
           </CardContent>
         </Card>
 
         {/* Total Expense */}
-        <Card className="border-slate-200/90 shadow-2xs bg-white">
+        <Card className="border-hairline shadow-xs bg-white">
           <CardContent className="p-4">
             <div className="flex items-center justify-between">
-              <span className="text-2xs font-bold uppercase tracking-wider text-slate-500">Tổng các khoản chi</span>
+              <span className="text-2xs font-bold uppercase tracking-wider text-mist-gray">Tổng các khoản chi</span>
               <div className="w-7 h-7 rounded-lg bg-rose-50 text-rose-600 flex items-center justify-center">
                 <ArrowDownRight className="w-4 h-4" />
               </div>
             </div>
             <div className="mt-2 text-xl sm:text-2xl font-black text-rose-700">{formatVND(totalExpense)}</div>
-            <div className="mt-0.5 text-2xs text-slate-400">
+            <div className="mt-0.5 text-2xs text-mist-gray">
               {expenseTransactionCount} phiếu chi đã duyệt
             </div>
           </CardContent>
         </Card>
 
         {/* Current Balance */}
-        <Card className="border-slate-200/90 shadow-2xs bg-white">
+        <Card className="border-hairline shadow-xs bg-white">
           <CardContent className="p-4">
             <div className="flex items-center justify-between">
-              <span className="text-2xs font-bold uppercase tracking-wider text-slate-500">Số dư khả dụng</span>
+              <span className="text-2xs font-bold uppercase tracking-wider text-mist-gray">Số dư khả dụng</span>
               <div className={`w-7 h-7 rounded-lg flex items-center justify-center ${isSurplus ? 'bg-emerald-50 text-emerald-600' : 'bg-rose-50 text-rose-600'}`}>
                 <Wallet className="w-4 h-4" />
               </div>
@@ -138,23 +138,23 @@ export function FundReport({ organizationId, filterParams }: FundReportProps) {
             <div className={`mt-2 text-xl sm:text-2xl font-black ${isSurplus ? 'text-emerald-700' : 'text-rose-700'}`}>
               {formatVND(balance)}
             </div>
-            <div className="mt-0.5 text-2xs text-slate-400">
+            <div className="mt-0.5 text-2xs text-mist-gray">
               {isSurplus ? 'Thặng dư ngân sách an toàn' : 'Cảnh báo thâm hụt quỹ'}
             </div>
           </CardContent>
         </Card>
 
         {/* Transactions summary */}
-        <Card className="border-slate-200/90 shadow-2xs bg-white">
+        <Card className="border-hairline shadow-xs bg-white">
           <CardContent className="p-4">
             <div className="flex items-center justify-between">
-              <span className="text-2xs font-bold uppercase tracking-wider text-slate-500">Tổng số giao dịch</span>
-              <div className="w-7 h-7 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center">
+              <span className="text-2xs font-bold uppercase tracking-wider text-mist-gray">Tổng số giao dịch</span>
+              <div className="w-7 h-7 rounded-lg bg-[#e6f0ff] text-signal-blue flex items-center justify-center">
                 <Receipt className="w-4 h-4" />
               </div>
             </div>
-            <div className="mt-2 text-xl sm:text-2xl font-black text-slate-900">{totalTransactions}</div>
-            <div className="mt-0.5 text-2xs text-slate-400">
+            <div className="mt-2 text-xl sm:text-2xl font-black text-ink-navy">{totalTransactions}</div>
+            <div className="mt-0.5 text-2xs text-mist-gray">
               {incomeTransactionCount} thu • {expenseTransactionCount} chi
             </div>
           </CardContent>
@@ -163,13 +163,13 @@ export function FundReport({ organizationId, filterParams }: FundReportProps) {
 
       {/* 2. Monthly Financial Trend Chart */}
       {byMonth.length > 0 && (
-        <Card className="border-slate-200/90 shadow-2xs bg-white">
-          <CardHeader className="p-4 pb-2 border-b border-slate-100 flex flex-row items-center justify-between">
+        <Card className="border-hairline shadow-xs bg-white">
+          <CardHeader className="p-4 pb-2 border-b border-hairline flex flex-row items-center justify-between">
             <div>
-              <CardTitle className="text-xs font-bold uppercase tracking-wider text-slate-900">
+              <CardTitle className="text-xs font-bold uppercase tracking-wider text-ink-navy">
                 Biến động Dòng tiền Thu & Chi theo Tháng
               </CardTitle>
-              <CardDescription className="text-2xs text-slate-500">
+              <CardDescription className="text-2xs text-mist-gray">
                 So sánh tổng thu và tổng chi qua từng kỳ kế toán
               </CardDescription>
             </div>
@@ -206,7 +206,7 @@ export function FundReport({ organizationId, filterParams }: FundReportProps) {
                     verticalAlign="bottom"
                     height={36}
                     formatter={(val: string) => (
-                      <span className="text-2xs font-medium text-slate-700">
+                      <span className="text-2xs font-medium text-slate-gray">
                         {val === 'income' ? 'Khoản thu' : val === 'expense' ? 'Khoản chi' : 'Số dư'}
                       </span>
                     )}
@@ -223,12 +223,12 @@ export function FundReport({ organizationId, filterParams }: FundReportProps) {
       {/* 3. Category Breakdown Charts */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
         {/* Income by Category */}
-        <Card className="border-slate-200/90 shadow-2xs bg-white">
-          <CardHeader className="p-4 pb-2 border-b border-slate-100">
-            <CardTitle className="text-xs font-bold uppercase tracking-wider text-slate-900">
+        <Card className="border-hairline shadow-xs bg-white">
+          <CardHeader className="p-4 pb-2 border-b border-hairline">
+            <CardTitle className="text-xs font-bold uppercase tracking-wider text-ink-navy">
               Cơ cấu Nguồn thu theo Danh mục
             </CardTitle>
-            <CardDescription className="text-2xs text-slate-500">
+            <CardDescription className="text-2xs text-mist-gray">
               Tỷ trọng các nguồn tiền tài trợ, hội phí và đóng góp
             </CardDescription>
           </CardHeader>
@@ -258,13 +258,13 @@ export function FundReport({ organizationId, filterParams }: FundReportProps) {
                     <Legend
                       verticalAlign="bottom"
                       height={36}
-                      formatter={(val: string) => <span className="text-2xs font-medium text-slate-700">{val}</span>}
+                      formatter={(val: string) => <span className="text-2xs font-medium text-slate-gray">{val}</span>}
                     />
                   </PieChart>
                 </ResponsiveContainer>
               </div>
             ) : (
-              <div className="h-48 flex items-center justify-center text-xs text-slate-400">
+              <div className="h-48 flex items-center justify-center text-xs text-mist-gray">
                 Chưa có dữ liệu nguồn thu
               </div>
             )}
@@ -272,12 +272,12 @@ export function FundReport({ organizationId, filterParams }: FundReportProps) {
         </Card>
 
         {/* Expense by Category */}
-        <Card className="border-slate-200/90 shadow-2xs bg-white">
-          <CardHeader className="p-4 pb-2 border-b border-slate-100">
-            <CardTitle className="text-xs font-bold uppercase tracking-wider text-slate-900">
+        <Card className="border-hairline shadow-xs bg-white">
+          <CardHeader className="p-4 pb-2 border-b border-hairline">
+            <CardTitle className="text-xs font-bold uppercase tracking-wider text-ink-navy">
               Cơ cấu Khoản chi theo Danh mục
             </CardTitle>
-            <CardDescription className="text-2xs text-slate-500">
+            <CardDescription className="text-2xs text-mist-gray">
               Tỷ trọng các chi phí tổ chức sự kiện, hậu cần và văn phòng phẩm
             </CardDescription>
           </CardHeader>
@@ -307,13 +307,13 @@ export function FundReport({ organizationId, filterParams }: FundReportProps) {
                     <Legend
                       verticalAlign="bottom"
                       height={36}
-                      formatter={(val: string) => <span className="text-2xs font-medium text-slate-700">{val}</span>}
+                      formatter={(val: string) => <span className="text-2xs font-medium text-slate-gray">{val}</span>}
                     />
                   </PieChart>
                 </ResponsiveContainer>
               </div>
             ) : (
-              <div className="h-48 flex items-center justify-center text-xs text-slate-400">
+              <div className="h-48 flex items-center justify-center text-xs text-mist-gray">
                 Chưa có dữ liệu khoản chi
               </div>
             )}
@@ -324,13 +324,13 @@ export function FundReport({ organizationId, filterParams }: FundReportProps) {
       {/* 4. Detailed Breakdown Tables */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
         {/* Income Table */}
-        <Card className="border-slate-200/90 shadow-2xs bg-white">
-          <CardHeader className="p-4 pb-3 border-b border-slate-100 flex flex-row items-center justify-between">
+        <Card className="border-hairline shadow-xs bg-white">
+          <CardHeader className="p-4 pb-3 border-b border-hairline flex flex-row items-center justify-between">
             <div>
-              <CardTitle className="text-xs font-bold uppercase tracking-wider text-slate-900">
+              <CardTitle className="text-xs font-bold uppercase tracking-wider text-ink-navy">
                 Bảng Thống kê Nguồn thu theo Danh mục
               </CardTitle>
-              <CardDescription className="text-2xs text-slate-500">
+              <CardDescription className="text-2xs text-mist-gray">
                 {incomeByCategory.length} hạng mục thu được ghi nhận
               </CardDescription>
             </div>
@@ -341,7 +341,7 @@ export function FundReport({ organizationId, filterParams }: FundReportProps) {
           </CardHeader>
           <CardContent className="p-0">
             <table className="w-full text-xs text-left border-collapse">
-              <thead className="bg-slate-50/80 border-b border-slate-200/80 text-slate-600 font-semibold uppercase tracking-wider text-2xs">
+              <thead className="bg-cloud border-b border-hairline text-slate-gray font-semibold uppercase tracking-wider text-2xs">
                 <tr>
                   <th className="py-2.5 px-4">Danh mục thu</th>
                   <th className="py-2.5 px-3 text-right">Số tiền</th>
@@ -349,19 +349,19 @@ export function FundReport({ organizationId, filterParams }: FundReportProps) {
                   <th className="py-2.5 px-4 text-center">Số GD</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-100">
+              <tbody className="divide-y divide-hairline">
                 {incomeByCategory.length > 0 ? (
                   incomeByCategory.map((c) => (
-                    <tr key={c.categoryId} className="hover:bg-slate-50/60 transition-colors">
-                      <td className="py-2.5 px-4 font-semibold text-slate-800">{c.categoryName}</td>
+                    <tr key={c.categoryId} className="hover:bg-cloud/60 transition-colors">
+                      <td className="py-2.5 px-4 font-semibold text-slate-gray">{c.categoryName}</td>
                       <td className="py-2.5 px-3 text-right font-bold text-emerald-700">{formatVND(c.amount)}</td>
-                      <td className="py-2.5 px-3 text-center text-2xs text-slate-500 font-medium">{c.percentage}%</td>
-                      <td className="py-2.5 px-4 text-center text-2xs text-slate-600">{c.count}</td>
+                      <td className="py-2.5 px-3 text-center text-2xs text-mist-gray font-medium">{c.percentage}%</td>
+                      <td className="py-2.5 px-4 text-center text-2xs text-slate-gray">{c.count}</td>
                     </tr>
                   ))
                 ) : (
                   <tr>
-                    <td colSpan={4} className="py-6 text-center text-xs text-slate-400">
+                    <td colSpan={4} className="py-6 text-center text-xs text-mist-gray">
                       Chưa có giao dịch thu
                     </td>
                   </tr>
@@ -372,13 +372,13 @@ export function FundReport({ organizationId, filterParams }: FundReportProps) {
         </Card>
 
         {/* Expense Table */}
-        <Card className="border-slate-200/90 shadow-2xs bg-white">
-          <CardHeader className="p-4 pb-3 border-b border-slate-100 flex flex-row items-center justify-between">
+        <Card className="border-hairline shadow-xs bg-white">
+          <CardHeader className="p-4 pb-3 border-b border-hairline flex flex-row items-center justify-between">
             <div>
-              <CardTitle className="text-xs font-bold uppercase tracking-wider text-slate-900">
+              <CardTitle className="text-xs font-bold uppercase tracking-wider text-ink-navy">
                 Bảng Thống kê Khoản chi theo Danh mục
               </CardTitle>
-              <CardDescription className="text-2xs text-slate-500">
+              <CardDescription className="text-2xs text-mist-gray">
                 {expenseByCategory.length} hạng mục chi đã thanh toán
               </CardDescription>
             </div>
@@ -389,7 +389,7 @@ export function FundReport({ organizationId, filterParams }: FundReportProps) {
           </CardHeader>
           <CardContent className="p-0">
             <table className="w-full text-xs text-left border-collapse">
-              <thead className="bg-slate-50/80 border-b border-slate-200/80 text-slate-600 font-semibold uppercase tracking-wider text-2xs">
+              <thead className="bg-cloud border-b border-hairline text-slate-gray font-semibold uppercase tracking-wider text-2xs">
                 <tr>
                   <th className="py-2.5 px-4">Danh mục chi</th>
                   <th className="py-2.5 px-3 text-right">Số tiền</th>
@@ -397,19 +397,19 @@ export function FundReport({ organizationId, filterParams }: FundReportProps) {
                   <th className="py-2.5 px-4 text-center">Số GD</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-100">
+              <tbody className="divide-y divide-hairline">
                 {expenseByCategory.length > 0 ? (
                   expenseByCategory.map((c) => (
-                    <tr key={c.categoryId} className="hover:bg-slate-50/60 transition-colors">
-                      <td className="py-2.5 px-4 font-semibold text-slate-800">{c.categoryName}</td>
+                    <tr key={c.categoryId} className="hover:bg-cloud/60 transition-colors">
+                      <td className="py-2.5 px-4 font-semibold text-slate-gray">{c.categoryName}</td>
                       <td className="py-2.5 px-3 text-right font-bold text-rose-700">{formatVND(c.amount)}</td>
-                      <td className="py-2.5 px-3 text-center text-2xs text-slate-500 font-medium">{c.percentage}%</td>
-                      <td className="py-2.5 px-4 text-center text-2xs text-slate-600">{c.count}</td>
+                      <td className="py-2.5 px-3 text-center text-2xs text-mist-gray font-medium">{c.percentage}%</td>
+                      <td className="py-2.5 px-4 text-center text-2xs text-slate-gray">{c.count}</td>
                     </tr>
                   ))
                 ) : (
                   <tr>
-                    <td colSpan={4} className="py-6 text-center text-xs text-slate-400">
+                    <td colSpan={4} className="py-6 text-center text-xs text-mist-gray">
                       Chưa có giao dịch chi
                     </td>
                   </tr>

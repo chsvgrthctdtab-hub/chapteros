@@ -9,15 +9,15 @@ interface ScopesAuditCardProps {
 
 export function ScopesAuditCard({ grantedScopes }: ScopesAuditCardProps) {
   return (
-    <Card className="border-slate-200 shadow-2xs">
+    <Card className="border-hairline bg-white shadow-xs">
       <CardHeader>
         <div className="flex items-center gap-2">
-          <ShieldCheck strokeWidth={1.5} className="h-5 w-5 text-blue-600" />
-          <CardTitle className="text-base font-semibold text-slate-900">
+          <ShieldCheck strokeWidth={1.5} className="h-5 w-5 text-signal-blue" />
+          <CardTitle className="text-base font-semibold text-ink-navy">
             Kiểm toán Quyền hạn & Bảo mật (Least Privilege Principle)
           </CardTitle>
         </div>
-        <CardDescription className="text-xs">
+        <CardDescription className="text-xs text-mist-gray">
           Chi tiết các phạm vi OAuth 2.0 được yêu cầu và tác động bảo mật tương ứng
         </CardDescription>
       </CardHeader>
@@ -35,48 +35,48 @@ export function ScopesAuditCard({ grantedScopes }: ScopesAuditCardProps) {
             </p>
           </div>
 
-          <div className="p-3 rounded-lg border border-blue-200 bg-blue-50/50 space-y-1">
-            <div className="font-semibold text-blue-800 flex items-center gap-1.5">
-              <Lock className="h-4 w-4 text-blue-600 shrink-0" />
+          <div className="p-3 rounded-lg border border-[#d4e4fa] bg-[#e6f0ff]/50 space-y-1">
+            <div className="font-semibold text-ink-navy flex items-center gap-1.5">
+              <Lock className="h-4 w-4 text-signal-blue shrink-0" />
               <span>Không lộ Client Secret</span>
             </div>
-            <p className="text-[11px] text-blue-700 leading-relaxed">
+            <p className="text-[11px] text-slate-gray leading-relaxed">
               Không lưu trữ Access Token hoặc API Secret Key dưới dạng <code>VITE_*</code> trong mã nguồn frontend.
             </p>
           </div>
 
-          <div className="p-3 rounded-lg border border-slate-200 bg-slate-50 space-y-1">
-            <div className="font-semibold text-slate-800 flex items-center gap-1.5">
-              <AlertCircle className="h-4 w-4 text-slate-600 shrink-0" />
+          <div className="p-3 rounded-lg border border-hairline bg-cloud space-y-1">
+            <div className="font-semibold text-ink-navy flex items-center gap-1.5">
+              <AlertCircle className="h-4 w-4 text-slate-gray shrink-0" />
               <span>Cách ly đa Đơn vị</span>
             </div>
-            <p className="text-[11px] text-slate-600 leading-relaxed">
+            <p className="text-[11px] text-slate-gray leading-relaxed">
               Row Level Security (RLS) bảo vệ phân quyền, mỗi Đơn vị chỉ quản lý và truy cập tài nguyên Google của riêng mình.
             </p>
           </div>
         </div>
 
         {/* Scopes Table */}
-        <div className="rounded-lg border border-slate-200 overflow-hidden">
-          <div className="bg-slate-50 px-4 py-2.5 border-b border-slate-200 grid grid-cols-12 text-[11px] font-semibold text-slate-600">
+        <div className="rounded-lg border border-hairline overflow-hidden">
+          <div className="bg-cloud px-4 py-2.5 border-b border-hairline grid grid-cols-12 text-[11px] font-semibold text-slate-gray">
             <div className="col-span-4 sm:col-span-3">Phạm vi quyền (Scope)</div>
             <div className="col-span-5 sm:col-span-6">Mục đích sử dụng cụ thể</div>
             <div className="col-span-3 sm:col-span-3 text-right">Trạng thái cấp quyền</div>
           </div>
 
-          <div className="divide-y divide-slate-100">
+          <div className="divide-y divide-hairline">
             {GOOGLE_SCOPES_CATALOGUE.map((scopeItem) => {
               const isGranted = grantedScopes.includes(scopeItem.scope);
               return (
-                <div key={scopeItem.scope} className="px-4 py-3 grid grid-cols-12 items-center gap-2 text-xs hover:bg-slate-50/50 transition-colors">
+                <div key={scopeItem.scope} className="px-4 py-3 grid grid-cols-12 items-center gap-2 text-xs hover:bg-cloud/50 transition-colors">
                   <div className="col-span-4 sm:col-span-3">
-                    <div className="font-semibold text-slate-800">{scopeItem.name}</div>
-                    <div className="font-mono text-[10px] text-slate-400 truncate" title={scopeItem.scope}>
+                    <div className="font-semibold text-ink-navy">{scopeItem.name}</div>
+                    <div className="font-mono text-[10px] text-mist-gray truncate" title={scopeItem.scope}>
                       {scopeItem.scope.replace('https://www.googleapis.com/auth/', '')}
                     </div>
                   </div>
 
-                  <div className="col-span-5 sm:col-span-6 text-[11px] text-slate-600 leading-relaxed">
+                  <div className="col-span-5 sm:col-span-6 text-[11px] text-slate-gray leading-relaxed">
                     {scopeItem.purpose}
                   </div>
 
@@ -87,7 +87,7 @@ export function ScopesAuditCard({ grantedScopes }: ScopesAuditCardProps) {
                         Đã cấp
                       </Badge>
                     ) : (
-                      <Badge variant="outline" className="text-[10px] py-0 px-2 text-slate-400 border-slate-200">
+                      <Badge variant="outline" className="text-[10px] py-0 px-2 text-mist-gray border-hairline">
                         Chưa cấp
                       </Badge>
                     )}

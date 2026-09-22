@@ -17,7 +17,7 @@ function Skeleton({ className, shape = "rounded", ...props }: SkeletonProps) {
 
   return (
     <div
-      className={cn("animate-pulse bg-slate-200/80", shapeClass, className)}
+      className={cn("animate-pulse bg-pebble", shapeClass, className)}
       {...props}
     />
   );

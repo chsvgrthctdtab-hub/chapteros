@@ -46,7 +46,7 @@ export function DocumentAccessLevelBadge({
       case 'public':
         return <Globe className="w-3 h-3 mr-1 text-emerald-600" />;
       case 'internal':
-        return <UserCheck className="w-3 h-3 mr-1 text-blue-600" />;
+        return <UserCheck className="w-3 h-3 mr-1 text-signal-blue" />;
       case 'board_only':
         return <ShieldCheck className="w-3 h-3 mr-1 text-amber-600" />;
       case 'admin_only':

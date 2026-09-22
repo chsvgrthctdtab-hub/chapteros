@@ -100,17 +100,17 @@ export function ReportFilters({
   return (
     <div
       id="report-filters-bar"
-      className="rounded-xl border border-slate-200/90 bg-white p-4 shadow-2xs space-y-3"
+      className="rounded-xl border border-hairline bg-white p-4 shadow-xs space-y-3"
     >
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-3">
         {/* Active Organization Info */}
-        <div className="flex items-center gap-2 text-slate-700">
-          <div className="w-8 h-8 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center">
+        <div className="flex items-center gap-2 text-slate-gray">
+          <div className="w-8 h-8 rounded-lg bg-[#e6f0ff] text-signal-blue flex items-center justify-center">
             <Building2 className="w-4 h-4" />
           </div>
           <div>
-            <span className="text-xs text-slate-500 font-medium block">Chi hội đang chọn</span>
-            <span className="text-sm font-bold text-slate-900">{organizationName}</span>
+            <span className="text-xs text-mist-gray font-medium block">Chi hội đang chọn</span>
+            <span className="text-sm font-bold text-ink-navy">{organizationName}</span>
           </div>
         </div>
 
@@ -122,9 +122,9 @@ export function ReportFilters({
             onValueChange={handleTermChange}
             disabled={isTermsLoading}
           >
-            <SelectTrigger id={termSelectId} className="h-8.5 text-xs font-semibold bg-slate-50 border-slate-200/80 w-auto min-w-[140px]">
+            <SelectTrigger id={termSelectId} className="h-8.5 text-xs font-semibold bg-cloud border-hairline w-auto min-w-[140px] text-ink-navy">
               <div className="flex items-center gap-1.5">
-                <Layers className="w-3.5 h-3.5 text-slate-500 shrink-0" />
+                <Layers className="w-3.5 h-3.5 text-mist-gray shrink-0" />
                 <SelectValue placeholder="Tất cả nhiệm kỳ" />
               </div>
             </SelectTrigger>
@@ -143,9 +143,9 @@ export function ReportFilters({
             value={timePreset}
             onValueChange={(val) => handlePresetChange(val as TimeRangePreset)}
           >
-            <SelectTrigger id={timePresetSelectId} className="h-8.5 text-xs font-semibold bg-slate-50 border-slate-200/80 w-auto min-w-[140px]">
+            <SelectTrigger id={timePresetSelectId} className="h-8.5 text-xs font-semibold bg-cloud border-hairline w-auto min-w-[140px] text-ink-navy">
               <div className="flex items-center gap-1.5">
-                <Calendar className="w-3.5 h-3.5 text-slate-500 shrink-0" />
+                <Calendar className="w-3.5 h-3.5 text-mist-gray shrink-0" />
                 <SelectValue placeholder="Toàn thời gian" />
               </div>
             </SelectTrigger>
@@ -162,13 +162,13 @@ export function ReportFilters({
 
       {/* Custom Date Range Inputs (when 'custom' preset is selected) */}
       {timePreset === 'custom' && (
-        <div className="pt-2 border-t border-slate-100 flex flex-wrap items-center gap-3 text-xs">
-          <span className="font-medium text-slate-600 flex items-center gap-1">
-            <Filter className="w-3.5 h-3.5 text-slate-400" />
+        <div className="pt-2 border-t border-hairline flex flex-wrap items-center gap-3 text-xs">
+          <span className="font-medium text-slate-gray flex items-center gap-1">
+            <Filter className="w-3.5 h-3.5 text-mist-gray" />
             Khoảng ngày tùy chỉnh:
           </span>
           <div className="flex items-center gap-1.5">
-            <span className="text-slate-500">Từ:</span>
+            <span className="text-mist-gray">Từ:</span>
             <DatePicker
               value={customStartDate}
               onChange={(val) => handleCustomDateChange(val || '', customEndDate)}
@@ -176,7 +176,7 @@ export function ReportFilters({
             />
           </div>
           <div className="flex items-center gap-1.5">
-            <span className="text-slate-500">Đến:</span>
+            <span className="text-mist-gray">Đến:</span>
             <DatePicker
               value={customEndDate}
               onChange={(val) => handleCustomDateChange(customStartDate, val || '')}

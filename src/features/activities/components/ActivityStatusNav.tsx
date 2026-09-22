@@ -41,8 +41,8 @@ const NAV_ITEMS: NavItem[] = [
     label: 'Tất cả',
     vnLabel: 'Tất cả',
     icon: ListFilter,
-    color: 'text-slate-600',
-    activeColor: 'bg-slate-900 text-white border-slate-900 shadow-2xs',
+    color: 'text-slate-gray',
+    activeColor: 'bg-signal-blue text-white border-signal-blue shadow-sm',
   },
   {
     id: 'draft',
@@ -50,15 +50,15 @@ const NAV_ITEMS: NavItem[] = [
     vnLabel: 'Kế hoạch',
     icon: Clock,
     color: 'text-amber-700',
-    activeColor: 'bg-amber-700 text-white border-amber-700 shadow-2xs',
+    activeColor: 'bg-amber-700 text-white border-amber-700 shadow-sm',
   },
   {
     id: 'published',
     label: 'Đã công bố',
     vnLabel: 'Đã công bố',
     icon: Send,
-    color: 'text-sky-700',
-    activeColor: 'bg-sky-700 text-white border-sky-700 shadow-2xs',
+    color: 'text-signal-blue',
+    activeColor: 'bg-signal-blue text-white border-signal-blue shadow-sm',
   },
   {
     id: 'in_progress',
@@ -66,15 +66,15 @@ const NAV_ITEMS: NavItem[] = [
     vnLabel: 'Đang diễn ra',
     icon: Flame,
     color: 'text-emerald-700',
-    activeColor: 'bg-emerald-700 text-white border-emerald-700 shadow-2xs',
+    activeColor: 'bg-emerald-700 text-white border-emerald-700 shadow-sm',
   },
   {
     id: 'completed',
     label: 'Hoàn thành',
     vnLabel: 'Hoàn thành',
     icon: CheckCircle2,
-    color: 'text-blue-700',
-    activeColor: 'bg-blue-700 text-white border-blue-700 shadow-2xs',
+    color: 'text-signal-blue',
+    activeColor: 'bg-signal-blue text-white border-signal-blue shadow-sm',
   },
   {
     id: 'cancelled',
@@ -82,7 +82,7 @@ const NAV_ITEMS: NavItem[] = [
     vnLabel: 'Đã hủy',
     icon: XCircle,
     color: 'text-rose-700',
-    activeColor: 'bg-rose-700 text-white border-rose-700 shadow-2xs',
+    activeColor: 'bg-rose-700 text-white border-rose-700 shadow-sm',
   },
 ];
 
@@ -108,7 +108,7 @@ export function ActivityStatusNav({
               'inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-lg border transition-all whitespace-nowrap cursor-pointer shrink-0',
               isActive
                 ? item.activeColor
-                : 'bg-white text-slate-600 border-slate-200/90 hover:bg-slate-50 hover:text-slate-900 hover:border-slate-300'
+                : 'bg-white text-slate-gray border-hairline hover:bg-pebble hover:text-ink-navy hover:border-mist-gray'
             )}
           >
             <Icon className={cn('w-3.5 h-3.5', isActive ? 'text-white' : item.color)} />
@@ -119,7 +119,7 @@ export function ActivityStatusNav({
                   'text-[10px] font-bold px-1.5 py-0.2 rounded-full tabular-nums',
                   isActive
                     ? 'bg-white/20 text-white'
-                    : 'bg-slate-100 text-slate-600 group-hover:bg-slate-200'
+                    : 'bg-pebble text-slate-gray group-hover:bg-cloud'
                 )}
               >
                 {count}

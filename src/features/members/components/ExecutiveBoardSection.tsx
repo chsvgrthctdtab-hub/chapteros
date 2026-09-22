@@ -5,8 +5,6 @@ import {
   GraduationCap,
   Phone,
   Search,
-  CheckCircle2,
-  ExternalLink,
   Shield,
   Award,
   UserCheck,
@@ -15,9 +13,7 @@ import {
   UserCog,
 } from 'lucide-react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
 import { ROLES, getRoleLabel, getOrgBoardTitle, type OrganizationRole } from '@/types/roles';
 import { useLanguage } from '@/contexts/LanguageContext';
 import type { OrganizationMembership } from '@/types';
@@ -93,11 +89,11 @@ export function ExecutiveBoardSection({
   return (
     <section className="w-full space-y-4" id="bch-roster-section">
       {/* Section Header */}
-      <div className="bg-gradient-to-r from-emerald-800 to-teal-900 rounded-2xl p-5 sm:p-6 text-white shadow-xs">
+      <div className="bg-ink-navy rounded-2xl p-5 sm:p-6 text-white shadow-xs">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div className="space-y-1.5">
-            <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-700/60 border border-emerald-500/30 text-emerald-100 text-[11px] font-medium tracking-wide uppercase">
-              <ShieldCheck className="w-3.5 h-3.5 text-emerald-300" />
+            <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-white/10 border border-white/20 text-white text-[11px] font-medium tracking-wide uppercase">
+              <ShieldCheck className="w-3.5 h-3.5 text-signal-blue" />
               <span>{t('members.bch.badge', 'Ban Quản Trị & Điều Hành')}</span>
             </div>
             <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-white flex items-center gap-2">
@@ -106,7 +102,7 @@ export function ExecutiveBoardSection({
                 {validBoardMembers.length}
               </span>
             </h2>
-            <p className="text-xs sm:text-sm text-emerald-100/80 max-w-2xl">
+            <p className="text-xs sm:text-sm text-mist-gray max-w-2xl">
               {t(
                 'members.bch.subtitle',
                 'Tài khoản được phân quyền quản lý và điều hành hệ thống'
@@ -121,7 +117,7 @@ export function ExecutiveBoardSection({
               variant="outline"
               size="sm"
               onClick={onManageMemberships}
-              className="bg-white/10 hover:bg-white/20 text-white border-white/20 hover:border-white/30 text-xs h-9 self-start md:self-auto cursor-pointer"
+              className="bg-white/10 hover:bg-white/20 text-white border-white/20 hover:border-white/30 text-xs h-9 rounded-lg self-start md:self-auto cursor-pointer"
             >
               <UserCog className="w-4 h-4 mr-1.5" />
               <span>{language === 'vi' ? 'Quản lý phân quyền' : 'Manage Permissions'}</span>
@@ -133,7 +129,7 @@ export function ExecutiveBoardSection({
         {validBoardMembers.length > 4 && (
           <div className="mt-4 pt-4 border-t border-white/10 max-w-md">
             <div className="relative">
-              <Search className="w-4 h-4 text-emerald-200/70 absolute left-3 top-1/2 -translate-y-1/2" />
+              <Search className="w-4 h-4 text-mist-gray absolute left-3 top-1/2 -translate-y-1/2" />
               <input
                 type="text"
                 value={effectiveSearch}
@@ -146,7 +142,7 @@ export function ExecutiveBoardSection({
                     ? 'Tìm cán bộ BCH theo tên, email, chức vụ...'
                     : 'Search board members by name, email, role...'
                 }
-                className="w-full pl-9 pr-4 py-2 bg-white/10 border border-white/20 rounded-xl text-xs text-white placeholder-emerald-200/60 focus:outline-hidden focus:ring-2 focus:ring-white/30"
+                className="w-full pl-9 pr-4 py-2 bg-white/10 border border-white/20 rounded-lg text-xs text-white placeholder:text-mist-gray focus:outline-none focus:ring-2 focus:ring-white/30"
               />
             </div>
           </div>
@@ -159,25 +155,25 @@ export function ExecutiveBoardSection({
           {[1, 2, 3].map((i) => (
             <div
               key={i}
-              className="bg-white border border-slate-200/80 rounded-xl p-5 animate-pulse space-y-3"
+              className="bg-white border border-hairline rounded-2xl p-5 animate-pulse space-y-3"
             >
               <div className="flex items-center gap-3">
-                <div className="w-12 h-12 bg-slate-200 rounded-full shrink-0" />
+                <div className="w-12 h-12 bg-pebble rounded-full shrink-0" />
                 <div className="space-y-2 flex-1">
-                  <div className="h-4 bg-slate-200 rounded w-3/4" />
-                  <div className="h-3 bg-slate-100 rounded w-1/2" />
+                  <div className="h-4 bg-pebble rounded w-3/4" />
+                  <div className="h-3 bg-cloud rounded w-1/2" />
                 </div>
               </div>
             </div>
           ))}
         </div>
       ) : filteredMembers.length === 0 ? (
-        <div className="bg-white border border-slate-200/90 rounded-xl p-8 text-center shadow-2xs space-y-3">
-          <div className="w-12 h-12 rounded-full bg-slate-100 flex items-center justify-center mx-auto text-slate-400">
+        <div className="bg-white border border-hairline rounded-2xl p-8 text-center shadow-xs space-y-3">
+          <div className="w-12 h-12 rounded-full bg-cloud flex items-center justify-center mx-auto text-mist-gray border border-hairline">
             <ShieldCheck strokeWidth={1.5} className="w-6 h-6" />
           </div>
           <div className="space-y-1 max-w-md mx-auto">
-            <h3 className="text-sm font-semibold text-slate-900">
+            <h3 className="text-sm font-semibold text-ink-navy">
               {effectiveSearch
                 ? language === 'vi'
                   ? 'Không tìm thấy cán bộ Ban Chấp Hành phù hợp'
@@ -186,7 +182,7 @@ export function ExecutiveBoardSection({
                 ? 'Chưa có tài khoản Ban Chấp Hành nào'
                 : 'No Executive Board members found'}
             </h3>
-            <p className="text-xs text-slate-500">
+            <p className="text-xs text-slate-gray">
               {effectiveSearch
                 ? language === 'vi'
                   ? 'Hãy thử thay đổi từ khóa tìm kiếm.'
@@ -211,24 +207,24 @@ export function ExecutiveBoardSection({
             return (
               <div
                 key={membership.id}
-                className="bg-white border border-slate-200/80 hover:border-emerald-500/50 rounded-2xl p-5 shadow-2xs transition-all duration-200 hover:shadow-xs flex flex-col justify-between space-y-4 group"
+                className="bg-white border border-hairline hover:border-signal-blue/50 rounded-2xl p-5 shadow-xs transition-all duration-200 hover:shadow-xs flex flex-col justify-between space-y-4 group"
               >
                 <div className="flex items-start gap-3.5">
-                  <Avatar className="h-12 w-12 rounded-full border-2 border-slate-100 shadow-2xs shrink-0">
+                  <Avatar className="h-12 w-12 rounded-full border-2 border-white shadow-xs shrink-0">
                     {membership.profile?.avatarUrl && (
                       <AvatarImage src={membership.profile.avatarUrl} alt={fullName} />
                     )}
-                    <AvatarFallback className="bg-emerald-50 text-emerald-800 font-bold text-sm">
+                    <AvatarFallback className="bg-[#e6f0ff] text-signal-blue font-bold text-sm">
                       {initial}
                     </AvatarFallback>
                   </Avatar>
 
                   <div className="min-w-0 flex-1 space-y-1">
                     <div className="flex items-center justify-between gap-1.5">
-                      <h4 className="text-sm font-bold text-slate-900 truncate group-hover:text-emerald-800 transition-colors">
+                      <h4 className="text-sm font-bold text-ink-navy truncate group-hover:text-signal-blue transition-colors">
                         {fullName}
                       </h4>
-                      <span className="inline-flex items-center gap-1 text-[10px] font-semibold text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded-full shrink-0 border border-emerald-200/60">
+                      <span className="inline-flex items-center gap-1 text-[10px] font-semibold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full shrink-0 border border-emerald-200/60">
                         <span className="w-1.5 h-1.5 rounded-full bg-emerald-600 shrink-0" />
                         {language === 'vi' ? 'Hoạt động' : 'Active'}
                       </span>
@@ -237,7 +233,7 @@ export function ExecutiveBoardSection({
                     {/* Role Badge */}
                     <div className="flex items-center gap-1.5 pt-0.5">
                       <span
-                        className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-lg text-xs font-semibold border shadow-2xs tracking-wide ${roleConfig.colorClasses.bg} ${roleConfig.colorClasses.text} ${roleConfig.colorClasses.border}`}
+                        className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold border shadow-xs tracking-wide ${roleConfig.colorClasses.bg} ${roleConfig.colorClasses.text} ${roleConfig.colorClasses.border}`}
                       >
                         <RoleIcon className="w-3.5 h-3.5 shrink-0" />
                         <span>{getRoleLabel(membership.role, language, organizationType)}</span>
@@ -247,17 +243,17 @@ export function ExecutiveBoardSection({
                 </div>
 
                 {/* Contact & Student Info */}
-                <div className="space-y-1.5 pt-2 border-t border-slate-100 text-xs text-slate-600">
+                <div className="space-y-1.5 pt-2 border-t border-hairline text-xs text-slate-gray">
                   {email && (
                     <div className="flex items-center justify-between group/email gap-2">
-                      <div className="flex items-center gap-1.5 min-w-0 text-slate-600">
-                        <Mail className="w-3.5 h-3.5 text-slate-400 shrink-0" />
+                      <div className="flex items-center gap-1.5 min-w-0 text-slate-gray">
+                        <Mail className="w-3.5 h-3.5 text-mist-gray shrink-0" />
                         <span className="truncate">{email}</span>
                       </div>
                       <button
                         type="button"
                         onClick={() => handleCopyEmail(email)}
-                        className="p-1 text-slate-400 hover:text-slate-700 rounded transition-colors shrink-0 cursor-pointer"
+                        className="p-1 text-mist-gray hover:text-ink-navy rounded-lg transition-colors shrink-0 cursor-pointer"
                         title={language === 'vi' ? 'Sao chép email' : 'Copy email'}
                       >
                         {copiedEmail === email ? (
@@ -270,22 +266,22 @@ export function ExecutiveBoardSection({
                   )}
 
                   {studentId && (
-                    <div className="flex items-center gap-1.5 text-slate-500">
-                      <GraduationCap className="w-3.5 h-3.5 text-slate-400 shrink-0" />
-                      <span>MSSV: {studentId}</span>
+                    <div className="flex items-center gap-1.5 text-slate-gray">
+                      <GraduationCap className="w-3.5 h-3.5 text-mist-gray shrink-0" />
+                      <span className="tabular-nums">MSSV: {studentId}</span>
                     </div>
                   )}
 
                   {phone && (
-                    <div className="flex items-center gap-1.5 text-slate-500">
-                      <Phone className="w-3.5 h-3.5 text-slate-400 shrink-0" />
-                      <span>{phone}</span>
+                    <div className="flex items-center gap-1.5 text-slate-gray">
+                      <Phone className="w-3.5 h-3.5 text-mist-gray shrink-0" />
+                      <span className="tabular-nums">{phone}</span>
                     </div>
                   )}
                 </div>
 
                 {/* Organization & Scope footer */}
-                <div className="pt-2 border-t border-slate-100/80 flex items-center justify-between text-[11px] text-slate-400">
+                <div className="pt-2 border-t border-hairline flex items-center justify-between text-[11px] text-mist-gray">
                   <span>
                     {organizationCode ? `${organizationCode}` : 'Chi hội'}
                   </span>

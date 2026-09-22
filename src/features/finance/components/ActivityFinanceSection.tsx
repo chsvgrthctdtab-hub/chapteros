@@ -5,10 +5,7 @@ import {
   Plus,
   DollarSign,
   AlertCircle,
-  FileSpreadsheet,
-  Wallet,
   Scale,
-  Calendar,
   ExternalLink,
   Edit2,
   Trash2,
@@ -110,8 +107,8 @@ export function ActivityFinanceSection({
   if (isLoading) {
     return (
       <div className="py-12 px-4 text-center space-y-4">
-        <div className="w-8 h-8 border-3 border-blue-600 border-t-transparent rounded-full animate-spin mx-auto" />
-        <p className="text-xs text-slate-500">Đang tải dữ liệu tài chính của hoạt động...</p>
+        <div className="w-8 h-8 border-3 border-signal-blue border-t-transparent rounded-full animate-spin mx-auto" />
+        <p className="text-xs text-mist-gray">Đang tải dữ liệu tài chính của hoạt động...</p>
       </div>
     );
   }
@@ -121,11 +118,11 @@ export function ActivityFinanceSection({
       {/* 1. Header & Quick Actions */}
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div>
-          <h3 className="text-base font-bold text-slate-900">
-            Kế hoạch Thu - Chi & Quyết toán Hoạt động
+          <h3 className="text-base font-bold text-ink-navy">
+            Kế hoạch Thu - Chi &amp; Quyết toán Hoạt động
           </h3>
-          <p className="text-xs text-slate-500">
-            Theo dõi chi phí thực tế, các nguồn thu và cân đối ngân sách cho: <span className="font-semibold text-slate-700">{activityTitle}</span>
+          <p className="text-xs text-slate-gray">
+            Theo dõi chi phí thực tế, các nguồn thu và cân đối ngân sách cho: <span className="font-semibold text-ink-navy">{activityTitle}</span>
           </p>
         </div>
 
@@ -142,7 +139,7 @@ export function ActivityFinanceSection({
             <button
               type="button"
               onClick={() => handleOpenCreate('expense')}
-              className="flex items-center gap-1.5 px-3 py-2 text-xs font-bold text-white bg-rose-600 hover:bg-rose-700 active:bg-rose-800 rounded-xl transition-colors shadow-xs"
+              className="flex items-center gap-1.5 px-3 py-2 text-xs font-bold text-white bg-signal-blue hover:bg-[#005be0] active:bg-[#004fcc] rounded-xl transition-colors shadow-xs"
             >
               <Plus className="w-3.5 h-3.5" />
               <span>Ghi khoản Chi</span>
@@ -154,9 +151,9 @@ export function ActivityFinanceSection({
       {/* 2. Mini Balance Summary Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
         {/* Total Income */}
-        <div className="bg-white rounded-2xl p-4 border border-slate-200/80 shadow-xs">
+        <div className="bg-white rounded-2xl p-4 border border-hairline shadow-xs">
           <div className="flex items-center justify-between mb-1.5">
-            <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">
+            <span className="text-xs font-semibold text-mist-gray uppercase tracking-wider">
               Tổng Thu vào
             </span>
             <div className="w-7 h-7 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center">
@@ -169,9 +166,9 @@ export function ActivityFinanceSection({
         </div>
 
         {/* Total Expense */}
-        <div className="bg-white rounded-2xl p-4 border border-slate-200/80 shadow-xs">
+        <div className="bg-white rounded-2xl p-4 border border-hairline shadow-xs">
           <div className="flex items-center justify-between mb-1.5">
-            <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">
+            <span className="text-xs font-semibold text-mist-gray uppercase tracking-wider">
               Tổng Đã Chi
             </span>
             <div className="w-7 h-7 rounded-lg bg-rose-50 text-rose-600 flex items-center justify-center">
@@ -187,12 +184,12 @@ export function ActivityFinanceSection({
         <div
           className={`rounded-2xl p-4 border shadow-xs ${
             isBalancePositive
-              ? 'bg-slate-900 text-white border-slate-800'
+              ? 'bg-ink-navy text-white border-[#1a2a4a]'
               : 'bg-rose-950 text-white border-rose-900'
           }`}
         >
           <div className="flex items-center justify-between mb-1.5">
-            <span className="text-xs font-semibold text-slate-300 uppercase tracking-wider">
+            <span className="text-xs font-semibold text-mist-gray uppercase tracking-wider">
               Cân đối thu chi
             </span>
             <div className="w-7 h-7 rounded-lg bg-white/10 text-white flex items-center justify-center">
@@ -207,14 +204,14 @@ export function ActivityFinanceSection({
 
       {/* 3. Transaction List or Empty State */}
       {transactions.length === 0 ? (
-        <div className="py-12 px-4 text-center max-w-md mx-auto space-y-3 bg-slate-50/50 rounded-2xl border border-dashed border-slate-200">
-          <div className="w-12 h-12 rounded-2xl bg-white text-slate-400 flex items-center justify-center mx-auto border border-slate-200 shadow-xs">
+        <div className="py-12 px-4 text-center max-w-md mx-auto space-y-3 bg-cloud rounded-2xl border border-dashed border-hairline">
+          <div className="w-12 h-12 rounded-2xl bg-white text-mist-gray flex items-center justify-center mx-auto border border-hairline shadow-xs">
             <DollarSign strokeWidth={1.5} className="w-6 h-6" />
           </div>
-          <h4 className="text-sm font-bold text-slate-800">
+          <h4 className="text-sm font-bold text-ink-navy">
             Chưa có phiếu thu chi nào cho hoạt động này
           </h4>
-          <p className="text-xs text-slate-500 leading-relaxed">
+          <p className="text-xs text-mist-gray leading-relaxed">
             Ghi nhận các chi phí chuẩn bị, mua sắm vật tư, giải thưởng hoặc nguồn tài trợ gắn liền với hoạt động này.
           </p>
           {canManage && (
@@ -222,7 +219,7 @@ export function ActivityFinanceSection({
               <button
                 type="button"
                 onClick={() => handleOpenCreate('expense')}
-                className="inline-flex items-center gap-1.5 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold rounded-xl transition-colors shadow-xs"
+                className="inline-flex items-center gap-1.5 px-4 py-2 bg-signal-blue hover:bg-[#005be0] text-white text-xs font-bold rounded-xl transition-colors shadow-xs"
               >
                 <Plus className="w-4 h-4" />
                 <span>Ghi nhận chi phí đầu tiên</span>
@@ -231,25 +228,25 @@ export function ActivityFinanceSection({
           )}
         </div>
       ) : (
-        <div className="bg-white rounded-2xl border border-slate-200/80 shadow-xs overflow-hidden">
+        <div className="bg-white rounded-2xl border border-hairline shadow-xs overflow-hidden">
           <div className="overflow-x-auto">
             <table className="w-full text-left border-collapse text-sm">
               <thead>
-                <tr className="bg-slate-50/80 border-b border-slate-200/80 text-xs font-semibold text-slate-500 uppercase tracking-wider">
+                <tr className="bg-cloud border-b border-hairline text-xs font-semibold text-mist-gray uppercase tracking-wider">
                   <th className="py-3 px-4">Ngày</th>
-                  <th className="py-3 px-4">Loại & Danh mục</th>
+                  <th className="py-3 px-4">Loại &amp; Danh mục</th>
                   <th className="py-3 px-4">Nội dung</th>
                   <th className="py-3 px-4">Người lập</th>
                   <th className="py-3 px-4 text-right">Số tiền</th>
                   {canManage && <th className="py-3 px-4 text-right">Thao tác</th>}
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-100">
+              <tbody className="divide-y divide-hairline">
                 {transactions.map((tx) => {
                   const typeConfig = getTransactionTypeConfig(tx.transactionType);
                   return (
-                    <tr key={tx.id} className="hover:bg-slate-50/70 transition-colors">
-                      <td className="py-3 px-4 whitespace-nowrap text-xs text-slate-600">
+                    <tr key={tx.id} className="hover:bg-cloud transition-colors">
+                      <td className="py-3 px-4 whitespace-nowrap text-xs text-slate-gray">
                         {formatDate(tx.transactionDate)}
                       </td>
                       <td className="py-3 px-4 whitespace-nowrap">
@@ -259,14 +256,14 @@ export function ActivityFinanceSection({
                           >
                             {typeConfig.shortLabel}
                           </span>
-                          <span className="text-xs font-medium text-slate-800">
+                          <span className="text-xs font-medium text-ink-navy">
                             {tx.category?.name || 'Khác'}
                           </span>
                         </div>
                       </td>
                       <td className="py-3 px-4">
                         <div className="space-y-0.5">
-                          <p className="text-xs font-medium text-slate-900 line-clamp-1">
+                          <p className="text-xs font-medium text-ink-navy line-clamp-1">
                             {tx.description}
                           </p>
                           {tx.receiptUrl && (
@@ -274,7 +271,7 @@ export function ActivityFinanceSection({
                               href={tx.receiptUrl}
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="inline-flex items-center gap-1 text-[11px] text-blue-600 hover:underline"
+                              className="inline-flex items-center gap-1 text-[11px] text-signal-blue hover:underline"
                             >
                               <ExternalLink className="w-3 h-3" />
                               <span>Chứng từ</span>
@@ -282,7 +279,7 @@ export function ActivityFinanceSection({
                           )}
                         </div>
                       </td>
-                      <td className="py-3 px-4 whitespace-nowrap text-xs text-slate-600">
+                      <td className="py-3 px-4 whitespace-nowrap text-xs text-slate-gray">
                         {tx.recorder?.fullName || 'BCH'}
                       </td>
                       <td className="py-3 px-4 text-right whitespace-nowrap">
@@ -297,14 +294,14 @@ export function ActivityFinanceSection({
                             <button
                               type="button"
                               onClick={() => handleOpenEdit(tx)}
-                              className="p-1 text-slate-400 hover:text-blue-600 rounded"
+                              className="p-1 text-mist-gray hover:text-signal-blue rounded"
                             >
                               <Edit2 className="w-3.5 h-3.5" />
                             </button>
                             <button
                               type="button"
                               onClick={() => setDeletingTransaction(tx)}
-                              className="p-1 text-slate-400 hover:text-rose-600 rounded"
+                              className="p-1 text-mist-gray hover:text-rose-600 rounded"
                             >
                               <Trash2 className="w-3.5 h-3.5" />
                             </button>
@@ -337,25 +334,25 @@ export function ActivityFinanceSection({
 
       {/* Delete Confirmation Modal */}
       {deletingTransaction && (
-        <div className="fixed inset-0 z-50 overflow-y-auto bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4">
-          <div className="bg-white rounded-3xl p-6 max-w-sm w-full border border-slate-200 shadow-2xl space-y-4">
+        <div className="fixed inset-0 z-50 overflow-y-auto bg-ink-navy/60 backdrop-blur-xs flex items-center justify-center p-4">
+          <div className="bg-white rounded-3xl p-6 max-w-sm w-full border border-hairline shadow-2xl space-y-4">
             <div className="w-10 h-10 rounded-2xl bg-rose-50 text-rose-600 flex items-center justify-center">
               <AlertCircle className="w-5 h-5" />
             </div>
             <div>
-              <h4 className="text-base font-bold text-slate-900">
+              <h4 className="text-base font-bold text-ink-navy">
                 Xác nhận xóa phiếu thu/chi?
               </h4>
-              <p className="text-xs text-slate-500 mt-1">
-                Giao dịch <span className="font-semibold text-slate-700">"{deletingTransaction.description}"</span> với số tiền{' '}
-                <span className="font-bold text-slate-900">{formatVND(deletingTransaction.amount)}</span> sẽ bị xóa khỏi sổ quỹ.
+              <p className="text-xs text-mist-gray mt-1">
+                Giao dịch <span className="font-semibold text-slate-gray">"{deletingTransaction.description}"</span> với số tiền{' '}
+                <span className="font-bold text-ink-navy">{formatVND(deletingTransaction.amount)}</span> sẽ bị xóa khỏi sổ quỹ.
               </p>
             </div>
             <div className="flex items-center justify-end gap-2 pt-2">
               <button
                 type="button"
                 onClick={() => setDeletingTransaction(null)}
-                className="px-3 py-1.5 text-xs font-semibold text-slate-600 hover:bg-slate-100 rounded-xl"
+                className="px-3 py-1.5 text-xs font-semibold text-slate-gray hover:bg-cloud rounded-xl"
               >
                 Hủy
               </button>

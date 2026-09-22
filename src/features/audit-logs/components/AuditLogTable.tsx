@@ -23,11 +23,8 @@ import {
   ChevronLeft,
   ChevronRight,
   History,
-  Shield,
   ArrowRight,
   User,
-  Layers,
-  Sparkles,
 } from 'lucide-react';
 import type { AuditLogItemWithActor } from '../types/audit-log.types';
 import {
@@ -65,9 +62,9 @@ export function AuditLogTable({
 }: AuditLogTableProps) {
   if (!isLoading && logs.length === 0) {
     return (
-      <div className="bg-white rounded-xl border border-slate-200/90 p-8 shadow-2xs">
+      <div className="bg-white rounded-xl border border-hairline p-8 shadow-xs">
         <EmptyState
-          icon={<History strokeWidth={1.5} className="w-9 h-9 text-slate-400" />}
+          icon={<History strokeWidth={1.5} className="w-9 h-9 text-mist-gray" />}
           title="Không tìm thấy nhật ký kiểm toán"
           description="Chưa có thao tác nào được ghi nhận hoặc không khớp với tiêu chí tìm kiếm hiện tại."
         />
@@ -79,40 +76,40 @@ export function AuditLogTable({
   const endItem = Math.min(currentPage * pageSize, totalCount);
 
   return (
-    <div className="bg-white rounded-xl border border-slate-200/90 shadow-2xs overflow-hidden flex flex-col">
+    <div className="bg-white rounded-xl border border-hairline shadow-xs overflow-hidden flex flex-col">
       {/* Desktop Table View (hidden on small mobile, visible md+) */}
       <div className="hidden md:block overflow-x-auto">
         <Table>
-          <TableHeader className="bg-slate-50/90 border-b border-slate-200/80">
+          <TableHeader className="bg-cloud border-b border-hairline">
             <TableRow>
-              <TableHead className="w-[170px] text-xs font-bold text-slate-700 py-3">
+              <TableHead className="w-[170px] text-xs font-bold text-slate-gray py-3">
                 Thời gian
               </TableHead>
-              <TableHead className="w-[210px] text-xs font-bold text-slate-700 py-3">
+              <TableHead className="w-[210px] text-xs font-bold text-slate-gray py-3">
                 Người thực hiện
               </TableHead>
-              <TableHead className="w-[130px] text-xs font-bold text-slate-700 py-3">
+              <TableHead className="w-[130px] text-xs font-bold text-slate-gray py-3">
                 Phân hệ
               </TableHead>
-              <TableHead className="text-xs font-bold text-slate-700 py-3">
-                Hành động & Đối tượng
+              <TableHead className="text-xs font-bold text-slate-gray py-3">
+                Hành động &amp; Đối tượng
               </TableHead>
-              <TableHead className="w-[200px] text-xs font-bold text-slate-700 py-3">
+              <TableHead className="w-[200px] text-xs font-bold text-slate-gray py-3">
                 Biến động dữ liệu
               </TableHead>
-              <TableHead className="w-[90px] text-right text-xs font-bold text-slate-700 py-3">
+              <TableHead className="w-[90px] text-right text-xs font-bold text-slate-gray py-3">
                 Thao tác
               </TableHead>
             </TableRow>
           </TableHeader>
 
-          <TableBody className="divide-y divide-slate-100">
+          <TableBody className="divide-y divide-hairline">
             {logs.map((log) => {
               const moduleConfig = AUDIT_MODULE_CONFIG[log.module] || {
                 label: log.module,
-                bgClass: 'bg-slate-50',
-                borderClass: 'border-slate-200',
-                textClass: 'text-slate-700',
+                bgClass: 'bg-cloud',
+                borderClass: 'border-hairline',
+                textClass: 'text-slate-gray',
               };
 
               const impact = inferActionImpact(log.action);
@@ -129,17 +126,17 @@ export function AuditLogTable({
               return (
                 <TableRow
                   key={log.id}
-                  className="hover:bg-slate-50/70 transition-colors group cursor-pointer"
+                  className="hover:bg-cloud transition-colors group cursor-pointer"
                   onClick={() => onSelectLog(log)}
                 >
                   {/* Timestamp */}
                   <TableCell className="py-3 align-top">
                     <div className="space-y-0.5">
-                      <div className="text-xs font-semibold text-slate-900 flex items-center gap-1">
-                        <Clock className="w-3 h-3 text-slate-400 shrink-0" />
+                      <div className="text-xs font-semibold text-ink-navy flex items-center gap-1">
+                        <Clock className="w-3 h-3 text-mist-gray shrink-0" />
                         <span className="font-mono text-[11px]">{formatAuditTimestamp(log.createdAt)}</span>
                       </div>
-                      <div className="text-[10px] text-slate-500 font-medium">
+                      <div className="text-[10px] text-mist-gray font-medium">
                         {formatRelativeTime(log.createdAt)}
                       </div>
                     </div>
@@ -148,19 +145,19 @@ export function AuditLogTable({
                   {/* Actor */}
                   <TableCell className="py-3 align-top">
                     <div className="flex items-center gap-2.5">
-                      <Avatar className="w-7 h-7 ring-1 ring-slate-200 shrink-0">
+                      <Avatar className="w-7 h-7 ring-1 ring-hairline shrink-0">
                         {log.actor?.avatarUrl && (
                           <AvatarImage src={log.actor.avatarUrl} alt={actorName} />
                         )}
-                        <AvatarFallback className="bg-slate-100 text-slate-700 font-semibold text-[10px]">
+                        <AvatarFallback className="bg-pebble text-ink-navy font-semibold text-[10px]">
                           {initial}
                         </AvatarFallback>
                       </Avatar>
                       <div className="space-y-0.5 truncate">
-                        <p className="text-xs font-bold text-slate-900 truncate">
+                        <p className="text-xs font-bold text-ink-navy truncate">
                           {actorName}
                         </p>
-                        <p className="text-[10px] text-slate-500 truncate font-mono">
+                        <p className="text-[10px] text-mist-gray truncate font-mono">
                           {log.actor?.studentId
                             ? `MSSV: ${log.actor.studentId}`
                             : log.actor?.email || (log.userId ? 'System ID' : 'Automated Job')}
@@ -183,7 +180,7 @@ export function AuditLogTable({
                   <TableCell className="py-3 align-top">
                     <div className="space-y-1">
                       <div className="flex items-center gap-1.5 flex-wrap">
-                        <span className="text-xs font-bold text-slate-900">
+                        <span className="text-xs font-bold text-ink-navy">
                           {log.actionLabel}
                         </span>
                         <Badge
@@ -194,12 +191,12 @@ export function AuditLogTable({
                         </Badge>
                       </div>
 
-                      <div className="flex items-center gap-1.5 text-[11px] text-slate-500 font-mono flex-wrap">
-                        <span className="bg-slate-100 px-1.5 py-0.2 rounded text-slate-700 font-sans text-[10px] font-semibold">
+                      <div className="flex items-center gap-1.5 text-[11px] text-mist-gray font-mono flex-wrap">
+                        <span className="bg-cloud border border-hairline px-1.5 py-0.2 rounded text-slate-gray font-sans text-[10px] font-semibold">
                           {log.entityType}
                         </span>
                         {log.entityId && (
-                          <span className="text-slate-400 truncate max-w-[140px]" title={log.entityId}>
+                          <span className="text-mist-gray truncate max-w-[140px]" title={log.entityId}>
                             #{log.entityId.slice(0, 8)}
                           </span>
                         )}
@@ -215,7 +212,7 @@ export function AuditLogTable({
                           <span className="px-1.5 py-0.5 rounded bg-rose-50 text-rose-700 font-mono text-[10px] border border-rose-200">
                             {formatMetadataValue(prevStatus)}
                           </span>
-                          <ArrowRight className="w-3 h-3 text-slate-400 shrink-0" />
+                          <ArrowRight className="w-3 h-3 text-mist-gray shrink-0" />
                           <span className="px-1.5 py-0.5 rounded bg-emerald-50 text-emerald-700 font-mono text-[10px] border border-emerald-200 font-semibold">
                             {formatMetadataValue(newStatus)}
                           </span>
@@ -225,15 +222,15 @@ export function AuditLogTable({
                           {new Intl.NumberFormat('vi-VN').format(Number(amount))} ₫
                         </div>
                       ) : note ? (
-                        <p className="text-[11px] text-slate-600 truncate max-w-[190px]" title={String(note)}>
+                        <p className="text-[11px] text-slate-gray truncate max-w-[190px]" title={String(note)}>
                           {String(note)}
                         </p>
                       ) : Object.keys(log.metadata || {}).length > 0 ? (
-                        <span className="text-[10px] text-slate-500 bg-slate-50 px-1.5 py-0.5 rounded border border-slate-200 font-mono">
+                        <span className="text-[10px] text-slate-gray bg-cloud px-1.5 py-0.5 rounded border border-hairline font-mono">
                           {Object.keys(log.metadata).length} tham số
                         </span>
                       ) : (
-                        <span className="text-[11px] text-slate-400 italic">—</span>
+                        <span className="text-[11px] text-mist-gray italic">—</span>
                       )}
                     </div>
                   </TableCell>
@@ -243,7 +240,7 @@ export function AuditLogTable({
                     <Button
                       variant="ghost"
                       size="sm"
-                      className="text-xs h-7 px-2 text-slate-600 group-hover:text-blue-600 group-hover:bg-blue-50 transition-colors"
+                      className="text-xs h-7 px-2 text-slate-gray group-hover:text-signal-blue group-hover:bg-[#e6f0ff] transition-colors"
                       onClick={(e) => {
                         e.stopPropagation();
                         onSelectLog(log);
@@ -261,13 +258,13 @@ export function AuditLogTable({
       </div>
 
       {/* Mobile Card List View (visible < md) */}
-      <div className="md:hidden divide-y divide-slate-100">
+      <div className="md:hidden divide-y divide-hairline">
         {logs.map((log) => {
           const moduleConfig = AUDIT_MODULE_CONFIG[log.module] || {
             label: log.module,
-            bgClass: 'bg-slate-50',
-            borderClass: 'border-slate-200',
-            textClass: 'text-slate-700',
+            bgClass: 'bg-cloud',
+            borderClass: 'border-hairline',
+            textClass: 'text-slate-gray',
           };
           const impact = inferActionImpact(log.action);
           const impactConfig = ACTION_IMPACT_MAP[impact] || ACTION_IMPACT_MAP.info;
@@ -277,7 +274,7 @@ export function AuditLogTable({
             <div
               key={log.id}
               onClick={() => onSelectLog(log)}
-              className="p-4 space-y-2.5 hover:bg-slate-50/70 transition-colors cursor-pointer"
+              className="p-4 space-y-2.5 hover:bg-cloud transition-colors cursor-pointer"
             >
               <div className="flex items-center justify-between gap-2">
                 <div className="flex items-center gap-1.5">
@@ -294,31 +291,31 @@ export function AuditLogTable({
                     {impactConfig.label}
                   </Badge>
                 </div>
-                <div className="text-[11px] text-slate-400 font-mono flex items-center gap-1">
-                  <Clock className="w-3 h-3 text-slate-400" />
+                <div className="text-[11px] text-mist-gray font-mono flex items-center gap-1">
+                  <Clock className="w-3 h-3 text-mist-gray" />
                   <span>{formatRelativeTime(log.createdAt)}</span>
                 </div>
               </div>
 
               <div>
-                <p className="text-xs font-bold text-slate-900 leading-snug">
+                <p className="text-xs font-bold text-ink-navy leading-snug">
                   {log.actionLabel}
                 </p>
-                <div className="flex items-center gap-1.5 text-[11px] text-slate-500 font-mono mt-0.5">
-                  <span className="bg-slate-100 px-1 rounded text-slate-700">{log.entityType}</span>
+                <div className="flex items-center gap-1.5 text-[11px] text-mist-gray font-mono mt-0.5">
+                  <span className="bg-cloud border border-hairline px-1 rounded text-slate-gray">{log.entityType}</span>
                   {log.entityId && <span>#{log.entityId.slice(0, 8)}</span>}
                 </div>
               </div>
 
-              <div className="flex items-center justify-between pt-1 border-t border-slate-100 text-xs">
+              <div className="flex items-center justify-between pt-1 border-t border-hairline text-xs">
                 <div className="flex items-center gap-2 truncate">
-                  <User className="w-3.5 h-3.5 text-slate-400 shrink-0" />
-                  <span className="font-semibold text-slate-800 truncate">{actorName}</span>
+                  <User className="w-3.5 h-3.5 text-mist-gray shrink-0" />
+                  <span className="font-semibold text-slate-gray truncate">{actorName}</span>
                 </div>
                 <Button
                   variant="ghost"
                   size="sm"
-                  className="h-6 px-2 text-xs text-blue-600"
+                  className="h-6 px-2 text-xs text-signal-blue"
                   onClick={(e) => {
                     e.stopPropagation();
                     onSelectLog(log);
@@ -333,22 +330,22 @@ export function AuditLogTable({
       </div>
 
       {/* Pagination Footer */}
-      <div className="p-3.5 px-4 border-t border-slate-100 bg-slate-50/70 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-600">
+      <div className="p-3.5 px-4 border-t border-hairline bg-cloud flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-gray">
         <div className="flex items-center gap-3">
           <span>
-            Hiển thị <strong className="text-slate-900">{startItem}</strong> -{' '}
-            <strong className="text-slate-900">{endItem}</strong> trên tổng số{' '}
-            <strong className="text-slate-900">{totalCount}</strong> sự kiện
+            Hiển thị <strong className="text-ink-navy">{startItem}</strong> -{' '}
+            <strong className="text-ink-navy">{endItem}</strong> trên tổng số{' '}
+            <strong className="text-ink-navy">{totalCount}</strong> sự kiện
           </span>
 
           {onPageSizeChange && (
-            <div className="hidden sm:flex items-center gap-1.5 text-xs text-slate-500">
+            <div className="hidden sm:flex items-center gap-1.5 text-xs text-mist-gray">
               <span>Mỗi trang:</span>
               <Select
                 value={String(pageSize)}
                 onValueChange={(val) => onPageSizeChange(Number(val))}
               >
-                <SelectTrigger className="h-7 text-xs bg-white border-slate-200 w-auto min-w-[70px]">
+                <SelectTrigger className="h-7 text-xs bg-white border-hairline w-auto min-w-[70px] text-ink-navy">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
@@ -368,13 +365,13 @@ export function AuditLogTable({
             size="sm"
             disabled={currentPage <= 1 || isLoading}
             onClick={() => onPageChange(currentPage - 1)}
-            className="h-8 px-2.5 text-xs bg-white hover:bg-slate-50"
+            className="h-8 px-2.5 text-xs bg-white hover:bg-cloud border-hairline text-slate-gray"
           >
             <ChevronLeft className="w-3.5 h-3.5 mr-1" />
             <span>Trang trước</span>
           </Button>
 
-          <span className="font-semibold text-slate-700 px-2">
+          <span className="font-semibold text-ink-navy px-2">
             Trang {currentPage} / {Math.max(1, totalPages)}
           </span>
 
@@ -383,7 +380,7 @@ export function AuditLogTable({
             size="sm"
             disabled={currentPage >= totalPages || isLoading}
             onClick={() => onPageChange(currentPage + 1)}
-            className="h-8 px-2.5 text-xs bg-white hover:bg-slate-50"
+            className="h-8 px-2.5 text-xs bg-white hover:bg-cloud border-hairline text-slate-gray"
           >
             <span>Trang sau</span>
             <ChevronRight className="w-3.5 h-3.5 ml-1" />

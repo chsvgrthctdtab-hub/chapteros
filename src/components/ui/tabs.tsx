@@ -49,7 +49,7 @@ export function TabsList({ className, children, ...props }: TabsListProps) {
   return (
     <div
       className={cn(
-        "inline-flex h-10 items-center justify-center rounded-xl bg-slate-100/90 p-1 text-slate-600 border border-slate-200/60",
+        "inline-flex h-9.5 items-center justify-center rounded-lg bg-pebble p-1 text-slate-gray border border-hairline",
         className
       )}
       {...props}
@@ -78,10 +78,10 @@ export function TabsTrigger({ value, className, children, ...props }: TabsTrigge
       aria-selected={isSelected}
       onClick={() => context.onValueChange(value)}
       className={cn(
-        "inline-flex items-center justify-center whitespace-nowrap rounded-lg px-3.5 py-1.5 text-xs font-semibold transition-all duration-150 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-emerald-600/40 disabled:pointer-events-none disabled:opacity-45 cursor-pointer select-none tracking-wide",
+        "inline-flex items-center justify-center whitespace-nowrap rounded-md px-3.5 py-1 text-xs font-semibold transition-all duration-150 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-signal-blue/30 disabled:pointer-events-none disabled:opacity-45 cursor-pointer select-none tracking-wide",
         isSelected
-          ? "bg-white text-emerald-900 font-bold shadow-2xs"
-          : "text-slate-600 hover:text-slate-900 hover:bg-slate-200/60",
+          ? "bg-white text-ink-navy font-semibold shadow-sm"
+          : "text-slate-gray hover:text-ink-navy hover:bg-white/50",
         className
       )}
       {...props}

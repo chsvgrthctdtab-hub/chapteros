@@ -3,13 +3,7 @@ import {
   CheckCircle2, 
   AlertCircle, 
   Clock, 
-  Layers, 
-  Activity, 
-  ShieldCheck,
-  FileSpreadsheet,
-  CalendarDays,
-  FileText,
-  FolderSync
+  Activity
 } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import type { GoogleServiceMetrics, GoogleIntegrationOverview } from '../types/google.types';
@@ -54,29 +48,29 @@ export function IntegrationsSummaryStrip({
     <div id="integrations-summary-strip" className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
       {/* 1. Connected Services Metric */}
       <Card 
-        className="border-slate-200 shadow-2xs hover:border-slate-300 transition-colors cursor-pointer bg-white"
+        className="border-hairline shadow-xs hover:border-slate-gray transition-colors cursor-pointer bg-white"
         onClick={() => onSelectService && onSelectService('sheets')}
       >
         <CardContent className="p-4 flex items-center justify-between">
           <div className="space-y-1">
-            <span className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">
+            <span className="text-[11px] font-semibold text-mist-gray uppercase tracking-wider">
               Dịch vụ Google Workspace
             </span>
             <div className="flex items-baseline gap-2">
-              <span className="text-xl font-bold text-slate-900">
+              <span className="text-xl font-bold text-ink-navy">
                 {isLoading ? '...' : `${readyServices}/${totalServices}`}
               </span>
-              <span className="text-xs text-slate-500 font-medium">Sẵn sàng</span>
+              <span className="text-xs text-mist-gray font-medium">Sẵn sàng</span>
             </div>
-            <p className="text-[11px] text-slate-500 truncate">
+            <p className="text-[11px] text-mist-gray truncate">
               {isOrgConnected ? 'Forms, Sheets, Calendar, Drive' : 'Cần ủy quyền tài khoản'}
             </p>
           </div>
           <div
             className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border ${
               isOrgConnected
-                ? 'bg-blue-50 text-blue-600 border-blue-100'
-                : 'bg-slate-100 text-slate-400 border-slate-200'
+                ? 'bg-[#e6f0ff] text-signal-blue border-[#d4e4fa]'
+                : 'bg-cloud text-mist-gray border-hairline'
             }`}
           >
             <Boxes strokeWidth={1.5} className="h-5 w-5" />
@@ -85,14 +79,14 @@ export function IntegrationsSummaryStrip({
       </Card>
 
       {/* 2. Operational Health Status */}
-      <Card className="border-slate-200 shadow-2xs bg-white">
+      <Card className="border-hairline shadow-xs bg-white">
         <CardContent className="p-4 flex items-center justify-between">
           <div className="space-y-1">
-            <span className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">
+            <span className="text-[11px] font-semibold text-mist-gray uppercase tracking-wider">
               Trạng thái Vận hành
             </span>
             <div className="flex items-baseline gap-1.5">
-              <span className="text-xl font-bold text-slate-900">
+              <span className="text-xl font-bold text-ink-navy">
                 {isOrgConnected ? '100% Sẵn sàng' : 'Chờ kích hoạt'}
               </span>
             </div>
@@ -108,18 +102,18 @@ export function IntegrationsSummaryStrip({
       </Card>
 
       {/* 3. Attention & Conflict Alerts */}
-      <Card className="border-slate-200 shadow-2xs bg-white">
+      <Card className="border-hairline shadow-xs bg-white">
         <CardContent className="p-4 flex items-center justify-between">
           <div className="space-y-1">
-            <span className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">
+            <span className="text-[11px] font-semibold text-mist-gray uppercase tracking-wider">
               Cảnh báo & Đối soát
             </span>
             <div className="flex items-baseline gap-1.5">
-              <span className="text-xl font-bold text-slate-900">
+              <span className="text-xl font-bold text-ink-navy">
                 {warningCount} Cảnh báo
               </span>
             </div>
-            <p className="text-[11px] text-slate-500">
+            <p className="text-[11px] text-mist-gray">
               {warningCount === 0 ? 'Hạ tầng ổn định, không lỗi' : 'Có mục cần Ban Chấp Hành xử lý'}
             </p>
           </div>
@@ -127,7 +121,7 @@ export function IntegrationsSummaryStrip({
             className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border ${
               warningCount > 0
                 ? 'bg-amber-50 text-amber-600 border-amber-100'
-                : 'bg-slate-100 text-slate-400 border-slate-200'
+                : 'bg-cloud text-mist-gray border-hairline'
             }`}
           >
             <AlertCircle className="h-5 w-5" />
@@ -136,18 +130,18 @@ export function IntegrationsSummaryStrip({
       </Card>
 
       {/* 4. Last Sync & Timezone */}
-      <Card className="border-slate-200 shadow-2xs bg-white">
+      <Card className="border-hairline shadow-xs bg-white">
         <CardContent className="p-4 flex items-center justify-between">
           <div className="space-y-1">
-            <span className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">
+            <span className="text-[11px] font-semibold text-mist-gray uppercase tracking-wider">
               Đồng bộ Gần nhất
             </span>
             <div className="flex items-baseline gap-1.5">
-              <span className="text-base font-bold text-slate-900">
+              <span className="text-base font-bold text-ink-navy">
                 {latestSyncTime ? formatDate(latestSyncTime, 'HH:mm dd/MM') : 'Theo phiên'}
               </span>
             </div>
-            <p className="text-[11px] text-slate-500">
+            <p className="text-[11px] text-mist-gray">
               Múi giờ Asia/Ho_Chi_Minh (GMT+7)
             </p>
           </div>

@@ -183,8 +183,8 @@ export function ChaptersPage() {
 
       {/* Summary KPI Bar */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-        <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-2xs flex items-center gap-3">
-          <div className="h-10 w-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center shrink-0 overflow-hidden border border-blue-100">
+        <div className="bg-white p-4 rounded-xl border border-hairline shadow-xs flex items-center gap-3">
+          <div className="h-10 w-10 rounded-xl bg-[#e6f0ff] text-signal-blue flex items-center justify-center shrink-0 overflow-hidden border border-[#d4e4fa]">
             {currentOrg?.logoUrl ? (
               <img
                 src={currentOrg.logoUrl}
@@ -196,35 +196,35 @@ export function ChaptersPage() {
             )}
           </div>
           <div className="min-w-0">
-            <span className="text-[11px] text-slate-500 block">Đơn vị đang kích hoạt</span>
-            <span className="text-xs font-bold text-slate-900 truncate block">
+            <span className="text-[11px] text-slate-gray block">Đơn vị đang kích hoạt</span>
+            <span className="text-xs font-bold text-ink-navy truncate block">
               {currentOrg?.name || 'Đang tải...'}
             </span>
-            <span className="tabular-nums text-[10px] text-slate-400">
+            <span className="tabular-nums text-[10px] text-mist-gray">
               {currentOrg?.code || '—'}
             </span>
           </div>
         </div>
 
-        <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-2xs flex items-center gap-3">
-          <div className="h-10 w-10 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center shrink-0">
+        <div className="bg-white p-4 rounded-xl border border-hairline shadow-xs flex items-center gap-3">
+          <div className="h-10 w-10 rounded-xl bg-[#e6f0ff] text-signal-blue flex items-center justify-center shrink-0">
             <Users strokeWidth={1.5} className="h-5 w-5" />
           </div>
           <div>
-            <span className="text-[11px] text-slate-500 block">Tổng tài khoản thành viên</span>
-            <span className="text-base font-bold text-slate-900">
-              {isLoadingMemberships ? <Loader2 className="h-4 w-4 animate-spin" /> : memberships.length}
+            <span className="text-[11px] text-slate-gray block">Tổng tài khoản thành viên</span>
+            <span className="text-base font-bold text-ink-navy">
+              {isLoadingMemberships ? <Loader2 className="h-4 w-4 animate-spin text-signal-blue" /> : memberships.length}
             </span>
-            <span className="text-[10px] text-slate-400 block">đã được cấp quyền</span>
+            <span className="text-[10px] text-mist-gray block">đã được cấp quyền</span>
           </div>
         </div>
 
-        <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-2xs flex items-center gap-3">
+        <div className="bg-white p-4 rounded-xl border border-hairline shadow-xs flex items-center gap-3">
           <div className="h-10 w-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0">
             <Shield strokeWidth={1.5} className="h-5 w-5" />
           </div>
           <div>
-            <span className="text-[11px] text-slate-500 block">Vai trò của bạn</span>
+            <span className="text-[11px] text-slate-gray block">Vai trò của bạn</span>
             <div className="mt-0.5">
               {roleInfo ? (
                 <span
@@ -233,10 +233,10 @@ export function ChaptersPage() {
                   {roleInfo.label}
                 </span>
               ) : (
-                <span className="text-xs text-slate-400">Chưa xác định</span>
+                <span className="text-xs text-mist-gray">Chưa xác định</span>
               )}
             </div>
-            <span className="text-[10px] text-slate-400 block mt-0.5">
+            <span className="text-[10px] text-mist-gray block mt-0.5">
               {userOrganizations.length} Đơn vị liên kết
             </span>
           </div>
@@ -245,18 +245,18 @@ export function ChaptersPage() {
 
       {/* Main Tabs Navigation */}
       <Tabs value={activeTab} onValueChange={(v) => setActiveTab(v as 'info' | 'memberships' | 'my-orgs')}>
-        <TabsList className="grid grid-cols-3 max-w-lg mb-6">
-          <TabsTrigger value="info" className="text-xs flex items-center gap-1.5">
+        <TabsList className="grid grid-cols-3 max-w-lg mb-6 bg-cloud border border-hairline">
+          <TabsTrigger value="info" className="text-xs flex items-center gap-1.5 data-[state=active]:bg-white data-[state=active]:text-ink-navy">
             <Building2 className="h-3.5 w-3.5 shrink-0" />
             <span className="hidden sm:inline">Thông tin Đơn vị</span>
             <span className="sm:hidden">Thông tin</span>
           </TabsTrigger>
-          <TabsTrigger value="memberships" className="text-xs flex items-center gap-1.5">
+          <TabsTrigger value="memberships" className="text-xs flex items-center gap-1.5 data-[state=active]:bg-white data-[state=active]:text-ink-navy">
             <Users className="h-3.5 w-3.5 shrink-0" />
             <span className="hidden sm:inline">Phân quyền hệ thống</span>
             <span className="sm:hidden">Phân quyền</span>
           </TabsTrigger>
-          <TabsTrigger value="my-orgs" className="text-xs flex items-center gap-1.5">
+          <TabsTrigger value="my-orgs" className="text-xs flex items-center gap-1.5 data-[state=active]:bg-white data-[state=active]:text-ink-navy">
             <Network className="h-3.5 w-3.5 shrink-0" />
             <span className="hidden sm:inline">Đơn vị của tôi</span>
             <span className="sm:hidden">Đơn vị</span>

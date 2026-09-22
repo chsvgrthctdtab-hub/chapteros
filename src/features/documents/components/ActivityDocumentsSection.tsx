@@ -108,13 +108,13 @@ export function ActivityDocumentsSection({
   return (
     <div className="space-y-4">
       {/* Header bar with Action buttons */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-white border border-slate-200 rounded-xl p-4 shadow-2xs">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-white border border-hairline rounded-xl p-4 shadow-xs">
         <div>
-          <h3 className="text-sm font-bold text-slate-900 flex items-center gap-2">
-            <FileText className="w-4 h-4 text-emerald-600" />
+          <h3 className="text-sm font-bold text-ink-navy flex items-center gap-2">
+            <FileText className="w-4 h-4 text-signal-blue" />
             <span>Activity Documents & Files</span>
           </h3>
-          <p className="text-xs text-slate-500 mt-0.5">
+          <p className="text-xs text-mist-gray mt-0.5">
             Operational plans, reports, forms, spreadsheets, and Google Drive links for this activity.
           </p>
         </div>
@@ -126,9 +126,9 @@ export function ActivityDocumentsSection({
               variant="outline"
               onClick={() => setDriveLinkModalOpen(true)}
               size="sm"
-              className="rounded-lg text-xs text-slate-700 border-slate-200 bg-white hover:bg-slate-50 font-semibold gap-1.5 shadow-2xs cursor-pointer"
+              className="rounded-lg text-xs text-slate-gray border-hairline bg-white hover:bg-cloud font-semibold gap-1.5 shadow-xs cursor-pointer"
             >
-              <Cloud className="w-3.5 h-3.5 text-blue-600" />
+              <Cloud className="w-3.5 h-3.5 text-signal-blue" />
               <span>Link Drive</span>
             </Button>
 
@@ -136,7 +136,7 @@ export function ActivityDocumentsSection({
               type="button"
               onClick={() => setUploadModalOpen(true)}
               size="sm"
-              className="rounded-lg text-xs bg-emerald-700 hover:bg-emerald-800 text-white font-semibold gap-1.5 shadow-2xs cursor-pointer"
+              className="rounded-lg text-xs bg-signal-blue hover:bg-[#005be0] text-white font-semibold gap-1.5 shadow-xs cursor-pointer"
             >
               <Upload className="w-3.5 h-3.5" />
               <span>Upload Document</span>
@@ -151,17 +151,17 @@ export function ActivityDocumentsSection({
           {[1, 2].map((i) => (
             <div
               key={i}
-              className="h-24 bg-white border border-slate-200 rounded-xl animate-pulse"
+              className="h-24 bg-white border border-hairline rounded-xl animate-pulse"
             />
           ))}
         </div>
       ) : documents.length === 0 ? (
-        <div className="bg-white border border-slate-200 rounded-xl p-8 text-center shadow-2xs">
-          <div className="w-10 h-10 rounded-xl bg-slate-100 text-slate-400 flex items-center justify-center mx-auto mb-2.5">
+        <div className="bg-white border border-hairline rounded-xl p-8 text-center shadow-xs">
+          <div className="w-10 h-10 rounded-xl bg-cloud text-mist-gray flex items-center justify-center mx-auto mb-2.5">
             <FileText strokeWidth={1.5} className="w-5 h-5" />
           </div>
-          <h4 className="text-xs font-bold text-slate-800">No Attached Documents</h4>
-          <p className="text-[11px] text-slate-500 max-w-sm mx-auto mt-0.5">
+          <h4 className="text-xs font-bold text-ink-navy">No Attached Documents</h4>
+          <p className="text-[11px] text-mist-gray max-w-sm mx-auto mt-0.5">
             Upload operational plans or link files from Google Drive to organize records for this activity.
           </p>
           {canManage && (
@@ -171,9 +171,9 @@ export function ActivityDocumentsSection({
                 variant="outline"
                 size="sm"
                 onClick={() => setDriveLinkModalOpen(true)}
-                className="rounded-lg text-xs text-slate-700 border-slate-200 hover:bg-slate-50 gap-1.5 cursor-pointer"
+                className="rounded-lg text-xs text-slate-gray border-hairline hover:bg-cloud gap-1.5 cursor-pointer"
               >
-                <Cloud className="w-3.5 h-3.5 text-blue-600" />
+                <Cloud className="w-3.5 h-3.5 text-signal-blue" />
                 <span>Link Google Drive</span>
               </Button>
 
@@ -181,7 +181,7 @@ export function ActivityDocumentsSection({
                 type="button"
                 size="sm"
                 onClick={() => setUploadModalOpen(true)}
-                className="rounded-lg text-xs bg-emerald-700 hover:bg-emerald-800 text-white gap-1.5 cursor-pointer"
+                className="rounded-lg text-xs bg-signal-blue hover:bg-[#005be0] text-white gap-1.5 cursor-pointer"
               >
                 <Plus className="w-3.5 h-3.5" />
                 <span>Upload File</span>
@@ -200,7 +200,7 @@ export function ActivityDocumentsSection({
               <div
                 key={doc.id}
                 onClick={() => setSelectedDoc(doc)}
-                className="bg-white border border-slate-200 hover:border-slate-300 rounded-xl p-3.5 shadow-2xs hover:shadow-sm transition-all flex flex-col justify-between cursor-pointer"
+                className="bg-white border border-hairline hover:border-pebble rounded-xl p-3.5 shadow-xs hover:shadow-sm transition-all flex flex-col justify-between cursor-pointer"
               >
                 <div>
                   <div className="flex items-start gap-3">
@@ -211,7 +211,7 @@ export function ActivityDocumentsSection({
                     />
                     <div className="min-w-0 flex-1">
                       <h5
-                        className="text-xs font-bold text-slate-900 line-clamp-1 hover:text-blue-600 transition-colors"
+                        className="text-xs font-bold text-ink-navy line-clamp-1 hover:text-signal-blue transition-colors"
                         title={doc.title}
                       >
                         {doc.title}
@@ -223,12 +223,12 @@ export function ActivityDocumentsSection({
                             <span>Drive</span>
                           </span>
                         ) : (
-                          <span className="inline-flex items-center gap-0.5 text-[10px] font-medium text-slate-500 bg-slate-100 px-1 py-0.2 rounded border border-slate-200">
+                          <span className="inline-flex items-center gap-0.5 text-[10px] font-medium text-mist-gray bg-cloud px-1.5 py-0.5 rounded border border-hairline">
                             <HardDrive className="w-2.5 h-2.5" />
                             <span>Storage</span>
                           </span>
                         )}
-                        <span className="text-[11px] text-slate-400 truncate font-mono">
+                        <span className="text-[11px] text-mist-gray truncate font-mono">
                           {formatFileSize(doc.fileSize)}
                         </span>
                       </div>
@@ -241,7 +241,7 @@ export function ActivityDocumentsSection({
                   </div>
                 </div>
 
-                <div className="pt-2.5 mt-2.5 border-t border-slate-100 flex items-center justify-between text-[11px] text-slate-500">
+                <div className="pt-2.5 mt-2.5 border-t border-hairline flex items-center justify-between text-[11px] text-mist-gray">
                   <span>{formatDate(doc.createdAt)}</span>
 
                   <div className="flex items-center gap-1">
@@ -251,7 +251,7 @@ export function ActivityDocumentsSection({
                       size="icon"
                       onClick={(e) => handlePreview(e, doc)}
                       disabled={isPreviewing}
-                      className="h-6 w-6 rounded text-slate-500 hover:text-slate-900 cursor-pointer"
+                      className="h-6 w-6 rounded text-mist-gray hover:text-ink-navy cursor-pointer"
                       title={isDriveDoc ? 'Open on Drive' : 'Preview'}
                     >
                       {isPreviewing ? (
@@ -268,7 +268,7 @@ export function ActivityDocumentsSection({
                         size="icon"
                         onClick={(e) => handleDownload(e, doc)}
                         disabled={isDownloading}
-                        className="h-6 w-6 rounded text-slate-500 hover:text-slate-900 cursor-pointer"
+                        className="h-6 w-6 rounded text-mist-gray hover:text-ink-navy cursor-pointer"
                         title="Download"
                       >
                         {isDownloading ? (
@@ -289,7 +289,7 @@ export function ActivityDocumentsSection({
                             e.stopPropagation();
                             setEditingDoc(doc);
                           }}
-                          className="h-6 w-6 rounded text-slate-400 hover:text-slate-800 cursor-pointer"
+                          className="h-6 w-6 rounded text-mist-gray hover:text-ink-navy cursor-pointer"
                           title="Edit"
                         >
                           <Edit3 className="w-3 h-3" />
@@ -303,7 +303,7 @@ export function ActivityDocumentsSection({
                             e.stopPropagation();
                             setDeletingDoc(doc);
                           }}
-                          className="h-6 w-6 rounded text-slate-400 hover:text-rose-600 cursor-pointer"
+                          className="h-6 w-6 rounded text-mist-gray hover:text-rose-600 cursor-pointer"
                           title={isDriveDoc ? 'Unlink' : 'Delete'}
                         >
                           <Trash2 className="w-3 h-3" />

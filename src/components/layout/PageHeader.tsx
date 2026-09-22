@@ -21,12 +21,12 @@ export function PageHeader({ title, description, breadcrumbs, actions, badge }: 
                 <React.Fragment key={idx}>
                   <BreadcrumbItem>
                     {isLast ? (
-                      <BreadcrumbPage className="font-medium text-slate-900 text-xs sm:text-sm">{item.label}</BreadcrumbPage>
+                      <BreadcrumbPage className="font-semibold text-ink-navy text-xs sm:text-sm">{item.label}</BreadcrumbPage>
                     ) : (
-                      <BreadcrumbLink href={item.href || '#'} className="text-xs sm:text-sm text-slate-500 hover:text-slate-900">{item.label}</BreadcrumbLink>
+                      <BreadcrumbLink href={item.href || '#'} className="text-xs sm:text-sm text-slate-gray hover:text-ink-navy">{item.label}</BreadcrumbLink>
                     )}
                   </BreadcrumbItem>
-                  {!isLast && <BreadcrumbSeparator />}
+                  {!isLast && <BreadcrumbSeparator className="text-mist-gray" />}
                 </React.Fragment>
               );
             })}
@@ -37,10 +37,10 @@ export function PageHeader({ title, description, breadcrumbs, actions, badge }: 
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div className="space-y-1">
           <div className="flex items-center gap-3 flex-wrap">
-            <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-slate-900">{title}</h1>
+            <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-ink-navy">{title}</h1>
             {badge}
           </div>
-          {description && <p className="text-sm sm:text-base text-slate-500 max-w-3xl leading-relaxed">{description}</p>}
+          {description && <p className="text-sm sm:text-base text-slate-gray max-w-3xl leading-relaxed">{description}</p>}
         </div>
         {actions && <div className="flex items-center gap-2.5 shrink-0 flex-wrap">{actions}</div>}
       </div>

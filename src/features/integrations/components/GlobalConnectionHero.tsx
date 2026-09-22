@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { 
   Building2, 
-  User as UserIcon, 
   CheckCircle2, 
   AlertCircle, 
   Clock, 
@@ -9,9 +8,7 @@ import {
   Plus, 
   Unlink, 
   ShieldCheck, 
-  KeyRound, 
   CalendarCheck, 
-  ExternalLink,
   Loader2,
   Lock,
   Layers
@@ -19,7 +16,7 @@ import {
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import type { GoogleConnection, GoogleConnectionType } from '@/types';
+import type { GoogleConnection } from '@/types';
 import { formatDate } from '@/lib/date';
 
 interface GlobalConnectionHeroProps {
@@ -61,22 +58,22 @@ export function GlobalConnectionHero({
   };
 
   return (
-    <Card id="google-global-connection-hero" className="border-slate-200/90 shadow-sm overflow-hidden bg-white">
+    <Card id="google-global-connection-hero" className="border-hairline shadow-xs overflow-hidden bg-white">
       {/* Top Identity & Scope Pill Header */}
-      <div className="bg-slate-900 text-slate-100 px-5 py-3 flex flex-wrap items-center justify-between gap-3 border-b border-slate-800">
+      <div className="bg-ink-navy text-pebble px-5 py-3 flex flex-wrap items-center justify-between gap-3 border-b border-hairline">
         <div className="flex items-center gap-2.5">
           <div className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
-          <span className="text-xs font-semibold uppercase tracking-wider text-slate-300">
+          <span className="text-xs font-semibold uppercase tracking-wider text-pebble">
             Trung tâm Quản trị Google Workspace
           </span>
-          <span className="text-slate-600">•</span>
-          <span className="text-xs text-slate-300">
+          <span className="text-mist-gray">•</span>
+          <span className="text-xs text-pebble">
             Tài khoản Google chính thức của Đơn vị
           </span>
         </div>
 
-        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-800 text-[11px] font-medium text-slate-300 border border-slate-700">
-          <Building2 className="h-3.5 w-3.5 text-emerald-400" />
+        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-cloud text-[11px] font-medium text-ink-navy border border-hairline">
+          <Building2 className="h-3.5 w-3.5 text-signal-blue" />
           <span>Tài khoản Đơn vị</span>
         </div>
       </div>
@@ -92,7 +89,7 @@ export function GlobalConnectionHero({
                   ? 'bg-emerald-50 text-emerald-600 border-emerald-200/80'
                   : isExpired
                   ? 'bg-amber-50 text-amber-600 border-amber-200/80'
-                  : 'bg-slate-100 text-slate-400 border-slate-200'
+                  : 'bg-cloud text-mist-gray border-hairline'
               }`}
             >
               <Building2 strokeWidth={1.5} className="h-6 w-6" />
@@ -100,7 +97,7 @@ export function GlobalConnectionHero({
 
             <div className="space-y-1">
               <div className="flex items-center gap-2.5 flex-wrap">
-                <h2 className="text-lg font-bold text-slate-900 tracking-tight">
+                <h2 className="text-lg font-bold text-ink-navy tracking-tight">
                   Google Workspace Đơn vị — {orgName || 'Ban Chấp Hành'}
                 </h2>
 
@@ -115,30 +112,30 @@ export function GlobalConnectionHero({
                     Hết hạn phiên xác thực
                   </Badge>
                 ) : (
-                  <Badge variant="secondary" className="text-xs px-2.5 py-0.5 flex items-center gap-1 text-slate-600 bg-slate-100 border-slate-200">
-                    <Clock className="h-3.5 w-3.5 text-slate-400" />
+                  <Badge variant="secondary" className="text-xs px-2.5 py-0.5 flex items-center gap-1 text-mist-gray bg-cloud border-hairline">
+                    <Clock className="h-3.5 w-3.5 text-mist-gray" />
                     Chưa kết nối Google
                   </Badge>
                 )}
               </div>
 
               {isConnected && activeConnection ? (
-                <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-slate-600">
-                  <span className="font-mono font-medium text-slate-800 bg-slate-100 px-2 py-0.5 rounded border border-slate-200/80">
+                <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-slate-gray">
+                  <span className="font-mono font-medium text-ink-navy bg-pebble px-2 py-0.5 rounded border border-hairline">
                     {activeConnection.googleEmail}
                   </span>
                   {activeConnection.googleName && (
-                    <span className="text-slate-500">
-                      Tên: <strong className="text-slate-700 font-medium">{activeConnection.googleName}</strong>
+                    <span className="text-mist-gray">
+                      Tên: <strong className="text-slate-gray font-medium">{activeConnection.googleName}</strong>
                     </span>
                   )}
-                  <span className="text-slate-500 flex items-center gap-1">
-                    <CalendarCheck className="h-3.5 w-3.5 text-slate-400" />
+                  <span className="text-mist-gray flex items-center gap-1">
+                    <CalendarCheck className="h-3.5 w-3.5 text-mist-gray" />
                     Xác thực gần nhất: {formatDate(activeConnection.lastVerifiedAt, 'dd/MM/yyyy HH:mm')}
                   </span>
                 </div>
               ) : (
-                <p className="text-xs text-slate-500 max-w-2xl leading-relaxed">
+                <p className="text-xs text-mist-gray max-w-2xl leading-relaxed">
                   Kết nối tài khoản Google Workspace chính thức của Đơn vị để mở khóa toàn bộ hệ sinh thái: Biểu mẫu (Forms), Bảng tính (Sheets), Lịch (Calendar) và Lưu trữ (Drive).
                 </p>
               )}
@@ -155,12 +152,12 @@ export function GlobalConnectionHero({
                   size="sm"
                   onClick={handleRunVerify}
                   disabled={isVerifying}
-                  className="text-xs border-slate-200 hover:bg-slate-50"
+                  className="text-xs border-hairline text-slate-gray hover:bg-cloud cursor-pointer"
                 >
                   {isVerifying ? (
-                    <Loader2 className="h-3.5 w-3.5 animate-spin mr-1.5 text-blue-600" />
+                    <Loader2 className="h-3.5 w-3.5 animate-spin mr-1.5 text-signal-blue" />
                   ) : (
-                    <RefreshCw className="h-3.5 w-3.5 mr-1.5 text-slate-600" />
+                    <RefreshCw className="h-3.5 w-3.5 mr-1.5 text-mist-gray" />
                   )}
                   Kiểm tra kết nối
                 </Button>
@@ -171,7 +168,7 @@ export function GlobalConnectionHero({
                     variant="outline"
                     size="sm"
                     onClick={() => onDisconnect(activeConnection)}
-                    className="text-xs text-rose-600 border-rose-200 hover:bg-rose-50 hover:border-rose-300"
+                    className="text-xs text-rose-600 border-rose-200 hover:bg-rose-50 hover:border-rose-300 cursor-pointer"
                   >
                     <Unlink className="h-3.5 w-3.5 mr-1.5" />
                     Ngắt kết nối
@@ -184,7 +181,7 @@ export function GlobalConnectionHero({
                 size="sm"
                 onClick={onConnectOrg}
                 disabled={!canManageOrg}
-                className="text-xs bg-blue-600 hover:bg-blue-700 text-white font-medium shadow-xs"
+                className="text-xs bg-signal-blue hover:bg-[#005be0] text-white font-medium shadow-xs cursor-pointer"
               >
                 <Plus className="h-3.5 w-3.5 mr-1.5" />
                 Ủy quyền Google Đơn vị
@@ -206,25 +203,25 @@ export function GlobalConnectionHero({
 
         {/* Active Connection Sub-metadata Bar */}
         {isConnected && activeConnection && (
-          <div className="pt-3 border-t border-slate-100 grid grid-cols-1 md:grid-cols-3 gap-3 text-xs">
-            <div className="flex items-center gap-2 text-slate-600">
+          <div className="pt-3 border-t border-hairline grid grid-cols-1 md:grid-cols-3 gap-3 text-xs">
+            <div className="flex items-center gap-2 text-slate-gray">
               <ShieldCheck className="h-4 w-4 text-emerald-600 shrink-0" />
               <span>
-                Phân quyền Scopes: <strong className="text-slate-800 font-semibold">{activeConnection.grantedScopes.length} scopes</strong> đã cấp
+                Phân quyền Scopes: <strong className="text-ink-navy font-semibold">{activeConnection.grantedScopes.length} scopes</strong> đã cấp
               </span>
             </div>
 
-            <div className="flex items-center gap-2 text-slate-600">
-              <Lock className="h-4 w-4 text-blue-600 shrink-0" />
+            <div className="flex items-center gap-2 text-slate-gray">
+              <Lock className="h-4 w-4 text-signal-blue shrink-0" />
               <span>
-                Lưu trữ Token: <strong className="text-slate-800 font-semibold">Bảo mật Máy chủ Cách ly RLS</strong>
+                Lưu trữ Token: <strong className="text-ink-navy font-semibold">Bảo mật Máy chủ Cách ly RLS</strong>
               </span>
             </div>
 
-            <div className="flex items-center gap-2 text-slate-600">
-              <Layers className="h-4 w-4 text-purple-600 shrink-0" />
+            <div className="flex items-center gap-2 text-slate-gray">
+              <Layers className="h-4 w-4 text-signal-blue shrink-0" />
               <span>
-                Cơ chế dữ liệu: <strong className="text-slate-800 font-semibold">Đồng bộ Cơ sở dữ liệu Trực tiếp</strong>
+                Cơ chế dữ liệu: <strong className="text-ink-navy font-semibold">Đồng bộ Cơ sở dữ liệu Trực tiếp</strong>
               </span>
             </div>
           </div>
@@ -232,8 +229,8 @@ export function GlobalConnectionHero({
 
         {/* Guard Notice if cannot manage org */}
         {!canManageOrg && !orgConnection && (
-          <div className="p-3 rounded-lg bg-slate-50 border border-slate-200 text-slate-600 text-xs flex items-center gap-2">
-            <Lock className="h-4 w-4 text-slate-400 shrink-0" />
+          <div className="p-3 rounded-lg bg-cloud border border-hairline text-slate-gray text-xs flex items-center gap-2">
+            <Lock className="h-4 w-4 text-mist-gray shrink-0" />
             <span>Chỉ thành viên <strong>Ban Chấp Hành (BCH)</strong> mới có thẩm quyền ủy quyền tài khoản Google Workspace cho Đơn vị.</span>
           </div>
         )}

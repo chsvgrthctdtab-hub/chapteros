@@ -37,10 +37,10 @@ export function GoogleDriveUnlinkDialog({
               <Link2Off className="w-5 h-5" />
             </div>
             <div>
-              <DialogTitle className="text-base font-bold text-slate-900">
+              <DialogTitle className="text-base font-bold text-ink-navy">
                 Gỡ liên kết tài liệu Google Drive
               </DialogTitle>
-              <DialogDescription className="text-xs text-slate-500">
+              <DialogDescription className="text-xs text-slate-gray">
                 Xác nhận hủy liên kết với hồ sơ trong hệ thống Chi hội
               </DialogDescription>
             </div>
@@ -48,14 +48,14 @@ export function GoogleDriveUnlinkDialog({
         </DialogHeader>
 
         <div className="space-y-3 py-2 text-xs">
-          <div className="p-3 bg-slate-50 rounded-lg border border-slate-200 space-y-1">
-            <div className="font-semibold text-slate-800 line-clamp-1">{document.title}</div>
+          <div className="p-3 bg-cloud rounded-lg border border-hairline space-y-1">
+            <div className="font-semibold text-ink-navy line-clamp-1">{document.title}</div>
             {document.driveUrl && (
               <a
                 href={document.driveUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-[11px] text-blue-600 hover:underline flex items-center gap-1 font-mono truncate"
+                className="text-[11px] text-signal-blue hover:text-[#005be0] hover:underline flex items-center gap-1 font-mono truncate"
               >
                 <span className="truncate">{document.driveUrl}</span>
                 <ExternalLink className="w-3 h-3 shrink-0" />
@@ -63,8 +63,8 @@ export function GoogleDriveUnlinkDialog({
             )}
           </div>
 
-          <div className="p-3 bg-blue-50/60 rounded-lg border border-blue-100 flex items-start gap-2.5 text-blue-900 leading-relaxed text-[11px]">
-            <ShieldAlert className="w-4 h-4 text-blue-600 shrink-0 mt-0.5" />
+          <div className="p-3 bg-[#e6f0ff] rounded-lg border border-[#d4e4fa] flex items-start gap-2.5 text-ink-navy leading-relaxed text-[11px]">
+            <ShieldAlert className="w-4 h-4 text-signal-blue shrink-0 mt-0.5" />
             <div>
               <strong>Chính sách Unlink-only an toàn:</strong> Thao tác này chỉ hủy liên kết tài liệu
               khỏi ChapterOS. <strong>Tệp gốc trên Google Drive của bạn sẽ hoàn toàn được giữ nguyên</strong> và không bị xóa hay chỉnh sửa.

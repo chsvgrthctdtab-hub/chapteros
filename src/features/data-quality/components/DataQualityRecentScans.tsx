@@ -24,8 +24,8 @@ const CHECKER_MODULES = [
     name: 'Kiểm soát Hội viên',
     desc: 'MSSV, liên kết nhiệm kỳ, trùng email/sđt',
     icon: Users,
-    color: 'text-blue-600',
-    bg: 'bg-blue-50',
+    color: 'text-signal-blue',
+    bg: 'bg-[#e6f0ff]',
   },
   {
     category: 'terms' as const,
@@ -40,8 +40,8 @@ const CHECKER_MODULES = [
     name: 'Kiểm soát Hoạt động',
     desc: 'Thời gian, người phụ trách, điểm rèn luyện',
     icon: CalendarCheck,
-    color: 'text-violet-600',
-    bg: 'bg-violet-50',
+    color: 'text-purple-600',
+    bg: 'bg-purple-50',
   },
   {
     category: 'tasks' as const,
@@ -71,13 +71,13 @@ const CHECKER_MODULES = [
 
 export function DataQualityRecentScans({ summary }: DataQualityRecentScansProps) {
   return (
-    <div className="rounded-xl bg-white p-6 border border-slate-200/90 shadow-2xs space-y-4">
+    <div className="rounded-xl bg-white p-6 border border-hairline shadow-xs space-y-4">
       <div className="space-y-1">
-        <h2 className="text-base font-bold text-slate-900 flex items-center gap-2">
-          <Activity className="w-4 h-4 text-emerald-700" />
+        <h2 className="text-base font-bold text-ink-navy flex items-center gap-2">
+          <Activity className="w-4 h-4 text-signal-blue" />
           <span>Bộ máy rà soát tự động</span>
         </h2>
-        <p className="text-xs text-slate-500">Trạng thái 6 module kiểm toán dữ liệu</p>
+        <p className="text-xs text-mist-gray">Trạng thái 6 module kiểm toán dữ liệu</p>
       </div>
 
       <div className="space-y-2.5">
@@ -90,7 +90,7 @@ export function DataQualityRecentScans({ summary }: DataQualityRecentScansProps)
           return (
             <div
               key={mod.category}
-              className="flex items-center justify-between p-3 rounded-lg bg-slate-50/70 border border-slate-200/70 transition-all hover:bg-slate-50"
+              className="flex items-center justify-between p-3 rounded-lg bg-cloud/70 border border-hairline transition-all hover:bg-cloud"
             >
               <div className="flex items-center gap-3 min-w-0">
                 <div
@@ -99,8 +99,8 @@ export function DataQualityRecentScans({ summary }: DataQualityRecentScansProps)
                   <Icon className="w-4 h-4" />
                 </div>
                 <div className="min-w-0">
-                  <div className="text-xs font-semibold text-slate-800 truncate">{mod.name}</div>
-                  <div className="text-[11px] text-slate-500 truncate">{mod.desc}</div>
+                  <div className="text-xs font-semibold text-ink-navy truncate">{mod.name}</div>
+                  <div className="text-[11px] text-mist-gray truncate">{mod.desc}</div>
                 </div>
               </div>
 

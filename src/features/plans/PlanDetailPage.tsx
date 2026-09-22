@@ -1,7 +1,6 @@
 import { useState, useMemo } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import {
-  FolderKanban,
   ArrowLeft,
   Calendar,
   Building2,
@@ -11,21 +10,15 @@ import {
   MapPin,
   Clock,
   Sparkles,
-  Layers,
   CheckCircle2,
   Trash2,
   AlertCircle,
-  ExternalLink,
   ChevronRight,
   ShieldCheck,
   UserPlus,
   DollarSign,
   CheckSquare,
   Search,
-  Filter,
-  User,
-  Kanban,
-  List,
   Edit,
   Loader2,
   TrendingUp,
@@ -41,7 +34,7 @@ import {
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Card, CardContent } from '@/components/ui/card';
+import { Card } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import {
   Select,
@@ -56,7 +49,6 @@ import {
   useRemoveCohost,
   useAcceptPlanInvitation,
   useRejectPlanInvitation,
-  useUpdatePlan,
 } from '@/features/plans/queries/plan.queries';
 import {
   useCollabActivities,
@@ -83,14 +75,14 @@ import { formatError } from '@/lib/error-formatter';
 import { formatDate } from '@/lib/date';
 import { cn } from '@/lib/utils';
 import { getOrgTypeLabel, getOrgTypeBadgeClass } from '@/lib/organization.utils';
-import type { CollabTask, CollabTaskStatus, TaskPriority, PlanStatus } from '@/types';
+import type { CollabTask, CollabTaskStatus } from '@/types';
 
 const PLAN_STATUS_CONFIG: Record<string, { label: string; colorClasses: string }> = {
-  draft: { label: 'Bản nháp', colorClasses: 'bg-slate-100 text-slate-700 border-slate-200' },
-  planning: { label: 'Đang lập kế hoạch', colorClasses: 'bg-amber-50 text-amber-700 border-amber-200' },
-  active: { label: 'Đang thực hiện', colorClasses: 'bg-emerald-50 text-emerald-700 border-emerald-200' },
-  completed: { label: 'Đã hoàn thành', colorClasses: 'bg-blue-50 text-blue-700 border-blue-200' },
-  cancelled: { label: 'Đã hủy', colorClasses: 'bg-rose-50 text-rose-700 border-rose-200' },
+  draft: { label: 'Bản nháp', colorClasses: 'bg-pebble text-slate-gray border-hairline' },
+  planning: { label: 'Đang lập kế hoạch', colorClasses: 'bg-amber-50 text-amber-800 border-amber-200/70' },
+  active: { label: 'Đang thực hiện', colorClasses: 'bg-[#e6f0ff] text-signal-blue border-[#d4e4fa]' },
+  completed: { label: 'Đã hoàn thành', colorClasses: 'bg-emerald-50 text-emerald-800 border-emerald-200/70' },
+  cancelled: { label: 'Đã hủy', colorClasses: 'bg-rose-50 text-rose-800 border-rose-200/70' },
 };
 
 type PlanTab = 'activities' | 'participants' | 'tasks' | 'finance' | 'personnel';
@@ -98,7 +90,7 @@ type PlanTab = 'activities' | 'participants' | 'tasks' | 'finance' | 'personnel'
 export function PlanDetailPage() {
   const { planId } = useParams<{ planId: string }>();
   const navigate = useNavigate();
-  const { user, activeOrganization, activeRole } = useAuth();
+  const { activeOrganization, activeRole } = useAuth();
 
   const [activeTab, setActiveTab] = useState<PlanTab>('activities');
   const [isCreateActivityOpen, setIsCreateActivityOpen] = useState(false);
@@ -549,9 +541,9 @@ export function PlanDetailPage() {
   if (isPlanLoading) {
     return (
       <div className="p-6 max-w-7xl mx-auto space-y-6 animate-pulse">
-        <div className="h-8 bg-slate-100 rounded-md w-1/4" />
-        <div className="h-40 bg-slate-50 rounded-2xl" />
-        <div className="h-64 bg-slate-50 rounded-2xl" />
+        <div className="h-8 bg-cloud rounded-md w-1/4" />
+        <div className="h-40 bg-cloud rounded-2xl" />
+        <div className="h-64 bg-cloud rounded-2xl" />
       </div>
     );
   }
@@ -562,11 +554,11 @@ export function PlanDetailPage() {
         <div className="h-16 w-16 bg-rose-50 border border-rose-200 text-rose-600 rounded-2xl flex items-center justify-center mx-auto">
           <AlertCircle className="h-8 w-8" />
         </div>
-        <h2 className="text-lg font-bold text-slate-900">Không tìm thấy chiến dịch</h2>
-        <p className="text-xs text-slate-500">
+        <h2 className="text-lg font-bold text-ink-navy">Không tìm thấy chiến dịch</h2>
+        <p className="text-xs text-mist-gray">
           Chiến dịch này không tồn tại hoặc tài khoản của bạn chưa có quyền truy cập.
         </p>
-        <Button onClick={() => navigate('/plans')} variant="outline" size="sm" className="text-xs">
+        <Button onClick={() => navigate('/plans')} variant="outline" size="sm" className="text-xs border-hairline hover:bg-cloud">
           <ArrowLeft className="h-3.5 w-3.5 mr-1.5" />
           Về danh sách Kế hoạch
         </Button>
@@ -586,32 +578,32 @@ export function PlanDetailPage() {
           variant="ghost"
           size="sm"
           onClick={() => navigate('/plans')}
-          className="text-xs text-slate-600 hover:text-slate-900 gap-1.5 pl-0 hover:bg-transparent"
+          className="text-xs text-slate-gray hover:text-ink-navy gap-1.5 pl-0 hover:bg-transparent"
         >
           <ArrowLeft className="h-4 w-4" />
           <span>Danh sách Chiến dịch</span>
         </Button>
 
-        <Badge className="bg-blue-50 text-blue-700 border border-blue-200/80 text-xs px-2.5 py-1 font-semibold rounded-full">
+        <Badge className="bg-[#e6f0ff] text-signal-blue border border-[#d4e4fa] text-xs px-2.5 py-1 font-semibold rounded-full">
           Chiến Dịch Liên Đơn Vị (Collab)
         </Badge>
       </div>
 
       {/* Main Plan Header Card */}
-      <Card className="bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-2xs">
+      <Card className="bg-white border border-hairline rounded-2xl overflow-hidden shadow-sm">
         {/* Pending Invitation Alert for current user's organization */}
         {myOrgPendingInvitation && (
-          <div className="bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-700 px-6 py-4 text-white flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-inner">
+          <div className="bg-ink-navy px-6 py-4 text-white flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-hairline">
             <div className="flex items-center gap-3">
-              <div className="h-9 w-9 rounded-xl bg-white/20 flex items-center justify-center shrink-0">
-                <Sparkles strokeWidth={1.5} className="h-5 w-5 text-white" />
+              <div className="h-9 w-9 rounded-lg bg-white/10 flex items-center justify-center shrink-0">
+                <Sparkles strokeWidth={1.5} className="h-5 w-5 text-signal-blue" />
               </div>
               <div>
                 <div className="font-bold text-sm">
                   Đơn vị của bạn được mời tham gia Chiến dịch này!
                 </div>
-                <div className="text-xs text-blue-100">
-                  Vai trò đề xuất: <span className="font-semibold underline">{myOrgPendingInvitation.roleDescription || 'Đơn vị đồng tổ chức'}</span>
+                <div className="text-xs text-mist-gray">
+                  Vai trò đề xuất: <span className="font-semibold text-white underline">{myOrgPendingInvitation.roleDescription || 'Đơn vị đồng tổ chức'}</span>
                 </div>
               </div>
             </div>
@@ -628,12 +620,12 @@ export function PlanDetailPage() {
                 size="sm"
                 onClick={handleAcceptInvitation}
                 disabled={acceptInvitationMutation.isPending}
-                className="text-xs bg-white text-blue-900 hover:bg-blue-50 font-bold shadow-sm rounded-lg active:scale-[0.98]"
+                className="text-xs bg-signal-blue hover:bg-[#005be0] text-white font-bold shadow-sm rounded-lg active:scale-[0.98]"
               >
                 {acceptInvitationMutation.isPending ? (
                   <Loader2 className="h-3.5 w-3.5 animate-spin mr-1.5" />
                 ) : (
-                  <CheckCircle2 className="h-3.5 w-3.5 mr-1.5 text-emerald-600" />
+                  <CheckCircle2 className="h-3.5 w-3.5 mr-1.5 text-white" />
                 )}
                 Chấp nhận tham gia
               </Button>
@@ -645,22 +637,23 @@ export function PlanDetailPage() {
           <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4">
             <div className="space-y-1.5">
               <div className="flex items-center gap-2.5 flex-wrap">
-                <span className="px-2.5 py-1 rounded-md text-xs font-bold tracking-tight bg-blue-50 text-blue-800 border border-blue-200/80">
+                <span className="px-2.5 py-1 rounded-md text-xs font-semibold tracking-tight bg-pebble text-ink-navy border border-hairline">
                   {plan.code}
                 </span>
+
                 <span className={`px-3 py-1 rounded-full text-xs font-semibold border ${statusConfig.colorClasses}`}>
                   {statusConfig.label}
                 </span>
-                <span className="text-xs text-slate-400">
+                <span className="text-xs text-mist-gray tabular-nums">
                   Tạo ngày {formatDate(plan.createdAt)}
                 </span>
               </div>
 
-              <h1 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
+              <h1 className="text-2xl sm:text-3xl font-bold text-ink-navy tracking-tight">
                 {plan.name}
               </h1>
 
-              <p className="text-xs sm:text-sm text-slate-600 leading-relaxed max-w-4xl">
+              <p className="text-xs sm:text-sm text-slate-gray leading-relaxed max-w-4xl">
                 {plan.description || 'Chưa có mô tả chi tiết.'}
               </p>
             </div>
@@ -672,25 +665,25 @@ export function PlanDetailPage() {
                     id="btn-header-invite-cohost"
                     variant="outline"
                     onClick={() => setIsInviteCohostOpen(true)}
-                    className="text-xs h-8 gap-1.5 rounded-lg border-slate-200/90 hover:bg-slate-50 font-medium cursor-pointer shadow-2xs"
+                    className="text-xs h-8 gap-1.5 rounded-lg border-hairline hover:bg-pebble text-ink-navy font-medium cursor-pointer shadow-sm"
                   >
-                    <UserPlus className="h-3.5 w-3.5 text-blue-600" />
+                    <UserPlus className="h-3.5 w-3.5 text-signal-blue" />
                     <span>Mời đơn vị</span>
                   </Button>
 
                   <Button
                     variant="outline"
                     onClick={() => setIsEditPlanOpen(true)}
-                    className="text-xs h-8 gap-1.5 rounded-lg border-slate-200/90 hover:bg-slate-50 font-medium cursor-pointer shadow-2xs"
+                    className="text-xs h-8 gap-1.5 rounded-lg border-hairline hover:bg-pebble text-ink-navy font-medium cursor-pointer shadow-sm"
                   >
-                    <Edit className="h-3.5 w-3.5 text-slate-600" />
+                    <Edit className="h-3.5 w-3.5 text-slate-gray" />
                     <span>Chỉnh sửa</span>
                   </Button>
 
                   <Button
                     variant="outline"
                     onClick={() => setIsDeletePlanOpen(true)}
-                    className="text-xs h-8 gap-1.5 rounded-lg border-rose-200 text-rose-600 hover:bg-rose-50 font-medium cursor-pointer shadow-2xs"
+                    className="text-xs h-8 gap-1.5 rounded-lg border-rose-200 text-rose-700 hover:bg-rose-50 font-medium cursor-pointer shadow-sm"
                   >
                     <Trash2 className="h-3.5 w-3.5" />
                     <span>Xóa</span>
@@ -702,7 +695,7 @@ export function PlanDetailPage() {
                 <Button
                   id="btn-create-collab-activity"
                   onClick={() => setIsCreateActivityOpen(true)}
-                  className="text-xs h-8 bg-blue-600 hover:bg-blue-700 text-white gap-1.5 shadow-xs rounded-lg font-semibold cursor-pointer"
+                  className="text-xs h-8 bg-signal-blue hover:bg-[#005be0] text-white gap-1.5 shadow-sm rounded-lg font-semibold cursor-pointer"
                 >
                   <Plus className="h-3.5 w-3.5" />
                   Tạo hoạt động Collab
@@ -712,43 +705,43 @@ export function PlanDetailPage() {
           </div>
 
           {/* Minimal Horizontal Property Ribbon */}
-          <div className="flex items-center gap-2 flex-wrap pt-4 border-t border-slate-100 text-xs">
+          <div className="flex items-center gap-2 flex-wrap pt-4 border-t border-hairline text-xs">
             {/* Đơn vị chủ trì */}
-            <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-50/80 border border-slate-200/70 text-slate-700">
-              <Building2 className="w-3.5 h-3.5 text-blue-600 shrink-0" />
-              <span className="text-slate-400 font-medium">Chủ trì:</span>
+            <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-pebble border border-hairline text-slate-gray">
+              <Building2 className="w-3.5 h-3.5 text-signal-blue shrink-0" />
+              <span className="text-slate-gray font-medium">Chủ trì:</span>
               <span className={`text-[10px] px-1.5 py-0.2 rounded font-semibold border ${getOrgTypeBadgeClass(plan.leadOrganization?.type)}`}>
                 {getOrgTypeLabel(plan.leadOrganization?.type)}
               </span>
-              <span className="font-semibold text-slate-900 truncate max-w-[200px]" title={plan.leadOrganization?.name}>
+              <span className="font-semibold text-ink-navy truncate max-w-[200px]" title={plan.leadOrganization?.name}>
                 {plan.leadOrganization?.name || 'Đơn vị chủ trì'}
               </span>
             </div>
 
             {/* Đơn vị tham gia */}
-            <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-50/80 border border-slate-200/70 text-slate-700">
-              <Users className="w-3.5 h-3.5 text-sky-600 shrink-0" />
-              <span className="text-slate-400 font-medium">Phối hợp:</span>
-              <span className="font-semibold text-slate-900">
+            <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-pebble border border-hairline text-slate-gray">
+              <Users className="w-3.5 h-3.5 text-signal-blue shrink-0" />
+              <span className="text-slate-gray font-medium">Phối hợp:</span>
+              <span className="font-semibold text-ink-navy">
                 {cohosts.length} đơn vị
               </span>
             </div>
 
             {/* Thời gian triển khai */}
-            <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-50/80 border border-slate-200/70 text-slate-700">
-              <Calendar className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
-              <span className="text-slate-400 font-medium">Thời gian:</span>
-              <span className="font-medium text-slate-900 tabular-nums">
+            <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-pebble border border-hairline text-slate-gray">
+              <Calendar className="w-3.5 h-3.5 text-signal-blue shrink-0" />
+              <span className="text-slate-gray font-medium">Thời gian:</span>
+              <span className="font-medium text-ink-navy tabular-nums">
                 {plan.startDate ? formatDate(plan.startDate) : 'Chưa rõ'}
                 {plan.endDate ? ` – ${formatDate(plan.endDate)}` : ''}
               </span>
             </div>
 
             {/* Quỹ chiến dịch */}
-            <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-50/80 border border-slate-200/70 text-slate-700">
-              <DollarSign className="w-3.5 h-3.5 text-amber-600 shrink-0" />
-              <span className="text-slate-400 font-medium">Quỹ:</span>
-              <span className="font-bold text-slate-900 tabular-nums">
+            <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-pebble border border-hairline text-slate-gray">
+              <DollarSign className="w-3.5 h-3.5 text-signal-blue shrink-0" />
+              <span className="text-slate-gray font-medium">Quỹ:</span>
+              <span className="font-bold text-ink-navy tabular-nums">
                 {formatVND(netBalance)}
               </span>
             </div>
@@ -757,7 +750,7 @@ export function PlanDetailPage() {
       </Card>
 
       {/* Tabs Navigation Header - Minimal Underline Style */}
-      <div className="flex items-center gap-1 border-b border-slate-200 overflow-x-auto scrollbar-none">
+      <div className="flex items-center gap-1 border-b border-hairline overflow-x-auto scrollbar-none">
         <button
           id="tab-btn-activities"
           type="button"
@@ -765,13 +758,13 @@ export function PlanDetailPage() {
           className={cn(
             'flex items-center gap-2 py-3 px-3.5 text-xs font-semibold border-b-2 transition-all whitespace-nowrap cursor-pointer -mb-px',
             activeTab === 'activities'
-              ? 'border-blue-600 text-blue-700 font-bold'
-              : 'border-transparent text-slate-500 hover:text-slate-900 hover:border-slate-300'
+              ? 'border-signal-blue text-signal-blue font-bold'
+              : 'border-transparent text-slate-gray hover:text-ink-navy hover:border-slate-gray/40'
           )}
         >
           <CalendarCheck className="h-4 w-4 shrink-0" />
           <span>Hoạt động trực thuộc</span>
-          <span className={cn('text-[10px] px-1.5 py-0.2 rounded-full tabular-nums font-semibold', activeTab === 'activities' ? 'bg-blue-100 text-blue-800' : 'bg-slate-100 text-slate-600')}>
+          <span className={cn('text-[10px] px-1.5 py-0.2 rounded-full tabular-nums font-semibold', activeTab === 'activities' ? 'bg-[#e6f0ff] text-signal-blue' : 'bg-pebble text-slate-gray')}>
             {collabActivities.length}
           </span>
         </button>
@@ -783,13 +776,13 @@ export function PlanDetailPage() {
           className={cn(
             'flex items-center gap-2 py-3 px-3.5 text-xs font-semibold border-b-2 transition-all whitespace-nowrap cursor-pointer -mb-px',
             activeTab === 'participants'
-              ? 'border-blue-600 text-blue-700 font-bold'
-              : 'border-transparent text-slate-500 hover:text-slate-900 hover:border-slate-300'
+              ? 'border-signal-blue text-signal-blue font-bold'
+              : 'border-transparent text-slate-gray hover:text-ink-navy hover:border-slate-gray/40'
           )}
         >
           <Users className="h-4 w-4 shrink-0" />
           <span>Người tham gia</span>
-          <span className={cn('text-[10px] px-1.5 py-0.2 rounded-full tabular-nums font-semibold', activeTab === 'participants' ? 'bg-blue-100 text-blue-800' : 'bg-slate-100 text-slate-600')}>
+          <span className={cn('text-[10px] px-1.5 py-0.2 rounded-full tabular-nums font-semibold', activeTab === 'participants' ? 'bg-[#e6f0ff] text-signal-blue' : 'bg-pebble text-slate-gray')}>
             {campaignParticipantStats.total}
           </span>
         </button>
@@ -801,13 +794,13 @@ export function PlanDetailPage() {
           className={cn(
             'flex items-center gap-2 py-3 px-3.5 text-xs font-semibold border-b-2 transition-all whitespace-nowrap cursor-pointer -mb-px',
             activeTab === 'tasks'
-              ? 'border-blue-600 text-blue-700 font-bold'
-              : 'border-transparent text-slate-500 hover:text-slate-900 hover:border-slate-300'
+              ? 'border-signal-blue text-signal-blue font-bold'
+              : 'border-transparent text-slate-gray hover:text-ink-navy hover:border-slate-gray/40'
           )}
         >
           <CheckSquare className="h-4 w-4 shrink-0" />
           <span>Tất cả nhiệm vụ</span>
-          <span className={cn('text-[10px] px-1.5 py-0.2 rounded-full tabular-nums font-semibold', activeTab === 'tasks' ? 'bg-blue-100 text-blue-800' : 'bg-slate-100 text-slate-600')}>
+          <span className={cn('text-[10px] px-1.5 py-0.2 rounded-full tabular-nums font-semibold', activeTab === 'tasks' ? 'bg-[#e6f0ff] text-signal-blue' : 'bg-pebble text-slate-gray')}>
             {collabTasks.length}
           </span>
         </button>
@@ -819,14 +812,14 @@ export function PlanDetailPage() {
           className={cn(
             'flex items-center gap-2 py-3 px-3.5 text-xs font-semibold border-b-2 transition-all whitespace-nowrap cursor-pointer -mb-px',
             activeTab === 'finance'
-              ? 'border-blue-600 text-blue-700 font-bold'
-              : 'border-transparent text-slate-500 hover:text-slate-900 hover:border-slate-300'
+              ? 'border-signal-blue text-signal-blue font-bold'
+              : 'border-transparent text-slate-gray hover:text-ink-navy hover:border-slate-gray/40'
           )}
         >
           <DollarSign className="h-4 w-4 shrink-0" />
           <span>Tài chính & Gây quỹ</span>
           {transactions.length > 0 && (
-            <span className={cn('text-[10px] px-1.5 py-0.2 rounded-full tabular-nums font-semibold', activeTab === 'finance' ? 'bg-blue-100 text-blue-800' : 'bg-slate-100 text-slate-600')}>
+            <span className={cn('text-[10px] px-1.5 py-0.2 rounded-full tabular-nums font-semibold', activeTab === 'finance' ? 'bg-[#e6f0ff] text-signal-blue' : 'bg-pebble text-slate-gray')}>
               {transactions.length}
             </span>
           )}
@@ -839,14 +832,14 @@ export function PlanDetailPage() {
           className={cn(
             'flex items-center gap-2 py-3 px-3.5 text-xs font-semibold border-b-2 transition-all whitespace-nowrap cursor-pointer -mb-px',
             activeTab === 'personnel'
-              ? 'border-blue-600 text-blue-700 font-bold'
-              : 'border-transparent text-slate-500 hover:text-slate-900 hover:border-slate-300'
+              ? 'border-signal-blue text-signal-blue font-bold'
+              : 'border-transparent text-slate-gray hover:text-ink-navy hover:border-slate-gray/40'
           )}
         >
           <Building2 className="h-4 w-4 shrink-0" />
           <span>Ban Tổ Chức</span>
           {personnel.length > 0 && (
-            <span className={cn('text-[10px] px-1.5 py-0.2 rounded-full tabular-nums font-semibold', activeTab === 'personnel' ? 'bg-blue-100 text-blue-800' : 'bg-slate-100 text-slate-600')}>
+            <span className={cn('text-[10px] px-1.5 py-0.2 rounded-full tabular-nums font-semibold', activeTab === 'personnel' ? 'bg-[#e6f0ff] text-signal-blue' : 'bg-pebble text-slate-gray')}>
               {personnel.length}
             </span>
           )}
@@ -859,21 +852,21 @@ export function PlanDetailPage() {
           {/* Plan Metrics Overview Strip */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
             {/* Metric 1: Activities & Readiness */}
-            <Card className="bg-white border border-slate-200/80 rounded-2xl p-4 shadow-2xs">
+            <Card className="bg-white border border-hairline rounded-2xl p-4 shadow-sm">
               <div className="flex items-center justify-between">
-                <span className="text-xs font-semibold text-slate-500">Hoạt động Collab</span>
-                <div className="h-8 w-8 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center">
+                <span className="text-xs font-semibold text-slate-gray">Hoạt động Collab</span>
+                <div className="h-8 w-8 rounded-lg bg-[#e6f0ff] text-signal-blue flex items-center justify-center">
                   <CalendarCheck className="h-4 w-4" />
                 </div>
               </div>
               <div className="mt-2 flex items-baseline gap-2">
-                <span className="text-2xl font-black text-slate-900 tabular-nums">
+                <span className="text-2xl font-bold text-ink-navy tabular-nums">
                   {campaignMetrics.totalActivities}
                 </span>
-                <span className="text-xs font-medium text-slate-500">hoạt động</span>
+                <span className="text-xs font-medium text-slate-gray">hoạt động</span>
               </div>
               <div className="mt-2 flex items-center gap-1.5 text-xs">
-                <span className="inline-flex items-center gap-1 text-emerald-600 font-semibold bg-emerald-50 px-2 py-0.5 rounded-md text-[11px] tabular-nums">
+                <span className="inline-flex items-center gap-1 text-emerald-800 font-semibold bg-emerald-50 px-2 py-0.5 rounded-md text-[11px] tabular-nums border border-emerald-200/60">
                   <CheckCircle2 className="h-3 w-3" />
                   {campaignMetrics.readyActivitiesCount}/{campaignMetrics.totalActivities} sẵn sàng
                 </span>
@@ -881,33 +874,33 @@ export function PlanDetailPage() {
             </Card>
 
             {/* Metric 2: Task Workload Distribution */}
-            <Card className="bg-white border border-slate-200/80 rounded-2xl p-4 shadow-2xs">
+            <Card className="bg-white border border-hairline rounded-2xl p-4 shadow-sm">
               <div className="flex items-center justify-between">
-                <span className="text-xs font-semibold text-slate-500">Khối lượng công việc</span>
-                <div className="h-8 w-8 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center">
+                <span className="text-xs font-semibold text-slate-gray">Khối lượng công việc</span>
+                <div className="h-8 w-8 rounded-lg bg-[#e6f0ff] text-signal-blue flex items-center justify-center">
                   <CheckSquare className="h-4 w-4" />
                 </div>
               </div>
               <div className="mt-2 flex items-baseline gap-2">
-                <span className="text-2xl font-black text-slate-900 tabular-nums">
+                <span className="text-2xl font-bold text-ink-navy tabular-nums">
                   {campaignMetrics.totalTasksCount}
                 </span>
-                <span className="text-xs font-medium text-slate-500">nhiệm vụ</span>
+                <span className="text-xs font-medium text-slate-gray">nhiệm vụ</span>
               </div>
               <div className="mt-2 flex items-center gap-2 text-[11px] flex-wrap font-medium">
-                <span className="text-emerald-700 bg-emerald-50 px-1.5 py-0.5 rounded tabular-nums">
+                <span className="text-emerald-800 bg-emerald-50 border border-emerald-200/60 px-1.5 py-0.5 rounded tabular-nums">
                   {campaignMetrics.doneTasksCount} xong
                 </span>
-                <span className="text-blue-700 bg-blue-50 px-1.5 py-0.5 rounded tabular-nums">
+                <span className="text-signal-blue bg-[#e6f0ff] border border-[#d4e4fa] px-1.5 py-0.5 rounded tabular-nums">
                   {campaignMetrics.inProgressTasksCount} đang làm
                 </span>
                 {campaignMetrics.overdueTasksCount > 0 ? (
-                  <span className="text-rose-700 bg-rose-50 px-1.5 py-0.5 rounded font-bold flex items-center gap-0.5 tabular-nums">
+                  <span className="text-rose-800 bg-rose-50 border border-rose-200/60 px-1.5 py-0.5 rounded font-semibold flex items-center gap-0.5 tabular-nums">
                     <AlertTriangle className="h-3 w-3" />
                     {campaignMetrics.overdueTasksCount} quá hạn
                   </span>
                 ) : (
-                  <span className="text-slate-600 bg-slate-100 px-1.5 py-0.5 rounded tabular-nums">
+                  <span className="text-slate-gray bg-pebble border border-hairline px-1.5 py-0.5 rounded tabular-nums">
                     {campaignMetrics.todoTasksCount} cần làm
                   </span>
                 )}
@@ -915,32 +908,30 @@ export function PlanDetailPage() {
             </Card>
 
             {/* Metric 3: Overall Campaign Readiness Progress */}
-            <Card className="bg-white border border-slate-200/80 rounded-2xl p-4 shadow-2xs sm:col-span-2 lg:col-span-1">
+            <Card className="bg-white border border-hairline rounded-2xl p-4 shadow-sm sm:col-span-2 lg:col-span-1">
               <div className="flex items-center justify-between">
-                <span className="text-xs font-semibold text-slate-500">Tiến độ & Sẵn sàng</span>
-                <div className="h-8 w-8 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center">
+                <span className="text-xs font-semibold text-slate-gray">Tiến độ & Sẵn sàng</span>
+                <div className="h-8 w-8 rounded-lg bg-emerald-50 text-emerald-700 flex items-center justify-center">
                   <TrendingUp className="h-4 w-4" />
                 </div>
               </div>
               <div className="mt-2 flex items-baseline justify-between">
                 <div className="flex items-baseline gap-1">
-                  <span className="text-2xl font-black text-slate-900 tabular-nums">
+                  <span className="text-2xl font-bold text-ink-navy tabular-nums">
                     {campaignMetrics.readinessPercent}%
                   </span>
-                  <span className="text-xs text-slate-500 font-medium">hoàn thành</span>
+                  <span className="text-xs text-slate-gray font-medium">hoàn thành</span>
                 </div>
-                <span className="text-xs font-bold text-slate-700 tabular-nums">
+                <span className="text-xs font-semibold text-slate-gray tabular-nums">
                   {campaignMetrics.doneTasksCount}/{campaignMetrics.totalTasksCount} việc
                 </span>
               </div>
-              <div className="mt-2.5 w-full bg-slate-100 rounded-full h-2 overflow-hidden">
+              <div className="mt-2.5 w-full bg-pebble border border-hairline rounded-full h-2 overflow-hidden">
                 <div
                   className={`h-full rounded-full transition-all duration-500 ${
                     campaignMetrics.readinessPercent === 100
                       ? 'bg-emerald-600'
-                      : campaignMetrics.readinessPercent > 50
-                      ? 'bg-blue-600'
-                      : 'bg-blue-600'
+                      : 'bg-signal-blue'
                   }`}
                   style={{ width: `${campaignMetrics.readinessPercent}%` }}
                 />
@@ -953,11 +944,11 @@ export function PlanDetailPage() {
             <div className="lg:col-span-2 space-y-4">
               <div className="flex items-center justify-between">
                 <div>
-                  <h2 className="text-base font-bold text-slate-900 flex items-center gap-2">
-                    <CalendarCheck className="h-5 w-5 text-blue-600" />
+                  <h2 className="text-base font-bold text-ink-navy flex items-center gap-2">
+                    <CalendarCheck className="h-5 w-5 text-signal-blue" />
                     Danh Sách Hoạt Động Phối Hợp ({collabActivities.length})
                   </h2>
-                  <p className="text-xs text-slate-500 mt-0.5">
+                  <p className="text-xs text-slate-gray mt-0.5">
                     Các sự kiện độc lập trong chiến dịch. Nhấp vào bất kỳ thẻ nào để mở chi tiết hoạt động.
                   </p>
                 </div>
@@ -966,23 +957,23 @@ export function PlanDetailPage() {
               {isActivitiesLoading ? (
                 <div className="space-y-3">
                   {[1, 2].map((i) => (
-                    <div key={i} className="h-28 bg-slate-50 border border-slate-200 rounded-2xl animate-pulse" />
+                    <div key={i} className="h-28 bg-white border border-hairline rounded-2xl animate-pulse shadow-sm" />
                   ))}
                 </div>
               ) : collabActivities.length === 0 ? (
-                <Card className="bg-white border border-slate-200/80 rounded-2xl p-8 text-center shadow-2xs">
-                  <div className="h-12 w-12 bg-blue-50 border border-blue-100 rounded-xl flex items-center justify-center mx-auto mb-3 text-blue-600">
+                <Card className="bg-white border border-hairline rounded-2xl p-8 text-center shadow-sm">
+                  <div className="h-12 w-12 bg-[#e6f0ff] border border-hairline rounded-xl flex items-center justify-center mx-auto mb-3 text-signal-blue">
                     <CalendarCheck className="h-6 w-6" />
                   </div>
-                  <h3 className="text-sm font-bold text-slate-800">Chưa có hoạt động collab nào</h3>
-                  <p className="text-xs text-slate-500 mt-0.5 mb-4">
+                  <h3 className="text-sm font-bold text-ink-navy">Chưa có hoạt động collab nào</h3>
+                  <p className="text-xs text-slate-gray mt-0.5 mb-4">
                     Chiến dịch chưa có sự kiện độc lập nào được thiết lập. Hãy tạo hoạt động phối hợp đầu tiên!
                   </p>
                   {canManageOperational && (
                     <Button
                       onClick={() => setIsCreateActivityOpen(true)}
                       size="sm"
-                      className="text-xs bg-blue-600 hover:bg-blue-700 text-white gap-1.5 shadow-2xs font-semibold rounded-lg active:scale-[0.98]"
+                      className="text-xs bg-signal-blue hover:bg-[#005be0] text-white gap-1.5 shadow-sm font-semibold rounded-lg active:scale-[0.98]"
                     >
                       <Plus className="h-3.5 w-3.5" />
                       Tạo hoạt động Collab
@@ -1005,15 +996,15 @@ export function PlanDetailPage() {
                         key={act.id}
                         id={`collab-act-card-${act.id}`}
                         onClick={() => navigate(`/plans/${planId}/collab-activities/${act.id}`)}
-                        className="group bg-white hover:bg-blue-50/30 border border-slate-200 hover:border-blue-300 rounded-2xl p-5 transition-all duration-200 shadow-2xs hover:shadow-sm cursor-pointer flex flex-col md:flex-row md:items-center justify-between gap-4 min-w-0"
+                        className="group bg-white hover:bg-white border border-hairline hover:border-signal-blue/40 rounded-2xl p-5 transition-all duration-200 shadow-sm hover:shadow-md cursor-pointer flex flex-col md:flex-row md:items-center justify-between gap-4 min-w-0"
                       >
                         {/* Left: Activity Details */}
                         <div className="space-y-2 min-w-0 flex-1">
                           <div className="flex items-center gap-2 flex-wrap min-w-0">
-                            <span className="text-[10px] font-bold tabular-nums bg-slate-100 text-slate-800 px-2 py-0.5 rounded border border-slate-200 shrink-0">
+                            <span className="text-[10px] font-semibold tabular-nums bg-pebble text-ink-navy px-2 py-0.5 rounded border border-hairline shrink-0">
                               {act.code}
                             </span>
-                            <Badge className="bg-blue-50 text-blue-700 border border-blue-200/70 text-[10px] shrink-0 font-medium">
+                            <Badge className="bg-[#e6f0ff] text-signal-blue border border-[#d4e4fa] text-[10px] shrink-0 font-medium">
                               {act.category === 'volunteer'
                                 ? 'Tình nguyện'
                                 : act.category === 'academic'
@@ -1029,25 +1020,25 @@ export function PlanDetailPage() {
                                 : 'Sự kiện'}
                             </Badge>
                             {act.leadOrganization && (
-                              <span className="text-[11px] text-blue-700 font-semibold flex items-center gap-1 min-w-0 truncate" title={act.leadOrganization.name}>
-                                <Building2 className="h-3 w-3 text-blue-500 shrink-0" />
+                              <span className="text-[11px] text-signal-blue font-semibold flex items-center gap-1 min-w-0 truncate" title={act.leadOrganization.name}>
+                                <Building2 className="h-3 w-3 text-signal-blue shrink-0" />
                                 <span className="truncate">{act.leadOrganization.name}</span>
                               </span>
                             )}
                           </div>
 
-                          <h3 className="text-sm sm:text-base font-bold text-slate-900 group-hover:text-blue-700 transition-colors break-words break-all min-w-0">
+                          <h3 className="text-sm sm:text-base font-bold text-ink-navy group-hover:text-signal-blue transition-colors break-words break-all min-w-0">
                             {act.title}
                           </h3>
 
-                          <div className="flex items-center gap-4 text-xs text-slate-500 flex-wrap min-w-0">
-                            <span className="flex items-center gap-1.5 text-[11px] shrink-0 text-slate-600">
-                              <Clock className="h-3.5 w-3.5 text-slate-400" />
+                          <div className="flex items-center gap-4 text-xs text-slate-gray flex-wrap min-w-0">
+                            <span className="flex items-center gap-1.5 text-[11px] shrink-0 text-slate-gray tabular-nums">
+                              <Clock className="h-3.5 w-3.5 text-mist-gray" />
                               {formatDate(act.startDate)} - {formatDate(act.endDate)}
                             </span>
                             {act.location && (
-                              <span className="flex items-center gap-1.5 text-[11px] text-slate-600 min-w-0 break-words break-all max-w-[280px]" title={act.location}>
-                                <MapPin className="h-3.5 w-3.5 text-slate-400 shrink-0" />
+                              <span className="flex items-center gap-1.5 text-[11px] text-slate-gray min-w-0 break-words break-all max-w-[280px]" title={act.location}>
+                                <MapPin className="h-3.5 w-3.5 text-mist-gray shrink-0" />
                                 <span className="truncate">{act.location}</span>
                               </span>
                             )}
@@ -1055,15 +1046,15 @@ export function PlanDetailPage() {
                         </div>
 
                         {/* Right: Progress Metric & Chevron Indicator */}
-                        <div className="flex items-center justify-between md:justify-end gap-4 pt-3 md:pt-0 border-t md:border-t-0 border-slate-100 shrink-0">
+                        <div className="flex items-center justify-between md:justify-end gap-4 pt-3 md:pt-0 border-t md:border-t-0 border-hairline shrink-0">
                           {/* Progress Metric Block */}
                           <div className="flex flex-col items-start md:items-end min-w-[130px]">
                             <div className="flex items-center gap-1.5">
-                              <span className="text-xs font-bold tabular-nums text-slate-900">
+                              <span className="text-xs font-bold tabular-nums text-ink-navy">
                                 {totalTasks > 0 ? `${completedTasks}/${totalTasks} việc` : '0 việc'}
                               </span>
                               {totalTasks > 0 && (
-                                <span className={`text-[10px] font-bold ${isAllDone ? 'text-emerald-600' : 'text-blue-600'}`}>
+                                <span className={`text-[10px] font-bold tabular-nums ${isAllDone ? 'text-emerald-700' : 'text-signal-blue'}`}>
                                   ({percent}%)
                                 </span>
                               )}
@@ -1072,24 +1063,24 @@ export function PlanDetailPage() {
                             {/* Progress Bar / Ready Badge */}
                             <div className="mt-1 flex items-center gap-1.5">
                               {isAllDone ? (
-                                <Badge className="bg-emerald-50 text-emerald-700 border border-emerald-200 text-[10px] font-semibold px-2 py-0">
+                                <Badge className="bg-emerald-50 text-emerald-800 border border-emerald-200/70 text-[10px] font-semibold px-2 py-0">
                                   Sẵn sàng triển khai
                                 </Badge>
                               ) : totalTasks > 0 ? (
-                                <div className="w-24 bg-slate-100 rounded-full h-1.5 overflow-hidden">
+                                <div className="w-24 bg-pebble border border-hairline rounded-full h-1.5 overflow-hidden">
                                   <div
-                                    className="bg-blue-600 h-full rounded-full transition-all duration-300"
+                                    className="bg-signal-blue h-full rounded-full transition-all duration-300"
                                     style={{ width: `${percent}%` }}
                                   />
                                 </div>
                               ) : (
-                                <span className="text-[10px] text-slate-400 italic">Chưa giao việc</span>
+                                <span className="text-[10px] text-mist-gray italic">Chưa giao việc</span>
                               )}
                             </div>
                           </div>
 
                           {/* Navigation Indicator Arrow */}
-                          <div className="w-8 h-8 rounded-full bg-slate-50 group-hover:bg-blue-100 text-slate-400 group-hover:text-blue-700 flex items-center justify-center transition-colors">
+                          <div className="w-8 h-8 rounded-full bg-pebble group-hover:bg-[#e6f0ff] text-slate-gray group-hover:text-signal-blue flex items-center justify-center transition-colors">
                             <ChevronRight className="h-4 w-4 group-hover:translate-x-0.5 transition-transform" />
                           </div>
                         </div>
@@ -1104,11 +1095,11 @@ export function PlanDetailPage() {
           <div className="space-y-4">
             <div className="flex items-center justify-between">
               <div>
-                <h2 className="text-base font-bold text-slate-900 flex items-center gap-2">
-                  <Building2 strokeWidth={1.5} className="h-5 w-5 text-blue-600" />
+                <h2 className="text-base font-bold text-ink-navy flex items-center gap-2">
+                  <Building2 strokeWidth={1.5} className="h-5 w-5 text-signal-blue" />
                   Đơn Vị Tham Gia ({cohosts.length})
                 </h2>
-                <p className="text-[11px] text-slate-500">Chỉ những đơn vị được mời mới có quyền phân công</p>
+                <p className="text-[11px] text-slate-gray">Chỉ những đơn vị được mời mới có quyền phân công</p>
               </div>
 
               {canManagePlan && (
@@ -1117,7 +1108,7 @@ export function PlanDetailPage() {
                   variant="ghost"
                   size="sm"
                   onClick={() => setIsInviteCohostOpen(true)}
-                  className="text-xs text-blue-600 hover:text-blue-700 gap-1.5 hover:bg-blue-50 rounded-lg active:scale-[0.98]"
+                  className="text-xs text-signal-blue hover:text-[#005be0] gap-1.5 hover:bg-[#e6f0ff] rounded-lg active:scale-[0.98]"
                 >
                   <UserPlus className="h-3.5 w-3.5" />
                   Mời đơn vị
@@ -1153,23 +1144,23 @@ export function PlanDetailPage() {
                 return (
                   <Card
                     key={cohost.id}
-                    className={`bg-white border rounded-2xl p-3.5 transition-all shadow-2xs ${
+                    className={`bg-white border rounded-2xl p-3.5 transition-all shadow-sm ${
                       cohost.isHost
-                        ? 'border-blue-200 bg-blue-50/20'
+                        ? 'border-hairline bg-[#e6f0ff]/20'
                         : isPending
-                        ? 'border-amber-200 bg-amber-50/20'
-                        : 'border-slate-200'
+                        ? 'border-amber-200/70 bg-amber-50/30'
+                        : 'border-hairline'
                     }`}
                   >
                     <div className="flex items-start justify-between gap-2">
                       <div className="flex items-center gap-3 min-w-0">
                         <div
-                          className={`h-9 w-9 rounded-xl flex items-center justify-center font-bold text-xs shrink-0 ${
+                          className={`h-9 w-9 rounded-lg flex items-center justify-center font-bold text-xs shrink-0 ${
                             cohost.isHost
-                              ? 'bg-blue-600 text-white'
+                              ? 'bg-signal-blue text-white'
                               : isPending
                               ? 'bg-amber-100 text-amber-800'
-                              : 'bg-slate-100 text-slate-700'
+                              : 'bg-pebble text-ink-navy border border-hairline'
                           }`}
                         >
                           {cohost.organization?.code?.substring(0, 3) || 'ORG'}
@@ -1180,33 +1171,33 @@ export function PlanDetailPage() {
                             <span className={`text-[10px] px-1.5 py-0.2 rounded font-semibold border ${typeBadgeClass}`}>
                               {typeLabel}
                             </span>
-                            <span className="font-bold text-xs text-slate-900 truncate">
+                            <span className="font-semibold text-xs text-ink-navy truncate">
                               {cohost.organization?.name || 'Đơn vị thành viên'}
                             </span>
                             <span className={`px-1.5 py-0.2 rounded text-[10px] font-semibold shrink-0 ${
                               cohost.isHost
-                                ? 'bg-blue-100 text-blue-800'
-                                : 'bg-indigo-50 text-indigo-700 border border-indigo-100'
+                                ? 'bg-[#e6f0ff] text-signal-blue border border-[#d4e4fa]'
+                                : 'bg-pebble text-slate-gray border border-hairline'
                             }`}>
                               {roleLabel}
                             </span>
                             {isPending && (
-                              <span className="px-1.5 py-0.2 rounded text-[10px] font-semibold bg-amber-100 text-amber-800 shrink-0">
+                              <span className="px-1.5 py-0.2 rounded text-[10px] font-semibold bg-amber-100 text-amber-800 shrink-0 border border-amber-200/60">
                                 Chờ xác nhận
                               </span>
                             )}
                             {isRejected && (
-                              <span className="px-1.5 py-0.2 rounded text-[10px] font-semibold bg-rose-100 text-rose-800 shrink-0">
+                              <span className="px-1.5 py-0.2 rounded text-[10px] font-semibold bg-rose-100 text-rose-800 shrink-0 border border-rose-200/60">
                                 Đã từ chối
                               </span>
                             )}
                           </div>
-                          <div className="flex items-center gap-2 text-[11px] text-slate-500 mt-0.5">
+                          <div className="flex items-center gap-2 text-[11px] text-slate-gray mt-0.5">
                             <p className="truncate">
                               {cohost.roleDescription || (cohost.isHost ? 'Đơn vị chủ trì chiến dịch' : 'Đơn vị đồng tổ chức')}
                             </p>
                             {parentName && (
-                              <span className="text-indigo-600 shrink-0">
+                              <span className="text-signal-blue shrink-0">
                                 • {parentName}
                               </span>
                             )}
@@ -1219,7 +1210,7 @@ export function PlanDetailPage() {
                           variant="ghost"
                           size="sm"
                           onClick={() => handleRemoveCohost(cohost.organizationId)}
-                          className="h-7 w-7 p-0 text-slate-400 hover:text-rose-600 hover:bg-rose-50 rounded-lg shrink-0"
+                          className="h-7 w-7 p-0 text-slate-gray hover:text-rose-600 hover:bg-rose-50 rounded-lg shrink-0"
                           title="Gỡ đơn vị này khỏi chiến dịch"
                         >
                           <Trash2 className="h-3.5 w-3.5" />
@@ -1237,7 +1228,7 @@ export function PlanDetailPage() {
 
       {/* TAB CONTENT 2: ALL COLLAB TASKS */}
       {activeTab === 'tasks' && (
-        <div className="bg-white border border-slate-200/80 rounded-2xl p-5 shadow-sm space-y-4">
+        <div className="bg-white border border-hairline rounded-2xl p-5 shadow-sm space-y-4">
           {/* Informative Banner for Read-Only / Non-Manage State */}
           {!canManageOperational && (
             <div className="p-3.5 bg-amber-50/80 border border-amber-200/70 rounded-xl flex items-start gap-2.5 text-xs text-amber-900">
@@ -1273,13 +1264,13 @@ export function PlanDetailPage() {
             </div>
           )}
 
-          <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 pb-3 border-b border-slate-100">
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 pb-3 border-b border-hairline">
             <div>
-              <h2 className="text-sm font-bold text-slate-900 flex items-center gap-2">
-                <CheckSquare className="h-4 w-4 text-blue-600" />
+              <h2 className="text-sm font-bold text-ink-navy flex items-center gap-2">
+                <CheckSquare className="h-4 w-4 text-signal-blue" />
                 Tất Cả Nhiệm Vụ ({filteredTasks.length})
               </h2>
-              <p className="text-xs text-slate-500 mt-0.5">
+              <p className="text-xs text-slate-gray mt-0.5">
                 Danh sách nhiệm vụ của các hoạt động trong chiến dịch.
               </p>
             </div>
@@ -1287,21 +1278,21 @@ export function PlanDetailPage() {
             <div className="flex items-center gap-2 flex-wrap">
               {/* Search */}
               <div className="relative min-w-[180px]">
-                <Search className="absolute left-2.5 top-2 h-3.5 w-3.5 text-slate-400" />
+                <Search className="absolute left-2.5 top-2 h-3.5 w-3.5 text-mist-gray" />
                 <Input
                   value={taskSearch}
                   onChange={(e) => setTaskSearch(e.target.value)}
                   placeholder="Tìm nhiệm vụ..."
-                  className="pl-8 h-8 text-xs bg-slate-50 border-slate-200"
+                  className="pl-8 h-8 text-xs bg-white border-hairline text-ink-navy placeholder:text-mist-gray"
                 />
               </div>
 
               {/* Filter by Activity */}
               <Select value={taskActivityFilter} onValueChange={setTaskActivityFilter}>
-                <SelectTrigger className="h-8 text-xs w-[140px] bg-slate-50">
+                <SelectTrigger className="h-8 text-xs w-[140px] bg-white border-hairline text-ink-navy">
                   <SelectValue placeholder="Hoạt động" />
                 </SelectTrigger>
-                <SelectContent className="bg-white border-slate-200">
+                <SelectContent className="bg-white border-hairline text-ink-navy">
                   <SelectItem value="all" className="text-xs">Tất cả hoạt động</SelectItem>
                   {collabActivities.map((act) => (
                     <SelectItem key={act.id} value={act.id} className="text-xs">
@@ -1313,10 +1304,10 @@ export function PlanDetailPage() {
 
               {/* Filter by Status */}
               <Select value={taskStatusFilter} onValueChange={setTaskStatusFilter}>
-                <SelectTrigger className="h-8 text-xs w-[120px] bg-slate-50">
+                <SelectTrigger className="h-8 text-xs w-[120px] bg-white border-hairline text-ink-navy">
                   <SelectValue placeholder="Trạng thái" />
                 </SelectTrigger>
-                <SelectContent className="bg-white border-slate-200">
+                <SelectContent className="bg-white border-hairline text-ink-navy">
                   <SelectItem value="all" className="text-xs">Tất cả trạng thái</SelectItem>
                   <SelectItem value="todo" className="text-xs">Chưa làm</SelectItem>
                   <SelectItem value="in_progress" className="text-xs">Đang làm</SelectItem>
@@ -1332,7 +1323,7 @@ export function PlanDetailPage() {
                     setEditingTask(null);
                     setIsTaskDialogOpen(true);
                   }}
-                  className="h-8 text-xs bg-blue-600 hover:bg-blue-700 text-white shadow-2xs font-semibold rounded-lg active:scale-[0.98] transition-all cursor-pointer"
+                  className="h-8 text-xs bg-signal-blue hover:bg-[#005be0] text-white shadow-sm font-semibold rounded-lg active:scale-[0.98] transition-all cursor-pointer"
                 >
                   <Plus className="h-3.5 w-3.5 mr-1" />
                   Giao việc mới
@@ -1343,15 +1334,15 @@ export function PlanDetailPage() {
 
           {/* Task Table */}
           {isTasksLoading ? (
-            <div className="p-8 text-center text-xs text-slate-400 flex items-center justify-center gap-2">
-              <Loader2 className="h-4 w-4 animate-spin text-blue-600" />
+            <div className="p-8 text-center text-xs text-mist-gray flex items-center justify-center gap-2">
+              <Loader2 className="h-4 w-4 animate-spin text-signal-blue" />
               <span>Đang tải danh sách công việc...</span>
             </div>
           ) : filteredTasks.length === 0 ? (
-            <div className="p-10 text-center bg-slate-50/50 rounded-xl border border-dashed border-slate-200 text-slate-500 text-xs">
-              <CheckSquare strokeWidth={1.5} className="h-8 w-8 text-slate-300 mx-auto mb-2" />
-              <p className="font-semibold text-slate-700">Chưa có công việc nào</p>
-              <p className="mt-0.5">Danh sách nhiệm vụ của các hoạt động trong chiến dịch.</p>
+            <div className="p-10 text-center bg-pebble/40 rounded-xl border border-dashed border-hairline text-slate-gray text-xs">
+              <CheckSquare strokeWidth={1.5} className="h-8 w-8 text-mist-gray mx-auto mb-2" />
+              <p className="font-semibold text-ink-navy">Chưa có công việc nào</p>
+              <p className="mt-0.5 text-slate-gray">Danh sách nhiệm vụ của các hoạt động trong chiến dịch.</p>
               {canManageOperational && (
                 <Button
                   size="sm"
@@ -1359,7 +1350,7 @@ export function PlanDetailPage() {
                     setEditingTask(null);
                     setIsTaskDialogOpen(true);
                   }}
-                  className="mt-3 text-xs bg-blue-600 hover:bg-blue-700 text-white shadow-2xs font-semibold rounded-lg active:scale-[0.98]"
+                  className="mt-3 text-xs bg-signal-blue hover:bg-[#005be0] text-white shadow-sm font-semibold rounded-lg active:scale-[0.98]"
                 >
                   <Plus className="h-3.5 w-3.5 mr-1" />
                   Giao việc ngay
@@ -1367,9 +1358,9 @@ export function PlanDetailPage() {
               )}
             </div>
           ) : (
-            <div className="overflow-x-auto border border-slate-200/80 rounded-xl">
-              <table className="w-full text-left text-xs text-slate-700">
-                <thead className="bg-slate-50/90 text-[11px] font-semibold text-slate-500 uppercase tracking-wider border-b border-slate-200">
+            <div className="overflow-x-auto border border-hairline rounded-xl">
+              <table className="w-full text-left text-xs text-ink-navy">
+                <thead className="bg-cloud text-[11px] font-semibold text-slate-gray uppercase tracking-wider border-b border-hairline">
                   <tr>
                     <th className="px-4 py-3">Công việc</th>
                     <th className="px-4 py-3">Đơn vị phụ trách</th>
@@ -1382,25 +1373,25 @@ export function PlanDetailPage() {
                     {canManageOperational && <th className="px-4 py-3 text-right">Thao tác</th>}
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-slate-100 bg-white">
+                <tbody className="divide-y divide-hairline bg-white">
                   {filteredTasks.map((task) => {
                     const assigneePerson = personnel.find((p) => p.userId === task.assignedTo);
                     const act = collabActivities.find((a) => a.id === task.collabActivityId);
                     const isLeadOrg = task.organizationId && plan?.leadOrganizationId === task.organizationId;
 
                     return (
-                      <tr key={task.id} className="hover:bg-slate-50/60 transition-colors">
-                        <td className="px-4 py-3 font-semibold text-slate-900 min-w-[180px] max-w-[280px]">
+                      <tr key={task.id} className="hover:bg-pebble/60 transition-colors">
+                        <td className="px-4 py-3 font-semibold text-ink-navy min-w-[180px] max-w-[280px]">
                           <div className="flex items-center gap-1.5 flex-wrap mb-0.5">
                             {task.category && (
-                              <span className="text-[9px] px-1.5 py-0.2 rounded font-semibold bg-blue-50 text-blue-700 border border-blue-200/70">
+                              <span className="text-[9px] px-1.5 py-0.2 rounded font-semibold bg-[#e6f0ff] text-signal-blue border border-[#d4e4fa]">
                                 {task.category}
                               </span>
                             )}
                           </div>
                           <div className="break-words font-semibold text-xs sm:text-sm">{task.title}</div>
                           {task.description && (
-                            <p className="text-[11px] text-slate-500 font-normal line-clamp-1 break-words mt-0.5">
+                            <p className="text-[11px] text-slate-gray font-normal line-clamp-1 break-words mt-0.5">
                               {task.description}
                             </p>
                           )}
@@ -1409,40 +1400,40 @@ export function PlanDetailPage() {
                         {/* Đơn vị phụ trách */}
                         <td className="px-4 py-3 whitespace-nowrap min-w-[120px]">
                           {task.externalOrganization ? (
-                            <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-800 border border-emerald-200/80 shadow-2xs">
+                            <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-800 border border-emerald-200/80 shadow-sm">
                               <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
                               <span>{task.externalOrganization}</span>
                             </span>
                           ) : task.organization ? (
                             <span className={cn(
-                              "inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold border shadow-2xs",
+                              "inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold border shadow-sm",
                               isLeadOrg
-                                ? "bg-rose-50 text-rose-700 border-rose-200/80"
-                                : "bg-blue-50 text-blue-700 border-blue-200/80"
+                                ? "bg-rose-50 text-rose-800 border-rose-200/80"
+                                : "bg-[#e6f0ff] text-signal-blue border-[#d4e4fa]"
                             )}>
                               <span className={cn(
                                 "w-1.5 h-1.5 rounded-full",
-                                isLeadOrg ? "bg-rose-500" : "bg-blue-500"
+                                isLeadOrg ? "bg-rose-500" : "bg-signal-blue"
                               )} />
                               <span>{task.organization.code || task.organization.name}</span>
                             </span>
                           ) : (
-                            <span className="text-slate-400 italic text-[11px]">Chưa chỉ định</span>
+                            <span className="text-mist-gray italic text-[11px]">Chưa chỉ định</span>
                           )}
                         </td>
 
-                        <td className="px-4 py-3 whitespace-nowrap text-blue-700 font-medium">
+                        <td className="px-4 py-3 whitespace-nowrap text-signal-blue font-medium">
                           {act ? (
                             <button
                               type="button"
                               onClick={() => navigate(`/plans/${planId}/collab-activities/${act.id}`)}
-                              className="text-blue-700 hover:text-blue-900 font-medium hover:underline text-left inline-flex items-center gap-1 max-w-[160px] truncate"
+                              className="text-signal-blue hover:text-[#005be0] font-medium hover:underline text-left inline-flex items-center gap-1 max-w-[160px] truncate"
                               title={`Xem hoạt động: ${act.title}`}
                             >
                               <span className="truncate">{act.title}</span>
                             </button>
                           ) : (
-                            <span className="text-slate-400 italic">Toàn chiến dịch</span>
+                            <span className="text-mist-gray italic">Toàn chiến dịch</span>
                           )}
                         </td>
 
@@ -1450,48 +1441,48 @@ export function PlanDetailPage() {
                         <td className="px-4 py-3 min-w-[150px]">
                           {task.externalAssignee ? (
                             <div className="min-w-0">
-                              <span className="font-semibold text-slate-800 text-xs truncate block" title={task.externalAssignee}>
+                              <span className="font-semibold text-slate-gray text-xs truncate block" title={task.externalAssignee}>
                                 {task.externalAssignee}
                               </span>
                               {task.externalContact && (
-                                <span className="text-[10px] text-slate-500 tabular-nums block">
+                                <span className="text-[10px] text-mist-gray tabular-nums block">
                                   {task.externalContact}
                                 </span>
                               )}
                             </div>
                           ) : assigneePerson ? (
                             <div className="flex items-center gap-1.5 min-w-0">
-                              <div className="w-5 h-5 rounded-full bg-blue-100 text-blue-700 font-bold text-[9px] flex items-center justify-center shrink-0">
+                              <div className="w-5 h-5 rounded-full bg-[#e6f0ff] text-signal-blue font-bold text-[9px] flex items-center justify-center shrink-0">
                                 {assigneePerson.fullName.slice(0, 1)}
                               </div>
                               <div className="min-w-0">
-                                <span className="font-medium text-slate-900 block truncate text-xs">
+                                <span className="font-medium text-ink-navy block truncate text-xs">
                                   {assigneePerson.fullName}
                                 </span>
-                                <span className="text-[10px] text-slate-500 block truncate" title={assigneePerson.organizationName}>
+                                <span className="text-[10px] text-mist-gray block truncate" title={assigneePerson.organizationName}>
                                   {assigneePerson.organizationCode}
                                 </span>
                               </div>
                             </div>
                           ) : (
-                            <span className="text-slate-400 italic text-[11px]">Đơn vị tự phân công</span>
+                            <span className="text-mist-gray italic text-[11px]">Đơn vị tự phân công</span>
                           )}
                         </td>
 
                         {/* Sản phẩm đầu ra */}
                         <td className="px-4 py-3 min-w-[140px] max-w-[200px]">
                           {task.deliverable ? (
-                            <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-slate-50 border border-slate-200/80 text-slate-800 font-medium text-xs max-w-full shadow-2xs">
-                              <Package className="w-3.5 h-3.5 text-blue-600 shrink-0" />
+                            <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-cloud border border-hairline text-slate-gray font-medium text-xs max-w-full shadow-xs">
+                              <Package className="w-3.5 h-3.5 text-signal-blue shrink-0" />
                               <span className="truncate block" title={task.deliverable}>{task.deliverable}</span>
                             </div>
                           ) : (
-                            <span className="text-slate-300 italic text-[11px]">--</span>
+                            <span className="text-mist-gray italic text-[11px]">--</span>
                           )}
                         </td>
 
-                        <td className="px-4 py-3 whitespace-nowrap tabular-nums text-slate-600 text-xs">
-                          {task.dueTime && <span className="text-indigo-700 font-semibold mr-1">{task.dueTime}</span>}
+                        <td className="px-4 py-3 whitespace-nowrap tabular-nums text-slate-gray text-xs">
+                          {task.dueTime && <span className="text-signal-blue font-semibold mr-1">{task.dueTime}</span>}
                           {task.dueDate ? formatDate(task.dueDate) : '--'}
                         </td>
 
@@ -1503,8 +1494,8 @@ export function PlanDetailPage() {
                                 : task.priority === 'high'
                                 ? 'bg-amber-100 text-amber-800'
                                 : task.priority === 'medium'
-                                ? 'bg-blue-100 text-blue-800'
-                                : 'bg-slate-100 text-slate-700'
+                                ? 'bg-[#e6f0ff] text-signal-blue'
+                                : 'bg-pebble text-slate-gray'
                             }`}
                           >
                             {task.priority === 'urgent'
@@ -1523,10 +1514,10 @@ export function PlanDetailPage() {
                               value={task.status}
                               onValueChange={(val: CollabTaskStatus) => handleTaskStatusChange(task, val)}
                             >
-                              <SelectTrigger className="h-7 text-xs w-[115px] bg-white border-slate-200 shadow-2xs rounded-lg font-medium">
+                              <SelectTrigger className="h-7 text-xs w-[115px] bg-white border-hairline shadow-xs rounded-lg font-medium text-ink-navy">
                                 <SelectValue />
                               </SelectTrigger>
-                              <SelectContent className="bg-white border-slate-200">
+                              <SelectContent className="bg-white border-hairline text-ink-navy">
                                 <SelectItem value="todo" className="text-xs">Cần làm</SelectItem>
                                 <SelectItem value="in_progress" className="text-xs">Đang làm</SelectItem>
                                 <SelectItem value="review" className="text-xs">Chờ duyệt</SelectItem>
@@ -1556,7 +1547,7 @@ export function PlanDetailPage() {
                                   setEditingTask(task);
                                   setIsTaskDialogOpen(true);
                                 }}
-                                className="h-7 w-7 p-0 text-slate-400 hover:text-blue-600"
+                                className="h-7 w-7 p-0 text-mist-gray hover:text-signal-blue"
                               >
                                 <Edit className="h-3.5 w-3.5" />
                               </Button>
@@ -1564,7 +1555,7 @@ export function PlanDetailPage() {
                                 variant="ghost"
                                 size="sm"
                                 onClick={() => handleDeleteTask(task.id, task.collabActivityId)}
-                                className="h-7 w-7 p-0 text-slate-400 hover:text-rose-600"
+                                className="h-7 w-7 p-0 text-mist-gray hover:text-rose-600"
                               >
                                 <Trash2 className="h-3.5 w-3.5" />
                               </Button>
@@ -1586,20 +1577,20 @@ export function PlanDetailPage() {
         <div className="space-y-4">
           {/* KPI Stat Cards (Standard 4 Cards) */}
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-            <Card className="p-3.5 bg-white border border-slate-200/80 shadow-2xs rounded-xl flex flex-col justify-between">
-              <div className="flex items-center justify-between text-slate-500 text-xs font-semibold">
+            <Card className="p-3.5 bg-white border border-hairline shadow-xs rounded-xl flex flex-col justify-between">
+              <div className="flex items-center justify-between text-mist-gray text-xs font-semibold">
                 <span>Tổng người tham gia</span>
-                <div className="w-7 h-7 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center">
+                <div className="w-7 h-7 rounded-lg bg-[#e6f0ff] text-signal-blue flex items-center justify-center">
                   <Users className="h-4 w-4" />
                 </div>
               </div>
-              <div className="mt-2 text-2xl font-bold tracking-tight text-slate-900 tabular-nums">
+              <div className="mt-2 text-2xl font-bold tracking-tight text-ink-navy tabular-nums">
                 {campaignParticipantStats.total}
               </div>
-              <div className="text-[11px] text-slate-400 mt-0.5">Toàn bộ chiến dịch</div>
+              <div className="text-[11px] text-mist-gray mt-0.5">Toàn bộ chiến dịch</div>
             </Card>
 
-            <Card className="p-3.5 bg-white border border-emerald-200/80 shadow-2xs rounded-xl flex flex-col justify-between">
+            <Card className="p-3.5 bg-white border border-emerald-200/80 shadow-xs rounded-xl flex flex-col justify-between">
               <div className="flex items-center justify-between text-emerald-800 text-xs font-semibold">
                 <span>Có mặt</span>
                 <div className="w-7 h-7 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center">
@@ -1612,7 +1603,7 @@ export function PlanDetailPage() {
               <div className="text-[11px] text-emerald-600/80 mt-0.5">Đã điểm danh có mặt</div>
             </Card>
 
-            <Card className="p-3.5 bg-white border border-rose-200/80 shadow-2xs rounded-xl flex flex-col justify-between">
+            <Card className="p-3.5 bg-white border border-rose-200/80 shadow-xs rounded-xl flex flex-col justify-between">
               <div className="flex items-center justify-between text-rose-800 text-xs font-semibold">
                 <span>Vắng</span>
                 <div className="w-7 h-7 rounded-lg bg-rose-50 text-rose-600 flex items-center justify-center">
@@ -1625,66 +1616,110 @@ export function PlanDetailPage() {
               <div className="text-[11px] text-rose-600/80 mt-0.5">Vắng mặt</div>
             </Card>
 
-            <Card className="p-3.5 bg-white border border-blue-200/80 shadow-2xs rounded-xl flex flex-col justify-between">
-              <div className="flex items-center justify-between text-blue-800 text-xs font-semibold">
+            <Card className="p-3.5 bg-white border border-[#d4e4fa] shadow-xs rounded-xl flex flex-col justify-between">
+              <div className="flex items-center justify-between text-signal-blue text-xs font-semibold">
                 <span>Tỉ lệ có mặt</span>
-                <div className="w-7 h-7 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center">
+                <div className="w-7 h-7 rounded-lg bg-[#e6f0ff] text-signal-blue flex items-center justify-center">
                   <Percent className="h-4 w-4" />
                 </div>
               </div>
-              <div className="mt-2 text-2xl font-bold tracking-tight text-blue-700 tabular-nums">
+              <div className="mt-2 text-2xl font-bold tracking-tight text-signal-blue tabular-nums">
                 {campaignParticipantStats.participationRate}%
               </div>
-              <div className="text-[11px] text-blue-600/80 mt-0.5">
+              <div className="text-[11px] text-signal-blue/80 mt-0.5">
                 <span className="tabular-nums font-semibold">{campaignParticipantStats.unmarked}</span> chưa điểm danh
               </div>
             </Card>
           </div>
 
           {/* Participant Table Container */}
-          <div className="bg-white border border-slate-200/80 rounded-2xl p-5 shadow-sm space-y-4">
-            <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 pb-3 border-b border-slate-100">
+          <div className="bg-white border border-hairline rounded-2xl p-5 shadow-sm space-y-4">
+            {/* Header: Title & Action Buttons */}
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-hairline">
               <div>
-                <h2 className="text-sm font-bold text-slate-900 flex items-center gap-2">
-                  <ShieldCheck className="h-4 w-4 text-blue-600" />
-                  Danh Sách Lực Lượng Toàn Chiến Dịch ({filteredCampaignParticipants.length})
+                <h2 className="text-sm font-bold text-ink-navy flex items-center gap-2">
+                  <ShieldCheck className="h-4 w-4 text-signal-blue" />
+                  <span>Danh Sách Lực Lượng Toàn Chiến Dịch</span>
+                  <span className="text-xs px-2 py-0.5 rounded-full bg-pebble text-slate-gray font-semibold tabular-nums">
+                    {filteredCampaignParticipants.length}
+                  </span>
                 </h2>
-                <p className="text-[11px] text-slate-500 mt-0.5">
+                <p className="text-[11px] text-mist-gray mt-0.5">
                   Tổng hợp danh sách chiến sĩ, tình nguyện viên đăng ký từ tất cả các đơn vị phối hợp.
                 </p>
               </div>
 
-              <div className="flex items-center gap-2 flex-wrap">
+              {/* Action Buttons Right */}
+              <div className="flex items-center gap-2 shrink-0">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={handleExportCampaignParticipantsCSV}
+                  className="h-8 text-xs border-hairline hover:bg-pebble text-ink-navy font-medium active:scale-[0.98] shadow-xs rounded-lg"
+                >
+                  <Download className="h-3.5 w-3.5 mr-1" />
+                  Xuất CSV
+                </Button>
+
+                {canManageOperational && (
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => setIsImportParticipantsOpen(true)}
+                    className="h-8 text-xs border-emerald-200/80 text-emerald-800 bg-emerald-50/70 hover:bg-emerald-100 font-semibold gap-1.5 shadow-xs active:scale-[0.98] cursor-pointer rounded-lg"
+                  >
+                    <FileSpreadsheet className="h-3.5 w-3.5 text-emerald-600" />
+                    <span>Nhập từ Sheet</span>
+                  </Button>
+                )}
+
+                {canManageOperational && (
+                  <Button
+                    size="sm"
+                    onClick={() => setIsAddParticipantOpen(true)}
+                    className="h-8 text-xs bg-signal-blue hover:bg-[#005be0] text-white shadow-xs font-semibold gap-1.5 active:scale-[0.98] cursor-pointer rounded-lg"
+                  >
+                    <Plus className="h-3.5 w-3.5" />
+                    <span>Thêm người</span>
+                  </Button>
+                )}
+              </div>
+            </div>
+
+            {/* Sub-toolbar: Search & Filter Controls + Batch Action Bar */}
+            <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-3 bg-cloud/50 p-2.5 rounded-xl border border-hairline/60">
+              {/* Filter Inputs */}
+              <div className="flex items-center gap-2 flex-wrap flex-1">
                 {/* Search */}
-                <div className="relative min-w-[170px]">
-                  <Search className="absolute left-2.5 top-2 h-3.5 w-3.5 text-slate-400" />
+                <div className="relative min-w-[200px] flex-1 sm:flex-initial">
+                  <Search className="absolute left-2.5 top-2 h-3.5 w-3.5 text-mist-gray" />
                   <Input
                     value={participantSearch}
                     onChange={(e) => setParticipantSearch(e.target.value)}
                     placeholder="Tìm tên, MSSV, đội hình..."
-                    className="pl-8 h-8 text-xs bg-slate-50/70 border-slate-200/90 focus:bg-white"
+                    className="pl-8 h-8 text-xs bg-white border-hairline focus:bg-white text-ink-navy placeholder:text-mist-gray rounded-lg"
                   />
                 </div>
 
                 {/* Status Filter */}
                 <Select value={participantStatusFilter} onValueChange={setParticipantStatusFilter}>
-                  <SelectTrigger className="h-8 text-xs w-[110px] bg-slate-50/70 border-slate-200/90">
+                  <SelectTrigger className="h-8 text-xs w-[120px] bg-white border-hairline text-ink-navy rounded-lg">
                     <SelectValue placeholder="Trạng thái" />
                   </SelectTrigger>
-                  <SelectContent className="bg-white border-slate-200">
-                    <SelectItem value="all" className="text-xs">Tất cả</SelectItem>
+                  <SelectContent className="bg-white border-hairline text-ink-navy">
+                    <SelectItem value="all" className="text-xs">Tất cả trạng thái</SelectItem>
                     <SelectItem value="present" className="text-xs text-emerald-700 font-semibold">Có mặt</SelectItem>
                     <SelectItem value="absent" className="text-xs text-rose-700 font-semibold">Vắng</SelectItem>
-                    <SelectItem value="unmarked" className="text-xs text-slate-500">Chưa điểm danh</SelectItem>
+                    <SelectItem value="unmarked" className="text-xs text-mist-gray">Chưa điểm danh</SelectItem>
                   </SelectContent>
                 </Select>
 
                 {/* Org Filter */}
                 <Select value={participantOrgFilter} onValueChange={setParticipantOrgFilter}>
-                  <SelectTrigger className="h-8 text-xs w-[120px] bg-slate-50/70 border-slate-200/90">
+                  <SelectTrigger className="h-8 text-xs w-[130px] bg-white border-hairline text-ink-navy rounded-lg">
                     <SelectValue placeholder="Đơn vị" />
                   </SelectTrigger>
-                  <SelectContent className="bg-white border-slate-200">
+                  <SelectContent className="bg-white border-hairline text-ink-navy">
                     <SelectItem value="all" className="text-xs">Tất cả đơn vị</SelectItem>
                     {participatingOrganizations.map((org) => (
                       <SelectItem key={org.id} value={org.id} className="text-xs">
@@ -1700,12 +1735,12 @@ export function PlanDetailPage() {
                 {/* Activity Filter */}
                 {collabActivities.length > 0 && (
                   <Select value={participantActivityFilter} onValueChange={setParticipantActivityFilter}>
-                    <SelectTrigger className="h-8 text-xs w-[130px] bg-slate-50/70 border-slate-200/90">
+                    <SelectTrigger className="h-8 text-xs w-[140px] bg-white border-hairline text-ink-navy rounded-lg">
                       <SelectValue placeholder="Hoạt động" />
                     </SelectTrigger>
-                    <SelectContent className="bg-white border-slate-200">
+                    <SelectContent className="bg-white border-hairline text-ink-navy">
                       <SelectItem value="all" className="text-xs">Tất cả hoạt động</SelectItem>
-                      <SelectItem value="campaign_wide" className="text-xs font-semibold text-blue-700">
+                      <SelectItem value="campaign_wide" className="text-xs font-semibold text-signal-blue">
                         Toàn chiến dịch
                       </SelectItem>
                       {collabActivities.map((act) => (
@@ -1716,77 +1751,47 @@ export function PlanDetailPage() {
                     </SelectContent>
                   </Select>
                 )}
-
-                {/* Batch Action Toolbar */}
-                {selectedParticipantIds.length > 0 && canManageOperational && (
-                  <div className="flex items-center gap-1.5 bg-blue-50 px-2.5 py-1 rounded-xl border border-blue-200/80 text-blue-900 shadow-2xs">
-                    <span className="text-[11px] font-bold text-blue-900">
-                      Đã chọn {selectedParticipantIds.length}:
-                    </span>
-                    <Button
-                      size="sm"
-                      onClick={() => handleBulkAttendanceAction('present')}
-                      className="h-6 text-[10px] px-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold rounded-md active:scale-[0.98] shadow-2xs"
-                    >
-                      Có mặt
-                    </Button>
-                    <Button
-                      size="sm"
-                      onClick={() => handleBulkAttendanceAction('absent')}
-                      className="h-6 text-[10px] px-2.5 bg-rose-600 hover:bg-rose-700 text-white font-semibold rounded-md active:scale-[0.98] shadow-2xs"
-                    >
-                      Vắng
-                    </Button>
-                  </div>
-                )}
-
-                {/* Export CSV Button */}
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={handleExportCampaignParticipantsCSV}
-                  className="h-8 text-xs border-slate-200/90 hover:bg-slate-50 font-medium active:scale-[0.98] shadow-2xs"
-                >
-                  <Download className="h-3.5 w-3.5 mr-1" />
-                  Xuất CSV
-                </Button>
-
-                {/* Paste & Import Button */}
-                {canManageOperational && (
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => setIsImportParticipantsOpen(true)}
-                    className="h-8 text-xs border-emerald-200/80 text-emerald-700 bg-emerald-50/70 hover:bg-emerald-100/70 font-semibold gap-1.5 shadow-2xs active:scale-[0.98] cursor-pointer"
-                  >
-                    <FileSpreadsheet className="h-3.5 w-3.5 text-emerald-600" />
-                    <span>⚡ Nhập từ Sheet</span>
-                  </Button>
-                )}
-
-                {/* Add Participant Button */}
-                {canManageOperational && (
-                  <Button
-                    size="sm"
-                    onClick={() => setIsAddParticipantOpen(true)}
-                    className="h-8 text-xs bg-blue-600 hover:bg-blue-700 text-white shadow-2xs font-semibold gap-1.5 active:scale-[0.98] cursor-pointer"
-                  >
-                    <Plus className="h-3.5 w-3.5" />
-                    <span>Thêm người</span>
-                  </Button>
-                )}
               </div>
+
+              {/* Batch Action Toolbar */}
+              {selectedParticipantIds.length > 0 && canManageOperational && (
+                <div className="flex items-center gap-2 bg-[#e6f0ff] px-3 py-1 rounded-lg border border-[#d4e4fa] text-signal-blue shrink-0 animate-in fade-in duration-150">
+                  <span className="text-[11px] font-bold text-signal-blue">
+                    Đã chọn {selectedParticipantIds.length} người:
+                  </span>
+                  <Button
+                    size="sm"
+                    onClick={() => handleBulkAttendanceAction('present')}
+                    className="h-6 text-[11px] px-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold rounded-md active:scale-[0.98] shadow-xs"
+                  >
+                    Có mặt
+                  </Button>
+                  <Button
+                    size="sm"
+                    onClick={() => handleBulkAttendanceAction('absent')}
+                    className="h-6 text-[11px] px-2.5 bg-rose-600 hover:bg-rose-700 text-white font-semibold rounded-md active:scale-[0.98] shadow-xs"
+                  >
+                    Vắng
+                  </Button>
+                  <button
+                    onClick={() => setSelectedParticipantIds([])}
+                    className="text-[11px] text-slate-gray hover:text-ink-navy underline px-1 cursor-pointer"
+                  >
+                    Bỏ chọn
+                  </button>
+                </div>
+              )}
             </div>
 
             {/* Attendance Table */}
             {isParticipantsLoading ? (
-              <div className="p-8 text-center text-xs text-slate-400 flex items-center justify-center gap-2">
-                <Loader2 className="h-4 w-4 animate-spin text-blue-600" />
+              <div className="p-8 text-center text-xs text-mist-gray flex items-center justify-center gap-2">
+                <Loader2 className="h-4 w-4 animate-spin text-signal-blue" />
                 <span>Đang tải danh sách người tham gia...</span>
               </div>
             ) : filteredCampaignParticipants.length === 0 ? (
-              <div className="p-10 text-center text-slate-400 text-xs space-y-3">
-                <div className="w-10 h-10 rounded-full bg-slate-100 text-slate-400 flex items-center justify-center mx-auto">
+              <div className="p-10 text-center text-slate-gray text-xs space-y-3">
+                <div className="w-10 h-10 rounded-full bg-pebble text-slate-gray flex items-center justify-center mx-auto">
                   <Users strokeWidth={1.5} className="h-5 w-5" />
                 </div>
                 <p>Chưa có người tham gia nào trong danh sách lực lượng chiến dịch.</p>
@@ -1796,7 +1801,7 @@ export function PlanDetailPage() {
                       variant="outline"
                       size="sm"
                       onClick={() => setIsImportParticipantsOpen(true)}
-                      className="h-8 text-xs gap-1.5 border-emerald-200/80 text-emerald-700 bg-emerald-50/70 hover:bg-emerald-100/70 active:scale-[0.98] font-semibold shadow-2xs"
+                      className="h-8 text-xs gap-1.5 border-emerald-200/80 text-emerald-800 bg-emerald-50/70 hover:bg-emerald-100/70 active:scale-[0.98] font-semibold shadow-sm rounded-lg"
                     >
                       <FileSpreadsheet className="h-3.5 w-3.5 text-emerald-600" />
                       Dán từ Google Sheet
@@ -1804,7 +1809,7 @@ export function PlanDetailPage() {
                     <Button
                       size="sm"
                       onClick={() => setIsAddParticipantOpen(true)}
-                      className="h-8 text-xs bg-blue-600 hover:bg-blue-700 text-white gap-1.5 active:scale-[0.98] font-semibold shadow-2xs"
+                      className="h-8 text-xs bg-signal-blue hover:bg-[#005be0] text-white gap-1.5 active:scale-[0.98] font-semibold shadow-sm rounded-lg"
                     >
                       <Plus className="h-3.5 w-3.5" />
                       Thêm người đầu tiên
@@ -1813,13 +1818,13 @@ export function PlanDetailPage() {
                 )}
               </div>
             ) : (
-              <div className="border border-slate-200/80 rounded-xl overflow-hidden shadow-2xs">
+              <div className="border border-hairline rounded-xl overflow-hidden shadow-sm bg-white">
                 {/* Desktop View */}
-                <div className="hidden md:block max-h-[620px] overflow-y-auto overflow-x-auto">
-                  <table className="w-full text-left text-xs text-slate-700">
-                    <thead className="sticky top-0 z-10 bg-slate-50/95 backdrop-blur-xs text-[11px] font-semibold text-slate-500 uppercase tracking-wider border-b border-slate-200 shadow-2xs">
+                <div className="hidden md:block max-h-[580px] overflow-y-auto overflow-x-auto">
+                  <table className="w-full text-left text-xs text-ink-navy">
+                    <thead className="sticky top-0 z-10 bg-cloud/95 backdrop-blur-xs text-[11px] font-bold text-slate-gray uppercase tracking-wider border-b border-hairline shadow-xs">
                       <tr>
-                        <th className="w-10 px-3 py-3 text-center">
+                        <th className="w-10 px-3 py-2.5 text-center">
                           <input
                             type="checkbox"
                             checked={
@@ -1827,50 +1832,58 @@ export function PlanDetailPage() {
                               selectedParticipantIds.length === filteredCampaignParticipants.length
                             }
                             onChange={handleSelectAllParticipants}
-                            className="rounded border-slate-300 text-blue-600 focus:ring-blue-500 cursor-pointer"
+                            className="rounded border-hairline text-signal-blue focus:ring-signal-blue cursor-pointer h-3.5 w-3.5"
                           />
                         </th>
-                        <th className="px-4 py-3 min-w-[180px]">Họ và tên</th>
-                        <th className="w-24 px-3 py-3 text-center">MSSV</th>
-                        <th className="w-24 px-3 py-3 text-center">Lớp / Khóa</th>
-                        <th className="w-28 px-3 py-3">Đơn vị</th>
-                        <th className="w-36 px-3 py-3">Đội hình / Vai trò</th>
-                        <th className="w-36 px-3 py-3">Hoạt động phân bổ</th>
-                        <th className="w-48 px-3 py-3 text-center">Điểm danh</th>
+                        <th className="w-10 px-2 py-2.5 text-center text-slate-gray">#</th>
+                        <th className="px-3 py-2.5 min-w-[190px]">Họ và tên</th>
+                        <th className="w-28 px-3 py-2.5 text-center">MSSV</th>
+                        <th className="w-24 px-3 py-2.5 text-center">Lớp / Khóa</th>
+                        <th className="w-28 px-3 py-2.5 text-center">Đơn vị</th>
+                        <th className="w-32 px-3 py-2.5">Đội hình / Vai trò</th>
+                        <th className="w-36 px-3 py-2.5">Hoạt động phân bổ</th>
+                        <th className="w-44 px-3 py-2.5 text-center">Điểm danh</th>
                         {canManageOperational && (
-                          <th className="w-12 px-2 py-3 text-center">Xóa</th>
+                          <th className="w-10 px-2 py-2.5 text-center">Xóa</th>
                         )}
                       </tr>
                     </thead>
-                    <tbody className="divide-y divide-slate-100 bg-white">
-                      {filteredCampaignParticipants.map((p: any) => {
+                    <tbody className="divide-y divide-hairline bg-white">
+                      {filteredCampaignParticipants.map((p: any, idx: number) => {
                         const isPresent = p.attendanceStatus === 'present';
                         const isAbsent = p.attendanceStatus === 'absent';
                         const isSelected = selectedParticipantIds.includes(p.id);
                         const memOrg = participatingOrganizations.find((o) => o.id === p.organizationId || o.id === p.member?.organizationId);
 
                         return (
-                          <tr key={p.id} className={cn('hover:bg-slate-50/60 transition-colors', isSelected && 'bg-blue-50/40')}>
+                          <tr key={p.id} className={cn('hover:bg-cloud/50 transition-colors', isSelected && 'bg-[#e6f0ff]/40')}>
                             {/* Checkbox */}
-                            <td className="w-10 px-3 py-3 text-center">
+                            <td className="w-10 px-3 py-2.5 text-center">
                               <input
                                 type="checkbox"
                                 checked={isSelected}
                                 onChange={() => handleToggleSelectParticipant(p.id)}
-                                className="rounded border-slate-300 text-blue-600 focus:ring-blue-500 cursor-pointer"
+                                className="rounded border-hairline text-signal-blue focus:ring-signal-blue cursor-pointer h-3.5 w-3.5"
                               />
                             </td>
 
+                            {/* STT */}
+                            <td className="w-10 px-2 py-2.5 text-center tabular-nums text-[11px] text-mist-gray font-medium">
+                              {idx + 1}
+                            </td>
+
                             {/* Họ và tên */}
-                            <td className="px-4 py-3 font-semibold text-slate-900 min-w-[180px]">
-                              <div className="flex items-center gap-2">
-                                <div className="w-6 h-6 rounded-full bg-blue-100 text-blue-700 font-bold text-[10px] flex items-center justify-center shrink-0">
-                                  {(p.fullName || p.member?.fullName || 'N').slice(0, 1)}
+                            <td className="px-3 py-2.5 font-semibold text-ink-navy min-w-[190px]">
+                              <div className="flex items-center gap-2.5">
+                                <div className="w-7 h-7 rounded-full bg-[#e6f0ff] text-signal-blue font-bold text-xs flex items-center justify-center shrink-0 border border-[#d4e4fa]">
+                                  {(p.fullName || p.member?.fullName || 'N').slice(0, 1).toUpperCase()}
                                 </div>
                                 <div className="min-w-0">
-                                  <span className="block truncate">{p.fullName || p.member?.fullName || 'Người tham gia'}</span>
+                                  <span className="block font-bold text-ink-navy truncate text-xs">
+                                    {p.fullName || p.member?.fullName || 'Người tham gia'}
+                                  </span>
                                   {(p.email || p.phone) && (
-                                    <span className="text-[10px] text-slate-400 font-normal block truncate">
+                                    <span className="text-[10px] text-mist-gray font-normal block truncate">
                                       {[p.email, p.phone].filter(Boolean).join(' • ')}
                                     </span>
                                   )}
@@ -1879,17 +1892,23 @@ export function PlanDetailPage() {
                             </td>
 
                             {/* MSSV */}
-                            <td className="w-24 px-3 py-3 text-center tabular-nums font-medium text-slate-700">
-                              {p.studentId || p.member?.studentId || '--'}
+                            <td className="w-28 px-3 py-2.5 text-center tabular-nums font-mono text-xs font-semibold text-slate-gray">
+                              {p.studentId || p.member?.studentId ? (
+                                <span className="bg-pebble/70 px-2 py-0.5 rounded text-slate-gray">
+                                  {p.studentId || p.member?.studentId}
+                                </span>
+                              ) : (
+                                <span className="text-mist-gray">--</span>
+                              )}
                             </td>
 
                             {/* Lớp / Khóa */}
-                            <td className="w-24 px-3 py-3 text-center">
-                              <span className="font-medium text-slate-700 block truncate">
+                            <td className="w-24 px-3 py-2.5 text-center">
+                              <span className="font-semibold text-ink-navy block truncate text-xs">
                                 {p.className || p.member?.className || '--'}
                               </span>
                               {(p.cohort || p.member?.cohort) && (
-                                <span className="text-[10px] text-slate-400 tabular-nums block">
+                                <span className="text-[10px] text-mist-gray font-medium tabular-nums block">
                                   {String(p.cohort || p.member?.cohort).toUpperCase().startsWith('K')
                                     ? (p.cohort || p.member?.cohort)
                                     : `K${p.cohort || p.member?.cohort}`}
@@ -1898,51 +1917,52 @@ export function PlanDetailPage() {
                             </td>
 
                             {/* Đơn vị */}
-                            <td className="w-28 px-3 py-3">
+                            <td className="w-28 px-3 py-2.5 text-center">
                               {p.externalOrganization ? (
-                                <span className="inline-flex items-center gap-1 text-[10px] bg-emerald-50 text-emerald-800 border border-emerald-200 px-2 py-0.5 rounded-full font-medium truncate max-w-[130px]" title={p.externalOrganization}>
+                                <span className="inline-flex items-center gap-1 text-[10px] bg-emerald-50 text-emerald-800 border border-emerald-200/80 px-2 py-0.5 rounded-full font-semibold truncate max-w-[120px]" title={p.externalOrganization}>
                                   <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 shrink-0" />
                                   <span className="truncate">{p.externalOrganization}</span>
                                 </span>
                               ) : (
-                                <span className="inline-flex items-center gap-1 text-[10px] bg-blue-50 text-blue-800 border border-blue-200/80 px-2 py-0.5 rounded-full font-semibold truncate max-w-[120px]">
-                                  <span className="w-1.5 h-1.5 rounded-full bg-blue-600 shrink-0" />
+                                <span className="inline-flex items-center gap-1 text-[10px] bg-[#e6f0ff] text-signal-blue border border-[#d4e4fa] px-2 py-0.5 rounded-full font-bold truncate max-w-[110px]">
+                                  <span className="w-1.5 h-1.5 rounded-full bg-signal-blue shrink-0" />
                                   <span>{memOrg?.code || p.organization?.code || 'Đơn vị'}</span>
                                 </span>
                               )}
                             </td>
 
                             {/* Đội hình / Vai trò */}
-                            <td className="w-36 px-3 py-3">
-                              <span className="inline-block text-[10px] bg-slate-100 text-slate-700 px-2 py-0.5 rounded-md font-medium truncate max-w-[130px]">
+                            <td className="w-32 px-3 py-2.5">
+                              <span className="inline-block text-[10px] bg-pebble text-slate-gray px-2 py-0.5 rounded-md font-medium truncate max-w-[125px]">
                                 {p.roleTitle || 'Tình nguyện viên'}
                               </span>
                             </td>
 
                             {/* Hoạt động phân bổ */}
-                            <td className="w-36 px-3 py-3 text-slate-600 text-[11px]">
+                            <td className="w-36 px-3 py-2.5 text-[11px]">
                               {p.collabActivity?.title ? (
-                                <span className="truncate block max-w-[130px] font-medium text-blue-700" title={p.collabActivity.title}>
+                                <span className="truncate block max-w-[130px] font-semibold text-signal-blue" title={p.collabActivity.title}>
                                   {p.collabActivity.title}
                                 </span>
                               ) : (
-                                <span className="text-slate-400 italic">Toàn chiến dịch</span>
+                                <span className="text-mist-gray italic text-[11px]">Toàn chiến dịch</span>
                               )}
                             </td>
 
                             {/* Điểm danh 1-chạm */}
-                            <td className="w-48 px-3 py-3 text-center">
-                              <div className="inline-flex items-center justify-center gap-1 p-0.5 bg-slate-100/90 rounded-lg">
+                            <td className="w-44 px-3 py-2.5 text-center">
+                              <div className="inline-flex items-center justify-center gap-1 p-0.5 bg-pebble/90 rounded-lg border border-hairline/60">
                                 <button
                                   type="button"
                                   disabled={!canManageOperational}
                                   onClick={() => handleCampaignAttendanceToggle(p.id, p.attendanceStatus, 'present')}
                                   className={cn(
-                                    'h-6 px-2.5 rounded-md font-semibold text-[10px] flex items-center gap-1 transition-all active:scale-[0.98]',
+                                    'h-6 px-2 rounded-md font-semibold text-[11px] flex items-center gap-1 transition-all active:scale-[0.96] cursor-pointer',
                                     isPresent
-                                      ? 'bg-emerald-600 text-white shadow-2xs'
-                                      : 'text-emerald-700 hover:bg-emerald-100/70 bg-transparent'
+                                      ? 'bg-emerald-600 text-white shadow-xs'
+                                      : 'text-slate-gray hover:text-emerald-700 hover:bg-emerald-50 bg-transparent'
                                   )}
+                                  title="Đánh dấu Có mặt"
                                 >
                                   <Check className="h-3 w-3 stroke-[2.5]" />
                                   <span>Có mặt</span>
@@ -1953,11 +1973,12 @@ export function PlanDetailPage() {
                                   disabled={!canManageOperational}
                                   onClick={() => handleCampaignAttendanceToggle(p.id, p.attendanceStatus, 'absent')}
                                   className={cn(
-                                    'h-6 px-2.5 rounded-md font-semibold text-[10px] flex items-center gap-1 transition-all active:scale-[0.98]',
+                                    'h-6 px-2 rounded-md font-semibold text-[11px] flex items-center gap-1 transition-all active:scale-[0.96] cursor-pointer',
                                     isAbsent
-                                      ? 'bg-rose-600 text-white shadow-2xs'
-                                      : 'text-rose-700 hover:bg-rose-100/70 bg-transparent'
+                                      ? 'bg-rose-600 text-white shadow-xs'
+                                      : 'text-slate-gray hover:text-rose-700 hover:bg-rose-50 bg-transparent'
                                   )}
+                                  title="Đánh dấu Vắng mặt"
                                 >
                                   <X className="h-3 w-3 stroke-[2.5]" />
                                   <span>Vắng</span>
@@ -1967,11 +1988,11 @@ export function PlanDetailPage() {
 
                             {/* Thao tác xóa */}
                             {canManageOperational && (
-                              <td className="w-12 px-2 py-3 text-center">
+                              <td className="w-10 px-2 py-2.5 text-center">
                                 <button
                                   type="button"
                                   onClick={() => handleDeleteParticipant(p.id)}
-                                  className="h-6 w-6 inline-flex items-center justify-center text-slate-400 hover:text-rose-600 hover:bg-rose-50 rounded transition-colors active:scale-[0.95]"
+                                  className="h-6 w-6 inline-flex items-center justify-center text-mist-gray hover:text-rose-600 hover:bg-rose-50 rounded transition-colors active:scale-[0.95] cursor-pointer"
                                   title="Xóa người tham gia"
                                 >
                                   <Trash2 className="h-3.5 w-3.5" />
@@ -1985,8 +2006,32 @@ export function PlanDetailPage() {
                   </table>
                 </div>
 
+                {/* Table Footer Summary Bar */}
+                <div className="hidden md:flex items-center justify-between px-4 py-2.5 bg-cloud/50 border-t border-hairline text-[11px] text-slate-gray font-medium">
+                  <div>
+                    Hiển thị <span className="font-bold text-ink-navy tabular-nums">{filteredCampaignParticipants.length}</span> / <span className="tabular-nums">{campaignParticipants.length}</span> người tham gia
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <span className="text-emerald-700 font-semibold">
+                      Có mặt: <span className="tabular-nums font-bold">{campaignParticipantStats.present}</span>
+                    </span>
+                    <span>•</span>
+                    <span className="text-rose-700 font-semibold">
+                      Vắng: <span className="tabular-nums font-bold">{campaignParticipantStats.absent}</span>
+                    </span>
+                    <span>•</span>
+                    <span className="text-slate-gray font-semibold">
+                      Chưa điểm danh: <span className="tabular-nums font-bold">{campaignParticipantStats.unmarked}</span>
+                    </span>
+                    <span>•</span>
+                    <span className="text-signal-blue font-bold">
+                      Tỉ lệ: <span className="tabular-nums">{campaignParticipantStats.participationRate}%</span>
+                    </span>
+                  </div>
+                </div>
+
                 {/* Mobile Responsive Thumb-Friendly Card View */}
-                <div className="block md:hidden divide-y divide-slate-100 bg-white max-h-[620px] overflow-y-auto p-3 space-y-3">
+                <div className="block md:hidden divide-y divide-hairline bg-white max-h-[580px] overflow-y-auto p-3 space-y-3">
                   {filteredCampaignParticipants.map((p: any) => {
                     const isPresent = p.attendanceStatus === 'present';
                     const isAbsent = p.attendanceStatus === 'absent';
@@ -1997,8 +2042,8 @@ export function PlanDetailPage() {
                       <div
                         key={p.id}
                         className={cn(
-                          'p-3.5 rounded-xl border border-slate-200/80 bg-slate-50/40 space-y-2.5 transition-colors',
-                          isSelected && 'bg-blue-50/50 border-blue-200'
+                          'p-3.5 rounded-xl border border-hairline bg-cloud/40 space-y-2.5 transition-colors',
+                          isSelected && 'bg-[#e6f0ff]/50 border-[#d4e4fa]'
                         )}
                       >
                         <div className="flex items-start justify-between gap-2">
@@ -2007,17 +2052,17 @@ export function PlanDetailPage() {
                               type="checkbox"
                               checked={isSelected}
                               onChange={() => handleToggleSelectParticipant(p.id)}
-                              className="rounded border-slate-300 text-blue-600 focus:ring-blue-500 cursor-pointer h-4 w-4 shrink-0"
+                              className="rounded border-hairline text-signal-blue focus:ring-signal-blue cursor-pointer h-4 w-4 shrink-0"
                             />
-                            <div className="w-8 h-8 rounded-full bg-blue-100 text-blue-700 font-bold text-xs flex items-center justify-center shrink-0">
-                              {(p.fullName || p.member?.fullName || 'N').slice(0, 1)}
+                            <div className="w-8 h-8 rounded-full bg-[#e6f0ff] text-signal-blue font-bold text-xs flex items-center justify-center shrink-0 border border-[#d4e4fa]">
+                              {(p.fullName || p.member?.fullName || 'N').slice(0, 1).toUpperCase()}
                             </div>
                             <div className="min-w-0">
-                              <p className="font-bold text-slate-900 text-xs truncate">
+                              <p className="font-bold text-ink-navy text-xs truncate">
                                 {p.fullName || p.member?.fullName || 'Người tham gia'}
                               </p>
-                              <div className="flex items-center gap-1.5 text-[11px] text-slate-500">
-                                <span className="tabular-nums font-medium">{p.studentId || p.member?.studentId || '--'}</span>
+                              <div className="flex items-center gap-1.5 text-[11px] text-mist-gray">
+                                <span className="tabular-nums font-mono font-medium">{p.studentId || p.member?.studentId || '--'}</span>
                                 <span>•</span>
                                 <span>{p.className || p.member?.className || '--'}</span>
                               </div>
@@ -2028,7 +2073,7 @@ export function PlanDetailPage() {
                             <button
                               type="button"
                               onClick={() => handleDeleteParticipant(p.id)}
-                              className="p-1.5 text-slate-400 hover:text-rose-600 hover:bg-rose-50 rounded-lg transition-colors shrink-0"
+                              className="p-1.5 text-mist-gray hover:text-rose-600 hover:bg-rose-50 rounded-lg transition-colors shrink-0"
                               title="Xóa người tham gia"
                             >
                               <Trash2 className="h-4 w-4" />
@@ -2044,54 +2089,53 @@ export function PlanDetailPage() {
                               <span className="truncate">{p.externalOrganization}</span>
                             </span>
                           ) : (
-                            <span className="inline-flex items-center gap-1 text-[10px] bg-blue-50 text-blue-800 border border-blue-200/80 px-2 py-0.5 rounded-full font-semibold">
-                              <span className="w-1.5 h-1.5 rounded-full bg-blue-600 shrink-0" />
+                            <span className="inline-flex items-center gap-1 text-[10px] bg-[#e6f0ff] text-signal-blue border border-[#d4e4fa] px-2 py-0.5 rounded-full font-semibold">
+                              <span className="w-1.5 h-1.5 rounded-full bg-signal-blue shrink-0" />
                               <span>{memOrg?.code || p.organization?.code || 'Đơn vị'}</span>
                             </span>
                           )}
 
-                          <span className="inline-block text-[10px] bg-slate-100 text-slate-700 px-2 py-0.5 rounded-md font-medium">
+                          <span className="text-[10px] bg-pebble text-slate-gray px-2 py-0.5 rounded-md font-medium">
                             {p.roleTitle || 'Tình nguyện viên'}
                           </span>
 
                           {p.collabActivity?.title && (
-                            <span className="inline-block text-[10px] bg-blue-50 text-blue-700 border border-blue-200/60 px-2 py-0.5 rounded-md font-medium truncate max-w-[200px]">
+                            <span className="text-[10px] bg-sky-50 text-signal-blue border border-sky-200 px-2 py-0.5 rounded-md font-medium truncate max-w-[160px]">
                               {p.collabActivity.title}
                             </span>
                           )}
                         </div>
 
-                        {/* Fast Attendance Bar on Mobile (Large Thumb Target) */}
-                        <div className="grid grid-cols-2 gap-2 pt-1 border-t border-slate-100">
-                          <button
-                            type="button"
+                        {/* Quick Attendance Action Buttons Mobile */}
+                        <div className="grid grid-cols-2 gap-2 pt-1">
+                          <Button
+                            size="sm"
                             disabled={!canManageOperational}
                             onClick={() => handleCampaignAttendanceToggle(p.id, p.attendanceStatus, 'present')}
                             className={cn(
-                              'h-8 rounded-lg font-bold text-xs flex items-center justify-center gap-1.5 transition-all active:scale-[0.98] cursor-pointer',
+                              'h-8 text-xs font-semibold gap-1.5 rounded-lg active:scale-[0.98]',
                               isPresent
-                                ? 'bg-emerald-600 text-white shadow-xs'
-                                : 'bg-slate-100 text-emerald-700 hover:bg-emerald-50 border border-slate-200/60'
+                                ? 'bg-emerald-600 hover:bg-emerald-700 text-white shadow-xs'
+                                : 'bg-white hover:bg-emerald-50 text-emerald-700 border border-hairline'
                             )}
                           >
-                            <Check className="h-3.5 w-3.5 stroke-[2.5]" />
+                            <Check className="h-3.5 w-3.5" />
                             <span>Có mặt</span>
-                          </button>
-
-                          <button
-                            type="button"
+                          </Button>
+                          <Button
+                            size="sm"
                             disabled={!canManageOperational}
                             onClick={() => handleCampaignAttendanceToggle(p.id, p.attendanceStatus, 'absent')}
                             className={cn(
-                              'h-8 rounded-lg font-bold text-xs flex items-center justify-center gap-1.5 transition-all active:scale-[0.98] cursor-pointer',
+                              'h-8 text-xs font-semibold gap-1.5 rounded-lg active:scale-[0.98]',
                               isAbsent
-                                ? 'bg-rose-600 text-white shadow-xs'
-                                : 'bg-slate-100 text-rose-700 hover:bg-rose-50 border border-slate-200/60'
+                                ? 'bg-rose-600 hover:bg-rose-700 text-white shadow-xs'
+                                : 'bg-white hover:bg-rose-50 text-rose-700 border border-hairline'
                             )}
                           >
-                            <X className="h-3.5 w-3.5 stroke-[2.5]" />
+                            <X className="h-3.5 w-3.5" />
                             <span>Vắng</span>
-                          </button>
+                          </Button>
                         </div>
                       </div>
                     );
@@ -2114,35 +2158,35 @@ export function PlanDetailPage() {
 
       {/* TAB CONTENT 4: BAN TỔ CHỨC */}
       {activeTab === 'personnel' && (
-        <div className="bg-white border border-slate-200/80 rounded-2xl p-5 shadow-sm space-y-4">
-          <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 pb-3 border-b border-slate-100">
+        <div className="bg-white border border-hairline rounded-2xl p-5 shadow-sm space-y-4">
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 pb-3 border-b border-hairline">
             <div>
-              <h2 className="text-sm font-bold text-slate-900 flex items-center gap-2">
-                <Building2 className="h-4 w-4 text-blue-600" />
+              <h2 className="text-sm font-bold text-ink-navy flex items-center gap-2">
+                <Building2 className="h-4 w-4 text-signal-blue" />
                 Ban Tổ Chức ({filteredPersonnel.length})
               </h2>
-              <p className="text-xs text-slate-500 mt-0.5">
+              <p className="text-xs text-mist-gray mt-0.5">
                 Nhân sự Ban chấp hành và cán bộ phụ trách từ các đơn vị tham gia.
               </p>
             </div>
 
             <div className="flex items-center gap-2 flex-wrap">
               <div className="relative min-w-[200px]">
-                <Search className="absolute left-2.5 top-2 h-3.5 w-3.5 text-slate-400" />
+                <Search className="absolute left-2.5 top-2 h-3.5 w-3.5 text-mist-gray" />
                 <Input
                   value={personnelSearch}
                   onChange={(e) => setPersonnelSearch(e.target.value)}
                   placeholder="Tìm thành viên, đơn vị..."
-                  className="pl-8 h-8 text-xs bg-slate-50/70 border-slate-200/90 focus:bg-white"
+                  className="pl-8 h-8 text-xs bg-cloud border-hairline focus:bg-white text-ink-navy placeholder:text-mist-gray"
                 />
               </div>
 
               {participatingOrganizations.length > 1 && (
                 <Select value={personnelOrgFilter} onValueChange={setPersonnelOrgFilter}>
-                  <SelectTrigger className="h-8 text-xs w-[140px] bg-slate-50/70 border-slate-200/90">
+                  <SelectTrigger className="h-8 text-xs w-[140px] bg-cloud border-hairline text-ink-navy">
                     <SelectValue placeholder="Đơn vị" />
                   </SelectTrigger>
-                  <SelectContent className="bg-white border-slate-200">
+                  <SelectContent className="bg-white border-hairline text-ink-navy">
                     <SelectItem value="all" className="text-xs">Tất cả đơn vị</SelectItem>
                     {participatingOrganizations.map((org) => (
                       <SelectItem key={org.id} value={org.id} className="text-xs">
@@ -2158,7 +2202,7 @@ export function PlanDetailPage() {
                   id="btn-btc-invite-cohost"
                   size="sm"
                   onClick={() => setIsInviteCohostOpen(true)}
-                  className="h-8 text-xs bg-blue-600 hover:bg-blue-700 text-white font-semibold gap-1.5 shadow-2xs active:scale-[0.98] cursor-pointer"
+                  className="h-8 text-xs bg-signal-blue hover:bg-[#005be0] text-white font-semibold gap-1.5 shadow-xs active:scale-[0.98] cursor-pointer"
                 >
                   <UserPlus className="h-3.5 w-3.5" />
                   <span>Mời đơn vị</span>
@@ -2168,12 +2212,12 @@ export function PlanDetailPage() {
           </div>
 
           {isPersonnelLoading ? (
-            <div className="p-8 text-center text-xs text-slate-400 flex items-center justify-center gap-2">
-              <Loader2 className="h-4 w-4 animate-spin text-blue-600" />
+            <div className="p-8 text-center text-xs text-mist-gray flex items-center justify-center gap-2">
+              <Loader2 className="h-4 w-4 animate-spin text-signal-blue" />
               <span>Đang tải danh sách Ban tổ chức...</span>
             </div>
           ) : filteredPersonnel.length === 0 ? (
-            <div className="p-10 text-center text-slate-400 text-xs">
+            <div className="p-10 text-center text-mist-gray text-xs">
               Không tìm thấy thành viên Ban tổ chức phù hợp.
             </div>
           ) : (
@@ -2186,40 +2230,40 @@ export function PlanDetailPage() {
                 return (
                   <div
                     key={`${person.userId}-${person.organizationId}`}
-                    className="p-4 bg-slate-50/60 border border-slate-200/80 rounded-2xl flex flex-col justify-between gap-3 hover:border-blue-200 hover:shadow-2xs transition-all text-xs"
+                    className="p-4 bg-cloud/60 border border-hairline rounded-2xl flex flex-col justify-between gap-3 hover:border-signal-blue/40 hover:shadow-xs transition-all text-xs"
                   >
                     <div className="flex items-start justify-between gap-2.5">
                       <div className="flex items-center gap-3 min-w-0">
-                        <div className="w-10 h-10 rounded-xl bg-blue-100 text-blue-700 font-bold flex items-center justify-center text-sm shrink-0">
+                        <div className="w-10 h-10 rounded-xl bg-[#e6f0ff] text-signal-blue font-bold flex items-center justify-center text-sm shrink-0">
                           {person.fullName.slice(0, 1).toUpperCase()}
                         </div>
                         <div className="min-w-0">
-                          <span className="font-bold text-slate-900 truncate block text-[13px]">
+                          <span className="font-bold text-ink-navy truncate block text-[13px]">
                             {person.fullName}
                           </span>
-                          <span className="text-[11px] text-slate-500 font-medium block truncate">
+                          <span className="text-[11px] text-mist-gray font-medium block truncate">
                             {person.position || 'Thành viên Ban tổ chức'}
                           </span>
                         </div>
                       </div>
 
-                      <Badge className="bg-blue-50 text-blue-700 border border-blue-200/80 font-semibold text-[10px] px-2 py-0.5 shrink-0 rounded-full">
+                      <Badge className="bg-[#e6f0ff] text-signal-blue border border-[#d4e4fa] font-semibold text-[10px] px-2 py-0.5 shrink-0 rounded-full">
                         {assignedCount} việc
                       </Badge>
                     </div>
 
-                    <div className="pt-2.5 border-t border-slate-200/60 flex items-center justify-between gap-2 text-[11px]">
+                    <div className="pt-2.5 border-t border-hairline flex items-center justify-between gap-2 text-[11px]">
                       <div className="flex items-center gap-1.5 min-w-0">
                         <span className={`text-[9px] px-1.5 py-0.2 rounded font-semibold border shrink-0 ${typeBadgeClass}`}>
                           {typeLabel}
                         </span>
-                        <span className="text-slate-600 font-medium truncate" title={person.organizationName}>
+                        <span className="text-slate-gray font-medium truncate" title={person.organizationName}>
                           {person.organizationName}
                         </span>
                       </div>
 
                       {person.email && (
-                        <span className="text-slate-400 text-[10px] truncate max-w-[110px]" title={person.email}>
+                        <span className="text-mist-gray text-[10px] truncate max-w-[110px]" title={person.email}>
                           {person.email}
                         </span>
                       )}

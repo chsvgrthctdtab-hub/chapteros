@@ -331,21 +331,21 @@ export function ImportCollabParticipantsModal({
 
   return (
     <Dialog open={isOpen} onOpenChange={(open) => !open && handleClose()}>
-      <DialogContent className="max-w-4xl w-full bg-white rounded-2xl p-6 pr-10 shadow-2xl border border-slate-100 max-h-[90vh] flex flex-col">
-        <DialogHeader className="pb-3 border-b border-slate-100 shrink-0">
-          <DialogTitle className="text-base sm:text-lg font-bold text-slate-900 flex items-center gap-2">
-            <div className="w-8 h-8 rounded-xl bg-blue-50 text-blue-600 border border-blue-100 flex items-center justify-center shrink-0">
+      <DialogContent className="max-w-4xl w-full bg-white rounded-2xl p-6 pr-10 shadow-sm border border-hairline max-h-[90vh] flex flex-col">
+        <DialogHeader className="pb-3 border-b border-hairline shrink-0">
+          <DialogTitle className="text-base sm:text-lg font-bold text-ink-navy flex items-center gap-2">
+            <div className="w-8 h-8 rounded-lg bg-[#e6f0ff] text-signal-blue border border-hairline flex items-center justify-center shrink-0">
               <FileSpreadsheet strokeWidth={1.5} className="h-5 w-5" />
             </div>
             <span>Nhập Danh Sách từ Google Sheet / Excel</span>
           </DialogTitle>
           <div className="flex items-center gap-2 mt-1.5">
-            <Badge className="bg-blue-50 text-blue-700 border-blue-200/80 text-[10px] px-2 py-0.5 font-semibold">
+            <Badge className="bg-[#e6f0ff] text-signal-blue border border-hairline text-[10px] px-2.5 py-0.5 font-semibold rounded-full">
               Format: Họ tên • MSSV • Lớp • Khóa
             </Badge>
           </div>
-          <DialogDescription className="text-xs text-slate-500 mt-1">
-            Copy danh sách theo format chuẩn <strong className="text-slate-700 font-semibold">Họ và tên, MSSV, Lớp, Khóa</strong> từ Google Sheet hoặc Excel và dán trực tiếp. Hệ thống tự động nhận diện và bóc tách dữ liệu tức thì.
+          <DialogDescription className="text-xs text-slate-gray mt-1">
+            Copy danh sách theo format chuẩn <strong className="text-ink-navy font-semibold">Họ và tên, MSSV, Lớp, Khóa</strong> từ Google Sheet hoặc Excel và dán trực tiếp. Hệ thống tự động nhận diện và bóc tách dữ liệu tức thì.
           </DialogDescription>
         </DialogHeader>
 
@@ -361,29 +361,29 @@ export function ImportCollabParticipantsModal({
           <div className="space-y-4 py-3 flex-1 overflow-y-auto">
             <div className="space-y-1.5">
               <div className="flex items-center justify-between">
-                <label className="text-xs font-bold text-slate-800 flex items-center gap-1.5">
-                  <ClipboardPaste className="h-3.5 w-3.5 text-blue-600" />
+                <label className="text-xs font-semibold text-ink-navy flex items-center gap-1.5">
+                  <ClipboardPaste className="h-3.5 w-3.5 text-signal-blue" />
                   <span>Dán dữ liệu từ Sheet (Ctrl + V):</span>
                 </label>
-                <span className="text-[11px] text-slate-400">Hỗ trợ phân tách Tab, Dấu phẩy hoặc Dấu chấm phẩy</span>
+                <span className="text-[11px] text-slate-gray">Hỗ trợ phân tách Tab, Dấu phẩy hoặc Dấu chấm phẩy</span>
               </div>
               <textarea
                 value={pastedText}
                 onChange={(e) => setPastedText(e.target.value)}
                 rows={10}
                 placeholder={`Ví dụ sao chép theo format chuẩn (Họ và tên\tMSSV\tLớp\tKhóa):\nNguyễn Văn A\tB2101234\tDI21V7A1\t47\nTrần Thị B\tB2205678\tQT22A2\t48\nLê Hoàng Nam\tB2009876\tCN20V7\t46\nPhạm Minh C\tB2301122\tTN23A1\t49`}
-                className="w-full p-3 font-mono text-xs bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 leading-relaxed resize-none placeholder:text-slate-400"
+                className="w-full p-3 font-mono text-xs bg-white border border-hairline rounded-lg focus:outline-none focus:border-signal-blue leading-relaxed resize-none text-ink-navy placeholder:text-mist-gray"
               />
             </div>
 
             {/* Quick config options */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 p-3 bg-slate-50/80 rounded-xl border border-slate-100">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 p-3 bg-pebble rounded-xl border border-hairline">
               <div className="space-y-1">
-                <label className="text-[11px] font-semibold text-slate-700">Đơn vị mặc định (nếu dòng thiếu đơn vị):</label>
+                <label className="text-[11px] font-semibold text-ink-navy">Đơn vị mặc định (nếu dòng thiếu đơn vị):</label>
                 <select
                   value={defaultOrgId}
                   onChange={(e) => setDefaultOrgId(e.target.value)}
-                  className="w-full h-8 text-xs bg-white border border-slate-200 rounded-lg px-2 focus:outline-none"
+                  className="w-full h-8 text-xs bg-white border border-hairline rounded-lg px-2 text-ink-navy focus:outline-none focus:border-signal-blue"
                 >
                   {participatingOrganizations.map((org) => (
                     <option key={org.id} value={org.id}>
@@ -395,11 +395,11 @@ export function ImportCollabParticipantsModal({
 
               {activities.length > 0 && (
                 <div className="space-y-1">
-                  <label className="text-[11px] font-semibold text-slate-700">Phân bổ vào hoạt động:</label>
+                  <label className="text-[11px] font-semibold text-ink-navy">Phân bổ vào hoạt động:</label>
                   <select
                     value={selectedActivityId}
                     onChange={(e) => setSelectedActivityId(e.target.value)}
-                    className="w-full h-8 text-xs bg-white border border-slate-200 rounded-lg px-2 focus:outline-none"
+                    className="w-full h-8 text-xs bg-white border border-hairline rounded-lg px-2 text-ink-navy focus:outline-none focus:border-signal-blue"
                   >
                     <option value="all">Toàn chiến dịch (Lực lượng chung)</option>
                     {activities.map((act) => (
@@ -412,10 +412,10 @@ export function ImportCollabParticipantsModal({
               )}
             </div>
 
-            <div className="p-3 bg-blue-50/50 rounded-xl border border-blue-100 flex items-start gap-2 text-xs text-blue-900">
-              <HelpCircle className="h-4 w-4 text-blue-600 shrink-0 mt-0.5" />
-              <div className="leading-relaxed">
-                <span className="font-bold">Mẹo sao chép nhanh:</span> Chọn và bôi đen các cột theo thứ tự <code className="bg-blue-100 px-1 rounded text-blue-800 font-mono">Họ và tên | MSSV | Lớp | Khóa</code> trên Google Sheet rồi nhấn <code className="bg-blue-100 px-1 rounded text-blue-800 font-mono">Ctrl + C</code> và dán thẳng vào đây. Bạn cũng có thể dán kèm các cột Đơn vị, SĐT nếu có.
+            <div className="p-3 bg-pebble rounded-xl border border-hairline flex items-start gap-2 text-xs text-ink-navy">
+              <HelpCircle className="h-4 w-4 text-signal-blue shrink-0 mt-0.5" />
+              <div className="leading-relaxed text-slate-gray">
+                <span className="font-semibold text-ink-navy">Mẹo sao chép nhanh:</span> Chọn và bôi đen các cột theo thứ tự <code className="bg-white border border-hairline px-1.5 py-0.5 rounded text-ink-navy font-mono">Họ và tên | MSSV | Lớp | Khóa</code> trên Google Sheet rồi nhấn <code className="bg-white border border-hairline px-1.5 py-0.5 rounded text-ink-navy font-mono">Ctrl + C</code> và dán thẳng vào đây. Bạn cũng có thể dán kèm các cột Đơn vị, SĐT nếu có.
               </div>
             </div>
           </div>
@@ -426,10 +426,10 @@ export function ImportCollabParticipantsModal({
           <div className="space-y-3 py-2 flex-1 overflow-hidden flex flex-col min-h-0">
             <div className="flex items-center justify-between shrink-0">
               <div className="flex items-center gap-2">
-                <span className="text-xs font-bold text-slate-800">
+                <span className="text-xs font-semibold text-ink-navy">
                   Xem trước danh sách nhận diện ({parsedRows.length} người)
                 </span>
-                <Badge className="bg-emerald-50 text-emerald-700 border-emerald-200 text-[10px]">
+                <Badge className="bg-emerald-50 text-emerald-700 border-emerald-200 text-[10px] rounded-full">
                   Sẵn sàng nhập
                 </Badge>
               </div>
@@ -437,15 +437,15 @@ export function ImportCollabParticipantsModal({
                 variant="ghost"
                 size="sm"
                 onClick={() => setStep('paste')}
-                className="h-7 text-xs text-blue-700 hover:bg-blue-50 active:scale-[0.98] font-medium"
+                className="h-7 text-xs text-signal-blue hover:bg-pebble font-medium"
               >
                 ← Dán lại nội dung
               </Button>
             </div>
 
-            <div className="flex-1 overflow-y-auto border border-slate-200/80 rounded-xl bg-white shadow-inner">
-              <table className="w-full text-left text-xs text-slate-700">
-                <thead className="bg-slate-50 sticky top-0 border-b border-slate-200 text-[11px] font-semibold text-slate-600 uppercase tracking-wider">
+            <div className="flex-1 overflow-y-auto border border-hairline rounded-xl bg-white shadow-inner">
+              <table className="w-full text-left text-xs text-ink-navy">
+                <thead className="bg-cloud sticky top-0 border-b border-hairline text-[11px] font-semibold text-slate-gray uppercase tracking-wider">
                   <tr>
                     <th className="w-10 px-2 py-2 text-center">STT</th>
                     <th className="px-3 py-2 min-w-[150px]">Họ và tên *</th>
@@ -458,10 +458,10 @@ export function ImportCollabParticipantsModal({
                     <th className="w-10 px-2 py-2 text-center">Xóa</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-slate-100">
+                <tbody className="divide-y divide-hairline">
                   {parsedRows.map((row, idx) => (
-                    <tr key={row.id} className="hover:bg-slate-50/70">
-                      <td className="px-2 py-1.5 text-center text-slate-400 font-mono text-[11px]">
+                    <tr key={row.id} className="hover:bg-pebble/60">
+                      <td className="px-2 py-1.5 text-center text-slate-gray font-mono text-[11px]">
                         {idx + 1}
                       </td>
                       <td className="px-3 py-1.5">
@@ -469,7 +469,7 @@ export function ImportCollabParticipantsModal({
                           type="text"
                           value={row.fullName}
                           onChange={(e) => handleUpdateRowField(row.id, 'fullName', e.target.value)}
-                          className="w-full h-7 px-2 text-xs border border-transparent hover:border-slate-200 focus:border-blue-400 rounded bg-transparent focus:bg-white font-medium text-slate-900"
+                          className="w-full h-7 px-2 text-xs border border-transparent hover:border-hairline focus:border-signal-blue rounded bg-transparent focus:bg-white font-medium text-ink-navy"
                         />
                       </td>
                       <td className="px-2 py-1.5 font-mono">
@@ -478,7 +478,7 @@ export function ImportCollabParticipantsModal({
                           value={row.studentId}
                           onChange={(e) => handleUpdateRowField(row.id, 'studentId', e.target.value)}
                           placeholder="MSSV"
-                          className="w-full h-7 px-1.5 text-xs font-mono border border-transparent hover:border-slate-200 focus:border-blue-400 rounded bg-transparent focus:bg-white text-slate-700"
+                          className="w-full h-7 px-1.5 text-xs font-mono border border-transparent hover:border-hairline focus:border-signal-blue rounded bg-transparent focus:bg-white text-ink-navy tabular-nums"
                         />
                       </td>
                       <td className="px-2 py-1.5">
@@ -487,7 +487,7 @@ export function ImportCollabParticipantsModal({
                           value={row.className}
                           onChange={(e) => handleUpdateRowField(row.id, 'className', e.target.value)}
                           placeholder="Lớp"
-                          className="w-full h-7 px-1.5 text-xs border border-transparent hover:border-slate-200 focus:border-blue-400 rounded bg-transparent focus:bg-white text-slate-700"
+                          className="w-full h-7 px-1.5 text-xs border border-transparent hover:border-hairline focus:border-signal-blue rounded bg-transparent focus:bg-white text-ink-navy"
                         />
                       </td>
                       <td className="px-2 py-1.5 font-mono text-center">
@@ -496,14 +496,14 @@ export function ImportCollabParticipantsModal({
                           value={row.cohort}
                           onChange={(e) => handleUpdateRowField(row.id, 'cohort', e.target.value)}
                           placeholder="Khóa"
-                          className="w-full h-7 px-1 text-xs font-mono text-center border border-transparent hover:border-slate-200 focus:border-blue-400 rounded bg-transparent focus:bg-white text-slate-700"
+                          className="w-full h-7 px-1 text-xs font-mono text-center border border-transparent hover:border-hairline focus:border-signal-blue rounded bg-transparent focus:bg-white text-ink-navy tabular-nums"
                         />
                       </td>
                       <td className="px-2 py-1.5">
                         <select
                           value={row.organizationId}
                           onChange={(e) => handleUpdateRowField(row.id, 'organizationId', e.target.value)}
-                          className="w-full h-7 text-[11px] bg-slate-50 border border-slate-200 rounded px-1.5"
+                          className="w-full h-7 text-[11px] bg-pebble border border-hairline rounded px-1.5 text-ink-navy"
                         >
                           {participatingOrganizations.map((org) => (
                             <option key={org.id} value={org.id}>
@@ -518,7 +518,7 @@ export function ImportCollabParticipantsModal({
                           value={row.roleTitle}
                           onChange={(e) => handleUpdateRowField(row.id, 'roleTitle', e.target.value)}
                           placeholder="Đội hình"
-                          className="w-full h-7 px-1.5 text-xs border border-transparent hover:border-slate-200 focus:border-blue-400 rounded bg-transparent focus:bg-white text-slate-700"
+                          className="w-full h-7 px-1.5 text-xs border border-transparent hover:border-hairline focus:border-signal-blue rounded bg-transparent focus:bg-white text-ink-navy"
                         />
                       </td>
                       <td className="px-2 py-1.5 font-mono">
@@ -527,14 +527,14 @@ export function ImportCollabParticipantsModal({
                           value={row.phone}
                           onChange={(e) => handleUpdateRowField(row.id, 'phone', e.target.value)}
                           placeholder="SĐT"
-                          className="w-full h-7 px-1.5 text-xs font-mono border border-transparent hover:border-slate-200 focus:border-blue-400 rounded bg-transparent focus:bg-white text-slate-700"
+                          className="w-full h-7 px-1.5 text-xs font-mono border border-transparent hover:border-hairline focus:border-signal-blue rounded bg-transparent focus:bg-white text-ink-navy tabular-nums"
                         />
                       </td>
                       <td className="px-2 py-1.5 text-center">
                         <button
                           type="button"
                           onClick={() => handleRemoveRow(row.id)}
-                          className="h-6 w-6 inline-flex items-center justify-center text-slate-400 hover:text-rose-600 hover:bg-rose-50 rounded transition-colors active:scale-[0.95]"
+                          className="h-6 w-6 inline-flex items-center justify-center text-slate-gray hover:text-rose-600 hover:bg-rose-50 rounded transition-colors cursor-pointer"
                         >
                           <Trash2 className="h-3.5 w-3.5" />
                         </button>
@@ -548,13 +548,13 @@ export function ImportCollabParticipantsModal({
         )}
 
         {/* DIALOG FOOTER */}
-        <DialogFooter className="pt-3 border-t border-slate-100 flex items-center justify-between gap-2 shrink-0">
+        <DialogFooter className="pt-3 border-t border-hairline flex items-center justify-between gap-2 shrink-0">
           <Button
             type="button"
             variant="outline"
             size="sm"
             onClick={handleClose}
-            className="text-xs h-8 px-3 border-slate-200 hover:bg-slate-50 active:scale-[0.98]"
+            className="text-xs h-9 px-4 rounded-lg border-hairline text-ink-navy hover:bg-pebble"
           >
             Hủy
           </Button>
@@ -565,7 +565,7 @@ export function ImportCollabParticipantsModal({
               size="sm"
               onClick={handleParseText}
               disabled={!pastedText.trim()}
-              className="text-xs h-8 px-3.5 bg-blue-600 hover:bg-blue-700 text-white font-semibold gap-1.5 shadow-2xs active:scale-[0.98]"
+              className="text-xs h-9 px-4 rounded-lg bg-signal-blue hover:bg-[#005be0] text-white font-semibold gap-1.5 shadow-sm"
             >
               <span>Phân tích dữ liệu</span>
               <ArrowRight className="h-3.5 w-3.5" />
@@ -576,7 +576,7 @@ export function ImportCollabParticipantsModal({
               size="sm"
               disabled={bulkAddMutation.isPending || parsedRows.length === 0}
               onClick={handleBulkSubmit}
-              className="text-xs h-8 px-3.5 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold gap-1.5 shadow-2xs active:scale-[0.98]"
+              className="text-xs h-9 px-4 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white font-semibold gap-1.5 shadow-sm"
             >
               {bulkAddMutation.isPending ? (
                 <Loader2 className="h-3.5 w-3.5 animate-spin" />

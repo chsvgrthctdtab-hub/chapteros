@@ -56,7 +56,7 @@ export function SettingsPage() {
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 items-start">
         {/* Left Navigation Rail */}
         <div className="lg:col-span-1 sticky top-20">
-          <div className="bg-white rounded-2xl border border-slate-200/90 p-3 sm:p-4 shadow-2xs">
+          <div className="bg-white rounded-2xl border border-hairline p-3 sm:p-4 shadow-xs">
             <SettingsNavRail activeTab={activeTab} onSelectTab={handleSelectTab} />
           </div>
         </div>

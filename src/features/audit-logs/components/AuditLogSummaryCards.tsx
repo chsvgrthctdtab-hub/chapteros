@@ -6,8 +6,6 @@ import {
   Users,
   ShieldAlert,
   Layers,
-  CheckCircle2,
-  TrendingUp,
 } from 'lucide-react';
 import type { AuditLogItemWithActor } from '../types/audit-log.types';
 import {
@@ -89,10 +87,10 @@ export function AuditLogSummaryCards({
         {[1, 2, 3, 4].map((i) => (
           <div
             key={i}
-            className="h-24 bg-white rounded-xl border border-slate-200/80 p-4 animate-pulse space-y-2"
+            className="h-24 bg-white rounded-xl border border-hairline p-4 animate-pulse space-y-2"
           >
-            <div className="h-3.5 bg-slate-100 rounded w-1/2" />
-            <div className="h-6 bg-slate-200 rounded w-1/3" />
+            <div className="h-3.5 bg-cloud rounded w-1/2" />
+            <div className="h-6 bg-pebble rounded w-1/3" />
           </div>
         ))}
       </div>
@@ -102,54 +100,54 @@ export function AuditLogSummaryCards({
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5">
       {/* 1. Total Events */}
-      <Card className="border-slate-200/90 shadow-2xs hover:border-slate-300 transition-colors bg-white">
+      <Card className="border-hairline shadow-xs hover:border-slate-gray/30 transition-colors bg-white">
         <CardContent className="p-4 flex items-center justify-between">
           <div className="space-y-1">
-            <p className="text-xs font-semibold text-slate-500 flex items-center gap-1.5">
+            <p className="text-xs font-semibold text-mist-gray flex items-center gap-1.5">
               <span>Tổng sự kiện ghi nhận</span>
             </p>
             <div className="flex items-baseline gap-2">
-              <span className="text-2xl font-bold tracking-tight text-slate-900 tabular-nums">
+              <span className="text-2xl font-bold tracking-tight text-ink-navy tabular-nums">
                 {new Intl.NumberFormat('vi-VN').format(totalCount)}
               </span>
               <span className="text-[11px] font-medium text-emerald-600">bất biến</span>
             </div>
           </div>
-          <div className="w-10 h-10 rounded-xl bg-slate-100/90 text-slate-700 flex items-center justify-center border border-slate-200/60 shrink-0">
-            <Activity strokeWidth={1.5} className="w-5 h-5 text-slate-700" />
+          <div className="w-10 h-10 rounded-xl bg-cloud text-slate-gray flex items-center justify-center border border-hairline shrink-0">
+            <Activity strokeWidth={1.5} className="w-5 h-5 text-slate-gray" />
           </div>
         </CardContent>
       </Card>
 
       {/* 2. Active Operators / Actors */}
-      <Card className="border-slate-200/90 shadow-2xs hover:border-slate-300 transition-colors bg-white">
+      <Card className="border-hairline shadow-xs hover:border-slate-gray/30 transition-colors bg-white">
         <CardContent className="p-4 flex items-center justify-between">
           <div className="space-y-1">
-            <p className="text-xs font-semibold text-slate-500 flex items-center gap-1.5">
+            <p className="text-xs font-semibold text-mist-gray flex items-center gap-1.5">
               <span>Người thao tác (Trang hiện tại)</span>
             </p>
             <div className="flex items-baseline gap-2">
-              <span className="text-2xl font-bold tracking-tight text-slate-900 tabular-nums">
+              <span className="text-2xl font-bold tracking-tight text-ink-navy tabular-nums">
                 {stats.uniqueActorsCount}
               </span>
-              <span className="text-[11px] text-slate-500 font-medium">cán bộ/hệ thống</span>
+              <span className="text-[11px] text-mist-gray font-medium">cán bộ/hệ thống</span>
             </div>
           </div>
-          <div className="w-10 h-10 rounded-xl bg-blue-50 text-blue-700 flex items-center justify-center border border-blue-200/60 shrink-0">
-            <Users strokeWidth={1.5} className="w-5 h-5 text-blue-600" />
+          <div className="w-10 h-10 rounded-xl bg-[#e6f0ff] text-signal-blue flex items-center justify-center border border-[#d4e4fa] shrink-0">
+            <Users strokeWidth={1.5} className="w-5 h-5 text-signal-blue" />
           </div>
         </CardContent>
       </Card>
 
       {/* 3. High Impact Actions */}
-      <Card className="border-slate-200/90 shadow-2xs hover:border-slate-300 transition-colors bg-white">
+      <Card className="border-hairline shadow-xs hover:border-slate-gray/30 transition-colors bg-white">
         <CardContent className="p-4 flex items-center justify-between">
           <div className="space-y-1">
-            <p className="text-xs font-semibold text-slate-500 flex items-center gap-1.5">
+            <p className="text-xs font-semibold text-mist-gray flex items-center gap-1.5">
               <span>Tác vụ trọng yếu / Rủi ro</span>
             </p>
             <div className="flex items-baseline gap-2">
-              <span className="text-2xl font-bold tracking-tight text-slate-900 tabular-nums">
+              <span className="text-2xl font-bold tracking-tight text-ink-navy tabular-nums">
                 {stats.highImpactCount}
               </span>
               <span className="text-[11px] text-amber-600 font-medium">xóa / duyệt / quyền</span>
@@ -162,28 +160,28 @@ export function AuditLogSummaryCards({
       </Card>
 
       {/* 4. Top Active Module */}
-      <Card className="border-slate-200/90 shadow-2xs hover:border-slate-300 transition-colors bg-white">
+      <Card className="border-hairline shadow-xs hover:border-slate-gray/30 transition-colors bg-white">
         <CardContent className="p-4 flex items-center justify-between">
           <div className="space-y-1">
-            <p className="text-xs font-semibold text-slate-500 flex items-center gap-1.5">
+            <p className="text-xs font-semibold text-mist-gray flex items-center gap-1.5">
               <span>Phân hệ tác động nhiều nhất</span>
             </p>
             <div className="flex items-baseline gap-2">
-              <span className="text-sm font-bold text-slate-900 truncate max-w-[130px]">
+              <span className="text-sm font-bold text-ink-navy truncate max-w-[130px]">
                 {stats.topModule?.label || 'Chưa xác định'}
               </span>
               {stats.topModule && (
                 <Badge
                   variant="outline"
-                  className="text-[10px] px-1.5 py-0 tabular-nums font-semibold text-slate-600 bg-slate-50"
+                  className="text-[10px] px-1.5 py-0 tabular-nums font-semibold text-slate-gray bg-cloud border-hairline"
                 >
                   {stats.topModule.count} logs
                 </Badge>
               )}
             </div>
           </div>
-          <div className="w-10 h-10 rounded-xl bg-indigo-50 text-indigo-700 flex items-center justify-center border border-indigo-200/60 shrink-0">
-            <Layers strokeWidth={1.5} className="w-5 h-5 text-indigo-600" />
+          <div className="w-10 h-10 rounded-xl bg-[#e6f0ff] text-signal-blue flex items-center justify-center border border-[#d4e4fa] shrink-0">
+            <Layers strokeWidth={1.5} className="w-5 h-5 text-signal-blue" />
           </div>
         </CardContent>
       </Card>

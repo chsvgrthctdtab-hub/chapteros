@@ -72,11 +72,11 @@ export function ConfirmDialog({
               {style.icon}
             </div>
             <div className="flex-1 min-w-0 text-left">
-              <DialogTitle className="text-base font-semibold text-slate-900 leading-snug">
+              <DialogTitle className="text-base font-semibold text-ink-navy leading-snug">
                 {title}
               </DialogTitle>
               {description && (
-                <DialogDescription className="text-xs text-slate-500 mt-1 leading-relaxed">
+                <DialogDescription className="text-xs text-mist-gray mt-1 leading-relaxed">
                   {description}
                 </DialogDescription>
               )}

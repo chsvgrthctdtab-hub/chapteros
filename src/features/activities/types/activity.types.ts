@@ -51,9 +51,9 @@ export const ACTIVITY_CATEGORIES: Record<ActivityCategory, CategoryConfig> = {
     key: 'general',
     label: 'Chung / Phong trào',
     colorClasses: {
-      bg: 'bg-slate-50',
-      text: 'text-slate-700',
-      border: 'border-slate-200',
+      bg: 'bg-cloud',
+      text: 'text-slate-gray',
+      border: 'border-hairline',
     },
     iconName: 'Sparkles',
     description: 'Các hoạt động chung của Đơn vị, sinh hoạt định kỳ, giao lưu.',
@@ -73,9 +73,9 @@ export const ACTIVITY_CATEGORIES: Record<ActivityCategory, CategoryConfig> = {
     key: 'academic',
     label: 'Học thuật - Nghiên cứu',
     colorClasses: {
-      bg: 'bg-blue-50',
-      text: 'text-blue-700',
-      border: 'border-blue-200',
+      bg: 'bg-[#e6f0ff]',
+      text: 'text-signal-blue',
+      border: 'border-[#d4e4fa]',
     },
     iconName: 'GraduationCap',
     description: 'Hội thảo khoa học, tọa đàm, cuộc thi học thuật, chia sẻ phương pháp học tập.',
@@ -106,9 +106,9 @@ export const ACTIVITY_CATEGORIES: Record<ActivityCategory, CategoryConfig> = {
     key: 'meeting',
     label: 'Họp - Đại hội',
     colorClasses: {
-      bg: 'bg-indigo-50',
-      text: 'text-indigo-700',
-      border: 'border-indigo-200',
+      bg: 'bg-[#e6f0ff]',
+      text: 'text-signal-blue',
+      border: 'border-[#d4e4fa]',
     },
     iconName: 'Users',
     description: 'Đại hội Chi hội, họp Ban Chấp Hành, họp toàn thể hội viên định kỳ.',
@@ -132,10 +132,10 @@ export const ACTIVITY_STATUSES: Record<ActivityStatus, StatusConfig<ActivityStat
     label: 'Bản nháp',
     badgeVariant: 'outline',
     colorClasses: {
-      bg: 'bg-slate-100',
-      text: 'text-slate-600',
-      border: 'border-slate-300',
-      dot: 'bg-slate-400',
+      bg: 'bg-cloud',
+      text: 'text-slate-gray',
+      border: 'border-hairline',
+      dot: 'bg-mist-gray',
     },
     description: 'Hoạt động đang trong giai đoạn soạn thảo, chưa công bố kế hoạch.',
   },
@@ -156,10 +156,10 @@ export const ACTIVITY_STATUSES: Record<ActivityStatus, StatusConfig<ActivityStat
     label: 'Đã công bố',
     badgeVariant: 'info',
     colorClasses: {
-      bg: 'bg-sky-50',
-      text: 'text-sky-700',
-      border: 'border-sky-200',
-      dot: 'bg-sky-500',
+      bg: 'bg-[#e6f0ff]',
+      text: 'text-signal-blue',
+      border: 'border-[#d4e4fa]',
+      dot: 'bg-signal-blue',
     },
     description: 'Đã phát động đến toàn thể hội viên, đang tiếp nhận đăng ký tham gia.',
   },
@@ -180,10 +180,10 @@ export const ACTIVITY_STATUSES: Record<ActivityStatus, StatusConfig<ActivityStat
     label: 'Đã hoàn thành',
     badgeVariant: 'default',
     colorClasses: {
-      bg: 'bg-blue-50',
-      text: 'text-blue-700',
-      border: 'border-blue-200',
-      dot: 'bg-blue-500',
+      bg: 'bg-[#e6f0ff]',
+      text: 'text-signal-blue',
+      border: 'border-[#d4e4fa]',
+      dot: 'bg-signal-blue',
     },
     description: 'Hoạt động đã kết thúc và hoàn tất tổng kết.',
   },
@@ -207,9 +207,9 @@ export const REGISTRATION_STATUSES: Record<RegistrationStatus, StatusConfig<Regi
     label: 'Đã đăng ký',
     badgeVariant: 'info',
     colorClasses: {
-      bg: 'bg-sky-50',
-      text: 'text-sky-700',
-      border: 'border-sky-200',
+      bg: 'bg-[#e6f0ff]',
+      text: 'text-signal-blue',
+      border: 'border-[#d4e4fa]',
     },
     description: 'Hội viên đã đăng ký tham gia hoạt động.',
   },
@@ -254,9 +254,9 @@ export const ATTENDANCE_STATUSES: Record<AttendanceStatus, StatusConfig<Attendan
     label: 'Chưa điểm danh',
     badgeVariant: 'outline',
     colorClasses: {
-      bg: 'bg-slate-50',
-      text: 'text-slate-600',
-      border: 'border-slate-200',
+      bg: 'bg-cloud',
+      text: 'text-slate-gray',
+      border: 'border-hairline',
     },
     description: 'Chưa có thông tin điểm danh.',
   },
@@ -381,6 +381,8 @@ export interface ActivityFilterParams {
   status?: ActivityStatus | 'all';
   category?: ActivityCategory | 'all';
   termId?: string | 'all';
+  semester?: 'hk1' | 'hk2' | 'hk3' | 'all';
+  organizerScope?: 'chapter' | 'collab' | 'university_faculty' | 'all';
   startDateFrom?: string;
   startDateTo?: string;
   page?: number;

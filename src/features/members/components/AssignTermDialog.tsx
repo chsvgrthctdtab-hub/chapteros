@@ -53,7 +53,6 @@ export function AssignTermDialog({
     register,
     handleSubmit,
     reset,
-    setValue,
     control,
     formState: { errors },
   } = useForm<TermMemberFormData>({
@@ -106,20 +105,20 @@ export function AssignTermDialog({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-md">
+      <DialogContent className="max-w-md rounded-2xl border-hairline bg-white shadow-xl">
         <DialogHeader>
-          <div className="flex items-center space-x-2">
-            <div className="h-8 w-8 rounded-lg bg-indigo-50 text-indigo-600 flex items-center justify-center">
+          <div className="flex items-center space-x-3">
+            <div className="h-9 w-9 rounded-lg bg-[#e6f0ff] text-signal-blue border border-[#d4e4fa] flex items-center justify-center shrink-0">
               <Calendar className="h-4 w-4" />
             </div>
             <div>
-              <DialogTitle>
+              <DialogTitle className="text-base font-semibold text-ink-navy">
                 {isEditing ? 'Cập nhật phân công nhiệm kỳ' : 'Gán hội viên vào nhiệm kỳ'}
               </DialogTitle>
-              <DialogDescription>
+              <DialogDescription className="text-xs text-slate-gray">
                 {member ? (
                   <span>
-                    Hội viên: <strong className="text-slate-800 font-semibold">{member.fullName}</strong> {member.studentId ? `(${member.studentId})` : ''}
+                    Hội viên: <strong className="text-ink-navy font-semibold">{member.fullName}</strong> {member.studentId ? `(${member.studentId})` : ''}
                   </span>
                 ) : (
                   'Chọn nhiệm kỳ và chức vụ phụ trách cho hội viên.'
@@ -139,7 +138,7 @@ export function AssignTermDialog({
         <form onSubmit={handleSubmit(handleFormSubmit)} className="space-y-3.5 pt-1">
           {/* Nhiệm kỳ */}
           <div className="space-y-1">
-            <label className="text-xs font-medium text-slate-700">
+            <label className="text-xs font-semibold text-slate-gray">
               Nhiệm kỳ Chi hội <span className="text-rose-500">*</span>
             </label>
             <Controller
@@ -151,12 +150,12 @@ export function AssignTermDialog({
                   value={field.value || ''}
                   onValueChange={field.onChange}
                 >
-                  <SelectTrigger className="w-full h-9 text-sm bg-white border-slate-200">
+                  <SelectTrigger className="w-full h-9 text-xs rounded-lg bg-cloud border-hairline focus:bg-white text-ink-navy">
                     <SelectValue placeholder="-- Chọn nhiệm kỳ --" />
                   </SelectTrigger>
-                  <SelectContent>
+                  <SelectContent className="rounded-xl border-hairline bg-white shadow-lg">
                     {terms.map((t) => (
-                      <SelectItem key={t.id} value={t.id}>
+                      <SelectItem key={t.id} value={t.id} className="text-xs">
                         {t.name} {t.isCurrent ? '(Hiện tại)' : ''}
                       </SelectItem>
                     ))}
@@ -171,13 +170,14 @@ export function AssignTermDialog({
 
           {/* Chức vụ */}
           <div className="space-y-1">
-            <label className="text-xs font-medium text-slate-700">
+            <label className="text-xs font-semibold text-slate-gray">
               Chức vụ trong nhiệm kỳ <span className="text-rose-500">*</span>
             </label>
             <Input
               {...register('position')}
               placeholder="Ví dụ: Hội viên, Chi hội phó..."
               list="term-positions-select"
+              className="h-9 rounded-lg bg-cloud border-hairline focus:bg-white text-xs text-ink-navy"
             />
             <datalist id="term-positions-select">
               {COMMON_POSITIONS.map((p) => (
@@ -191,11 +191,12 @@ export function AssignTermDialog({
 
           {/* Ban / Bộ phận */}
           <div className="space-y-1">
-            <label className="text-xs font-medium text-slate-700">Ban / Bộ phận chuyên trách</label>
+            <label className="text-xs font-semibold text-slate-gray">Ban / Bộ phận chuyên trách</label>
             <Input
               {...register('department')}
               placeholder="Ví dụ: Ban Phong trào, Ban Truyền thông..."
               list="term-dept-select"
+              className="h-9 rounded-lg bg-cloud border-hairline focus:bg-white text-xs text-ink-navy"
             />
             <datalist id="term-dept-select">
               {COMMON_DEPARTMENTS.map((d) => (
@@ -206,7 +207,7 @@ export function AssignTermDialog({
 
           {/* Trạng thái trong nhiệm kỳ */}
           <div className="space-y-1">
-            <label className="text-xs font-medium text-slate-700">Trạng thái trong nhiệm kỳ</label>
+            <label className="text-xs font-semibold text-slate-gray">Trạng thái trong nhiệm kỳ</label>
             <Controller
               name="status"
               control={control}
@@ -215,12 +216,12 @@ export function AssignTermDialog({
                   value={field.value || 'active'}
                   onValueChange={field.onChange}
                 >
-                  <SelectTrigger className="w-full h-9 text-sm bg-white border-slate-200">
+                  <SelectTrigger className="w-full h-9 text-xs rounded-lg bg-cloud border-hairline focus:bg-white text-ink-navy">
                     <SelectValue />
                   </SelectTrigger>
-                  <SelectContent>
+                  <SelectContent className="rounded-xl border-hairline bg-white shadow-lg">
                     {Object.entries(TERM_MEMBER_STATUSES).map(([key, config]) => (
-                      <SelectItem key={key} value={key}>
+                      <SelectItem key={key} value={key} className="text-xs">
                         {config.label}
                       </SelectItem>
                     ))}
@@ -232,7 +233,7 @@ export function AssignTermDialog({
 
           {/* Ngày bắt đầu */}
           <div className="space-y-1">
-            <label className="text-xs font-medium text-slate-700">Ngày bắt đầu tham gia nhiệm kỳ</label>
+            <label className="text-xs font-semibold text-slate-gray">Ngày bắt đầu tham gia nhiệm kỳ</label>
             <Controller
               name="joinedDate"
               control={control}
@@ -248,25 +249,30 @@ export function AssignTermDialog({
 
           {/* Ghi chú */}
           <div className="space-y-1">
-            <label className="text-xs font-medium text-slate-700">Ghi chú nhiệm kỳ</label>
+            <label className="text-xs font-semibold text-slate-gray">Ghi chú nhiệm kỳ</label>
             <textarea
               {...register('notes')}
               rows={2}
               placeholder="Ghi chú phân công, lý do miễn nhiệm nếu có..."
-              className="w-full rounded-md border border-slate-200 bg-white px-3 py-1.5 text-xs text-slate-800 focus:outline-none focus:ring-2 focus:ring-slate-950 focus:ring-offset-2"
+              className="w-full rounded-lg border border-hairline bg-cloud focus:bg-white p-2.5 text-xs text-ink-navy focus:outline-none focus:ring-1 focus:ring-signal-blue resize-none transition-all"
             />
           </div>
 
-          <DialogFooter>
+          <DialogFooter className="pt-2">
             <Button
               type="button"
               variant="outline"
               onClick={() => onOpenChange(false)}
               disabled={isLoading}
+              className="rounded-lg border-hairline text-ink-navy hover:bg-cloud text-xs h-9 px-4"
             >
               Hủy
             </Button>
-            <Button type="submit" disabled={isLoading} className="bg-indigo-600 hover:bg-indigo-700 text-white">
+            <Button
+              type="submit"
+              disabled={isLoading}
+              className="bg-signal-blue hover:bg-[#005be0] text-white rounded-lg text-xs h-9 px-4 shadow-sm font-semibold"
+            >
               {isLoading ? (
                 <>
                   <Loader2 className="h-3.5 w-3.5 mr-1.5 animate-spin" />

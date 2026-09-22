@@ -293,13 +293,13 @@ export function CreateCollabTaskDialog({
 
   return (
     <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
-      <DialogContent className="sm:max-w-xl md:max-w-2xl max-h-[92vh] overflow-y-auto bg-white border border-slate-200/80 shadow-2xl rounded-2xl p-5 pr-10 sm:p-7 sm:pr-12 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+      <DialogContent className="sm:max-w-xl md:max-w-2xl max-h-[92vh] overflow-y-auto bg-white border border-hairline shadow-sm rounded-2xl p-5 pr-10 sm:p-7 sm:pr-12 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
         {/* Header tối giản */}
-        <DialogHeader className="space-y-1 text-left pb-2 border-b border-slate-100">
-          <DialogTitle className="text-base sm:text-lg font-bold text-slate-900">
+        <DialogHeader className="space-y-1 text-left pb-2 border-b border-hairline">
+          <DialogTitle className="text-base sm:text-lg font-bold text-ink-navy">
             {editingTask ? 'Chỉnh sửa nhiệm vụ' : 'Giao việc mới'}
           </DialogTitle>
-          <DialogDescription className="text-xs text-slate-500">
+          <DialogDescription className="text-xs text-slate-gray">
             Phân công theo mảng phụ trách và đơn vị tham gia chiến dịch.
           </DialogDescription>
         </DialogHeader>
@@ -328,8 +328,8 @@ export function CreateCollabTaskDialog({
           {/* Chọn Hoạt động (chỉ hiện khi chưa chỉ định từ trước) */}
           {!collabActivityId && activities.length > 0 && (
             <div className="space-y-1">
-              <label htmlFor="collab-task-act" className="block text-xs font-semibold text-slate-700 flex items-center gap-1">
-                <Sparkles className="h-3 w-3 text-blue-600" />
+              <label htmlFor="collab-task-act" className="block text-xs font-semibold text-ink-navy flex items-center gap-1">
+                <Sparkles className="h-3 w-3 text-signal-blue" />
                 Hoạt động phối hợp <span className="text-rose-500">*</span>
               </label>
               <Controller
@@ -340,10 +340,10 @@ export function CreateCollabTaskDialog({
                     value={field.value || activities[0]?.id || ''}
                     onValueChange={field.onChange}
                   >
-                    <SelectTrigger id="collab-task-act" className="h-9 text-xs bg-slate-50/50">
+                    <SelectTrigger id="collab-task-act" className="h-9.5 text-xs bg-cloud border-hairline rounded-lg text-ink-navy">
                       <SelectValue placeholder="Chọn hoạt động" />
                     </SelectTrigger>
-                    <SelectContent className="bg-white border-slate-200">
+                    <SelectContent className="bg-white border-hairline rounded-xl shadow-sm">
                       {activities.map((act) => (
                         <SelectItem key={act.id} value={act.id} className="text-xs">
                           {act.title} ({act.code})
@@ -358,14 +358,14 @@ export function CreateCollabTaskDialog({
 
           {/* Tiêu đề công việc */}
           <div className="space-y-1">
-            <label htmlFor="collab-task-title" className="block text-xs font-semibold text-slate-700">
+            <label htmlFor="collab-task-title" className="block text-xs font-semibold text-ink-navy">
               Nội dung công việc <span className="text-rose-500">*</span>
             </label>
             <Input
               id="collab-task-title"
               {...register('title')}
               placeholder="VD: Poster chương trình, Đặt đồ ăn TNV, Kịch bản MC..."
-              className="h-10 text-sm font-medium bg-slate-50/50 focus:bg-white border-slate-200 focus:border-blue-400"
+              className="h-9.5 text-sm font-medium bg-white border-hairline rounded-lg text-ink-navy placeholder:text-mist-gray focus:border-signal-blue"
             />
             {errors.title && (
               <p className="text-[11px] text-rose-500">{errors.title.message}</p>
@@ -375,10 +375,10 @@ export function CreateCollabTaskDialog({
           {/* 1-Click Badges: Đơn vị phụ trách */}
           <div className="space-y-1.5 pt-1">
             <div className="flex items-center justify-between">
-              <span className="block text-xs font-semibold text-slate-700">
+              <span className="block text-xs font-semibold text-ink-navy">
                 Đơn vị phụ trách
               </span>
-              <span className="text-[11px] text-slate-400">
+              <span className="text-[11px] text-slate-gray">
                 {assigneeType === 'internal' ? 'Đơn vị trong chiến dịch' : 'Đối tác ngoài'}
               </span>
             </div>
@@ -392,22 +392,14 @@ export function CreateCollabTaskDialog({
                     type="button"
                     onClick={() => handleSelectOrgBadge(org.id)}
                     className={cn(
-                      "px-3 py-1.5 rounded-full text-xs font-semibold transition-all border inline-flex items-center gap-1.5 cursor-pointer shadow-2xs",
+                      "px-3 py-1.5 rounded-full text-xs font-semibold transition-all border inline-flex items-center gap-1.5 cursor-pointer",
                       isSelected
                         ? org.color === 'rose'
-                          ? 'bg-rose-600 text-white border-rose-600 ring-2 ring-rose-200'
-                          : org.color === 'blue'
-                          ? 'bg-blue-600 text-white border-blue-600 ring-2 ring-blue-200'
-                          : org.color === 'emerald'
-                          ? 'bg-emerald-600 text-white border-emerald-600 ring-2 ring-emerald-200'
-                          : 'bg-blue-600 text-white border-blue-600 ring-2 ring-blue-200'
+                          ? 'bg-rose-600 text-white border-rose-600 shadow-sm'
+                          : 'bg-signal-blue text-white border-signal-blue shadow-sm'
                         : org.color === 'rose'
                         ? 'bg-rose-50 text-rose-700 border-rose-200 hover:bg-rose-100'
-                        : org.color === 'blue'
-                        ? 'bg-blue-50 text-blue-700 border-blue-200 hover:bg-blue-100'
-                        : org.color === 'emerald'
-                        ? 'bg-emerald-50 text-emerald-700 border-emerald-200 hover:bg-emerald-100'
-                        : 'bg-blue-50 text-blue-700 border-blue-200 hover:bg-blue-100'
+                        : 'bg-pebble text-slate-gray border-hairline hover:text-ink-navy hover:bg-pebble/80'
                     )}
                   >
                     <span className="w-2 h-2 rounded-full bg-current opacity-80" />
@@ -424,10 +416,10 @@ export function CreateCollabTaskDialog({
                 type="button"
                 onClick={handleSelectExternalMode}
                 className={cn(
-                  "px-3 py-1.5 rounded-full text-xs font-semibold transition-all border inline-flex items-center gap-1.5 cursor-pointer shadow-2xs",
+                  "px-3 py-1.5 rounded-full text-xs font-semibold transition-all border inline-flex items-center gap-1.5 cursor-pointer",
                   assigneeType === 'external'
-                    ? 'bg-amber-600 text-white border-amber-600 ring-2 ring-amber-200'
-                    : 'bg-amber-50 text-amber-800 border-amber-200 hover:bg-amber-100'
+                    ? 'bg-ink-navy text-white border-ink-navy shadow-sm'
+                    : 'bg-pebble text-slate-gray border-hairline hover:text-ink-navy'
                 )}
               >
                 <Plus className="w-3 h-3" />
@@ -441,43 +433,43 @@ export function CreateCollabTaskDialog({
 
           {/* Chi tiết người & đơn vị phụ trách */}
           {assigneeType === 'external' ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 p-3 bg-amber-50/50 rounded-xl border border-amber-200/80 animate-in fade-in-50 duration-150">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 p-3.5 bg-pebble rounded-xl border border-hairline animate-in fade-in-50 duration-150">
               <div className="space-y-1">
-                <label className="block text-[11px] font-semibold text-amber-900">
+                <label className="block text-[11px] font-semibold text-ink-navy">
                   Tên Đơn vị ngoài <span className="text-rose-500">*</span>
                 </label>
                 <Input
                   {...register('externalOrganization')}
                   placeholder="VD: Xã Đoàn An Bình, THPT Hùng Vương..."
-                  className="h-8 text-xs bg-white border-amber-200 focus:border-amber-500"
+                  className="h-9 text-xs bg-white border-hairline rounded-lg text-ink-navy placeholder:text-mist-gray focus:border-signal-blue"
                 />
               </div>
 
               <div className="space-y-1">
-                <label className="block text-[11px] font-semibold text-amber-900">
+                <label className="block text-[11px] font-semibold text-ink-navy">
                   Người phụ trách (Họ tên)
                 </label>
                 <Input
                   {...register('externalAssignee')}
                   placeholder="VD: Anh Tuấn, Chị Hoa..."
-                  className="h-8 text-xs bg-white border-amber-200 focus:border-amber-500"
+                  className="h-9 text-xs bg-white border-hairline rounded-lg text-ink-navy placeholder:text-mist-gray focus:border-signal-blue"
                 />
               </div>
 
               <div className="sm:col-span-2 space-y-1">
-                <label className="block text-[11px] font-semibold text-amber-900">
+                <label className="block text-[11px] font-semibold text-ink-navy">
                   Số điện thoại / Zalo liên hệ (Tùy chọn)
                 </label>
                 <Input
                   {...register('externalContact')}
                   placeholder="VD: 0912.345.678"
-                  className="h-8 text-xs bg-white border-amber-200 focus:border-amber-500"
+                  className="h-9 text-xs bg-white border-hairline rounded-lg text-ink-navy placeholder:text-mist-gray focus:border-signal-blue tabular-nums"
                 />
               </div>
             </div>
           ) : (
             <div className="space-y-1">
-              <label className="block text-xs font-semibold text-slate-700">
+              <label className="block text-xs font-semibold text-ink-navy">
                 Người phụ trách cụ thể
               </label>
               <Controller
@@ -497,11 +489,11 @@ export function CreateCollabTaskDialog({
                       }
                     }}
                   >
-                    <SelectTrigger className="h-9 text-xs bg-slate-50/50">
+                    <SelectTrigger className="h-9.5 text-xs bg-white border-hairline rounded-lg text-ink-navy">
                       <SelectValue placeholder="Đơn vị tự phân công (hoặc chọn cá nhân cụ thể)" />
                     </SelectTrigger>
-                    <SelectContent className="bg-white border-slate-200 max-h-56">
-                      <SelectItem value="none" className="text-xs text-slate-500 italic">
+                    <SelectContent className="bg-white border-hairline rounded-xl shadow-sm max-h-56">
+                      <SelectItem value="none" className="text-xs text-slate-gray italic">
                         -- Đơn vị tự phụ trách (Chưa chỉ định người cụ thể) --
                       </SelectItem>
                       {filteredPersonnel.map((p) => (
@@ -519,7 +511,7 @@ export function CreateCollabTaskDialog({
           {/* Mảng công việc & Giai đoạn (2 cột ngang gọn gàng) */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div className="space-y-1">
-              <label className="block text-xs font-semibold text-slate-700">
+              <label className="block text-xs font-semibold text-ink-navy">
                 Mảng công việc
               </label>
               <Controller
@@ -530,10 +522,10 @@ export function CreateCollabTaskDialog({
                     value={field.value || CATEGORY_OPTIONS[0]}
                     onValueChange={field.onChange}
                   >
-                    <SelectTrigger className="h-9 text-xs bg-slate-50/50">
+                    <SelectTrigger className="h-9.5 text-xs bg-white border-hairline rounded-lg text-ink-navy">
                       <SelectValue placeholder="Chọn mảng công việc" />
                     </SelectTrigger>
-                    <SelectContent className="bg-white border-slate-200">
+                    <SelectContent className="bg-white border-hairline rounded-xl shadow-sm">
                       {CATEGORY_OPTIONS.map((cat) => (
                         <SelectItem key={cat} value={cat} className="text-xs">
                           {cat}
@@ -546,7 +538,7 @@ export function CreateCollabTaskDialog({
             </div>
 
             <div className="space-y-1">
-              <label className="block text-xs font-semibold text-slate-700">
+              <label className="block text-xs font-semibold text-ink-navy">
                 Giai đoạn
               </label>
               <Controller
@@ -557,10 +549,10 @@ export function CreateCollabTaskDialog({
                     value={field.value || PHASE_OPTIONS[0]}
                     onValueChange={field.onChange}
                   >
-                    <SelectTrigger className="h-9 text-xs bg-slate-50/50">
+                    <SelectTrigger className="h-9.5 text-xs bg-white border-hairline rounded-lg text-ink-navy">
                       <SelectValue placeholder="Chọn giai đoạn" />
                     </SelectTrigger>
-                    <SelectContent className="bg-white border-slate-200">
+                    <SelectContent className="bg-white border-hairline rounded-xl shadow-sm">
                       {PHASE_OPTIONS.map((ph) => (
                         <SelectItem key={ph} value={ph} className="text-xs">
                           {ph}
@@ -576,23 +568,23 @@ export function CreateCollabTaskDialog({
           {/* Sản phẩm bàn giao (Cột H trên Google Sheet) */}
           <div className="space-y-1">
             <div className="flex items-center justify-between">
-              <label htmlFor="collab-task-deliverable" className="block text-xs font-semibold text-slate-700">
+              <label htmlFor="collab-task-deliverable" className="block text-xs font-semibold text-ink-navy">
                 Sản phẩm bàn giao / Đầu ra
               </label>
-              <span className="text-[10px] text-slate-400">Kết quả cụ thể cần nộp</span>
+              <span className="text-[10px] text-slate-gray">Kết quả cụ thể cần nộp</span>
             </div>
             <Input
               id="collab-task-deliverable"
               {...register('deliverable')}
               placeholder="VD: Poster in ấn & file gốc, 50 suất cơm & nước, Kịch bản Word, Đồ Bowling..."
-              className="h-9 text-xs bg-slate-50/50 focus:bg-white"
+              className="h-9.5 text-xs bg-white border-hairline rounded-lg text-ink-navy placeholder:text-mist-gray focus:border-signal-blue"
             />
           </div>
 
           {/* Hạn chót & Mức độ ưu tiên */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
             <div className="space-y-1">
-              <label className="block text-xs font-semibold text-slate-700">
+              <label className="block text-xs font-semibold text-ink-navy">
                 Hạn chót
               </label>
               <Controller
@@ -602,25 +594,25 @@ export function CreateCollabTaskDialog({
                   <DatePicker
                     value={field.value || ''}
                     onChange={field.onChange}
-                    className="h-9 text-xs"
+                    className="h-9.5 text-xs rounded-lg border-hairline"
                   />
                 )}
               />
             </div>
 
             <div className="space-y-1">
-              <label className="block text-xs font-semibold text-slate-700">
+              <label className="block text-xs font-semibold text-ink-navy">
                 Khung giờ (Tùy chọn)
               </label>
               <Input
                 {...register('dueTime')}
                 placeholder="VD: 07:30 - 08:30"
-                className="h-9 text-xs bg-slate-50/50 focus:bg-white"
+                className="h-9.5 text-xs bg-white border-hairline rounded-lg text-ink-navy placeholder:text-mist-gray focus:border-signal-blue tabular-nums"
               />
             </div>
 
             <div className="space-y-1">
-              <label className="block text-xs font-semibold text-slate-700">
+              <label className="block text-xs font-semibold text-ink-navy">
                 Mức ưu tiên
               </label>
               <Controller
@@ -628,10 +620,10 @@ export function CreateCollabTaskDialog({
                 control={control}
                 render={({ field }) => (
                   <Select value={field.value} onValueChange={field.onChange}>
-                    <SelectTrigger className="h-9 text-xs bg-slate-50/50">
+                    <SelectTrigger className="h-9.5 text-xs bg-white border-hairline rounded-lg text-ink-navy">
                       <SelectValue />
                     </SelectTrigger>
-                    <SelectContent className="bg-white border-slate-200">
+                    <SelectContent className="bg-white border-hairline rounded-xl shadow-sm">
                       <SelectItem value="low" className="text-xs">Thấp</SelectItem>
                       <SelectItem value="medium" className="text-xs">Trung bình</SelectItem>
                       <SelectItem value="high" className="text-xs">Cao</SelectItem>
@@ -645,7 +637,7 @@ export function CreateCollabTaskDialog({
 
           {/* Ghi chú chi tiết */}
           <div className="space-y-1">
-            <label htmlFor="collab-task-desc" className="block text-xs font-semibold text-slate-700">
+            <label htmlFor="collab-task-desc" className="block text-xs font-semibold text-ink-navy">
               Ghi chú thêm (Tùy chọn)
             </label>
             <Textarea
@@ -653,18 +645,18 @@ export function CreateCollabTaskDialog({
               {...register('description')}
               rows={2}
               placeholder="Ghi rõ lưu ý địa điểm, yêu cầu vận chuyển hoặc lưu ý người tham gia..."
-              className="text-xs bg-slate-50/50 focus:bg-white resize-none"
+              className="text-xs bg-white border-hairline rounded-lg text-ink-navy placeholder:text-mist-gray resize-none"
             />
           </div>
 
           {/* Footer nút bấm */}
-          <DialogFooter className="pt-2 gap-2 border-t border-slate-100">
+          <DialogFooter className="pt-3 gap-2 border-t border-hairline">
             <Button
               type="button"
               variant="outline"
               size="sm"
               onClick={onClose}
-              className="text-xs h-8 px-3 border-slate-200 hover:bg-slate-50 active:scale-[0.98]"
+              className="text-xs h-9 px-4 rounded-lg border-hairline text-ink-navy hover:bg-pebble"
             >
               Hủy
             </Button>
@@ -672,7 +664,7 @@ export function CreateCollabTaskDialog({
               type="submit"
               size="sm"
               disabled={createMutation.isPending || updateMutation.isPending || hasNoActivities}
-              className="text-xs h-8 px-3.5 bg-blue-600 hover:bg-blue-700 text-white font-semibold shadow-2xs active:scale-[0.98] disabled:opacity-50"
+              className="text-xs h-9 px-4 rounded-lg bg-signal-blue hover:bg-[#005be0] text-white font-semibold shadow-sm disabled:opacity-50"
             >
               {createMutation.isPending || updateMutation.isPending ? (
                 <>

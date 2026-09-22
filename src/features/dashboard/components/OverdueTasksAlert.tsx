@@ -14,7 +14,7 @@ export function OverdueTasksAlert({ overdueTasks }: OverdueTasksAlertProps) {
 
   if (!hasOverdue) {
     return (
-      <Card className="border-emerald-200/80 bg-emerald-50/40 shadow-2xs">
+      <Card className="border-emerald-200/80 bg-emerald-50/40 shadow-xs">
         <CardContent className="p-4 flex items-center justify-between gap-3">
           <div className="flex items-center gap-3">
             <div className="w-8 h-8 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center shrink-0">
@@ -39,7 +39,7 @@ export function OverdueTasksAlert({ overdueTasks }: OverdueTasksAlertProps) {
   }
 
   return (
-    <Card className="border-rose-200 bg-rose-50/40 shadow-2xs">
+    <Card className="border-rose-200 bg-rose-50/40 shadow-xs">
       <CardHeader className="p-4 pb-2">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
@@ -74,8 +74,8 @@ export function OverdueTasksAlert({ overdueTasks }: OverdueTasksAlertProps) {
             const priorityMeta = TASK_PRIORITY_META[task.priority] || {
               label: task.priority,
               badgeVariant: 'outline' as const,
-              colorClass: 'text-slate-600',
-              bgClass: 'bg-white text-slate-700 border-slate-200',
+              colorClass: 'text-slate-gray',
+              bgClass: 'bg-white text-slate-gray border-hairline',
             };
 
             return (
@@ -97,20 +97,20 @@ export function OverdueTasksAlert({ overdueTasks }: OverdueTasksAlertProps) {
                         {priorityMeta.label}
                       </Badge>
                       {task.activity && (
-                        <span className="text-[11px] text-slate-500 tabular-nums font-medium truncate">
+                        <span className="text-[11px] text-mist-gray tabular-nums font-medium truncate">
                           #{task.activity.code}
                         </span>
                       )}
                     </div>
 
-                    <h5 className="text-xs font-semibold text-slate-900 group-hover:text-rose-600 transition-colors line-clamp-1">
+                    <h5 className="text-xs font-semibold text-ink-navy group-hover:text-rose-600 transition-colors line-clamp-1">
                       {task.title}
                     </h5>
 
-                    <div className="flex items-center gap-3 text-[11px] text-slate-500">
+                    <div className="flex items-center gap-3 text-[11px] text-mist-gray">
                       <span>Hạn chót: {formatShortDate(task.dueDate)}</span>
                       <span className="flex items-center gap-1">
-                        <User className="w-3 h-3 text-slate-400" />
+                        <User className="w-3 h-3 text-mist-gray" />
                         <span className="truncate max-w-[120px]">
                           {task.assignee ? task.assignee.fullName : 'Chưa phân công'}
                         </span>

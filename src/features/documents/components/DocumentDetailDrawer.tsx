@@ -179,9 +179,9 @@ export function DocumentDetailDrawer({
               onClose();
               onEdit(document);
             }}
-            className="h-8 text-xs font-semibold text-slate-700 hover:text-slate-900 border-slate-200 shadow-2xs gap-1.5 cursor-pointer rounded-xl"
+            className="h-8 text-xs font-semibold text-slate-gray hover:text-ink-navy border-hairline shadow-xs gap-1.5 cursor-pointer rounded-xl"
           >
-            <Edit3 className="w-3.5 h-3.5 text-slate-500" />
+            <Edit3 className="w-3.5 h-3.5 text-mist-gray" />
             <span>Sửa</span>
           </Button>
           <Button
@@ -191,7 +191,7 @@ export function DocumentDetailDrawer({
               onClose();
               onDelete(document);
             }}
-            className="h-8 text-xs font-semibold text-rose-700 border-rose-200 hover:bg-rose-50 shadow-2xs gap-1.5 cursor-pointer rounded-xl"
+            className="h-8 text-xs font-semibold text-rose-700 border-rose-200 hover:bg-rose-50 shadow-xs gap-1.5 cursor-pointer rounded-xl"
           >
             <Trash2 className="w-3.5 h-3.5 text-rose-500" />
             <span>Xóa tài liệu</span>
@@ -202,15 +202,15 @@ export function DocumentDetailDrawer({
   );
 
   const footer = (
-    <div className="flex items-center justify-between w-full text-xs text-slate-500">
+    <div className="flex items-center justify-between w-full text-xs text-mist-gray">
       <span>
-        Mã tài liệu: <strong className="font-mono text-slate-800">{document.id.slice(0, 8)}...</strong>
+        Mã tài liệu: <strong className="font-mono text-ink-navy">{document.id.slice(0, 8)}...</strong>
       </span>
       <Button
         size="sm"
         variant="outline"
         onClick={onClose}
-        className="h-8 text-xs font-semibold text-slate-700 rounded-xl"
+        className="h-8 text-xs font-semibold text-slate-gray border-hairline rounded-xl hover:bg-cloud"
       >
         Đóng
       </Button>
@@ -230,15 +230,15 @@ export function DocumentDetailDrawer({
       footer={footer}
     >
       {/* Quick Action Bar */}
-      <div className="p-3 bg-slate-50/80 rounded-2xl border border-slate-200/80 flex items-center justify-between gap-2 overflow-x-auto">
+      <div className="p-3 bg-cloud/80 rounded-2xl border border-hairline flex items-center justify-between gap-2 overflow-x-auto">
         <div className="flex items-center gap-2">
           <Button
             size="sm"
             variant="outline"
             onClick={handleOpenExternal}
-            className="h-8 text-xs font-semibold text-slate-700 hover:text-slate-900 bg-white border-slate-200 shadow-2xs gap-1.5 cursor-pointer rounded-xl"
+            className="h-8 text-xs font-semibold text-slate-gray hover:text-ink-navy bg-white border-hairline shadow-xs gap-1.5 cursor-pointer rounded-xl"
           >
-            <ExternalLink className="w-3.5 h-3.5 text-slate-500" />
+            <ExternalLink className="w-3.5 h-3.5 text-mist-gray" />
             <span>{isDriveDoc ? 'Mở trên Google Drive' : 'Mở / Xem'}</span>
           </Button>
 
@@ -248,9 +248,9 @@ export function DocumentDetailDrawer({
               variant="outline"
               onClick={handleDownload}
               disabled={isDownloading}
-              className="h-8 text-xs font-semibold text-slate-700 hover:text-slate-900 bg-white border-slate-200 shadow-2xs gap-1.5 cursor-pointer rounded-xl"
+              className="h-8 text-xs font-semibold text-slate-gray hover:text-ink-navy bg-white border-hairline shadow-xs gap-1.5 cursor-pointer rounded-xl"
             >
-              <Download className="w-3.5 h-3.5 text-slate-500" />
+              <Download className="w-3.5 h-3.5 text-mist-gray" />
               <span>{isDownloading ? 'Đang tải xuống...' : 'Tải xuống'}</span>
             </Button>
           )}
@@ -259,7 +259,7 @@ export function DocumentDetailDrawer({
             size="sm"
             variant="ghost"
             onClick={handleCopyLink}
-            className="h-8 text-xs font-semibold text-slate-600 hover:text-slate-900 gap-1.5 cursor-pointer rounded-xl"
+            className="h-8 text-xs font-semibold text-slate-gray hover:text-ink-navy gap-1.5 cursor-pointer rounded-xl"
           >
             {copied ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <Copy className="w-3.5 h-3.5" />}
             <span>{copied ? 'Đã sao chép liên kết' : 'Sao chép liên kết'}</span>
@@ -269,16 +269,16 @@ export function DocumentDetailDrawer({
 
       {/* Embedded Document Preview for Supported Formats */}
       {previewLoading && (
-        <div className="flex items-center justify-center p-8 bg-slate-50 border border-slate-200 rounded-2xl">
+        <div className="flex items-center justify-center p-8 bg-cloud border border-hairline rounded-2xl">
           <div className="flex flex-col items-center gap-2">
-            <div className="w-6 h-6 border-2 border-blue-600 border-t-transparent rounded-full animate-spin" />
-            <span className="text-xs text-slate-500 font-medium">Đang tải bản xem trước...</span>
+            <div className="w-6 h-6 border-2 border-signal-blue border-t-transparent rounded-full animate-spin" />
+            <span className="text-xs text-mist-gray font-medium">Đang tải bản xem trước...</span>
           </div>
         </div>
       )}
 
       {previewSignedUrl && fileTypeGroup === 'image' && (
-        <div className="relative group rounded-2xl overflow-hidden border border-slate-200 bg-slate-900/5 max-h-72 flex items-center justify-center p-2">
+        <div className="relative group rounded-2xl overflow-hidden border border-hairline bg-ink-navy/5 max-h-72 flex items-center justify-center p-2">
           <img
             src={previewSignedUrl}
             alt={document.title}
@@ -288,7 +288,7 @@ export function DocumentDetailDrawer({
             href={previewSignedUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="absolute top-3 right-3 p-1.5 rounded-lg bg-slate-900/70 text-white hover:bg-slate-900 transition-colors opacity-0 group-hover:opacity-100"
+            className="absolute top-3 right-3 p-1.5 rounded-lg bg-ink-navy/70 text-white hover:bg-ink-navy transition-colors opacity-0 group-hover:opacity-100"
             title="Mở toàn màn hình"
           >
             <Maximize2 className="w-3.5 h-3.5" />
@@ -297,7 +297,7 @@ export function DocumentDetailDrawer({
       )}
 
       {previewSignedUrl && fileTypeGroup === 'pdf' && (
-        <div className="rounded-2xl overflow-hidden border border-slate-200 bg-slate-100 h-96">
+        <div className="rounded-2xl overflow-hidden border border-hairline bg-cloud h-96">
           <iframe
             src={`${previewSignedUrl}#toolbar=0`}
             title={document.title}
@@ -308,41 +308,41 @@ export function DocumentDetailDrawer({
 
       {/* SECTION 1 — FILE SPECIFICATIONS */}
       <div className="space-y-2.5">
-        <div className="flex items-center gap-1.5 text-slate-900 font-bold uppercase tracking-wider text-[10px]">
-          <FileText className="w-3.5 h-3.5 text-slate-400" />
+        <div className="flex items-center gap-1.5 text-ink-navy font-bold uppercase tracking-wider text-[10px]">
+          <FileText className="w-3.5 h-3.5 text-mist-gray" />
           <span>Thông tin tài liệu</span>
         </div>
 
-        <div className="bg-slate-50/70 border border-slate-200 rounded-2xl p-4 space-y-2.5 text-xs">
+        <div className="bg-cloud/70 border border-hairline rounded-2xl p-4 space-y-2.5 text-xs">
           <div className="flex justify-between items-start gap-4">
-            <span className="text-slate-500 font-medium shrink-0">Tên văn bản:</span>
-            <span className="font-semibold text-slate-900 text-right break-all">{document.title}</span>
+            <span className="text-mist-gray font-medium shrink-0">Tên văn bản:</span>
+            <span className="font-semibold text-ink-navy text-right break-all">{document.title}</span>
           </div>
 
-          <div className="flex justify-between items-center border-t border-slate-200/60 pt-2">
-            <span className="text-slate-500 font-medium">Định dạng & Phân loại:</span>
-            <span className="font-mono text-slate-800 uppercase font-semibold">
+          <div className="flex justify-between items-center border-t border-hairline pt-2">
+            <span className="text-mist-gray font-medium">Định dạng & Phân loại:</span>
+            <span className="font-mono text-ink-navy uppercase font-semibold">
               {fileExt ? `${fileExt} (${fileTypeGroup})` : fileTypeGroup.toUpperCase()}
             </span>
           </div>
 
           {document.fileSize !== null && document.fileSize !== undefined && (
-            <div className="flex justify-between items-center border-t border-slate-200/60 pt-2">
-              <span className="text-slate-500 font-medium">Kích thước:</span>
-              <span className="font-mono font-semibold text-slate-800">
+            <div className="flex justify-between items-center border-t border-hairline pt-2">
+              <span className="text-mist-gray font-medium">Kích thước:</span>
+              <span className="font-mono font-semibold text-ink-navy">
                 {formatFileSize(document.fileSize)}
               </span>
             </div>
           )}
 
-          <div className="flex justify-between items-center border-t border-slate-200/60 pt-2">
-            <span className="text-slate-500 font-medium">Ngày tạo:</span>
-            <span className="text-slate-700">{formatDate(document.createdAt)}</span>
+          <div className="flex justify-between items-center border-t border-hairline pt-2">
+            <span className="text-mist-gray font-medium">Ngày tạo:</span>
+            <span className="text-slate-gray">{formatDate(document.createdAt)}</span>
           </div>
 
-          <div className="flex justify-between items-center border-t border-slate-200/60 pt-2">
-            <span className="text-slate-500 font-medium">Cập nhật lần cuối:</span>
-            <span className="text-slate-700">{formatDate(document.updatedAt)}</span>
+          <div className="flex justify-between items-center border-t border-hairline pt-2">
+            <span className="text-mist-gray font-medium">Cập nhật lần cuối:</span>
+            <span className="text-slate-gray">{formatDate(document.updatedAt)}</span>
           </div>
         </div>
       </div>
@@ -350,23 +350,23 @@ export function DocumentDetailDrawer({
       {/* SECTION 2 — CONTEXT & LINKAGES (Only shown if linked) */}
       {isLinked && (
         <div className="space-y-2.5">
-          <div className="flex items-center gap-1.5 text-slate-900 font-bold uppercase tracking-wider text-[10px]">
-            <Layers className="w-3.5 h-3.5 text-slate-400" />
+          <div className="flex items-center gap-1.5 text-ink-navy font-bold uppercase tracking-wider text-[10px]">
+            <Layers className="w-3.5 h-3.5 text-mist-gray" />
             <span>Liên kết Đơn vị & Nhiệm kỳ</span>
           </div>
 
-          <div className="bg-slate-50/70 border border-slate-200 rounded-2xl p-4 space-y-2.5 text-xs">
+          <div className="bg-cloud/70 border border-hairline rounded-2xl p-4 space-y-2.5 text-xs">
             {document.term && (
               <div className="flex justify-between items-center">
-                <span className="text-slate-500 font-medium">Nhiệm kỳ áp dụng:</span>
-                <span className="font-semibold text-slate-900">{document.term.name}</span>
+                <span className="text-mist-gray font-medium">Nhiệm kỳ áp dụng:</span>
+                <span className="font-semibold text-ink-navy">{document.term.name}</span>
               </div>
             )}
 
             {document.activity && (
-              <div className="flex justify-between items-center border-t border-slate-200/60 pt-2">
-                <span className="text-slate-500 font-medium">Hoạt động liên quan:</span>
-                <span className="font-semibold text-slate-900">
+              <div className="flex justify-between items-center border-t border-hairline pt-2">
+                <span className="text-mist-gray font-medium">Hoạt động liên quan:</span>
+                <span className="font-semibold text-ink-navy">
                   <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-emerald-50 text-emerald-700 border border-emerald-200 font-medium">
                     {document.activity.title}
                     {document.activity.code && ` [${document.activity.code}]`}
@@ -376,16 +376,16 @@ export function DocumentDetailDrawer({
             )}
 
             {document.task && (
-              <div className="flex justify-between items-center border-t border-slate-200/60 pt-2">
-                <span className="text-slate-500 font-medium">Nhiệm vụ liên quan:</span>
-                <span className="font-medium text-slate-800">{document.task.title}</span>
+              <div className="flex justify-between items-center border-t border-hairline pt-2">
+                <span className="text-mist-gray font-medium">Nhiệm vụ liên quan:</span>
+                <span className="font-medium text-ink-navy">{document.task.title}</span>
               </div>
             )}
 
             {document.member && (
-              <div className="flex justify-between items-center border-t border-slate-200/60 pt-2">
-                <span className="text-slate-500 font-medium">Hội viên / Nhân sự:</span>
-                <span className="font-medium text-slate-800">
+              <div className="flex justify-between items-center border-t border-hairline pt-2">
+                <span className="text-mist-gray font-medium">Hội viên / Nhân sự:</span>
+                <span className="font-medium text-ink-navy">
                   {document.member.fullName} ({document.member.studentId})
                 </span>
               </div>
@@ -396,19 +396,19 @@ export function DocumentDetailDrawer({
 
       {/* SECTION 3 — OWNERSHIP & GOVERNANCE */}
       <div className="space-y-2.5">
-        <div className="flex items-center gap-1.5 text-slate-900 font-bold uppercase tracking-wider text-[10px]">
-          <Shield className="w-3.5 h-3.5 text-slate-400" />
+        <div className="flex items-center gap-1.5 text-ink-navy font-bold uppercase tracking-wider text-[10px]">
+          <Shield className="w-3.5 h-3.5 text-mist-gray" />
           <span>Người tải lên</span>
         </div>
 
-        <div className="bg-slate-50/70 border border-slate-200 rounded-2xl p-4 space-y-2.5 text-xs">
+        <div className="bg-cloud/70 border border-hairline rounded-2xl p-4 space-y-2.5 text-xs">
           <div className="flex items-center justify-between">
-            <span className="text-slate-500 font-medium">Người tải lên:</span>
+            <span className="text-mist-gray font-medium">Người tải lên:</span>
             <div className="flex items-center gap-2">
-              <div className="w-5 h-5 rounded-full bg-slate-200 text-slate-600 flex items-center justify-center font-bold text-[10px]">
+              <div className="w-5 h-5 rounded-full bg-pebble text-slate-gray flex items-center justify-center font-bold text-[10px]">
                 {document.uploader?.fullName?.charAt(0) || <User className="w-3 h-3" />}
               </div>
-              <span className="font-medium text-slate-900">
+              <span className="font-medium text-ink-navy">
                 {document.uploader?.fullName || 'Hội viên Đơn vị'}
               </span>
             </div>

@@ -24,9 +24,9 @@ export function QuickActionsBar({
   }
 
   return (
-    <div className="p-4 rounded-xl bg-linear-to-r from-slate-900 via-slate-800 to-indigo-950 text-white shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-4">
+    <div className="p-4 rounded-xl bg-ink-navy text-white shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-4">
       <div className="space-y-0.5">
-        <div className="flex items-center gap-1.5 text-xs text-indigo-300 font-medium">
+        <div className="flex items-center gap-1.5 text-xs text-mist-gray font-medium">
           <span>Thao tác nhanh cho Ban Chấp Hành</span>
         </div>
         <h3 className="text-sm font-bold text-white">
@@ -39,7 +39,7 @@ export function QuickActionsBar({
           <Link to="/activities">
             <Button
               size="sm"
-              className="bg-indigo-600 hover:bg-indigo-500 text-white text-xs h-8 shadow-xs border border-indigo-400/30"
+              className="bg-signal-blue hover:bg-[#005be0] text-white text-xs h-8 shadow-xs border border-white/20"
             >
               <CalendarPlus className="w-3.5 h-3.5 mr-1.5" />
               Thêm hoạt động
@@ -63,7 +63,7 @@ export function QuickActionsBar({
           <Link to="/members">
             <Button
               size="sm"
-              className="bg-blue-600 hover:bg-blue-500 text-white text-xs h-8 shadow-xs border border-blue-400/30"
+              className="bg-signal-blue hover:bg-[#005be0] text-white text-xs h-8 shadow-xs border border-white/20"
             >
               <Users className="w-3.5 h-3.5 mr-1.5" />
               Thêm hội viên

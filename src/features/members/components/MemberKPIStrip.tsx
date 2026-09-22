@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   Users,
   UserCheck,
@@ -29,7 +28,7 @@ export function MemberKPIStrip({
   onFilterSelect,
   activeTermId,
 }: MemberKPIStripProps) {
-  const { t, language } = useLanguage();
+  const { language } = useLanguage();
   const isAllActive = !currentFilters.status || currentFilters.status === 'all';
   const isActiveFilter = currentFilters.status === 'active';
   const isAlumniFilter = currentFilters.status === 'alumni';
@@ -43,8 +42,7 @@ export function MemberKPIStrip({
       value: stats.total,
       subtext: language === 'vi' ? 'Toàn bộ hội viên' : 'All member profiles',
       icon: Users,
-      color: 'text-slate-900',
-      badgeBg: 'bg-slate-100 text-slate-700',
+      color: 'text-ink-navy',
       active: isAllActive && !isBoardFilter && !isTermFilter,
       onClick: () =>
         onFilterSelect({
@@ -61,7 +59,6 @@ export function MemberKPIStrip({
       subtext: language === 'vi' ? 'Đang sinh hoạt thường xuyên' : 'Regular active members',
       icon: UserCheck,
       color: 'text-emerald-700',
-      badgeBg: 'bg-emerald-50 text-emerald-800 border-emerald-200/80',
       active: isActiveFilter && !isBoardFilter,
       onClick: () =>
         onFilterSelect({
@@ -75,8 +72,7 @@ export function MemberKPIStrip({
       value: stats.alumni,
       subtext: language === 'vi' ? 'Đã tốt nghiệp ra trường' : 'Graduated members',
       icon: GraduationCap,
-      color: 'text-indigo-700',
-      badgeBg: 'bg-indigo-50 text-indigo-800 border-indigo-200/80',
+      color: 'text-signal-blue',
       active: isAlumniFilter,
       onClick: () =>
         onFilterSelect({
@@ -96,8 +92,7 @@ export function MemberKPIStrip({
         ? 'Hồ sơ có nhiệm kỳ'
         : 'Assigned to a term',
       icon: CalendarCheck,
-      color: 'text-blue-700',
-      badgeBg: 'bg-blue-50 text-blue-800 border-blue-200/80',
+      color: 'text-signal-blue',
       active: isTermFilter,
       onClick: () => {
         if (activeTermId) {
@@ -114,8 +109,7 @@ export function MemberKPIStrip({
       value: stats.boardCount,
       subtext: language === 'vi' ? 'Cán bộ cốt cán Đơn vị' : 'Organization leadership accounts',
       icon: ShieldAlert,
-      color: 'text-indigo-700',
-      badgeBg: 'bg-indigo-50 text-indigo-800 border-indigo-200/80',
+      color: 'text-signal-blue',
       active: isBoardFilter,
       onClick: () =>
         onFilterSelect({
@@ -135,23 +129,23 @@ export function MemberKPIStrip({
             type="button"
             onClick={card.onClick}
             className={cn(
-              'flex flex-col text-left p-3.5 rounded-2xl border transition-all duration-200 relative overflow-hidden group focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-emerald-600/40 focus-visible:ring-offset-2 cursor-pointer active:scale-[0.98]',
+              'flex flex-col text-left p-3.5 rounded-2xl border transition-all duration-200 relative overflow-hidden group focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-signal-blue/40 focus-visible:ring-offset-2 cursor-pointer active:scale-[0.98]',
               card.active
-                ? 'bg-emerald-50/40 border-emerald-600/80 shadow-xs ring-1 ring-emerald-600/20'
-                : 'bg-white border-slate-200/80 hover:bg-slate-50/50 hover:border-slate-300/80 hover:shadow-2xs'
+                ? 'bg-[#e6f0ff]/50 border-signal-blue shadow-xs ring-1 ring-signal-blue/20'
+                : 'bg-white border-hairline hover:bg-cloud hover:border-slate-gray/40 hover:shadow-xs'
             )}
           >
             {/* Top row: Label and Icon */}
             <div className="flex items-center justify-between w-full mb-1">
-              <span className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider truncate">
+              <span className="text-[11px] font-semibold text-slate-gray uppercase tracking-wider truncate">
                 {card.label}
               </span>
               <div
                 className={cn(
-                  'h-7 w-7 rounded-xl flex items-center justify-center transition-colors shadow-2xs',
+                  'h-7 w-7 rounded-xl flex items-center justify-center transition-colors shadow-xs',
                   card.active
-                    ? 'bg-emerald-100/90 text-emerald-800'
-                    : 'bg-slate-100/80 text-slate-500 group-hover:text-slate-700 group-hover:bg-slate-200/70'
+                    ? 'bg-[#e6f0ff] text-signal-blue border border-[#d4e4fa]'
+                    : 'bg-pebble text-slate-gray group-hover:text-ink-navy group-hover:bg-cloud'
                 )}
               >
                 <Icon className="h-4 w-4" />
@@ -160,19 +154,19 @@ export function MemberKPIStrip({
 
             {/* Middle row: Big Value */}
             <div className="flex items-baseline gap-1.5 mt-0.5">
-              <span className={cn('text-xl font-bold tracking-tight', card.color)}>
+              <span className={cn('text-xl font-bold tracking-tight tabular-nums', card.color)}>
                 {card.value}
               </span>
             </div>
 
             {/* Bottom row: Subtext */}
-            <div className="text-[11px] text-slate-400 truncate mt-0.5 font-normal">
+            <div className="text-[11px] text-slate-gray truncate mt-0.5 font-normal">
               {card.subtext}
             </div>
 
             {/* Active Indicator bar */}
             {card.active && (
-              <div className="absolute bottom-0 left-2 right-2 h-0.5 bg-emerald-600 rounded-t-full" />
+              <div className="absolute bottom-0 left-2 right-2 h-0.5 bg-signal-blue rounded-t-full" />
             )}
           </button>
         );
@@ -180,4 +174,3 @@ export function MemberKPIStrip({
     </div>
   );
 }
-

@@ -25,8 +25,6 @@ import {
   AlertCircle,
   Loader2,
   Sparkles,
-  Users,
-  CheckCircle2,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useAddCollabParticipant, useCollabPlanPersonnel } from '../queries/collab.queries';
@@ -204,15 +202,15 @@ export function AddCollabParticipantDialog({
 
   return (
     <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
-      <DialogContent className="max-w-xl w-full bg-white rounded-2xl p-6 pr-10 shadow-2xl border border-slate-100 max-h-[90vh] overflow-y-auto">
-        <DialogHeader className="pb-3 border-b border-slate-100">
-          <DialogTitle className="text-base font-bold text-slate-900 flex items-center gap-2">
-            <div className="w-8 h-8 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center">
+      <DialogContent className="max-w-xl w-full bg-white rounded-2xl p-6 pr-10 shadow-sm border border-hairline max-h-[90vh] overflow-y-auto">
+        <DialogHeader className="pb-3 border-b border-hairline">
+          <DialogTitle className="text-base font-bold text-ink-navy flex items-center gap-2">
+            <div className="w-8 h-8 rounded-lg bg-[#e6f0ff] text-signal-blue flex items-center justify-center">
               <UserPlus className="h-4 w-4" />
             </div>
             <span>Thêm Người Tham Gia / Tình Nguyện Viên</span>
           </DialogTitle>
-          <DialogDescription className="text-xs text-slate-500">
+          <DialogDescription className="text-xs text-slate-gray">
             Ghi nhận thành viên vào danh sách lực lượng chiến dịch hoặc phân công hoạt động cụ thể.
           </DialogDescription>
         </DialogHeader>
@@ -226,15 +224,15 @@ export function AddCollabParticipantDialog({
 
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 pt-1">
           {/* Mode Switcher */}
-          <div className="flex rounded-xl bg-slate-100/80 p-1 border border-slate-200/50">
+          <div className="flex rounded-lg bg-pebble p-1 border border-hairline">
             <button
               type="button"
               onClick={() => setValue('mode', 'existing_member')}
               className={cn(
-                'flex-1 py-1.5 text-xs font-semibold rounded-lg transition-all active:scale-[0.98]',
+                'flex-1 py-1.5 text-xs font-semibold rounded-md transition-all',
                 mode === 'existing_member'
-                  ? 'bg-white text-blue-700 shadow-2xs font-bold'
-                  : 'text-slate-600 hover:text-slate-900'
+                  ? 'bg-white text-ink-navy shadow-sm font-bold'
+                  : 'text-slate-gray hover:text-ink-navy'
               )}
             >
               Chọn từ Danh bạ đơn vị ({personnel.length})
@@ -246,10 +244,10 @@ export function AddCollabParticipantDialog({
                 setValue('memberId', null);
               }}
               className={cn(
-                'flex-1 py-1.5 text-xs font-semibold rounded-lg transition-all active:scale-[0.98]',
+                'flex-1 py-1.5 text-xs font-semibold rounded-md transition-all',
                 mode === 'manual'
-                  ? 'bg-white text-blue-700 shadow-2xs font-bold'
-                  : 'text-slate-600 hover:text-slate-900'
+                  ? 'bg-white text-ink-navy shadow-sm font-bold'
+                  : 'text-slate-gray hover:text-ink-navy'
               )}
             >
               Nhập sinh viên / Tự do
@@ -258,16 +256,16 @@ export function AddCollabParticipantDialog({
 
           {/* Quick Picker from Unit Directory */}
           {mode === 'existing_member' && (
-            <div className="space-y-1.5 p-3 bg-blue-50/50 rounded-xl border border-blue-100">
-              <label className="block text-xs font-semibold text-blue-900 flex items-center gap-1.5">
-                <Sparkles className="h-3.5 w-3.5 text-blue-600" />
+            <div className="space-y-1.5 p-3.5 bg-pebble/50 rounded-xl border border-hairline">
+              <label className="block text-xs font-semibold text-ink-navy flex items-center gap-1.5">
+                <Sparkles className="h-3.5 w-3.5 text-signal-blue" />
                 Chọn nhanh từ nhân sự BCH / Thành viên các đơn vị
               </label>
               <Select onValueChange={handleSelectMember}>
-                <SelectTrigger className="h-9 text-xs bg-white border-blue-200">
+                <SelectTrigger className="h-9.5 text-xs bg-white border-hairline rounded-lg text-ink-navy">
                   <SelectValue placeholder="-- Chọn từ danh bạ các đơn vị --" />
                 </SelectTrigger>
-                <SelectContent className="bg-white border-slate-200 max-h-56">
+                <SelectContent className="bg-white border-hairline rounded-xl shadow-sm max-h-56">
                   {personnel.map((p) => {
                     const studentInfo = [p.studentId, p.className, p.cohort ? `K${p.cohort}` : null]
                       .filter(Boolean)
@@ -276,16 +274,16 @@ export function AddCollabParticipantDialog({
                       <SelectItem
                         key={`${p.userId}-${p.organizationId}`}
                         value={p.userId}
-                        className="text-xs"
+                        className="text-xs text-ink-navy"
                       >
                         <div className="flex items-center justify-between w-full gap-2 min-w-0">
                           <div className="flex items-center gap-1.5 truncate">
-                            <span className="font-semibold text-slate-900">{p.fullName}</span>
+                            <span className="font-semibold text-ink-navy">{p.fullName}</span>
                             {studentInfo && (
-                              <span className="text-[10px] text-slate-400 tabular-nums">({studentInfo})</span>
+                              <span className="text-[10px] text-slate-gray tabular-nums">({studentInfo})</span>
                             )}
                           </div>
-                          <span className="text-[10px] bg-slate-100 text-slate-700 px-1.5 py-0.5 rounded font-medium shrink-0">
+                          <span className="text-[10px] bg-pebble text-ink-navy border border-hairline px-2 py-0.5 rounded-full font-medium shrink-0">
                             {p.organizationCode}
                           </span>
                         </div>
@@ -299,7 +297,7 @@ export function AddCollabParticipantDialog({
 
           {/* 1-Click Organization Badges */}
           <div className="space-y-1.5">
-            <label className="block text-xs font-bold text-slate-800">
+            <label className="block text-xs font-semibold text-ink-navy">
               Đơn vị trực thuộc / Phụ trách *
             </label>
             <div className="flex items-center gap-2 flex-wrap">
@@ -314,10 +312,10 @@ export function AddCollabParticipantDialog({
                       setValue('organizationId', org.id);
                     }}
                     className={cn(
-                      'px-3 py-1.5 rounded-xl text-xs font-semibold transition-all border inline-flex items-center gap-1.5 active:scale-[0.98]',
+                      'px-3 py-1.5 rounded-full text-xs font-semibold transition-all border inline-flex items-center gap-1.5 cursor-pointer',
                       isSelected
-                        ? 'bg-blue-600 text-white border-blue-600 shadow-2xs font-bold'
-                        : 'bg-white text-slate-700 border-slate-200 hover:bg-slate-50'
+                        ? 'bg-signal-blue text-white border-signal-blue shadow-sm'
+                        : 'bg-white text-ink-navy border-hairline hover:bg-pebble'
                     )}
                   >
                     <Building2 className="h-3.5 w-3.5" />
@@ -333,10 +331,10 @@ export function AddCollabParticipantDialog({
                   setValue('organizationId', null);
                 }}
                 className={cn(
-                  'px-3 py-1.5 rounded-xl text-xs font-semibold transition-all border inline-flex items-center gap-1.5 active:scale-[0.98]',
+                  'px-3 py-1.5 rounded-full text-xs font-semibold transition-all border inline-flex items-center gap-1.5 cursor-pointer',
                   isExternal
-                    ? 'bg-emerald-600 text-white border-emerald-600 shadow-2xs font-bold'
-                    : 'bg-white text-slate-700 border-slate-200 hover:bg-slate-50'
+                    ? 'bg-emerald-600 text-white border-emerald-600 shadow-sm'
+                    : 'bg-white text-ink-navy border-hairline hover:bg-pebble'
                 )}
               >
                 <span>+ Đối tác / Đơn vị ngoài</span>
@@ -349,7 +347,7 @@ export function AddCollabParticipantDialog({
                 <Input
                   {...register('externalOrganization')}
                   placeholder="Tên đơn vị ngoài (vd: Xã Đoàn Mỹ Thuận, CLB Mầm Xanh...)"
-                  className="h-9 text-xs bg-emerald-50/50 border-emerald-200 focus:bg-white"
+                  className="h-9.5 text-xs bg-white border-hairline rounded-lg text-ink-navy placeholder:text-mist-gray focus:border-signal-blue"
                 />
               </div>
             )}
@@ -357,11 +355,11 @@ export function AddCollabParticipantDialog({
 
           {/* Full Name */}
           <div className="space-y-1">
-            <label className="block text-xs font-bold text-slate-800">Họ và tên *</label>
+            <label className="block text-xs font-semibold text-ink-navy">Họ và tên *</label>
             <Input
               {...register('fullName')}
               placeholder="Nguyễn Văn A"
-              className="h-9 text-xs bg-slate-50/50 focus:bg-white"
+              className="h-9.5 text-xs bg-white border-hairline rounded-lg text-ink-navy placeholder:text-mist-gray focus:border-signal-blue"
             />
             {errors.fullName && (
               <p className="text-[11px] text-rose-500">{errors.fullName.message}</p>
@@ -371,34 +369,34 @@ export function AddCollabParticipantDialog({
           {/* Student ID, Class, Cohort (3 columns) */}
           <div className="grid grid-cols-3 gap-2">
             <div className="space-y-1">
-              <label className="block text-xs font-semibold text-slate-700">MSSV</label>
+              <label className="block text-xs font-semibold text-ink-navy">MSSV</label>
               <Input
                 {...register('studentId')}
                 placeholder="B2100000"
-                className="h-9 text-xs bg-slate-50/50 focus:bg-white tabular-nums"
+                className="h-9.5 text-xs bg-white border-hairline rounded-lg text-ink-navy placeholder:text-mist-gray focus:border-signal-blue tabular-nums"
               />
             </div>
             <div className="space-y-1">
-              <label className="block text-xs font-semibold text-slate-700">Lớp</label>
+              <label className="block text-xs font-semibold text-ink-navy">Lớp</label>
               <Input
                 {...register('className')}
                 placeholder="DI21V7A1"
-                className="h-9 text-xs bg-slate-50/50 focus:bg-white"
+                className="h-9.5 text-xs bg-white border-hairline rounded-lg text-ink-navy placeholder:text-mist-gray focus:border-signal-blue"
               />
             </div>
             <div className="space-y-1">
-              <label className="block text-xs font-semibold text-slate-700">Khóa</label>
+              <label className="block text-xs font-semibold text-ink-navy">Khóa</label>
               <Input
                 {...register('cohort')}
                 placeholder="47"
-                className="h-9 text-xs bg-slate-50/50 focus:bg-white tabular-nums"
+                className="h-9.5 text-xs bg-white border-hairline rounded-lg text-ink-navy placeholder:text-mist-gray focus:border-signal-blue tabular-nums"
               />
             </div>
           </div>
 
           {/* Role / Squad Presets */}
           <div className="space-y-1.5">
-            <label className="block text-xs font-bold text-slate-800">
+            <label className="block text-xs font-semibold text-ink-navy">
               Đội hình / Vai trò tham gia
             </label>
             <div className="flex items-center gap-1.5 flex-wrap">
@@ -408,10 +406,10 @@ export function AddCollabParticipantDialog({
                   type="button"
                   onClick={() => setValue('roleTitle', role)}
                   className={cn(
-                    'px-2.5 py-1 rounded-lg text-[11px] font-medium transition-all border active:scale-[0.98]',
+                    'px-2.5 py-1 rounded-full text-[11px] font-medium transition-all border cursor-pointer',
                     selectedRole === role
-                      ? 'bg-blue-50 text-blue-700 border-blue-300 font-bold shadow-2xs'
-                      : 'bg-white text-slate-600 border-slate-200 hover:bg-slate-50'
+                      ? 'bg-signal-blue text-white border-signal-blue shadow-sm'
+                      : 'bg-white text-slate-gray border-hairline hover:text-ink-navy hover:bg-pebble'
                   )}
                 >
                   {role}
@@ -421,26 +419,26 @@ export function AddCollabParticipantDialog({
             <Input
               {...register('roleTitle')}
               placeholder="Hoặc nhập vai trò / đội hình khác..."
-              className="h-8 text-xs bg-slate-50/50 focus:bg-white mt-1"
+              className="h-9.5 text-xs bg-white border-hairline rounded-lg text-ink-navy placeholder:text-mist-gray focus:border-signal-blue mt-1"
             />
           </div>
 
           {/* Contact (Phone & Email) */}
           <div className="grid grid-cols-2 gap-2">
             <div className="space-y-1">
-              <label className="block text-xs font-semibold text-slate-700">Số điện thoại</label>
+              <label className="block text-xs font-semibold text-ink-navy">Số điện thoại</label>
               <Input
                 {...register('phone')}
                 placeholder="0912345678"
-                className="h-9 text-xs bg-slate-50/50 focus:bg-white tabular-nums"
+                className="h-9.5 text-xs bg-white border-hairline rounded-lg text-ink-navy placeholder:text-mist-gray focus:border-signal-blue tabular-nums"
               />
             </div>
             <div className="space-y-1">
-              <label className="block text-xs font-semibold text-slate-700">Email</label>
+              <label className="block text-xs font-semibold text-ink-navy">Email</label>
               <Input
                 {...register('email')}
                 placeholder="sinhvien@ctu.edu.vn"
-                className="h-9 text-xs bg-slate-50/50 focus:bg-white"
+                className="h-9.5 text-xs bg-white border-hairline rounded-lg text-ink-navy placeholder:text-mist-gray focus:border-signal-blue"
               />
             </div>
           </div>
@@ -448,7 +446,7 @@ export function AddCollabParticipantDialog({
           {/* Activity Assignment (If opened at Plan level with activities available) */}
           {activities.length > 0 && !propActivityId && (
             <div className="space-y-1">
-              <label className="block text-xs font-semibold text-slate-700">
+              <label className="block text-xs font-semibold text-ink-navy">
                 Phân bổ vào hoạt động
               </label>
               <Controller
@@ -456,10 +454,10 @@ export function AddCollabParticipantDialog({
                 control={control}
                 render={({ field }) => (
                   <Select value={field.value || 'all'} onValueChange={field.onChange}>
-                    <SelectTrigger className="h-9 text-xs bg-slate-50/50">
+                    <SelectTrigger className="h-9.5 text-xs bg-white border-hairline rounded-lg text-ink-navy">
                       <SelectValue placeholder="Chọn hoạt động phân công" />
                     </SelectTrigger>
-                    <SelectContent className="bg-white border-slate-200">
+                    <SelectContent className="bg-white border-hairline rounded-xl shadow-sm">
                       <SelectItem value="all" className="text-xs font-medium">
                         Toàn chiến dịch (Lực lượng chung)
                       </SelectItem>
@@ -477,7 +475,7 @@ export function AddCollabParticipantDialog({
 
           {/* Attendance Initial Status */}
           <div className="space-y-1">
-            <label className="block text-xs font-semibold text-slate-700">
+            <label className="block text-xs font-semibold text-ink-navy">
               Trạng thái điểm danh ban đầu
             </label>
             <Controller
@@ -485,10 +483,10 @@ export function AddCollabParticipantDialog({
               control={control}
               render={({ field }) => (
                 <Select value={field.value} onValueChange={field.onChange}>
-                  <SelectTrigger className="h-9 text-xs bg-slate-50/50">
+                  <SelectTrigger className="h-9.5 text-xs bg-white border-hairline rounded-lg text-ink-navy">
                     <SelectValue placeholder="Chọn trạng thái" />
                   </SelectTrigger>
-                  <SelectContent className="bg-white border-slate-200">
+                  <SelectContent className="bg-white border-hairline rounded-xl shadow-sm">
                     <SelectItem value="unmarked" className="text-xs">
                       Chưa điểm danh
                     </SelectItem>
@@ -506,21 +504,21 @@ export function AddCollabParticipantDialog({
 
           {/* Notes */}
           <div className="space-y-1">
-            <label className="block text-xs font-semibold text-slate-700">Ghi chú (Tùy chọn)</label>
+            <label className="block text-xs font-semibold text-ink-navy">Ghi chú (Tùy chọn)</label>
             <Input
               {...register('notes')}
               placeholder="Vd: Xe số 1, nhóm hỗ trợ buổi sáng..."
-              className="h-9 text-xs bg-slate-50/50 focus:bg-white"
+              className="h-9.5 text-xs bg-white border-hairline rounded-lg text-ink-navy placeholder:text-mist-gray focus:border-signal-blue"
             />
           </div>
 
-          <DialogFooter className="pt-3 border-t border-slate-100 flex items-center justify-end gap-2">
+          <DialogFooter className="pt-3 border-t border-hairline flex items-center justify-end gap-2">
             <Button
               type="button"
               variant="outline"
               size="sm"
               onClick={onClose}
-              className="text-xs h-8 px-3 border-slate-200 hover:bg-slate-50 active:scale-[0.98]"
+              className="text-xs h-9 px-4 rounded-lg border-hairline text-ink-navy hover:bg-pebble"
             >
               Hủy
             </Button>
@@ -528,7 +526,7 @@ export function AddCollabParticipantDialog({
               type="submit"
               size="sm"
               disabled={addMutation.isPending}
-              className="text-xs h-8 px-3.5 bg-blue-600 hover:bg-blue-700 text-white font-semibold gap-1.5 shadow-2xs active:scale-[0.98]"
+              className="text-xs h-9 px-4 rounded-lg bg-signal-blue hover:bg-[#005be0] text-white font-semibold gap-1.5 shadow-sm"
             >
               {addMutation.isPending && <Loader2 className="h-3.5 w-3.5 animate-spin" />}
               <span>Lưu người tham gia</span>

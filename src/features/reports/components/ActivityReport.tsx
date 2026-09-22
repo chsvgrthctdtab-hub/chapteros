@@ -37,14 +37,14 @@ const CATEGORY_NAMES: Record<string, string> = {
 
 const STATUS_NAMES: Record<string, { label: string; color: string; badgeClass: string }> = {
   completed: { label: 'Đã hoàn thành', color: '#10b981', badgeClass: 'bg-emerald-50 text-emerald-700 border-emerald-200' },
-  in_progress: { label: 'Đang diễn ra', color: '#3b82f6', badgeClass: 'bg-blue-50 text-blue-700 border-blue-200' },
-  published: { label: 'Đã công bố', color: '#6366f1', badgeClass: 'bg-indigo-50 text-indigo-700 border-indigo-200' },
+  in_progress: { label: 'Đang diễn ra', color: '#006bff', badgeClass: 'bg-[#e6f0ff] text-signal-blue border-[#d4e4fa]' },
+  published: { label: 'Đã công bố', color: '#8b5cf6', badgeClass: 'bg-purple-50 text-purple-700 border-purple-200' },
   planning: { label: 'Lập kế hoạch', color: '#f59e0b', badgeClass: 'bg-amber-50 text-amber-700 border-amber-200' },
-  draft: { label: 'Dự thảo', color: '#94a3b8', badgeClass: 'bg-slate-100 text-slate-700 border-slate-200' },
+  draft: { label: 'Dự thảo', color: '#476788', badgeClass: 'bg-cloud text-slate-gray border-hairline' },
   cancelled: { label: 'Đã hủy', color: '#ef4444', badgeClass: 'bg-rose-50 text-rose-700 border-rose-200' },
 };
 
-const PALETTE = ['#0284c7', '#10b981', '#6366f1', '#f59e0b', '#ec4899', '#8b5cf6', '#14b8a6', '#64748b'];
+const PALETTE = ['#006bff', '#10b981', '#6366f1', '#f59e0b', '#ec4899', '#8b5cf6', '#14b8a6', '#6b7280'];
 
 export function ActivityReport({ organizationId, filterParams }: ActivityReportProps) {
   const {
@@ -101,7 +101,7 @@ export function ActivityReport({ organizationId, filterParams }: ActivityReportP
   const statusPieData = byStatus.map((s) => ({
     name: STATUS_NAMES[s.status]?.label || s.status,
     count: s.count,
-    color: STATUS_NAMES[s.status]?.color || '#94a3b8',
+    color: STATUS_NAMES[s.status]?.color || '#6b7280',
   }));
 
   // Format Category for BarChart
@@ -114,18 +114,18 @@ export function ActivityReport({ organizationId, filterParams }: ActivityReportP
     <div className="space-y-6" id="activity-report-section">
       {/* 1. KPI Strip */}
       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3.5">
-        <Card className="border-slate-200/90 shadow-2xs bg-white">
+        <Card className="border-hairline shadow-xs bg-white">
           <CardContent className="p-3.5">
             <div className="flex items-center justify-between">
-              <span className="text-2xs font-bold uppercase tracking-wider text-slate-500">Tổng sự kiện</span>
-              <Calendar className="w-3.5 h-3.5 text-blue-600" />
+              <span className="text-2xs font-bold uppercase tracking-wider text-mist-gray">Tổng sự kiện</span>
+              <Calendar className="w-3.5 h-3.5 text-signal-blue" />
             </div>
-            <div className="mt-2 text-xl font-black text-slate-900">{totalActivities}</div>
-            <div className="mt-0.5 text-3xs text-slate-400">Tất cả danh mục</div>
+            <div className="mt-2 text-xl font-black text-ink-navy">{totalActivities}</div>
+            <div className="mt-0.5 text-3xs text-mist-gray">Tất cả danh mục</div>
           </CardContent>
         </Card>
 
-        <Card className="border-slate-200/90 shadow-2xs bg-white">
+        <Card className="border-hairline shadow-xs bg-white">
           <CardContent className="p-3.5">
             <div className="flex items-center justify-between">
               <span className="text-2xs font-bold uppercase tracking-wider text-emerald-600">Hoàn thành</span>
@@ -136,47 +136,47 @@ export function ActivityReport({ organizationId, filterParams }: ActivityReportP
           </CardContent>
         </Card>
 
-        <Card className="border-slate-200/90 shadow-2xs bg-white">
+        <Card className="border-hairline shadow-xs bg-white">
           <CardContent className="p-3.5">
             <div className="flex items-center justify-between">
-              <span className="text-2xs font-bold uppercase tracking-wider text-blue-600">Đang triển khai</span>
-              <PlayCircle className="w-3.5 h-3.5 text-blue-600" />
+              <span className="text-2xs font-bold uppercase tracking-wider text-signal-blue">Đang triển khai</span>
+              <PlayCircle className="w-3.5 h-3.5 text-signal-blue" />
             </div>
-            <div className="mt-2 text-xl font-black text-blue-700">{ongoingTotal}</div>
-            <div className="mt-0.5 text-3xs text-slate-400">{inProgressActivities} chạy • {publishedActivities} công bố</div>
+            <div className="mt-2 text-xl font-black text-signal-blue">{ongoingTotal}</div>
+            <div className="mt-0.5 text-3xs text-mist-gray">{inProgressActivities} chạy • {publishedActivities} công bố</div>
           </CardContent>
         </Card>
 
-        <Card className="border-slate-200/90 shadow-2xs bg-white">
+        <Card className="border-hairline shadow-xs bg-white">
           <CardContent className="p-3.5">
             <div className="flex items-center justify-between">
               <span className="text-2xs font-bold uppercase tracking-wider text-amber-600">Kế hoạch / Dự thảo</span>
               <Clock className="w-3.5 h-3.5 text-amber-600" />
             </div>
             <div className="mt-2 text-xl font-black text-amber-700">{planningTotal}</div>
-            <div className="mt-0.5 text-3xs text-slate-400">{planningActivities} kế hoạch • {draftActivities} nháp</div>
+            <div className="mt-0.5 text-3xs text-mist-gray">{planningActivities} kế hoạch • {draftActivities} nháp</div>
           </CardContent>
         </Card>
 
-        <Card className="border-slate-200/90 shadow-2xs bg-white">
+        <Card className="border-hairline shadow-xs bg-white">
           <CardContent className="p-3.5">
             <div className="flex items-center justify-between">
               <span className="text-2xs font-bold uppercase tracking-wider text-rose-600">Đã hủy</span>
               <AlertTriangle className="w-3.5 h-3.5 text-rose-600" />
             </div>
             <div className="mt-2 text-xl font-black text-rose-700">{cancelledActivities}</div>
-            <div className="mt-0.5 text-3xs text-slate-400">Không tổ chức</div>
+            <div className="mt-0.5 text-3xs text-mist-gray">Không tổ chức</div>
           </CardContent>
         </Card>
 
-        <Card className="border-slate-200/90 shadow-2xs bg-white">
+        <Card className="border-hairline shadow-xs bg-white">
           <CardContent className="p-3.5">
             <div className="flex items-center justify-between">
               <span className="text-2xs font-bold uppercase tracking-wider text-purple-600">Chỉ tiêu quy mô</span>
               <Target className="w-3.5 h-3.5 text-purple-600" />
             </div>
             <div className="mt-2 text-xl font-black text-purple-700">{totalTargetMembers}</div>
-            <div className="mt-0.5 text-3xs text-slate-400">Lượt người tham gia</div>
+            <div className="mt-0.5 text-3xs text-mist-gray">Lượt người tham gia</div>
           </CardContent>
         </Card>
       </div>
@@ -184,12 +184,12 @@ export function ActivityReport({ organizationId, filterParams }: ActivityReportP
       {/* 2. Charts Section */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
         {/* Category Breakdown Bar Chart */}
-        <Card className="border-slate-200/90 shadow-2xs bg-white">
-          <CardHeader className="p-4 pb-2 border-b border-slate-100">
-            <CardTitle className="text-xs font-bold uppercase tracking-wider text-slate-900">
+        <Card className="border-hairline shadow-xs bg-white">
+          <CardHeader className="p-4 pb-2 border-b border-hairline">
+            <CardTitle className="text-xs font-bold uppercase tracking-wider text-ink-navy">
               Phân bổ Hoạt động theo Mảng Nghiệp vụ
             </CardTitle>
-            <CardDescription className="text-2xs text-slate-500">
+            <CardDescription className="text-2xs text-mist-gray">
               Số lượng chương trình theo từng loại hình hoạt động
             </CardDescription>
           </CardHeader>
@@ -205,12 +205,12 @@ export function ActivityReport({ organizationId, filterParams }: ActivityReportP
                       formatter={(val: number) => [`${val} hoạt động`, 'Số lượng']}
                       contentStyle={{ backgroundColor: '#ffffff', borderColor: '#e2e8f0', borderRadius: '8px', fontSize: '12px' }}
                     />
-                    <Bar dataKey="count" fill="#0284c7" radius={[0, 4, 4, 0]} barSize={16} />
+                    <Bar dataKey="count" fill="#006bff" radius={[0, 4, 4, 0]} barSize={16} />
                   </BarChart>
                 </ResponsiveContainer>
               </div>
             ) : (
-              <div className="h-48 flex items-center justify-center text-xs text-slate-400">
+              <div className="h-48 flex items-center justify-center text-xs text-mist-gray">
                 Chưa có số liệu danh mục
               </div>
             )}
@@ -218,12 +218,12 @@ export function ActivityReport({ organizationId, filterParams }: ActivityReportP
         </Card>
 
         {/* Status Distribution Pie Chart */}
-        <Card className="border-slate-200/90 shadow-2xs bg-white">
-          <CardHeader className="p-4 pb-2 border-b border-slate-100">
-            <CardTitle className="text-xs font-bold uppercase tracking-wider text-slate-900">
+        <Card className="border-hairline shadow-xs bg-white">
+          <CardHeader className="p-4 pb-2 border-b border-hairline">
+            <CardTitle className="text-xs font-bold uppercase tracking-wider text-ink-navy">
               Cơ cấu Trạng thái Tiến độ Hoạt động
             </CardTitle>
-            <CardDescription className="text-2xs text-slate-500">
+            <CardDescription className="text-2xs text-mist-gray">
               Tỷ lệ phân bổ trạng thái các chương trình
             </CardDescription>
           </CardHeader>
@@ -253,13 +253,13 @@ export function ActivityReport({ organizationId, filterParams }: ActivityReportP
                     <Legend
                       verticalAlign="bottom"
                       height={36}
-                      formatter={(val: string) => <span className="text-2xs font-medium text-slate-700">{val}</span>}
+                      formatter={(val: string) => <span className="text-2xs font-medium text-slate-gray">{val}</span>}
                     />
                   </PieChart>
                 </ResponsiveContainer>
               </div>
             ) : (
-              <div className="h-48 flex items-center justify-center text-xs text-slate-400">
+              <div className="h-48 flex items-center justify-center text-xs text-mist-gray">
                 Chưa có số liệu trạng thái
               </div>
             )}
@@ -269,12 +269,12 @@ export function ActivityReport({ organizationId, filterParams }: ActivityReportP
 
       {/* 3. Monthly Activity Trends */}
       {byMonth.length > 0 && (
-        <Card className="border-slate-200/90 shadow-2xs bg-white">
-          <CardHeader className="p-4 pb-2 border-b border-slate-100">
-            <CardTitle className="text-xs font-bold uppercase tracking-wider text-slate-900">
+        <Card className="border-hairline shadow-xs bg-white">
+          <CardHeader className="p-4 pb-2 border-b border-hairline">
+            <CardTitle className="text-xs font-bold uppercase tracking-wider text-ink-navy">
               Biến động Mật độ Hoạt động theo Tháng
             </CardTitle>
-            <CardDescription className="text-2xs text-slate-500">
+            <CardDescription className="text-2xs text-mist-gray">
               Số lượng sự kiện khởi động theo từng mốc thời gian
             </CardDescription>
           </CardHeader>
@@ -298,19 +298,19 @@ export function ActivityReport({ organizationId, filterParams }: ActivityReportP
       )}
 
       {/* 4. Detailed Category Breakdown Matrix Table */}
-      <Card className="border-slate-200/90 shadow-2xs bg-white">
-        <CardHeader className="p-4 pb-3 border-b border-slate-100 flex flex-row items-center justify-between">
+      <Card className="border-hairline shadow-xs bg-white">
+        <CardHeader className="p-4 pb-3 border-b border-hairline flex flex-row items-center justify-between">
           <div>
-            <CardTitle className="text-xs font-bold uppercase tracking-wider text-slate-900">
+            <CardTitle className="text-xs font-bold uppercase tracking-wider text-ink-navy">
               Bảng Tổng hợp Hiệu suất Hoạt động theo Mảng
             </CardTitle>
-            <CardDescription className="text-2xs text-slate-500">
+            <CardDescription className="text-2xs text-mist-gray">
               Chi tiết phân bổ và tỷ trọng từng danh mục hoạt động trong kỳ
             </CardDescription>
           </div>
           <Link
             to="/activities"
-            className="text-2xs font-semibold text-blue-700 hover:text-blue-800 flex items-center gap-1"
+            className="text-2xs font-semibold text-signal-blue hover:text-[#005be0] flex items-center gap-1"
           >
             <span>Mở danh sách hoạt động</span>
             <ArrowRight className="w-3 h-3" />
@@ -319,7 +319,7 @@ export function ActivityReport({ organizationId, filterParams }: ActivityReportP
         <CardContent className="p-0">
           <div className="overflow-x-auto">
             <table className="w-full text-xs text-left border-collapse">
-              <thead className="bg-slate-50/80 border-b border-slate-200/80 text-slate-600 font-semibold uppercase tracking-wider text-2xs">
+              <thead className="bg-cloud border-b border-hairline text-slate-gray font-semibold uppercase tracking-wider text-2xs">
                 <tr>
                   <th className="py-2.5 px-4">Mảng hoạt động</th>
                   <th className="py-2.5 px-3 text-center">Số lượng</th>
@@ -327,29 +327,29 @@ export function ActivityReport({ organizationId, filterParams }: ActivityReportP
                   <th className="py-2.5 px-4 text-right">Thao tác</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-100">
+              <tbody className="divide-y divide-hairline">
                 {byCategory.map((cat) => {
                   const percentage = totalActivities > 0 ? Math.round((cat.count / totalActivities) * 100) : 0;
                   return (
-                    <tr key={cat.category} className="hover:bg-slate-50/60 transition-colors">
-                      <td className="py-3 px-4 font-semibold text-slate-800">
+                    <tr key={cat.category} className="hover:bg-cloud/60 transition-colors">
+                      <td className="py-3 px-4 font-semibold text-slate-gray">
                         {CATEGORY_NAMES[cat.category] || cat.category}
                       </td>
-                      <td className="py-3 px-3 text-center font-bold text-slate-900">
+                      <td className="py-3 px-3 text-center font-bold text-ink-navy">
                         {cat.count}
                       </td>
                       <td className="py-3 px-3 text-center">
                         <div className="inline-flex items-center gap-1.5">
-                          <div className="w-16 h-1.5 rounded-full bg-slate-100 overflow-hidden">
-                            <div className="h-full bg-blue-500 rounded-full" style={{ width: `${percentage}%` }} />
+                          <div className="w-16 h-1.5 rounded-full bg-cloud overflow-hidden border border-hairline">
+                            <div className="h-full bg-signal-blue rounded-full" style={{ width: `${percentage}%` }} />
                           </div>
-                          <span className="text-2xs text-slate-500 font-medium">{percentage}%</span>
+                          <span className="text-2xs text-mist-gray font-medium">{percentage}%</span>
                         </div>
                       </td>
                       <td className="py-3 px-4 text-right">
                         <Link
                           to="/activities"
-                          className="text-2xs font-semibold text-blue-600 hover:text-blue-800"
+                          className="text-2xs font-semibold text-signal-blue hover:text-[#005be0]"
                         >
                           Xem chi tiết
                         </Link>

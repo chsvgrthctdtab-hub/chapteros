@@ -34,7 +34,7 @@ const Switch = React.forwardRef<HTMLInputElement, SwitchProps>(
         />
         <div
           className={cn(
-            "w-11 h-6 bg-slate-200 peer-focus-visible:outline-hidden peer-focus-visible:ring-2 peer-focus-visible:ring-emerald-600/40 peer-focus-visible:ring-offset-1 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all after:duration-200 peer-checked:bg-emerald-700 peer-disabled:opacity-50",
+            "w-11 h-6 bg-pebble border border-hairline peer-focus-visible:outline-hidden peer-focus-visible:ring-2 peer-focus-visible:ring-signal-blue/40 peer-focus-visible:ring-offset-1 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-hairline after:border after:rounded-full after:h-5 after:w-5 after:transition-all after:duration-200 peer-checked:bg-signal-blue peer-disabled:opacity-50",
             className
           )}
         />

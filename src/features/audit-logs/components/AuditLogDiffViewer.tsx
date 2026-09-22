@@ -1,6 +1,4 @@
-import React from 'react';
-import { Badge } from '@/components/ui/badge';
-import { ArrowRight, CheckCircle2, AlertCircle, Sparkles, FileText } from 'lucide-react';
+import { ArrowRight, Sparkles, FileText } from 'lucide-react';
 import {
   formatMetadataKey,
   formatMetadataValue,
@@ -22,7 +20,7 @@ interface DiffRow {
 export function AuditLogDiffViewer({ metadata, className = '' }: AuditLogDiffViewerProps) {
   if (!metadata || Object.keys(metadata).length === 0) {
     return (
-      <div className="p-4 rounded-xl bg-slate-50 border border-slate-100 text-center text-xs text-slate-400">
+      <div className="p-4 rounded-xl bg-cloud border border-hairline text-center text-xs text-mist-gray">
         Không có thông số thay đổi chi tiết được ghi nhận cho sự kiện này.
       </div>
     );
@@ -67,13 +65,13 @@ export function AuditLogDiffViewer({ metadata, className = '' }: AuditLogDiffVie
     <div className={`space-y-3 ${className}`}>
       {/* Visual Status Transition Banner */}
       {Boolean(prevStatus && newStatus) && (
-        <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200/90 flex items-center justify-between flex-wrap gap-3">
-          <div className="text-xs font-bold text-slate-700">Chuyển đổi trạng thái</div>
+        <div className="p-3.5 rounded-xl bg-cloud border border-hairline flex items-center justify-between flex-wrap gap-3">
+          <div className="text-xs font-bold text-ink-navy">Chuyển đổi trạng thái</div>
           <div className="flex items-center gap-2 text-xs">
             <span className="px-2.5 py-1 rounded-lg bg-rose-50 border border-rose-200 text-rose-700 font-semibold font-mono">
               {formatMetadataValue(prevStatus)}
             </span>
-            <ArrowRight className="w-3.5 h-3.5 text-slate-400" />
+            <ArrowRight className="w-3.5 h-3.5 text-mist-gray" />
             <span className="px-2.5 py-1 rounded-lg bg-emerald-50 border border-emerald-200 text-emerald-700 font-semibold font-mono">
               {formatMetadataValue(newStatus)}
             </span>
@@ -84,22 +82,22 @@ export function AuditLogDiffViewer({ metadata, className = '' }: AuditLogDiffVie
       {/* Field-by-Field Before vs After Diff Table */}
       {diffRows.length > 0 && (
         <div className="space-y-2">
-          <div className="text-xs font-bold text-slate-800 flex items-center gap-1.5">
-            <Sparkles className="w-3.5 h-3.5 text-emerald-600" />
-            <span>Chi tiết thay đổi trước & sau ({diffRows.length} trường)</span>
+          <div className="text-xs font-bold text-ink-navy flex items-center gap-1.5">
+            <Sparkles className="w-3.5 h-3.5 text-signal-blue" />
+            <span>Chi tiết thay đổi trước &amp; sau ({diffRows.length} trường)</span>
           </div>
 
-          <div className="border border-slate-200 rounded-xl overflow-hidden shadow-2xs">
-            <div className="grid grid-cols-12 bg-slate-100/80 p-2.5 px-3 text-[11px] font-bold text-slate-600 uppercase tracking-wider">
+          <div className="border border-hairline rounded-xl overflow-hidden shadow-xs">
+            <div className="grid grid-cols-12 bg-cloud p-2.5 px-3 text-[11px] font-bold text-slate-gray uppercase tracking-wider">
               <div className="col-span-4">Trường thông tin</div>
               <div className="col-span-4 text-rose-700">Trước thay đổi</div>
               <div className="col-span-4 text-emerald-700">Sau thay đổi</div>
             </div>
 
-            <div className="divide-y divide-slate-100 bg-white">
+            <div className="divide-y divide-hairline bg-white">
               {diffRows.map((row) => (
-                <div key={row.key} className="grid grid-cols-12 p-2.5 px-3 text-xs items-center gap-2 hover:bg-slate-50/60">
-                  <div className="col-span-4 font-semibold text-slate-700 truncate" title={row.label}>
+                <div key={row.key} className="grid grid-cols-12 p-2.5 px-3 text-xs items-center gap-2 hover:bg-cloud">
+                  <div className="col-span-4 font-semibold text-slate-gray truncate" title={row.label}>
                     {row.label}
                   </div>
                   <div className="col-span-4">
@@ -122,21 +120,21 @@ export function AuditLogDiffViewer({ metadata, className = '' }: AuditLogDiffVie
       {/* General Parameter Key-Values */}
       {remainingKeys.length > 0 && (
         <div className="space-y-2">
-          <div className="text-xs font-bold text-slate-800 flex items-center gap-1.5">
-            <FileText className="w-3.5 h-3.5 text-slate-500" />
-            <span>Thông số ngữ cảnh & Dữ liệu bổ sung ({remainingKeys.length})</span>
+          <div className="text-xs font-bold text-ink-navy flex items-center gap-1.5">
+            <FileText className="w-3.5 h-3.5 text-mist-gray" />
+            <span>Thông số ngữ cảnh &amp; Dữ liệu bổ sung ({remainingKeys.length})</span>
           </div>
 
-          <div className="border border-slate-200 rounded-xl overflow-hidden divide-y divide-slate-100 bg-white shadow-2xs">
+          <div className="border border-hairline rounded-xl overflow-hidden divide-y divide-hairline bg-white shadow-xs">
             {remainingKeys.map((key) => (
               <div
                 key={key}
-                className="p-2.5 px-3 flex flex-col sm:flex-row sm:items-center justify-between gap-1 text-xs hover:bg-slate-50/50"
+                className="p-2.5 px-3 flex flex-col sm:flex-row sm:items-center justify-between gap-1 text-xs hover:bg-cloud"
               >
-                <span className="font-semibold text-slate-700 shrink-0 sm:w-1/3">
+                <span className="font-semibold text-slate-gray shrink-0 sm:w-1/3">
                   {formatMetadataKey(key)}
                 </span>
-                <span className="text-slate-900 font-mono sm:text-right break-all">
+                <span className="text-ink-navy font-mono sm:text-right break-all">
                   {formatMetadataValue(clean[key])}
                 </span>
               </div>

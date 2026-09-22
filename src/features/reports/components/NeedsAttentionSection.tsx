@@ -80,7 +80,7 @@ export function NeedsAttentionSection({ overview }: NeedsAttentionSectionProps) 
 
   if (issues.length === 0) {
     return (
-      <Card className="border-slate-200/90 shadow-2xs bg-emerald-50/50 border-emerald-200/80" id="needs-attention-healthy">
+      <Card className="border-hairline shadow-xs bg-emerald-50/50 border-emerald-200/80" id="needs-attention-healthy">
         <CardContent className="p-4 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <div className="w-8 h-8 rounded-lg bg-emerald-100 text-emerald-700 flex items-center justify-center shrink-0">
@@ -104,19 +104,19 @@ export function NeedsAttentionSection({ overview }: NeedsAttentionSectionProps) 
   }
 
   return (
-    <Card className="border-slate-200/90 shadow-2xs bg-white" id="needs-attention-section">
-      <CardHeader className="p-4 pb-2 border-b border-slate-100 flex flex-row items-center justify-between">
+    <Card className="border-hairline shadow-xs bg-white" id="needs-attention-section">
+      <CardHeader className="p-4 pb-2 border-b border-hairline flex flex-row items-center justify-between">
         <div className="flex items-center gap-2">
           <div className="w-6 h-6 rounded-md bg-amber-50 text-amber-600 flex items-center justify-center">
             <AlertTriangle className="w-3.5 h-3.5" />
           </div>
-          <CardTitle className="text-xs font-bold uppercase tracking-wider text-slate-800">
+          <CardTitle className="text-xs font-bold uppercase tracking-wider text-ink-navy">
             Điểm nghẽn cần lưu ý ({issues.length})
           </CardTitle>
         </div>
-        <span className="text-2xs text-slate-500 font-medium">Khuyến nghị điều hành</span>
+        <span className="text-2xs text-mist-gray font-medium">Khuyến nghị điều hành</span>
       </CardHeader>
-      <CardContent className="p-3 divide-y divide-slate-100">
+      <CardContent className="p-3 divide-y divide-hairline">
         {issues.map((issue) => {
           const Icon = issue.icon;
           const isDanger = issue.type === 'danger';
@@ -131,23 +131,23 @@ export function NeedsAttentionSection({ overview }: NeedsAttentionSectionProps) 
                       ? 'bg-rose-50 text-rose-600'
                       : isWarning
                       ? 'bg-amber-50 text-amber-600'
-                      : 'bg-blue-50 text-blue-600'
+                      : 'bg-[#e6f0ff] text-signal-blue'
                   }`}
                 >
                   <Icon className="w-3.5 h-3.5" />
                 </div>
                 <div>
-                  <h4 className={`text-xs font-bold ${isDanger ? 'text-rose-900' : isWarning ? 'text-amber-900' : 'text-blue-900'}`}>
+                  <h4 className={`text-xs font-bold ${isDanger ? 'text-rose-900' : isWarning ? 'text-amber-900' : 'text-signal-blue'}`}>
                     {issue.title}
                   </h4>
-                  <p className="text-2xs text-slate-600 mt-0.5 leading-relaxed">
+                  <p className="text-2xs text-slate-gray mt-0.5 leading-relaxed">
                     {issue.description}
                   </p>
                 </div>
               </div>
               <Link
                 to={issue.linkUrl}
-                className="shrink-0 inline-flex items-center gap-1 text-2xs font-semibold text-slate-700 hover:text-slate-900 hover:bg-slate-100 px-2.5 py-1.5 rounded-md transition-colors border border-slate-200"
+                className="shrink-0 inline-flex items-center gap-1 text-2xs font-semibold text-slate-gray hover:text-ink-navy hover:bg-cloud px-2.5 py-1.5 rounded-md transition-colors border border-hairline"
               >
                 <span>{issue.linkText}</span>
                 <ArrowRight className="w-3 h-3" />

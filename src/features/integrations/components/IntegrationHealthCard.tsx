@@ -59,7 +59,7 @@ export function IntegrationHealthCard({
         );
       default:
         return (
-          <Badge variant="outline" className="text-[10px] py-0 px-1.5 flex items-center gap-1 text-slate-500">
+          <Badge variant="outline" className="text-[10px] py-0 px-1.5 flex items-center gap-1 text-mist-gray border-hairline">
             <Info className="h-3 w-3" />
             Thông tin
           </Badge>
@@ -68,16 +68,16 @@ export function IntegrationHealthCard({
   };
 
   return (
-    <Card className="border-slate-200 shadow-2xs">
+    <Card className="border-hairline bg-white shadow-xs">
       <CardHeader className="pb-3">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <Activity strokeWidth={1.5} className="h-5 w-5 text-blue-600" />
+            <Activity strokeWidth={1.5} className="h-5 w-5 text-signal-blue" />
             <div>
-              <CardTitle className="text-base font-semibold text-slate-900">
+              <CardTitle className="text-base font-semibold text-ink-navy">
                 Chẩn đoán & Giám sát Hạ tầng Tích hợp
               </CardTitle>
-              <CardDescription className="text-xs">
+              <CardDescription className="text-xs text-mist-gray">
                 Kiểm tra tính toàn vẹn của kết nối Google OAuth 2.0 và chính sách bảo mật RLS
               </CardDescription>
             </div>
@@ -89,7 +89,7 @@ export function IntegrationHealthCard({
             size="sm"
             onClick={handleRunDiagnostic}
             disabled={isRunningCheck}
-            className="text-xs h-8"
+            className="text-xs h-8 border-hairline hover:bg-cloud"
           >
             {isRunningCheck ? (
               <Loader2 className="h-3.5 w-3.5 animate-spin mr-1.5" />
@@ -102,17 +102,17 @@ export function IntegrationHealthCard({
       </CardHeader>
 
       <CardContent className="space-y-3 pt-1 text-xs">
-        <div className="rounded-lg border border-slate-200 divide-y divide-slate-100 overflow-hidden">
+        <div className="rounded-lg border border-hairline divide-y divide-hairline overflow-hidden">
           {healthItems.map((item) => (
-            <div key={item.key} className="p-3 bg-white flex items-start justify-between gap-3 hover:bg-slate-50/60 transition-colors">
+            <div key={item.key} className="p-3 bg-white flex items-start justify-between gap-3 hover:bg-cloud/60 transition-colors">
               <div className="space-y-1 flex-1">
                 <div className="flex items-center gap-2">
-                  <span className="font-semibold text-slate-800 text-xs">{item.title}</span>
+                  <span className="font-semibold text-slate-gray text-xs">{item.title}</span>
                   {getStatusBadge(item.status)}
                 </div>
-                <p className="text-[11px] text-slate-500 leading-relaxed">{item.message}</p>
+                <p className="text-[11px] text-mist-gray leading-relaxed">{item.message}</p>
               </div>
-              <span className="text-[10px] font-mono text-slate-400 shrink-0">
+              <span className="text-[10px] font-mono text-mist-gray shrink-0">
                 {formatDate(item.timestamp, 'HH:mm dd/MM')}
               </span>
             </div>
@@ -120,7 +120,7 @@ export function IntegrationHealthCard({
         </div>
       </CardContent>
 
-      <CardFooter className="bg-slate-50/50 border-t border-slate-100 py-2.5 px-4 flex items-center justify-between text-[11px] text-slate-500">
+      <CardFooter className="bg-cloud/50 border-t border-hairline py-2.5 px-4 flex items-center justify-between text-[11px] text-mist-gray">
         <span className="flex items-center gap-1.5">
           <ShieldCheck className="h-3.5 w-3.5 text-emerald-600" />
           Hệ thống sẵn sàng vận hành Phase 9 (Foundation)

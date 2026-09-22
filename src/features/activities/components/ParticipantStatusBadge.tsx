@@ -7,16 +7,16 @@ export function RegistrationStatusBadge({ status }: { status: RegistrationStatus
     label: status,
     badgeVariant: 'secondary',
     colorClasses: {
-      bg: 'bg-slate-100',
-      text: 'text-slate-700',
-      border: 'border-slate-200',
+      bg: 'bg-cloud',
+      text: 'text-ink-navy',
+      border: 'border-hairline',
     },
     description: '',
   };
 
   return (
     <span
-      className={`inline-flex items-center px-2 py-0.5 rounded text-[11px] font-medium border ${config.colorClasses.bg} ${config.colorClasses.text} ${config.colorClasses.border}`}
+      className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-semibold border tabular-nums ${config.colorClasses.bg} ${config.colorClasses.text} ${config.colorClasses.border}`}
       title={config.description || config.label}
     >
       {config.label}
@@ -30,16 +30,16 @@ export function AttendanceStatusBadge({ status }: { status: AttendanceStatus }) 
     label: status,
     badgeVariant: 'secondary',
     colorClasses: {
-      bg: 'bg-slate-100',
-      text: 'text-slate-700',
-      border: 'border-slate-200',
+      bg: 'bg-cloud',
+      text: 'text-ink-navy',
+      border: 'border-hairline',
     },
     description: '',
   };
 
   return (
     <span
-      className={`inline-flex items-center px-2 py-0.5 rounded text-[11px] font-medium border ${config.colorClasses.bg} ${config.colorClasses.text} ${config.colorClasses.border}`}
+      className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-semibold border tabular-nums ${config.colorClasses.bg} ${config.colorClasses.text} ${config.colorClasses.border}`}
       title={config.description || config.label}
     >
       {config.label}

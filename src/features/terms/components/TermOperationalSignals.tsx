@@ -96,11 +96,11 @@ export function TermOperationalSignals({
   return (
     <div
       id="term-operational-signals"
-      className="rounded-2xl border border-slate-200/90 bg-white p-4 sm:p-5 shadow-2xs space-y-3"
+      className="rounded-2xl border border-hairline bg-white p-4 sm:p-5 shadow-xs space-y-3"
     >
       <div className="flex items-center justify-between">
-        <h4 className="text-xs font-bold uppercase tracking-wider text-slate-500 flex items-center gap-1.5">
-          <Info className="h-3.5 w-3.5 text-blue-600" />
+        <h4 className="text-xs font-bold uppercase tracking-wider text-mist-gray flex items-center gap-1.5">
+          <Info className="h-3.5 w-3.5 text-signal-blue" />
           Operational Governance Signals
         </h4>
         <Link
@@ -119,7 +119,7 @@ export function TermOperationalSignals({
             className={`p-3.5 rounded-xl border flex flex-col sm:flex-row sm:items-center justify-between gap-3 ${
               signal.type === 'warning'
                 ? 'bg-amber-50/50 border-amber-200/80 text-amber-950'
-                : 'bg-blue-50/40 border-blue-200/70 text-slate-900'
+                : 'bg-[#e6f0ff]/50 border-[#d4e4fa] text-ink-navy'
             }`}
           >
             <div className="flex items-start gap-3">
@@ -127,7 +127,7 @@ export function TermOperationalSignals({
                 className={`h-7 w-7 rounded-lg flex items-center justify-center shrink-0 mt-0.5 ${
                   signal.type === 'warning'
                     ? 'bg-amber-100 text-amber-800'
-                    : 'bg-blue-100 text-blue-800'
+                    : 'bg-[#e6f0ff] text-signal-blue'
                 }`}
               >
                 {signal.type === 'warning' ? (
@@ -138,7 +138,7 @@ export function TermOperationalSignals({
               </div>
               <div>
                 <h5 className="text-xs sm:text-sm font-bold">{signal.title}</h5>
-                <p className="text-xs text-slate-600 mt-0.5 leading-relaxed">
+                <p className="text-xs text-slate-gray mt-0.5 leading-relaxed">
                   {signal.description}
                 </p>
               </div>
@@ -150,10 +150,10 @@ export function TermOperationalSignals({
                   size="sm"
                   variant="outline"
                   onClick={signal.onAction}
-                  className={`text-xs h-7 px-2.5 font-medium cursor-pointer shadow-2xs ${
+                  className={`text-xs h-7 px-2.5 font-medium cursor-pointer shadow-xs ${
                     signal.type === 'warning'
                       ? 'bg-white border-amber-300 text-amber-900 hover:bg-amber-100'
-                      : 'bg-white border-blue-300 text-blue-900 hover:bg-blue-50'
+                      : 'bg-white border-[#d4e4fa] text-signal-blue hover:bg-[#e6f0ff]'
                   }`}
                 >
                   {signal.actionLabel}

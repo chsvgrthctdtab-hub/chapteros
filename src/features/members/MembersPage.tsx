@@ -11,7 +11,7 @@ import { useAuth } from '@/contexts/AuthContext';
 import { useToast } from '@/contexts/ToastContext';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useQueryClient } from '@tanstack/react-query';
-import { isOrgBoard, getOrgBoardTitle, getOrgMemberNoun, type OrganizationRole } from '@/types/roles';
+import { isOrgBoard, getOrgBoardTitle, getOrgMemberNoun } from '@/types/roles';
 import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
@@ -288,24 +288,24 @@ export function MembersPage() {
   return (
     <div className="space-y-4 max-w-7xl mx-auto pb-12">
       {/* 1. Page Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 pb-2 border-b border-slate-200/80">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 pb-2 border-b border-hairline">
         <div>
           <div className="flex items-center gap-2.5">
-            <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-slate-900">
+            <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-ink-navy">
               {language === 'vi' ? `${memberNoun} & ${boardTitle}` : `${memberNoun} & ${boardTitle}`}
             </h1>
-            <span className="text-xs font-semibold text-slate-600 bg-slate-100 border border-slate-200/80 px-2.5 py-0.5 rounded-full tabular-nums">
+            <span className="text-xs font-semibold text-slate-gray bg-cloud border border-hairline px-2.5 py-0.5 rounded-full tabular-nums">
               {stats.total} {memberNoun.toLowerCase()} • {stats.boardCount} {boardTitle}
             </span>
           </div>
-          <p className="text-xs text-slate-500 mt-0.5">
+          <p className="text-xs text-slate-gray mt-0.5">
             {language === 'vi'
               ? `Quản lý hồ sơ ${memberNoun.toLowerCase()} và phân quyền ${boardTitle}.`
               : `Manage ${memberNoun.toLowerCase()} directory and ${boardTitle} permissions.`}
           </p>
         </div>
 
-        {/* Top Header Actions (Single clean row) */}
+        {/* Top Header Actions */}
         <div className="flex items-center gap-2 shrink-0">
           {/* Dropdown Xuất */}
           <DropdownMenu>
@@ -314,20 +314,20 @@ export function MembersPage() {
                 variant="outline"
                 size="sm"
                 title={t('members.action.export', 'Xuất')}
-                className="text-xs h-8 px-2 sm:px-2.5 text-slate-700 hover:text-emerald-800 hover:bg-emerald-50 border-slate-200 cursor-pointer flex items-center gap-1 font-medium"
+                className="text-xs h-8 px-2 sm:px-2.5 text-ink-navy hover:bg-cloud border-hairline rounded-lg cursor-pointer flex items-center gap-1 font-medium shadow-xs"
               >
-                <Download className="h-3.5 w-3.5 text-emerald-700 shrink-0" />
+                <Download className="h-3.5 w-3.5 text-signal-blue shrink-0" />
                 <span className="hidden sm:inline">{t('members.action.export', 'Xuất')}</span>
                 <ChevronDown className="h-3 w-3 opacity-60 ml-0.5 shrink-0" />
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="w-48 shadow-lg">
+            <DropdownMenuContent align="end" className="w-48 rounded-xl border-hairline bg-white shadow-lg">
               <DropdownMenuItem onClick={() => setSheetsExportOpen(true)} className="cursor-pointer text-xs py-2">
-                <Download className="h-3.5 w-3.5 mr-2 text-emerald-700" />
+                <Download className="h-3.5 w-3.5 mr-2 text-signal-blue" />
                 <span>{t('members.action.export_sheets', 'Xuất Google Sheets')}</span>
               </DropdownMenuItem>
               <DropdownMenuItem onClick={handleExportCsv} className="cursor-pointer text-xs py-2">
-                <FileSpreadsheet className="h-3.5 w-3.5 mr-2 text-slate-500" />
+                <FileSpreadsheet className="h-3.5 w-3.5 mr-2 text-slate-gray" />
                 <span>{t('members.action.export_csv', 'Xuất file CSV')}</span>
               </DropdownMenuItem>
             </DropdownMenuContent>
@@ -341,26 +341,26 @@ export function MembersPage() {
                   variant="outline"
                   size="sm"
                   title={t('members.action.import', 'Nhập')}
-                  className="text-xs h-8 px-2 sm:px-2.5 text-slate-700 hover:text-blue-700 hover:bg-blue-50 border-slate-200 cursor-pointer flex items-center gap-1 font-medium"
+                  className="text-xs h-8 px-2 sm:px-2.5 text-ink-navy hover:bg-cloud border-hairline rounded-lg cursor-pointer flex items-center gap-1 font-medium shadow-xs"
                 >
-                  <Upload className="h-3.5 w-3.5 text-blue-600 shrink-0" />
+                  <Upload className="h-3.5 w-3.5 text-signal-blue shrink-0" />
                   <span className="hidden sm:inline">{t('members.action.import', 'Nhập')}</span>
                   <ChevronDown className="h-3 w-3 opacity-60 ml-0.5 shrink-0" />
                 </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="w-52 shadow-lg">
+              <DropdownMenuContent align="end" className="w-52 rounded-xl border-hairline bg-white shadow-lg">
                 <DropdownMenuItem
                   onClick={() => setFileImportOpen(true)}
-                  className="cursor-pointer text-xs py-2 font-medium text-emerald-800 focus:text-emerald-900 focus:bg-emerald-50"
+                  className="cursor-pointer text-xs py-2 font-medium text-ink-navy focus:bg-cloud"
                 >
-                  <FileSpreadsheet className="h-3.5 w-3.5 mr-2 text-emerald-600" />
+                  <FileSpreadsheet className="h-3.5 w-3.5 mr-2 text-signal-blue" />
                   <span>Nhập từ file Excel / CSV</span>
                 </DropdownMenuItem>
                 <DropdownMenuItem
                   onClick={() => setSheetsImportOpen(true)}
-                  className="cursor-pointer text-xs py-2 text-slate-700"
+                  className="cursor-pointer text-xs py-2 text-slate-gray focus:text-ink-navy focus:bg-cloud"
                 >
-                  <Upload className="h-3.5 w-3.5 mr-2 text-blue-600" />
+                  <Upload className="h-3.5 w-3.5 mr-2 text-signal-blue" />
                   <span>Nhập từ Google Sheets</span>
                 </DropdownMenuItem>
               </DropdownMenuContent>
@@ -373,7 +373,7 @@ export function MembersPage() {
               size="sm"
               onClick={handleOpenCreateDialog}
               title={language === 'vi' ? `Thêm ${memberNoun.toLowerCase()}` : `Add ${memberNoun.toLowerCase()}`}
-              className="bg-emerald-700 hover:bg-emerald-800 text-white text-xs h-8 px-2.5 sm:px-3 shadow-xs cursor-pointer font-medium shrink-0 flex items-center gap-1.5"
+              className="bg-signal-blue hover:bg-[#005be0] text-white text-xs h-8 px-2.5 sm:px-3 rounded-lg shadow-sm cursor-pointer font-medium shrink-0 flex items-center gap-1.5"
             >
               <UserPlus className="h-3.5 w-3.5 shrink-0" />
               <span className="hidden sm:inline whitespace-nowrap">{language === 'vi' ? `Thêm ${memberNoun.toLowerCase()}` : `Add ${memberNoun.toLowerCase()}`}</span>
@@ -403,7 +403,6 @@ export function MembersPage() {
 
       {/* 4. Display Content: Executive Board vs Member Roster */}
       {isViewingBchOnly ? (
-        /* SPECIALIZED VIEW: Ban Chấp Hành / Ban Chủ Nhiệm from organization_memberships */
         <ExecutiveBoardSection
           memberships={bchMemberships}
           organizationName={activeOrganization?.name}
@@ -415,7 +414,6 @@ export function MembersPage() {
           canManage={canManage}
         />
       ) : (
-        /* STANDARD VIEW: Member Roster */
         <div className="space-y-6">
           {/* Error State if query fails */}
           {membersError && (
@@ -457,17 +455,17 @@ export function MembersPage() {
             /* Cards Grid View */
             <div className="space-y-4">
               {membersList.length === 0 ? (
-                <div className="bg-white border border-slate-200/90 rounded-xl p-12 text-center shadow-2xs space-y-4">
-                  <div className="h-14 w-14 bg-slate-50 text-slate-400 rounded-2xl flex items-center justify-center mx-auto border border-slate-200">
-                    <Users strokeWidth={1.5} className="h-7 w-7 text-slate-400" />
+                <div className="bg-white border border-hairline rounded-2xl p-12 text-center shadow-xs space-y-4">
+                  <div className="h-14 w-14 bg-cloud text-mist-gray rounded-2xl flex items-center justify-center mx-auto border border-hairline">
+                    <Users strokeWidth={1.5} className="h-7 w-7 text-mist-gray" />
                   </div>
                   <div className="space-y-1 max-w-md mx-auto">
-                    <h3 className="text-sm font-semibold text-slate-900">
+                    <h3 className="text-sm font-semibold text-ink-navy">
                       {language === 'vi'
                         ? 'Không tìm thấy hội viên nào'
                         : 'No members found'}
                     </h3>
-                    <p className="text-xs text-slate-500">
+                    <p className="text-xs text-slate-gray">
                       {language === 'vi'
                         ? 'Chưa có hồ sơ hội viên nào trong Đơn vị hoặc không có kết quả phù hợp với bộ lọc hiện tại.'
                         : 'No member records in this Chapter or none matched current filters.'}
@@ -477,7 +475,7 @@ export function MembersPage() {
                     <Button
                       onClick={handleOpenCreateDialog}
                       size="sm"
-                      className="bg-emerald-700 hover:bg-emerald-800 text-white text-xs h-8 shadow-xs cursor-pointer"
+                      className="bg-signal-blue hover:bg-[#005be0] text-white text-xs h-8 rounded-lg shadow-sm cursor-pointer font-medium"
                     >
                       <UserPlus className="h-3.5 w-3.5 mr-1.5" />
                       {language === 'vi'

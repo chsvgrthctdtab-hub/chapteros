@@ -320,9 +320,9 @@ export function GoogleDriveExplorer({
       return <FileText strokeWidth={1.5} className="w-5 h-5 text-rose-600 shrink-0" />;
     }
     if (mime.includes('document') || path.endsWith('.gdoc') || path.endsWith('.docx') || path.endsWith('.doc')) {
-      return <FileText strokeWidth={1.5} className="w-5 h-5 text-blue-600 shrink-0" />;
+      return <FileText strokeWidth={1.5} className="w-5 h-5 text-signal-blue shrink-0" />;
     }
-    return <File strokeWidth={1.5} className="w-5 h-5 text-slate-500 shrink-0" />;
+    return <File strokeWidth={1.5} className="w-5 h-5 text-mist-gray shrink-0" />;
   };
 
   const getFileTypeLabel = (mimeType?: string | null, filePath?: string) => {
@@ -345,8 +345,8 @@ export function GoogleDriveExplorer({
     if (mime.includes('form') || path.endsWith('.gform')) return 'border-t-purple-500 bg-purple-50/20';
     if (mime.includes('presentation') || path.endsWith('.gslide')) return 'border-t-amber-500 bg-amber-50/20';
     if (mime.includes('pdf') || path.endsWith('.pdf')) return 'border-t-rose-500 bg-rose-50/20';
-    if (mime.includes('document') || path.endsWith('.gdoc')) return 'border-t-blue-500 bg-blue-50/20';
-    return 'border-t-slate-400 bg-slate-50/20';
+    if (mime.includes('document') || path.endsWith('.gdoc')) return 'border-t-signal-blue bg-[#e6f0ff]/20';
+    return 'border-t-mist-gray bg-cloud';
   };
 
   const handleOpenDocExternal = (e: React.MouseEvent, doc: DocumentItem) => {
@@ -385,14 +385,14 @@ export function GoogleDriveExplorer({
 
       {/* Full-Page Drag & Drop Overlay */}
       {isDraggingOver && (
-        <div className="absolute inset-0 z-50 bg-blue-600/90 backdrop-blur-xs rounded-3xl flex flex-col items-center justify-center text-white border-4 border-dashed border-white pointer-events-none p-8 animate-in fade-in duration-150">
+        <div className="absolute inset-0 z-50 bg-signal-blue/90 backdrop-blur-xs rounded-3xl flex flex-col items-center justify-center text-white border-4 border-dashed border-white pointer-events-none p-8 animate-in fade-in duration-150">
           <UploadCloud className="w-20 h-20 mb-4 animate-bounce" />
           <p className="text-xl font-bold">
             {activeFolderObj
               ? `Thả tệp vào thư mục "${activeFolderObj.name}"`
               : 'Thả tệp vào đây để tải lên Google Drive'}
           </p>
-          <p className="text-sm text-blue-100 mt-1">
+          <p className="text-sm text-white/90 mt-1">
             {activeFolderObj
               ? `Tệp tin sẽ được lưu trực tiếp vào thư mục ${activeFolderObj.name}`
               : 'Hỗ trợ Docs, Sheets, Slides, Forms, PDF, Ảnh và mọi định dạng tệp'}
@@ -401,35 +401,35 @@ export function GoogleDriveExplorer({
       )}
 
       {/* 1. Google Drive Workspace Command Bar */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white border border-slate-200/80 rounded-3xl p-4 sm:p-5 shadow-xs">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white border border-hairline rounded-3xl p-4 sm:p-5 shadow-xs">
         <div className="flex items-center gap-3">
           {/* Google Drive Official Style + Mới Dropdown */}
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button
-                className="h-10 px-4 rounded-2xl bg-white hover:bg-slate-50 text-slate-800 border border-slate-200/90 font-bold text-xs shadow-sm gap-2 cursor-pointer ring-1 ring-slate-900/5 hover:shadow transition-all"
+                className="h-10 px-4 rounded-2xl bg-white hover:bg-cloud text-ink-navy border border-hairline font-bold text-xs shadow-sm gap-2 cursor-pointer ring-1 ring-ink-navy/5 hover:shadow transition-all"
               >
-                <div className="w-5 h-5 rounded-full bg-blue-600 text-white flex items-center justify-center shadow-2xs">
+                <div className="w-5 h-5 rounded-full bg-signal-blue text-white flex items-center justify-center shadow-xs">
                   <Plus className="w-3.5 h-3.5 stroke-[3]" />
                 </div>
-                <span className="text-xs font-bold text-slate-800">Mới</span>
+                <span className="text-xs font-bold text-ink-navy">Mới</span>
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="start" className="w-56 p-1.5 rounded-2xl shadow-xl border-slate-200">
+            <DropdownMenuContent align="start" className="w-56 p-1.5 rounded-2xl shadow-xl border-hairline">
               {canManage && (
                 <>
                   <DropdownMenuItem
                     onClick={() => setNewFolderModalOpen(true)}
-                    className="gap-2.5 text-xs py-2 rounded-xl font-medium text-slate-800 hover:bg-slate-100 cursor-pointer"
+                    className="gap-2.5 text-xs py-2 rounded-xl font-medium text-ink-navy hover:bg-cloud cursor-pointer"
                   >
-                    <FolderPlus className="w-4 h-4 text-slate-600" />
+                    <FolderPlus className="w-4 h-4 text-slate-gray" />
                     <span>Thư mục mới</span>
                   </DropdownMenuItem>
                   <DropdownMenuItem
                     onClick={() => fileInputRef.current?.click()}
                     className="gap-2.5 text-xs py-2 rounded-xl font-medium cursor-pointer"
                   >
-                    <Upload className="w-4 h-4 text-slate-600" />
+                    <Upload className="w-4 h-4 text-slate-gray" />
                     <span>
                       {activeFolderObj
                         ? `Tải tệp vào "${activeFolderObj.name}"`
@@ -441,9 +441,9 @@ export function GoogleDriveExplorer({
               )}
               <DropdownMenuItem
                 onClick={() => handleCreateNewGoogleDoc('doc')}
-                className="gap-2.5 text-xs py-2 rounded-xl font-medium text-blue-700 hover:bg-blue-50 cursor-pointer"
+                className="gap-2.5 text-xs py-2 rounded-xl font-medium text-signal-blue hover:bg-[#e6f0ff] cursor-pointer"
               >
-                <FileText className="w-4 h-4 text-blue-600" />
+                <FileText className="w-4 h-4 text-signal-blue" />
                 <span>Google Tài liệu (Docs)</span>
               </DropdownMenuItem>
               <DropdownMenuItem
@@ -471,24 +471,24 @@ export function GoogleDriveExplorer({
           </DropdownMenu>
 
           {/* Drive Breadcrumb Navigation */}
-          <div className="flex items-center gap-1.5 text-xs font-semibold text-slate-700 bg-slate-50 border border-slate-200/80 px-3.5 py-2 rounded-2xl">
+          <div className="flex items-center gap-1.5 text-xs font-semibold text-slate-gray bg-cloud border border-hairline px-3.5 py-2 rounded-2xl">
             <button
               onClick={() => setActiveFolder(null)}
-              className={`hover:text-blue-600 cursor-pointer transition-colors ${!activeFolderObj ? 'text-blue-700 font-bold' : 'text-slate-500'}`}
+              className={`hover:text-signal-blue cursor-pointer transition-colors ${!activeFolderObj ? 'text-signal-blue font-bold' : 'text-mist-gray'}`}
             >
               Drive của Đơn vị
             </button>
             {activeFolderObj && (
               <>
-                <ChevronRight className="w-3.5 h-3.5 text-slate-400" />
-                <span className="text-slate-900 font-bold truncate max-w-[200px]">
+                <ChevronRight className="w-3.5 h-3.5 text-mist-gray" />
+                <span className="text-ink-navy font-bold truncate max-w-[200px]">
                   {activeFolderObj.name}
                 </span>
 
                 {activeFolderObj.driveUrl && (
                   <button
                     onClick={() => window.open(activeFolderObj.driveUrl!, '_blank', 'noopener,noreferrer')}
-                    className="ml-1 p-1 hover:bg-slate-200/80 rounded-lg text-slate-400 hover:text-blue-600 transition-colors cursor-pointer"
+                    className="ml-1 p-1 hover:bg-pebble rounded-lg text-mist-gray hover:text-signal-blue transition-colors cursor-pointer"
                     title="Mở thư mục này trên Google Drive"
                   >
                     <ExternalLink className="w-3 h-3" />
@@ -502,27 +502,27 @@ export function GoogleDriveExplorer({
         {/* Search & View Mode Switcher */}
         <div className="flex items-center gap-2.5">
           <div className="relative w-full sm:w-64">
-            <Search className="w-3.5 h-3.5 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
+            <Search className="w-3.5 h-3.5 text-mist-gray absolute left-3 top-1/2 -translate-y-1/2" />
             <input
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Tìm kiếm trong Drive..."
-              className="w-full h-9 pl-8 pr-3 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:bg-white transition-all"
+              className="w-full h-9 pl-8 pr-3 rounded-xl bg-cloud border border-hairline text-xs text-ink-navy placeholder:text-mist-gray focus:outline-none focus:ring-1 focus:ring-signal-blue focus:bg-white transition-all"
             />
           </div>
 
-          <div className="flex items-center p-1 rounded-xl bg-slate-100 border border-slate-200/70 shrink-0">
+          <div className="flex items-center p-1 rounded-xl bg-cloud border border-hairline shrink-0">
             <button
               onClick={() => setViewMode('grid')}
-              className={`p-1.5 rounded-lg text-xs cursor-pointer transition-colors ${viewMode === 'grid' ? 'bg-white text-blue-700 shadow-2xs' : 'text-slate-500 hover:text-slate-900'}`}
+              className={`p-1.5 rounded-lg text-xs cursor-pointer transition-colors ${viewMode === 'grid' ? 'bg-white text-signal-blue shadow-xs' : 'text-mist-gray hover:text-ink-navy'}`}
               title="Chế độ xem lưới"
             >
               <Grid className="w-3.5 h-3.5" />
             </button>
             <button
               onClick={() => setViewMode('table')}
-              className={`p-1.5 rounded-lg text-xs cursor-pointer transition-colors ${viewMode === 'table' ? 'bg-white text-blue-700 shadow-2xs' : 'text-slate-500 hover:text-slate-900'}`}
+              className={`p-1.5 rounded-lg text-xs cursor-pointer transition-colors ${viewMode === 'table' ? 'bg-white text-signal-blue shadow-xs' : 'text-mist-gray hover:text-ink-navy'}`}
               title="Chế độ xem danh sách"
             >
               <List className="w-3.5 h-3.5" />
@@ -535,14 +535,14 @@ export function GoogleDriveExplorer({
       {dynamicFolders.length > 0 && (
         <div className="space-y-3">
           <div className="flex items-center justify-between">
-            <h3 className="text-xs font-bold uppercase tracking-wider text-slate-500 flex items-center gap-1.5">
-              <Folder className="w-3.5 h-3.5 text-slate-400" />
+            <h3 className="text-xs font-bold uppercase tracking-wider text-mist-gray flex items-center gap-1.5">
+              <Folder className="w-3.5 h-3.5 text-mist-gray" />
               <span>Thư mục Google Drive Đơn vị ({dynamicFolders.length})</span>
             </h3>
             {activeFolderObj && (
               <button
                 onClick={() => setActiveFolder(null)}
-                className="text-[11px] font-semibold text-blue-600 hover:underline cursor-pointer"
+                className="text-[11px] font-semibold text-signal-blue hover:underline cursor-pointer"
               >
                 Xem tất cả thư mục
               </button>
@@ -558,8 +558,8 @@ export function GoogleDriveExplorer({
                   onClick={() => setActiveFolder(isSelected ? null : folder.name)}
                   className={`p-3.5 rounded-2xl border transition-all cursor-pointer flex flex-col justify-between gap-3 ${
                     isSelected
-                      ? 'bg-blue-50/80 border-blue-300 ring-2 ring-blue-500/20 shadow-xs'
-                      : 'bg-white border-slate-200/80 hover:border-slate-300 hover:shadow-2xs'
+                      ? 'bg-[#e6f0ff]/80 border-[#d4e4fa] ring-2 ring-signal-blue/20 shadow-xs'
+                      : 'bg-white border-hairline hover:border-slate-gray hover:shadow-xs'
                   }`}
                 >
                   <div className="flex items-center justify-between">
@@ -574,7 +574,7 @@ export function GoogleDriveExplorer({
                             e.stopPropagation();
                             window.open(folder.driveUrl!, '_blank', 'noopener,noreferrer');
                           }}
-                          className="p-1 rounded-lg hover:bg-slate-100 text-slate-400 hover:text-blue-600 cursor-pointer transition-colors"
+                          className="p-1 rounded-lg hover:bg-cloud text-mist-gray hover:text-signal-blue cursor-pointer transition-colors"
                           title="Mở thư mục trên Google Drive"
                         >
                           <ExternalLink className="w-3 h-3" />
@@ -636,22 +636,22 @@ export function GoogleDriveExplorer({
                               }
                             }
                           }}
-                          className="p-1 rounded-lg hover:bg-rose-50 text-slate-400 hover:text-rose-600 cursor-pointer transition-colors"
+                          className="p-1 rounded-lg hover:bg-rose-50 text-mist-gray hover:text-rose-600 cursor-pointer transition-colors"
                           title="Xóa thư mục khỏi ChapterOS & Google Drive"
                         >
                           <Trash2 className="w-3 h-3" />
                         </button>
                       )}
-                      <span className="text-[10px] font-bold text-slate-400 font-mono">
+                      <span className="text-[10px] font-bold text-mist-gray font-mono">
                         {folder.filesCount} tệp
                       </span>
                     </div>
                   </div>
                   <div>
-                    <h4 className="text-xs font-bold text-slate-900 line-clamp-1 leading-snug">
+                    <h4 className="text-xs font-bold text-ink-navy line-clamp-1 leading-snug">
                       {folder.name}
                     </h4>
-                    <p className="text-[10px] text-slate-400 mt-0.5">Thư mục Google Drive</p>
+                    <p className="text-[10px] text-mist-gray mt-0.5">Thư mục Google Drive</p>
                   </div>
                 </div>
               );
@@ -663,15 +663,15 @@ export function GoogleDriveExplorer({
       {/* 3. Files Section */}
       <div className="space-y-3">
         <div className="flex items-center justify-between">
-          <h3 className="text-xs font-bold uppercase tracking-wider text-slate-500 flex items-center gap-1.5">
-            <File className="w-3.5 h-3.5 text-slate-400" />
+          <h3 className="text-xs font-bold uppercase tracking-wider text-mist-gray flex items-center gap-1.5">
+            <File className="w-3.5 h-3.5 text-mist-gray" />
             <span>
               {activeFolderObj
                 ? `Tệp tin trong "${activeFolderObj.name}" (${filteredDocs.length})`
                 : `Tệp tin Google Workspace (${filteredDocs.length})`}
             </span>
           </h3>
-          <span className="text-[11px] text-slate-400 hidden sm:inline">
+          <span className="text-[11px] text-mist-gray hidden sm:inline">
             {activeFolderObj
               ? `Kéo thả tệp vào đây để tải vào thư mục "${activeFolderObj.name}"`
               : 'Kéo thả tệp bất kỳ vào màn hình để tải lên nhanh'}
@@ -679,19 +679,19 @@ export function GoogleDriveExplorer({
         </div>
 
         {filteredDocs.length === 0 ? (
-          <div className="py-16 bg-white rounded-3xl border-2 border-dashed border-slate-200/90 text-center p-8 space-y-4 shadow-2xs">
-            <div className="w-14 h-14 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center mx-auto border border-blue-100">
-              <UploadCloud strokeWidth={1.5} className="w-7 h-7 text-blue-600" />
+          <div className="py-16 bg-white rounded-3xl border-2 border-dashed border-hairline text-center p-8 space-y-4 shadow-xs">
+            <div className="w-14 h-14 rounded-2xl bg-[#e6f0ff] text-signal-blue flex items-center justify-center mx-auto border border-[#d4e4fa]">
+              <UploadCloud strokeWidth={1.5} className="w-7 h-7 text-signal-blue" />
             </div>
             <div className="space-y-1">
-              <p className="text-sm font-bold text-slate-900">
+              <p className="text-sm font-bold text-ink-navy">
                 {searchQuery
                   ? 'Không tìm thấy tệp phù hợp bộ lọc'
                   : activeFolderObj
                   ? `Thư mục "${activeFolderObj.name}" chưa có tệp tin`
                   : 'Kéo & thả tệp vào đây để tải lên Google Drive'}
               </p>
-              <p className="text-xs text-slate-500 max-w-md mx-auto leading-relaxed">
+              <p className="text-xs text-mist-gray max-w-md mx-auto leading-relaxed">
                 {searchQuery
                   ? 'Thử kiểm tra lại từ khóa tìm kiếm hoặc chọn lại thư mục khác.'
                   : activeFolderObj
@@ -706,16 +706,16 @@ export function GoogleDriveExplorer({
                     size="sm"
                     variant="outline"
                     onClick={() => setNewFolderModalOpen(true)}
-                    className="rounded-xl text-xs font-semibold h-9 gap-1.5 cursor-pointer"
+                    className="rounded-xl text-xs font-semibold h-9 gap-1.5 cursor-pointer border-hairline text-slate-gray hover:bg-cloud hover:text-ink-navy"
                   >
-                    <FolderPlus className="w-3.5 h-3.5 text-slate-500" />
+                    <FolderPlus className="w-3.5 h-3.5 text-mist-gray" />
                     <span>Tạo thư mục mới</span>
                   </Button>
                 )}
                 <Button
                   size="sm"
                   onClick={() => fileInputRef.current?.click()}
-                  className="rounded-xl text-xs font-semibold h-9 bg-blue-600 hover:bg-blue-700 text-white gap-1.5 cursor-pointer shadow-xs"
+                  className="rounded-xl text-xs font-semibold h-9 bg-signal-blue hover:bg-[#005be0] text-white gap-1.5 cursor-pointer shadow-xs"
                 >
                   <Upload className="w-3.5 h-3.5" />
                   <span>
@@ -735,13 +735,13 @@ export function GoogleDriveExplorer({
                 <div
                   key={doc.id}
                   onClick={() => onSelectDoc(doc)}
-                  className={`group bg-white rounded-2xl border border-slate-200/80 hover:border-slate-300 hover:shadow-xs transition-all cursor-pointer flex flex-col justify-between overflow-hidden border-t-4 ${getFileAccentColor(doc.mimeType, doc.filePath)}`}
+                  className={`group bg-white rounded-2xl border border-hairline hover:border-slate-gray hover:shadow-xs transition-all cursor-pointer flex flex-col justify-between overflow-hidden border-t-4 ${getFileAccentColor(doc.mimeType, doc.filePath)}`}
                 >
                   <div className="p-4 space-y-3">
                     <div className="flex items-start justify-between gap-2">
                       <div className="flex items-center gap-2">
                         {getFileIcon(doc.mimeType, doc.filePath)}
-                        <span className="text-[11px] font-bold text-slate-500 uppercase tracking-tight">
+                        <span className="text-[11px] font-bold text-mist-gray uppercase tracking-tight">
                           {getFileTypeLabel(doc.mimeType, doc.filePath)}
                         </span>
                       </div>
@@ -751,7 +751,7 @@ export function GoogleDriveExplorer({
                           <button
                             type="button"
                             onClick={(e) => handleOpenDocExternal(e, doc)}
-                            className="p-1 rounded-lg hover:bg-slate-100 text-slate-400 hover:text-blue-600 cursor-pointer transition-colors"
+                            className="p-1 rounded-lg hover:bg-cloud text-mist-gray hover:text-signal-blue cursor-pointer transition-colors"
                             title="Mở tài liệu trên Google Drive"
                           >
                             <ExternalLink className="w-3.5 h-3.5" />
@@ -761,16 +761,16 @@ export function GoogleDriveExplorer({
                     </div>
 
                     <div>
-                      <h4 className="text-xs font-bold text-slate-900 line-clamp-2 leading-snug group-hover:text-blue-600 transition-colors">
+                      <h4 className="text-xs font-bold text-ink-navy line-clamp-2 leading-snug group-hover:text-signal-blue transition-colors">
                         {doc.title}
                       </h4>
-                      <p className="font-mono text-[10px] text-slate-400 mt-1 truncate">
+                      <p className="font-mono text-[10px] text-mist-gray mt-1 truncate">
                         {doc.filePath}
                       </p>
                     </div>
                   </div>
 
-                  <div className="px-4 py-2.5 bg-slate-50/80 border-t border-slate-100 flex items-center justify-between text-[10px] text-slate-500 font-medium">
+                  <div className="px-4 py-2.5 bg-cloud/80 border-t border-hairline flex items-center justify-between text-[10px] text-mist-gray font-medium">
                     <span>{formatDate(doc.updatedAt || doc.createdAt, 'dd/MM/yyyy')}</span>
                     <span>{formatFileSize(doc.fileSize)}</span>
                   </div>
@@ -780,11 +780,11 @@ export function GoogleDriveExplorer({
           </div>
         ) : (
           /* TABLE LIST VIEW */
-          <div className="bg-white rounded-3xl border border-slate-200/80 overflow-hidden shadow-2xs">
+          <div className="bg-white rounded-3xl border border-hairline overflow-hidden shadow-xs">
             <div className="overflow-x-auto">
               <table className="w-full text-left text-xs">
                 <thead>
-                  <tr className="bg-slate-50/80 text-slate-500 border-b border-slate-200/80 font-bold uppercase text-[10px] tracking-wider">
+                  <tr className="bg-cloud text-mist-gray border-b border-hairline font-bold uppercase text-[10px] tracking-wider">
                     <th className="py-3 px-4">Tên tệp tin</th>
                     <th className="py-3 px-4">Định dạng</th>
                     <th className="py-3 px-4">Đường dẫn</th>
@@ -793,33 +793,33 @@ export function GoogleDriveExplorer({
                     <th className="py-3 px-4 text-right">Thao tác</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-slate-100">
+                <tbody className="divide-y divide-hairline">
                   {filteredDocs.map((doc) => (
                     <tr
                       key={doc.id}
                       onClick={() => onSelectDoc(doc)}
-                      className="hover:bg-slate-50/80 cursor-pointer transition-colors group"
+                      className="hover:bg-cloud cursor-pointer transition-colors group"
                     >
                       <td className="py-3 px-4">
                         <div className="flex items-center gap-2.5 max-w-md">
                           {getFileIcon(doc.mimeType, doc.filePath)}
-                          <span className="font-semibold text-slate-900 truncate group-hover:text-blue-600 transition-colors">
+                          <span className="font-semibold text-ink-navy truncate group-hover:text-signal-blue transition-colors">
                             {doc.title}
                           </span>
                         </div>
                       </td>
                       <td className="py-3 px-4">
-                        <Badge variant="outline" className="text-[10px] font-semibold">
+                        <Badge variant="outline" className="text-[10px] font-semibold border-hairline text-slate-gray">
                           {getFileTypeLabel(doc.mimeType, doc.filePath)}
                         </Badge>
                       </td>
-                      <td className="py-3 px-4 text-slate-500 font-mono text-[11px] max-w-[200px] truncate">
+                      <td className="py-3 px-4 text-mist-gray font-mono text-[11px] max-w-[200px] truncate">
                         {doc.filePath || 'Drive gốc'}
                       </td>
-                      <td className="py-3 px-4 text-slate-500 font-mono text-[11px]">
+                      <td className="py-3 px-4 text-mist-gray font-mono text-[11px]">
                         {formatDate(doc.updatedAt || doc.createdAt, 'dd/MM/yyyy HH:mm')}
                       </td>
-                      <td className="py-3 px-4 text-slate-500 font-mono text-[11px]">
+                      <td className="py-3 px-4 text-mist-gray font-mono text-[11px]">
                         {formatFileSize(doc.fileSize)}
                       </td>
                       <td className="py-3 px-4 text-right" onClick={(e) => e.stopPropagation()}>
@@ -829,7 +829,7 @@ export function GoogleDriveExplorer({
                               variant="ghost"
                               size="sm"
                               onClick={(e) => handleOpenDocExternal(e, doc)}
-                              className="h-7 px-2 text-blue-600 hover:text-blue-700 hover:bg-blue-50 text-xs font-semibold"
+                              className="h-7 px-2 text-signal-blue hover:text-[#005be0] hover:bg-[#e6f0ff] text-xs font-semibold"
                             >
                               <span>Mở</span>
                               <ExternalLink className="w-3 h-3 ml-1" />
@@ -848,17 +848,17 @@ export function GoogleDriveExplorer({
 
       {/* 4. New Folder Modal */}
       <Dialog open={newFolderModalOpen} onOpenChange={setNewFolderModalOpen}>
-        <DialogContent className="sm:max-w-xl p-6 pr-10 sm:p-7 sm:pr-12 rounded-3xl border border-slate-200/80 shadow-xl">
+        <DialogContent className="sm:max-w-xl p-6 pr-10 sm:p-7 sm:pr-12 rounded-3xl border border-hairline shadow-xl">
           <DialogHeader>
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 rounded-2xl bg-amber-50 text-amber-600 flex items-center justify-center border border-amber-200 shrink-0">
                 <FolderPlus strokeWidth={1.5} className="w-5 h-5" />
               </div>
               <div>
-                <DialogTitle className="text-base font-bold text-slate-900">
+                <DialogTitle className="text-base font-bold text-ink-navy">
                   Tạo thư mục mới trong Google Drive
                 </DialogTitle>
-                <DialogDescription className="text-xs text-slate-500">
+                <DialogDescription className="text-xs text-mist-gray">
                   Tạo thư mục để tổ chức văn bản, sổ thu chi và hồ sơ hoạt động của Đơn vị
                 </DialogDescription>
               </div>
@@ -867,14 +867,14 @@ export function GoogleDriveExplorer({
 
           <form onSubmit={handleCreateFolderSubmit} className="space-y-4 my-2">
             <div className="space-y-1.5">
-              <label className="text-xs font-semibold text-slate-700 block">
+              <label className="text-xs font-semibold text-slate-gray block">
                 Tên thư mục <span className="text-rose-500">*</span>
               </label>
               <Input
                 value={newFolderName}
                 onChange={(e) => setNewFolderName(e.target.value)}
                 placeholder="VD: Kế hoạch Hoạt động 2026-2027"
-                className="h-10 text-xs rounded-xl"
+                className="h-10 text-xs rounded-xl border-hairline bg-cloud text-ink-navy placeholder:text-mist-gray focus:bg-white"
                 autoFocus
               />
             </div>
@@ -885,14 +885,14 @@ export function GoogleDriveExplorer({
                 variant="outline"
                 onClick={() => setNewFolderModalOpen(false)}
                 disabled={createFolderMutation.isPending}
-                className="rounded-xl text-xs"
+                className="rounded-xl text-xs border-hairline text-slate-gray hover:bg-cloud hover:text-ink-navy"
               >
                 Hủy bỏ
               </Button>
               <Button
                 type="submit"
                 disabled={!newFolderName.trim() || createFolderMutation.isPending}
-                className="rounded-xl text-xs bg-blue-600 hover:bg-blue-700 text-white font-semibold shadow-xs"
+                className="rounded-xl text-xs bg-signal-blue hover:bg-[#005be0] text-white font-semibold shadow-xs"
               >
                 {createFolderMutation.isPending ? (
                   <>
@@ -910,12 +910,12 @@ export function GoogleDriveExplorer({
 
       {/* 5. Google Drive Official Style Upload Queue Widget (Bottom Right) */}
       {uploadQueue.length > 0 && (
-        <div className="fixed bottom-6 right-6 z-50 w-80 sm:w-96 bg-white border border-slate-200/90 rounded-2xl shadow-2xl overflow-hidden animate-in slide-in-from-bottom-5">
+        <div className="fixed bottom-6 right-6 z-50 w-80 sm:w-96 bg-white border border-hairline rounded-2xl shadow-2xl overflow-hidden animate-in slide-in-from-bottom-5">
           {/* Header */}
-          <div className="flex items-center justify-between px-4 py-3 bg-slate-900 text-white">
+          <div className="flex items-center justify-between px-4 py-3 bg-ink-navy text-white">
             <div className="flex items-center gap-2">
               {uploadQueue.some((t) => t.status === 'uploading') ? (
-                <Loader2 className="w-4 h-4 animate-spin text-blue-400" />
+                <Loader2 className="w-4 h-4 animate-spin text-signal-blue" />
               ) : (
                 <CheckCircle2 className="w-4 h-4 text-emerald-400" />
               )}
@@ -930,7 +930,7 @@ export function GoogleDriveExplorer({
               <button
                 type="button"
                 onClick={() => setIsQueueMinimized(!isQueueMinimized)}
-                className="p-1 text-slate-400 hover:text-white rounded-lg transition-colors cursor-pointer"
+                className="p-1 text-mist-gray hover:text-white rounded-lg transition-colors cursor-pointer"
                 title={isQueueMinimized ? 'Mở rộng' : 'Thu nhỏ'}
               >
                 {isQueueMinimized ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
@@ -938,7 +938,7 @@ export function GoogleDriveExplorer({
               <button
                 type="button"
                 onClick={() => setUploadQueue([])}
-                className="p-1 text-slate-400 hover:text-white rounded-lg transition-colors cursor-pointer"
+                className="p-1 text-mist-gray hover:text-white rounded-lg transition-colors cursor-pointer"
                 title="Đóng"
               >
                 <X className="w-4 h-4" />
@@ -948,17 +948,17 @@ export function GoogleDriveExplorer({
 
           {/* Queue List */}
           {!isQueueMinimized && (
-            <div className="max-h-56 overflow-y-auto divide-y divide-slate-100 p-2 space-y-1">
+            <div className="max-h-56 overflow-y-auto divide-y divide-hairline p-2 space-y-1">
               {uploadQueue.map((item) => (
-                <div key={item.id} className="flex items-center justify-between p-2 rounded-xl text-xs hover:bg-slate-50 gap-2">
+                <div key={item.id} className="flex items-center justify-between p-2 rounded-xl text-xs hover:bg-cloud gap-2">
                   <div className="min-w-0 flex-1">
-                    <p className="font-semibold text-slate-800 truncate">{item.name}</p>
-                    <p className="text-[10px] text-slate-400">{formatFileSize(item.size)}</p>
+                    <p className="font-semibold text-ink-navy truncate">{item.name}</p>
+                    <p className="text-[10px] text-mist-gray">{formatFileSize(item.size)}</p>
                   </div>
 
                   <div className="shrink-0">
                     {item.status === 'uploading' && (
-                      <Loader2 className="w-4 h-4 animate-spin text-blue-600" />
+                      <Loader2 className="w-4 h-4 animate-spin text-signal-blue" />
                     )}
                     {item.status === 'success' && (
                       <CheckCircle2 className="w-4 h-4 text-emerald-600" />

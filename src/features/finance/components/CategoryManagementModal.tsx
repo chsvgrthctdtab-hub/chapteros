@@ -145,19 +145,19 @@ export function CategoryManagementModal({
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 overflow-y-auto bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4">
-      <div className="relative bg-white rounded-3xl shadow-2xl max-w-lg w-full border border-slate-200 overflow-hidden animate-in fade-in zoom-in-95 duration-200">
+    <div className="fixed inset-0 z-50 overflow-y-auto bg-ink-navy/60 backdrop-blur-xs flex items-center justify-center p-4">
+      <div className="relative bg-white rounded-3xl shadow-2xl max-w-lg w-full border border-hairline overflow-hidden animate-in fade-in zoom-in-95 duration-200">
         {/* Header */}
-        <div className="flex items-center justify-between px-6 py-4 border-b border-slate-100 bg-slate-50/50">
+        <div className="flex items-center justify-between px-6 py-4 border-b border-hairline bg-cloud">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-2xl bg-indigo-50 text-indigo-600 flex items-center justify-center border border-indigo-200">
+            <div className="w-10 h-10 rounded-2xl bg-[#e6f0ff] text-signal-blue flex items-center justify-center border border-[#d4e4fa]">
               <Layers strokeWidth={1.5} className="w-5 h-5" />
             </div>
             <div>
-              <h3 className="text-base font-bold text-slate-900">
+              <h3 className="text-base font-bold text-ink-navy">
                 Danh mục Thu - Chi
               </h3>
-              <p className="text-xs text-slate-500">
+              <p className="text-xs text-slate-gray">
                 Quản lý các hạng mục phân loại tài chính trong Đơn vị
               </p>
             </div>
@@ -165,7 +165,7 @@ export function CategoryManagementModal({
           <button
             type="button"
             onClick={onClose}
-            className="p-2 text-slate-400 hover:text-slate-600 rounded-xl hover:bg-slate-100 transition-colors"
+            className="p-2 text-mist-gray hover:text-slate-gray rounded-xl hover:bg-pebble transition-colors"
           >
             <X className="w-5 h-5" />
           </button>
@@ -173,7 +173,7 @@ export function CategoryManagementModal({
 
         {/* Tab switcher: Thu vs Chi */}
         <div className="px-6 pt-4 pb-2">
-          <div className="flex items-center gap-1 bg-slate-100 p-1 rounded-xl border border-slate-200/60">
+          <div className="flex items-center gap-1 bg-pebble p-1 rounded-xl border border-hairline">
             <button
               type="button"
               onClick={() => {
@@ -186,7 +186,7 @@ export function CategoryManagementModal({
               className={`flex-1 flex items-center justify-center gap-1.5 py-2 text-xs font-bold rounded-lg transition-all ${
                 activeTab === 'income'
                   ? 'bg-emerald-600 text-white shadow-sm'
-                  : 'text-slate-600 hover:text-slate-900'
+                  : 'text-slate-gray hover:text-ink-navy'
               }`}
             >
               <TrendingUp className="w-3.5 h-3.5" />
@@ -204,7 +204,7 @@ export function CategoryManagementModal({
               className={`flex-1 flex items-center justify-center gap-1.5 py-2 text-xs font-bold rounded-lg transition-all ${
                 activeTab === 'expense'
                   ? 'bg-rose-600 text-white shadow-sm'
-                  : 'text-slate-600 hover:text-slate-900'
+                  : 'text-slate-gray hover:text-ink-navy'
               }`}
             >
               <TrendingDown className="w-3.5 h-3.5" />
@@ -235,26 +235,26 @@ export function CategoryManagementModal({
             {currentCategories.map((cat) => (
               <div
                 key={cat.id}
-                className="flex items-center justify-between p-3 rounded-xl bg-slate-50 border border-slate-200/80 hover:bg-white hover:border-slate-300 transition-all group"
+                className="flex items-center justify-between p-3 rounded-xl bg-cloud border border-hairline hover:bg-white hover:border-[#c8d8f0] transition-all group"
               >
                 <div className="space-y-0.5 flex-1 pr-2">
                   <div className="flex items-center gap-2">
-                    <span className="text-sm font-semibold text-slate-900">
+                    <span className="text-sm font-semibold text-ink-navy">
                       {cat.name}
                     </span>
                     {cat.isSystem ? (
-                      <span className="inline-flex items-center gap-0.5 text-[10px] font-medium bg-slate-200/70 text-slate-600 px-1.5 py-0.5 rounded">
+                      <span className="inline-flex items-center gap-0.5 text-[10px] font-medium bg-pebble text-slate-gray px-1.5 py-0.5 rounded">
                         <Lock className="w-2.5 h-2.5" />
                         Mặc định
                       </span>
                     ) : (
-                      <span className="text-[10px] font-medium bg-blue-100 text-blue-700 px-1.5 py-0.5 rounded">
+                      <span className="text-[10px] font-medium bg-[#e6f0ff] text-signal-blue px-1.5 py-0.5 rounded">
                         Chi hội tạo
                       </span>
                     )}
                   </div>
                   {cat.description && (
-                    <p className="text-xs text-slate-500 line-clamp-1">
+                    <p className="text-xs text-mist-gray line-clamp-1">
                       {cat.description}
                     </p>
                   )}
@@ -267,7 +267,7 @@ export function CategoryManagementModal({
                         type="button"
                         onClick={() => handleStartEdit(cat)}
                         title="Sửa danh mục"
-                        className="p-1.5 text-slate-500 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
+                        className="p-1.5 text-slate-gray hover:text-signal-blue hover:bg-[#e6f0ff] rounded-lg transition-colors"
                       >
                         <Edit2 className="w-3.5 h-3.5" />
                       </button>
@@ -280,7 +280,7 @@ export function CategoryManagementModal({
                           setErrorMessage(null);
                         }}
                         title="Xóa danh mục"
-                        className="p-1.5 text-slate-500 hover:text-rose-600 hover:bg-rose-50 rounded-lg transition-colors"
+                        className="p-1.5 text-slate-gray hover:text-rose-600 hover:bg-rose-50 rounded-lg transition-colors"
                       >
                         <Trash2 className="w-3.5 h-3.5" />
                       </button>
@@ -295,30 +295,30 @@ export function CategoryManagementModal({
           {editingCategory && (
             <form
               onSubmit={handleSubmitEdit(handleFormEdit)}
-              className="bg-indigo-50/50 p-4 rounded-2xl border border-indigo-200 space-y-3 animate-in fade-in duration-150"
+              className="bg-[#e6f0ff] p-4 rounded-2xl border border-[#d4e4fa] space-y-3 animate-in fade-in duration-150"
             >
               <div className="flex items-center justify-between">
-                <h4 className="text-xs font-bold text-indigo-900 uppercase tracking-wider">
+                <h4 className="text-xs font-bold text-ink-navy uppercase tracking-wider">
                   Chỉnh sửa danh mục: {editingCategory.name}
                 </h4>
                 <button
                   type="button"
                   onClick={handleCancelEdit}
-                  className="text-slate-400 hover:text-slate-600 text-xs"
+                  className="text-mist-gray hover:text-slate-gray text-xs"
                 >
                   Hủy
                 </button>
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-slate-700 mb-1">
+                <label className="block text-xs font-semibold text-ink-navy mb-1">
                   Tên danh mục <span className="text-rose-500">*</span>
                 </label>
                 <input
                   type="text"
                   {...registerEdit('name')}
-                  className={`w-full px-3 py-1.5 text-xs bg-white border rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500/20 text-slate-800 ${
-                    errorsEdit.name ? 'border-rose-300' : 'border-slate-200'
+                  className={`w-full px-3 py-1.5 text-xs bg-white border rounded-xl focus:outline-none focus:ring-2 focus:ring-signal-blue/20 text-ink-navy ${
+                    errorsEdit.name ? 'border-rose-300' : 'border-hairline'
                   }`}
                 />
                 {errorsEdit.name && (
@@ -327,13 +327,13 @@ export function CategoryManagementModal({
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-slate-700 mb-1">
+                <label className="block text-xs font-semibold text-ink-navy mb-1">
                   Mô tả
                 </label>
                 <input
                   type="text"
                   {...registerEdit('description')}
-                  className="w-full px-3 py-1.5 text-xs bg-white border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500/20 text-slate-800"
+                  className="w-full px-3 py-1.5 text-xs bg-white border border-hairline rounded-xl focus:outline-none focus:ring-2 focus:ring-signal-blue/20 text-ink-navy"
                 />
               </div>
 
@@ -341,14 +341,14 @@ export function CategoryManagementModal({
                 <button
                   type="button"
                   onClick={handleCancelEdit}
-                  className="px-3 py-1 text-xs text-slate-600 hover:bg-slate-100 rounded-lg"
+                  className="px-3 py-1 text-xs text-slate-gray hover:bg-cloud rounded-lg"
                 >
                   Hủy
                 </button>
                 <button
                   type="submit"
                   disabled={isSubmittingEdit || isLoading}
-                  className="flex items-center gap-1.5 px-4 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-xs font-bold shadow-sm transition-all disabled:opacity-50"
+                  className="flex items-center gap-1.5 px-4 py-1.5 bg-signal-blue hover:bg-[#005be0] text-white rounded-xl text-xs font-bold shadow-sm transition-all disabled:opacity-50"
                 >
                   {isSubmittingEdit || isLoading ? (
                     <Loader2 className="w-3.5 h-3.5 animate-spin" />
@@ -380,7 +380,7 @@ export function CategoryManagementModal({
                 <button
                   type="button"
                   onClick={() => setDeletingCategory(null)}
-                  className="px-3 py-1.5 text-xs text-slate-600 hover:bg-slate-100 rounded-xl"
+                  className="px-3 py-1.5 text-xs text-slate-gray hover:bg-cloud rounded-xl"
                 >
                   Hủy
                 </button>
@@ -407,7 +407,7 @@ export function CategoryManagementModal({
                     setErrorMessage(null);
                     setSuccessMessage(null);
                   }}
-                  className="w-full flex items-center justify-center gap-1.5 py-2.5 border-2 border-dashed border-slate-300 hover:border-blue-500 hover:bg-blue-50/40 text-slate-600 hover:text-blue-600 rounded-xl text-xs font-bold transition-all"
+                  className="w-full flex items-center justify-center gap-1.5 py-2.5 border-2 border-dashed border-hairline hover:border-signal-blue hover:bg-[#e6f0ff] text-slate-gray hover:text-signal-blue rounded-xl text-xs font-bold transition-all"
                 >
                   <Plus className="w-4 h-4" />
                   <span>
@@ -417,31 +417,31 @@ export function CategoryManagementModal({
               ) : (
                 <form
                   onSubmit={handleSubmitCreate(handleFormCreate)}
-                  className="bg-slate-50 p-4 rounded-2xl border border-slate-200 space-y-3"
+                  className="bg-cloud p-4 rounded-2xl border border-hairline space-y-3"
                 >
                   <div className="flex items-center justify-between">
-                    <h4 className="text-xs font-bold text-slate-800 uppercase tracking-wider">
+                    <h4 className="text-xs font-bold text-ink-navy uppercase tracking-wider">
                       Tạo danh mục {activeTab === 'income' ? 'thu' : 'chi'} mới
                     </h4>
                     <button
                       type="button"
                       onClick={() => setIsCreatingNew(false)}
-                      className="text-slate-400 hover:text-slate-600 text-xs"
+                      className="text-mist-gray hover:text-slate-gray text-xs"
                     >
                       Hủy
                     </button>
                   </div>
 
                   <div>
-                    <label className="block text-xs font-semibold text-slate-700 mb-1">
+                    <label className="block text-xs font-semibold text-ink-navy mb-1">
                       Tên danh mục <span className="text-rose-500">*</span>
                     </label>
                     <input
                       type="text"
                       placeholder="Ví dụ: Ủng hộ từ Cựu sinh viên..."
                       {...registerCreate('name')}
-                      className={`w-full px-3 py-1.5 text-xs bg-white border rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/20 text-slate-800 ${
-                        errorsCreate.name ? 'border-rose-300' : 'border-slate-200'
+                      className={`w-full px-3 py-1.5 text-xs bg-white border rounded-xl focus:outline-none focus:ring-2 focus:ring-signal-blue/20 text-ink-navy ${
+                        errorsCreate.name ? 'border-rose-300' : 'border-hairline'
                       }`}
                     />
                     {errorsCreate.name && (
@@ -450,14 +450,14 @@ export function CategoryManagementModal({
                   </div>
 
                   <div>
-                    <label className="block text-xs font-semibold text-slate-700 mb-1">
+                    <label className="block text-xs font-semibold text-ink-navy mb-1">
                       Mô tả / Ghi chú (Tùy chọn)
                     </label>
                     <input
                       type="text"
                       placeholder="Mô tả phạm vi thu/chi của danh mục này..."
                       {...registerCreate('description')}
-                      className="w-full px-3 py-1.5 text-xs bg-white border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/20 text-slate-800"
+                      className="w-full px-3 py-1.5 text-xs bg-white border border-hairline rounded-xl focus:outline-none focus:ring-2 focus:ring-signal-blue/20 text-ink-navy"
                     />
                   </div>
 
@@ -465,7 +465,7 @@ export function CategoryManagementModal({
                     <button
                       type="submit"
                       disabled={isSubmittingCreate || isLoading}
-                      className="flex items-center gap-1.5 px-4 py-1.5 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs font-bold shadow-sm transition-all disabled:opacity-50"
+                      className="flex items-center gap-1.5 px-4 py-1.5 bg-signal-blue hover:bg-[#005be0] text-white rounded-xl text-xs font-bold shadow-sm transition-all disabled:opacity-50"
                     >
                       {isSubmittingCreate || isLoading ? (
                         <Loader2 className="w-3.5 h-3.5 animate-spin" />
@@ -482,11 +482,11 @@ export function CategoryManagementModal({
         </div>
 
         {/* Footer */}
-        <div className="px-6 py-3 border-t border-slate-100 bg-slate-50/50 flex justify-end">
+        <div className="px-6 py-3 border-t border-hairline bg-cloud flex justify-end">
           <button
             type="button"
             onClick={onClose}
-            className="px-4 py-2 text-xs font-bold text-slate-600 hover:text-slate-800 hover:bg-slate-100 rounded-xl transition-colors"
+            className="px-4 py-2 text-xs font-bold text-slate-gray hover:text-ink-navy hover:bg-pebble rounded-xl transition-colors"
           >
             Đóng
           </button>

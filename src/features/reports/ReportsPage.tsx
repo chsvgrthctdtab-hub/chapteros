@@ -16,13 +16,14 @@ import { ReportControlBar, type ReportScope } from './components/ReportControlBa
 import { ReportExportDropdown } from './components/ReportExportDropdown';
 import { ExecutiveSummaryStrip } from './components/ExecutiveSummaryStrip';
 import { OverviewReport } from './components/OverviewReport';
+import { ChapterScorecardReport } from './components/ChapterScorecardReport';
 import { MemberReport } from './components/MemberReport';
 import { TermReport } from './components/TermReport';
 import { ActivityReport } from './components/ActivityReport';
 import { TaskReport } from './components/TaskReport';
 import { FundReport } from './components/FundReport';
 import { Button } from '@/components/ui/button';
-import { BarChart3, RefreshCw, AlertCircle, Sparkles, Building2 } from 'lucide-react';
+import { BarChart3, RefreshCw, AlertCircle } from 'lucide-react';
 
 export function ReportsPage() {
   const queryClient = useQueryClient();
@@ -83,19 +84,19 @@ export function ReportsPage() {
   return (
     <div className="space-y-6 pb-12 print:p-0" id="reports-page">
       {/* 1. Executive Page Header */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-200/80 pb-4">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-hairline pb-4">
         <div>
           <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-lg bg-blue-600 text-white flex items-center justify-center shadow-xs">
+            <div className="w-8 h-8 rounded-lg bg-signal-blue text-white flex items-center justify-center shadow-xs">
               <BarChart3 className="w-4 h-4" />
             </div>
             <div>
-              <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-slate-900">
-                Báo cáo & Thống kê
+              <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-ink-navy">
+                Báo cáo &amp; Thống kê
               </h1>
             </div>
           </div>
-          <p className="text-sm text-slate-500 mt-1">
+          <p className="text-sm text-mist-gray mt-1">
             Tổng hợp dữ liệu hiệu suất hoạt động, quản trị nhân sự và tài chính của Đơn vị.
           </p>
         </div>
@@ -107,10 +108,10 @@ export function ReportsPage() {
             size="sm"
             onClick={handleRefresh}
             disabled={isRefreshing}
-            className="h-8 px-2 sm:px-2.5 text-xs font-semibold border-slate-200 text-slate-700 hover:bg-slate-50 bg-white shadow-2xs"
+            className="h-8 px-2 sm:px-2.5 text-xs font-semibold border-hairline text-slate-gray hover:text-ink-navy hover:bg-cloud bg-white shadow-xs"
             title="Làm mới số liệu"
           >
-            <RefreshCw className={`w-3.5 h-3.5 sm:mr-1.5 shrink-0 ${isRefreshing ? 'animate-spin text-blue-600' : ''}`} />
+            <RefreshCw className={`w-3.5 h-3.5 sm:mr-1.5 shrink-0 ${isRefreshing ? 'animate-spin text-signal-blue' : ''}`} />
             <span className="hidden sm:inline">{isRefreshing ? 'Đang tải...' : 'Làm mới'}</span>
           </Button>
 
@@ -153,6 +154,13 @@ export function ReportsPage() {
           />
         )}
 
+        {activeScope === 'scorecard' && (
+          <ChapterScorecardReport
+            organizationId={currentOrg?.id}
+            filterParams={filterParams}
+          />
+        )}
+
         {activeScope === 'activities' && (
           <ActivityReport
             organizationId={currentOrg?.id}
@@ -188,3 +196,4 @@ export function ReportsPage() {
     </div>
   );
 }
+

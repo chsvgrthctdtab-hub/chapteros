@@ -130,17 +130,17 @@ export function AuthCallbackPage() {
   }, [navigate, searchParams]);
 
   return (
-    <div className="min-h-screen flex flex-col justify-center items-center p-4 bg-slate-50 text-slate-900">
+    <div className="min-h-screen flex flex-col justify-center items-center p-4 bg-cloud text-ink-navy">
       <div className="w-full max-w-md space-y-6">
         <div className="text-center space-y-2">
-          <div className="inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-indigo-600 text-white shadow-xs ring-4 ring-indigo-50">
+          <div className="inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-signal-blue text-white shadow-xs ring-4 ring-[#e6f0ff]">
             <GraduationCap strokeWidth={1.5} className="h-7 w-7" />
           </div>
-          <h1 className="text-2xl font-bold tracking-tight text-slate-900">ChapterOS</h1>
-          <p className="text-xs text-slate-500">Nền tảng số Quản trị & Điều hành Đơn vị Sinh viên</p>
+          <h1 className="text-2xl font-bold tracking-tight text-ink-navy">ChapterOS</h1>
+          <p className="text-xs text-mist-gray">Nền tảng số Quản trị &amp; Điều hành Đơn vị Sinh viên</p>
         </div>
 
-        <Card className="border border-slate-200/80 shadow-xs rounded-3xl overflow-hidden bg-white">
+        <Card className="border border-hairline shadow-xs rounded-3xl overflow-hidden bg-white">
           <CardContent className="pt-6 pb-6 text-center space-y-4">
             {errorMessage ? (
               <div className="space-y-4">
@@ -153,7 +153,7 @@ export function AuthCallbackPage() {
                 </div>
                 <Button
                   onClick={() => navigate('/auth/login', { replace: true })}
-                  className="w-full text-xs rounded-xl bg-slate-900 hover:bg-slate-800 text-white"
+                  className="w-full text-xs rounded-xl bg-ink-navy hover:bg-[#1a2a4a] text-white"
                 >
                   <ArrowLeft className="h-3.5 w-3.5 mr-1.5" />
                   Quay lại trang Đăng nhập
@@ -161,8 +161,8 @@ export function AuthCallbackPage() {
               </div>
             ) : (
               <div className="py-6 flex flex-col items-center justify-center space-y-3">
-                <Loader2 strokeWidth={1.5} className="h-8 w-8 animate-spin text-indigo-600" />
-                <p className="text-xs font-medium text-slate-600">{statusText}</p>
+                <Loader2 strokeWidth={1.5} className="h-8 w-8 animate-spin text-signal-blue" />
+                <p className="text-xs font-medium text-slate-gray">{statusText}</p>
               </div>
             )}
           </CardContent>

@@ -91,10 +91,10 @@ export function ReportExportDropdown({
           variant="outline"
           size="sm"
           onClick={handlePrint}
-          className="h-9 px-3 text-xs font-semibold bg-white border-slate-200 text-slate-700 hover:bg-slate-50 hover:text-slate-900 rounded-lg shadow-2xs"
+          className="h-9 px-3 text-xs font-semibold bg-white border-hairline text-slate-gray hover:bg-cloud hover:text-ink-navy rounded-lg shadow-xs"
           title="In báo cáo hoặc lưu định dạng PDF"
         >
-          <Printer className="w-3.5 h-3.5 mr-1.5 text-slate-500" />
+          <Printer className="w-3.5 h-3.5 mr-1.5 text-mist-gray" />
           <span className="hidden sm:inline">In báo cáo</span>
         </Button>
 
@@ -104,31 +104,31 @@ export function ReportExportDropdown({
           size="sm"
           onClick={() => setIsOpen(!isOpen)}
           title="Xuất báo cáo dữ liệu"
-          className="h-8 sm:h-9 px-2 sm:px-3 text-xs font-semibold bg-white border-slate-200 text-slate-700 hover:bg-slate-50 hover:text-slate-900 rounded-lg shadow-2xs"
+          className="h-8 sm:h-9 px-2 sm:px-3 text-xs font-semibold bg-white border-hairline text-slate-gray hover:bg-cloud hover:text-ink-navy rounded-lg shadow-xs"
         >
-          <Download className="w-3.5 h-3.5 sm:mr-1.5 text-emerald-600 shrink-0" />
+          <Download className="w-3.5 h-3.5 sm:mr-1.5 text-signal-blue shrink-0" />
           <span className="hidden sm:inline">Xuất dữ liệu</span>
-          <ChevronDown className="w-3.5 h-3.5 ml-0.5 sm:ml-1.5 text-slate-400 shrink-0" />
+          <ChevronDown className="w-3.5 h-3.5 ml-0.5 sm:ml-1.5 text-mist-gray shrink-0" />
         </Button>
       </div>
 
       {/* Dropdown Menu */}
       {isOpen && (
-        <div className="absolute right-0 mt-1.5 w-64 rounded-xl bg-white border border-slate-200 shadow-lg py-1.5 z-50 animate-in fade-in zoom-in-95 duration-100">
-          <div className="px-3 py-1.5 text-2xs font-bold uppercase tracking-wider text-slate-400 border-b border-slate-100">
+        <div className="absolute right-0 mt-1.5 w-64 rounded-xl bg-white border border-hairline shadow-lg py-1.5 z-50 animate-in fade-in zoom-in-95 duration-100">
+          <div className="px-3 py-1.5 text-2xs font-bold uppercase tracking-wider text-mist-gray border-b border-hairline">
             Tải file dữ liệu (CSV Excel)
           </div>
 
           <button
             type="button"
             onClick={handleExportCurrentScope}
-            className="w-full text-left px-3 py-2 text-xs font-semibold text-slate-800 hover:bg-slate-50 flex items-center justify-between"
+            className="w-full text-left px-3 py-2 text-xs font-semibold text-ink-navy hover:bg-cloud flex items-center justify-between"
           >
             <div className="flex items-center gap-2">
-              <FileSpreadsheet className="w-4 h-4 text-emerald-600" />
+              <FileSpreadsheet className="w-4 h-4 text-signal-blue" />
               <span>Xuất dữ liệu theo tab hiện tại</span>
             </div>
-            <span className="text-2xs text-emerald-700 bg-emerald-50 px-1.5 py-0.5 rounded font-medium">Khuyên dùng</span>
+            <span className="text-2xs text-signal-blue bg-[#e6f0ff] px-1.5 py-0.5 rounded font-medium">Khuyên dùng</span>
           </button>
 
           {overview && (
@@ -138,9 +138,9 @@ export function ReportExportDropdown({
                 exportOverviewReportToCSV(overview, orgName, termName);
                 setIsOpen(false);
               }}
-              className="w-full text-left px-3 py-1.5 text-xs text-slate-700 hover:bg-slate-50 flex items-center gap-2"
+              className="w-full text-left px-3 py-1.5 text-xs text-slate-gray hover:bg-cloud flex items-center gap-2"
             >
-              <FileSpreadsheet className="w-3.5 h-3.5 text-slate-400" />
+              <FileSpreadsheet className="w-3.5 h-3.5 text-mist-gray" />
               <span>Tổng quan điều hành</span>
             </button>
           )}
@@ -152,9 +152,9 @@ export function ReportExportDropdown({
                 exportActivityReportToCSV(activityStats, orgName, termName);
                 setIsOpen(false);
               }}
-              className="w-full text-left px-3 py-1.5 text-xs text-slate-700 hover:bg-slate-50 flex items-center gap-2"
+              className="w-full text-left px-3 py-1.5 text-xs text-slate-gray hover:bg-cloud flex items-center gap-2"
             >
-              <FileSpreadsheet className="w-3.5 h-3.5 text-slate-400" />
+              <FileSpreadsheet className="w-3.5 h-3.5 text-mist-gray" />
               <span>Hoạt động & Sự kiện</span>
             </button>
           )}
@@ -166,9 +166,9 @@ export function ReportExportDropdown({
                 exportMemberReportToCSV(memberStats, orgName, termName);
                 setIsOpen(false);
               }}
-              className="w-full text-left px-3 py-1.5 text-xs text-slate-700 hover:bg-slate-50 flex items-center gap-2"
+              className="w-full text-left px-3 py-1.5 text-xs text-slate-gray hover:bg-cloud flex items-center gap-2"
             >
-              <FileSpreadsheet className="w-3.5 h-3.5 text-slate-400" />
+              <FileSpreadsheet className="w-3.5 h-3.5 text-mist-gray" />
               <span>Nhân sự & Hội viên</span>
             </button>
           )}
@@ -180,9 +180,9 @@ export function ReportExportDropdown({
                 exportTaskReportToCSV(taskStats, orgName, termName);
                 setIsOpen(false);
               }}
-              className="w-full text-left px-3 py-1.5 text-xs text-slate-700 hover:bg-slate-50 flex items-center gap-2"
+              className="w-full text-left px-3 py-1.5 text-xs text-slate-gray hover:bg-cloud flex items-center gap-2"
             >
-              <FileSpreadsheet className="w-3.5 h-3.5 text-slate-400" />
+              <FileSpreadsheet className="w-3.5 h-3.5 text-mist-gray" />
               <span>Thực thi Nhiệm vụ</span>
             </button>
           )}
@@ -194,9 +194,9 @@ export function ReportExportDropdown({
                 exportFundReportToCSV(fundStats, orgName, termName);
                 setIsOpen(false);
               }}
-              className="w-full text-left px-3 py-1.5 text-xs text-slate-700 hover:bg-slate-50 flex items-center gap-2"
+              className="w-full text-left px-3 py-1.5 text-xs text-slate-gray hover:bg-cloud flex items-center gap-2"
             >
-              <FileSpreadsheet className="w-3.5 h-3.5 text-slate-400" />
+              <FileSpreadsheet className="w-3.5 h-3.5 text-mist-gray" />
               <span>Tài chính & Ngân sách</span>
             </button>
           )}
@@ -208,21 +208,21 @@ export function ReportExportDropdown({
                 exportTermReportToCSV(termStats, orgName);
                 setIsOpen(false);
               }}
-              className="w-full text-left px-3 py-1.5 text-xs text-slate-700 hover:bg-slate-50 flex items-center gap-2"
+              className="w-full text-left px-3 py-1.5 text-xs text-slate-gray hover:bg-cloud flex items-center gap-2"
             >
-              <FileSpreadsheet className="w-3.5 h-3.5 text-slate-400" />
+              <FileSpreadsheet className="w-3.5 h-3.5 text-mist-gray" />
               <span>So sánh các Nhiệm kỳ</span>
             </button>
           )}
 
-          <div className="my-1 border-t border-slate-100" />
+          <div className="my-1 border-t border-hairline" />
 
           <button
             type="button"
             onClick={handlePrint}
-            className="w-full text-left px-3 py-1.5 text-xs text-slate-700 hover:bg-slate-50 flex items-center gap-2"
+            className="w-full text-left px-3 py-1.5 text-xs text-slate-gray hover:bg-cloud flex items-center gap-2"
           >
-            <Printer className="w-3.5 h-3.5 text-slate-500" />
+            <Printer className="w-3.5 h-3.5 text-mist-gray" />
             <span>In bản in điều hành (PDF)</span>
           </button>
         </div>

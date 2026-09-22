@@ -61,7 +61,7 @@ export function ConnectionStatusCard({
   };
 
   return (
-    <Card className="border-slate-200 shadow-2xs overflow-hidden flex flex-col justify-between">
+    <Card className="border-hairline shadow-xs bg-white overflow-hidden flex flex-col justify-between">
       <div>
         <CardHeader className="pb-3">
           <div className="flex items-start justify-between gap-2">
@@ -69,19 +69,19 @@ export function ConnectionStatusCard({
               <div
                 className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border ${
                   isOrg
-                    ? 'bg-blue-50 text-blue-600 border-blue-100'
-                    : 'bg-indigo-50 text-indigo-600 border-indigo-100'
+                    ? 'bg-[#e6f0ff] text-signal-blue border-[#d4e4fa]'
+                    : 'bg-[#e6f0ff] text-signal-blue border-[#d4e4fa]'
                 }`}
               >
                 {isOrg ? <Building2 strokeWidth={1.5} className="h-5 w-5" /> : <UserIcon className="h-5 w-5" />}
               </div>
               <div>
                 <div className="flex items-center gap-2">
-                  <CardTitle className="text-base font-semibold text-slate-900">
+                  <CardTitle className="text-base font-semibold text-ink-navy">
                     {isOrg ? 'Tài khoản Chi hội (Workspace)' : 'Tài khoản Google Cá nhân'}
                   </CardTitle>
                 </div>
-                <CardDescription className="text-xs">
+                <CardDescription className="text-xs text-mist-gray">
                   {isOrg
                     ? `Không gian lưu trữ chung của ${orgName || 'Chi hội'}`
                     : `Định danh cá nhân của ${userFullName || 'thành viên'}`}
@@ -101,7 +101,7 @@ export function ConnectionStatusCard({
                 Hết hạn phiên
               </Badge>
             ) : (
-              <Badge variant="secondary" className="text-xs flex items-center gap-1 text-slate-500">
+              <Badge variant="secondary" className="text-xs flex items-center gap-1 text-mist-gray">
                 <Clock className="h-3 w-3" />
                 Chưa kết nối
               </Badge>
@@ -120,23 +120,23 @@ export function ConnectionStatusCard({
           {isConnected && connection ? (
             <div className="space-y-3">
               {/* Account details box */}
-              <div className="rounded-lg border border-slate-200 bg-slate-50/70 p-3 space-y-2">
+              <div className="rounded-lg border border-hairline bg-cloud p-3 space-y-2">
                 <div className="flex items-center justify-between">
-                  <span className="text-slate-500 font-medium">Email Google:</span>
-                  <span className="font-semibold text-slate-800 font-mono text-xs">
+                  <span className="text-mist-gray font-medium">Email Google:</span>
+                  <span className="font-semibold text-ink-navy font-mono text-xs">
                     {connection.googleEmail}
                   </span>
                 </div>
                 {connection.googleName && (
-                  <div className="flex items-center justify-between border-t border-slate-200/60 pt-2">
-                    <span className="text-slate-500 font-medium">Tên hiển thị:</span>
-                    <span className="font-medium text-slate-700">{connection.googleName}</span>
+                  <div className="flex items-center justify-between border-t border-hairline pt-2">
+                    <span className="text-mist-gray font-medium">Tên hiển thị:</span>
+                    <span className="font-medium text-slate-gray">{connection.googleName}</span>
                   </div>
                 )}
-                <div className="flex items-center justify-between border-t border-slate-200/60 pt-2 text-[11px]">
-                  <span className="text-slate-500">Xác thực gần nhất:</span>
-                  <span className="text-slate-600 flex items-center gap-1">
-                    <CalendarCheck className="h-3 w-3 text-slate-400" />
+                <div className="flex items-center justify-between border-t border-hairline pt-2 text-[11px]">
+                  <span className="text-mist-gray">Xác thực gần nhất:</span>
+                  <span className="text-slate-gray flex items-center gap-1">
+                    <CalendarCheck className="h-3 w-3 text-mist-gray" />
                     {formatDate(connection.lastVerifiedAt, 'dd/MM/yyyy HH:mm')}
                   </span>
                 </div>
@@ -145,8 +145,8 @@ export function ConnectionStatusCard({
               {/* Granted Scopes */}
               <div className="space-y-1.5">
                 <div className="flex items-center justify-between text-[11px]">
-                  <span className="font-semibold text-slate-700 flex items-center gap-1">
-                    <KeyRound className="h-3 w-3 text-blue-600" />
+                  <span className="font-semibold text-slate-gray flex items-center gap-1">
+                    <KeyRound className="h-3 w-3 text-signal-blue" />
                     Phạm vi quyền hạn đã cấp ({connection.grantedScopes.length}):
                   </span>
                 </div>
@@ -157,7 +157,7 @@ export function ConnectionStatusCard({
                       <span
                         key={scope}
                         title={def?.description || scope}
-                        className="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-medium bg-slate-100 text-slate-700 border border-slate-200 hover:bg-slate-200/60 transition-colors"
+                        className="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-medium bg-pebble text-slate-gray border border-hairline hover:bg-pebble/80 transition-colors"
                       >
                         {def?.name || scope}
                       </span>
@@ -167,13 +167,13 @@ export function ConnectionStatusCard({
               </div>
             </div>
           ) : (
-            <div className="rounded-lg border border-dashed border-slate-200 bg-slate-50/40 p-4 text-center space-y-2">
-              <p className="text-slate-600 text-xs">
+            <div className="rounded-lg border border-dashed border-hairline bg-cloud/40 p-4 text-center space-y-2">
+              <p className="text-slate-gray text-xs">
                 {isOrg
                   ? 'Chưa kết nối tài khoản Google chung của Đơn vị. Kết nối để sẵn sàng đồng bộ Google Workspace (Drive, Sheets, Forms, Calendar).'
                   : 'Chưa liên kết tài khoản Google cá nhân. Liên kết để đăng nhập 1-chạm an toàn và đồng bộ dữ liệu tác vụ.'}
               </p>
-              <div className="text-[11px] text-slate-400 flex items-center justify-center gap-1">
+              <div className="text-[11px] text-mist-gray flex items-center justify-center gap-1">
                 <ShieldCheck className="h-3.5 w-3.5 text-emerald-600" />
                 Tuân thủ quy chuẩn bảo mật OAuth 2.0
               </div>
@@ -188,7 +188,7 @@ export function ConnectionStatusCard({
         </CardContent>
       </div>
 
-      <CardFooter className="bg-slate-50/50 border-t border-slate-100 flex items-center justify-between py-3">
+      <CardFooter className="bg-cloud border-t border-hairline flex items-center justify-between py-3">
         {isConnected ? (
           <>
             <Button
@@ -197,7 +197,7 @@ export function ConnectionStatusCard({
               size="sm"
               onClick={handleVerify}
               disabled={isVerifying}
-              className="text-xs"
+              className="text-xs border-hairline text-slate-gray hover:bg-cloud cursor-pointer"
             >
               {isVerifying ? (
                 <Loader2 className="h-3.5 w-3.5 animate-spin mr-1.5" />
@@ -213,7 +213,7 @@ export function ConnectionStatusCard({
                 variant="outline"
                 size="sm"
                 onClick={onDisconnectClick}
-                className="text-xs text-rose-600 hover:text-rose-700 hover:bg-rose-50"
+                className="text-xs text-rose-600 hover:text-rose-700 hover:bg-rose-50 border-rose-200 cursor-pointer"
               >
                 <Unlink className="h-3.5 w-3.5 mr-1.5" />
                 Ngắt kết nối
@@ -227,7 +227,7 @@ export function ConnectionStatusCard({
               size="sm"
               onClick={onConnectClick}
               disabled={!canManage}
-              className="text-xs bg-blue-600 hover:bg-blue-700 text-white"
+              className="text-xs bg-signal-blue hover:bg-[#005be0] text-white cursor-pointer font-medium"
             >
               <Plus className="h-3.5 w-3.5 mr-1.5" />
               {isOrg ? 'Kết nối tài khoản Chi hội' : 'Liên kết tài khoản Google'}

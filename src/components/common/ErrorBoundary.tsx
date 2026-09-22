@@ -56,17 +56,17 @@ export class ErrorBoundary extends React.Component<Props, State> {
       const isDev = import.meta.env.DEV;
 
       return (
-        <div className="min-h-screen bg-slate-50 flex items-center justify-center p-4 sm:p-6 lg:p-8">
-          <div className="max-w-lg w-full bg-white rounded-3xl border border-slate-200/80 shadow-2xl p-6 sm:p-8 text-center">
+        <div className="min-h-screen bg-cloud flex items-center justify-center p-4 sm:p-6 lg:p-8">
+          <div className="max-w-lg w-full bg-white rounded-3xl border border-hairline shadow-lg p-6 sm:p-8 text-center">
             <div className="w-16 h-16 bg-rose-50 border border-rose-100 rounded-2xl flex items-center justify-center mx-auto mb-5 text-rose-600 shadow-sm">
               <AlertOctagon className="w-8 h-8" />
             </div>
 
-            <h1 className="text-xl sm:text-2xl font-bold text-slate-900 tracking-tight mb-2">
+            <h1 className="text-xl sm:text-2xl font-bold text-ink-navy tracking-tight mb-2">
               Đã xảy ra sự cố hiển thị
             </h1>
 
-            <p className="text-sm text-slate-600 leading-relaxed mb-6">
+            <p className="text-sm text-slate-gray leading-relaxed mb-6">
               Hệ thống vừa gặp sự cố không mong muốn trong khi tải trang. Dữ liệu của bạn vẫn an toàn trên hệ thống.
             </p>
 
@@ -85,7 +85,7 @@ export class ErrorBoundary extends React.Component<Props, State> {
                 type="button"
                 variant="outline"
                 onClick={this.handleGoHome}
-                className="w-full sm:w-auto rounded-xl px-5 font-medium border-slate-200 hover:bg-slate-50 text-slate-700 gap-2 cursor-pointer"
+                className="w-full sm:w-auto rounded-xl px-5 font-medium border-hairline hover:bg-cloud text-slate-gray gap-2 cursor-pointer"
               >
                 <Home className="w-4 h-4" />
                 <span>Về Trang chủ</span>
@@ -94,11 +94,11 @@ export class ErrorBoundary extends React.Component<Props, State> {
 
             {/* Developer technical inspection */}
             {isDev && this.state.error && (
-              <div className="mt-8 pt-6 border-t border-slate-100 text-left">
+              <div className="mt-8 pt-6 border-t border-hairline text-left">
                 <button
                   type="button"
                   onClick={() => this.setState((prev) => ({ showDetails: !prev.showDetails }))}
-                  className="flex items-center justify-between w-full text-xs font-semibold text-slate-500 hover:text-slate-700 py-1 cursor-pointer"
+                  className="flex items-center justify-between w-full text-xs font-semibold text-slate-gray hover:text-ink-navy py-1 cursor-pointer"
                 >
                   <span>Chi tiết lỗi kỹ thuật (Chế độ phát triển)</span>
                   {this.state.showDetails ? (
@@ -109,10 +109,10 @@ export class ErrorBoundary extends React.Component<Props, State> {
                 </button>
 
                 {this.state.showDetails && (
-                  <div className="mt-2.5 p-3.5 bg-slate-950 text-slate-200 rounded-xl text-xs font-mono overflow-x-auto max-h-48 leading-relaxed">
+                  <div className="mt-2.5 p-3.5 bg-ink-navy text-cloud rounded-xl text-xs font-mono overflow-x-auto max-h-48 leading-relaxed">
                     <p className="text-rose-400 font-bold mb-1">{this.state.error.name}: {this.state.error.message}</p>
                     {this.state.error.stack && (
-                      <pre className="text-[11px] text-slate-400 whitespace-pre-wrap">
+                      <pre className="text-[11px] text-mist-gray whitespace-pre-wrap">
                         {this.state.error.stack}
                       </pre>
                     )}

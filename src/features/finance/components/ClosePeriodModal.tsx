@@ -2,12 +2,9 @@ import React, { useState, useEffect } from 'react';
 import {
   X,
   Lock,
-  Calendar,
   AlertTriangle,
   CheckCircle2,
   Scale,
-  DollarSign,
-  FileSpreadsheet,
   Info,
 } from 'lucide-react';
 import { formatVND } from '../utils/finance.utils';
@@ -166,23 +163,23 @@ export function ClosePeriodModal({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-xs animate-in fade-in duration-200 overflow-y-auto">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-ink-navy/60 backdrop-blur-xs animate-in fade-in duration-200 overflow-y-auto">
       <div
-        className="w-full max-w-2xl bg-white rounded-2xl shadow-xl border border-slate-200 overflow-hidden my-8 animate-in zoom-in-95 duration-200"
+        className="w-full max-w-2xl bg-white rounded-2xl shadow-xl border border-hairline overflow-hidden my-8 animate-in zoom-in-95 duration-200"
         role="dialog"
         aria-modal="true"
       >
         {/* Header */}
-        <div className="flex items-center justify-between px-6 py-4 border-b border-slate-100 bg-slate-900 text-white">
+        <div className="flex items-center justify-between px-6 py-4 border-b border-hairline bg-cloud text-ink-navy">
           <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-xl bg-white/10 flex items-center justify-center text-white">
+            <div className="w-8 h-8 rounded-lg bg-[#e6f0ff] text-signal-blue border border-[#d4e4fa] flex items-center justify-center">
               <Lock className="w-4 h-4" />
             </div>
             <div>
-              <h3 className="text-base font-bold text-white">
+              <h3 className="text-base font-bold text-ink-navy">
                 Chốt Sổ & Đối Soát Tài Chính Định Kỳ
               </h3>
-              <p className="text-xs text-slate-300">
+              <p className="text-xs text-slate-gray">
                 Khóa các giao dịch trong kỳ, lập biên bản đối soát số dư thực tế
               </p>
             </div>
@@ -191,7 +188,7 @@ export function ClosePeriodModal({
             type="button"
             onClick={onClose}
             disabled={isLoading}
-            className="p-1 text-slate-400 hover:text-white rounded-lg hover:bg-white/10 transition-colors"
+            className="p-1 text-mist-gray hover:text-ink-navy rounded-lg hover:bg-pebble transition-colors cursor-pointer"
           >
             <X className="w-5 h-5" />
           </button>
@@ -202,19 +199,19 @@ export function ClosePeriodModal({
           {/* 1. Basic Period Config */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
+              <label className="block text-xs font-bold text-slate-gray uppercase tracking-wider mb-1.5">
                 Nhiệm kỳ áp dụng <span className="text-rose-500">*</span>
               </label>
               <Select
                 value={termId}
                 onValueChange={(val) => setTermId(val)}
               >
-                <SelectTrigger className="w-full h-9 text-xs bg-slate-50 border-slate-200">
+                <SelectTrigger className="w-full h-9 text-xs bg-cloud border-hairline rounded-lg text-ink-navy">
                   <SelectValue placeholder="Chọn nhiệm kỳ" />
                 </SelectTrigger>
-                <SelectContent>
+                <SelectContent className="rounded-xl border-hairline bg-white shadow-lg">
                   {terms.map((t) => (
-                    <SelectItem key={t.id} value={t.id}>
+                    <SelectItem key={t.id} value={t.id} className="text-xs">
                       {t.name} {t.isCurrent ? '(Hiện tại)' : ''}
                     </SelectItem>
                   ))}
@@ -223,20 +220,20 @@ export function ClosePeriodModal({
             </div>
 
             <div>
-              <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
+              <label className="block text-xs font-bold text-slate-gray uppercase tracking-wider mb-1.5">
                 Loại kỳ chốt sổ <span className="text-rose-500">*</span>
               </label>
               <Select
                 value={periodType}
                 onValueChange={(val) => setPeriodType(val as PeriodClosingType)}
               >
-                <SelectTrigger className="w-full h-9 text-xs bg-slate-50 border-slate-200">
+                <SelectTrigger className="w-full h-9 text-xs bg-cloud border-hairline rounded-lg text-ink-navy">
                   <SelectValue />
                 </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="month">Theo Tháng</SelectItem>
-                  <SelectItem value="quarter">Theo Quý</SelectItem>
-                  <SelectItem value="custom">Tùy chỉnh khoảng ngày</SelectItem>
+                <SelectContent className="rounded-xl border-hairline bg-white shadow-lg">
+                  <SelectItem value="month" className="text-xs">Theo Tháng</SelectItem>
+                  <SelectItem value="quarter" className="text-xs">Theo Quý</SelectItem>
+                  <SelectItem value="custom" className="text-xs">Tùy chỉnh khoảng ngày</SelectItem>
                 </SelectContent>
               </Select>
             </div>
@@ -244,7 +241,7 @@ export function ClosePeriodModal({
 
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
             <div className="sm:col-span-1">
-              <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
+              <label className="block text-xs font-bold text-slate-gray uppercase tracking-wider mb-1.5">
                 Từ ngày <span className="text-rose-500">*</span>
               </label>
               <DatePicker
@@ -255,7 +252,7 @@ export function ClosePeriodModal({
             </div>
 
             <div className="sm:col-span-1">
-              <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
+              <label className="block text-xs font-bold text-slate-gray uppercase tracking-wider mb-1.5">
                 Đến ngày <span className="text-rose-500">*</span>
               </label>
               <DatePicker
@@ -266,7 +263,7 @@ export function ClosePeriodModal({
             </div>
 
             <div className="sm:col-span-1">
-              <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
+              <label className="block text-xs font-bold text-slate-gray uppercase tracking-wider mb-1.5">
                 Tên biên bản chốt <span className="text-rose-500">*</span>
               </label>
               <input
@@ -274,45 +271,45 @@ export function ClosePeriodModal({
                 value={periodName}
                 onChange={(e) => setPeriodName(e.target.value)}
                 placeholder="VD: Chốt sổ Tháng 8/2026"
-                className="w-full px-3 py-2 text-xs bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500/20 text-slate-800 font-medium"
+                className="w-full px-3 py-2 text-xs bg-cloud border border-hairline rounded-lg focus:bg-white focus:outline-none focus:ring-1 focus:ring-signal-blue text-ink-navy font-medium"
               />
             </div>
           </div>
 
           {/* 2. Reconciliation Engine Summary Box */}
-          <div className="p-4 bg-slate-50 border border-slate-200 rounded-2xl space-y-3">
+          <div className="p-4 bg-cloud border border-hairline rounded-2xl space-y-3">
             <div className="flex items-center justify-between">
-              <span className="text-xs font-bold uppercase tracking-wider text-slate-700 flex items-center gap-1.5">
-                <Scale className="w-4 h-4 text-blue-600" />
+              <span className="text-xs font-bold uppercase tracking-wider text-ink-navy flex items-center gap-1.5">
+                <Scale className="w-4 h-4 text-signal-blue" />
                 Bảng Tính Toán Đối Soát Tự Động
               </span>
-              <span className="text-xs text-slate-500 font-medium">
+              <span className="text-xs text-slate-gray font-medium">
                 {transactionCount} giao dịch trong kỳ
               </span>
             </div>
 
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 pt-1">
-              <div className="bg-white p-2.5 rounded-xl border border-slate-200/80">
-                <span className="text-[11px] text-slate-400 font-medium block">Số dư đầu kỳ</span>
-                <span className="text-sm font-bold text-slate-800">
+              <div className="bg-white p-2.5 rounded-xl border border-hairline">
+                <span className="text-[11px] text-slate-gray font-medium block">Số dư đầu kỳ</span>
+                <span className="text-sm font-bold text-ink-navy tabular-nums">
                   {formatVND(openingBalance)}
                 </span>
               </div>
-              <div className="bg-white p-2.5 rounded-xl border border-slate-200/80">
-                <span className="text-[11px] text-emerald-600 font-medium block">+ Tổng Thu</span>
-                <span className="text-sm font-bold text-emerald-600">
+              <div className="bg-white p-2.5 rounded-xl border border-hairline">
+                <span className="text-[11px] text-emerald-700 font-medium block">+ Tổng Thu</span>
+                <span className="text-sm font-bold text-emerald-700 tabular-nums">
                   +{formatVND(totalIncome)}
                 </span>
               </div>
-              <div className="bg-white p-2.5 rounded-xl border border-slate-200/80">
-                <span className="text-[11px] text-rose-600 font-medium block">- Tổng Chi</span>
-                <span className="text-sm font-bold text-rose-600">
+              <div className="bg-white p-2.5 rounded-xl border border-hairline">
+                <span className="text-[11px] text-rose-700 font-medium block">- Tổng Chi</span>
+                <span className="text-sm font-bold text-rose-700 tabular-nums">
                   -{formatVND(totalExpense)}
                 </span>
               </div>
-              <div className="bg-slate-900 text-white p-2.5 rounded-xl border border-slate-800">
-                <span className="text-[11px] text-slate-300 font-medium block">Số dư tính toán</span>
-                <span className="text-sm font-bold text-white">
+              <div className="bg-ink-navy text-white p-2.5 rounded-xl border border-ink-navy">
+                <span className="text-[11px] text-mist-gray font-medium block">Số dư tính toán</span>
+                <span className="text-sm font-bold text-white tabular-nums">
                   {formatVND(calculatedClosingBalance)}
                 </span>
               </div>
@@ -323,13 +320,13 @@ export function ClosePeriodModal({
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
               <div className="flex items-center justify-between mb-1.5">
-                <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider">
+                <label className="block text-xs font-bold text-slate-gray uppercase tracking-wider">
                   Số dư thực tế kiểm kê <span className="text-rose-500">*</span>
                 </label>
                 <button
                   type="button"
                   onClick={handleSetActualToCalculated}
-                  className="text-[11px] text-blue-600 hover:underline font-medium"
+                  className="text-[11px] text-signal-blue hover:underline font-medium cursor-pointer"
                 >
                   Khớp với sổ tính
                 </button>
@@ -339,15 +336,15 @@ export function ClosePeriodModal({
                 value={actualBalanceInput !== '' ? actualBalanceInput : calculatedClosingBalance.toLocaleString('vi-VN')}
                 onChange={handleActualBalanceChange}
                 placeholder="Nhập số tiền thực tế tại quỹ..."
-                className="w-full px-3.5 py-2.5 text-sm font-bold bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500/20 text-slate-900"
+                className="w-full px-3.5 py-2.5 text-sm font-bold tabular-nums bg-cloud border border-hairline rounded-lg focus:bg-white focus:outline-none focus:ring-1 focus:ring-signal-blue text-ink-navy"
               />
-              <span className="text-[11px] text-slate-400 mt-1 block">
+              <span className="text-[11px] text-slate-gray mt-1 block">
                 Tổng tiền mặt thực tế tại két quỹ + số dư tài khoản ngân hàng chi hội.
               </span>
             </div>
 
             <div>
-              <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
+              <label className="block text-xs font-bold text-slate-gray uppercase tracking-wider mb-1.5">
                 Kết quả đối soát
               </label>
               <div
@@ -369,7 +366,7 @@ export function ClosePeriodModal({
                   <div className="text-xs font-medium">
                     {hasDiscrepancy ? (
                       <span>
-                        Chênh lệch: <strong className="text-rose-700 font-bold">{formatVND(discrepancy)}</strong>
+                        Chênh lệch: <strong className="text-rose-700 font-bold tabular-nums">{formatVND(discrepancy)}</strong>
                       </span>
                     ) : (
                       <span>Không có sai lệch giữa sổ tính và thực tế</span>
@@ -391,14 +388,14 @@ export function ClosePeriodModal({
                 value={overrideReason}
                 onChange={(e) => setOverrideReason(e.target.value)}
                 placeholder="Giải trình nguyên nhân chênh lệch (ví dụ: Khoản chi lẻ chưa nộp hóa đơn, tiền lẻ chưa đối chiếu...)"
-                className="w-full px-3 py-2 text-xs bg-white border border-rose-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-rose-500/20 text-rose-950 placeholder:text-rose-400"
+                className="w-full px-3 py-2 text-xs bg-white border border-rose-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-rose-500 text-rose-950 placeholder:text-rose-400"
               />
             </div>
           )}
 
           {/* 5. Notes */}
           <div>
-            <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
+            <label className="block text-xs font-bold text-slate-gray uppercase tracking-wider mb-1.5">
               Ghi chú chốt sổ (Tùy chọn)
             </label>
             <input
@@ -406,7 +403,7 @@ export function ClosePeriodModal({
               value={notes}
               onChange={(e) => setNotes(e.target.value)}
               placeholder="VD: Đã đối chiếu sao kê tài khoản ngân hàng..."
-              className="w-full px-3.5 py-2 text-xs bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500/20 text-slate-800"
+              className="w-full px-3.5 py-2 text-xs bg-cloud border border-hairline rounded-lg focus:bg-white focus:outline-none focus:ring-1 focus:ring-signal-blue text-ink-navy"
             />
           </div>
 
@@ -426,19 +423,19 @@ export function ClosePeriodModal({
           )}
 
           {/* Actions */}
-          <div className="flex items-center justify-end gap-2.5 pt-3 border-t border-slate-100">
+          <div className="flex items-center justify-end gap-2.5 pt-3 border-t border-hairline">
             <button
               type="button"
               onClick={onClose}
               disabled={isLoading}
-              className="px-4 py-2 text-xs font-semibold text-slate-600 hover:text-slate-800 bg-slate-100 hover:bg-slate-200 rounded-xl transition-all"
+              className="px-4 py-2 text-xs font-semibold text-ink-navy hover:bg-cloud border border-hairline rounded-lg transition-all cursor-pointer"
             >
               Hủy bỏ
             </button>
             <button
               type="submit"
               disabled={isLoading || isPreviewFetching}
-              className="flex items-center gap-1.5 px-5 py-2 text-xs font-bold text-white bg-slate-900 hover:bg-slate-800 active:bg-slate-950 disabled:opacity-50 rounded-xl transition-all shadow-sm"
+              className="flex items-center gap-1.5 px-5 py-2 text-xs font-bold text-white bg-signal-blue hover:bg-[#005be0] active:bg-[#004eba] disabled:opacity-50 rounded-lg transition-all shadow-sm cursor-pointer"
             >
               <Lock className="w-3.5 h-3.5" />
               <span>{isLoading ? 'Đang chốt sổ...' : 'Xác nhận Chốt Sổ Kỳ Này'}</span>

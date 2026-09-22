@@ -16,8 +16,8 @@ const QUICK_MODULES = [
     desc: 'Cập nhật MSSV & gán nhiệm kỳ',
     href: '/members',
     icon: Users,
-    color: 'text-blue-600',
-    bg: 'bg-blue-50',
+    color: 'text-signal-blue',
+    bg: 'bg-[#e6f0ff]',
   },
   {
     title: 'Nhiệm kỳ',
@@ -32,8 +32,8 @@ const QUICK_MODULES = [
     desc: 'Bổ sung người phụ trách',
     href: '/activities',
     icon: CalendarCheck,
-    color: 'text-violet-600',
-    bg: 'bg-violet-50',
+    color: 'text-purple-600',
+    bg: 'bg-purple-50',
   },
   {
     title: 'Công việc',
@@ -63,13 +63,13 @@ const QUICK_MODULES = [
 
 export function DataQualityQuickActions() {
   return (
-    <div className="rounded-xl bg-white p-6 border border-slate-200/90 shadow-2xs space-y-4">
+    <div className="rounded-xl bg-white p-6 border border-hairline shadow-xs space-y-4">
       <div className="space-y-1">
-        <h2 className="text-base font-bold text-slate-900 flex items-center gap-2">
-          <ExternalLink className="w-4 h-4 text-emerald-700" />
+        <h2 className="text-base font-bold text-ink-navy flex items-center gap-2">
+          <ExternalLink className="w-4 h-4 text-signal-blue" />
           <span>Lối tắt xử lý nghiệp vụ</span>
         </h2>
-        <p className="text-xs text-slate-500">Truy cập trực tiếp các phân hệ để cập nhật dữ liệu</p>
+        <p className="text-xs text-mist-gray">Truy cập trực tiếp các phân hệ để cập nhật dữ liệu</p>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
@@ -79,7 +79,7 @@ export function DataQualityQuickActions() {
             <Link
               key={item.href}
               to={item.href}
-              className="group flex items-center justify-between p-3 rounded-lg border border-slate-200/80 bg-white hover:border-slate-300 hover:bg-slate-50/80 transition-all duration-150 shadow-2xs"
+              className="group flex items-center justify-between p-3 rounded-lg border border-hairline bg-white hover:border-slate-gray hover:bg-cloud/80 transition-all duration-150 shadow-xs"
             >
               <div className="flex items-center gap-2.5 min-w-0">
                 <div
@@ -88,11 +88,11 @@ export function DataQualityQuickActions() {
                   <Icon className="w-3.5 h-3.5" />
                 </div>
                 <div className="min-w-0">
-                  <div className="text-xs font-semibold text-slate-800 truncate">{item.title}</div>
-                  <div className="text-[11px] text-slate-500 truncate">{item.desc}</div>
+                  <div className="text-xs font-semibold text-ink-navy truncate">{item.title}</div>
+                  <div className="text-[11px] text-mist-gray truncate">{item.desc}</div>
                 </div>
               </div>
-              <ArrowRight className="w-3.5 h-3.5 text-slate-300 group-hover:text-slate-600 group-hover:translate-x-0.5 transition-all shrink-0 ml-1" />
+              <ArrowRight className="w-3.5 h-3.5 text-mist-gray group-hover:text-slate-gray group-hover:translate-x-0.5 transition-all shrink-0 ml-1" />
             </Link>
           );
         })}

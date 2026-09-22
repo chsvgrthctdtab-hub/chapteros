@@ -49,18 +49,18 @@ export function DeletePlanDialog({
 
   return (
     <Dialog open={isOpen} onOpenChange={(open) => !deletePlanMutation.isPending && !open && onClose()}>
-      <DialogContent className="sm:max-w-xl md:max-w-2xl p-6 pr-10 sm:p-8 sm:pr-12 rounded-3xl border border-slate-200/80 shadow-2xl">
-        <DialogHeader className="space-y-3">
+      <DialogContent className="sm:max-w-xl md:max-w-2xl p-6 pr-10 sm:p-8 sm:pr-12 rounded-2xl border border-hairline shadow-sm bg-white">
+        <DialogHeader className="space-y-3 pb-2 border-b border-hairline">
           <div className="flex items-center gap-3.5">
-            <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-rose-100/80 text-rose-700 border border-rose-200/60">
+            <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-rose-50 text-rose-700 border border-rose-200/60">
               <AlertTriangle className="h-6 w-6" />
             </div>
             <div>
-              <DialogTitle className="text-lg sm:text-xl font-bold text-slate-900 tracking-tight">
+              <DialogTitle className="text-lg sm:text-xl font-bold text-ink-navy tracking-tight">
                 Xác nhận xóa chương trình Collab?
               </DialogTitle>
-              <DialogDescription className="text-xs text-slate-500 mt-0.5">
-                Mã định danh: <span className="font-mono font-semibold text-slate-700">{plan.code}</span>
+              <DialogDescription className="text-xs text-slate-gray mt-0.5">
+                Mã định danh: <span className="font-mono font-semibold text-ink-navy tabular-nums">{plan.code}</span>
               </DialogDescription>
             </div>
           </div>
@@ -68,14 +68,14 @@ export function DeletePlanDialog({
 
         <div className="space-y-3.5 py-3 text-xs">
           {/* Target Plan Preview */}
-          <div className="p-4 bg-slate-50 border border-slate-200/90 rounded-2xl space-y-1">
-            <p className="text-xs font-bold text-slate-900 leading-snug">{plan.name}</p>
-            <p className="text-[11px] text-slate-500 line-clamp-2">
+          <div className="p-4 bg-pebble border border-hairline rounded-xl space-y-1">
+            <p className="text-xs font-bold text-ink-navy leading-snug">{plan.name}</p>
+            <p className="text-[11px] text-slate-gray line-clamp-2">
               {plan.description || 'Chưa có mô tả chi tiết cho chương trình này.'}
             </p>
           </div>
 
-          <div className="rounded-2xl bg-rose-50/80 border border-rose-200/80 p-4 text-rose-950 space-y-1.5">
+          <div className="rounded-xl bg-rose-50/80 border border-rose-200/80 p-4 text-rose-950 space-y-1.5">
             <p className="font-semibold text-rose-900 text-xs">
               Lưu ý quan trọng khi xóa chương trình:
             </p>
@@ -91,13 +91,13 @@ export function DeletePlanDialog({
           )}
         </div>
 
-        <DialogFooter className="gap-2 sm:gap-0 pt-2">
+        <DialogFooter className="gap-2 sm:gap-0 pt-3 border-t border-hairline">
           <Button
             type="button"
             variant="outline"
             onClick={onClose}
             disabled={deletePlanMutation.isPending}
-            className="rounded-xl text-xs h-9"
+            className="rounded-lg text-xs h-9 px-4 border-hairline text-ink-navy hover:bg-pebble"
           >
             Hủy bỏ
           </Button>
@@ -107,7 +107,7 @@ export function DeletePlanDialog({
             variant="destructive"
             onClick={handleDelete}
             disabled={deletePlanMutation.isPending}
-            className="rounded-xl text-xs font-semibold h-9 bg-rose-600 hover:bg-rose-700 text-white gap-1.5 cursor-pointer shadow-xs"
+            className="rounded-lg text-xs font-semibold h-9 px-4 bg-rose-600 hover:bg-rose-700 text-white gap-1.5 cursor-pointer shadow-sm"
           >
             {deletePlanMutation.isPending ? (
               <>

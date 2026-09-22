@@ -36,7 +36,7 @@ interface EditMembershipDialogProps {
 
 const STATUS_OPTIONS: { value: MembershipStatus; label: string; color: string }[] = [
   { value: 'active', label: 'Đang hoạt động', color: 'text-emerald-700 bg-emerald-50 border-emerald-200' },
-  { value: 'inactive', label: 'Tạm ngưng', color: 'text-slate-700 bg-slate-50 border-slate-200' },
+  { value: 'inactive', label: 'Tạm ngưng', color: 'text-slate-gray bg-cloud border-hairline' },
   { value: 'pending', label: 'Chờ duyệt', color: 'text-amber-700 bg-amber-50 border-amber-200' },
   { value: 'suspended', label: 'Bị khóa', color: 'text-rose-700 bg-rose-50 border-rose-200' },
 ];
@@ -83,17 +83,17 @@ export function EditMembershipDialog({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-md">
+      <DialogContent className="max-w-md border-hairline">
         <DialogHeader>
           <div className="flex items-center gap-2.5">
-            <div className="h-9 w-9 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center">
+            <div className="h-9 w-9 rounded-lg bg-[#e6f0ff] text-signal-blue flex items-center justify-center">
               <UserCog strokeWidth={1.5} className="h-5 w-5" />
             </div>
             <div>
-              <DialogTitle className="text-base font-bold text-slate-900">
+              <DialogTitle className="text-base font-bold text-ink-navy">
                 Phân quyền thành viên Đơn vị
               </DialogTitle>
-              <DialogDescription className="text-xs text-slate-500">
+              <DialogDescription className="text-xs text-mist-gray">
                 Cập nhật vai trò hệ thống và trạng thái hoạt động
               </DialogDescription>
             </div>
@@ -109,27 +109,27 @@ export function EditMembershipDialog({
 
         <form onSubmit={handleSubmit} className="space-y-4 py-1">
           {/* Member brief info */}
-          <div className="p-3 rounded-lg bg-slate-50 border border-slate-200/80 flex items-center justify-between text-xs">
+          <div className="p-3 rounded-lg bg-cloud border border-hairline flex items-center justify-between text-xs">
             <div>
-              <p className="font-semibold text-slate-900">{membership.profile?.fullName || 'Thành viên'}</p>
-              <p className="text-slate-500 text-[11px]">{membership.profile?.email}</p>
+              <p className="font-semibold text-ink-navy">{membership.profile?.fullName || 'Thành viên'}</p>
+              <p className="text-mist-gray text-[11px]">{membership.profile?.email}</p>
             </div>
-            <Badge variant="outline" className="text-[10px]">
+            <Badge variant="outline" className="text-[10px] bg-white text-slate-gray border-hairline">
               {isSelf ? 'Tài khoản của bạn' : `MSSV: ${membership.profile?.studentId || 'Chưa có'}`}
             </Badge>
           </div>
 
           {/* Role select */}
           <div className="space-y-1.5">
-            <label className="text-xs font-semibold text-slate-700 flex items-center gap-1.5">
-              <ShieldCheck className="h-3.5 w-3.5 text-blue-600" />
+            <label className="text-xs font-semibold text-slate-gray flex items-center gap-1.5">
+              <ShieldCheck className="h-3.5 w-3.5 text-signal-blue" />
               Vai trò hệ thống (System Role)
             </label>
             <Select
               value={selectedRole}
               onValueChange={(val) => setSelectedRole(val as OrganizationRole)}
             >
-              <SelectTrigger className="w-full h-9 rounded-md border-slate-200 bg-white text-xs text-slate-800">
+              <SelectTrigger className="w-full h-9 rounded-md border-hairline bg-white text-xs text-ink-navy">
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
@@ -142,7 +142,7 @@ export function EditMembershipDialog({
             </Select>
 
             {selectedRoleInfo && (
-              <p className="text-[11px] text-slate-500 bg-slate-50 p-2.5 rounded border border-slate-200/60 leading-relaxed">
+              <p className="text-[11px] text-mist-gray bg-cloud p-2.5 rounded border border-hairline leading-relaxed">
                 {selectedRoleInfo.description}
               </p>
             )}
@@ -150,12 +150,12 @@ export function EditMembershipDialog({
 
           {/* Status select */}
           <div className="space-y-1.5">
-            <label className="text-xs font-semibold text-slate-700">Trạng thái hoạt động</label>
+            <label className="text-xs font-semibold text-slate-gray">Trạng thái hoạt động</label>
             <Select
               value={selectedStatus}
               onValueChange={(val) => setSelectedStatus(val as MembershipStatus)}
             >
-              <SelectTrigger className="w-full h-9 rounded-md border-slate-200 bg-white text-xs text-slate-800">
+              <SelectTrigger className="w-full h-9 rounded-md border-hairline bg-white text-xs text-ink-navy">
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
@@ -185,7 +185,7 @@ export function EditMembershipDialog({
               size="sm"
               onClick={() => onOpenChange(false)}
               disabled={isLoading}
-              className="text-xs"
+              className="text-xs border-hairline text-slate-gray hover:bg-pebble hover:text-ink-navy"
             >
               Hủy
             </Button>
@@ -193,7 +193,7 @@ export function EditMembershipDialog({
               type="submit"
               size="sm"
               disabled={isLoading}
-              className="text-xs bg-blue-600 hover:bg-blue-700 text-white"
+              className="text-xs bg-signal-blue hover:bg-[#005be0] text-white"
             >
               {isLoading && <Loader2 className="h-3.5 w-3.5 mr-1.5 animate-spin" />}
               {isLoading ? 'Đang lưu...' : 'Lưu thay đổi'}

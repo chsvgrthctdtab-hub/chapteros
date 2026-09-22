@@ -10,11 +10,9 @@ import {
   AlertCircle,
   LogOut,
   Building2,
-  Key,
   Shield,
   Languages,
   Check,
-  Globe,
 } from 'lucide-react';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -91,10 +89,10 @@ export function ProfileSettingsTab() {
   return (
     <div id="settings-profile-tab" className="space-y-6">
       {/* Account Overview Header Card */}
-      <div className="rounded-2xl border border-slate-200/90 bg-white p-5 sm:p-6 shadow-2xs">
+      <div className="rounded-2xl border border-hairline bg-white p-5 sm:p-6 shadow-xs">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div className="flex items-center gap-4">
-            <div className="h-16 w-16 rounded-2xl bg-emerald-100/70 border border-emerald-200/80 text-emerald-800 flex items-center justify-center font-bold text-xl shrink-0 shadow-2xs">
+            <div className="h-16 w-16 rounded-2xl bg-[#e6f0ff] border border-[#d4e4fa] text-signal-blue flex items-center justify-center font-bold text-xl shrink-0 shadow-xs">
               {profile?.fullName
                 ? profile.fullName
                     .split(' ')
@@ -118,11 +116,11 @@ export function ProfileSettingsTab() {
                   </span>
                 )}
               </div>
-              <h3 className="text-lg sm:text-xl font-bold text-slate-900 leading-tight">
+              <h3 className="text-lg sm:text-xl font-bold text-ink-navy leading-tight">
                 {profile?.fullName || user?.email || 'Người dùng ChapterOS'}
               </h3>
-              <p className="text-xs text-slate-500 font-mono flex items-center gap-1.5">
-                <Mail className="h-3.5 w-3.5 text-slate-400" />
+              <p className="text-xs text-mist-gray font-mono flex items-center gap-1.5">
+                <Mail className="h-3.5 w-3.5 text-mist-gray" />
                 {user?.email || 'Chưa có email'}
               </p>
             </div>
@@ -140,13 +138,13 @@ export function ProfileSettingsTab() {
         </div>
       </div>
 
-      <Card className="border-slate-200 shadow-2xs">
-        <CardHeader className="pb-4 border-b border-slate-100">
-          <CardTitle className="text-sm sm:text-base font-bold text-slate-900 flex items-center gap-2">
-            <User className="h-4 w-4 text-emerald-600" />
+      <Card className="border-hairline shadow-xs bg-white">
+        <CardHeader className="pb-4 border-b border-hairline">
+          <CardTitle className="text-sm sm:text-base font-bold text-ink-navy flex items-center gap-2">
+            <User className="h-4 w-4 text-signal-blue" />
             Thông tin Cá nhân & Hồ sơ Sinh viên
           </CardTitle>
-          <CardDescription className="text-xs text-slate-500 mt-0.5">
+          <CardDescription className="text-xs text-mist-gray mt-0.5">
             Thông tin định danh liên kết với tài khoản xác thực Supabase Auth và hồ sơ Ban Chấp Hành
           </CardDescription>
         </CardHeader>
@@ -168,8 +166,8 @@ export function ProfileSettingsTab() {
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="space-y-1.5">
-                <label className="text-xs font-semibold text-slate-700 flex items-center gap-1.5">
-                  <User className="h-3.5 w-3.5 text-slate-400" />
+                <label className="text-xs font-semibold text-slate-gray flex items-center gap-1.5">
+                  <User className="h-3.5 w-3.5 text-mist-gray" />
                   Họ và tên <span className="text-rose-500">*</span>
                 </label>
                 <Input
@@ -182,8 +180,8 @@ export function ProfileSettingsTab() {
               </div>
 
               <div className="space-y-1.5">
-                <label className="text-xs font-semibold text-slate-700 flex items-center gap-1.5">
-                  <GraduationCap className="h-3.5 w-3.5 text-slate-400" />
+                <label className="text-xs font-semibold text-slate-gray flex items-center gap-1.5">
+                  <GraduationCap className="h-3.5 w-3.5 text-mist-gray" />
                   Mã số sinh viên (MSSV)
                 </label>
                 <Input
@@ -197,21 +195,21 @@ export function ProfileSettingsTab() {
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="space-y-1.5">
-                <label className="text-xs font-semibold text-slate-700 flex items-center gap-1.5">
-                  <Mail className="h-3.5 w-3.5 text-slate-400" />
+                <label className="text-xs font-semibold text-slate-gray flex items-center gap-1.5">
+                  <Mail className="h-3.5 w-3.5 text-mist-gray" />
                   Email tài khoản
                 </label>
                 <Input
                   value={user?.email || ''}
                   disabled
-                  className="bg-slate-50 text-slate-500 font-mono text-xs cursor-not-allowed"
+                  className="bg-cloud text-mist-gray font-mono text-xs cursor-not-allowed"
                 />
-                <span className="text-[10px] text-slate-400">Email quản lý bởi hệ thống Auth</span>
+                <span className="text-[10px] text-mist-gray">Email quản lý bởi hệ thống Auth</span>
               </div>
 
               <div className="space-y-1.5">
-                <label className="text-xs font-semibold text-slate-700 flex items-center gap-1.5">
-                  <Phone className="h-3.5 w-3.5 text-slate-400" />
+                <label className="text-xs font-semibold text-slate-gray flex items-center gap-1.5">
+                  <Phone className="h-3.5 w-3.5 text-mist-gray" />
                   Số điện thoại
                 </label>
                 <Input
@@ -224,39 +222,39 @@ export function ProfileSettingsTab() {
             </div>
 
             {/* Active Org context notice */}
-            <div className="rounded-xl border border-slate-200/80 bg-slate-50/70 p-3.5 space-y-2 mt-4 text-xs">
+            <div className="rounded-xl border border-hairline bg-cloud p-3.5 space-y-2 mt-4 text-xs">
               <div className="flex items-center justify-between">
-                <span className="text-slate-500 font-medium flex items-center gap-1.5">
-                  <Building2 className="h-3.5 w-3.5 text-slate-400" />
+                <span className="text-mist-gray font-medium flex items-center gap-1.5">
+                  <Building2 className="h-3.5 w-3.5 text-mist-gray" />
                   Chi hội đang hoạt động:
                 </span>
-                <span className="font-bold text-slate-800">
+                <span className="font-bold text-ink-navy">
                   {activeOrganization
                     ? `${activeOrganization.name} (${activeOrganization.code})`
                     : 'Chưa chọn'}
                 </span>
               </div>
-              <div className="flex items-center justify-between border-t border-slate-200/60 pt-2">
-                <span className="text-slate-500 font-medium flex items-center gap-1.5">
-                  <Shield className="h-3.5 w-3.5 text-slate-400" />
+              <div className="flex items-center justify-between border-t border-hairline pt-2">
+                <span className="text-mist-gray font-medium flex items-center gap-1.5">
+                  <Shield className="h-3.5 w-3.5 text-mist-gray" />
                   Vai trò quản lý:
                 </span>
-                <span className="font-semibold text-slate-700">
+                <span className="font-semibold text-slate-gray">
                   {roleInfo?.label || 'Chưa phân quyền'}
                 </span>
               </div>
             </div>
           </CardContent>
 
-          <CardFooter className="bg-slate-50/70 border-t border-slate-100 flex items-center justify-between py-3 px-5">
-            <span className="text-[11px] text-slate-500 font-mono">
-              ID: <code className="text-slate-700">{user?.id || 'demo-user'}</code>
+          <CardFooter className="bg-cloud border-t border-hairline flex items-center justify-between py-3 px-5">
+            <span className="text-[11px] text-mist-gray font-mono">
+              ID: <code className="text-ink-navy">{user?.id || 'demo-user'}</code>
             </span>
             <Button
               type="submit"
               size="sm"
               disabled={isSaving}
-              className="text-xs h-8 bg-emerald-600 hover:bg-emerald-700 text-white cursor-pointer shadow-2xs font-medium"
+              className="text-xs h-8 bg-signal-blue hover:bg-[#005be0] text-white cursor-pointer shadow-xs font-medium"
             >
               {isSaving ? (
                 <Loader2 className="h-3.5 w-3.5 mr-1.5 animate-spin" />
@@ -270,15 +268,15 @@ export function ProfileSettingsTab() {
       </Card>
 
       {/* Language Preferences Card */}
-      <Card className="border-slate-200/90 shadow-2xs bg-white">
-        <CardHeader className="p-5 pb-3 border-b border-slate-100">
+      <Card className="border-hairline shadow-xs bg-white">
+        <CardHeader className="p-5 pb-3 border-b border-hairline">
           <div className="flex items-center justify-between">
             <div className="space-y-1">
-              <CardTitle className="text-base font-bold text-slate-900 flex items-center gap-2">
-                <Languages className="h-4 w-4 text-emerald-600" />
+              <CardTitle className="text-base font-bold text-ink-navy flex items-center gap-2">
+                <Languages className="h-4 w-4 text-signal-blue" />
                 {t('language.title', 'Ngôn ngữ hiển thị (Display Language)')}
               </CardTitle>
-              <CardDescription className="text-xs text-slate-500">
+              <CardDescription className="text-xs text-mist-gray">
                 {t('language.description', 'Chọn ngôn ngữ giao diện cho ChapterOS (Tiếng Việt / English).')}
               </CardDescription>
             </div>
@@ -298,21 +296,21 @@ export function ProfileSettingsTab() {
               }}
               className={`p-4 rounded-xl border text-left flex items-start justify-between gap-3 transition-all cursor-pointer ${
                 language === 'vi'
-                  ? 'border-emerald-600 bg-emerald-50/40 shadow-xs ring-1 ring-emerald-600/30'
-                  : 'border-slate-200 hover:border-slate-300 hover:bg-slate-50/70'
+                  ? 'border-signal-blue bg-[#e6f0ff] shadow-xs ring-1 ring-signal-blue/30'
+                  : 'border-hairline hover:border-mist-gray hover:bg-cloud'
               }`}
             >
               <div className="space-y-1">
                 <div className="flex items-center gap-2">
                   <span className="text-lg">🇻🇳</span>
-                  <span className="text-sm font-bold text-slate-900">Tiếng Việt</span>
+                  <span className="text-sm font-bold text-ink-navy">Tiếng Việt</span>
                 </div>
-                <p className="text-2xs text-slate-500 leading-relaxed">
+                <p className="text-2xs text-mist-gray leading-relaxed">
                   Giao diện chuẩn tiếng Việt cho Ban Chấp Hành và hoạt động Hội Sinh viên.
                 </p>
               </div>
               {language === 'vi' && (
-                <div className="h-5 w-5 rounded-full bg-emerald-600 text-white flex items-center justify-center shrink-0 mt-0.5">
+                <div className="h-5 w-5 rounded-full bg-signal-blue text-white flex items-center justify-center shrink-0 mt-0.5">
                   <Check className="h-3 w-3" />
                 </div>
               )}
@@ -327,21 +325,21 @@ export function ProfileSettingsTab() {
               }}
               className={`p-4 rounded-xl border text-left flex items-start justify-between gap-3 transition-all cursor-pointer ${
                 language === 'en'
-                  ? 'border-emerald-600 bg-emerald-50/40 shadow-xs ring-1 ring-emerald-600/30'
-                  : 'border-slate-200 hover:border-slate-300 hover:bg-slate-50/70'
+                  ? 'border-signal-blue bg-[#e6f0ff] shadow-xs ring-1 ring-signal-blue/30'
+                  : 'border-hairline hover:border-mist-gray hover:bg-cloud'
               }`}
             >
               <div className="space-y-1">
                 <div className="flex items-center gap-2">
                   <span className="text-lg">🇬🇧</span>
-                  <span className="text-sm font-bold text-slate-900">English</span>
+                  <span className="text-sm font-bold text-ink-navy">English</span>
                 </div>
-                <p className="text-2xs text-slate-500 leading-relaxed">
+                <p className="text-2xs text-mist-gray leading-relaxed">
                   International executive interface with English labels and navigation.
                 </p>
               </div>
               {language === 'en' && (
-                <div className="h-5 w-5 rounded-full bg-emerald-600 text-white flex items-center justify-center shrink-0 mt-0.5">
+                <div className="h-5 w-5 rounded-full bg-signal-blue text-white flex items-center justify-center shrink-0 mt-0.5">
                   <Check className="h-3 w-3" />
                 </div>
               )}

@@ -3,11 +3,10 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import { 
   GraduationCap, 
-  ShieldCheck, 
   AlertCircle, 
   Loader2,
   Database,
-  Sparkles
+  ShieldCheck,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
@@ -50,20 +49,20 @@ export function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen w-full flex flex-col justify-between items-center p-4 sm:p-6 bg-slate-50/80 text-slate-900 font-sans selection:bg-blue-100 selection:text-blue-900">
+    <div className="min-h-screen w-full flex flex-col justify-between items-center p-4 sm:p-6 bg-cloud text-ink-navy font-sans selection:bg-[#e6f0ff] selection:text-signal-blue">
       <div />
 
-      {/* Main Material 3 Minimal Container */}
+      {/* Main Container */}
       <main className="w-full max-w-md my-auto animate-in fade-in zoom-in-95 duration-200">
-        <div className="bg-white rounded-3xl border border-slate-200/80 p-8 sm:p-10 shadow-xs space-y-8">
+        <div className="bg-white rounded-3xl border border-hairline p-8 sm:p-10 shadow-xs space-y-8">
           {/* Brand header */}
           <div className="text-center space-y-3">
-            <div className="inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-blue-600 text-white shadow-sm ring-4 ring-blue-50">
+            <div className="inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-signal-blue text-white shadow-sm ring-4 ring-[#e6f0ff]">
               <GraduationCap strokeWidth={1.5} className="h-7 w-7" />
             </div>
             <div className="space-y-1">
-              <h1 className="text-2xl font-bold tracking-tight text-slate-900">ChapterOS</h1>
-              <p className="text-xs text-slate-500 max-w-xs mx-auto leading-relaxed">
+              <h1 className="text-2xl font-bold tracking-tight text-ink-navy">ChapterOS</h1>
+              <p className="text-xs text-mist-gray max-w-xs mx-auto leading-relaxed">
                 Nền tảng vận hành và quản trị số dành cho Ban Chấp Hành các Đơn vị sinh viên
               </p>
             </div>
@@ -97,10 +96,10 @@ export function LoginPage() {
               type="button"
               onClick={handleGoogleSignIn}
               disabled={isGoogleLoading}
-              className="w-full h-12 text-sm font-semibold rounded-2xl bg-slate-900 hover:bg-slate-800 text-white shadow-xs hover:shadow-sm transition-all flex items-center justify-center gap-3 cursor-pointer disabled:opacity-70"
+              className="w-full h-12 text-sm font-semibold rounded-2xl bg-ink-navy hover:bg-black text-white shadow-xs hover:shadow-sm transition-all flex items-center justify-center gap-3 cursor-pointer disabled:opacity-70"
             >
               {isGoogleLoading ? (
-                <Loader2 className="h-4 w-4 animate-spin text-slate-300" />
+                <Loader2 className="h-4 w-4 animate-spin text-mist-gray" />
               ) : (
                 <svg className="h-4 w-4 shrink-0" viewBox="0 0 24 24">
                   <path
@@ -124,23 +123,23 @@ export function LoginPage() {
               <span>{isGoogleLoading ? 'Đang xác thực Google...' : 'Đăng nhập với Google'}</span>
             </Button>
 
-            <p className="text-[11px] text-center text-slate-400 leading-relaxed px-4">
+            <p className="text-[11px] text-center text-mist-gray leading-relaxed px-4">
               Sử dụng tài khoản Google trường hoặc email cá nhân để truy cập không gian làm việc.
             </p>
           </div>
 
           {/* Security Footnote */}
-          <div className="pt-4 border-t border-slate-100 flex items-center justify-center gap-1.5 text-xs text-slate-500 font-medium">
+          <div className="pt-4 border-t border-hairline flex items-center justify-center gap-1.5 text-xs text-slate-gray font-medium">
             <ShieldCheck className="h-4 w-4 text-emerald-600 shrink-0" />
-            <span>Bảo mật qua Google OAuth & Supabase RLS</span>
+            <span>Bảo mật qua Google OAuth &amp; Supabase RLS</span>
           </div>
         </div>
       </main>
 
       {/* Footer */}
-      <footer className="w-full max-w-sm text-center py-4 text-[11px] text-slate-400 font-medium space-y-1">
+      <footer className="w-full max-w-sm text-center py-4 text-[11px] text-mist-gray font-medium space-y-1">
         <p>&copy; {new Date().getFullYear()} ChapterOS. All rights reserved.</p>
-        <p className="text-slate-400">Phát triển bởi <span className="text-slate-600 font-semibold">tienthuan_0909</span></p>
+        <p className="text-mist-gray">Phát triển bởi <span className="text-slate-gray font-semibold">tienthuan_0909</span></p>
       </footer>
     </div>
   );

@@ -7,10 +7,6 @@ import {
   Trash2,
   ExternalLink,
   AlertTriangle,
-  MoreHorizontal,
-  Layers,
-  ArrowRight,
-  Sliders,
 } from 'lucide-react';
 import type { TaskListItem } from '../types/task.types';
 import { formatDueDateInfo } from '../types/task.types';
@@ -41,11 +37,11 @@ export function TaskTable({
   currentUserId,
 }: TaskTableProps) {
   return (
-    <div className="bg-white rounded-2xl border border-slate-200/80 shadow-2xs overflow-hidden">
+    <div className="bg-white rounded-2xl border border-hairline shadow-xs overflow-hidden">
       <div className="overflow-x-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
         <table className="w-full text-left border-collapse text-xs">
           <thead>
-            <tr className="bg-slate-50/90 border-b border-slate-200/90 text-[11px] font-bold text-slate-600 uppercase tracking-wider select-none">
+            <tr className="bg-cloud border-b border-hairline text-[11px] font-bold text-slate-gray uppercase tracking-wider select-none">
               <th className="py-3 px-3.5 min-w-[200px]">Nhiệm vụ</th>
               <th className="py-3 px-2 text-center w-28">Trạng thái</th>
               <th className="py-3 px-2 text-center w-24">Ưu tiên</th>
@@ -56,7 +52,7 @@ export function TaskTable({
               <th className="py-3 px-3 text-right w-20">Thao tác</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-slate-100/90">
+          <tbody className="divide-y divide-hairline">
             {tasks.map((task) => {
               const dueInfo = formatDueDateInfo(task.dueDate, task.status);
               const isAssignee = Boolean(currentUserId && task.assignedTo === currentUserId);
@@ -71,24 +67,24 @@ export function TaskTable({
                   id={`task-row-${task.id}`}
                   onClick={() => onSelectTask ? onSelectTask(task) : undefined}
                   className={cn(
-                    'group hover:bg-slate-50/90 transition-colors duration-150 cursor-pointer',
+                    'group hover:bg-cloud/60 transition-colors duration-150 cursor-pointer',
                     dueInfo.isOverdue && 'bg-rose-50/20'
                   )}
                 >
                   {/* Task Column: Title + Small Task ID */}
                   <td className="py-2.5 px-3.5 align-middle">
                     <div className="space-y-0.5">
-                      <div className="font-semibold text-slate-900 group-hover:text-emerald-800 transition-colors line-clamp-1 text-xs">
+                      <div className="font-semibold text-ink-navy group-hover:text-signal-blue transition-colors line-clamp-1 text-xs">
                         {task.title}
                       </div>
-                      <div className="flex items-center gap-1.5 text-[11px] text-slate-400">
-                        <span className="font-mono text-[10px] text-slate-400 font-medium">
+                      <div className="flex items-center gap-1.5 text-[11px] text-mist-gray">
+                        <span className="font-mono tabular-nums text-[10px] text-mist-gray font-medium">
                           #{taskCode}
                         </span>
                         {task.description && (
                           <>
                             <span>·</span>
-                            <span className="truncate max-w-[180px] text-[10px] text-slate-500">
+                            <span className="truncate max-w-[180px] text-[10px] text-slate-gray">
                               {task.description}
                             </span>
                           </>
@@ -133,20 +129,20 @@ export function TaskTable({
                             src={task.assignee.avatarUrl}
                             alt={task.assignee.fullName}
                             referrerPolicy="no-referrer"
-                            className="w-6 h-6 rounded-full object-cover shrink-0 border border-slate-200 shadow-2xs hover:scale-110 transition-transform"
+                            className="w-6 h-6 rounded-full object-cover shrink-0 border border-hairline shadow-xs hover:scale-110 transition-transform"
                           />
                         ) : (
-                          <div className="w-6 h-6 rounded-full bg-emerald-100 text-emerald-800 flex items-center justify-center font-bold text-[11px] shrink-0 border border-emerald-200 shadow-2xs hover:scale-110 transition-transform">
+                          <div className="w-6 h-6 rounded-full bg-[#e6f0ff] text-signal-blue flex items-center justify-center font-bold text-[11px] shrink-0 border border-[#d4e4fa] shadow-xs hover:scale-110 transition-transform">
                             {task.assignee.fullName?.charAt(0) || 'U'}
                           </div>
                         )}
                       </div>
                     ) : (
                       <div
-                        className="inline-flex items-center justify-center text-slate-300"
+                        className="inline-flex items-center justify-center text-mist-gray"
                         title="Chưa phân công phụ trách"
                       >
-                        <div className="w-6 h-6 rounded-full border border-dashed border-slate-300 flex items-center justify-center text-[10px] text-slate-400">
+                        <div className="w-6 h-6 rounded-full border border-dashed border-hairline flex items-center justify-center text-[10px] text-mist-gray">
                           <User className="w-3 h-3" />
                         </div>
                       </div>
@@ -159,7 +155,7 @@ export function TaskTable({
                       <Link
                         to={`/activities/${task.activity.id}`}
                         onClick={(e) => e.stopPropagation()}
-                        className="inline-flex items-center gap-1 text-slate-700 hover:text-emerald-800 bg-slate-100/70 hover:bg-slate-100 px-2 py-0.5 rounded-md text-[11px] font-medium transition-colors max-w-full truncate border border-slate-200/60"
+                        className="inline-flex items-center gap-1 text-ink-navy hover:text-signal-blue bg-cloud hover:bg-pebble px-2.5 py-0.5 rounded-full text-[11px] font-medium transition-colors max-w-full truncate border border-hairline"
                         title={task.activity.title}
                       >
                         <span className="truncate">
@@ -168,7 +164,7 @@ export function TaskTable({
                         </span>
                       </Link>
                     ) : (
-                      <span className="text-[11px] text-slate-400 italic">
+                      <span className="text-[11px] text-mist-gray italic">
                         Độc lập
                       </span>
                     )}
@@ -178,10 +174,10 @@ export function TaskTable({
                   <td className="py-2.5 px-2.5 text-center align-middle whitespace-nowrap">
                     <div
                       className={cn(
-                        'inline-flex items-center gap-1.5 text-xs font-medium',
+                        'inline-flex items-center gap-1.5 text-xs font-medium tabular-nums',
                         dueInfo.isOverdue
-                          ? 'text-rose-700 font-semibold bg-rose-50 px-2 py-0.5 rounded border border-rose-200'
-                          : 'text-slate-600'
+                          ? 'text-rose-700 font-semibold bg-rose-50 px-2.5 py-0.5 rounded-full border border-rose-200'
+                          : 'text-slate-gray'
                       )}
                     >
                       {dueInfo.isOverdue ? (
@@ -195,7 +191,7 @@ export function TaskTable({
                         </>
                       ) : (
                         <>
-                          <Calendar className="w-3.5 h-3.5 text-slate-400 shrink-0" />
+                          <Calendar className="w-3.5 h-3.5 text-mist-gray shrink-0" />
                           <span>{dueInfo.formattedDate}</span>
                         </>
                       )}
@@ -218,7 +214,7 @@ export function TaskTable({
                     </div>
                   </td>
 
-                  {/* Actions Column (Revealed / Highlighted on hover) */}
+                  {/* Actions Column */}
                   <td className="py-2.5 px-3 align-middle text-right">
                     <div
                       className="flex items-center justify-end gap-1 opacity-70 group-hover:opacity-100 transition-opacity"
@@ -228,7 +224,7 @@ export function TaskTable({
                         type="button"
                         id={`view-task-drawer-${task.id}`}
                         onClick={() => onSelectTask ? onSelectTask(task) : undefined}
-                        className="p-1.5 text-slate-400 hover:text-slate-800 hover:bg-slate-100 rounded-md transition-colors cursor-pointer"
+                        className="p-1.5 text-slate-gray hover:text-ink-navy hover:bg-pebble rounded-lg transition-colors cursor-pointer"
                         title="Xem chi tiết"
                       >
                         <ExternalLink className="w-3.5 h-3.5" />
@@ -239,7 +235,7 @@ export function TaskTable({
                           type="button"
                           id={`edit-task-table-${task.id}`}
                           onClick={() => onEdit(task)}
-                          className="p-1.5 text-slate-400 hover:text-slate-800 hover:bg-slate-100 rounded-md transition-colors cursor-pointer"
+                          className="p-1.5 text-slate-gray hover:text-ink-navy hover:bg-pebble rounded-lg transition-colors cursor-pointer"
                           title="Chỉnh sửa nhiệm vụ"
                         >
                           <Edit2 className="w-3.5 h-3.5" />
@@ -251,7 +247,7 @@ export function TaskTable({
                           type="button"
                           id={`delete-task-table-${task.id}`}
                           onClick={() => onDelete(task)}
-                          className="p-1.5 text-slate-400 hover:text-rose-600 hover:bg-rose-50 rounded-md transition-colors cursor-pointer"
+                          className="p-1.5 text-slate-gray hover:text-rose-600 hover:bg-rose-50 rounded-lg transition-colors cursor-pointer"
                           title="Xóa nhiệm vụ"
                         >
                           <Trash2 className="w-3.5 h-3.5" />

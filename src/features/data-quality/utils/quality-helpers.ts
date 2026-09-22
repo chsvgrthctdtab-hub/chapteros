@@ -27,10 +27,10 @@ export const CATEGORY_META: Record<DataQualityCategory, CategoryMeta> = {
   members: {
     label: 'Hội viên',
     icon: Users,
-    color: '#2563eb', // blue-600
-    bgColor: 'bg-blue-50',
-    borderColor: 'border-blue-200',
-    badgeClass: 'bg-blue-50 text-blue-700 border-blue-200',
+    color: '#006bff', // signal-blue
+    bgColor: 'bg-[#e6f0ff]',
+    borderColor: 'border-[#d4e4fa]',
+    badgeClass: 'bg-[#e6f0ff] text-signal-blue border-[#d4e4fa]',
     route: '/members',
   },
   terms: {
@@ -81,10 +81,10 @@ export const CATEGORY_META: Record<DataQualityCategory, CategoryMeta> = {
   system: {
     label: 'Hệ thống',
     icon: ShieldCheck,
-    color: '#475569', // slate-600
-    bgColor: 'bg-slate-50',
-    borderColor: 'border-slate-200',
-    badgeClass: 'bg-slate-50 text-slate-700 border-slate-200',
+    color: '#475569', // slate-gray
+    bgColor: 'bg-cloud',
+    borderColor: 'border-hairline',
+    badgeClass: 'bg-cloud text-slate-gray border-hairline',
     route: '/settings',
   },
 };
@@ -121,11 +121,11 @@ export const SEVERITY_META: Record<DataQualitySeverity, SeverityMeta> = {
   info: {
     label: 'Thông tin',
     icon: Info,
-    color: '#0284c7', // sky-600
-    badgeClass: 'bg-sky-50 text-sky-700 border-sky-200',
-    pillBg: 'bg-sky-500',
-    pillText: 'text-sky-700',
-    borderClass: 'border-sky-300 hover:border-sky-400',
+    color: '#006bff',
+    badgeClass: 'bg-[#e6f0ff] text-signal-blue border-[#d4e4fa]',
+    pillBg: 'bg-signal-blue',
+    pillText: 'text-signal-blue',
+    borderClass: 'border-[#d4e4fa] hover:border-signal-blue',
   },
 };
 

@@ -114,19 +114,19 @@ export function CreateInviteDialog({
 
   return (
     <Dialog open={isOpen} onOpenChange={handleOpenChange}>
-      <DialogContent id="assign-role-dialog" className="sm:max-w-md bg-white border border-slate-200 shadow-xl rounded-2xl p-6">
+      <DialogContent id="assign-role-dialog" className="sm:max-w-md bg-white border border-hairline shadow-xl rounded-2xl p-6">
         <form onSubmit={handleAssignRole} className="space-y-5">
           <DialogHeader className="space-y-1.5 text-left">
-            <div className="flex items-center gap-2 text-blue-600 font-semibold text-xs mb-0.5">
+            <div className="flex items-center gap-2 text-signal-blue font-semibold text-xs mb-0.5">
               <UserCheck className="h-4 w-4" />
               <span>Cấp quyền đón đầu</span>
             </div>
-            <DialogTitle className="text-lg font-bold text-slate-900">
+            <DialogTitle className="text-lg font-bold text-ink-navy">
               Cấp Quyền Cán Bộ Ban Chấp Hành
             </DialogTitle>
-            <DialogDescription className="text-xs text-slate-500 leading-relaxed">
+            <DialogDescription className="text-xs text-mist-gray leading-relaxed">
               Cấp quyền trước cho cán bộ gia nhập{' '}
-              <span className="font-semibold text-slate-700">{organizationName || 'Chi hội'}</span>. Cán bộ chỉ cần đăng nhập bằng Google Gmail để nhận quyền tự động.
+              <span className="font-semibold text-slate-gray">{organizationName || 'Chi hội'}</span>. Cán bộ chỉ cần đăng nhập bằng Google Gmail để nhận quyền tự động.
             </DialogDescription>
           </DialogHeader>
 
@@ -138,7 +138,7 @@ export function CreateInviteDialog({
           )}
 
           {successMessage && (
-            <div className="p-3.5 bg-emerald-50 border border-emerald-200 rounded-xl flex items-start gap-2.5 text-xs text-emerald-800 font-medium animate-in fade-in-50 shadow-2xs">
+            <div className="p-3.5 bg-emerald-50 border border-emerald-200 rounded-xl flex items-start gap-2.5 text-xs text-emerald-800 font-medium animate-in fade-in-50 shadow-xs">
               <CheckCircle2 className="h-4 w-4 text-emerald-600 shrink-0 mt-0.5" />
               <div>{successMessage}</div>
             </div>
@@ -147,31 +147,31 @@ export function CreateInviteDialog({
           <div className="space-y-4">
             {/* Email Input */}
             <div className="space-y-1.5">
-              <label htmlFor="assign-email" className="block text-xs font-semibold text-slate-700">
+              <label htmlFor="assign-email" className="block text-xs font-semibold text-slate-gray">
                 Email cán bộ (Google Account) <span className="text-rose-500">*</span>
               </label>
               <div className="relative">
-                <Mail className="absolute left-3 top-2.5 h-4 w-4 text-slate-400" />
+                <Mail className="absolute left-3 top-2.5 h-4 w-4 text-mist-gray" />
                 <Input
                   id="assign-email"
                   type="email"
                   placeholder="canbo@ctu.edu.vn hoặc gmail.com"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="pl-9 h-9 bg-slate-50/50 border-slate-200 text-xs text-slate-900 focus:bg-white"
+                  className="pl-9 h-9 bg-cloud border-hairline text-xs text-ink-navy focus:bg-white"
                   required
                   disabled={isLoading || Boolean(successMessage)}
                   autoFocus
                 />
               </div>
-              <p className="text-[11px] text-slate-400">
+              <p className="text-[11px] text-mist-gray">
                 Nhập đúng địa chỉ email mà cán bộ sẽ dùng để Đăng nhập Google.
               </p>
             </div>
 
             {/* Role Dropdown */}
             <div className="space-y-1.5">
-              <label htmlFor="assign-role" className="block text-xs font-semibold text-slate-700">
+              <label htmlFor="assign-role" className="block text-xs font-semibold text-slate-gray">
                 Chức vụ phân công trong Ban Chấp Hành <span className="text-rose-500">*</span>
               </label>
               <Select
@@ -179,19 +179,19 @@ export function CreateInviteDialog({
                 onValueChange={(val) => setRole(val as OrganizationRole)}
                 disabled={isLoading || Boolean(successMessage)}
               >
-                <SelectTrigger id="assign-role" className="h-9 bg-slate-50/50 border-slate-200 text-xs">
+                <SelectTrigger id="assign-role" className="h-9 bg-cloud border-hairline text-xs text-ink-navy">
                   <SelectValue placeholder="Chọn chức vụ" />
                 </SelectTrigger>
-                <SelectContent className="bg-white border-slate-200">
+                <SelectContent className="bg-white border-hairline">
                   <SelectItem value="leader" className="text-xs">
                     <div className="flex items-center gap-2">
-                      <Shield className="h-3.5 w-3.5 text-blue-700" />
+                      <Shield className="h-3.5 w-3.5 text-signal-blue" />
                       <span>{ROLES.leader.label} (Chi hội trưởng)</span>
                     </div>
                   </SelectItem>
                   <SelectItem value="deputy" className="text-xs">
                     <div className="flex items-center gap-2">
-                      <Shield className="h-3.5 w-3.5 text-blue-600" />
+                      <Shield className="h-3.5 w-3.5 text-signal-blue" />
                       <span>{ROLES.deputy.label} (Phó Ban / Thường trực)</span>
                     </div>
                   </SelectItem>
@@ -215,7 +215,7 @@ export function CreateInviteDialog({
                   </SelectItem>
                 </SelectContent>
               </Select>
-              <p className="text-[11px] text-slate-400">
+              <p className="text-[11px] text-mist-gray">
                 Quyền hạn và trách nhiệm sẽ được tự động kích hoạt ngay khi cán bộ đăng nhập lần đầu.
               </p>
             </div>
@@ -227,7 +227,7 @@ export function CreateInviteDialog({
               variant="outline"
               size="sm"
               onClick={() => handleOpenChange(false)}
-              className="text-xs"
+              className="text-xs border-hairline text-slate-gray hover:bg-cloud cursor-pointer"
               disabled={isLoading || Boolean(successMessage)}
             >
               Hủy
@@ -236,7 +236,7 @@ export function CreateInviteDialog({
               id="btn-submit-assign-role"
               type="submit"
               size="sm"
-              className="text-xs bg-blue-600 hover:bg-blue-700 text-white gap-1.5 shadow-xs"
+              className="text-xs bg-signal-blue hover:bg-[#005be0] text-white gap-1.5 shadow-xs cursor-pointer font-medium"
               disabled={isLoading || Boolean(successMessage)}
             >
               {isLoading ? (

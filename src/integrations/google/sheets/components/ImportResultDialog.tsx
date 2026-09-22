@@ -62,10 +62,10 @@ export function ImportResultDialog({
               <CheckCircle2 strokeWidth={1.5} className="w-5 h-5" />
             </div>
             <div>
-              <DialogTitle className="text-base font-semibold text-slate-900">
+              <DialogTitle className="text-base font-semibold text-ink-navy">
                 Kết quả Nhập dữ liệu ({moduleInfo?.title || result.module})
               </DialogTitle>
-              <DialogDescription className="text-xs text-slate-500">
+              <DialogDescription className="text-xs text-slate-gray">
                 Đã hoàn tất đồng bộ dữ liệu từ Google Sheets vào Supabase PostgreSQL
               </DialogDescription>
             </div>
@@ -79,9 +79,9 @@ export function ImportResultDialog({
               <div className="text-xl font-bold text-emerald-700">{result.createdCount}</div>
               <div className="text-xs font-medium text-emerald-800 mt-0.5">Tạo mới</div>
             </div>
-            <div className="p-3 bg-blue-50 border border-blue-200 rounded-lg text-center">
-              <div className="text-xl font-bold text-blue-700">{result.updatedCount}</div>
-              <div className="text-xs font-medium text-blue-800 mt-0.5">Cập nhật</div>
+            <div className="p-3 bg-[#e6f0ff] border border-[#d4e4fa] rounded-lg text-center">
+              <div className="text-xl font-bold text-signal-blue">{result.updatedCount}</div>
+              <div className="text-xs font-medium text-ink-navy mt-0.5">Cập nhật</div>
             </div>
             <div className="p-3 bg-amber-50 border border-amber-200 rounded-lg text-center">
               <div className="text-xl font-bold text-amber-700">{result.skippedCount}</div>
@@ -93,8 +93,8 @@ export function ImportResultDialog({
             </div>
           </div>
 
-          <div className="p-3 bg-slate-50 border border-slate-200 rounded-lg text-xs text-slate-700 leading-relaxed">
-            <div className="font-semibold text-slate-900 mb-0.5">Thông điệp thực thi:</div>
+          <div className="p-3 bg-cloud border border-hairline rounded-lg text-xs text-slate-gray leading-relaxed">
+            <div className="font-semibold text-ink-navy mb-0.5">Thông điệp thực thi:</div>
             <div>{result.message}</div>
           </div>
 
@@ -109,7 +109,7 @@ export function ImportResultDialog({
                   variant="outline"
                   size="sm"
                   onClick={handleCopyErrors}
-                  className="h-7 text-xs px-2.5 gap-1 text-slate-600"
+                  className="h-7 text-xs px-2.5 gap-1 text-slate-gray border-hairline hover:bg-cloud"
                 >
                   {copied ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <Copy className="w-3.5 h-3.5" />}
                   {copied ? 'Đã sao chép' : 'Sao chép nhật ký'}
@@ -134,7 +134,7 @@ export function ImportResultDialog({
         </div>
 
         <DialogFooter className="gap-2 sm:gap-0">
-          <Button onClick={handleClose} className="w-full sm:w-auto bg-slate-900 text-white hover:bg-slate-800 text-xs">
+          <Button onClick={handleClose} className="w-full sm:w-auto bg-signal-blue text-white hover:bg-[#005be0] text-xs">
             Đóng & Hoàn tất
           </Button>
         </DialogFooter>

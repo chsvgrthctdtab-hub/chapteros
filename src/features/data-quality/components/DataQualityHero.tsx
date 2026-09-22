@@ -5,8 +5,6 @@ import {
   AlertTriangle,
   Building2,
   Clock,
-  Check,
-  Info,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -40,19 +38,19 @@ export function DataQualityHero({
   const timeAgo = formatTimeAgo(evaluatedAt);
 
   return (
-    <div className="rounded-2xl border border-slate-200/90 bg-white p-6 sm:p-7 shadow-2xs">
+    <div className="rounded-2xl border border-hairline bg-white p-6 sm:p-7 shadow-xs">
       <div className="flex flex-col lg:flex-row lg:items-start justify-between gap-6">
         {/* Left Column: Title, Description & Integrity Metrics */}
         <div className="space-y-4 max-w-3xl">
           {/* Top metadata badges */}
           <div className="flex items-center gap-2.5 flex-wrap">
-            <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-emerald-50 border border-emerald-200/80 text-emerald-800 text-xs font-semibold">
-              <Building2 className="w-3.5 h-3.5 text-emerald-700" />
+            <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-[#e6f0ff] border border-[#d4e4fa] text-signal-blue text-xs font-semibold">
+              <Building2 className="w-3.5 h-3.5 text-signal-blue" />
               <span>{organizationName}</span>
             </div>
 
-            <Badge variant="outline" className="text-slate-600 border-slate-200 bg-slate-50 text-xs py-1 px-2.5 font-medium">
-              <ShieldCheck className="w-3.5 h-3.5 mr-1.5 text-emerald-700" />
+            <Badge variant="outline" className="text-slate-gray border-hairline bg-cloud text-xs py-1 px-2.5 font-medium">
+              <ShieldCheck className="w-3.5 h-3.5 mr-1.5 text-signal-blue" />
               Operations Control Center
             </Badge>
 
@@ -76,10 +74,10 @@ export function DataQualityHero({
 
           {/* Headline & Description */}
           <div className="space-y-1.5">
-            <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-slate-900">
+            <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-ink-navy">
               Data Quality Hub
             </h1>
-            <p className="text-sm sm:text-base text-slate-500 leading-relaxed">
+            <p className="text-sm sm:text-base text-mist-gray leading-relaxed">
               Data integrity and governance checks across members, terms, activities, tasks, finance and documents.
             </p>
           </div>
@@ -87,28 +85,28 @@ export function DataQualityHero({
           {/* Operational Issues Breakdown Bar */}
           <div className="pt-2">
             <div className="flex items-center gap-2 sm:gap-3 flex-wrap">
-              <div className="px-3.5 py-1.5 rounded-lg bg-slate-50 border border-slate-200 text-xs font-semibold text-slate-800 flex items-center gap-1.5">
-                <span className="text-sm font-bold text-slate-900 tabular-nums">{totalIssues}</span>
+              <div className="px-3.5 py-1.5 rounded-lg bg-cloud border border-hairline text-xs font-semibold text-ink-navy flex items-center gap-1.5">
+                <span className="text-sm font-bold text-ink-navy tabular-nums">{totalIssues}</span>
                 <span>issues detected</span>
               </div>
 
               <div className={`px-3 py-1.5 rounded-lg border text-xs font-medium flex items-center gap-1.5 ${
-                criticalCount > 0 ? 'bg-rose-50 border-rose-200 text-rose-800 font-semibold' : 'bg-slate-50 border-slate-200 text-slate-500'
+                criticalCount > 0 ? 'bg-rose-50 border-rose-200 text-rose-800 font-semibold' : 'bg-cloud border-hairline text-mist-gray'
               }`}>
                 <span className="font-bold tabular-nums">{criticalCount}</span> Critical
               </div>
 
               <div className={`px-3 py-1.5 rounded-lg border text-xs font-medium flex items-center gap-1.5 ${
-                warningCount > 0 ? 'bg-amber-50 border-amber-200 text-amber-800 font-semibold' : 'bg-slate-50 border-slate-200 text-slate-500'
+                warningCount > 0 ? 'bg-amber-50 border-amber-200 text-amber-800 font-semibold' : 'bg-cloud border-hairline text-mist-gray'
               }`}>
                 <span className="font-bold tabular-nums">{warningCount}</span> Warnings
               </div>
 
-              <div className="px-3 py-1.5 rounded-lg bg-slate-50 border border-slate-200 text-xs font-medium text-slate-600 flex items-center gap-1.5">
+              <div className="px-3 py-1.5 rounded-lg bg-cloud border border-hairline text-xs font-medium text-slate-gray flex items-center gap-1.5">
                 <span className="font-bold tabular-nums">{suggestionCount}</span> Suggestions
               </div>
 
-              <div className="px-3 py-1.5 rounded-lg bg-slate-50 border border-slate-200 text-xs font-medium text-slate-600 flex items-center gap-1.5">
+              <div className="px-3 py-1.5 rounded-lg bg-cloud border border-hairline text-xs font-medium text-slate-gray flex items-center gap-1.5">
                 <span className="font-bold tabular-nums">6</span> Checks Active
               </div>
 
@@ -121,11 +119,11 @@ export function DataQualityHero({
           </div>
 
           {/* Last scan info */}
-          <div className="flex items-center gap-2 text-xs text-slate-400 pt-1">
-            <Clock className="w-3.5 h-3.5 text-slate-400" />
+          <div className="flex items-center gap-2 text-xs text-mist-gray pt-1">
+            <Clock className="w-3.5 h-3.5 text-mist-gray" />
             <span>Last scan:</span>
-            <span className="text-slate-600 font-medium">{formattedTime}</span>
-            {timeAgo && <span className="text-slate-400">· {timeAgo}</span>}
+            <span className="text-slate-gray font-medium">{formattedTime}</span>
+            {timeAgo && <span className="text-mist-gray">· {timeAgo}</span>}
           </div>
         </div>
 
@@ -136,7 +134,7 @@ export function DataQualityHero({
             type="button"
             onClick={onRescan}
             disabled={isScanning}
-            className="h-11 px-5 rounded-lg bg-emerald-700 hover:bg-emerald-800 text-white font-medium text-sm shadow-2xs transition-all duration-150 cursor-pointer disabled:opacity-70"
+            className="h-11 px-5 rounded-lg bg-signal-blue hover:bg-[#005be0] text-white font-medium text-sm shadow-xs transition-all duration-150 cursor-pointer disabled:opacity-70"
           >
             <RefreshCw className={`w-4 h-4 mr-2 ${isScanning ? 'animate-spin' : ''}`} />
             <span>{isScanning ? 'Scanning system...' : 'Run scan'}</span>

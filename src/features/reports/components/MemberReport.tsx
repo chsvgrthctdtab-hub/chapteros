@@ -31,7 +31,7 @@ const STATUS_COLORS = {
   transferred: '#f59e0b',
 };
 
-const CHART_COLORS = ['#0284c7', '#10b981', '#6366f1', '#f59e0b', '#ec4899', '#8b5cf6', '#14b8a6', '#64748b'];
+const CHART_COLORS = ['#006bff', '#10b981', '#6366f1', '#f59e0b', '#ec4899', '#8b5cf6', '#14b8a6', '#6b7280'];
 
 export function MemberReport({ organizationId, termId }: MemberReportProps) {
   const {
@@ -96,18 +96,18 @@ export function MemberReport({ organizationId, termId }: MemberReportProps) {
     <div className="space-y-6" id="member-report-section">
       {/* 1. KPI Strip */}
       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3.5">
-        <Card className="border-slate-200/90 shadow-2xs bg-white">
+        <Card className="border-hairline shadow-xs bg-white">
           <CardContent className="p-3.5">
             <div className="flex items-center justify-between">
-              <span className="text-2xs font-bold uppercase tracking-wider text-slate-500">Tổng hội viên</span>
-              <Users className="w-3.5 h-3.5 text-blue-600" />
+              <span className="text-2xs font-bold uppercase tracking-wider text-mist-gray">Tổng hội viên</span>
+              <Users className="w-3.5 h-3.5 text-signal-blue" />
             </div>
-            <div className="mt-2 text-xl font-black text-slate-900">{totalMembers}</div>
-            <div className="mt-0.5 text-3xs text-slate-400">Tất cả hồ sơ</div>
+            <div className="mt-2 text-xl font-black text-ink-navy">{totalMembers}</div>
+            <div className="mt-0.5 text-3xs text-mist-gray">Tất cả hồ sơ</div>
           </CardContent>
         </Card>
 
-        <Card className="border-slate-200/90 shadow-2xs bg-white">
+        <Card className="border-hairline shadow-xs bg-white">
           <CardContent className="p-3.5">
             <div className="flex items-center justify-between">
               <span className="text-2xs font-bold uppercase tracking-wider text-emerald-600">Đang hoạt động</span>
@@ -118,29 +118,29 @@ export function MemberReport({ organizationId, termId }: MemberReportProps) {
           </CardContent>
         </Card>
 
-        <Card className="border-slate-200/90 shadow-2xs bg-white">
+        <Card className="border-hairline shadow-xs bg-white">
           <CardContent className="p-3.5">
             <div className="flex items-center justify-between">
-              <span className="text-2xs font-bold uppercase tracking-wider text-indigo-600">Cựu hội viên</span>
-              <GraduationCap className="w-3.5 h-3.5 text-indigo-600" />
+              <span className="text-2xs font-bold uppercase tracking-wider text-signal-blue">Cựu hội viên</span>
+              <GraduationCap className="w-3.5 h-3.5 text-signal-blue" />
             </div>
-            <div className="mt-2 text-xl font-black text-indigo-700">{alumniMembers}</div>
-            <div className="mt-0.5 text-3xs text-slate-400">Đã tốt nghiệp</div>
+            <div className="mt-2 text-xl font-black text-signal-blue">{alumniMembers}</div>
+            <div className="mt-0.5 text-3xs text-mist-gray">Đã tốt nghiệp</div>
           </CardContent>
         </Card>
 
-        <Card className="border-slate-200/90 shadow-2xs bg-white">
+        <Card className="border-hairline shadow-xs bg-white">
           <CardContent className="p-3.5">
             <div className="flex items-center justify-between">
               <span className="text-2xs font-bold uppercase tracking-wider text-amber-600">Chuyển sinh hoạt</span>
               <ArrowRightLeft className="w-3.5 h-3.5 text-amber-600" />
             </div>
             <div className="mt-2 text-xl font-black text-amber-700">{transferredMembers}</div>
-            <div className="mt-0.5 text-3xs text-slate-400">Chuyển chi hội khác</div>
+            <div className="mt-0.5 text-3xs text-mist-gray">Chuyển chi hội khác</div>
           </CardContent>
         </Card>
 
-        <Card className="border-slate-200/90 shadow-2xs bg-white">
+        <Card className="border-hairline shadow-xs bg-white">
           <CardContent className="p-3.5">
             <div className="flex items-center justify-between">
               <span className="text-2xs font-bold uppercase tracking-wider text-purple-600">Nhân sự nhiệm kỳ</span>
@@ -149,7 +149,7 @@ export function MemberReport({ organizationId, termId }: MemberReportProps) {
             <div className="mt-2 text-xl font-black text-purple-700">
               {termMembersCount !== null ? termMembersCount : '---'}
             </div>
-            <div className="mt-0.5 text-3xs text-slate-400">BCH & Ban chuyên môn</div>
+            <div className="mt-0.5 text-3xs text-mist-gray">BCH & Ban chuyên môn</div>
           </CardContent>
         </Card>
       </div>
@@ -157,12 +157,12 @@ export function MemberReport({ organizationId, termId }: MemberReportProps) {
       {/* 2. Charts Section */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
         {/* Member Status Pie Chart */}
-        <Card className="border-slate-200/90 shadow-2xs bg-white">
-          <CardHeader className="p-4 pb-2 border-b border-slate-100">
-            <CardTitle className="text-xs font-bold uppercase tracking-wider text-slate-900">
+        <Card className="border-hairline shadow-xs bg-white">
+          <CardHeader className="p-4 pb-2 border-b border-hairline">
+            <CardTitle className="text-xs font-bold uppercase tracking-wider text-ink-navy">
               Phân bổ Tình trạng Sinh hoạt Hội viên
             </CardTitle>
-            <CardDescription className="text-2xs text-slate-500">
+            <CardDescription className="text-2xs text-mist-gray">
               Cơ cấu nhân sự đang hoạt động và cựu hội viên
             </CardDescription>
           </CardHeader>
@@ -191,7 +191,7 @@ export function MemberReport({ organizationId, termId }: MemberReportProps) {
                   <Legend
                     verticalAlign="bottom"
                     height={36}
-                    formatter={(val: string) => <span className="text-2xs font-medium text-slate-700">{val}</span>}
+                    formatter={(val: string) => <span className="text-2xs font-medium text-slate-gray">{val}</span>}
                   />
                 </PieChart>
               </ResponsiveContainer>
@@ -200,12 +200,12 @@ export function MemberReport({ organizationId, termId }: MemberReportProps) {
         </Card>
 
         {/* Position Distribution Bar Chart */}
-        <Card className="border-slate-200/90 shadow-2xs bg-white">
-          <CardHeader className="p-4 pb-2 border-b border-slate-100">
-            <CardTitle className="text-xs font-bold uppercase tracking-wider text-slate-900">
+        <Card className="border-hairline shadow-xs bg-white">
+          <CardHeader className="p-4 pb-2 border-b border-hairline">
+            <CardTitle className="text-xs font-bold uppercase tracking-wider text-ink-navy">
               Cơ cấu Chức vụ & Vị trí Phụ trách
             </CardTitle>
-            <CardDescription className="text-2xs text-slate-500">
+            <CardDescription className="text-2xs text-mist-gray">
               Phân bổ nhân sự theo từng chức danh trong Đơn vị
             </CardDescription>
           </CardHeader>
@@ -221,12 +221,12 @@ export function MemberReport({ organizationId, termId }: MemberReportProps) {
                       formatter={(val: number) => [`${val} thành viên`, 'Số lượng']}
                       contentStyle={{ backgroundColor: '#ffffff', borderColor: '#e2e8f0', borderRadius: '8px', fontSize: '12px' }}
                     />
-                    <Bar dataKey="count" fill="#6366f1" radius={[0, 4, 4, 0]} barSize={16} />
+                    <Bar dataKey="count" fill="#006bff" radius={[0, 4, 4, 0]} barSize={16} />
                   </BarChart>
                 </ResponsiveContainer>
               </div>
             ) : (
-              <div className="h-48 flex items-center justify-center text-xs text-slate-400">
+              <div className="h-48 flex items-center justify-center text-xs text-mist-gray">
                 Chưa có số liệu chức vụ
               </div>
             )}
@@ -237,45 +237,45 @@ export function MemberReport({ organizationId, termId }: MemberReportProps) {
       {/* 3. Demographics breakdown: Majors & Cohorts */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
         {/* Majors Breakdown */}
-        <Card className="border-slate-200/90 shadow-2xs bg-white">
-          <CardHeader className="p-4 pb-3 border-b border-slate-100 flex flex-row items-center justify-between">
+        <Card className="border-hairline shadow-xs bg-white">
+          <CardHeader className="p-4 pb-3 border-b border-hairline flex flex-row items-center justify-between">
             <div>
-              <CardTitle className="text-xs font-bold uppercase tracking-wider text-slate-900">
+              <CardTitle className="text-xs font-bold uppercase tracking-wider text-ink-navy">
                 Phân bổ theo Chuyên ngành Học
               </CardTitle>
-              <CardDescription className="text-2xs text-slate-500">
+              <CardDescription className="text-2xs text-mist-gray">
                 {majorDistribution.length} chuyên ngành ghi nhận
               </CardDescription>
             </div>
-            <Link to="/members" className="text-2xs font-semibold text-blue-600 hover:text-blue-800 flex items-center gap-1">
+            <Link to="/members" className="text-2xs font-semibold text-signal-blue hover:text-[#005be0] flex items-center gap-1">
               <span>Hồ sơ hội viên</span>
               <ArrowRight className="w-3 h-3" />
             </Link>
           </CardHeader>
           <CardContent className="p-0 max-h-64 overflow-y-auto">
             <table className="w-full text-xs text-left border-collapse">
-              <thead className="bg-slate-50/80 border-b border-slate-200/80 text-slate-600 font-semibold uppercase tracking-wider text-2xs sticky top-0">
+              <thead className="bg-cloud border-b border-hairline text-slate-gray font-semibold uppercase tracking-wider text-2xs sticky top-0">
                 <tr>
                   <th className="py-2 px-4">Chuyên ngành</th>
                   <th className="py-2 px-3 text-center">Hội viên</th>
                   <th className="py-2 px-4 text-right">Tỷ trọng</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-100">
+              <tbody className="divide-y divide-hairline">
                 {majorDistribution.length > 0 ? (
                   majorDistribution.map((m) => {
                     const pct = totalMembers > 0 ? Math.round((m.count / totalMembers) * 100) : 0;
                     return (
-                      <tr key={m.major} className="hover:bg-slate-50/60 transition-colors">
-                        <td className="py-2 px-4 font-semibold text-slate-800">{m.major}</td>
-                        <td className="py-2 px-3 text-center font-bold text-slate-900">{m.count}</td>
-                        <td className="py-2 px-4 text-right text-2xs text-slate-500 font-medium">{pct}%</td>
+                      <tr key={m.major} className="hover:bg-cloud/60 transition-colors">
+                        <td className="py-2 px-4 font-semibold text-slate-gray">{m.major}</td>
+                        <td className="py-2 px-3 text-center font-bold text-ink-navy">{m.count}</td>
+                        <td className="py-2 px-4 text-right text-2xs text-mist-gray font-medium">{pct}%</td>
                       </tr>
                     );
                   })
                 ) : (
                   <tr>
-                    <td colSpan={3} className="py-6 text-center text-xs text-slate-400">
+                    <td colSpan={3} className="py-6 text-center text-xs text-mist-gray">
                       Chưa có dữ liệu chuyên ngành
                     </td>
                   </tr>
@@ -286,45 +286,45 @@ export function MemberReport({ organizationId, termId }: MemberReportProps) {
         </Card>
 
         {/* Cohort Breakdown */}
-        <Card className="border-slate-200/90 shadow-2xs bg-white">
-          <CardHeader className="p-4 pb-3 border-b border-slate-100 flex flex-row items-center justify-between">
+        <Card className="border-hairline shadow-xs bg-white">
+          <CardHeader className="p-4 pb-3 border-b border-hairline flex flex-row items-center justify-between">
             <div>
-              <CardTitle className="text-xs font-bold uppercase tracking-wider text-slate-900">
+              <CardTitle className="text-xs font-bold uppercase tracking-wider text-ink-navy">
                 Phân bổ theo Khóa sinh viên
               </CardTitle>
-              <CardDescription className="text-2xs text-slate-500">
+              <CardDescription className="text-2xs text-mist-gray">
                 {cohortDistribution.length} khóa tuyển sinh tham gia
               </CardDescription>
             </div>
-            <Link to="/members" className="text-2xs font-semibold text-blue-600 hover:text-blue-800 flex items-center gap-1">
+            <Link to="/members" className="text-2xs font-semibold text-signal-blue hover:text-[#005be0] flex items-center gap-1">
               <span>Hồ sơ hội viên</span>
               <ArrowRight className="w-3 h-3" />
             </Link>
           </CardHeader>
           <CardContent className="p-0 max-h-64 overflow-y-auto">
             <table className="w-full text-xs text-left border-collapse">
-              <thead className="bg-slate-50/80 border-b border-slate-200/80 text-slate-600 font-semibold uppercase tracking-wider text-2xs sticky top-0">
+              <thead className="bg-cloud border-b border-hairline text-slate-gray font-semibold uppercase tracking-wider text-2xs sticky top-0">
                 <tr>
                   <th className="py-2 px-4">Khóa</th>
                   <th className="py-2 px-3 text-center">Hội viên</th>
                   <th className="py-2 px-4 text-right">Tỷ trọng</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-100">
+              <tbody className="divide-y divide-hairline">
                 {cohortDistribution.length > 0 ? (
                   cohortDistribution.map((c) => {
                     const pct = totalMembers > 0 ? Math.round((c.count / totalMembers) * 100) : 0;
                     return (
-                      <tr key={c.cohort} className="hover:bg-slate-50/60 transition-colors">
-                        <td className="py-2 px-4 font-semibold text-slate-800">Khóa {c.cohort}</td>
-                        <td className="py-2 px-3 text-center font-bold text-slate-900">{c.count}</td>
-                        <td className="py-2 px-4 text-right text-2xs text-slate-500 font-medium">{pct}%</td>
+                      <tr key={c.cohort} className="hover:bg-cloud/60 transition-colors">
+                        <td className="py-2 px-4 font-semibold text-slate-gray">Khóa {c.cohort}</td>
+                        <td className="py-2 px-3 text-center font-bold text-ink-navy">{c.count}</td>
+                        <td className="py-2 px-4 text-right text-2xs text-mist-gray font-medium">{pct}%</td>
                       </tr>
                     );
                   })
                 ) : (
                   <tr>
-                    <td colSpan={3} className="py-6 text-center text-xs text-slate-400">
+                    <td colSpan={3} className="py-6 text-center text-xs text-mist-gray">
                       Chưa có dữ liệu khóa sinh viên
                     </td>
                   </tr>
@@ -337,30 +337,30 @@ export function MemberReport({ organizationId, termId }: MemberReportProps) {
 
       {/* 4. Term Department Structure (if term selected and data available) */}
       {termMembersByDepartment.length > 0 && (
-        <Card className="border-slate-200/90 shadow-2xs bg-white">
-          <CardHeader className="p-4 pb-3 border-b border-slate-100 flex flex-row items-center justify-between">
+        <Card className="border-hairline shadow-xs bg-white">
+          <CardHeader className="p-4 pb-3 border-b border-hairline flex flex-row items-center justify-between">
             <div>
-              <CardTitle className="text-xs font-bold uppercase tracking-wider text-slate-900">
+              <CardTitle className="text-xs font-bold uppercase tracking-wider text-ink-navy">
                 Cơ cấu Ban Chuyên môn trong Nhiệm kỳ
               </CardTitle>
-              <CardDescription className="text-2xs text-slate-500">
+              <CardDescription className="text-2xs text-mist-gray">
                 Phân bổ nhân lực Ban Chấp hành theo các ban chuyên môn
               </CardDescription>
             </div>
-            <span className="text-2xs font-bold text-indigo-700 bg-indigo-50 px-2 py-0.5 rounded border border-indigo-200">
+            <span className="text-2xs font-bold text-signal-blue bg-[#e6f0ff] px-2 py-0.5 rounded border border-[#d4e4fa]">
               {termMembersCount} nhân sự
             </span>
           </CardHeader>
           <CardContent className="p-4">
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
               {termMembersByDepartment.map((dept) => (
-                <div key={dept.department} className="p-3 rounded-lg bg-slate-50 border border-slate-200/80 flex items-center justify-between">
+                <div key={dept.department} className="p-3 rounded-lg bg-cloud border border-hairline flex items-center justify-between">
                   <div>
-                    <span className="text-xs font-bold text-slate-900 block">{dept.department}</span>
-                    <span className="text-2xs text-slate-500">Ban chuyên môn</span>
+                    <span className="text-xs font-bold text-ink-navy block">{dept.department}</span>
+                    <span className="text-2xs text-mist-gray">Ban chuyên môn</span>
                   </div>
-                  <div className="text-base font-black text-indigo-700">
-                    {dept.count} <span className="text-2xs font-normal text-slate-500">người</span>
+                  <div className="text-base font-black text-signal-blue">
+                    {dept.count} <span className="text-2xs font-normal text-mist-gray">người</span>
                   </div>
                 </div>
               ))}

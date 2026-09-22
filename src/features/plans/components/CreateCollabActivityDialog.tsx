@@ -21,12 +21,12 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { Sparkles, Calendar, MapPin, Building2, Loader2, AlertCircle, ImageIcon } from 'lucide-react';
+import { Sparkles, MapPin, Building2, Loader2, AlertCircle, ImageIcon } from 'lucide-react';
 import { useCreateCollabActivity } from '../queries/collab.queries';
 import { useAuth } from '@/contexts/AuthContext';
 import { formatError } from '@/lib/error-formatter';
 import { getOrgTypeLabel, getOrgTypeBadgeClass } from '@/lib/organization.utils';
-import type { Plan, ActivityCategory, ActivityStatus } from '@/types';
+import type { Plan } from '@/types';
 
 const collabActivitySchema = z.object({
   title: z.string().min(3, 'Tên hoạt động phải có ít nhất 3 ký tự'),
@@ -161,16 +161,16 @@ export function CreateCollabActivityDialog({
 
   return (
     <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
-      <DialogContent className="sm:max-w-2xl md:max-w-3xl max-h-[92vh] overflow-y-auto bg-white border border-slate-200/80 shadow-2xl rounded-3xl p-6 pr-10 sm:p-8 sm:pr-12 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+      <DialogContent className="sm:max-w-2xl md:max-w-3xl max-h-[92vh] overflow-y-auto bg-white border border-hairline shadow-sm rounded-2xl p-6 pr-10 sm:p-8 sm:pr-12 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
         <DialogHeader className="space-y-1 text-left pb-1">
-          <div className="flex items-center gap-2 text-blue-600 font-semibold text-xs mb-0.5">
+          <div className="flex items-center gap-2 text-signal-blue font-semibold text-xs mb-0.5">
             <Sparkles className="h-4 w-4" />
             <span>Chiến dịch: {plan?.name}</span>
           </div>
-          <DialogTitle className="text-lg font-bold text-slate-900">
+          <DialogTitle className="text-lg font-bold text-ink-navy">
             Tạo Hoạt Động Phối Hợp Mới
           </DialogTitle>
-          <DialogDescription className="text-xs text-slate-500">
+          <DialogDescription className="text-xs text-slate-gray">
             Tạo một hoạt động collab liên đơn vị, phân công đơn vị phụ trách chính và lộ trình thực hiện.
           </DialogDescription>
         </DialogHeader>
@@ -186,14 +186,14 @@ export function CreateCollabActivityDialog({
           {/* Tên hoạt động & Mã code */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
             <div className="md:col-span-2 space-y-1.5">
-              <label htmlFor="collab-act-title" className="block text-xs font-semibold text-slate-700">
+              <label htmlFor="collab-act-title" className="block text-xs font-semibold text-ink-navy">
                 Tên hoạt động <span className="text-rose-500">*</span>
               </label>
               <Input
                 id="collab-act-title"
                 {...register('title')}
                 placeholder="Ví dụ: Ngày hội Hiến máu Tình nguyện 2026..."
-                className="h-9 text-xs bg-slate-50/50 focus:bg-white"
+                className="h-9.5 text-xs bg-cloud border-hairline text-ink-navy placeholder:text-mist-gray"
               />
               {errors.title && (
                 <p className="text-[11px] text-rose-500">{errors.title.message}</p>
@@ -201,14 +201,14 @@ export function CreateCollabActivityDialog({
             </div>
 
             <div className="space-y-1.5">
-              <label htmlFor="collab-act-code" className="block text-xs font-semibold text-slate-700">
+              <label htmlFor="collab-act-code" className="block text-xs font-semibold text-ink-navy">
                 Mã hoạt động <span className="text-rose-500">*</span>
               </label>
               <Input
                 id="collab-act-code"
                 {...register('code')}
                 placeholder="ACT-01..."
-                className="h-9 text-xs font-mono uppercase bg-slate-50/50 focus:bg-white"
+                className="h-9.5 text-xs font-mono uppercase bg-cloud border-hairline text-ink-navy placeholder:text-mist-gray"
               />
               {errors.code && (
                 <p className="text-[11px] text-rose-500">{errors.code.message}</p>
@@ -219,7 +219,7 @@ export function CreateCollabActivityDialog({
           {/* Phân loại & Trạng thái */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
             <div className="space-y-1.5">
-              <label htmlFor="collab-act-category" className="block text-xs font-semibold text-slate-700">
+              <label htmlFor="collab-act-category" className="block text-xs font-semibold text-ink-navy">
                 Phân loại hoạt động
               </label>
               <Controller
@@ -230,10 +230,10 @@ export function CreateCollabActivityDialog({
                     value={field.value || 'volunteer'}
                     onValueChange={field.onChange}
                   >
-                    <SelectTrigger id="collab-act-category" className="h-9 text-xs bg-slate-50/50">
+                    <SelectTrigger id="collab-act-category" className="h-9.5 text-xs bg-cloud border-hairline text-ink-navy rounded-lg">
                       <SelectValue placeholder="Chọn phân loại" />
                     </SelectTrigger>
-                    <SelectContent className="bg-white border-slate-200">
+                    <SelectContent className="bg-white border-hairline text-ink-navy">
                       <SelectItem value="volunteer" className="text-xs">Tình nguyện vì cộng đồng</SelectItem>
                       <SelectItem value="academic" className="text-xs">Học thuật & Nghiên cứu</SelectItem>
                       <SelectItem value="sports" className="text-xs">Thể dục thể thao</SelectItem>
@@ -248,7 +248,7 @@ export function CreateCollabActivityDialog({
             </div>
 
             <div className="space-y-1.5">
-              <label htmlFor="collab-act-status" className="block text-xs font-semibold text-slate-700">
+              <label htmlFor="collab-act-status" className="block text-xs font-semibold text-ink-navy">
                 Trạng thái ban đầu
               </label>
               <Controller
@@ -259,10 +259,10 @@ export function CreateCollabActivityDialog({
                     value={field.value || 'planning'}
                     onValueChange={field.onChange}
                   >
-                    <SelectTrigger id="collab-act-status" className="h-9 text-xs bg-slate-50/50">
+                    <SelectTrigger id="collab-act-status" className="h-9.5 text-xs bg-cloud border-hairline text-ink-navy rounded-lg">
                       <SelectValue placeholder="Chọn trạng thái" />
                     </SelectTrigger>
-                    <SelectContent className="bg-white border-slate-200">
+                    <SelectContent className="bg-white border-hairline text-ink-navy">
                       <SelectItem value="planning" className="text-xs">Đang lập kế hoạch</SelectItem>
                       <SelectItem value="published" className="text-xs">Đã công bố</SelectItem>
                       <SelectItem value="in_progress" className="text-xs">Đang diễn ra</SelectItem>
@@ -276,9 +276,9 @@ export function CreateCollabActivityDialog({
           </div>
 
           {/* Đơn vị phụ trách chính */}
-          <div className="p-3 bg-blue-50/40 rounded-xl border border-blue-100 space-y-1.5">
-            <label htmlFor="collab-act-org" className="block text-xs font-semibold text-blue-900 flex items-center gap-1.5">
-              <Building2 className="h-3.5 w-3.5 text-blue-600" />
+          <div className="p-3 bg-pebble rounded-xl border border-hairline space-y-1.5">
+            <label htmlFor="collab-act-org" className="block text-xs font-semibold text-ink-navy flex items-center gap-1.5">
+              <Building2 className="h-3.5 w-3.5 text-signal-blue" />
               Đơn vị phụ trách chính (Lead Unit) <span className="text-rose-500">*</span>
             </label>
             <Controller
@@ -289,10 +289,10 @@ export function CreateCollabActivityDialog({
                   value={field.value || ''}
                   onValueChange={field.onChange}
                 >
-                  <SelectTrigger id="collab-act-org" className="h-9 text-xs bg-white border-blue-200">
+                  <SelectTrigger id="collab-act-org" className="h-9.5 text-xs bg-white border-hairline text-ink-navy rounded-lg">
                     <SelectValue placeholder="Chọn đơn vị phụ trách" />
                   </SelectTrigger>
-                  <SelectContent className="bg-white border-slate-200 max-h-60">
+                  <SelectContent className="bg-white border-hairline text-ink-navy max-h-60">
                     {participatingOrganizations.map((org) => {
                       const typeLabel = getOrgTypeLabel(org.type);
                       const typeBadgeClass = getOrgTypeBadgeClass(org.type);
@@ -303,10 +303,10 @@ export function CreateCollabActivityDialog({
                               <span className={`text-[10px] px-1.5 py-0.2 rounded font-semibold border ${typeBadgeClass}`}>
                                 {typeLabel}
                               </span>
-                              <span className="font-medium text-slate-900 truncate">{org.name}</span>
+                              <span className="font-medium text-ink-navy truncate">{org.name}</span>
                             </div>
                             <span className={`text-[10px] px-1.5 py-0.5 rounded font-semibold shrink-0 ${
-                              org.isHost ? 'bg-blue-100 text-blue-700' : 'bg-slate-100 text-slate-600'
+                              org.isHost ? 'bg-[#e6f0ff] text-signal-blue border border-hairline' : 'bg-pebble text-slate-gray border border-hairline'
                             }`}>
                               {org.roleTag}
                             </span>
@@ -326,7 +326,7 @@ export function CreateCollabActivityDialog({
           {/* Ngày bắt đầu & Ngày kết thúc */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
             <div className="space-y-1.5">
-              <label className="block text-xs font-semibold text-slate-700">
+              <label className="block text-xs font-semibold text-ink-navy">
                 Ngày bắt đầu <span className="text-rose-500">*</span>
               </label>
               <Controller
@@ -346,7 +346,7 @@ export function CreateCollabActivityDialog({
             </div>
 
             <div className="space-y-1.5">
-              <label className="block text-xs font-semibold text-slate-700">
+              <label className="block text-xs font-semibold text-ink-navy">
                 Ngày kết thúc <span className="text-rose-500">*</span>
               </label>
               <Controller
@@ -368,35 +368,35 @@ export function CreateCollabActivityDialog({
 
           {/* Địa điểm */}
           <div className="space-y-1.5">
-            <label htmlFor="collab-act-location" className="block text-xs font-semibold text-slate-700 flex items-center gap-1">
-              <MapPin className="h-3.5 w-3.5 text-slate-400" />
+            <label htmlFor="collab-act-location" className="block text-xs font-semibold text-ink-navy flex items-center gap-1">
+              <MapPin className="h-3.5 w-3.5 text-mist-gray" />
               Địa điểm tổ chức
             </label>
             <Input
               id="collab-act-location"
               {...register('location')}
               placeholder="Ví dụ: Hội trường A, Nhà văn hóa sinh viên hoặc Online qua MS Teams..."
-              className="h-9 text-xs bg-slate-50/50 focus:bg-white"
+              className="h-9.5 text-xs bg-cloud border-hairline text-ink-navy placeholder:text-mist-gray"
             />
           </div>
 
           {/* Banner URL */}
           <div className="space-y-1.5">
-            <label htmlFor="collab-act-banner" className="block text-xs font-semibold text-slate-700 flex items-center gap-1">
-              <ImageIcon className="h-3.5 w-3.5 text-slate-400" />
+            <label htmlFor="collab-act-banner" className="block text-xs font-semibold text-ink-navy flex items-center gap-1">
+              <ImageIcon className="h-3.5 w-3.5 text-mist-gray" />
               Ảnh Banner hoạt động (URL)
             </label>
             <Input
               id="collab-act-banner"
               {...register('bannerUrl')}
               placeholder="https://images.unsplash.com/..."
-              className="h-9 text-xs bg-slate-50/50 focus:bg-white"
+              className="h-9.5 text-xs bg-cloud border-hairline text-ink-navy placeholder:text-mist-gray"
             />
           </div>
 
           {/* Mô tả chi tiết */}
           <div className="space-y-1.5">
-            <label htmlFor="collab-act-desc" className="block text-xs font-semibold text-slate-700">
+            <label htmlFor="collab-act-desc" className="block text-xs font-semibold text-ink-navy">
               Mục tiêu & Kế hoạch chi tiết
             </label>
             <Textarea
@@ -404,17 +404,17 @@ export function CreateCollabActivityDialog({
               {...register('description')}
               rows={3}
               placeholder="Mô tả nội dung chương trình, các mốc thời gian và kế hoạch triển khai..."
-              className="text-xs bg-slate-50/50 focus:bg-white resize-none"
+              className="text-xs bg-cloud border-hairline text-ink-navy placeholder:text-mist-gray resize-none"
             />
           </div>
 
-          <DialogFooter className="pt-3 gap-2">
+          <DialogFooter className="pt-3 gap-2 border-t border-hairline">
             <Button
               type="button"
               variant="outline"
               size="sm"
               onClick={onClose}
-              className="text-xs h-8 px-3 border-slate-200 hover:bg-slate-50 active:scale-[0.98]"
+              className="text-xs h-8 px-3 border-hairline hover:bg-pebble text-ink-navy shadow-sm rounded-lg active:scale-[0.98]"
             >
               Hủy
             </Button>
@@ -422,7 +422,7 @@ export function CreateCollabActivityDialog({
               type="submit"
               size="sm"
               disabled={createMutation.isPending}
-              className="text-xs h-8 px-3.5 bg-blue-600 hover:bg-blue-700 text-white font-semibold shadow-2xs active:scale-[0.98]"
+              className="text-xs h-8 px-3.5 bg-signal-blue hover:bg-[#005be0] text-white font-semibold shadow-sm rounded-lg active:scale-[0.98]"
             >
               {createMutation.isPending ? (
                 <>

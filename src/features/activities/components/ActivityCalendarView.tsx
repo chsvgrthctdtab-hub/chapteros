@@ -1,12 +1,9 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import {
   ChevronLeft,
   ChevronRight,
   Calendar as CalendarIcon,
-  Clock,
-  MapPin,
-  Users,
 } from 'lucide-react';
 import type { ActivityListItem } from '../types/activity.types';
 import { ACTIVITY_STATUSES } from '../types/activity.types';
@@ -57,21 +54,21 @@ export function ActivityCalendarView({ activities }: ActivityCalendarViewProps) 
   });
 
   const monthNames = [
-    'January',
-    'February',
-    'March',
-    'April',
-    'May',
-    'June',
-    'July',
-    'August',
-    'September',
-    'October',
-    'November',
-    'December',
+    'Tháng 1',
+    'Tháng 2',
+    'Tháng 3',
+    'Tháng 4',
+    'Tháng 5',
+    'Tháng 6',
+    'Tháng 7',
+    'Tháng 8',
+    'Tháng 9',
+    'Tháng 10',
+    'Tháng 11',
+    'Tháng 12',
   ];
 
-  const weekDayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+  const weekDayNames = ['CN', 'T2', 'T3', 'T4', 'T5', 'T6', 'T7'];
 
   // Build 35 or 42 grid cells
   const gridCells: { dayNumber: number | null; dateKey: string | null; isToday: boolean }[] = [];
@@ -96,12 +93,12 @@ export function ActivityCalendarView({ activities }: ActivityCalendarViewProps) 
   }
 
   return (
-    <div className="bg-white rounded-xl border border-slate-200/90 shadow-2xs overflow-hidden">
+    <div className="bg-white rounded-2xl border border-hairline shadow-xs overflow-hidden">
       {/* Calendar Header */}
-      <div className="p-4 border-b border-slate-200/80 bg-slate-50/70 flex items-center justify-between gap-3">
+      <div className="p-4 border-b border-hairline bg-cloud flex items-center justify-between gap-3">
         <div className="flex items-center gap-2">
-          <CalendarIcon className="w-4 h-4 text-emerald-700" />
-          <h3 className="text-sm font-bold text-slate-900">
+          <CalendarIcon className="w-4 h-4 text-signal-blue" />
+          <h3 className="text-sm font-bold text-ink-navy">
             {monthNames[month]} {year}
           </h3>
         </div>
@@ -111,17 +108,17 @@ export function ActivityCalendarView({ activities }: ActivityCalendarViewProps) 
             type="button"
             id="calendar-today-btn"
             onClick={handleToday}
-            className="px-2.5 py-1 text-xs font-semibold text-slate-700 bg-white hover:bg-slate-100 border border-slate-200 rounded-md transition-colors cursor-pointer"
+            className="px-2.5 py-1 text-xs font-semibold text-slate-gray bg-white hover:bg-pebble hover:text-ink-navy border border-hairline rounded-lg transition-colors cursor-pointer"
           >
-            Today
+            Hôm nay
           </button>
-          <div className="flex items-center gap-0.5 bg-white border border-slate-200 rounded-md p-0.5">
+          <div className="flex items-center gap-0.5 bg-white border border-hairline rounded-lg p-0.5">
             <button
               type="button"
               id="calendar-prev-btn"
               onClick={handlePrevMonth}
-              className="p-1 text-slate-600 hover:text-slate-900 hover:bg-slate-100 rounded transition-colors cursor-pointer"
-              title="Previous Month"
+              className="p-1 text-slate-gray hover:text-ink-navy hover:bg-pebble rounded-md transition-colors cursor-pointer"
+              title="Tháng trước"
             >
               <ChevronLeft className="w-3.5 h-3.5" />
             </button>
@@ -129,8 +126,8 @@ export function ActivityCalendarView({ activities }: ActivityCalendarViewProps) 
               type="button"
               id="calendar-next-btn"
               onClick={handleNextMonth}
-              className="p-1 text-slate-600 hover:text-slate-900 hover:bg-slate-100 rounded transition-colors cursor-pointer"
-              title="Next Month"
+              className="p-1 text-slate-gray hover:text-ink-navy hover:bg-pebble rounded-md transition-colors cursor-pointer"
+              title="Tháng sau"
             >
               <ChevronRight className="w-3.5 h-3.5" />
             </button>
@@ -139,18 +136,18 @@ export function ActivityCalendarView({ activities }: ActivityCalendarViewProps) 
       </div>
 
       {/* Weekday Labels */}
-      <div className="grid grid-cols-7 border-b border-slate-200/80 bg-slate-50/50 text-[11px] font-bold text-slate-500 text-center py-2">
+      <div className="grid grid-cols-7 border-b border-hairline bg-cloud text-[11px] font-bold text-slate-gray text-center py-2 uppercase tracking-wider">
         {weekDayNames.map((wd) => (
           <div key={wd}>{wd}</div>
         ))}
       </div>
 
       {/* Calendar Grid */}
-      <div className="grid grid-cols-7 divide-x divide-y divide-slate-100 bg-slate-100/30">
+      <div className="grid grid-cols-7 divide-x divide-y divide-hairline bg-cloud/40">
         {gridCells.map((cell, idx) => {
           if (!cell.dayNumber || !cell.dateKey) {
             return (
-              <div key={idx} className="min-h-[100px] bg-slate-50/40 p-1.5 opacity-40" />
+              <div key={idx} className="min-h-[100px] bg-cloud/30 p-1.5 opacity-40" />
             );
           }
 
@@ -160,24 +157,24 @@ export function ActivityCalendarView({ activities }: ActivityCalendarViewProps) 
             <div
               key={idx}
               className={cn(
-                'min-h-[100px] bg-white p-1.5 flex flex-col justify-between transition-colors hover:bg-slate-50/50',
-                cell.isToday && 'bg-emerald-50/30'
+                'min-h-[100px] bg-white p-1.5 flex flex-col justify-between transition-colors hover:bg-cloud/60',
+                cell.isToday && 'bg-[#e6f0ff]/20'
               )}
             >
               {/* Day Header */}
               <div className="flex items-center justify-between mb-1">
                 <span
                   className={cn(
-                    'text-xs font-bold w-5 h-5 flex items-center justify-center rounded-full',
+                    'text-xs font-bold w-5 h-5 flex items-center justify-center rounded-full tabular-nums',
                     cell.isToday
-                      ? 'bg-emerald-700 text-white shadow-2xs'
-                      : 'text-slate-700'
+                      ? 'bg-signal-blue text-white shadow-xs'
+                      : 'text-ink-navy'
                   )}
                 >
                   {cell.dayNumber}
                 </span>
                 {dayActivities.length > 0 && (
-                  <span className="text-[10px] text-slate-400 font-medium">
+                  <span className="text-[10px] text-mist-gray font-medium tabular-nums">
                     {dayActivities.length}
                   </span>
                 )}
@@ -193,10 +190,10 @@ export function ActivityCalendarView({ activities }: ActivityCalendarViewProps) 
                       to={`/activities/${act.id}`}
                       id={`calendar-act-link-${act.id}`}
                       className={cn(
-                        'block px-1.5 py-0.5 rounded text-[11px] font-semibold truncate transition-all border shadow-2xs',
-                        statusCfg?.colorClasses.bg || 'bg-slate-100',
-                        statusCfg?.colorClasses.text || 'text-slate-800',
-                        statusCfg?.colorClasses.border || 'border-slate-200'
+                        'block px-1.5 py-0.5 rounded-md text-[11px] font-semibold truncate transition-all border shadow-xs',
+                        statusCfg?.colorClasses.bg || 'bg-pebble',
+                        statusCfg?.colorClasses.text || 'text-ink-navy',
+                        statusCfg?.colorClasses.border || 'border-hairline'
                       )}
                       title={`${act.title} (${statusCfg?.label || act.status})`}
                     >
@@ -206,8 +203,8 @@ export function ActivityCalendarView({ activities }: ActivityCalendarViewProps) 
                 })}
 
                 {dayActivities.length > 3 && (
-                  <span className="text-[10px] text-slate-500 font-semibold pl-1 block">
-                    +{dayActivities.length - 3} more
+                  <span className="text-[10px] text-slate-gray font-semibold pl-1 block tabular-nums">
+                    +{dayActivities.length - 3} khác
                   </span>
                 )}
               </div>

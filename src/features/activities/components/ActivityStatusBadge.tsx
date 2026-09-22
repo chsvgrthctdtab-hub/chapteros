@@ -15,10 +15,10 @@ export function ActivityStatusBadge({
     label: status,
     badgeVariant: 'secondary',
     colorClasses: {
-      bg: 'bg-slate-100',
-      text: 'text-slate-700',
-      border: 'border-slate-200',
-      dot: 'bg-slate-400',
+      bg: 'bg-cloud',
+      text: 'text-slate-gray',
+      border: 'border-hairline',
+      dot: 'bg-mist-gray',
     },
     description: '',
   };

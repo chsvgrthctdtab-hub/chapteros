@@ -195,11 +195,11 @@ export function OrganizationSettingsTab({
 
   if (!organization) {
     return (
-      <Card className="border-slate-200 shadow-2xs">
-        <CardContent className="py-12 text-center text-slate-500 text-xs">
-          <Building2 strokeWidth={1.5} className="h-8 w-8 text-slate-300 mx-auto mb-2" />
-          <p className="font-medium text-slate-700">Chưa chọn Đơn vị hoạt động</p>
-          <p className="text-[11px] text-slate-400 mt-1">
+      <Card className="border-hairline shadow-xs bg-white">
+        <CardContent className="py-12 text-center text-mist-gray text-xs">
+          <Building2 strokeWidth={1.5} className="h-8 w-8 text-mist-gray mx-auto mb-2" />
+          <p className="font-medium text-ink-navy">Chưa chọn Đơn vị hoạt động</p>
+          <p className="text-[11px] text-mist-gray mt-1">
             Vui lòng chọn một Chi hội trong thanh điều hướng để cấu hình thông tin.
           </p>
         </CardContent>
@@ -210,10 +210,10 @@ export function OrganizationSettingsTab({
   return (
     <div id="settings-organization-tab" className="space-y-6">
       {/* Chapter Identity Preview Banner */}
-      <div className="rounded-2xl border border-slate-200/90 bg-white p-5 sm:p-6 shadow-2xs">
+      <div className="rounded-2xl border border-hairline bg-white p-5 sm:p-6 shadow-xs">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div className="flex items-center gap-4">
-            <div className="h-16 w-16 rounded-2xl border border-slate-200/80 bg-slate-50 overflow-hidden flex items-center justify-center shrink-0 shadow-2xs">
+            <div className="h-16 w-16 rounded-2xl border border-hairline bg-cloud overflow-hidden flex items-center justify-center shrink-0 shadow-xs">
               {organization.logoUrl && !imgError ? (
                 <img
                   src={organization.logoUrl}
@@ -222,28 +222,28 @@ export function OrganizationSettingsTab({
                   className="h-full w-full object-cover"
                 />
               ) : (
-                <Building2 strokeWidth={1.5} className="h-8 w-8 text-slate-400" />
+                <Building2 strokeWidth={1.5} className="h-8 w-8 text-mist-gray" />
               )}
             </div>
             <div className="space-y-1">
               <div className="flex items-center gap-2 flex-wrap">
                 {currentTypeShort && (
-                  <Badge variant="outline" className="font-mono text-[10px] bg-blue-50 border-blue-200 text-blue-700 font-bold px-2 py-0.5">
+                  <Badge variant="outline" className="font-mono text-[10px] bg-[#e6f0ff] border-[#d4e4fa] text-signal-blue font-bold px-2 py-0.5">
                     {currentTypeShort}
                   </Badge>
                 )}
-                <Badge variant="outline" className="font-mono text-[10px] bg-slate-100/80 border-slate-300 text-slate-700 font-semibold px-2 py-0.5">
+                <Badge variant="outline" className="font-mono text-[10px] bg-cloud border-hairline text-slate-gray font-semibold px-2 py-0.5">
                   {organization.code}
                 </Badge>
                 <Badge variant="success" className="text-[10px] px-2 py-0.5">
                   Đang hoạt động
                 </Badge>
               </div>
-              <h3 className="text-lg sm:text-xl font-bold text-slate-900 leading-tight break-words whitespace-normal">
+              <h3 className="text-lg sm:text-xl font-bold text-ink-navy leading-tight break-words whitespace-normal">
                 {organization.name}
               </h3>
-              <div className="flex items-center gap-2 text-[11px] text-slate-500 font-mono">
-                <Calendar className="h-3.5 w-3.5 text-slate-400 shrink-0" />
+              <div className="flex items-center gap-2 text-[11px] text-mist-gray font-mono">
+                <Calendar className="h-3.5 w-3.5 text-mist-gray shrink-0" />
                 <span>Khởi tạo: {dayjs(organization.createdAt).format('DD/MM/YYYY')}</span>
               </div>
             </div>
@@ -255,9 +255,9 @@ export function OrganizationSettingsTab({
                 variant="outline"
                 size="sm"
                 onClick={() => setIsEditing(true)}
-                className="text-xs h-8 text-slate-700 border-slate-200 hover:bg-slate-50 cursor-pointer shadow-2xs font-medium"
+                className="text-xs h-8 text-slate-gray border-hairline hover:bg-cloud cursor-pointer shadow-xs font-medium"
               >
-                <Edit2 className="h-3.5 w-3.5 mr-1.5 text-slate-500" />
+                <Edit2 className="h-3.5 w-3.5 mr-1.5 text-mist-gray" />
                 Chỉnh sửa thông tin
               </Button>
             )}
@@ -266,20 +266,20 @@ export function OrganizationSettingsTab({
       </div>
 
       {/* Organization Details Form / View */}
-      <Card className="border-slate-200 shadow-2xs">
-        <CardHeader className="pb-4 border-b border-slate-100">
+      <Card className="border-hairline shadow-xs bg-white">
+        <CardHeader className="pb-4 border-b border-hairline">
           <div className="flex items-center justify-between">
             <div>
-              <CardTitle className="text-sm sm:text-base font-bold text-slate-900 flex items-center gap-2">
-                <Building2 className="h-4 w-4 text-emerald-600" />
+              <CardTitle className="text-sm sm:text-base font-bold text-ink-navy flex items-center gap-2">
+                <Building2 className="h-4 w-4 text-signal-blue" />
                 Hồ sơ & Danh tính Chi hội
               </CardTitle>
-              <CardDescription className="text-xs text-slate-500 mt-0.5">
+              <CardDescription className="text-xs text-mist-gray mt-0.5">
                 Cấu hình tên gọi, mã định danh, mô tả hoạt động và biểu trưng chính thức.
               </CardDescription>
             </div>
             {!canManage && (
-              <Badge variant="outline" className="text-[11px] bg-slate-50 text-slate-500 border-slate-200">
+              <Badge variant="outline" className="text-[11px] bg-cloud text-mist-gray border-hairline">
                 Chế độ chỉ đọc
               </Badge>
             )}
@@ -299,7 +299,7 @@ export function OrganizationSettingsTab({
 
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
               <div className="sm:col-span-2 space-y-1.5">
-                <label className="text-xs font-semibold text-slate-700">
+                <label className="text-xs font-semibold text-slate-gray">
                   Tên đơn vị <span className="text-rose-500">*</span>
                 </label>
                 <Input
@@ -308,17 +308,17 @@ export function OrganizationSettingsTab({
                   disabled={!isEditing || !canManage}
                   placeholder={`Ví dụ: ${currentTypeFullName} Sinh viên Cần Thơ`}
                   className={`text-xs ${
-                    !isEditing ? 'bg-slate-50 text-slate-800 font-medium' : 'bg-white'
+                    !isEditing ? 'bg-cloud text-ink-navy font-medium' : 'bg-white'
                   }`}
                   required
                 />
-                <span className="text-[10px] text-slate-400">
+                <span className="text-[10px] text-mist-gray">
                   Tên chính thức hiển thị trên toàn bộ văn bản và giao diện hệ thống.
                 </span>
               </div>
 
               <div className="space-y-1.5">
-                <label className="text-xs font-semibold text-slate-700">
+                <label className="text-xs font-semibold text-slate-gray">
                   Mã đơn vị (Code) <span className="text-rose-500">*</span>
                 </label>
                 <Input
@@ -327,18 +327,18 @@ export function OrganizationSettingsTab({
                   disabled={!isEditing || !canManage}
                   placeholder="CH-CT"
                   className={`text-xs font-mono uppercase ${
-                    !isEditing ? 'bg-slate-50 text-slate-800 font-bold' : 'bg-white'
+                    !isEditing ? 'bg-cloud text-ink-navy font-bold' : 'bg-white'
                   }`}
                   required
                 />
-                <span className="text-[10px] text-slate-400">Mã viết tắt duy nhất trên hệ thống.</span>
+                <span className="text-[10px] text-mist-gray">Mã viết tắt duy nhất trên hệ thống.</span>
               </div>
             </div>
 
             <div className="space-y-1.5">
-              <label className="text-xs font-semibold text-slate-700 flex items-center justify-between">
+              <label className="text-xs font-semibold text-slate-gray flex items-center justify-between">
                 <span>Loại hình đơn vị <span className="text-rose-500">*</span></span>
-                <span className="text-[11px] font-mono font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded border border-blue-100">
+                <span className="text-[11px] font-mono font-bold text-signal-blue bg-[#e6f0ff] px-2 py-0.5 rounded border border-[#d4e4fa]">
                   {currentTypeShort}
                 </span>
               </label>
@@ -347,7 +347,7 @@ export function OrganizationSettingsTab({
                 onValueChange={setType}
                 disabled={!isEditing || !canManage}
               >
-                <SelectTrigger className="w-full rounded-md border-slate-200 text-xs text-slate-800 bg-white">
+                <SelectTrigger className="w-full rounded-md border-hairline text-xs text-ink-navy bg-white">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
@@ -361,24 +361,24 @@ export function OrganizationSettingsTab({
             </div>
 
             <div className="space-y-1.5">
-              <label className="text-xs font-semibold text-slate-700">Mô tả Chi hội</label>
+              <label className="text-xs font-semibold text-slate-gray">Mô tả Chi hội</label>
               <textarea
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
                 disabled={!isEditing || !canManage}
                 rows={3}
                 placeholder="Giới thiệu về phạm vi tổ chức, tôn chỉ hoạt động và liên hiệp trực thuộc..."
-                className={`w-full rounded-md border border-slate-200 p-2.5 text-xs text-slate-800 placeholder:text-slate-400 focus:outline-hidden focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-600 transition-all ${
-                  !isEditing ? 'bg-slate-50' : 'bg-white'
+                className={`w-full rounded-md border border-hairline p-2.5 text-xs text-ink-navy placeholder:text-mist-gray focus:outline-hidden focus:ring-2 focus:ring-signal-blue/20 focus:border-signal-blue transition-all ${
+                  !isEditing ? 'bg-cloud' : 'bg-white'
                 }`}
               />
             </div>
 
             {/* Logo Storage Upload Section */}
             <div className="space-y-1.5">
-              <label className="text-xs font-semibold text-slate-700 flex items-center justify-between">
+              <label className="text-xs font-semibold text-slate-gray flex items-center justify-between">
                 <span className="flex items-center gap-1.5">
-                  <ImageIcon className="h-3.5 w-3.5 text-slate-500" />
+                  <ImageIcon className="h-3.5 w-3.5 text-mist-gray" />
                   Biểu trưng Đơn vị (Logo)
                 </span>
                 {organization.logoUrl && !imgError && (
@@ -396,11 +396,11 @@ export function OrganizationSettingsTab({
                 className="hidden"
               />
 
-              <div className="rounded-xl border border-slate-200/90 bg-slate-50/70 p-3 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+              <div className="rounded-xl border border-hairline bg-cloud p-3 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                 <div className="flex items-center gap-3 min-w-0">
-                  <div className="h-12 w-12 rounded-lg border border-slate-200 bg-white overflow-hidden flex items-center justify-center shrink-0 shadow-2xs">
+                  <div className="h-12 w-12 rounded-lg border border-hairline bg-white overflow-hidden flex items-center justify-center shrink-0 shadow-xs">
                     {uploadLogoMutation.isPending || deleteLogoMutation.isPending ? (
-                      <Loader2 strokeWidth={1.5} className="h-5 w-5 animate-spin text-emerald-600" />
+                      <Loader2 strokeWidth={1.5} className="h-5 w-5 animate-spin text-signal-blue" />
                     ) : organization.logoUrl && !imgError ? (
                       <img
                         src={organization.logoUrl}
@@ -409,26 +409,26 @@ export function OrganizationSettingsTab({
                         className="h-full w-full object-contain p-1"
                       />
                     ) : (
-                      <Building2 strokeWidth={1.5} className="h-6 w-6 text-slate-300" />
+                      <Building2 strokeWidth={1.5} className="h-6 w-6 text-mist-gray" />
                     )}
                   </div>
 
                   <div className="min-w-0 space-y-0.5">
                     {organization.logoUrl && !imgError ? (
                       <>
-                        <p className="text-xs font-semibold text-slate-800 truncate">
+                        <p className="text-xs font-semibold text-ink-navy truncate">
                           Logo chính thức của Đơn vị
                         </p>
-                        <p className="text-[11px] text-slate-500">
+                        <p className="text-[11px] text-mist-gray">
                           Định dạng PNG, JPG, WebP — tối đa 2 MB
                         </p>
                       </>
                     ) : (
                       <>
-                        <p className="text-xs font-medium text-slate-700">
+                        <p className="text-xs font-medium text-slate-gray">
                           Chưa có logo
                         </p>
-                        <p className="text-[11px] text-slate-500">
+                        <p className="text-[11px] text-mist-gray">
                           Tải lên PNG, JPG hoặc WebP — tối đa 2 MB.
                         </p>
                       </>
@@ -447,12 +447,12 @@ export function OrganizationSettingsTab({
                           size="sm"
                           onClick={handleTriggerUpload}
                           disabled={uploadLogoMutation.isPending || deleteLogoMutation.isPending}
-                          className="h-8 text-xs text-slate-700 hover:bg-slate-100 cursor-pointer shadow-2xs"
+                          className="h-8 text-xs text-slate-gray hover:bg-cloud border-hairline cursor-pointer shadow-xs"
                         >
                           {uploadLogoMutation.isPending ? (
-                            <Loader2 className="h-3.5 w-3.5 mr-1.5 animate-spin text-emerald-600" />
+                            <Loader2 className="h-3.5 w-3.5 mr-1.5 animate-spin text-signal-blue" />
                           ) : (
-                            <RefreshCw className="h-3.5 w-3.5 mr-1.5 text-slate-500" />
+                            <RefreshCw className="h-3.5 w-3.5 mr-1.5 text-mist-gray" />
                           )}
                           Thay logo
                         </Button>
@@ -462,7 +462,7 @@ export function OrganizationSettingsTab({
                           size="sm"
                           onClick={handleDeleteLogo}
                           disabled={uploadLogoMutation.isPending || deleteLogoMutation.isPending}
-                          className="h-8 text-xs text-rose-600 hover:text-rose-700 hover:bg-rose-50 border-rose-200 cursor-pointer shadow-2xs"
+                          className="h-8 text-xs text-rose-600 hover:text-rose-700 hover:bg-rose-50 border-rose-200 cursor-pointer shadow-xs"
                         >
                           {deleteLogoMutation.isPending ? (
                             <Loader2 className="h-3.5 w-3.5 mr-1.5 animate-spin text-rose-600" />
@@ -479,12 +479,12 @@ export function OrganizationSettingsTab({
                         size="sm"
                         onClick={handleTriggerUpload}
                         disabled={uploadLogoMutation.isPending || deleteLogoMutation.isPending}
-                        className="h-8 text-xs text-emerald-700 bg-white hover:bg-emerald-50 border-emerald-300 font-medium cursor-pointer shadow-2xs"
+                        className="h-8 text-xs text-signal-blue bg-white hover:bg-[#e6f0ff] border-[#d4e4fa] font-medium cursor-pointer shadow-xs"
                       >
                         {uploadLogoMutation.isPending ? (
-                          <Loader2 className="h-3.5 w-3.5 mr-1.5 animate-spin text-emerald-600" />
+                          <Loader2 className="h-3.5 w-3.5 mr-1.5 animate-spin text-signal-blue" />
                         ) : (
-                          <Upload className="h-3.5 w-3.5 mr-1.5 text-emerald-600" />
+                          <Upload className="h-3.5 w-3.5 mr-1.5 text-signal-blue" />
                         )}
                         Tải logo lên
                       </Button>
@@ -502,14 +502,14 @@ export function OrganizationSettingsTab({
             </div>
 
             {/* Metadata Footer */}
-            <div className="pt-2 border-t border-slate-100 grid grid-cols-1 sm:grid-cols-2 gap-3 text-[11px] text-slate-500 font-mono">
+            <div className="pt-2 border-t border-hairline grid grid-cols-1 sm:grid-cols-2 gap-3 text-[11px] text-mist-gray font-mono">
               <div>
                 <span>Mã định danh ID: </span>
-                <code className="text-slate-700 bg-slate-100 px-1.5 py-0.5 rounded">{organization.id}</code>
+                <code className="text-ink-navy bg-pebble px-1.5 py-0.5 rounded">{organization.id}</code>
               </div>
               <div className="sm:text-right">
                 <span>Cập nhật gần nhất: </span>
-                <span className="text-slate-700">
+                <span className="text-ink-navy">
                   {dayjs(organization.updatedAt).format('DD/MM/YYYY HH:mm')}
                 </span>
               </div>
@@ -517,7 +517,7 @@ export function OrganizationSettingsTab({
           </CardContent>
 
           {isEditing && canManage && (
-            <CardFooter className="bg-slate-50/70 border-t border-slate-100 flex items-center justify-end gap-2 py-3 px-5">
+            <CardFooter className="bg-cloud border-t border-hairline flex items-center justify-end gap-2 py-3 px-5">
               <Button
                 type="button"
                 variant="outline"
@@ -533,7 +533,7 @@ export function OrganizationSettingsTab({
                 type="submit"
                 size="sm"
                 disabled={updateOrgMutation.isPending}
-                className="text-xs h-8 bg-emerald-600 hover:bg-emerald-700 text-white cursor-pointer shadow-2xs font-medium"
+                className="text-xs h-8 bg-signal-blue hover:bg-[#005be0] text-white cursor-pointer shadow-xs font-medium"
               >
                 {updateOrgMutation.isPending ? (
                   <Loader2 className="h-3.5 w-3.5 mr-1.5 animate-spin" />

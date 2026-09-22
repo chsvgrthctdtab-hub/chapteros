@@ -1,5 +1,5 @@
 import React from 'react';
-import { Sparkles, Calendar, Users, Activity, ChevronRight, CheckCircle2, Clock, Lock } from 'lucide-react';
+import { Calendar, Users, Activity, ChevronRight } from 'lucide-react';
 import { TermStatusBadge } from './TermStatusBadge';
 import dayjs from 'dayjs';
 import type { Term } from '@/types';
@@ -31,19 +31,19 @@ export function TermTimeline({
   return (
     <div
       id="term-timeline-section"
-      className="rounded-2xl border border-slate-200/90 bg-white p-5 sm:p-6 shadow-2xs space-y-4"
+      className="rounded-2xl border border-hairline bg-white p-5 sm:p-6 shadow-xs space-y-4"
     >
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-100 pb-3.5">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-hairline pb-3.5">
         <div>
-          <h3 className="text-sm sm:text-base font-bold text-slate-900 flex items-center gap-2">
-            <Calendar className="h-4 w-4 text-emerald-600" />
+          <h3 className="text-sm sm:text-base font-bold text-ink-navy flex items-center gap-2">
+            <Calendar className="h-4 w-4 text-signal-blue" />
             Organizational Lifecycle Timeline
           </h3>
-          <p className="text-xs text-slate-500 mt-0.5">
+          <p className="text-xs text-mist-gray mt-0.5">
             Chronological term progression from historical archives to active and upcoming periods.
           </p>
         </div>
-        <span className="text-xs text-slate-400 font-medium">
+        <span className="text-xs text-mist-gray font-medium">
           {sortedTerms.length} terms in chronological flow
         </span>
       </div>
@@ -54,7 +54,6 @@ export function TermTimeline({
           {sortedTerms.map((term, index) => {
             const isCurrent = term.isCurrent || term.id === currentTermId;
             const isClosed = term.status === 'completed' || term.status === 'archived';
-            const isDraft = term.status === 'draft';
             const activityCount = activitiesCountMap[term.id] ?? 0;
 
             const start = dayjs(term.startDate);
@@ -71,7 +70,7 @@ export function TermTimeline({
                     isCurrent
                       ? 'border-emerald-500 bg-emerald-50/30 shadow-xs ring-2 ring-emerald-500/20'
                       : isClosed
-                      ? 'border-slate-200 bg-slate-50/50 hover:bg-white hover:border-slate-300'
+                      ? 'border-hairline bg-cloud hover:bg-white hover:border-[#d4e4fa]'
                       : 'border-amber-200 bg-amber-50/20 hover:bg-white hover:border-amber-300'
                   }`}
                 >
@@ -91,30 +90,30 @@ export function TermTimeline({
                         className={`text-sm font-bold truncate transition-colors ${
                           isCurrent
                             ? 'text-emerald-950'
-                            : 'text-slate-900 group-hover:text-emerald-600'
+                            : 'text-ink-navy group-hover:text-signal-blue'
                         }`}
                       >
                         {term.name}
                       </h4>
-                      <p className="text-xs text-slate-500 font-mono mt-0.5">{formattedDates}</p>
+                      <p className="text-xs text-mist-gray font-mono mt-0.5">{formattedDates}</p>
                     </div>
                   </div>
 
                   {/* Node Footer: Compact Stats */}
-                  <div className="mt-4 pt-3 border-t border-slate-100/90 flex items-center justify-between text-xs text-slate-600">
+                  <div className="mt-4 pt-3 border-t border-hairline flex items-center justify-between text-xs text-slate-gray">
                     <span className="flex items-center gap-1">
-                      <Users className="h-3.5 w-3.5 text-slate-400" />
+                      <Users className="h-3.5 w-3.5 text-mist-gray" />
                       <strong>{term.memberCount ?? 0}</strong> members
                     </span>
                     <span className="flex items-center gap-1">
-                      <Activity className="h-3.5 w-3.5 text-slate-400" />
+                      <Activity className="h-3.5 w-3.5 text-mist-gray" />
                       <strong>{activityCount}</strong> activities
                     </span>
                   </div>
                 </div>
 
                 {index < sortedTerms.length - 1 && (
-                  <div className="flex items-center justify-center text-slate-300 px-1">
+                  <div className="flex items-center justify-center text-mist-gray px-1">
                     <ChevronRight strokeWidth={1.5} className="h-5 w-5" />
                   </div>
                 )}
@@ -125,7 +124,7 @@ export function TermTimeline({
       </div>
 
       {/* Mobile Vertical Timeline */}
-      <div className="block md:hidden space-y-3 relative pl-6 before:absolute before:left-2.5 before:top-3 before:bottom-3 before:w-0.5 before:bg-slate-200">
+      <div className="block md:hidden space-y-3 relative pl-6 before:absolute before:left-2.5 before:top-3 before:bottom-3 before:w-0.5 before:bg-pebble">
         {sortedTerms.map((term) => {
           const isCurrent = term.isCurrent || term.id === currentTermId;
           const isClosed = term.status === 'completed' || term.status === 'archived';
@@ -139,7 +138,7 @@ export function TermTimeline({
                 isCurrent
                   ? 'border-emerald-500 bg-emerald-50/40 ring-1 ring-emerald-500/30'
                   : isClosed
-                  ? 'border-slate-200 bg-slate-50/60'
+                  ? 'border-hairline bg-cloud'
                   : 'border-amber-200 bg-amber-50/30'
               }`}
             >
@@ -149,27 +148,27 @@ export function TermTimeline({
                   isCurrent
                     ? 'border-emerald-600 bg-emerald-600'
                     : isClosed
-                    ? 'border-slate-400'
+                    ? 'border-mist-gray'
                     : 'border-amber-500'
                 }`}
               />
 
               <div className="flex items-center justify-between gap-2">
-                <h4 className="text-sm font-bold text-slate-900">{term.name}</h4>
+                <h4 className="text-sm font-bold text-ink-navy">{term.name}</h4>
                 <TermStatusBadge status={term.status} isCurrent={isCurrent} />
               </div>
 
-              <p className="text-xs text-slate-500 font-mono mt-1">
+              <p className="text-xs text-mist-gray font-mono mt-1">
                 {term.startDate} → {term.endDate}
               </p>
 
-              <div className="mt-2.5 pt-2 border-t border-slate-100 flex items-center justify-between text-xs text-slate-600">
+              <div className="mt-2.5 pt-2 border-t border-hairline flex items-center justify-between text-xs text-slate-gray">
                 <span className="flex items-center gap-1">
-                  <Users className="h-3.5 w-3.5 text-slate-400" />
+                  <Users className="h-3.5 w-3.5 text-mist-gray" />
                   {term.memberCount ?? 0} members
                 </span>
                 <span className="flex items-center gap-1">
-                  <Activity className="h-3.5 w-3.5 text-slate-400" />
+                  <Activity className="h-3.5 w-3.5 text-mist-gray" />
                   {activityCount} activities
                 </span>
               </div>

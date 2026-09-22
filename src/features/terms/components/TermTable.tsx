@@ -68,10 +68,10 @@ export function TermTable({
 }: TermTableProps) {
   if (terms.length === 0) {
     return (
-      <div className="rounded-xl border border-dashed border-slate-200 bg-white p-12 text-center">
-        <Calendar className="h-10 w-10 text-slate-300 mx-auto mb-3" />
-        <h3 className="text-sm font-semibold text-slate-800">No terms found</h3>
-        <p className="text-xs text-slate-500 max-w-sm mx-auto mt-1">
+      <div className="rounded-xl border border-dashed border-hairline bg-white p-12 text-center">
+        <Calendar className="h-10 w-10 text-mist-gray mx-auto mb-3" />
+        <h3 className="text-sm font-semibold text-ink-navy">No terms found</h3>
+        <p className="text-xs text-mist-gray max-w-sm mx-auto mt-1">
           No terms matched your search filters. Try adjusting your query or filter selections.
         </p>
       </div>
@@ -79,32 +79,32 @@ export function TermTable({
   }
 
   return (
-    <div className="rounded-xl border border-slate-200/90 bg-white overflow-hidden shadow-2xs">
+    <div className="rounded-xl border border-hairline bg-white overflow-hidden shadow-xs">
       <Table>
         <TableHeader>
-          <TableRow className="bg-slate-50/80 hover:bg-slate-50/80 border-b border-slate-200">
-            <TableHead className="w-[260px] text-xs font-semibold uppercase tracking-wider text-slate-500">
+          <TableRow className="bg-cloud hover:bg-cloud border-b border-hairline">
+            <TableHead className="w-[260px] text-xs font-semibold uppercase tracking-wider text-mist-gray">
               Term & Period
             </TableHead>
-            <TableHead className="w-[200px] text-xs font-semibold uppercase tracking-wider text-slate-500">
+            <TableHead className="w-[200px] text-xs font-semibold uppercase tracking-wider text-mist-gray">
               Date Duration
             </TableHead>
-            <TableHead className="w-[140px] text-xs font-semibold uppercase tracking-wider text-slate-500">
+            <TableHead className="w-[140px] text-xs font-semibold uppercase tracking-wider text-mist-gray">
               Status
             </TableHead>
-            <TableHead className="w-[110px] text-xs font-semibold uppercase tracking-wider text-slate-500 text-center">
+            <TableHead className="w-[110px] text-xs font-semibold uppercase tracking-wider text-mist-gray text-center">
               Members
             </TableHead>
-            <TableHead className="w-[100px] text-xs font-semibold uppercase tracking-wider text-slate-500 text-center">
+            <TableHead className="w-[100px] text-xs font-semibold uppercase tracking-wider text-mist-gray text-center">
               Activities
             </TableHead>
-            <TableHead className="w-[100px] text-xs font-semibold uppercase tracking-wider text-slate-500 text-center">
+            <TableHead className="w-[100px] text-xs font-semibold uppercase tracking-wider text-mist-gray text-center">
               Tasks
             </TableHead>
-            <TableHead className="w-[140px] text-xs font-semibold uppercase tracking-wider text-slate-500 text-right">
+            <TableHead className="w-[140px] text-xs font-semibold uppercase tracking-wider text-mist-gray text-right">
               Treasury
             </TableHead>
-            <TableHead className="w-[110px] text-xs font-semibold uppercase tracking-wider text-slate-500 text-right">
+            <TableHead className="w-[110px] text-xs font-semibold uppercase tracking-wider text-mist-gray text-right">
               Actions
             </TableHead>
           </TableRow>
@@ -135,7 +135,7 @@ export function TermTable({
                 className={`transition-colors ${
                   isCurrent
                     ? 'bg-emerald-50/35 hover:bg-emerald-50/50 border-l-4 border-l-emerald-600'
-                    : 'hover:bg-slate-50/70'
+                    : 'hover:bg-cloud'
                 }`}
               >
                 {/* Term Name & Snapshot Indicator */}
@@ -146,7 +146,7 @@ export function TermTable({
                       className="text-left group cursor-pointer"
                     >
                       <div className="flex items-center gap-1.5 flex-wrap">
-                        <span className="text-sm font-bold text-slate-900 group-hover:text-emerald-700 transition-colors">
+                        <span className="text-sm font-bold text-ink-navy group-hover:text-emerald-700 transition-colors">
                           {term.name}
                         </span>
                         {isCurrent && (
@@ -160,7 +160,7 @@ export function TermTable({
                           </span>
                         )}
                       </div>
-                      <span className="text-[11px] text-slate-400 font-mono block mt-0.5">
+                      <span className="text-[11px] text-mist-gray font-mono block mt-0.5">
                         ID: {term.id.slice(0, 8)}
                       </span>
                     </button>
@@ -168,13 +168,13 @@ export function TermTable({
                 </TableCell>
 
                 {/* Date Duration */}
-                <TableCell className="py-3.5 text-xs text-slate-600 font-mono">
+                <TableCell className="py-3.5 text-xs text-slate-gray font-mono">
                   <div>
                     {start.isValid() ? start.format('DD/MM/YYYY') : term.startDate} →{' '}
                     {end.isValid() ? end.format('DD/MM/YYYY') : term.endDate}
                   </div>
                   {durationMonths !== null && (
-                    <span className="text-[11px] text-slate-400 font-sans">
+                    <span className="text-[11px] text-mist-gray font-sans">
                       ({durationMonths} months)
                     </span>
                   )}
@@ -187,28 +187,28 @@ export function TermTable({
 
                 {/* Members */}
                 <TableCell className="py-3.5 text-center">
-                  <span className="inline-flex items-center gap-1 text-xs font-semibold text-slate-800 bg-slate-100 px-2 py-0.5 rounded-md border border-slate-200/60">
-                    <Users className="h-3 w-3 text-slate-500" />
+                  <span className="inline-flex items-center gap-1 text-xs font-semibold text-ink-navy bg-cloud px-2 py-0.5 rounded-md border border-hairline">
+                    <Users className="h-3 w-3 text-mist-gray" />
                     {term.memberCount ?? 0}
                   </span>
                 </TableCell>
 
                 {/* Activities */}
                 <TableCell className="py-3.5 text-center">
-                  <span className="text-xs font-semibold text-slate-700">
+                  <span className="text-xs font-semibold text-slate-gray">
                     {activityCount}
                   </span>
                 </TableCell>
 
                 {/* Tasks */}
                 <TableCell className="py-3.5 text-center">
-                  <span className="text-xs font-semibold text-slate-700">
+                  <span className="text-xs font-semibold text-slate-gray">
                     {taskCount}
                   </span>
                 </TableCell>
 
                 {/* Finance Balance */}
-                <TableCell className="py-3.5 text-right font-mono text-xs text-slate-800 font-medium">
+                <TableCell className="py-3.5 text-right font-mono text-xs text-ink-navy font-medium">
                   {formattedBalance}
                 </TableCell>
 
@@ -219,7 +219,7 @@ export function TermTable({
                       variant="ghost"
                       size="sm"
                       onClick={() => onOpenDetail(term)}
-                      className="h-8 w-8 p-0 text-slate-600 hover:text-slate-900 hover:bg-slate-100 cursor-pointer"
+                      className="h-8 w-8 p-0 text-slate-gray hover:text-ink-navy hover:bg-cloud cursor-pointer"
                       title="Inspect workspace"
                     >
                       <Eye className="h-3.5 w-3.5" />
@@ -230,17 +230,17 @@ export function TermTable({
                         <Button
                           variant="ghost"
                           size="sm"
-                          className="h-8 w-8 p-0 text-slate-500 hover:text-slate-900 hover:bg-slate-100 cursor-pointer"
+                          className="h-8 w-8 p-0 text-mist-gray hover:text-ink-navy hover:bg-cloud cursor-pointer"
                         >
                           <MoreHorizontal className="h-3.5 w-3.5" />
                         </Button>
                       </DropdownMenuTrigger>
-                      <DropdownMenuContent align="end" className="w-48 bg-white shadow-lg border border-slate-200">
+                      <DropdownMenuContent align="end" className="w-48 bg-white shadow-lg border border-hairline">
                         <DropdownMenuItem
                           onClick={() => onOpenDetail(term)}
-                          className="text-xs text-slate-700 cursor-pointer"
+                          className="text-xs text-slate-gray cursor-pointer"
                         >
-                          <Eye className="h-3.5 w-3.5 mr-2 text-slate-400" />
+                          <Eye className="h-3.5 w-3.5 mr-2 text-mist-gray" />
                           Inspect Workspace
                         </DropdownMenuItem>
 
@@ -270,18 +270,18 @@ export function TermTable({
 
                             <DropdownMenuItem
                               onClick={() => onTransfer(term)}
-                              className="text-xs text-slate-700 cursor-pointer"
+                              className="text-xs text-slate-gray cursor-pointer"
                             >
-                              <ArrowRightLeft className="h-3.5 w-3.5 mr-2 text-slate-400" />
+                              <ArrowRightLeft className="h-3.5 w-3.5 mr-2 text-mist-gray" />
                               Transfer Members
                             </DropdownMenuItem>
 
                             {!isLocked && (
                               <DropdownMenuItem
                                 onClick={() => onEdit(term)}
-                                className="text-xs text-slate-700 cursor-pointer"
+                                className="text-xs text-slate-gray cursor-pointer"
                               >
-                                <Edit2 className="h-3.5 w-3.5 mr-2 text-slate-400" />
+                                <Edit2 className="h-3.5 w-3.5 mr-2 text-mist-gray" />
                                 Edit Term Details
                               </DropdownMenuItem>
                             )}
@@ -299,9 +299,9 @@ export function TermTable({
                             {term.status === 'completed' && (
                               <DropdownMenuItem
                                 onClick={() => onArchive(term)}
-                                className="text-xs text-slate-600 cursor-pointer"
+                                className="text-xs text-slate-gray cursor-pointer"
                               >
-                                <Archive className="h-3.5 w-3.5 mr-2 text-slate-400" />
+                                <Archive className="h-3.5 w-3.5 mr-2 text-mist-gray" />
                                 Archive Term
                               </DropdownMenuItem>
                             )}

@@ -5,7 +5,7 @@ import {
   Trophy, 
   Music, 
   Users, 
-  BookOpen,
+  BookOpen, 
   HelpCircle,
   type LucideIcon 
 } from 'lucide-react';
@@ -35,9 +35,9 @@ export function ActivityCategoryBadge({
     key: category,
     label: category,
     colorClasses: {
-      bg: 'bg-slate-50',
-      text: 'text-slate-700',
-      border: 'border-slate-200',
+      bg: 'bg-cloud',
+      text: 'text-ink-navy',
+      border: 'border-hairline',
     },
     iconName: 'HelpCircle',
     description: '',
@@ -47,7 +47,7 @@ export function ActivityCategoryBadge({
 
   return (
     <span
-      className={`inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md text-xs font-medium border ${config.colorClasses.bg} ${config.colorClasses.text} ${config.colorClasses.border} ${className}`}
+      className={`inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold border ${config.colorClasses.bg} ${config.colorClasses.text} ${config.colorClasses.border} ${className}`}
       title={config.description || config.label}
     >
       {showIcon && <IconComponent className="w-3.5 h-3.5 shrink-0" />}

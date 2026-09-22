@@ -82,17 +82,17 @@ export function DocumentDeleteDialog({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-lg md:max-w-xl p-6 pr-10 sm:p-7 sm:pr-12 rounded-3xl border border-slate-200/80 shadow-2xl">
+      <DialogContent className="sm:max-w-lg md:max-w-xl p-6 pr-10 sm:p-7 sm:pr-12 rounded-3xl border border-hairline shadow-2xl">
         <DialogHeader>
           <div className="flex items-center gap-3.5">
             <div className="w-10 h-10 rounded-2xl flex items-center justify-center border shrink-0 bg-rose-50 text-rose-600 border-rose-100">
               <Trash2 strokeWidth={1.5} className="w-5 h-5" />
             </div>
             <div>
-              <DialogTitle className="text-base font-bold text-slate-900">
+              <DialogTitle className="text-base font-bold text-ink-navy">
                 Xác nhận xóa tài liệu?
               </DialogTitle>
-              <DialogDescription className="text-xs text-slate-500 mt-0.5">
+              <DialogDescription className="text-xs text-mist-gray mt-0.5">
                 Hành động này sẽ xóa vĩnh viễn tệp tin khỏi hệ thống và Google Drive của bạn.
               </DialogDescription>
             </div>
@@ -100,7 +100,7 @@ export function DocumentDeleteDialog({
         </DialogHeader>
 
         {/* Target Document preview */}
-        <div className="flex items-center gap-3.5 p-4 bg-slate-50 border border-slate-200/90 rounded-2xl my-2">
+        <div className="flex items-center gap-3.5 p-4 bg-cloud border border-hairline rounded-2xl my-2">
           <div className="shrink-0">
             <DocumentFileIcon
               filename={isDriveDoc ? (document.driveUrl || document.title) : document.filePath}
@@ -109,8 +109,8 @@ export function DocumentDeleteDialog({
             />
           </div>
           <div className="min-w-0 flex-1 space-y-0.5">
-            <p className="text-xs font-bold text-slate-900 leading-snug break-all">{document.title}</p>
-            <p className="text-[11px] text-slate-500 font-mono break-all line-clamp-1">
+            <p className="text-xs font-bold text-ink-navy leading-snug break-all">{document.title}</p>
+            <p className="text-[11px] text-mist-gray font-mono break-all line-clamp-1">
               {isDriveDoc
                 ? (document.driveUrl || 'Liên kết Google Drive')
                 : `${document.filePath.split('/').pop()} • ${formatFileSize(document.fileSize)}`}

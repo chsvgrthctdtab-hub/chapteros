@@ -2,7 +2,6 @@ import React from 'react';
 import {
   Calendar,
   Tag,
-  DollarSign,
   User,
   ShieldCheck,
   ShieldAlert,
@@ -69,11 +68,11 @@ export function TransactionDetailDrawer({
 
   const headerBadge = (
     <div className="flex items-center gap-2">
-      <span className="font-mono text-[11px] font-semibold text-slate-600 bg-white px-2 py-0.5 rounded border border-slate-200 shadow-2xs">
+      <span className="tabular-nums font-mono text-[11px] font-semibold text-slate-gray bg-cloud px-2 py-0.5 rounded border border-hairline shadow-xs">
         {txCode}
       </span>
       <span
-        className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[11px] font-semibold border ${statusConfig.badgeBg}`}
+        className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-semibold border ${statusConfig.badgeBg}`}
       >
         <span className={`w-1.5 h-1.5 rounded-full ${statusConfig.dotColor}`} />
         {statusConfig.label}
@@ -86,9 +85,9 @@ export function TransactionDetailDrawer({
       {isPending && canApprove ? (
         <div className="w-full flex items-center justify-between gap-2">
           {isSelfRecorded ? (
-            <div className="flex items-center gap-1.5 text-xs text-amber-800 bg-amber-50 px-3 py-1.5 rounded-lg border border-amber-200 flex-1">
+            <div className="flex items-center gap-1.5 text-xs text-amber-900 bg-amber-50 px-3 py-1.5 rounded-lg border border-amber-200 flex-1">
               <AlertCircle className="h-3.5 w-3.5 text-amber-600 shrink-0" />
-              <span>Awaiting another approver (Self-approval disallowed)</span>
+              <span>Chờ người khác duyệt (Không được tự duyệt)</span>
             </div>
           ) : (
             <Button
@@ -98,7 +97,7 @@ export function TransactionDetailDrawer({
                 onClose();
               }}
               disabled={isApproving}
-              className="flex-1 bg-emerald-700 hover:bg-emerald-800 text-white text-xs h-8"
+              className="flex-1 bg-signal-blue hover:bg-[#005be0] text-white text-xs h-8 rounded-lg shadow-sm font-semibold"
             >
               <CheckCircle2 className="h-3.5 w-3.5 mr-1" />
               Phê duyệt
@@ -113,15 +112,15 @@ export function TransactionDetailDrawer({
               onClose();
             }}
             disabled={isApproving}
-            className="text-xs h-8 text-rose-600 border-rose-200 hover:bg-rose-50"
+            className="text-xs h-8 text-rose-600 border-rose-200 hover:bg-rose-50 rounded-lg"
           >
             <ShieldAlert className="h-3.5 w-3.5 mr-1" />
             Từ chối
           </Button>
         </div>
       ) : isLocked ? (
-        <div className="flex items-center gap-2 text-xs text-slate-500 w-full justify-center">
-          <Lock className="h-3.5 w-3.5 text-slate-400" />
+        <div className="flex items-center gap-2 text-xs text-slate-gray w-full justify-center">
+          <Lock className="h-3.5 w-3.5 text-mist-gray" />
           <span>Giao dịch đã khóa chốt sổ (Chỉ xem)</span>
         </div>
       ) : canManage ? (
@@ -133,7 +132,7 @@ export function TransactionDetailDrawer({
               onClose();
               onDelete(transaction);
             }}
-            className="text-xs h-8 text-rose-600 border-rose-200 hover:bg-rose-50"
+            className="text-xs h-8 text-rose-600 border-rose-200 hover:bg-rose-50 rounded-lg"
           >
             <Trash2 className="h-3.5 w-3.5 mr-1" />
             Xóa
@@ -145,14 +144,14 @@ export function TransactionDetailDrawer({
               onClose();
               onEdit(transaction);
             }}
-            className="text-xs h-8 bg-slate-900 hover:bg-slate-800 text-white"
+            className="text-xs h-8 bg-ink-navy hover:bg-[#002d52] text-white rounded-lg font-medium"
           >
             <Edit2 className="h-3.5 w-3.5 mr-1" />
             Chỉnh sửa
           </Button>
         </div>
       ) : (
-        <div className="text-xs text-slate-400 w-full text-center">
+        <div className="text-xs text-mist-gray w-full text-center">
           Chế độ chỉ xem
         </div>
       )}
@@ -171,13 +170,13 @@ export function TransactionDetailDrawer({
       footer={footer}
     >
       {/* Prominent Amount Box */}
-      <div className="flex items-center justify-between p-4 rounded-xl bg-slate-50 border border-slate-200/90 shadow-2xs">
-        <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">
+      <div className="flex items-center justify-between p-4 rounded-xl bg-cloud border border-hairline shadow-xs">
+        <span className="text-xs font-semibold text-slate-gray uppercase tracking-wider">
           Số tiền giao dịch
         </span>
         <div
           className={`text-xl font-bold tabular-nums ${
-            isIncome ? 'text-emerald-800' : 'text-rose-800'
+            isIncome ? 'text-emerald-700' : 'text-rose-700'
           }`}
         >
           {isIncome ? `+${formatVND(transaction.amount)}` : `−${formatVND(transaction.amount)}`}
@@ -186,22 +185,22 @@ export function TransactionDetailDrawer({
 
       {/* 1. TRANSACTION DETAILS */}
       <div className="space-y-2.5">
-        <h4 className="text-[11px] font-bold text-slate-900 uppercase tracking-wider flex items-center gap-1.5">
-          <FileText className="h-3.5 w-3.5 text-slate-500" />
-          Transaction Details
+        <h4 className="text-[11px] font-bold text-ink-navy uppercase tracking-wider flex items-center gap-1.5">
+          <FileText className="h-3.5 w-3.5 text-slate-gray" />
+          Thông tin chi tiết giao dịch
         </h4>
 
-        <div className="space-y-2 bg-slate-50/60 p-4 rounded-xl border border-slate-200/70 text-xs">
+        <div className="space-y-2 bg-cloud p-4 rounded-xl border border-hairline text-xs">
           <div className="flex justify-between items-center py-0.5">
-            <span className="text-slate-500">Transaction ID:</span>
-            <span className="font-mono text-[11px] font-semibold text-slate-800 select-all">
+            <span className="text-slate-gray">Transaction ID:</span>
+            <span className="tabular-nums font-mono text-[11px] font-semibold text-ink-navy select-all">
               {transaction.id}
             </span>
           </div>
 
           <div className="flex justify-between items-center py-0.5">
-            <span className="text-slate-500">Phân loại:</span>
-            <span className="font-semibold text-slate-800 flex items-center gap-1">
+            <span className="text-slate-gray">Phân loại:</span>
+            <span className="font-semibold text-ink-navy flex items-center gap-1">
               {isIncome ? (
                 <TrendingUp className="h-3.5 w-3.5 text-emerald-700" />
               ) : (
@@ -212,31 +211,31 @@ export function TransactionDetailDrawer({
           </div>
 
           <div className="flex justify-between items-center py-0.5">
-            <span className="text-slate-500">Danh mục thu/chi:</span>
-            <span className="font-semibold text-slate-800">
+            <span className="text-slate-gray">Danh mục thu/chi:</span>
+            <span className="font-semibold text-ink-navy">
               {transaction.category?.name || 'Chưa phân loại'}
             </span>
           </div>
 
           <div className="flex justify-between items-center py-0.5">
-            <span className="text-slate-500">Ngày giao dịch:</span>
-            <span className="font-semibold text-slate-800 flex items-center gap-1">
-              <Calendar className="h-3.5 w-3.5 text-slate-400" />
+            <span className="text-slate-gray">Ngày giao dịch:</span>
+            <span className="font-semibold text-ink-navy flex items-center gap-1 tabular-nums">
+              <Calendar className="h-3.5 w-3.5 text-mist-gray" />
               {formatDate(transaction.transactionDate)}
             </span>
           </div>
 
           <div className="flex justify-between items-center py-0.5">
-            <span className="text-slate-500">Nhiệm kỳ ghi nhận:</span>
-            <span className="font-semibold text-slate-800">
+            <span className="text-slate-gray">Nhiệm kỳ ghi nhận:</span>
+            <span className="font-semibold text-ink-navy">
               {transaction.term?.name || 'Toàn thời gian'}
             </span>
           </div>
 
           {transaction.activity && (
             <div className="flex justify-between items-center py-0.5">
-              <span className="text-slate-500">Hoạt động gắn kèm:</span>
-              <span className="font-semibold text-emerald-800 truncate max-w-[220px]">
+              <span className="text-slate-gray">Hoạt động gắn kèm:</span>
+              <span className="font-semibold text-signal-blue truncate max-w-[220px]">
                 {transaction.activity.title}
               </span>
             </div>
@@ -246,31 +245,31 @@ export function TransactionDetailDrawer({
 
       {/* 2. AUDIT TRAIL & PARTICIPANTS */}
       <div className="space-y-2.5">
-        <h4 className="text-[11px] font-bold text-slate-900 uppercase tracking-wider flex items-center gap-1.5">
-          <Clock className="h-3.5 w-3.5 text-slate-500" />
-          Audit Trail & Approvals
+        <h4 className="text-[11px] font-bold text-ink-navy uppercase tracking-wider flex items-center gap-1.5">
+          <Clock className="h-3.5 w-3.5 text-slate-gray" />
+          Nhật ký duyệt & Người thực hiện
         </h4>
 
-        <div className="space-y-2 bg-slate-50/60 p-4 rounded-xl border border-slate-200/70 text-xs">
+        <div className="space-y-2 bg-cloud p-4 rounded-xl border border-hairline text-xs">
           <div className="flex justify-between items-center py-0.5">
-            <span className="text-slate-500">Người lập phiếu:</span>
-            <span className="font-semibold text-slate-800 flex items-center gap-1">
-              <User className="h-3.5 w-3.5 text-slate-400" />
+            <span className="text-slate-gray">Người lập phiếu:</span>
+            <span className="font-semibold text-ink-navy flex items-center gap-1">
+              <User className="h-3.5 w-3.5 text-mist-gray" />
               {transaction.recorder?.fullName || 'Hệ thống'}
             </span>
           </div>
 
           <div className="flex justify-between items-center py-0.5">
-            <span className="text-slate-500">Thời gian tạo:</span>
-            <span className="font-mono text-slate-600">
+            <span className="text-slate-gray">Thời gian tạo:</span>
+            <span className="tabular-nums font-mono text-slate-gray">
               {new Date(transaction.createdAt).toLocaleString('vi-VN')}
             </span>
           </div>
 
           {transaction.approver && (
             <div className="flex justify-between items-center py-0.5">
-              <span className="text-slate-500">Người phê duyệt:</span>
-              <span className="font-semibold text-emerald-800 flex items-center gap-1">
+              <span className="text-slate-gray">Người phê duyệt:</span>
+              <span className="font-semibold text-emerald-700 flex items-center gap-1">
                 <ShieldCheck className="h-3.5 w-3.5 text-emerald-600" />
                 {transaction.approver.fullName}
               </span>
@@ -279,15 +278,15 @@ export function TransactionDetailDrawer({
 
           {transaction.approvedAt && (
             <div className="flex justify-between items-center py-0.5">
-              <span className="text-slate-500">Thời gian duyệt:</span>
-              <span className="font-mono text-slate-600">
+              <span className="text-slate-gray">Thời gian duyệt:</span>
+              <span className="tabular-nums font-mono text-slate-gray">
                 {new Date(transaction.approvedAt).toLocaleString('vi-VN')}
               </span>
             </div>
           )}
 
           {transaction.rejectionReason && (
-            <div className="pt-2 border-t border-slate-200/70 space-y-1">
+            <div className="pt-2 border-t border-hairline space-y-1">
               <span className="text-rose-700 font-bold flex items-center gap-1">
                 <ShieldAlert className="h-3.5 w-3.5 text-rose-600" />
                 Lý do từ chối phê duyệt:
@@ -302,29 +301,29 @@ export function TransactionDetailDrawer({
 
       {/* 3. ATTACHMENTS & RECEIPTS */}
       <div className="space-y-2.5">
-        <h4 className="text-[11px] font-bold text-slate-900 uppercase tracking-wider flex items-center gap-1.5">
-          <Tag className="h-3.5 w-3.5 text-slate-500" />
-          Receipts & References
+        <h4 className="text-[11px] font-bold text-ink-navy uppercase tracking-wider flex items-center gap-1.5">
+          <Tag className="h-3.5 w-3.5 text-slate-gray" />
+          Chứng từ & Tham chiếu
         </h4>
 
-        <div className="bg-slate-50/60 p-4 rounded-xl border border-slate-200/70 text-xs space-y-2">
+        <div className="bg-cloud p-4 rounded-xl border border-hairline text-xs space-y-2">
           {transaction.receiptUrl ? (
             <a
               href={transaction.receiptUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 text-emerald-800 bg-white hover:bg-slate-50 px-3 py-2 rounded-lg border border-slate-200 font-semibold shadow-2xs transition-colors"
+              className="inline-flex items-center gap-1.5 text-signal-blue bg-white hover:bg-cloud px-3 py-2 rounded-lg border border-hairline font-semibold shadow-xs transition-colors"
             >
               <ExternalLink className="h-3.5 w-3.5" />
               <span>Xem chứng từ gốc đính kèm</span>
             </a>
           ) : (
-            <p className="text-slate-400 italic">Không có chứng từ liên kết</p>
+            <p className="text-mist-gray italic">Không có chứng từ liên kết</p>
           )}
 
           {isLocked && (
-            <p className="text-[11px] text-slate-500 bg-white p-2.5 rounded-lg border border-slate-200">
-              Transaction is immutable because it belongs to a closed accounting period or archived term.
+            <p className="text-[11px] text-slate-gray bg-white p-2.5 rounded-lg border border-hairline">
+              Giao dịch này không thể chỉnh sửa do thuộc kỳ chốt sổ đã hoàn thành.
             </p>
           )}
         </div>

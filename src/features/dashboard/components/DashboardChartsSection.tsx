@@ -31,8 +31,8 @@ export function DashboardChartsSection({ chartData, isLoading = false }: Dashboa
   if (isLoading) {
     return (
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <div className="h-72 rounded-xl bg-slate-100 animate-pulse" />
-        <div className="h-72 rounded-xl bg-slate-100 animate-pulse" />
+        <div className="h-72 rounded-xl bg-pebble animate-pulse" />
+        <div className="h-72 rounded-xl bg-pebble animate-pulse" />
       </div>
     );
   }
@@ -40,18 +40,18 @@ export function DashboardChartsSection({ chartData, isLoading = false }: Dashboa
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 sm:gap-6 items-start">
       {/* Chart 1: Monthly Cashflow Trend */}
-      <Card className="border-slate-200/90 shadow-2xs rounded-xl bg-white">
-        <CardHeader className="p-4 sm:p-5 pb-3 border-b border-slate-100">
+      <Card className="border-hairline shadow-sm rounded-2xl bg-white">
+        <CardHeader className="p-4 sm:p-5 pb-3 border-b border-hairline">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
               <div className="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-700 border border-emerald-100 flex items-center justify-center">
                 <TrendingUp className="w-4 h-4" />
               </div>
               <div>
-                <CardTitle className="text-base sm:text-lg font-bold text-slate-900 leading-tight">
+                <CardTitle className="text-base sm:text-lg font-bold text-ink-navy leading-tight">
                   Xu hướng Thu - Chi (6 tháng gần nhất)
                 </CardTitle>
-                <CardDescription className="text-xs text-slate-500 mt-0.5">
+                <CardDescription className="text-xs text-slate-gray mt-0.5">
                   Biến động dòng tiền quỹ Chi hội theo từng tháng
                 </CardDescription>
               </div>
@@ -67,15 +67,15 @@ export function DashboardChartsSection({ chartData, isLoading = false }: Dashboa
                   data={monthlyFinanceTrend}
                   margin={{ top: 10, right: 10, left: -15, bottom: 0 }}
                 >
-                  <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" />
+                  <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#d4e0ed" />
                   <XAxis
                     dataKey="month"
-                    tick={{ fontSize: 11, fill: '#64748b' }}
-                    axisLine={{ stroke: '#e2e8f0' }}
+                    tick={{ fontSize: 11, fill: '#476788' }}
+                    axisLine={{ stroke: '#d4e0ed' }}
                     tickLine={false}
                   />
                   <YAxis
-                    tick={{ fontSize: 10, fill: '#64748b' }}
+                    tick={{ fontSize: 10, fill: '#476788' }}
                     axisLine={false}
                     tickLine={false}
                     tickFormatter={(val) => {
@@ -88,15 +88,15 @@ export function DashboardChartsSection({ chartData, isLoading = false }: Dashboa
                     content={({ active, payload, label }) => {
                       if (active && payload && payload.length) {
                         return (
-                          <div className="rounded-xl border border-slate-200 bg-white p-3 shadow-md text-xs space-y-1.5">
-                            <div className="font-bold text-slate-900 mb-1">Tháng {label}</div>
+                          <div className="rounded-xl border border-hairline bg-white p-3 shadow-sm text-xs space-y-1.5">
+                            <div className="font-bold text-ink-navy mb-1">Tháng {label}</div>
                             {payload.map((entry: any, index: number) => (
                               <div key={`item-${index}`} className="flex items-center justify-between gap-4">
                                 <span className="flex items-center gap-1.5" style={{ color: entry.color }}>
                                   <span className="w-2 h-2 rounded-full" style={{ backgroundColor: entry.color }} />
                                   {entry.name === 'income' ? 'Tổng thu' : 'Tổng chi'}:
                                 </span>
-                                <span className="font-bold text-slate-900 tabular-nums">
+                                <span className="font-bold text-ink-navy tabular-nums">
                                   {formatVND(entry.value)}
                                 </span>
                               </div>
@@ -111,34 +111,34 @@ export function DashboardChartsSection({ chartData, isLoading = false }: Dashboa
                     wrapperStyle={{ fontSize: 11, paddingTop: 10 }}
                     formatter={(value) => (value === 'income' ? 'Tổng thu' : 'Tổng chi')}
                   />
-                  <Bar dataKey="income" name="income" fill="#10b981" radius={[4, 4, 0, 0]} maxBarSize={32} />
+                  <Bar dataKey="income" name="income" fill="#006bff" radius={[4, 4, 0, 0]} maxBarSize={32} />
                   <Bar dataKey="expense" name="expense" fill="#f43f5e" radius={[4, 4, 0, 0]} maxBarSize={32} />
                 </BarChart>
               </ResponsiveContainer>
             </div>
           ) : (
             <div className="h-64 flex flex-col items-center justify-center text-center">
-              <BarChart3 strokeWidth={1.5} className="w-9 h-9 text-slate-300 mb-2" />
-              <p className="text-xs sm:text-sm font-semibold text-slate-700">Chưa có dữ liệu phát sinh giao dịch thu chi</p>
-              <p className="text-xs text-slate-400 mt-0.5">Các giao dịch 6 tháng gần nhất sẽ hiển thị tại đây</p>
+              <BarChart3 strokeWidth={1.5} className="w-9 h-9 text-mist-gray mb-2" />
+              <p className="text-xs sm:text-sm font-semibold text-ink-navy">Chưa có dữ liệu phát sinh giao dịch thu chi</p>
+              <p className="text-xs text-mist-gray mt-0.5">Các giao dịch 6 tháng gần nhất sẽ hiển thị tại đây</p>
             </div>
           )}
         </CardContent>
       </Card>
 
       {/* Chart 2: Task Status Distribution */}
-      <Card className="border-slate-200/90 shadow-2xs rounded-xl bg-white">
-        <CardHeader className="p-4 sm:p-5 pb-3 border-b border-slate-100">
+      <Card className="border-hairline shadow-sm rounded-2xl bg-white">
+        <CardHeader className="p-4 sm:p-5 pb-3 border-b border-hairline">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <div className="w-8 h-8 rounded-lg bg-blue-50 text-blue-600 border border-blue-100 flex items-center justify-center">
+              <div className="w-8 h-8 rounded-lg bg-[#e6f0ff] text-signal-blue border border-hairline flex items-center justify-center">
                 <PieIcon className="w-4 h-4" />
               </div>
               <div>
-                <CardTitle className="text-base sm:text-lg font-bold text-slate-900 leading-tight">
+                <CardTitle className="text-base sm:text-lg font-bold text-ink-navy leading-tight">
                   Phân bố Trạng thái Công việc
                 </CardTitle>
-                <CardDescription className="text-xs text-slate-500 mt-0.5">
+                <CardDescription className="text-xs text-slate-gray mt-0.5">
                   Tổng quan tình trạng xử lý các nhiệm vụ trong nhiệm kỳ
                 </CardDescription>
               </div>
@@ -171,9 +171,9 @@ export function DashboardChartsSection({ chartData, isLoading = false }: Dashboa
                           const data = payload[0].payload;
                           const percentage = ((data.count / totalTasks) * 100).toFixed(0);
                           return (
-                            <div className="rounded-xl border border-slate-200 bg-white p-2.5 shadow-md text-xs">
-                              <span className="font-semibold text-slate-800">{data.name}: </span>
-                              <span className="font-bold text-slate-900 tabular-nums">{data.count} ({percentage}%)</span>
+                            <div className="rounded-xl border border-hairline bg-white p-2.5 shadow-sm text-xs">
+                              <span className="font-semibold text-slate-gray">{data.name}: </span>
+                              <span className="font-bold text-ink-navy tabular-nums">{data.count} ({percentage}%)</span>
                             </div>
                           );
                         }
@@ -190,11 +190,11 @@ export function DashboardChartsSection({ chartData, isLoading = false }: Dashboa
                   <div key={item.status} className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
                       <span className="w-2.5 h-2.5 rounded-full shrink-0" style={{ backgroundColor: item.color }} />
-                      <span className="text-slate-600 font-medium">{item.name}</span>
+                      <span className="text-slate-gray font-medium">{item.name}</span>
                     </div>
-                    <span className="font-bold text-slate-900 tabular-nums">
+                    <span className="font-bold text-ink-navy tabular-nums">
                       {item.count}{' '}
-                      <span className="text-[11px] font-normal text-slate-400 tabular-nums">
+                      <span className="text-[11px] font-normal text-mist-gray tabular-nums">
                         ({totalTasks > 0 ? Math.round((item.count / totalTasks) * 100) : 0}%)
                       </span>
                     </span>
@@ -204,9 +204,9 @@ export function DashboardChartsSection({ chartData, isLoading = false }: Dashboa
             </div>
           ) : (
             <div className="h-64 flex flex-col items-center justify-center text-center">
-              <PieIcon strokeWidth={1.5} className="w-9 h-9 text-slate-300 mb-2" />
-              <p className="text-xs sm:text-sm font-semibold text-slate-700">Chưa có dữ liệu công việc</p>
-              <p className="text-xs text-slate-400 mt-0.5">Phân bố trạng thái sẽ tự động xuất hiện khi giao việc</p>
+              <PieIcon strokeWidth={1.5} className="w-9 h-9 text-mist-gray mb-2" />
+              <p className="text-xs sm:text-sm font-semibold text-ink-navy">Chưa có dữ liệu công việc</p>
+              <p className="text-xs text-mist-gray mt-0.5">Phân bố trạng thái sẽ tự động xuất hiện khi giao việc</p>
             </div>
           )}
         </CardContent>

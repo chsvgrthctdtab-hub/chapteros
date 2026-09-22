@@ -43,10 +43,10 @@ export const GOOGLE_DRIVE_FILE_TYPE_INFO: Record<
   doc: {
     label: 'Google Docs / Word',
     description: 'Tài liệu văn bản, nghị quyết, đề án',
-    badgeColor: 'bg-blue-100 text-blue-800 border-blue-200',
-    borderColor: 'border-blue-200',
-    textColor: 'text-blue-600',
-    bgColor: 'bg-blue-50',
+    badgeColor: 'bg-[#e6f0ff] text-signal-blue border-[#d4e4fa]',
+    borderColor: 'border-[#d4e4fa]',
+    textColor: 'text-signal-blue',
+    bgColor: 'bg-[#e6f0ff]',
   },
   sheet: {
     label: 'Google Sheets / Excel',
@@ -83,10 +83,10 @@ export const GOOGLE_DRIVE_FILE_TYPE_INFO: Record<
   image: {
     label: 'Hình ảnh / Poster',
     description: 'Ảnh hoạt động, banner chương trình, minh chứng',
-    badgeColor: 'bg-indigo-100 text-indigo-800 border-indigo-200',
-    borderColor: 'border-indigo-200',
-    textColor: 'text-indigo-600',
-    bgColor: 'bg-indigo-50',
+    badgeColor: 'bg-purple-50 text-purple-800 border-purple-200',
+    borderColor: 'border-purple-200',
+    textColor: 'text-purple-600',
+    bgColor: 'bg-purple-50',
   },
   video: {
     label: 'Video',
@@ -107,10 +107,10 @@ export const GOOGLE_DRIVE_FILE_TYPE_INFO: Record<
   archive: {
     label: 'Tệp nén (ZIP/RAR)',
     description: 'Gói hồ sơ nén tổng hợp',
-    badgeColor: 'bg-slate-100 text-slate-800 border-slate-200',
-    borderColor: 'border-slate-200',
-    textColor: 'text-slate-600',
-    bgColor: 'bg-slate-50',
+    badgeColor: 'bg-pebble text-slate-gray border-hairline',
+    borderColor: 'border-hairline',
+    textColor: 'text-slate-gray',
+    bgColor: 'bg-pebble',
   },
   folder: {
     label: 'Thư mục Drive',
@@ -123,10 +123,10 @@ export const GOOGLE_DRIVE_FILE_TYPE_INFO: Record<
   other: {
     label: 'Tệp khác',
     description: 'Tài liệu Google Drive',
-    badgeColor: 'bg-slate-100 text-slate-800 border-slate-200',
-    borderColor: 'border-slate-200',
-    textColor: 'text-slate-600',
-    bgColor: 'bg-slate-50',
+    badgeColor: 'bg-pebble text-slate-gray border-hairline',
+    borderColor: 'border-hairline',
+    textColor: 'text-slate-gray',
+    bgColor: 'bg-pebble',
   },
 };
 

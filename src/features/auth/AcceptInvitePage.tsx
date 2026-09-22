@@ -91,33 +91,33 @@ export function AcceptInvitePage() {
   }, [token, refreshAuth, setActiveOrganizationId, navigate]);
 
   return (
-    <div id="accept-invite-page" className="min-h-screen bg-slate-50 flex flex-col items-center justify-center p-4 sm:p-6">
+    <div id="accept-invite-page" className="min-h-screen bg-cloud flex flex-col items-center justify-center p-4 sm:p-6">
       {/* Brand Header */}
       <div className="flex items-center gap-3 mb-8">
-        <div className="h-11 w-11 rounded-2xl bg-indigo-600 flex items-center justify-center text-white shadow-xs ring-4 ring-indigo-50">
+        <div className="h-11 w-11 rounded-2xl bg-signal-blue flex items-center justify-center text-white shadow-xs ring-4 ring-[#e6f0ff]">
           <GraduationCap strokeWidth={1.5} className="h-6 w-6" />
         </div>
         <div>
-          <h1 className="text-lg font-bold text-slate-900 leading-tight">ChapterOS</h1>
-          <p className="text-xs text-slate-500">Nền tảng số Quản trị & Điều hành Đơn vị Sinh viên</p>
+          <h1 className="text-lg font-bold text-ink-navy leading-tight">ChapterOS</h1>
+          <p className="text-xs text-mist-gray">Nền tảng số Quản trị &amp; Điều hành Đơn vị Sinh viên</p>
         </div>
       </div>
 
-      <Card className="w-full max-w-md bg-white border border-slate-200/80 shadow-xs rounded-3xl overflow-hidden animate-in fade-in zoom-in-95 duration-200">
+      <Card className="w-full max-w-md bg-white border border-hairline shadow-xs rounded-3xl overflow-hidden animate-in fade-in zoom-in-95 duration-200">
         {/* Processing State */}
         {status === 'processing' && (
           <>
             <CardHeader className="text-center pb-2 pt-8">
-              <div className="h-16 w-16 rounded-2xl bg-indigo-50 border border-indigo-100 flex items-center justify-center mx-auto mb-4 text-indigo-600">
+              <div className="h-16 w-16 rounded-2xl bg-[#e6f0ff] border border-[#d4e4fa] flex items-center justify-center mx-auto mb-4 text-signal-blue">
                 <Loader2 strokeWidth={1.5} className="h-8 w-8 animate-spin" />
               </div>
-              <h2 className="text-xl font-bold text-slate-900">Đang xử lý lời mời</h2>
-              <p className="text-xs text-slate-500 mt-1 max-w-xs mx-auto leading-relaxed">
+              <h2 className="text-xl font-bold text-ink-navy">Đang xử lý lời mời</h2>
+              <p className="text-xs text-mist-gray mt-1 max-w-xs mx-auto leading-relaxed">
                 Hệ thống đang xác thực mã và kết nạp bạn vào không gian làm việc...
               </p>
             </CardHeader>
             <CardContent className="text-center py-6">
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-slate-100/80 text-slate-600 text-xs font-medium">
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-cloud text-slate-gray border border-hairline text-xs font-medium">
                 <Building2 className="h-3.5 w-3.5" />
                 <span>Đang đồng bộ quyền hạn</span>
               </div>
@@ -132,8 +132,8 @@ export function AcceptInvitePage() {
               <div className="h-16 w-16 rounded-2xl bg-emerald-50 border border-emerald-100 flex items-center justify-center mx-auto mb-4 text-emerald-600">
                 <CheckCircle2 strokeWidth={1.5} className="h-8 w-8 animate-bounce" />
               </div>
-              <h2 className="text-xl font-bold text-slate-900">Gia nhập thành công!</h2>
-              <p className="text-xs text-slate-500 mt-1 max-w-xs mx-auto leading-relaxed">
+              <h2 className="text-xl font-bold text-ink-navy">Gia nhập thành công!</h2>
+              <p className="text-xs text-mist-gray mt-1 max-w-xs mx-auto leading-relaxed">
                 Chào mừng bạn đã gia nhập Đơn vị. Đang chuyển hướng vào bảng điều khiển...
               </p>
             </CardHeader>
@@ -153,8 +153,8 @@ export function AcceptInvitePage() {
               <div className="h-16 w-16 rounded-2xl bg-rose-50 border border-rose-100 flex items-center justify-center mx-auto mb-4 text-rose-600">
                 <AlertCircle className="h-8 w-8" />
               </div>
-              <h2 className="text-xl font-bold text-slate-900">Không thể tham gia</h2>
-              <p className="text-xs text-slate-500 mt-1 max-w-xs mx-auto leading-relaxed">
+              <h2 className="text-xl font-bold text-ink-navy">Không thể tham gia</h2>
+              <p className="text-xs text-mist-gray mt-1 max-w-xs mx-auto leading-relaxed">
                 Đã xảy ra sự cố trong quá trình xử lý liên kết lời mời của bạn.
               </p>
             </CardHeader>
@@ -175,7 +175,7 @@ export function AcceptInvitePage() {
               <Button
                 id="btn-return-home"
                 variant="outline"
-                className="w-full text-xs font-medium gap-1.5 rounded-xl cursor-pointer"
+                className="w-full text-xs font-medium gap-1.5 rounded-xl cursor-pointer border-hairline text-slate-gray hover:bg-cloud"
                 onClick={() => navigate('/')}
               >
                 <Home className="h-3.5 w-3.5" />
@@ -184,7 +184,7 @@ export function AcceptInvitePage() {
 
               <Button
                 id="btn-goto-workspaces"
-                className="w-full text-xs font-medium gap-1.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl cursor-pointer"
+                className="w-full text-xs font-medium gap-1.5 bg-signal-blue hover:bg-[#005be0] text-white rounded-xl cursor-pointer"
                 onClick={() => navigate('/workspaces')}
               >
                 <Building2 className="h-3.5 w-3.5" />
@@ -197,8 +197,8 @@ export function AcceptInvitePage() {
       </Card>
 
       {/* Footer Info */}
-      <footer className="mt-8 text-center text-xs text-slate-400 font-medium">
-        Đăng nhập với tài khoản: <span className="font-semibold text-slate-600">{user?.email || 'N/A'}</span>
+      <footer className="mt-8 text-center text-xs text-mist-gray font-medium">
+        Đăng nhập với tài khoản: <span className="font-semibold text-slate-gray">{user?.email || 'N/A'}</span>
       </footer>
     </div>
   );

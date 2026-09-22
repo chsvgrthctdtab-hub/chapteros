@@ -117,9 +117,9 @@ export function GoogleServicesReadiness({
       case 'forms':
         return <FileText strokeWidth={1.5} className="h-5 w-5 text-purple-600" />;
       case 'calendar':
-        return <CalendarDays className="h-5 w-5 text-blue-600" />;
+        return <CalendarDays className="h-5 w-5 text-signal-blue" />;
       default:
-        return <FolderSync strokeWidth={1.5} className="h-5 w-5 text-blue-600" />;
+        return <FolderSync strokeWidth={1.5} className="h-5 w-5 text-signal-blue" />;
     }
   };
 
@@ -127,14 +127,14 @@ export function GoogleServicesReadiness({
     <div className="space-y-4">
       <div className="flex items-center justify-between">
         <div>
-          <h3 className="text-base font-semibold text-slate-900">
+          <h3 className="text-base font-semibold text-ink-navy">
             Trạng thái Sẵn sàng cho Dịch vụ Google Workspace
           </h3>
-          <p className="text-xs text-slate-500">
+          <p className="text-xs text-mist-gray">
             Nền tảng ủy quyền OAuth 2.0 & phạm vi quyền hạn (Scopes) cho các dịch vụ chuyên sâu
           </p>
         </div>
-        <div className="flex items-center gap-1.5 text-xs text-slate-500 bg-slate-50 border border-slate-200 px-2.5 py-1 rounded-lg">
+        <div className="flex items-center gap-1.5 text-xs text-slate-gray bg-cloud border border-hairline px-2.5 py-1 rounded-lg">
           <ShieldCheck className="h-4 w-4 text-emerald-600" />
           <span>Kiến trúc phân tầng bảo mật</span>
         </div>
@@ -142,21 +142,21 @@ export function GoogleServicesReadiness({
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {services.map((svc) => (
-          <Card key={svc.key} className="border-slate-200 shadow-2xs flex flex-col justify-between">
+          <Card key={svc.key} className="border-hairline bg-white shadow-xs flex flex-col justify-between">
             <CardHeader className="pb-3">
               <div className="flex items-start justify-between gap-2">
                 <div className="flex items-center gap-3">
-                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-slate-100 border border-slate-200/80">
+                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-cloud border border-hairline">
                     {getServiceIcon(svc.key)}
                   </div>
                   <div>
                     <div className="flex items-center gap-2">
-                      <CardTitle className="text-sm font-bold text-slate-900">{svc.name}</CardTitle>
-                      <Badge variant="outline" className="text-[10px] px-1.5 py-0">
+                      <CardTitle className="text-sm font-bold text-ink-navy">{svc.name}</CardTitle>
+                      <Badge variant="outline" className="text-[10px] px-1.5 py-0 border-hairline text-slate-gray">
                         {svc.phase}
                       </Badge>
                     </div>
-                    <CardDescription className="text-xs text-slate-500 font-medium">
+                    <CardDescription className="text-xs text-mist-gray font-medium">
                       {svc.tagline}
                     </CardDescription>
                   </div>
@@ -173,7 +173,7 @@ export function GoogleServicesReadiness({
                     Cần thêm Scope
                   </Badge>
                 ) : (
-                  <Badge variant="secondary" className="text-[11px] flex items-center gap-1 text-slate-500">
+                  <Badge variant="secondary" className="text-[11px] flex items-center gap-1 text-mist-gray">
                     <Clock className="h-3 w-3" />
                     Chờ kết nối
                   </Badge>
@@ -182,23 +182,23 @@ export function GoogleServicesReadiness({
             </CardHeader>
 
             <CardContent className="space-y-3 pt-0 text-xs">
-              <p className="text-slate-600 leading-relaxed text-xs">{svc.description}</p>
+              <p className="text-slate-gray leading-relaxed text-xs">{svc.description}</p>
 
-              <div className="rounded-lg bg-slate-50/70 border border-slate-200/80 p-3 space-y-1.5">
-                <span className="text-[11px] font-semibold text-slate-700">Tính năng trọng tâm:</span>
-                <ul className="space-y-1 text-slate-600 text-[11px]">
+              <div className="rounded-lg bg-cloud/70 border border-hairline p-3 space-y-1.5">
+                <span className="text-[11px] font-semibold text-slate-gray">Tính năng trọng tâm:</span>
+                <ul className="space-y-1 text-slate-gray text-[11px]">
                   {svc.targetFeatures.map((feat, idx) => (
                     <li key={idx} className="flex items-start gap-1.5">
-                      <ArrowRight className="h-3 w-3 text-blue-500 shrink-0 mt-0.5" />
+                      <ArrowRight className="h-3 w-3 text-signal-blue shrink-0 mt-0.5" />
                       <span>{feat}</span>
                     </li>
                   ))}
                 </ul>
               </div>
 
-              <div className="flex items-center justify-between text-[11px] text-slate-500 pt-1 border-t border-slate-100">
+              <div className="flex items-center justify-between text-[11px] text-mist-gray pt-1 border-t border-hairline">
                 <span>Scope yêu cầu:</span>
-                <code className="font-mono text-[10px] text-slate-600 bg-slate-100 px-1.5 py-0.5 rounded">
+                <code className="font-mono text-[10px] text-slate-gray bg-pebble px-1.5 py-0.5 rounded">
                   {svc.requiredScopes[0].replace('https://www.googleapis.com/auth/', '')}
                 </code>
               </div>

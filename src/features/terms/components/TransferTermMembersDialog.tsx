@@ -7,7 +7,6 @@ import {
   AlertCircle,
   Loader2,
   Check,
-  ShieldAlert,
   ArrowRight,
   Info,
 } from 'lucide-react';
@@ -172,19 +171,19 @@ export function TransferTermMembersDialog({
 
   return (
     <Dialog open={open} onOpenChange={handleOpenChange}>
-      <DialogContent className="max-w-2xl max-h-[90vh] flex flex-col p-0 gap-0 overflow-hidden">
+      <DialogContent className="max-w-2xl max-h-[90vh] flex flex-col p-0 gap-0 overflow-hidden border-hairline">
         {/* Header */}
-        <div className="p-6 border-b border-slate-200 bg-white">
+        <div className="p-6 border-b border-hairline bg-white">
           <DialogHeader>
             <div className="flex items-center gap-3">
-              <div className="h-10 w-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center shrink-0">
+              <div className="h-10 w-10 rounded-xl bg-[#e6f0ff] text-signal-blue flex items-center justify-center shrink-0">
                 <ArrowRightLeft strokeWidth={1.5} className="h-5 w-5" />
               </div>
               <div>
-                <DialogTitle className="text-lg font-bold text-slate-900">
+                <DialogTitle className="text-lg font-bold text-ink-navy">
                   {isConfirmStep ? 'Xác nhận bàn giao nhiệm kỳ' : 'Bàn giao sang nhiệm kỳ mới'}
                 </DialogTitle>
-                <DialogDescription className="text-xs text-slate-500 mt-0.5">
+                <DialogDescription className="text-xs text-mist-gray mt-0.5">
                   {isConfirmStep
                     ? 'Kiểm tra thông tin trước khi tạo phân công mới cho nhiệm kỳ tiếp nhận'
                     : 'Tạo bản ghi phân công cho nhiệm kỳ mới từ danh sách thành viên hiện tại'}
@@ -196,40 +195,40 @@ export function TransferTermMembersDialog({
 
         {/* Error message */}
         {errorMessage && (
-          <div className="mx-6 mt-4 p-3 bg-red-50 border border-red-200 rounded-lg flex items-start gap-2 text-xs text-red-700">
+          <div className="mx-6 mt-4 p-3 bg-rose-50 border border-rose-200 rounded-lg flex items-start gap-2 text-xs text-rose-700">
             <AlertCircle className="h-4 w-4 shrink-0 mt-0.5" />
             <div className="flex-1 font-medium">{errorMessage}</div>
           </div>
         )}
 
         {/* Content Body */}
-        <div className="flex-1 overflow-y-auto p-6 space-y-5 bg-slate-50/50">
+        <div className="flex-1 overflow-y-auto p-6 space-y-5 bg-cloud">
           {!isConfirmStep ? (
             <>
               {/* Term Selection Overview */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 {/* Source Term Card */}
-                <div className="p-4 bg-white rounded-xl border border-slate-200 shadow-xs">
-                  <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400">
+                <div className="p-4 bg-white rounded-xl border border-hairline shadow-xs">
+                  <span className="text-[11px] font-bold uppercase tracking-wider text-mist-gray">
                     Nhiệm kỳ hiện tại (Nguồn)
                   </span>
                   <div className="mt-1">
-                    <p className="font-semibold text-sm text-slate-900">{sourceTerm.name}</p>
-                    <p className="text-xs text-slate-500 mt-0.5">
+                    <p className="font-semibold text-sm text-ink-navy">{sourceTerm.name}</p>
+                    <p className="text-xs text-mist-gray mt-0.5">
                       {sourceTerm.startDate} → {sourceTerm.endDate}
                     </p>
                   </div>
                   <div className="mt-2.5">
-                    <Badge variant="secondary" className="text-[11px]">
+                    <Badge variant="secondary" className="text-[11px] bg-cloud text-slate-gray border-hairline">
                       {sourceMembers.length} thành viên
                     </Badge>
                   </div>
                 </div>
 
                 {/* Target Term Selector */}
-                <div className="p-4 bg-white rounded-xl border border-slate-200 shadow-xs flex flex-col justify-between">
+                <div className="p-4 bg-white rounded-xl border border-hairline shadow-xs flex flex-col justify-between">
                   <div>
-                    <span className="text-[11px] font-bold uppercase tracking-wider text-blue-600">
+                    <span className="text-[11px] font-bold uppercase tracking-wider text-signal-blue">
                       Nhiệm kỳ tiếp nhận (Đích) *
                     </span>
                     <div className="mt-1.5">
@@ -241,7 +240,7 @@ export function TransferTermMembersDialog({
                           setErrorMessage(null);
                         }}
                       >
-                        <SelectTrigger id="target-term-select" className="w-full h-9 text-xs border-slate-300 bg-white">
+                        <SelectTrigger id="target-term-select" className="w-full h-9 text-xs border-hairline bg-white text-ink-navy">
                           <SelectValue placeholder="-- Chọn nhiệm kỳ tiếp nhận --" />
                         </SelectTrigger>
                         <SelectContent>
@@ -265,50 +264,50 @@ export function TransferTermMembersDialog({
               </div>
 
               {/* Members Selection Section */}
-              <div className="bg-white rounded-xl border border-slate-200 shadow-xs p-4 space-y-3">
+              <div className="bg-white rounded-xl border border-hairline shadow-xs p-4 space-y-3">
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                   <div className="flex items-center gap-2">
-                    <Users className="h-4 w-4 text-slate-500" />
-                    <h4 className="text-xs font-bold text-slate-800 uppercase tracking-wide">
+                    <Users className="h-4 w-4 text-mist-gray" />
+                    <h4 className="text-xs font-bold text-ink-navy uppercase tracking-wide">
                       Chọn hội viên cần bàn giao ({selectedMemberIds.length}/{sourceMembers.length})
                     </h4>
                   </div>
 
                   {/* Search box */}
                   <div className="relative w-full sm:w-64">
-                    <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-slate-400" />
+                    <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-mist-gray" />
                     <Input
                       placeholder="Tìm theo tên, MSSV, chức vụ..."
                       value={searchQuery}
                       onChange={(e) => setSearchQuery(e.target.value)}
-                      className="pl-8 h-8 text-xs bg-slate-50"
+                      className="pl-8 h-8 text-xs bg-cloud border-hairline"
                     />
                   </div>
                 </div>
 
                 {/* Quick actions: Select all / Deselect all */}
-                <div className="flex items-center justify-between pt-1 border-t border-slate-100 text-xs">
+                <div className="flex items-center justify-between pt-1 border-t border-hairline text-xs">
                   <button
                     type="button"
                     onClick={handleToggleSelectAll}
-                    className="text-blue-600 hover:text-blue-700 font-semibold hover:underline cursor-pointer"
+                    className="text-signal-blue hover:text-[#005be0] font-semibold hover:underline cursor-pointer"
                   >
                     {isAllSelected ? 'Bỏ chọn tất cả' : 'Chọn tất cả trong danh sách'}
                   </button>
-                  <span className="text-slate-400 text-[11px]">
-                    Đã chọn: <strong className="text-slate-700">{selectedMemberIds.length}</strong> hội viên
+                  <span className="text-mist-gray text-[11px]">
+                    Đã chọn: <strong className="text-ink-navy">{selectedMemberIds.length}</strong> hội viên
                   </span>
                 </div>
 
                 {/* Member Roster Checklist */}
-                <div className="border border-slate-200 rounded-lg max-h-56 overflow-y-auto divide-y divide-slate-100">
+                <div className="border border-hairline rounded-lg max-h-56 overflow-y-auto divide-y divide-hairline">
                   {isLoadingMembers ? (
-                    <div className="py-8 flex items-center justify-center text-xs text-slate-500 gap-2">
-                      <Loader2 className="h-4 w-4 animate-spin text-blue-600" />
+                    <div className="py-8 flex items-center justify-center text-xs text-mist-gray gap-2">
+                      <Loader2 className="h-4 w-4 animate-spin text-signal-blue" />
                       Đang tải danh sách thành viên...
                     </div>
                   ) : filteredSourceMembers.length === 0 ? (
-                    <div className="py-8 text-center text-xs text-slate-400">
+                    <div className="py-8 text-center text-xs text-mist-gray">
                       {searchQuery ? 'Không tìm thấy hội viên phù hợp.' : 'Chưa có hội viên trong nhiệm kỳ nguồn.'}
                     </div>
                   ) : (
@@ -317,8 +316,8 @@ export function TransferTermMembersDialog({
                       return (
                         <label
                           key={tm.id}
-                          className={`flex items-center justify-between p-2.5 hover:bg-slate-50 cursor-pointer transition-colors ${
-                            isChecked ? 'bg-blue-50/40' : ''
+                          className={`flex items-center justify-between p-2.5 hover:bg-cloud cursor-pointer transition-colors ${
+                            isChecked ? 'bg-[#f0f6ff]' : ''
                           }`}
                         >
                           <div className="flex items-center gap-3 min-w-0">
@@ -326,13 +325,13 @@ export function TransferTermMembersDialog({
                               type="checkbox"
                               checked={isChecked}
                               onChange={() => handleToggleMember(tm.memberId)}
-                              className="h-4 w-4 rounded border-slate-300 text-blue-600 focus:ring-blue-500 cursor-pointer"
+                              className="h-4 w-4 rounded border-hairline text-signal-blue focus:ring-signal-blue cursor-pointer"
                             />
                             <div className="min-w-0">
-                              <p className="text-xs font-semibold text-slate-900 truncate">
+                              <p className="text-xs font-semibold text-ink-navy truncate">
                                 {tm.member?.fullName || 'Chưa cập nhật tên'}
                               </p>
-                              <div className="flex items-center gap-2 text-[11px] text-slate-500">
+                              <div className="flex items-center gap-2 text-[11px] text-mist-gray">
                                 {tm.member?.studentId && (
                                   <span>MSSV: {tm.member.studentId}</span>
                                 )}
@@ -344,11 +343,11 @@ export function TransferTermMembersDialog({
                           </div>
 
                           <div className="text-right shrink-0">
-                            <Badge variant="outline" className="text-[11px] py-0">
+                            <Badge variant="outline" className="text-[11px] py-0 border-hairline text-slate-gray">
                               {tm.position || 'Hội viên'}
                             </Badge>
                             {tm.department && (
-                              <p className="text-[10px] text-slate-400 mt-0.5">{tm.department}</p>
+                              <p className="text-[10px] text-mist-gray mt-0.5">{tm.department}</p>
                             )}
                           </div>
                         </label>
@@ -361,26 +360,26 @@ export function TransferTermMembersDialog({
           ) : (
             /* Confirm Step */
             <div className="space-y-4">
-              <div className="p-4 bg-blue-50/70 border border-blue-200 rounded-xl space-y-2 text-xs text-blue-900">
-                <p className="font-semibold text-sm text-blue-950">Thông tin bàn giao:</p>
+              <div className="p-4 bg-[#e6f0ff] border border-[#d4e4fa] rounded-xl space-y-2 text-xs text-signal-blue">
+                <p className="font-semibold text-sm text-ink-navy">Thông tin bàn giao:</p>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1">
                   <div>
-                    <span className="text-slate-500">Nhiệm kỳ hiện tại:</span>
-                    <p className="font-medium text-slate-900">{sourceTerm.name}</p>
+                    <span className="text-slate-gray">Nhiệm kỳ hiện tại:</span>
+                    <p className="font-medium text-ink-navy">{sourceTerm.name}</p>
                   </div>
                   <div>
-                    <span className="text-slate-500">Nhiệm kỳ tiếp nhận:</span>
-                    <p className="font-medium text-blue-700">{targetTerm?.name}</p>
+                    <span className="text-slate-gray">Nhiệm kỳ tiếp nhận:</span>
+                    <p className="font-medium text-signal-blue">{targetTerm?.name}</p>
                   </div>
                 </div>
-                <div className="pt-2 border-t border-blue-200/60 flex items-center justify-between">
-                  <span className="text-slate-600">Số hội viên được bàn giao:</span>
-                  <strong className="text-sm text-blue-700">{selectedMemberIds.length} hội viên</strong>
+                <div className="pt-2 border-t border-[#d4e4fa] flex items-center justify-between">
+                  <span className="text-slate-gray">Số hội viên được bàn giao:</span>
+                  <strong className="text-sm text-signal-blue">{selectedMemberIds.length} hội viên</strong>
                 </div>
               </div>
 
-              <div className="p-4 bg-slate-100/80 border border-slate-200 rounded-xl space-y-2 text-xs text-slate-600">
-                <p className="font-semibold text-slate-800 flex items-center gap-1.5">
+              <div className="p-4 bg-cloud border border-hairline rounded-xl space-y-2 text-xs text-slate-gray">
+                <p className="font-semibold text-ink-navy flex items-center gap-1.5">
                   <CheckCircle2 className="h-4 w-4 text-emerald-600" />
                   Đảm bảo toàn vẹn dữ liệu:
                 </p>
@@ -394,7 +393,7 @@ export function TransferTermMembersDialog({
         </div>
 
         {/* Footer Actions */}
-        <div className="p-4 border-t border-slate-200 bg-white">
+        <div className="p-4 border-t border-hairline bg-white">
           <DialogFooter className="flex-row justify-end gap-2">
             {!isConfirmStep ? (
               <>
@@ -403,6 +402,7 @@ export function TransferTermMembersDialog({
                   variant="outline"
                   onClick={() => handleOpenChange(false)}
                   disabled={transferMutation.isPending}
+                  className="border-hairline text-slate-gray hover:bg-pebble"
                 >
                   Hủy
                 </Button>
@@ -414,7 +414,7 @@ export function TransferTermMembersDialog({
                     selectedMemberIds.length === 0 ||
                     transferMutation.isPending
                   }
-                  className="bg-blue-600 hover:bg-blue-700 text-white"
+                  className="bg-signal-blue hover:bg-[#005be0] text-white"
                 >
                   Tiếp tục
                   <ArrowRight className="h-4 w-4 ml-1.5" />
@@ -427,6 +427,7 @@ export function TransferTermMembersDialog({
                   variant="outline"
                   onClick={() => setIsConfirmStep(false)}
                   disabled={transferMutation.isPending}
+                  className="border-hairline text-slate-gray hover:bg-pebble"
                 >
                   Quay lại
                 </Button>

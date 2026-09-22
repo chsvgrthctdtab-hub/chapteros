@@ -380,9 +380,9 @@ export function TermsPage() {
               onClick={() => refetchTerms()}
               disabled={isFetchingTerms}
               title="Làm mới danh sách nhiệm kỳ"
-              className="h-8 sm:h-9 px-2 sm:px-3 text-xs text-slate-700 bg-white border-slate-200 hover:bg-slate-50 cursor-pointer shadow-2xs"
+              className="h-8 sm:h-9 px-2 sm:px-3 text-xs text-slate-gray bg-white border-hairline hover:bg-cloud cursor-pointer shadow-xs"
             >
-              <RefreshCw className={`h-3.5 w-3.5 sm:mr-1.5 shrink-0 ${isFetchingTerms ? 'animate-spin' : ''}`} />
+              <RefreshCw className={`h-3.5 w-3.5 sm:mr-1.5 shrink-0 ${isFetchingTerms ? 'animate-spin text-signal-blue' : ''}`} />
               <span className="hidden sm:inline">Làm mới</span>
             </Button>
 
@@ -390,7 +390,7 @@ export function TermsPage() {
               <Button
                 onClick={() => setIsCreateOpen(true)}
                 title="Tạo nhiệm kỳ mới"
-                className="bg-emerald-600 hover:bg-emerald-700 text-white text-xs h-8 sm:h-9 px-2.5 sm:px-4 font-medium shadow-2xs cursor-pointer flex items-center gap-1"
+                className="bg-signal-blue hover:bg-[#005be0] text-white text-xs h-8 sm:h-9 px-2.5 sm:px-4 font-medium shadow-xs cursor-pointer flex items-center gap-1"
               >
                 <Plus className="h-3.5 w-3.5 sm:h-4 sm:w-4 shrink-0" />
                 <span className="hidden sm:inline">Tạo nhiệm kỳ</span>
@@ -457,8 +457,8 @@ export function TermsPage() {
 
       {/* 7. Main View: Table / Grid / Comparison */}
       {isLoadingTerms ? (
-        <div className="py-20 flex flex-col items-center justify-center text-slate-500 gap-3 bg-white rounded-2xl border border-slate-200 shadow-2xs">
-          <Loader2 strokeWidth={1.5} className="h-7 w-7 animate-spin text-emerald-600" />
+        <div className="py-20 flex flex-col items-center justify-center text-mist-gray gap-3 bg-white rounded-2xl border border-hairline shadow-xs">
+          <Loader2 strokeWidth={1.5} className="h-7 w-7 animate-spin text-signal-blue" />
           <p className="text-sm font-medium">Loading organizational terms...</p>
         </div>
       ) : termsError ? (
@@ -469,7 +469,7 @@ export function TermsPage() {
         />
       ) : filteredTerms.length === 0 ? (
         <EmptyState
-          icon={<CalendarRange className="h-7 w-7 text-emerald-600" />}
+          icon={<CalendarRange className="h-7 w-7 text-signal-blue" />}
           title={
             hasActiveFilters
               ? 'No matching terms found'

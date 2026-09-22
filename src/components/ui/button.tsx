@@ -4,31 +4,33 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center whitespace-nowrap rounded-xl text-sm font-semibold transition-all duration-150 active:scale-[0.98] focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-blue-500/40 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-40 select-none cursor-pointer tracking-wide",
+  "inline-flex items-center justify-center whitespace-nowrap rounded-lg text-sm font-semibold transition-all duration-150 active:scale-[0.98] focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-signal-blue/30 focus-visible:ring-offset-1 disabled:pointer-events-none disabled:opacity-40 select-none cursor-pointer tracking-wide",
   {
     variants: {
       variant: {
         default:
-          "bg-blue-600 text-white hover:bg-blue-700 active:bg-blue-800 border border-transparent font-semibold shadow-2xs",
+          "bg-signal-blue text-white hover:bg-[#005be0] active:bg-[#004eba] border border-transparent font-semibold shadow-sm",
+        dark:
+          "bg-ink-navy text-white hover:bg-[#082640] active:bg-[#061e32] border border-transparent font-semibold shadow-sm",
         destructive:
-          "bg-rose-600 text-white hover:bg-rose-700 active:bg-rose-800 border border-transparent font-semibold shadow-2xs",
+          "bg-rose-600 text-white hover:bg-rose-700 active:bg-rose-800 border border-transparent font-semibold shadow-sm",
         outline:
-          "border border-slate-300 bg-white text-slate-800 hover:bg-slate-50 hover:border-slate-400 active:bg-slate-100 font-semibold shadow-2xs",
+          "border border-hairline bg-white text-ink-navy hover:bg-pebble hover:text-ink-navy active:bg-[#e4ebf4] font-semibold shadow-sm",
         secondary:
-          "bg-blue-50 text-blue-900 hover:bg-blue-100 active:bg-blue-200 border border-blue-200/60 font-semibold",
+          "bg-pebble text-ink-navy hover:bg-[#e4ebf4] active:bg-[#d8e2ee] border border-hairline/60 font-semibold",
         ghost:
-          "text-slate-700 hover:bg-slate-100 active:bg-slate-200 hover:text-slate-950 font-medium",
+          "text-ink-navy hover:bg-pebble hover:text-ink-navy active:bg-[#e4ebf4] font-medium",
         link:
-          "text-blue-600 underline-offset-4 hover:underline p-0 h-auto font-medium",
+          "text-signal-blue underline-offset-4 hover:underline p-0 h-auto font-medium",
         success:
-          "bg-emerald-600 text-white hover:bg-emerald-700 active:bg-emerald-800 border border-transparent font-semibold shadow-2xs",
+          "bg-emerald-600 text-white hover:bg-emerald-700 active:bg-emerald-800 border border-transparent font-semibold shadow-sm",
       },
       size: {
-        default: "h-10 px-4 py-2 text-sm",
+        default: "h-9.5 px-4 py-2 text-sm rounded-lg",
         xs: "h-7.5 px-2.5 text-xs font-semibold rounded-lg",
-        sm: "h-8.5 px-3.5 text-xs font-semibold rounded-lg",
-        lg: "h-11 px-6 text-base font-semibold",
-        icon: "h-9 w-9 p-0 rounded-xl shrink-0",
+        sm: "h-8.5 px-3 text-xs font-semibold rounded-lg",
+        lg: "h-11 px-6 text-base font-semibold rounded-lg",
+        icon: "h-9 w-9 p-0 rounded-lg shrink-0",
         "icon-sm": "h-8 w-8 p-0 rounded-lg shrink-0",
         "icon-xs": "h-7 w-7 p-0 rounded-lg shrink-0",
       },

@@ -5,12 +5,7 @@ import {
   X,
   TrendingUp,
   TrendingDown,
-  Calendar,
-  DollarSign,
-  FileText,
-  Tag,
   Link2,
-  AlertCircle,
   Loader2,
   CheckCircle2,
   Info,
@@ -159,10 +154,10 @@ export function TransactionFormModal({
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 overflow-y-auto bg-slate-900/60 backdrop-blur-2xs flex items-center justify-center p-4 animate-in fade-in duration-150">
-      <div className="relative bg-white rounded-2xl shadow-xl max-w-lg w-full border border-slate-200 overflow-hidden animate-in zoom-in-95 duration-150">
+    <div className="fixed inset-0 z-50 overflow-y-auto bg-ink-navy/60 backdrop-blur-xs flex items-center justify-center p-4 animate-in fade-in duration-150">
+      <div className="relative bg-white rounded-2xl shadow-xl max-w-lg w-full border border-hairline overflow-hidden animate-in zoom-in-95 duration-150">
         {/* Header */}
-        <div className="flex items-center justify-between px-5 py-4 border-b border-slate-100 bg-slate-50/70">
+        <div className="flex items-center justify-between px-5 py-4 border-b border-hairline bg-cloud">
           <div className="flex items-center gap-2.5">
             <div
               className={`w-8 h-8 rounded-lg flex items-center justify-center border ${
@@ -178,20 +173,20 @@ export function TransactionFormModal({
               )}
             </div>
             <div>
-              <h3 className="text-sm font-bold text-slate-900">
-                {isEditing ? 'Edit Transaction' : 'Record Transaction'}
+              <h3 className="text-sm font-bold text-ink-navy">
+                {isEditing ? 'Chỉnh sửa giao dịch' : 'Ghi nhận giao dịch'}
               </h3>
-              <p className="text-[11px] text-slate-500">
+              <p className="text-[11px] text-slate-gray">
                 {isEditing
-                  ? 'Update transaction record and parameters'
-                  : 'Log income inflow or operational expense disbursement'}
+                  ? 'Cập nhật nội dung và thông số phiếu thu/chi'
+                  : 'Ghi chép dòng thu ngân quỹ hoặc giải ngân chi phí'}
               </p>
             </div>
           </div>
           <button
             type="button"
             onClick={onClose}
-            className="p-1.5 text-slate-400 hover:text-slate-700 rounded-lg hover:bg-slate-100 transition-colors"
+            className="p-1.5 text-mist-gray hover:text-ink-navy rounded-lg hover:bg-pebble transition-colors cursor-pointer"
           >
             <X className="w-4 h-4" />
           </button>
@@ -201,8 +196,8 @@ export function TransactionFormModal({
         <form onSubmit={handleSubmit(handleFormSubmit)} className="p-5 space-y-4 text-xs">
           {/* Section 1: TRANSACTION */}
           <div className="space-y-3">
-            <div className="text-[11px] font-bold uppercase tracking-wider text-slate-700">
-              1. Transaction Parameters
+            <div className="text-[11px] font-bold uppercase tracking-wider text-ink-navy">
+              1. Thông tin thu chi
             </div>
 
             {/* Type Toggle */}
@@ -210,53 +205,53 @@ export function TransactionFormModal({
               <button
                 type="button"
                 onClick={() => handleTypeSwitch('income')}
-                className={`flex items-center justify-center gap-1.5 py-2 px-3 rounded-lg border text-xs font-semibold transition-all ${
+                className={`flex items-center justify-center gap-1.5 py-2 px-3 rounded-lg border text-xs font-semibold transition-all cursor-pointer ${
                   selectedType === 'income'
-                    ? 'bg-emerald-800 text-white border-emerald-800 shadow-2xs'
-                    : 'bg-slate-50 text-slate-700 border-slate-200 hover:bg-slate-100'
+                    ? 'bg-emerald-700 text-white border-emerald-700 shadow-xs'
+                    : 'bg-cloud text-slate-gray border-hairline hover:bg-pebble'
                 }`}
               >
                 <TrendingUp className="w-3.5 h-3.5" />
-                <span>Income (Khoản Thu)</span>
+                <span>Khoản Thu (Income)</span>
               </button>
 
               <button
                 type="button"
                 onClick={() => handleTypeSwitch('expense')}
-                className={`flex items-center justify-center gap-1.5 py-2 px-3 rounded-lg border text-xs font-semibold transition-all ${
+                className={`flex items-center justify-center gap-1.5 py-2 px-3 rounded-lg border text-xs font-semibold transition-all cursor-pointer ${
                   selectedType === 'expense'
-                    ? 'bg-rose-800 text-white border-rose-800 shadow-2xs'
-                    : 'bg-slate-50 text-slate-700 border-slate-200 hover:bg-slate-100'
+                    ? 'bg-rose-700 text-white border-rose-700 shadow-xs'
+                    : 'bg-cloud text-slate-gray border-hairline hover:bg-pebble'
                 }`}
               >
                 <TrendingDown className="w-3.5 h-3.5" />
-                <span>Expense (Khoản Chi)</span>
+                <span>Khoản Chi (Expense)</span>
               </button>
             </div>
 
             {/* Amount */}
             <div>
-              <label className="block text-[11px] font-semibold text-slate-700 mb-1">
-                Amount (VNĐ) <span className="text-rose-500">*</span>
+              <label className="block text-[11px] font-semibold text-slate-gray mb-1">
+                Số tiền (VNĐ) <span className="text-rose-500">*</span>
               </label>
               <div className="relative">
                 <input
                   type="number"
                   step="1"
                   min="1"
-                  placeholder="e.g. 500000"
+                  placeholder="VD: 500000"
                   {...register('amount')}
-                  className={`w-full pl-3 pr-12 py-2 text-sm font-bold tabular-nums bg-slate-50 border rounded-lg focus:bg-white focus:outline-none focus:ring-1 focus:ring-slate-900 transition-all ${
-                    errors.amount ? 'border-rose-300 bg-rose-50/30' : 'border-slate-200'
+                  className={`w-full pl-3 pr-12 py-2 text-sm font-bold tabular-nums bg-cloud border rounded-lg focus:bg-white focus:outline-none focus:ring-1 focus:ring-signal-blue text-ink-navy transition-all ${
+                    errors.amount ? 'border-rose-300 bg-rose-50/30' : 'border-hairline'
                   }`}
                 />
-                <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs font-bold text-slate-400">
+                <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs font-bold text-mist-gray">
                   VNĐ
                 </span>
               </div>
               <div className="flex items-center justify-between text-[11px] pt-1 px-1">
-                <span className="text-slate-500">Standard preview:</span>
-                <span className="font-bold text-slate-900 tabular-nums">
+                <span className="text-slate-gray">Xem trước định dạng:</span>
+                <span className="font-bold text-ink-navy tabular-nums">
                   {selectedType === 'income' ? '+' : '−'}
                   {formatVND(watchAmount)}
                 </span>
@@ -269,7 +264,7 @@ export function TransactionFormModal({
             {/* Category & Date */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
               <div>
-                <label className="block text-[11px] font-semibold text-slate-700 mb-1">
+                <label className="block text-[11px] font-semibold text-slate-gray mb-1">
                   Danh mục thu chi <span className="text-rose-500">*</span>
                 </label>
                 <Controller
@@ -280,12 +275,12 @@ export function TransactionFormModal({
                       value={field.value || ''}
                       onValueChange={field.onChange}
                     >
-                      <SelectTrigger className="w-full h-9 bg-slate-50 border-slate-200 text-xs">
+                      <SelectTrigger className="w-full h-9 bg-cloud border-hairline rounded-lg text-xs text-ink-navy">
                         <SelectValue placeholder="-- Chọn danh mục --" />
                       </SelectTrigger>
-                      <SelectContent>
+                      <SelectContent className="rounded-xl border-hairline bg-white shadow-lg">
                         {availableCategories.map((cat) => (
-                          <SelectItem key={cat.id} value={cat.id}>
+                          <SelectItem key={cat.id} value={cat.id} className="text-xs">
                             {cat.name}
                           </SelectItem>
                         ))}
@@ -299,7 +294,7 @@ export function TransactionFormModal({
               </div>
 
               <div>
-                <label className="block text-[11px] font-semibold text-slate-700 mb-1">
+                <label className="block text-[11px] font-semibold text-slate-gray mb-1">
                   Ngày giao dịch <span className="text-rose-500">*</span>
                 </label>
                 <Controller
@@ -321,14 +316,14 @@ export function TransactionFormModal({
 
             {/* Description */}
             <div>
-              <label className="block text-[11px] font-semibold text-slate-700 mb-1">
+              <label className="block text-[11px] font-semibold text-slate-gray mb-1">
                 Nội dung / Diễn giải chi tiết <span className="text-rose-500">*</span>
               </label>
               <textarea
                 rows={2}
                 placeholder="Ghi rõ lý do chi tiêu, người nộp/nhận, lưu ý chứng từ..."
                 {...register('description')}
-                className="w-full px-2.5 py-1.5 bg-slate-50 border border-slate-200 rounded-lg text-slate-800 text-xs focus:bg-white focus:outline-none focus:ring-1 focus:ring-slate-900"
+                className="w-full px-2.5 py-1.5 bg-cloud border border-hairline rounded-lg text-ink-navy text-xs focus:bg-white focus:outline-none focus:ring-1 focus:ring-signal-blue resize-none"
               />
               {errors.description && (
                 <p className="text-[11px] text-rose-600 mt-0.5">{errors.description.message}</p>
@@ -337,14 +332,14 @@ export function TransactionFormModal({
           </div>
 
           {/* Section 2: CONTEXT */}
-          <div className="pt-2 border-t border-slate-100 space-y-2.5">
-            <div className="text-[11px] font-bold uppercase tracking-wider text-slate-700">
+          <div className="pt-2 border-t border-hairline space-y-2.5">
+            <div className="text-[11px] font-bold uppercase tracking-wider text-ink-navy">
               2. Bối cảnh hoạt động & Nhiệm kỳ
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
               <div>
-                <label className="block text-[11px] font-semibold text-slate-700 mb-1">
+                <label className="block text-[11px] font-semibold text-slate-gray mb-1">
                   Nhiệm kỳ hoạt động <span className="text-rose-500">*</span>
                 </label>
                 <Controller
@@ -355,12 +350,12 @@ export function TransactionFormModal({
                       value={field.value || ''}
                       onValueChange={field.onChange}
                     >
-                      <SelectTrigger className="w-full h-9 bg-slate-50 border-slate-200 text-xs">
+                      <SelectTrigger className="w-full h-9 bg-cloud border-hairline rounded-lg text-xs text-ink-navy">
                         <SelectValue placeholder="-- Chọn nhiệm kỳ --" />
                       </SelectTrigger>
-                      <SelectContent>
+                      <SelectContent className="rounded-xl border-hairline bg-white shadow-lg">
                         {terms.map((t) => (
-                          <SelectItem key={t.id} value={t.id}>
+                          <SelectItem key={t.id} value={t.id} className="text-xs">
                             {t.name} {t.isCurrent ? '(Hiện tại)' : ''}
                           </SelectItem>
                         ))}
@@ -374,7 +369,7 @@ export function TransactionFormModal({
               </div>
 
               <div>
-                <label className="block text-[11px] font-semibold text-slate-700 mb-1">
+                <label className="block text-[11px] font-semibold text-slate-gray mb-1">
                   Hoạt động liên kết (Tùy chọn)
                 </label>
                 <Controller
@@ -385,13 +380,13 @@ export function TransactionFormModal({
                       value={field.value || 'none'}
                       onValueChange={(val) => field.onChange(val === 'none' ? null : val)}
                     >
-                      <SelectTrigger className="w-full h-9 bg-slate-50 border-slate-200 text-xs">
+                      <SelectTrigger className="w-full h-9 bg-cloud border-hairline rounded-lg text-xs text-ink-navy">
                         <SelectValue placeholder="-- Quỹ chung (Không gắn hoạt động) --" />
                       </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="none">-- Quỹ chung (Không gắn hoạt động) --</SelectItem>
+                      <SelectContent className="rounded-xl border-hairline bg-white shadow-lg">
+                        <SelectItem value="none" className="text-xs">-- Quỹ chung (Không gắn hoạt động) --</SelectItem>
                         {availableActivities.map((act) => (
-                          <SelectItem key={act.id} value={act.id}>
+                          <SelectItem key={act.id} value={act.id} className="text-xs">
                             {act.title}
                           </SelectItem>
                         ))}
@@ -404,22 +399,22 @@ export function TransactionFormModal({
           </div>
 
           {/* Section 3: DOCUMENTATION */}
-          <div className="pt-2 border-t border-slate-100 space-y-2">
-            <div className="text-[11px] font-bold uppercase tracking-wider text-slate-700">
-              3. Supporting Documentation
+          <div className="pt-2 border-t border-hairline space-y-2">
+            <div className="text-[11px] font-bold uppercase tracking-wider text-ink-navy">
+              3. Chứng từ đính kèm
             </div>
 
             <div>
-              <label className="block text-[11px] font-semibold text-slate-700 mb-1">
-                Receipt / Invoice URL (Drive / Image link)
+              <label className="block text-[11px] font-semibold text-slate-gray mb-1">
+                Đường dẫn liên kết chứng từ / Hóa đơn (Drive / Ảnh)
               </label>
               <div className="relative">
-                <Link2 className="w-3.5 h-3.5 text-slate-400 absolute left-2.5 top-1/2 -translate-y-1/2" />
+                <Link2 className="w-3.5 h-3.5 text-mist-gray absolute left-2.5 top-1/2 -translate-y-1/2" />
                 <input
                   type="url"
                   placeholder="https://..."
                   {...register('receiptUrl')}
-                  className="w-full pl-8 pr-3 py-1.5 bg-slate-50 border border-slate-200 rounded-lg text-slate-800 focus:bg-white focus:outline-none focus:ring-1 focus:ring-slate-900"
+                  className="w-full pl-8 pr-3 py-1.5 bg-cloud border border-hairline rounded-lg text-ink-navy focus:bg-white focus:outline-none focus:ring-1 focus:ring-signal-blue"
                 />
               </div>
               {errors.receiptUrl && (
@@ -429,44 +424,44 @@ export function TransactionFormModal({
           </div>
 
           {/* Section 4: GOVERNANCE & APPROVAL NOTICE */}
-          <div className="p-2.5 rounded-lg bg-slate-50 border border-slate-200 text-slate-500 flex items-start gap-2 text-[11px] leading-relaxed">
-            <Info className="w-3.5 h-3.5 text-slate-400 shrink-0 mt-0.5" />
+          <div className="p-2.5 rounded-lg bg-cloud border border-hairline text-slate-gray flex items-start gap-2 text-[11px] leading-relaxed">
+            <Info className="w-3.5 h-3.5 text-signal-blue shrink-0 mt-0.5" />
             <span>
-              Transactions will be validated against internal control limits. Disbursements over approval threshold require board review.
+              Các giao dịch sẽ được kiểm tra tự động theo ngưỡng hạn mức chi tiêu. Các khoản chi vượt hạn mức sẽ chuyển sang danh sách chờ Ban Chủ nhiệm duyệt.
             </span>
           </div>
 
           {/* Actions */}
-          <div className="flex items-center justify-end gap-2 pt-3 border-t border-slate-100">
+          <div className="flex items-center justify-end gap-2 pt-3 border-t border-hairline">
             <Button
               type="button"
               variant="outline"
               size="sm"
               onClick={onClose}
               disabled={isSubmitting || isLoading}
-              className="text-xs h-8"
+              className="text-xs h-8 rounded-lg border-hairline text-ink-navy hover:bg-cloud"
             >
-              Cancel
+              Hủy
             </Button>
             <Button
               type="submit"
               size="sm"
               disabled={isSubmitting || isLoading}
-              className={`text-xs h-8 ${
+              className={`text-xs h-8 rounded-lg shadow-sm font-semibold ${
                 selectedType === 'income'
-                  ? 'bg-emerald-800 hover:bg-emerald-900 text-white'
-                  : 'bg-rose-800 hover:bg-rose-900 text-white'
+                  ? 'bg-emerald-700 hover:bg-emerald-800 text-white'
+                  : 'bg-rose-700 hover:bg-rose-800 text-white'
               }`}
             >
               {isSubmitting || isLoading ? (
                 <>
                   <Loader2 className="w-3.5 h-3.5 animate-spin mr-1" />
-                  <span>Saving...</span>
+                  <span>Đang lưu...</span>
                 </>
               ) : (
                 <>
                   <CheckCircle2 className="w-3.5 h-3.5 mr-1" />
-                  <span>{isEditing ? 'Update Transaction' : 'Record Transaction'}</span>
+                  <span>{isEditing ? 'Cập nhật giao dịch' : 'Ghi nhận giao dịch'}</span>
                 </>
               )}
             </Button>

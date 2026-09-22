@@ -7,11 +7,11 @@ const alertVariants = cva(
   {
     variants: {
       variant: {
-        default: "bg-surface-container border-outline-variant text-on-surface",
-        info: "bg-blue-50 border-blue-200 text-blue-900",
-        success: "bg-emerald-50 border-emerald-200 text-emerald-900",
-        warning: "bg-amber-50 border-amber-200 text-amber-900",
-        destructive: "bg-rose-50 border-rose-200 text-rose-900",
+        default: "bg-pebble border-hairline text-ink-navy",
+        info: "bg-[#e6f0ff] border-hairline text-signal-blue",
+        success: "bg-emerald-50/80 border-emerald-200 text-emerald-900",
+        warning: "bg-amber-50/80 border-amber-200 text-amber-900",
+        destructive: "bg-rose-50/80 border-rose-200 text-rose-900",
       },
     },
     defaultVariants: {

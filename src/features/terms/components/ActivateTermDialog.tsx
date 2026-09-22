@@ -52,10 +52,10 @@ export function ActivateTermDialog({
               <Sparkles strokeWidth={1.5} className="h-5 w-5" />
             </div>
             <div>
-              <DialogTitle className="text-lg font-bold text-slate-900">
+              <DialogTitle className="text-lg font-bold text-ink-navy">
                 Kích hoạt Nhiệm kỳ hoạt động
               </DialogTitle>
-              <DialogDescription className="text-xs text-slate-500">
+              <DialogDescription className="text-xs text-mist-gray">
                 Xác nhận đặt làm nhiệm kỳ hiện tại của Đơn vị
               </DialogDescription>
             </div>
@@ -63,19 +63,19 @@ export function ActivateTermDialog({
         </DialogHeader>
 
         {error && (
-          <div className="p-3 bg-red-50 border border-red-200 rounded-lg flex items-start gap-2 text-xs text-red-700">
+          <div className="p-3 bg-rose-50 border border-rose-200 rounded-lg flex items-start gap-2 text-xs text-rose-700">
             <AlertCircle className="h-4 w-4 shrink-0 mt-0.5" />
             <div className="flex-1">{error}</div>
           </div>
         )}
 
-        <div className="space-y-3 py-2 text-sm text-slate-600">
+        <div className="space-y-3 py-2 text-sm text-slate-gray">
           <p>
             Bạn đang chuẩn bị kích hoạt nhiệm kỳ:
           </p>
-          <div className="p-3 bg-slate-50 border border-slate-200 rounded-lg">
-            <p className="font-semibold text-slate-800">{term.name}</p>
-            <p className="text-xs text-slate-500 mt-1">
+          <div className="p-3 bg-cloud border border-hairline rounded-lg">
+            <p className="font-semibold text-ink-navy">{term.name}</p>
+            <p className="text-xs text-mist-gray mt-1">
               Thời gian: {term.startDate} → {term.endDate}
             </p>
           </div>
@@ -92,7 +92,7 @@ export function ActivateTermDialog({
             </div>
           )}
 
-          <p className="text-xs text-slate-500">
+          <p className="text-xs text-mist-gray">
             Sau khi kích hoạt, toàn bộ các hoạt động, báo cáo và phân loại mặc định trong Đơn vị sẽ tự động liên kết với nhiệm kỳ này.
           </p>
         </div>

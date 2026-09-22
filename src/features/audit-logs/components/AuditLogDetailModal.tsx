@@ -2,7 +2,6 @@ import { useState } from 'react';
 import {
   Dialog,
   DialogContent,
-  DialogHeader,
   DialogTitle,
   DialogDescription,
 } from '@/components/ui/dialog';
@@ -11,16 +10,12 @@ import { Button } from '@/components/ui/button';
 import {
   Clock,
   User,
-  Layers,
   Database,
   Code2,
   Copy,
   Check,
-  Shield,
   ShieldCheck,
-  FileText,
   Sliders,
-  ExternalLink,
 } from 'lucide-react';
 import type { AuditLogItemWithActor } from '../types/audit-log.types';
 import {
@@ -58,9 +53,9 @@ export function AuditLogDetailModal({
   const moduleConfig = AUDIT_MODULE_CONFIG[log.module] || {
     label: log.module,
     color: '#475569',
-    bgClass: 'bg-slate-50',
-    borderClass: 'border-slate-200',
-    textClass: 'text-slate-700',
+    bgClass: 'bg-cloud',
+    borderClass: 'border-hairline',
+    textClass: 'text-slate-gray',
     iconName: 'Shield',
   };
 
@@ -89,9 +84,9 @@ export function AuditLogDetailModal({
 
   return (
     <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
-      <DialogContent className="sm:max-w-3xl max-h-[90vh] overflow-y-auto p-0 gap-0 border-slate-200 shadow-xl rounded-2xl">
+      <DialogContent className="sm:max-w-3xl max-h-[90vh] overflow-y-auto p-0 gap-0 border-hairline shadow-xl rounded-2xl">
         {/* Header */}
-        <div className="p-5 pb-4 border-b border-slate-100 bg-slate-50/60 sticky top-0 z-10 backdrop-blur-sm">
+        <div className="p-5 pb-4 border-b border-hairline bg-cloud/80 sticky top-0 z-10 backdrop-blur-sm">
           <div className="flex items-center justify-between gap-3 mb-2 flex-wrap">
             <div className="flex items-center gap-2 flex-wrap">
               <Badge
@@ -111,30 +106,30 @@ export function AuditLogDetailModal({
               <button
                 type="button"
                 onClick={handleCopyTraceId}
-                className="inline-flex items-center gap-1 text-[11px] text-slate-500 hover:text-slate-900 font-mono bg-white px-2 py-0.5 rounded border border-slate-200 transition-colors"
+                className="inline-flex items-center gap-1 text-[11px] text-slate-gray hover:text-ink-navy font-mono bg-white px-2 py-0.5 rounded border border-hairline transition-colors cursor-pointer"
                 title="Sao chép ID sự kiện"
               >
                 <span>ID: #{log.id.slice(0, 8)}</span>
                 {copiedTraceId ? (
                   <Check className="w-3 h-3 text-emerald-600" />
                 ) : (
-                  <Copy className="w-3 h-3 text-slate-400" />
+                  <Copy className="w-3 h-3 text-mist-gray" />
                 )}
               </button>
             </div>
 
-            <div className="text-xs text-slate-500 flex items-center gap-1.5 font-medium">
-              <Clock className="w-3.5 h-3.5 text-slate-400" />
+            <div className="text-xs text-mist-gray flex items-center gap-1.5 font-medium">
+              <Clock className="w-3.5 h-3.5 text-mist-gray" />
               <span>{formatAuditTimestamp(log.createdAt)}</span>
-              <span className="text-[11px] text-slate-400">({formatRelativeTime(log.createdAt)})</span>
+              <span className="text-[11px] text-mist-gray">({formatRelativeTime(log.createdAt)})</span>
             </div>
           </div>
 
-          <DialogTitle className="text-lg font-bold text-slate-900 leading-snug">
+          <DialogTitle className="text-lg font-bold text-ink-navy leading-snug">
             {log.actionLabel}
           </DialogTitle>
-          <DialogDescription className="text-xs text-slate-500 pt-0.5">
-            Mã hành vi hệ thống: <span className="font-mono text-slate-700 font-semibold">{log.action}</span>
+          <DialogDescription className="text-xs text-mist-gray pt-0.5">
+            Mã hành vi hệ thống: <span className="font-mono text-slate-gray font-semibold">{log.action}</span>
           </DialogDescription>
         </div>
 
@@ -142,37 +137,37 @@ export function AuditLogDetailModal({
           {/* Identity Cards (Actor & Target) */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5">
             {/* Actor Card */}
-            <div className="p-4 rounded-xl bg-white border border-slate-200/90 shadow-2xs space-y-2">
+            <div className="p-4 rounded-xl bg-white border border-hairline shadow-xs space-y-2">
               <div className="flex items-center justify-between">
-                <span className="text-xs font-bold text-slate-500 uppercase tracking-wider flex items-center gap-1.5">
-                  <User className="w-3.5 h-3.5 text-blue-600" />
+                <span className="text-xs font-bold text-mist-gray uppercase tracking-wider flex items-center gap-1.5">
+                  <User className="w-3.5 h-3.5 text-signal-blue" />
                   <span>Người thực hiện</span>
                 </span>
                 {log.actor ? (
-                  <span className="text-[10px] font-semibold text-blue-700 bg-blue-50 border border-blue-200 px-1.5 py-0.5 rounded">
+                  <span className="text-[10px] font-semibold text-signal-blue bg-[#e6f0ff] border border-[#d4e4fa] px-1.5 py-0.5 rounded">
                     Thành viên
                   </span>
                 ) : (
-                  <span className="text-[10px] font-semibold text-slate-600 bg-slate-100 border border-slate-200 px-1.5 py-0.5 rounded">
+                  <span className="text-[10px] font-semibold text-slate-gray bg-cloud border border-hairline px-1.5 py-0.5 rounded">
                     Hệ thống
                   </span>
                 )}
               </div>
 
               <div className="pt-1 space-y-1">
-                <p className="text-sm font-bold text-slate-900">
+                <p className="text-sm font-bold text-ink-navy">
                   {log.actor ? log.actor.fullName : 'Hệ thống tự động (Automated Job)'}
                 </p>
                 {log.actor && (
-                  <div className="text-xs text-slate-600 space-y-0.5">
+                  <div className="text-xs text-slate-gray space-y-0.5">
                     {log.actor.studentId && (
-                      <p className="font-mono text-slate-700 font-medium">MSSV: {log.actor.studentId}</p>
+                      <p className="font-mono text-slate-gray font-medium">MSSV: {log.actor.studentId}</p>
                     )}
-                    {log.actor.email && <p className="text-slate-500">{log.actor.email}</p>}
+                    {log.actor.email && <p className="text-mist-gray">{log.actor.email}</p>}
                   </div>
                 )}
                 {log.userId && (
-                  <p className="text-[10px] text-slate-400 font-mono pt-1">
+                  <p className="text-[10px] text-mist-gray font-mono pt-1">
                     User UUID: {log.userId}
                   </p>
                 )}
@@ -180,30 +175,30 @@ export function AuditLogDetailModal({
             </div>
 
             {/* Target Entity Card */}
-            <div className="p-4 rounded-xl bg-white border border-slate-200/90 shadow-2xs space-y-2">
+            <div className="p-4 rounded-xl bg-white border border-hairline shadow-xs space-y-2">
               <div className="flex items-center justify-between">
-                <span className="text-xs font-bold text-slate-500 uppercase tracking-wider flex items-center gap-1.5">
-                  <Database className="w-3.5 h-3.5 text-indigo-600" />
+                <span className="text-xs font-bold text-mist-gray uppercase tracking-wider flex items-center gap-1.5">
+                  <Database className="w-3.5 h-3.5 text-signal-blue" />
                   <span>Đối tượng tác động</span>
                 </span>
-                <span className="text-[10px] font-semibold text-indigo-700 bg-indigo-50 border border-indigo-200 px-1.5 py-0.5 rounded font-mono">
+                <span className="text-[10px] font-semibold text-signal-blue bg-[#e6f0ff] border border-[#d4e4fa] px-1.5 py-0.5 rounded font-mono">
                   {log.entityType}
                 </span>
               </div>
 
               <div className="pt-1 space-y-1">
-                <p className="text-sm font-bold text-slate-900 capitalize">
+                <p className="text-sm font-bold text-ink-navy capitalize">
                   {log.entityType}
                 </p>
                 {log.entityId ? (
                   <div className="flex items-center gap-2 pt-0.5">
-                    <span className="text-xs font-mono text-slate-700 truncate max-w-[200px]" title={log.entityId}>
+                    <span className="text-xs font-mono text-slate-gray truncate max-w-[200px]" title={log.entityId}>
                       {log.entityId}
                     </span>
                     <Button
                       variant="ghost"
                       size="sm"
-                      className="h-6 px-1.5 text-xs text-slate-400 hover:text-slate-700"
+                      className="h-6 px-1.5 text-xs text-mist-gray hover:text-slate-gray"
                       onClick={handleCopyEntityId}
                       title="Sao chép ID đối tượng"
                     >
@@ -215,9 +210,9 @@ export function AuditLogDetailModal({
                     </Button>
                   </div>
                 ) : (
-                  <p className="text-xs text-slate-400">Không có ID đối tượng cụ thể (Global/Batch)</p>
+                  <p className="text-xs text-mist-gray">Không có ID đối tượng cụ thể (Global/Batch)</p>
                 )}
-                <p className="text-[10px] text-slate-400 font-mono pt-1">
+                <p className="text-[10px] text-mist-gray font-mono pt-1">
                   Org ID: {log.organizationId}
                 </p>
               </div>
@@ -226,28 +221,28 @@ export function AuditLogDetailModal({
 
           {/* Tab Selector: Formatted Changes vs Raw JSON */}
           <div className="space-y-3">
-            <div className="flex items-center justify-between border-b border-slate-200 pb-2">
+            <div className="flex items-center justify-between border-b border-hairline pb-2">
               <div className="flex items-center gap-2">
                 <button
                   type="button"
                   onClick={() => setActiveTab('diff')}
-                  className={`text-xs font-bold px-3 py-1.5 rounded-lg transition-colors flex items-center gap-1.5 ${
+                  className={`text-xs font-bold px-3 py-1.5 rounded-lg transition-colors flex items-center gap-1.5 cursor-pointer ${
                     activeTab === 'diff'
-                      ? 'bg-slate-900 text-white shadow-xs'
-                      : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
+                      ? 'bg-ink-navy text-white shadow-xs'
+                      : 'text-slate-gray hover:text-ink-navy hover:bg-pebble'
                   }`}
                 >
                   <Sliders className="w-3.5 h-3.5" />
-                  <span>Chi tiết thay đổi & Tham số</span>
+                  <span>Chi tiết thay đổi &amp; Tham số</span>
                 </button>
 
                 <button
                   type="button"
                   onClick={() => setActiveTab('raw')}
-                  className={`text-xs font-bold px-3 py-1.5 rounded-lg transition-colors flex items-center gap-1.5 ${
+                  className={`text-xs font-bold px-3 py-1.5 rounded-lg transition-colors flex items-center gap-1.5 cursor-pointer ${
                     activeTab === 'raw'
-                      ? 'bg-slate-900 text-white shadow-xs'
-                      : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
+                      ? 'bg-ink-navy text-white shadow-xs'
+                      : 'text-slate-gray hover:text-ink-navy hover:bg-pebble'
                   }`}
                 >
                   <Code2 className="w-3.5 h-3.5" />
@@ -259,7 +254,7 @@ export function AuditLogDetailModal({
                 <Button
                   size="sm"
                   variant="outline"
-                  className="h-7 px-2 text-xs text-slate-700 bg-white hover:bg-slate-50"
+                  className="h-7 px-2 text-xs text-slate-gray hover:text-ink-navy bg-white hover:bg-cloud border-hairline"
                   onClick={handleCopyJson}
                 >
                   {copiedJson ? (
@@ -282,7 +277,7 @@ export function AuditLogDetailModal({
               <AuditLogDiffViewer metadata={log.metadata} />
             ) : (
               <div className="relative">
-                <pre className="p-4 rounded-xl bg-slate-900 text-slate-100 text-xs font-mono overflow-x-auto max-h-80 leading-relaxed border border-slate-800">
+                <pre className="p-4 rounded-xl bg-ink-navy text-pebble text-xs font-mono overflow-x-auto max-h-80 leading-relaxed border border-hairline/20">
                   {JSON.stringify(
                     {
                       id: log.id,

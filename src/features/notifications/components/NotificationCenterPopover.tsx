@@ -73,7 +73,7 @@ export function NotificationCenterPopover() {
           id="btn-notifications"
           variant="ghost"
           size="icon"
-          className="relative h-9 w-9 text-slate-600 hover:text-slate-900 rounded-lg hover:bg-slate-100"
+          className="relative h-9 w-9 text-slate-gray hover:text-ink-navy rounded-lg hover:bg-pebble"
           aria-label="Thông báo"
         >
           <Bell className="h-4 w-4" />
@@ -88,21 +88,21 @@ export function NotificationCenterPopover() {
       <PopoverContent
         align="end"
         sideOffset={8}
-        className="w-80 sm:w-96 p-0 border border-slate-200 shadow-lg rounded-xl overflow-hidden bg-white z-50"
+        className="w-80 sm:w-96 p-0 border border-hairline shadow-md rounded-2xl overflow-hidden bg-white z-50"
       >
         {/* Header */}
-        <div className="p-3.5 px-4 bg-slate-50/90 border-b border-slate-100 flex items-center justify-between">
+        <div className="p-3.5 px-4 bg-cloud border-b border-hairline flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <h3 className="text-xs font-bold text-slate-900">
-              Notifications
+            <h3 className="text-xs font-bold text-ink-navy">
+              Thông báo
             </h3>
             {unreadCount > 0 ? (
               <Badge variant="destructive" className="text-[10px] px-1.5 py-0">
-                {unreadCount} new
+                {unreadCount} mới
               </Badge>
             ) : (
-              <Badge variant="outline" className="text-[10px] px-1.5 py-0 text-slate-500 bg-white">
-                0 unread
+              <Badge variant="outline" className="text-[10px] px-1.5 py-0 text-slate-gray bg-white border-hairline">
+                0 chưa đọc
               </Badge>
             )}
           </div>
@@ -113,26 +113,26 @@ export function NotificationCenterPopover() {
               size="sm"
               onClick={handleMarkAllRead}
               disabled={markAllReadMutation.isPending}
-              className="text-[11px] h-7 px-2 text-blue-600 hover:text-blue-700 font-semibold cursor-pointer"
+              className="text-[11px] h-7 px-2 text-signal-blue hover:text-[#005be0] hover:bg-pebble font-semibold cursor-pointer"
             >
               <CheckCheck className="w-3.5 h-3.5 mr-1" />
-              <span>Mark all as read</span>
+              <span>Đánh dấu đã đọc tất cả</span>
             </Button>
           )}
         </div>
 
         {/* Filter Tabs */}
-        <div className="p-2 px-3 border-b border-slate-100 bg-white flex items-center gap-1 overflow-x-auto text-[11px]">
+        <div className="p-2 px-3 border-b border-hairline bg-white flex items-center gap-1 overflow-x-auto text-[11px]">
           <button
             type="button"
             onClick={() => setActiveTab('all')}
             className={`px-2.5 py-1 rounded-md font-medium transition-colors ${
               activeTab === 'all'
-                ? 'bg-blue-50 text-blue-700 font-bold'
-                : 'text-slate-600 hover:bg-slate-50'
+                ? 'bg-[#e6f0ff] text-signal-blue font-bold'
+                : 'text-slate-gray hover:bg-cloud hover:text-ink-navy'
             }`}
           >
-            All ({items.length})
+            Tất cả ({items.length})
           </button>
 
           <button
@@ -140,11 +140,11 @@ export function NotificationCenterPopover() {
             onClick={() => setActiveTab('unread')}
             className={`px-2.5 py-1 rounded-md font-medium transition-colors ${
               activeTab === 'unread'
-                ? 'bg-blue-50 text-blue-700 font-bold'
-                : 'text-slate-600 hover:bg-slate-50'
+                ? 'bg-[#e6f0ff] text-signal-blue font-bold'
+                : 'text-slate-gray hover:bg-cloud hover:text-ink-navy'
             }`}
           >
-            Unread ({unreadCount})
+            Chưa đọc ({unreadCount})
           </button>
 
           <button
@@ -152,11 +152,11 @@ export function NotificationCenterPopover() {
             onClick={() => setActiveTab('task')}
             className={`px-2.5 py-1 rounded-md font-medium transition-colors ${
               activeTab === 'task'
-                ? 'bg-blue-50 text-blue-700 font-bold'
-                : 'text-slate-600 hover:bg-slate-50'
+                ? 'bg-[#e6f0ff] text-signal-blue font-bold'
+                : 'text-slate-gray hover:bg-cloud hover:text-ink-navy'
             }`}
           >
-            Tasks
+            Công việc
           </button>
 
           <button
@@ -164,24 +164,24 @@ export function NotificationCenterPopover() {
             onClick={() => setActiveTab('activity')}
             className={`px-2.5 py-1 rounded-md font-medium transition-colors ${
               activeTab === 'activity'
-                ? 'bg-blue-50 text-blue-700 font-bold'
-                : 'text-slate-600 hover:bg-slate-50'
+                ? 'bg-[#e6f0ff] text-signal-blue font-bold'
+                : 'text-slate-gray hover:bg-cloud hover:text-ink-navy'
             }`}
           >
-            Activities
+            Hoạt động
           </button>
         </div>
 
         {/* Notification List Body */}
-        <div className="max-h-[380px] overflow-y-auto divide-y divide-slate-100">
+        <div className="max-h-[380px] overflow-y-auto divide-y divide-hairline">
           {isLoading ? (
             <div className="p-4 space-y-3">
               {[1, 2, 3].map((i) => (
                 <div key={i} className="flex gap-3 animate-pulse">
-                  <div className="w-7 h-7 rounded-lg bg-slate-100 shrink-0" />
+                  <div className="w-7 h-7 rounded-lg bg-pebble shrink-0" />
                   <div className="space-y-1.5 flex-1">
-                    <div className="h-3 bg-slate-100 rounded w-3/4" />
-                    <div className="h-2.5 bg-slate-100 rounded w-full" />
+                    <div className="h-3 bg-pebble rounded w-3/4" />
+                    <div className="h-2.5 bg-pebble rounded w-full" />
                   </div>
                 </div>
               ))}
@@ -197,16 +197,16 @@ export function NotificationCenterPopover() {
             ))
           ) : (
             <div className="py-8 px-4 text-center">
-              <div className="w-10 h-10 rounded-full bg-slate-100 text-slate-400 flex items-center justify-center mx-auto mb-2">
+              <div className="w-10 h-10 rounded-full bg-cloud text-mist-gray flex items-center justify-center mx-auto mb-2">
                 <Inbox strokeWidth={1.5} className="w-5 h-5" />
               </div>
-              <p className="text-xs font-semibold text-slate-700">
-                No notifications
+              <p className="text-xs font-semibold text-ink-navy">
+                Không có thông báo nào
               </p>
-              <p className="text-[11px] text-slate-400 mt-0.5">
+              <p className="text-[11px] text-slate-gray mt-0.5">
                 {activeTab === 'unread'
-                  ? 'You have caught up with all notifications.'
-                  : 'All activities and tasks are operating smoothly.'}
+                  ? 'Bạn đã đọc tất cả thông báo.'
+                  : 'Mọi hoạt động và công việc đang diễn ra bình thường.'}
               </p>
             </div>
           )}

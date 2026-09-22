@@ -131,17 +131,17 @@ export function DocumentEditModal({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-2xl md:max-w-3xl max-h-[92vh] overflow-y-auto p-6 pr-10 sm:p-8 sm:pr-12 rounded-3xl border border-slate-200/80 shadow-2xl [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+      <DialogContent className="sm:max-w-2xl md:max-w-3xl max-h-[92vh] overflow-y-auto p-6 pr-10 sm:p-8 sm:pr-12 rounded-3xl border border-hairline shadow-2xl [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
         <DialogHeader className="pb-2">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-2xl bg-amber-50 text-amber-600 flex items-center justify-center border border-amber-100 shrink-0">
               <Edit3 strokeWidth={1.5} className="w-5 h-5" />
             </div>
             <div>
-              <DialogTitle className="text-lg font-bold text-slate-900 tracking-tight">
+              <DialogTitle className="text-lg font-bold text-ink-navy tracking-tight">
                 Chỉnh sửa thông tin tài liệu
               </DialogTitle>
-              <DialogDescription className="text-xs text-slate-500">
+              <DialogDescription className="text-xs text-mist-gray">
                 Đổi tên hiển thị, danh mục, phân quyền bảo mật hoặc liên kết ngữ cảnh
               </DialogDescription>
             </div>
@@ -149,17 +149,17 @@ export function DocumentEditModal({
         </DialogHeader>
 
         {/* File preview badge */}
-        <div className="flex items-center gap-3 p-3 bg-slate-50 border border-slate-200 rounded-xl">
+        <div className="flex items-center gap-3 p-3 bg-cloud border border-hairline rounded-xl">
           <DocumentFileIcon
             filename={document.filePath}
             mimeType={document.mimeType}
             size="md"
           />
           <div className="min-w-0 flex-1">
-            <p className="text-xs font-semibold text-slate-800 truncate">
+            <p className="text-xs font-semibold text-ink-navy truncate">
               {document.filePath.split('/').pop()}
             </p>
-            <p className="text-[11px] text-slate-500">
+            <p className="text-[11px] text-mist-gray">
               Dung lượng: {formatFileSize(document.fileSize)}
             </p>
           </div>
@@ -168,13 +168,13 @@ export function DocumentEditModal({
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 mt-2">
           {/* Title */}
           <div className="space-y-1.5">
-            <label className="text-xs font-semibold text-slate-700 block">
+            <label className="text-xs font-semibold text-slate-gray block">
               Tên tài liệu / Văn bản <span className="text-rose-500">*</span>
             </label>
             <Input
               {...register('title')}
               className={cn(
-                'rounded-xl text-xs h-10',
+                'rounded-xl text-xs h-10 border-hairline bg-cloud text-ink-navy placeholder:text-mist-gray focus:bg-white',
                 errors.title ? 'border-rose-400 focus-visible:ring-rose-200' : ''
               )}
             />
@@ -187,8 +187,8 @@ export function DocumentEditModal({
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             {/* Category */}
             <div className="space-y-1.5">
-              <label className="text-xs font-semibold text-slate-700 flex items-center gap-1.5">
-                <Tag className="w-3.5 h-3.5 text-slate-400" />
+              <label className="text-xs font-semibold text-slate-gray flex items-center gap-1.5">
+                <Tag className="w-3.5 h-3.5 text-mist-gray" />
                 <span>Danh mục tài liệu</span>
                 <span className="text-rose-500">*</span>
               </label>
@@ -200,7 +200,7 @@ export function DocumentEditModal({
                     value={field.value || 'general'}
                     onValueChange={field.onChange}
                   >
-                    <SelectTrigger className="w-full h-10 rounded-xl border-slate-200 bg-white text-xs font-medium">
+                    <SelectTrigger className="w-full h-10 rounded-xl border-hairline bg-white text-xs font-medium text-ink-navy">
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent>
@@ -220,8 +220,8 @@ export function DocumentEditModal({
 
             {/* Access Level */}
             <div className="space-y-1.5">
-              <label className="text-xs font-semibold text-slate-700 flex items-center gap-1.5">
-                <Shield className="w-3.5 h-3.5 text-slate-400" />
+              <label className="text-xs font-semibold text-slate-gray flex items-center gap-1.5">
+                <Shield className="w-3.5 h-3.5 text-mist-gray" />
                 <span>Mức độ truy cập (Bảo mật)</span>
                 <span className="text-rose-500">*</span>
               </label>
@@ -233,7 +233,7 @@ export function DocumentEditModal({
                     value={field.value || 'internal'}
                     onValueChange={field.onChange}
                   >
-                    <SelectTrigger className="w-full h-10 rounded-xl border-slate-200 bg-white text-xs font-medium">
+                    <SelectTrigger className="w-full h-10 rounded-xl border-hairline bg-white text-xs font-medium text-ink-navy">
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent>
@@ -253,14 +253,14 @@ export function DocumentEditModal({
           </div>
 
           {/* Relationships (Term, Activity, Task, Member) */}
-          <div className="p-3.5 bg-slate-50/80 border border-slate-200 rounded-2xl space-y-3">
-            <span className="text-xs font-bold text-slate-800 block">Liên kết ngữ cảnh</span>
+          <div className="p-3.5 bg-cloud/80 border border-hairline rounded-2xl space-y-3">
+            <span className="text-xs font-bold text-ink-navy block">Liên kết ngữ cảnh</span>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               {/* Term */}
               <div className="space-y-1">
-                <label className="text-[11px] font-medium text-slate-600 flex items-center gap-1">
-                  <CalendarRange className="w-3 h-3 text-slate-400" />
+                <label className="text-[11px] font-medium text-slate-gray flex items-center gap-1">
+                  <CalendarRange className="w-3 h-3 text-mist-gray" />
                   <span>Nhiệm kỳ</span>
                 </label>
                 <Controller
@@ -271,7 +271,7 @@ export function DocumentEditModal({
                       value={field.value || 'none'}
                       onValueChange={(val) => field.onChange(val === 'none' ? null : val)}
                     >
-                      <SelectTrigger className="w-full h-9 rounded-lg border-slate-200 bg-white text-xs">
+                      <SelectTrigger className="w-full h-9 rounded-lg border-hairline bg-white text-xs text-ink-navy">
                         <SelectValue placeholder="-- Tài liệu chung (Toàn Chi hội) --" />
                       </SelectTrigger>
                       <SelectContent>
@@ -289,8 +289,8 @@ export function DocumentEditModal({
 
               {/* Activity */}
               <div className="space-y-1">
-                <label className="text-[11px] font-medium text-slate-600 flex items-center gap-1">
-                  <CalendarCheck className="w-3 h-3 text-slate-400" />
+                <label className="text-[11px] font-medium text-slate-gray flex items-center gap-1">
+                  <CalendarCheck className="w-3 h-3 text-mist-gray" />
                   <span>Hoạt động liên kết</span>
                 </label>
                 <Controller
@@ -301,7 +301,7 @@ export function DocumentEditModal({
                       value={field.value || 'none'}
                       onValueChange={(val) => field.onChange(val === 'none' ? null : val)}
                     >
-                      <SelectTrigger className="w-full h-9 rounded-lg border-slate-200 bg-white text-xs">
+                      <SelectTrigger className="w-full h-9 rounded-lg border-hairline bg-white text-xs text-ink-navy">
                         <SelectValue placeholder="-- Không gắn hoạt động --" />
                       </SelectTrigger>
                       <SelectContent>
@@ -319,8 +319,8 @@ export function DocumentEditModal({
 
               {/* Task */}
               <div className="space-y-1">
-                <label className="text-[11px] font-medium text-slate-600 flex items-center gap-1">
-                  <CheckSquare className="w-3 h-3 text-slate-400" />
+                <label className="text-[11px] font-medium text-slate-gray flex items-center gap-1">
+                  <CheckSquare className="w-3 h-3 text-mist-gray" />
                   <span>Công việc (Task)</span>
                 </label>
                 <Controller
@@ -331,7 +331,7 @@ export function DocumentEditModal({
                       value={field.value || 'none'}
                       onValueChange={(val) => field.onChange(val === 'none' ? null : val)}
                     >
-                      <SelectTrigger className="w-full h-9 rounded-lg border-slate-200 bg-white text-xs">
+                      <SelectTrigger className="w-full h-9 rounded-lg border-hairline bg-white text-xs text-ink-navy">
                         <SelectValue placeholder="-- Không gắn công việc --" />
                       </SelectTrigger>
                       <SelectContent>
@@ -349,8 +349,8 @@ export function DocumentEditModal({
 
               {/* Member */}
               <div className="space-y-1">
-                <label className="text-[11px] font-medium text-slate-600 flex items-center gap-1">
-                  <Users className="w-3 h-3 text-slate-400" />
+                <label className="text-[11px] font-medium text-slate-gray flex items-center gap-1">
+                  <Users className="w-3 h-3 text-mist-gray" />
                   <span>Hội viên liên quan</span>
                 </label>
                 <Controller
@@ -361,7 +361,7 @@ export function DocumentEditModal({
                       value={field.value || 'none'}
                       onValueChange={(val) => field.onChange(val === 'none' ? null : val)}
                     >
-                      <SelectTrigger className="w-full h-9 rounded-lg border-slate-200 bg-white text-xs">
+                      <SelectTrigger className="w-full h-9 rounded-lg border-hairline bg-white text-xs text-ink-navy">
                         <SelectValue placeholder="-- Không gắn hội viên --" />
                       </SelectTrigger>
                       <SelectContent>
@@ -395,7 +395,7 @@ export function DocumentEditModal({
               variant="outline"
               onClick={() => onOpenChange(false)}
               disabled={updateMutation.isPending}
-              className="rounded-xl text-xs"
+              className="rounded-xl text-xs border-hairline text-slate-gray hover:bg-cloud hover:text-ink-navy"
             >
               Hủy
             </Button>
@@ -403,7 +403,7 @@ export function DocumentEditModal({
             <Button
               type="submit"
               disabled={updateMutation.isPending}
-              className="rounded-xl text-xs bg-amber-600 hover:bg-amber-700 text-white font-semibold gap-2"
+              className="rounded-xl text-xs bg-signal-blue hover:bg-[#005be0] text-white font-semibold gap-2 shadow-xs"
             >
               {updateMutation.isPending ? (
                 <>

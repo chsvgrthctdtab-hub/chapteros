@@ -8,21 +8,21 @@ const badgeVariants = cva(
     variants: {
       variant: {
         default:
-          "border-transparent bg-blue-600 text-white",
+          "border-[#d4e4fa] bg-[#e6f0ff] text-signal-blue font-medium",
         secondary:
-          "border-slate-200/80 bg-slate-100 text-slate-800",
+          "border-hairline bg-pebble text-ink-navy font-medium",
         destructive:
-          "border-rose-200 bg-rose-50 text-rose-700",
+          "border-rose-200/80 bg-rose-50 text-rose-700 font-medium",
         outline:
-          "text-slate-700 border-slate-300 bg-white",
+          "text-ink-navy border-hairline bg-white font-medium",
         success:
-          "border-emerald-200 bg-emerald-50 text-emerald-800",
+          "border-emerald-200/80 bg-emerald-50 text-emerald-800 font-medium",
         warning:
-          "border-amber-200 bg-amber-50 text-amber-800",
+          "border-amber-200/80 bg-amber-50 text-amber-800 font-medium",
         info:
-          "border-blue-200 bg-blue-50 text-blue-800",
+          "border-[#d4e4fa] bg-[#e6f0ff] text-signal-blue font-medium",
         purple:
-          "border-purple-200 bg-purple-50 text-purple-800",
+          "border-purple-200/80 bg-purple-50 text-purple-800 font-medium",
       },
       shape: {
         pill: "rounded-full",
@@ -65,9 +65,9 @@ function Badge({
         return "bg-amber-600";
       case "info":
       case "purple":
-        return "bg-blue-600";
+        return "bg-signal-blue";
       default:
-        return "bg-slate-500";
+        return "bg-mist-gray";
     }
   };
 

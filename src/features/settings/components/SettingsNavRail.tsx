@@ -100,7 +100,7 @@ export function SettingsNavRail({ activeTab, onSelectTab }: SettingsNavRailProps
     <div id="settings-nav-rail" className="w-full">
       {/* Mobile / Tablet Horizontal Navigation Selector */}
       <div className="lg:hidden mb-4 overflow-x-auto pb-1 -mx-4 px-4 sm:mx-0 sm:px-0">
-        <div className="flex items-center gap-1.5 min-w-max p-1 bg-slate-100/90 rounded-xl border border-slate-200/80">
+        <div className="flex items-center gap-1.5 min-w-max p-1 bg-pebble rounded-xl border border-hairline">
           {SETTINGS_NAV_ITEMS.map((item) => {
             const Icon = item.icon;
             const isActive = activeTab === item.id;
@@ -110,11 +110,11 @@ export function SettingsNavRail({ activeTab, onSelectTab }: SettingsNavRailProps
                 onClick={() => onSelectTab(item.id)}
                 className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap transition-all cursor-pointer ${
                   isActive
-                    ? 'bg-white text-emerald-800 shadow-2xs border border-slate-200/70'
-                    : 'text-slate-600 hover:text-slate-900 hover:bg-slate-200/50'
+                    ? 'bg-white text-signal-blue shadow-xs border border-hairline'
+                    : 'text-slate-gray hover:text-ink-navy hover:bg-cloud'
                 }`}
               >
-                <Icon className={`h-3.5 w-3.5 ${isActive ? 'text-emerald-600' : 'text-slate-400'}`} />
+                <Icon className={`h-3.5 w-3.5 ${isActive ? 'text-signal-blue' : 'text-mist-gray'}`} />
                 <span>{item.label}</span>
               </button>
             );
@@ -130,7 +130,7 @@ export function SettingsNavRail({ activeTab, onSelectTab }: SettingsNavRailProps
 
           return (
             <div key={grp.key} className="space-y-1.5">
-              <h4 className="px-3 text-[11px] font-bold uppercase tracking-wider text-slate-400">
+              <h4 className="px-3 text-[11px] font-bold uppercase tracking-wider text-mist-gray">
                 {grp.title}
               </h4>
               <div className="space-y-1">
@@ -143,25 +143,25 @@ export function SettingsNavRail({ activeTab, onSelectTab }: SettingsNavRailProps
                       onClick={() => onSelectTab(item.id)}
                       className={`w-full flex items-center justify-between p-2.5 rounded-xl text-left transition-all cursor-pointer group ${
                         isActive
-                          ? 'bg-emerald-50/80 border border-emerald-200/80 text-emerald-950 shadow-2xs font-semibold'
-                          : 'bg-transparent border border-transparent text-slate-600 hover:bg-slate-50 hover:text-slate-900'
+                          ? 'bg-[#e6f0ff] border border-[#d4e4fa] text-signal-blue shadow-xs font-semibold'
+                          : 'bg-transparent border border-transparent text-slate-gray hover:bg-cloud hover:text-ink-navy'
                       }`}
                     >
                       <div className="flex items-center gap-2.5 min-w-0">
                         <div
                           className={`h-7 w-7 rounded-lg flex items-center justify-center shrink-0 transition-colors ${
                             isActive
-                              ? 'bg-emerald-600 text-white'
-                              : 'bg-slate-100 text-slate-500 group-hover:bg-slate-200 group-hover:text-slate-700'
+                              ? 'bg-signal-blue text-white'
+                              : 'bg-cloud text-mist-gray group-hover:bg-pebble group-hover:text-slate-gray'
                           }`}
                         >
                           <Icon className="h-3.5 w-3.5" />
                         </div>
                         <div className="min-w-0 truncate">
-                          <p className={`text-xs truncate ${isActive ? 'font-bold text-emerald-950' : 'font-medium'}`}>
+                          <p className={`text-xs truncate ${isActive ? 'font-bold text-signal-blue' : 'font-medium'}`}>
                             {item.label}
                           </p>
-                          <p className="text-[11px] text-slate-400 truncate mt-0.5">
+                          <p className="text-[11px] text-mist-gray truncate mt-0.5">
                             {item.shortDesc}
                           </p>
                         </div>
@@ -169,8 +169,8 @@ export function SettingsNavRail({ activeTab, onSelectTab }: SettingsNavRailProps
                       <ChevronRight
                         className={`h-3.5 w-3.5 shrink-0 transition-transform ${
                           isActive
-                            ? 'text-emerald-700 translate-x-0.5'
-                            : 'text-slate-300 opacity-0 group-hover:opacity-100 group-hover:text-slate-400'
+                            ? 'text-signal-blue translate-x-0.5'
+                            : 'text-mist-gray/50 opacity-0 group-hover:opacity-100 group-hover:text-mist-gray'
                         }`}
                       />
                     </button>
@@ -181,9 +181,9 @@ export function SettingsNavRail({ activeTab, onSelectTab }: SettingsNavRailProps
           );
         })}
         {/* System & Author Info */}
-        <div className="pt-4 mt-4 border-t border-slate-100 text-center text-[11px] text-slate-400 space-y-0.5">
-          <p className="font-semibold text-slate-600">ChapterOS v2.0</p>
-          <p>Tác giả: <span className="text-emerald-700 font-semibold">tienthuan_0909</span></p>
+        <div className="pt-4 mt-4 border-t border-hairline text-center text-[11px] text-mist-gray space-y-0.5">
+          <p className="font-semibold text-slate-gray">ChapterOS v2.0</p>
+          <p>Tác giả: <span className="text-signal-blue font-semibold">tienthuan_0909</span></p>
         </div>
       </div>
     </div>

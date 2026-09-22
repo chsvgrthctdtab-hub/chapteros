@@ -1,5 +1,4 @@
-import React from 'react';
-import { Shield, ShieldAlert, Award, UserCheck, User } from 'lucide-react';
+import { Award, ShieldAlert, Shield, UserCheck, User } from 'lucide-react';
 
 interface MemberRoleBadgeProps {
   position?: string | null;
@@ -40,14 +39,14 @@ export function MemberRoleBadge({ position, department, className = '' }: Member
     const isFinance = roleTitle.toLowerCase().includes('thủ quỹ') || roleTitle.toLowerCase().includes('treasurer');
     const isSecretary = roleTitle.toLowerCase().includes('thư ký') || roleTitle.toLowerCase().includes('secretary');
 
-    let badgeClasses = 'bg-indigo-50 text-indigo-700 border-indigo-200/80';
+    let badgeClasses = 'bg-[#e6f0ff] text-signal-blue border-[#d4e4fa]';
     let Icon = Award;
 
     if (isLeader) {
-      badgeClasses = 'bg-blue-50 text-blue-700 border-blue-200/90 font-semibold';
+      badgeClasses = 'bg-[#e6f0ff] text-signal-blue border-[#d4e4fa] font-bold';
       Icon = ShieldAlert;
     } else if (isDeputy) {
-      badgeClasses = 'bg-sky-50 text-sky-700 border-sky-200/90 font-semibold';
+      badgeClasses = 'bg-[#e6f0ff] text-signal-blue border-[#d4e4fa] font-semibold';
       Icon = Shield;
     } else if (isFinance) {
       badgeClasses = 'bg-amber-50 text-amber-800 border-amber-200/90 font-semibold';
@@ -59,7 +58,7 @@ export function MemberRoleBadge({ position, department, className = '' }: Member
 
     return (
       <span
-        className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[11px] font-medium border shadow-2xs ${badgeClasses} ${className}`}
+        className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-semibold border shadow-xs ${badgeClasses} ${className}`}
         title={`Ban Chấp Hành: ${roleTitle}${department ? ` (${department})` : ''}`}
       >
         <Icon className="h-3 w-3 shrink-0" />
@@ -72,7 +71,7 @@ export function MemberRoleBadge({ position, department, className = '' }: Member
   if (roleTitle.toLowerCase().includes('ctv') || roleTitle.toLowerCase().includes('cộng tác viên')) {
     return (
       <span
-        className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[11px] font-medium bg-amber-50 text-amber-700 border border-amber-200/80 ${className}`}
+        className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-amber-50 text-amber-700 border border-amber-200/80 ${className}`}
       >
         <User className="h-3 w-3 shrink-0 text-amber-500" />
         <span>{roleTitle}</span>
@@ -83,9 +82,9 @@ export function MemberRoleBadge({ position, department, className = '' }: Member
   // Regular Member
   return (
     <span
-      className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[11px] font-medium bg-slate-100 text-slate-700 border border-slate-200/80 ${className}`}
+      className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-medium bg-cloud text-slate-gray border border-hairline ${className}`}
     >
-      <User className="h-3 w-3 shrink-0 text-slate-400" />
+      <User className="h-3 w-3 shrink-0 text-mist-gray" />
       <span>{roleTitle}</span>
     </span>
   );

@@ -3,7 +3,6 @@ import {
   AlertTriangle,
   AlertCircle,
   Info,
-  CheckCircle2,
   ChevronRight,
 } from 'lucide-react';
 import type { DataQualitySeverity } from '../types';
@@ -23,7 +22,6 @@ export function DataQualityKpiGrid({
   criticalCount,
   warningCount,
   infoCount,
-  healthyCount = 0,
   selectedSeverity = 'all',
   onSelectSeverity,
 }: DataQualityKpiGridProps) {
@@ -40,21 +38,21 @@ export function DataQualityKpiGrid({
         onClick={() => onSelectSeverity('all')}
         className={`group relative overflow-hidden rounded-xl p-5 sm:p-6 border transition-all duration-150 cursor-pointer ${
           isAllSelected
-            ? 'bg-slate-900 text-white border-slate-900 shadow-md ring-2 ring-slate-900/20'
-            : 'bg-white text-slate-800 border-slate-200/90 hover:border-slate-300 shadow-2xs'
+            ? 'bg-ink-navy text-white border-ink-navy shadow-md ring-2 ring-ink-navy/20'
+            : 'bg-white text-ink-navy border-hairline hover:border-slate-gray shadow-xs'
         }`}
       >
         <div className="flex items-center justify-between">
           <span
             className={`text-xs font-semibold uppercase tracking-wider ${
-              isAllSelected ? 'text-slate-300' : 'text-slate-500'
+              isAllSelected ? 'text-mist-gray' : 'text-mist-gray'
             }`}
           >
             Tổng vấn đề phát hiện
           </span>
           <div
             className={`flex items-center justify-center w-9 h-9 rounded-lg ${
-              isAllSelected ? 'bg-slate-800 text-slate-200' : 'bg-slate-100 text-slate-600'
+              isAllSelected ? 'bg-white/10 text-white' : 'bg-cloud text-slate-gray'
             }`}
           >
             <Layers className="w-4.5 h-4.5" />
@@ -65,20 +63,20 @@ export function DataQualityKpiGrid({
           <span className="text-3xl sm:text-4xl font-bold tracking-tight tabular-nums">{totalIssues}</span>
           <span
             className={`text-xs font-medium ${
-              isAllSelected ? 'text-slate-400' : 'text-slate-500'
+              isAllSelected ? 'text-mist-gray' : 'text-mist-gray'
             }`}
           >
             mục cần rà soát
           </span>
         </div>
 
-        <div className="mt-4 flex items-center justify-between text-xs pt-3 border-t border-slate-100/30">
-          <span className={isAllSelected ? 'text-slate-300' : 'text-slate-500'}>
+        <div className="mt-4 flex items-center justify-between text-xs pt-3 border-t border-hairline/30">
+          <span className={isAllSelected ? 'text-mist-gray' : 'text-mist-gray'}>
             {totalIssues === 0 ? 'Hệ thống đạt chuẩn' : 'Bấm để lọc tất cả'}
           </span>
           <ChevronRight
             className={`w-4 h-4 transition-transform group-hover:translate-x-0.5 ${
-              isAllSelected ? 'text-emerald-400' : 'text-slate-400'
+              isAllSelected ? 'text-signal-blue' : 'text-mist-gray'
             }`}
           />
         </div>
@@ -91,7 +89,7 @@ export function DataQualityKpiGrid({
         className={`group relative overflow-hidden rounded-xl p-5 sm:p-6 border transition-all duration-150 cursor-pointer ${
           isCriticalSelected
             ? 'bg-rose-900 text-white border-rose-900 shadow-md ring-2 ring-rose-600/30'
-            : 'bg-white text-slate-800 border-slate-200/90 hover:border-rose-300 shadow-2xs'
+            : 'bg-white text-ink-navy border-hairline hover:border-rose-300 shadow-xs'
         }`}
       >
         <div className="flex items-center justify-between">
@@ -121,7 +119,7 @@ export function DataQualityKpiGrid({
           </span>
           <span
             className={`text-xs font-medium ${
-              isCriticalSelected ? 'text-rose-300' : 'text-slate-500'
+              isCriticalSelected ? 'text-rose-300' : 'text-mist-gray'
             }`}
           >
             lỗi vận hành
@@ -129,12 +127,12 @@ export function DataQualityKpiGrid({
         </div>
 
         <div className="mt-4 flex items-center justify-between text-xs pt-3 border-t border-rose-100/30">
-          <span className={isCriticalSelected ? 'text-rose-200' : 'text-slate-500'}>
+          <span className={isCriticalSelected ? 'text-rose-200' : 'text-mist-gray'}>
             {criticalCount > 0 ? 'Cần xử lý ngay' : 'Không có lỗi nghiêm trọng'}
           </span>
           <ChevronRight
             className={`w-4 h-4 transition-transform group-hover:translate-x-0.5 ${
-              isCriticalSelected ? 'text-rose-300' : 'text-slate-400'
+              isCriticalSelected ? 'text-rose-300' : 'text-mist-gray'
             }`}
           />
         </div>
@@ -147,7 +145,7 @@ export function DataQualityKpiGrid({
         className={`group relative overflow-hidden rounded-xl p-5 sm:p-6 border transition-all duration-150 cursor-pointer ${
           isWarningSelected
             ? 'bg-amber-900 text-white border-amber-900 shadow-md ring-2 ring-amber-600/30'
-            : 'bg-white text-slate-800 border-slate-200/90 hover:border-amber-300 shadow-2xs'
+            : 'bg-white text-ink-navy border-hairline hover:border-amber-300 shadow-xs'
         }`}
       >
         <div className="flex items-center justify-between">
@@ -177,7 +175,7 @@ export function DataQualityKpiGrid({
           </span>
           <span
             className={`text-xs font-medium ${
-              isWarningSelected ? 'text-amber-300' : 'text-slate-500'
+              isWarningSelected ? 'text-amber-300' : 'text-mist-gray'
             }`}
           >
             cảnh báo
@@ -185,12 +183,12 @@ export function DataQualityKpiGrid({
         </div>
 
         <div className="mt-4 flex items-center justify-between text-xs pt-3 border-t border-amber-100/30">
-          <span className={isWarningSelected ? 'text-amber-200' : 'text-slate-500'}>
+          <span className={isWarningSelected ? 'text-amber-200' : 'text-mist-gray'}>
             {warningCount > 0 ? 'Thiếu thông tin / Quá hạn' : 'Dữ liệu chuẩn chỉ'}
           </span>
           <ChevronRight
             className={`w-4 h-4 transition-transform group-hover:translate-x-0.5 ${
-              isWarningSelected ? 'text-amber-300' : 'text-slate-400'
+              isWarningSelected ? 'text-amber-300' : 'text-mist-gray'
             }`}
           />
         </div>
@@ -202,21 +200,21 @@ export function DataQualityKpiGrid({
         onClick={() => onSelectSeverity('info')}
         className={`group relative overflow-hidden rounded-xl p-5 sm:p-6 border transition-all duration-150 cursor-pointer ${
           isInfoSelected
-            ? 'bg-sky-900 text-white border-sky-900 shadow-md ring-2 ring-sky-600/30'
-            : 'bg-white text-slate-800 border-slate-200/90 hover:border-sky-300 shadow-2xs'
+            ? 'bg-ink-navy text-white border-ink-navy shadow-md ring-2 ring-signal-blue/30'
+            : 'bg-white text-ink-navy border-hairline hover:border-[#d4e4fa] shadow-xs'
         }`}
       >
         <div className="flex items-center justify-between">
           <span
             className={`text-xs font-semibold uppercase tracking-wider ${
-              isInfoSelected ? 'text-sky-200' : 'text-sky-700'
+              isInfoSelected ? 'text-signal-blue' : 'text-signal-blue'
             }`}
           >
             Gợi ý tối ưu (Suggestions)
           </span>
           <div
             className={`flex items-center justify-center w-9 h-9 rounded-lg ${
-              isInfoSelected ? 'bg-sky-800 text-sky-200' : 'bg-sky-50 text-sky-600'
+              isInfoSelected ? 'bg-signal-blue text-white' : 'bg-[#e6f0ff] text-signal-blue'
             }`}
           >
             <Info className="w-4.5 h-4.5" />
@@ -226,27 +224,27 @@ export function DataQualityKpiGrid({
         <div className="mt-4 flex items-baseline gap-2">
           <span
             className={`text-3xl sm:text-4xl font-bold tracking-tight tabular-nums ${
-              isInfoSelected ? 'text-white' : 'text-sky-600'
+              isInfoSelected ? 'text-white' : 'text-signal-blue'
             }`}
           >
             {infoCount}
           </span>
           <span
             className={`text-xs font-medium ${
-              isInfoSelected ? 'text-sky-300' : 'text-slate-500'
+              isInfoSelected ? 'text-mist-gray' : 'text-mist-gray'
             }`}
           >
             khuyến nghị
           </span>
         </div>
 
-        <div className="mt-4 flex items-center justify-between text-xs pt-3 border-t border-sky-100/30">
-          <span className={isInfoSelected ? 'text-sky-200' : 'text-slate-500'}>
+        <div className="mt-4 flex items-center justify-between text-xs pt-3 border-t border-hairline/30">
+          <span className={isInfoSelected ? 'text-mist-gray' : 'text-mist-gray'}>
             Khuyến nghị chuẩn hóa
           </span>
           <ChevronRight
             className={`w-4 h-4 transition-transform group-hover:translate-x-0.5 ${
-              isInfoSelected ? 'text-sky-300' : 'text-slate-400'
+              isInfoSelected ? 'text-signal-blue' : 'text-mist-gray'
             }`}
           />
         </div>

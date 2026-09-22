@@ -62,7 +62,7 @@ export function Header({ onOpenMobileMenu }: HeaderProps) {
   return (
     <header
       id="app-header"
-      className="relative z-20 flex h-16 w-full items-center justify-between border-b border-slate-200/90 bg-[#F8FAF9]/90 backdrop-blur-md px-4 sm:px-6 lg:px-8 shrink-0"
+      className="relative z-20 flex h-16 w-full items-center justify-between border-b border-hairline bg-white/95 backdrop-blur-md px-4 sm:px-6 lg:px-8 shrink-0"
     >
       {/* Left side: Mobile menu toggle + Active Chapter Switcher */}
       <div className="flex items-center gap-3 min-w-0">
@@ -70,7 +70,7 @@ export function Header({ onOpenMobileMenu }: HeaderProps) {
           id="btn-mobile-menu"
           variant="ghost"
           size="icon-sm"
-          className="lg:hidden text-slate-700 hover:text-slate-900 shrink-0"
+          className="lg:hidden text-slate-gray hover:text-ink-navy shrink-0"
           onClick={onOpenMobileMenu}
           aria-label="Toggle navigation menu"
         >
@@ -83,29 +83,29 @@ export function Header({ onOpenMobileMenu }: HeaderProps) {
             <DropdownMenuTrigger asChild>
               <Button
                 variant="ghost"
-                className="h-8 py-1 pl-1.5 pr-2.5 -ml-1 text-left bg-white hover:bg-slate-50 border border-slate-200/90 shadow-2xs rounded-full flex items-center gap-2 group transition-all cursor-pointer"
+                className="h-8 py-1 pl-1.5 pr-2.5 -ml-1 text-left bg-white hover:bg-pebble border border-hairline shadow-sm rounded-lg flex items-center gap-2 group transition-all cursor-pointer"
                 title={activeOrganization.name}
               >
-                <div className="h-5.5 w-5.5 rounded-full bg-blue-100 border border-blue-300/80 flex items-center justify-center text-blue-900 font-bold text-[10px] shrink-0 overflow-hidden shadow-2xs">
+                <div className="h-5.5 w-5.5 rounded-md bg-pebble border border-hairline flex items-center justify-center text-ink-navy font-bold text-[10px] shrink-0 overflow-hidden shadow-sm">
                   {activeOrganization.logoUrl ? (
                     <img
                       src={activeOrganization.logoUrl}
                       alt=""
-                      className="h-full w-full object-cover rounded-full"
+                      className="h-full w-full object-cover rounded-md"
                     />
                   ) : (
                     activeOrganization.code ? activeOrganization.code.slice(0, 2).toUpperCase() : (activeOrgTypeShort || 'CH')
                   )}
                 </div>
-                <span className="text-xs font-bold text-slate-800 tracking-tight group-hover:text-blue-700 transition-colors">
+                <span className="text-xs font-bold text-ink-navy tracking-tight group-hover:text-signal-blue transition-colors">
                   {activeOrganization.code || activeOrganization.name}
                 </span>
-                <ChevronDown className="h-3.5 w-3.5 text-slate-400 group-hover:text-blue-700 transition-colors shrink-0 -ml-0.5" />
+                <ChevronDown className="h-3.5 w-3.5 text-slate-gray group-hover:text-signal-blue transition-colors shrink-0 -ml-0.5" />
               </Button>
             </DropdownMenuTrigger>
 
-            <DropdownMenuContent align="start" className="w-80">
-              <DropdownMenuLabel className="text-xs font-semibold text-slate-400 uppercase tracking-wider">
+            <DropdownMenuContent align="start" className="w-80 bg-white border border-hairline shadow-sm rounded-xl p-1.5">
+              <DropdownMenuLabel className="text-xs font-semibold text-slate-gray uppercase tracking-wider px-3 py-1.5">
                 Đơn vị của bạn ({memberships.length})
               </DropdownMenuLabel>
               <DropdownMenuGroup>
@@ -116,13 +116,13 @@ export function Header({ onOpenMobileMenu }: HeaderProps) {
                     <DropdownMenuItem
                       key={m.id}
                       onClick={() => setActiveOrganizationId(m.organizationId)}
-                      className={`flex items-center justify-between py-2.5 text-xs cursor-pointer ${
-                        isSelected ? 'bg-blue-50 text-blue-900 font-medium' : ''
+                      className={`flex items-center justify-between py-2 px-3 text-xs cursor-pointer rounded-lg ${
+                        isSelected ? 'bg-pebble text-ink-navy font-semibold' : 'text-slate-gray hover:text-ink-navy hover:bg-pebble/60'
                       }`}
                     >
                       <div className="flex items-center gap-2.5 min-w-0 flex-1">
                         {m.organization.logoUrl ? (
-                          <div className="h-7 w-7 rounded-md border border-slate-200 overflow-hidden shrink-0 bg-slate-50 flex items-center justify-center">
+                          <div className="h-7 w-7 rounded-md border border-hairline overflow-hidden shrink-0 bg-pebble flex items-center justify-center">
                             <img
                               src={m.organization.logoUrl}
                               alt=""
@@ -130,28 +130,28 @@ export function Header({ onOpenMobileMenu }: HeaderProps) {
                             />
                           </div>
                         ) : (
-                          <div className="h-7 w-7 rounded-md bg-slate-100 border border-slate-200 text-slate-700 font-bold text-[10px] flex items-center justify-center shrink-0">
+                          <div className="h-7 w-7 rounded-md bg-pebble border border-hairline text-ink-navy font-bold text-[10px] flex items-center justify-center shrink-0">
                             {itemTypeShort || 'CH'}
                           </div>
                         )}
                         <div className="min-w-0 flex-1">
-                          <p className="truncate text-xs font-semibold text-slate-900">{m.organization.name}</p>
-                          <p className="text-[11px] text-slate-500 font-normal truncate mt-0.5">
+                          <p className="truncate text-xs font-semibold text-ink-navy">{m.organization.name}</p>
+                          <p className="text-[11px] text-slate-gray font-normal truncate mt-0.5">
                             {m.organization.code} • {getRoleLabel(m.role, 'vi', m.organization.type)}
                           </p>
                         </div>
                       </div>
-                      {isSelected && <Check className="h-4 w-4 text-blue-600 shrink-0 ml-2" />}
+                      {isSelected && <Check className="h-4 w-4 text-signal-blue shrink-0 ml-2" />}
                     </DropdownMenuItem>
                   );
                 })}
               </DropdownMenuGroup>
 
-              <DropdownMenuSeparator />
+              <DropdownMenuSeparator className="bg-hairline" />
 
               <DropdownMenuItem
                 onClick={() => navigate('/onboarding')}
-                className="text-xs text-blue-600 cursor-pointer flex items-center gap-2 py-2 font-medium"
+                className="text-xs text-signal-blue cursor-pointer flex items-center gap-2 py-2 px-3 font-medium rounded-lg hover:bg-pebble"
               >
                 <PlusCircle className="h-4 w-4" />
                 <span>Tạo hoặc tham gia đơn vị khác</span>
@@ -171,25 +171,25 @@ export function Header({ onOpenMobileMenu }: HeaderProps) {
       <div className="flex items-center gap-3 sm:gap-4">
         {/* Database connection indicator */}
         <div
-          className="hidden sm:inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full border border-slate-200/80 bg-slate-50 text-xs text-slate-600 shadow-2xs"
+          className="hidden sm:inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full border border-hairline bg-pebble text-xs text-slate-gray shadow-sm"
           title={isSupabaseConfigured ? "Connected to PostgreSQL database" : "Running with local demo configuration"}
         >
           {isSupabaseConfigured ? (
             <>
               <span className="h-2 w-2 rounded-full bg-emerald-500 ring-2 ring-emerald-100" />
-              <span className="text-slate-700 font-medium text-xs">Đã kết nối</span>
+              <span className="text-ink-navy font-medium text-xs">Đã kết nối</span>
             </>
           ) : (
             <>
               <span className="h-2 w-2 rounded-full bg-amber-500 ring-2 ring-amber-100" />
-              <span className="text-slate-700 font-medium text-xs">Bản thử nghiệm</span>
+              <span className="text-ink-navy font-medium text-xs">Bản thử nghiệm</span>
             </>
           )}
         </div>
 
         {/* Active Role Badge */}
         {roleInfo && (
-          <div className={`hidden sm:inline-flex items-center px-3.5 py-1 rounded-full text-xs font-semibold border shadow-2xs tracking-wide ${roleInfo.colorClasses.bg} ${roleInfo.colorClasses.text} ${roleInfo.colorClasses.border}`}>
+          <div className={`hidden sm:inline-flex items-center px-3.5 py-1 rounded-full text-xs font-semibold border shadow-sm tracking-wide ${roleInfo.colorClasses.bg} ${roleInfo.colorClasses.text} ${roleInfo.colorClasses.border}`}>
             {getRoleLabel(activeRole, 'vi', activeOrganization?.type)}
           </div>
         )}
@@ -202,32 +202,32 @@ export function Header({ onOpenMobileMenu }: HeaderProps) {
           <DropdownMenuTrigger asChild>
             <button
               id="user-account-menu"
-              className="flex items-center gap-2.5 pl-3 border-l border-slate-200/90 focus:outline-hidden hover:opacity-90 transition-opacity cursor-pointer text-left"
+              className="flex items-center gap-2.5 pl-3 border-l border-hairline focus:outline-hidden hover:opacity-90 transition-opacity cursor-pointer text-left"
             >
-              <Avatar className="h-9 w-9 ring-1 ring-slate-200 shadow-2xs">
+              <Avatar className="h-9 w-9 ring-1 ring-hairline shadow-sm">
                 {profile?.avatarUrl && <AvatarImage src={profile.avatarUrl} alt={displayName} />}
-                <AvatarFallback className="bg-emerald-100 text-emerald-800 font-bold text-sm">
+                <AvatarFallback className="bg-pebble text-ink-navy font-bold text-sm">
                   {initialLetter}
                 </AvatarFallback>
               </Avatar>
 
               <div className="hidden xl:flex flex-col text-left">
-                <span className="text-sm font-semibold text-slate-800 leading-tight truncate max-w-[140px]">
+                <span className="text-sm font-semibold text-ink-navy leading-tight truncate max-w-[140px]">
                   {displayName}
                 </span>
-                <span className="text-xs text-slate-400 truncate max-w-[140px]">
+                <span className="text-xs text-slate-gray truncate max-w-[140px]">
                   {roleInfo?.label || user?.email || 'Hội viên'}
                 </span>
               </div>
 
-              <ChevronDown className="hidden xl:block h-3.5 w-3.5 text-slate-400" />
+              <ChevronDown className="hidden xl:block h-3.5 w-3.5 text-slate-gray" />
             </button>
           </DropdownMenuTrigger>
 
-          <DropdownMenuContent align="end" className="w-60">
+          <DropdownMenuContent align="end" className="w-60 bg-white border border-hairline shadow-sm rounded-xl p-1.5">
             <div className="px-3 py-2.5">
-              <p className="text-sm font-semibold text-slate-900 truncate">{displayName}</p>
-              <p className="text-xs text-slate-500 truncate">{user?.email || 'bch@chapter.edu.vn'}</p>
+              <p className="text-sm font-semibold text-ink-navy truncate">{displayName}</p>
+              <p className="text-xs text-slate-gray truncate">{user?.email || 'bch@chapter.edu.vn'}</p>
               {activeRole && (
                 <div className="mt-2 inline-block">
                   <span className={`inline-flex items-center px-2 py-0.5 rounded text-xs font-medium ${roleInfo?.colorClasses.bg} ${roleInfo?.colorClasses.text}`}>
@@ -237,19 +237,19 @@ export function Header({ onOpenMobileMenu }: HeaderProps) {
               )}
             </div>
 
-            <DropdownMenuSeparator />
+            <DropdownMenuSeparator className="bg-hairline" />
 
-            <DropdownMenuItem onClick={() => navigate('/settings')} className="text-xs cursor-pointer py-2">
-              <UserIcon className="h-4 w-4 mr-2.5 text-slate-500" />
+            <DropdownMenuItem onClick={() => navigate('/settings')} className="text-xs text-ink-navy cursor-pointer py-2 px-3 rounded-lg hover:bg-pebble">
+              <UserIcon className="h-4 w-4 mr-2.5 text-slate-gray" />
               <span>Hồ sơ & Cài đặt</span>
             </DropdownMenuItem>
 
-            <DropdownMenuItem onClick={() => navigate('/chapters')} className="text-xs cursor-pointer py-2">
-              <Building2 className="h-4 w-4 mr-2.5 text-slate-500" />
+            <DropdownMenuItem onClick={() => navigate('/chapters')} className="text-xs text-ink-navy cursor-pointer py-2 px-3 rounded-lg hover:bg-pebble">
+              <Building2 className="h-4 w-4 mr-2.5 text-slate-gray" />
               <span>Quản trị Đơn vị</span>
             </DropdownMenuItem>
 
-            <DropdownMenuSeparator />
+            <DropdownMenuSeparator className="bg-hairline" />
 
             <DropdownMenuItem
               onClick={handleSignOut}

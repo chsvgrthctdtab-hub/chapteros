@@ -75,18 +75,18 @@ export function TermReport({ organizationId }: TermReportProps) {
     <div className="space-y-6" id="term-report-section">
       {/* 1. KPI Strip */}
       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3.5">
-        <Card className="border-slate-200/90 shadow-2xs bg-white">
+        <Card className="border-hairline shadow-xs bg-white">
           <CardContent className="p-3.5">
             <div className="flex items-center justify-between">
-              <span className="text-2xs font-bold uppercase tracking-wider text-slate-500">Tổng nhiệm kỳ</span>
-              <Layers className="w-3.5 h-3.5 text-blue-600" />
+              <span className="text-2xs font-bold uppercase tracking-wider text-mist-gray">Tổng nhiệm kỳ</span>
+              <Layers className="w-3.5 h-3.5 text-signal-blue" />
             </div>
-            <div className="mt-2 text-xl font-black text-slate-900">{totalTerms}</div>
-            <div className="mt-0.5 text-3xs text-slate-400">Toàn bộ lịch sử</div>
+            <div className="mt-2 text-xl font-black text-ink-navy">{totalTerms}</div>
+            <div className="mt-0.5 text-3xs text-mist-gray">Toàn bộ lịch sử</div>
           </CardContent>
         </Card>
 
-        <Card className="border-slate-200/90 shadow-2xs bg-white">
+        <Card className="border-hairline shadow-xs bg-white">
           <CardContent className="p-3.5">
             <div className="flex items-center justify-between">
               <span className="text-2xs font-bold uppercase tracking-wider text-emerald-600">Đang diễn ra</span>
@@ -97,48 +97,48 @@ export function TermReport({ organizationId }: TermReportProps) {
           </CardContent>
         </Card>
 
-        <Card className="border-slate-200/90 shadow-2xs bg-white">
+        <Card className="border-hairline shadow-xs bg-white">
           <CardContent className="p-3.5">
             <div className="flex items-center justify-between">
-              <span className="text-2xs font-bold uppercase tracking-wider text-indigo-600">Đã hoàn thành</span>
-              <Clock className="w-3.5 h-3.5 text-indigo-600" />
+              <span className="text-2xs font-bold uppercase tracking-wider text-signal-blue">Đã hoàn thành</span>
+              <Clock className="w-3.5 h-3.5 text-signal-blue" />
             </div>
-            <div className="mt-2 text-xl font-black text-indigo-700">{completedTerms}</div>
-            <div className="mt-0.5 text-3xs text-slate-400">Đã kết thúc kỳ</div>
+            <div className="mt-2 text-xl font-black text-signal-blue">{completedTerms}</div>
+            <div className="mt-0.5 text-3xs text-mist-gray">Đã kết thúc kỳ</div>
           </CardContent>
         </Card>
 
-        <Card className="border-slate-200/90 shadow-2xs bg-white">
+        <Card className="border-hairline shadow-xs bg-white">
           <CardContent className="p-3.5">
             <div className="flex items-center justify-between">
-              <span className="text-2xs font-bold uppercase tracking-wider text-slate-500">Dự thảo</span>
-              <FileEdit className="w-3.5 h-3.5 text-slate-400" />
+              <span className="text-2xs font-bold uppercase tracking-wider text-mist-gray">Dự thảo</span>
+              <FileEdit className="w-3.5 h-3.5 text-mist-gray" />
             </div>
-            <div className="mt-2 text-xl font-black text-slate-700">{draftTerms}</div>
-            <div className="mt-0.5 text-3xs text-slate-400">Đang chuẩn bị</div>
+            <div className="mt-2 text-xl font-black text-slate-gray">{draftTerms}</div>
+            <div className="mt-0.5 text-3xs text-mist-gray">Đang chuẩn bị</div>
           </CardContent>
         </Card>
 
-        <Card className="border-slate-200/90 shadow-2xs bg-white">
+        <Card className="border-hairline shadow-xs bg-white">
           <CardContent className="p-3.5">
             <div className="flex items-center justify-between">
-              <span className="text-2xs font-bold uppercase tracking-wider text-slate-500">Lưu trữ</span>
-              <Archive className="w-3.5 h-3.5 text-slate-400" />
+              <span className="text-2xs font-bold uppercase tracking-wider text-mist-gray">Lưu trữ</span>
+              <Archive className="w-3.5 h-3.5 text-mist-gray" />
             </div>
-            <div className="mt-2 text-xl font-black text-slate-700">{archivedTerms}</div>
-            <div className="mt-0.5 text-3xs text-slate-400">Đóng hồ sơ</div>
+            <div className="mt-2 text-xl font-black text-slate-gray">{archivedTerms}</div>
+            <div className="mt-0.5 text-3xs text-mist-gray">Đóng hồ sơ</div>
           </CardContent>
         </Card>
       </div>
 
       {/* 2. Cross-Term Activity & Personnel Evolution Chart */}
       {comparisonChartData.length > 0 && (
-        <Card className="border-slate-200/90 shadow-2xs bg-white">
-          <CardHeader className="p-4 pb-2 border-b border-slate-100">
-            <CardTitle className="text-xs font-bold uppercase tracking-wider text-slate-900">
+        <Card className="border-hairline shadow-xs bg-white">
+          <CardHeader className="p-4 pb-2 border-b border-hairline">
+            <CardTitle className="text-xs font-bold uppercase tracking-wider text-ink-navy">
               So sánh Quy mô Hoạt động & Nhân sự qua các Nhiệm kỳ
             </CardTitle>
-            <CardDescription className="text-2xs text-slate-500">
+            <CardDescription className="text-2xs text-mist-gray">
               Biểu đồ đối sánh số lượng nhân sự BCH, sự kiện tổ chức và nhiệm vụ phân công
             </CardDescription>
           </CardHeader>
@@ -156,13 +156,13 @@ export function TermReport({ organizationId }: TermReportProps) {
                     verticalAlign="bottom"
                     height={36}
                     formatter={(val: string) => (
-                      <span className="text-2xs font-medium text-slate-700">
+                      <span className="text-2xs font-medium text-slate-gray">
                         {val === 'members' ? 'Nhân sự' : val === 'activities' ? 'Hoạt động' : 'Nhiệm vụ'}
                       </span>
                     )}
                   />
                   <Bar dataKey="members" name="members" fill="#6366f1" radius={[4, 4, 0, 0]} barSize={18} />
-                  <Bar dataKey="activities" name="activities" fill="#0284c7" radius={[4, 4, 0, 0]} barSize={18} />
+                  <Bar dataKey="activities" name="activities" fill="#006bff" radius={[4, 4, 0, 0]} barSize={18} />
                   <Bar dataKey="tasks" name="tasks" fill="#10b981" radius={[4, 4, 0, 0]} barSize={18} />
                 </BarChart>
               </ResponsiveContainer>
@@ -172,19 +172,19 @@ export function TermReport({ organizationId }: TermReportProps) {
       )}
 
       {/* 3. Comprehensive Comparative Terms Table */}
-      <Card className="border-slate-200/90 shadow-2xs bg-white">
-        <CardHeader className="p-4 pb-3 border-b border-slate-100">
-          <CardTitle className="text-xs font-bold uppercase tracking-wider text-slate-900">
+      <Card className="border-hairline shadow-xs bg-white">
+        <CardHeader className="p-4 pb-3 border-b border-hairline">
+          <CardTitle className="text-xs font-bold uppercase tracking-wider text-ink-navy">
             Bảng Ma trận So sánh Toàn diện qua các Nhiệm kỳ
           </CardTitle>
-          <CardDescription className="text-2xs text-slate-500">
+          <CardDescription className="text-2xs text-mist-gray">
             Tổng hợp đối sánh quy mô nhân sự, sự kiện, khối lượng công việc và tình hình ngân sách từng nhiệm kỳ
           </CardDescription>
         </CardHeader>
         <CardContent className="p-0">
           <div className="overflow-x-auto">
             <table className="w-full text-xs text-left border-collapse min-w-[760px]">
-              <thead className="bg-slate-50/80 border-b border-slate-200/80 text-slate-600 font-semibold uppercase tracking-wider text-2xs">
+              <thead className="bg-cloud border-b border-hairline text-slate-gray font-semibold uppercase tracking-wider text-2xs">
                 <tr>
                   <th className="py-2.5 px-4">Nhiệm kỳ</th>
                   <th className="py-2.5 px-3">Thời gian</th>
@@ -197,24 +197,24 @@ export function TermReport({ organizationId }: TermReportProps) {
                   <th className="py-2.5 px-4 text-right">Số dư</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-100">
+              <tbody className="divide-y divide-hairline">
                 {termsList.map((term) => {
                   const isCurrent = term.isCurrent || term.status === 'active';
                   const isSurplus = term.balance >= 0;
                   return (
                     <tr
                       key={term.id}
-                      className={`hover:bg-slate-50/70 transition-colors ${
-                        isCurrent ? 'bg-indigo-50/30' : ''
+                      className={`hover:bg-cloud/70 transition-colors ${
+                        isCurrent ? 'bg-[#e6f0ff]/40' : ''
                       }`}
                     >
-                      <td className="py-3 px-4 font-semibold text-slate-900">
+                      <td className="py-3 px-4 font-semibold text-ink-navy">
                         <div className="flex items-center gap-1.5">
                           {isCurrent && <Star className="w-3.5 h-3.5 text-amber-500 fill-amber-500 shrink-0" />}
                           <span>{term.name}</span>
                         </div>
                       </td>
-                      <td className="py-3 px-3 text-2xs text-slate-500">
+                      <td className="py-3 px-3 text-2xs text-mist-gray">
                         {term.startDate ? dayjs(term.startDate).format('DD/MM/YYYY') : '---'}
                         {' → '}
                         {term.endDate ? dayjs(term.endDate).format('DD/MM/YYYY') : '---'}
@@ -225,8 +225,8 @@ export function TermReport({ organizationId }: TermReportProps) {
                             term.status === 'active'
                               ? 'bg-emerald-50 text-emerald-700 border-emerald-200'
                               : term.status === 'completed'
-                              ? 'bg-indigo-50 text-indigo-700 border-indigo-200'
-                              : 'bg-slate-100 text-slate-700 border-slate-200'
+                              ? 'bg-[#e6f0ff] text-signal-blue border-[#d4e4fa]'
+                              : 'bg-cloud text-slate-gray border-hairline'
                           }`}
                         >
                           {term.status === 'active'
@@ -238,13 +238,13 @@ export function TermReport({ organizationId }: TermReportProps) {
                             : 'Lưu trữ'}
                         </span>
                       </td>
-                      <td className="py-3 px-3 text-center font-semibold text-slate-800">
+                      <td className="py-3 px-3 text-center font-semibold text-slate-gray">
                         {term.memberCount}
                       </td>
-                      <td className="py-3 px-3 text-center font-semibold text-slate-800">
+                      <td className="py-3 px-3 text-center font-semibold text-slate-gray">
                         {term.activityCount}
                       </td>
-                      <td className="py-3 px-3 text-center font-semibold text-slate-800">
+                      <td className="py-3 px-3 text-center font-semibold text-slate-gray">
                         {term.taskCount}
                       </td>
                       <td className="py-3 px-3 text-right font-medium text-emerald-600 text-2xs">

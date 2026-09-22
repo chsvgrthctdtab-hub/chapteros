@@ -6,7 +6,6 @@ import {
   Edit2,
   Calendar,
   Trash2,
-  Mail,
   Phone,
   GraduationCap,
   ChevronLeft,
@@ -64,13 +63,13 @@ export function MemberListTable({
 
   if (data.length === 0) {
     return (
-      <div className="bg-white border border-slate-200/90 rounded-xl p-12 text-center shadow-2xs space-y-4">
-        <div className="h-14 w-14 bg-slate-50 text-slate-400 rounded-2xl flex items-center justify-center mx-auto border border-slate-200">
-          <User strokeWidth={1.5} className="h-7 w-7 text-slate-400" />
+      <div className="bg-white border border-hairline rounded-2xl p-12 text-center shadow-xs space-y-4">
+        <div className="h-14 w-14 bg-cloud text-mist-gray rounded-2xl flex items-center justify-center mx-auto border border-hairline">
+          <User strokeWidth={1.5} className="h-7 w-7 text-mist-gray" />
         </div>
         <div className="space-y-1 max-w-md mx-auto">
-          <h3 className="text-sm font-semibold text-slate-900">Không tìm thấy hội viên nào</h3>
-          <p className="text-xs text-slate-500">
+          <h3 className="text-sm font-semibold text-ink-navy">Không tìm thấy hội viên nào</h3>
+          <p className="text-xs text-slate-gray">
             Chưa có hồ sơ hội viên nào trong Đơn vị hoặc không có kết quả phù hợp với tiêu chí tìm kiếm và bộ lọc hiện tại.
           </p>
         </div>
@@ -78,7 +77,7 @@ export function MemberListTable({
           <Button
             onClick={onAddNew}
             size="sm"
-            className="bg-blue-600 hover:bg-blue-700 text-white text-xs h-8 shadow-xs cursor-pointer"
+            className="bg-signal-blue hover:bg-[#005be0] text-white text-xs h-8 rounded-lg shadow-sm cursor-pointer"
           >
             <UserPlus className="h-3.5 w-3.5 mr-1.5" />
             Thêm hội viên đầu tiên
@@ -89,10 +88,10 @@ export function MemberListTable({
   }
 
   return (
-    <div className="bg-white border border-slate-200/80 rounded-2xl overflow-hidden shadow-2xs flex flex-col">
+    <div className="bg-white border border-hairline rounded-2xl overflow-hidden shadow-xs flex flex-col">
       <div className="overflow-x-auto overflow-y-auto max-h-[640px] [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
-        <table className="w-full text-left text-xs text-slate-600">
-          <thead className="sticky top-0 z-10 bg-slate-50/95 backdrop-blur-xs text-[11px] font-bold text-slate-600 border-b border-slate-200/90 uppercase tracking-wider shadow-2xs">
+        <table className="w-full text-left text-xs text-slate-gray">
+          <thead className="sticky top-0 z-10 bg-cloud/95 backdrop-blur-xs text-[11px] font-bold text-slate-gray border-b border-hairline uppercase tracking-wider shadow-xs">
             <tr>
               <th className="py-3.5 px-4 min-w-[200px]">Hội viên</th>
               <th className="py-3.5 px-3 min-w-[100px]">MSSV</th>
@@ -104,7 +103,7 @@ export function MemberListTable({
               <th className="py-3.5 px-4 text-right min-w-[80px]">Thao tác</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-slate-100">
+          <tbody className="divide-y divide-hairline">
             {data.map((item) => {
               const initials = item.fullName
                 .split(' ')
@@ -135,21 +134,21 @@ export function MemberListTable({
               return (
                 <tr
                   key={item.id}
-                  className="hover:bg-slate-50/80 transition-colors group cursor-pointer"
+                  className="hover:bg-cloud/80 transition-colors group cursor-pointer"
                   onClick={() => onViewDetail(memberObj)}
                 >
                   {/* 1. Member: Avatar + Name + Secondary email */}
                   <td className="py-3 px-4">
                     <div className="flex items-center space-x-3">
-                      <div className="h-9 w-9 rounded-xl bg-slate-100 text-slate-700 font-bold text-xs flex items-center justify-center shrink-0 border border-slate-200/80 group-hover:border-emerald-200 group-hover:bg-emerald-50 group-hover:text-emerald-700 transition-colors">
+                      <div className="h-9 w-9 rounded-xl bg-pebble text-ink-navy font-bold text-xs flex items-center justify-center shrink-0 border border-hairline group-hover:border-[#d4e4fa] group-hover:bg-[#e6f0ff] group-hover:text-signal-blue transition-colors">
                         {initials || <User className="h-4 w-4" />}
                       </div>
                       <div className="min-w-0">
-                        <div className="font-semibold text-slate-900 group-hover:text-emerald-700 transition-colors truncate">
+                        <div className="font-semibold text-ink-navy group-hover:text-signal-blue transition-colors truncate">
                           {item.fullName}
                         </div>
-                        <div className="text-[11px] text-slate-400 truncate">
-                          {item.email || <span className="text-slate-300 italic">Chưa có email</span>}
+                        <div className="text-[11px] text-slate-gray truncate">
+                          {item.email || <span className="text-mist-gray italic">Chưa có email</span>}
                         </div>
                       </div>
                     </div>
@@ -158,27 +157,27 @@ export function MemberListTable({
                   {/* 2. Student ID */}
                   <td className="py-3 px-3">
                     {item.studentId ? (
-                      <span className="tabular-nums text-xs font-medium text-slate-800 bg-slate-50 px-2 py-0.5 rounded border border-slate-200/80">
+                      <span className="tabular-nums text-xs font-medium text-ink-navy bg-cloud px-2 py-0.5 rounded border border-hairline">
                         {item.studentId}
                       </span>
                     ) : (
-                      <span className="text-[11px] text-slate-400 italic">Unassigned</span>
+                      <span className="text-[11px] text-mist-gray italic">Unassigned</span>
                     )}
                   </td>
 
                   {/* 3. Class & Cohort / Major */}
                   <td className="py-3 px-3">
                     <div className="space-y-0.5">
-                      <div className="font-medium text-slate-800 flex items-center space-x-1.5">
-                        <GraduationCap className="h-3 w-3 text-slate-400 shrink-0" />
+                      <div className="font-medium text-ink-navy flex items-center space-x-1.5">
+                        <GraduationCap className="h-3 w-3 text-mist-gray shrink-0" />
                         <span className="truncate">{item.className || 'Chưa có lớp'}</span>
                         {item.cohort && (
-                          <span className="tabular-nums text-[10px] bg-slate-100 text-slate-600 px-1.5 py-0.5 rounded shrink-0">
+                          <span className="tabular-nums text-[10px] bg-pebble text-slate-gray px-1.5 py-0.5 rounded-full shrink-0 font-medium">
                             {item.cohort}
                           </span>
                         )}
                       </div>
-                      <div className="text-[11px] text-slate-400 truncate max-w-[160px]">
+                      <div className="text-[11px] text-slate-gray truncate max-w-[160px]">
                         {item.major || 'Chưa cập nhật ngành'}
                       </div>
                     </div>
@@ -188,12 +187,12 @@ export function MemberListTable({
                   <td className="py-3 px-3">
                     <div className="space-y-0.5 text-[11px]">
                       {item.phone ? (
-                        <div className="flex items-center space-x-1 text-slate-600">
-                          <Phone className="h-3 w-3 text-slate-400 shrink-0" />
+                        <div className="flex items-center space-x-1 text-slate-gray">
+                          <Phone className="h-3 w-3 text-mist-gray shrink-0" />
                           <span className="tabular-nums text-[11px]">{item.phone}</span>
                         </div>
                       ) : (
-                        <div className="text-slate-300 italic text-[10px]">Chưa có SĐT</div>
+                        <div className="text-mist-gray italic text-[10px]">Chưa có SĐT</div>
                       )}
                     </div>
                   </td>
@@ -203,20 +202,20 @@ export function MemberListTable({
                     {item.currentTermAssignment ? (
                       <div className="space-y-0.5">
                         <span
-                          className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[10px] font-medium bg-blue-50 text-blue-700 border border-blue-200/80"
+                          className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-medium bg-[#e6f0ff] text-signal-blue border border-[#d4e4fa]"
                           title={item.currentTermAssignment.termName}
                         >
-                          <Calendar className="h-2.5 w-2.5 text-blue-500 shrink-0" />
+                          <Calendar className="h-2.5 w-2.5 text-signal-blue shrink-0" />
                           <span className="truncate max-w-[110px]">{item.currentTermAssignment.termName}</span>
                         </span>
                         {item.currentTermAssignment.department && (
-                          <div className="text-[10px] text-slate-400 truncate max-w-[120px]">
+                          <div className="text-[10px] text-slate-gray truncate max-w-[120px]">
                             {item.currentTermAssignment.department}
                           </div>
                         )}
                       </div>
                     ) : (
-                      <span className="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] text-slate-400 italic bg-slate-50 border border-dashed border-slate-200">
+                      <span className="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] text-mist-gray italic bg-cloud border border-dashed border-hairline">
                         Unassigned
                       </span>
                     )}
@@ -245,7 +244,7 @@ export function MemberListTable({
                         variant="ghost"
                         size="sm"
                         onClick={() => onViewDetail(memberObj)}
-                        className="h-7 w-7 p-0 text-slate-400 hover:text-slate-700"
+                        className="h-7 w-7 p-0 text-mist-gray hover:text-ink-navy hover:bg-pebble rounded-lg"
                         title="Xem chi tiết hồ sơ"
                       >
                         <Eye className="h-3.5 w-3.5" />
@@ -257,30 +256,30 @@ export function MemberListTable({
                             <Button
                               variant="ghost"
                               size="sm"
-                              className="h-7 w-7 p-0 text-slate-400 hover:text-slate-700"
+                              className="h-7 w-7 p-0 text-mist-gray hover:text-ink-navy hover:bg-pebble rounded-lg"
                             >
                               <MoreHorizontal className="h-3.5 w-3.5" />
                               <span className="sr-only">Tùy chọn</span>
                             </Button>
                           </DropdownMenuTrigger>
-                          <DropdownMenuContent align="end" className="w-48 text-xs">
-                            <DropdownMenuLabel>Tùy chọn hội viên</DropdownMenuLabel>
-                            <DropdownMenuItem onClick={() => onViewDetail(memberObj)}>
-                              <Eye className="h-3.5 w-3.5 mr-2 text-slate-500" />
+                          <DropdownMenuContent align="end" className="w-48 text-xs rounded-xl border-hairline bg-white shadow-lg">
+                            <DropdownMenuLabel className="text-slate-gray font-medium">Tùy chọn hội viên</DropdownMenuLabel>
+                            <DropdownMenuItem onClick={() => onViewDetail(memberObj)} className="cursor-pointer">
+                              <Eye className="h-3.5 w-3.5 mr-2 text-slate-gray" />
                               Xem chi tiết lý lịch
                             </DropdownMenuItem>
-                            <DropdownMenuItem onClick={() => onEdit(memberObj)}>
-                              <Edit2 className="h-3.5 w-3.5 mr-2 text-slate-500" />
+                            <DropdownMenuItem onClick={() => onEdit(memberObj)} className="cursor-pointer">
+                              <Edit2 className="h-3.5 w-3.5 mr-2 text-slate-gray" />
                               Chỉnh sửa hồ sơ
                             </DropdownMenuItem>
-                            <DropdownMenuItem onClick={() => onAssignTerm(memberObj)}>
-                              <Calendar className="h-3.5 w-3.5 mr-2 text-indigo-500" />
+                            <DropdownMenuItem onClick={() => onAssignTerm(memberObj)} className="cursor-pointer">
+                              <Calendar className="h-3.5 w-3.5 mr-2 text-signal-blue" />
                               Phân công nhiệm kỳ
                             </DropdownMenuItem>
-                            <DropdownMenuSeparator />
+                            <DropdownMenuSeparator className="bg-hairline" />
                             <DropdownMenuItem
                               onClick={() => onDelete(memberObj)}
-                              className="text-rose-600 focus:text-rose-600 focus:bg-rose-50"
+                              className="text-rose-600 focus:text-rose-700 focus:bg-rose-50 cursor-pointer"
                             >
                               <Trash2 className="h-3.5 w-3.5 mr-2" />
                               Xóa hồ sơ hội viên
@@ -298,13 +297,13 @@ export function MemberListTable({
       </div>
 
       {/* Pagination Footer */}
-      <div className="p-3 bg-slate-50/60 border-t border-slate-200/80 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-500">
+      <div className="p-3 bg-cloud/80 border-t border-hairline flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-gray">
         <div>
           Hiển thị{' '}
-          <strong className="text-slate-800 font-medium">
+          <strong className="text-ink-navy font-semibold tabular-nums">
             {totalCount > 0 ? (page - 1) * pageSize + 1 : 0}–{Math.min(page * pageSize, totalCount)}
           </strong>{' '}
-          trên <strong className="text-slate-800 font-medium">{totalCount}</strong> hội viên
+          trên <strong className="text-ink-navy font-semibold tabular-nums">{totalCount}</strong> hội viên
         </div>
 
         <div className="flex items-center space-x-2">
@@ -313,13 +312,13 @@ export function MemberListTable({
             size="sm"
             onClick={() => onPageChange(page - 1)}
             disabled={page <= 1}
-            className="h-7 text-xs px-2.5 bg-white border-slate-200 text-slate-700 disabled:opacity-40"
+            className="h-7 text-xs px-2.5 bg-white border-hairline text-ink-navy hover:bg-cloud rounded-lg shadow-xs disabled:opacity-40"
           >
             <ChevronLeft className="h-3.5 w-3.5 mr-1" />
             Trước
           </Button>
 
-          <span className="px-2 text-xs font-medium text-slate-700">
+          <span className="px-2 text-xs font-medium text-ink-navy tabular-nums">
             Trang {page} / {Math.max(totalPages, 1)}
           </span>
 
@@ -328,7 +327,7 @@ export function MemberListTable({
             size="sm"
             onClick={() => onPageChange(page + 1)}
             disabled={page >= totalPages}
-            className="h-7 text-xs px-2.5 bg-white border-slate-200 text-slate-700 disabled:opacity-40"
+            className="h-7 text-xs px-2.5 bg-white border-hairline text-ink-navy hover:bg-cloud rounded-lg shadow-xs disabled:opacity-40"
           >
             Sau
             <ChevronRight className="h-3.5 w-3.5 ml-1" />

@@ -13,18 +13,18 @@ export interface ModuleConfig {
 export const AUDIT_MODULE_CONFIG: Record<string, ModuleConfig> = {
   member: {
     label: 'Hội viên',
-    color: '#2563eb',
-    bgClass: 'bg-blue-50',
-    borderClass: 'border-blue-200',
-    textClass: 'text-blue-700',
+    color: '#0069ff',
+    bgClass: 'bg-[#e6f0ff]',
+    borderClass: 'border-[#d4e4fa]',
+    textClass: 'text-signal-blue',
     iconName: 'Users',
   },
   activity: {
     label: 'Hoạt động',
-    color: '#4f46e5',
-    bgClass: 'bg-indigo-50',
-    borderClass: 'border-indigo-200',
-    textClass: 'text-indigo-700',
+    color: '#0069ff',
+    bgClass: 'bg-[#e6f0ff]',
+    borderClass: 'border-[#d4e4fa]',
+    textClass: 'text-signal-blue',
     iconName: 'Calendar',
   },
   task: {
@@ -61,10 +61,10 @@ export const AUDIT_MODULE_CONFIG: Record<string, ModuleConfig> = {
   },
   organization: {
     label: 'Chi hội & Quyền',
-    color: '#0284c7',
-    bgClass: 'bg-sky-50',
-    borderClass: 'border-sky-200',
-    textClass: 'text-sky-700',
+    color: '#006bff',
+    bgClass: 'bg-[#e6f0ff]',
+    borderClass: 'border-[#d4e4fa]',
+    textClass: 'text-signal-blue',
     iconName: 'Building2',
   },
   google_integration: {
@@ -78,9 +78,9 @@ export const AUDIT_MODULE_CONFIG: Record<string, ModuleConfig> = {
   system: {
     label: 'Hệ thống',
     color: '#475569',
-    bgClass: 'bg-slate-50',
-    borderClass: 'border-slate-200',
-    textClass: 'text-slate-700',
+    bgClass: 'bg-cloud',
+    borderClass: 'border-hairline',
+    textClass: 'text-slate-gray',
     iconName: 'Shield',
   },
 };
@@ -89,12 +89,12 @@ export type ActionImpact = 'create' | 'update' | 'delete' | 'approval' | 'securi
 
 export const ACTION_IMPACT_MAP: Record<ActionImpact, { label: string; bgClass: string; textClass: string; borderClass: string }> = {
   create: { label: 'Tạo mới', bgClass: 'bg-emerald-50', textClass: 'text-emerald-700', borderClass: 'border-emerald-200' },
-  update: { label: 'Cập nhật', bgClass: 'bg-blue-50', textClass: 'text-blue-700', borderClass: 'border-blue-200' },
+  update: { label: 'Cập nhật', bgClass: 'bg-[#e6f0ff]', textClass: 'text-signal-blue', borderClass: 'border-[#d4e4fa]' },
   delete: { label: 'Xóa / Hủy', bgClass: 'bg-rose-50', textClass: 'text-rose-700', borderClass: 'border-rose-200' },
   approval: { label: 'Phê duyệt', bgClass: 'bg-purple-50', textClass: 'text-purple-700', borderClass: 'border-purple-200' },
   security: { label: 'Phân quyền', bgClass: 'bg-amber-50', textClass: 'text-amber-700', borderClass: 'border-amber-200' },
   sync: { label: 'Đồng bộ', bgClass: 'bg-teal-50', textClass: 'text-teal-700', borderClass: 'border-teal-200' },
-  info: { label: 'Thông tin', bgClass: 'bg-slate-50', textClass: 'text-slate-700', borderClass: 'border-slate-200' },
+  info: { label: 'Thông tin', bgClass: 'bg-cloud', textClass: 'text-slate-gray', borderClass: 'border-hairline' },
 };
 
 export const AUDIT_ACTION_MAP: Record<string, { label: string; module: string; impact: ActionImpact; description?: string }> = {

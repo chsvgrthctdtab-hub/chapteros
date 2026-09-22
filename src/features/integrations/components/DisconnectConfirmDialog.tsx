@@ -27,22 +27,20 @@ export function DisconnectConfirmDialog({
 }: DisconnectConfirmDialogProps) {
   if (!connection) return null;
 
-  const isOrg = connection.connectionType === 'organization';
-
   return (
     <Dialog open={isOpen} onOpenChange={(open) => !isLoading && !open && onClose()}>
-      <DialogContent className="sm:max-w-2xl p-6 pr-10 sm:p-8 sm:pr-12 rounded-3xl border border-slate-200/80 shadow-2xl">
+      <DialogContent className="sm:max-w-2xl p-6 pr-10 sm:p-8 sm:pr-12 rounded-3xl border border-hairline shadow-2xl bg-white">
         <DialogHeader className="space-y-3">
           <div className="flex items-center gap-3.5">
             <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-amber-100/80 text-amber-700 border border-amber-200/60">
               <AlertTriangle className="h-6 w-6" />
             </div>
             <div>
-              <DialogTitle className="text-lg font-bold text-slate-900 tracking-tight">
+              <DialogTitle className="text-lg font-bold text-ink-navy tracking-tight">
                 Xác nhận ngắt kết nối Google
               </DialogTitle>
-              <DialogDescription className="text-xs text-slate-500 mt-0.5">
-                Tài khoản Google Workspace của Đơn vị • <span className="font-semibold text-slate-700">{connection.googleEmail}</span>
+              <DialogDescription className="text-xs text-mist-gray mt-0.5">
+                Tài khoản Google Workspace của Đơn vị • <span className="font-semibold text-slate-gray">{connection.googleEmail}</span>
               </DialogDescription>
             </div>
           </div>
@@ -64,7 +62,7 @@ export function DisconnectConfirmDialog({
             </ul>
           </div>
 
-          <p className="text-slate-500 text-xs leading-relaxed px-1">
+          <p className="text-mist-gray text-xs leading-relaxed px-1">
             Bạn có thể kết nối lại bất cứ lúc nào qua trang Tích hợp này mà không bị mất dữ liệu.
           </p>
         </div>
@@ -75,7 +73,7 @@ export function DisconnectConfirmDialog({
             variant="outline"
             onClick={onClose}
             disabled={isLoading}
-            className="text-xs rounded-xl h-9 px-4 border-slate-200 hover:bg-slate-50"
+            className="text-xs rounded-xl h-9 px-4 border-hairline text-slate-gray hover:bg-cloud cursor-pointer"
           >
             Hủy bỏ
           </Button>
@@ -84,7 +82,7 @@ export function DisconnectConfirmDialog({
             variant="destructive"
             onClick={onConfirm}
             disabled={isLoading}
-            className="text-xs rounded-xl h-9 px-4 bg-rose-600 hover:bg-rose-700 text-white font-semibold shadow-xs"
+            className="text-xs rounded-xl h-9 px-4 bg-rose-600 hover:bg-rose-700 text-white font-semibold shadow-xs cursor-pointer"
           >
             {isLoading ? (
               <Loader2 className="h-3.5 w-3.5 animate-spin mr-1.5" />

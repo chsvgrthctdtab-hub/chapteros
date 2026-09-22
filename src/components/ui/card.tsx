@@ -9,16 +9,16 @@ const Card = React.forwardRef<HTMLDivElement, CardProps>(
   ({ className, variant = "elevated", ...props }, ref) => {
     const variantClasses =
       variant === "tonal"
-        ? "bg-slate-50/80 border border-slate-200/70"
+        ? "bg-pebble border border-hairline"
         : variant === "outlined"
-        ? "bg-white border border-slate-300"
-        : "bg-white border border-slate-200/80 shadow-2xs";
+        ? "bg-white border border-hairline"
+        : "bg-white border border-hairline shadow-sm";
 
     return (
       <div
         ref={ref}
         className={cn(
-          "rounded-2xl sm:rounded-3xl text-slate-900 transition-colors duration-150",
+          "rounded-2xl text-ink-navy transition-all duration-150",
           variantClasses,
           className
         )}
@@ -44,7 +44,7 @@ const CardTitle = React.forwardRef<HTMLHeadingElement, React.HTMLAttributes<HTML
   ({ className, ...props }, ref) => (
     <h3
       ref={ref}
-      className={cn("text-base font-semibold leading-snug tracking-tight text-slate-900", className)}
+      className={cn("text-base font-semibold leading-snug tracking-tight text-ink-navy", className)}
       {...props}
     />
   )
@@ -55,7 +55,7 @@ const CardDescription = React.forwardRef<HTMLParagraphElement, React.HTMLAttribu
   ({ className, ...props }, ref) => (
     <p
       ref={ref}
-      className={cn("text-xs text-slate-500 mt-0.5 leading-relaxed", className)}
+      className={cn("text-xs text-slate-gray mt-0.5 leading-relaxed", className)}
       {...props}
     />
   )

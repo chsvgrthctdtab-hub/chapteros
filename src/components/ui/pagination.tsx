@@ -67,22 +67,22 @@ export function Pagination({
   return (
     <div
       className={cn(
-        "flex flex-col sm:flex-row items-center justify-between gap-3 py-3 px-2 text-xs text-slate-600",
+        "flex flex-col sm:flex-row items-center justify-between gap-3 py-3 px-2 text-xs text-slate-gray",
         className
       )}
     >
       {/* Total Items Info */}
       {totalItems !== undefined && (
-        <div className="text-slate-500 font-medium">
+        <div className="text-mist-gray font-medium">
           {startItem && endItem ? (
             <span>
-              Hiển thị <strong className="text-slate-800 font-semibold">{startItem}</strong> -{" "}
-              <strong className="text-slate-800 font-semibold">{endItem}</strong> trong tổng số{" "}
-              <strong className="text-slate-800 font-semibold">{totalItems}</strong> kết quả
+              Hiển thị <strong className="text-ink-navy font-semibold">{startItem}</strong> -{" "}
+              <strong className="text-ink-navy font-semibold">{endItem}</strong> trong tổng số{" "}
+              <strong className="text-ink-navy font-semibold">{totalItems}</strong> kết quả
             </span>
           ) : (
             <span>
-              Tổng số <strong className="text-slate-800 font-semibold">{totalItems}</strong> kết quả
+              Tổng số <strong className="text-ink-navy font-semibold">{totalItems}</strong> kết quả
             </span>
           )}
         </div>
@@ -119,7 +119,7 @@ export function Pagination({
             return (
               <span
                 key={`ellipsis-${idx}`}
-                className="w-8 h-8 flex items-center justify-center text-slate-400 font-bold select-none"
+                className="w-8 h-8 flex items-center justify-center text-mist-gray font-bold select-none"
               >
                 ...
               </span>
@@ -135,7 +135,7 @@ export function Pagination({
               onClick={() => onPageChange(p)}
               className={cn(
                 "w-8 h-8 rounded-lg text-xs font-semibold",
-                isActive ? "bg-emerald-700 text-white" : "text-slate-700 hover:bg-slate-100"
+                isActive ? "bg-signal-blue text-white shadow-xs" : "text-slate-gray hover:bg-cloud"
               )}
               aria-current={isActive ? "page" : undefined}
               aria-label={`Trang ${p}`}

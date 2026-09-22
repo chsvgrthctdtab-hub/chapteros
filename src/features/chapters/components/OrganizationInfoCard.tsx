@@ -227,11 +227,11 @@ export function OrganizationInfoCard({
     : 'Chưa có';
 
   return (
-    <Card className="border-slate-200 shadow-2xs">
-      <CardHeader className="border-b border-slate-100 bg-slate-50/40 pb-4">
+    <Card className="border-hairline shadow-xs">
+      <CardHeader className="border-b border-hairline bg-cloud pb-4">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
           <div className="flex items-center gap-3">
-            <div className="h-11 w-11 rounded-xl bg-blue-600 flex items-center justify-center text-white shadow-xs overflow-hidden shrink-0 border border-blue-500">
+            <div className="h-11 w-11 rounded-xl bg-signal-blue flex items-center justify-center text-white shadow-xs overflow-hidden shrink-0 border border-signal-blue">
               {currentDisplayLogo ? (
                 <img
                   src={currentDisplayLogo}
@@ -247,14 +247,14 @@ export function OrganizationInfoCard({
                 <span className={`text-[10px] px-2 py-0.5 rounded font-semibold border ${orgTypeBadgeClass}`}>
                   {orgTypeLabel}
                 </span>
-                <CardTitle className="text-base font-bold text-slate-900">
+                <CardTitle className="text-base font-bold text-ink-navy">
                   {organization?.name || `Thông tin ${orgTypeLabel}`}
                 </CardTitle>
-                <Badge variant="outline" className="tabular-nums font-semibold text-[11px] bg-white text-slate-700">
+                <Badge variant="outline" className="tabular-nums font-semibold text-[11px] bg-white text-slate-gray border-hairline">
                   {organization?.code || 'N/A'}
                 </Badge>
               </div>
-              <CardDescription className="text-xs text-slate-500 mt-0.5">
+              <CardDescription className="text-xs text-mist-gray mt-0.5">
                 Hồ sơ định danh, loại hình, biểu trưng chính thức và thông tin cấu hình đơn vị
               </CardDescription>
             </div>
@@ -262,7 +262,7 @@ export function OrganizationInfoCard({
 
           <div className="flex items-center gap-2">
             {isLoading && !canManageLogo ? (
-              <Badge variant="outline" className="text-xs text-slate-500 gap-1 py-1 px-2.5">
+              <Badge variant="outline" className="text-xs text-mist-gray gap-1 py-1 px-2.5 border-hairline">
                 <Loader2 className="h-3.5 w-3.5 animate-spin" />
                 Đang kiểm tra quyền...
               </Badge>
@@ -272,7 +272,7 @@ export function OrganizationInfoCard({
                 Quyền Quản trị viên
               </Badge>
             ) : (
-              <Badge variant="secondary" className="text-xs text-slate-600 gap-1 py-1 px-2.5">
+              <Badge variant="secondary" className="text-xs text-slate-gray bg-cloud border-hairline gap-1 py-1 px-2.5">
                 <Lock className="h-3.5 w-3.5" />
                 Chỉ xem ({activeRole ? getRoleLabel(activeRole) : 'Chưa phân quyền'})
               </Badge>
@@ -323,14 +323,14 @@ export function OrganizationInfoCard({
         {/* ------------------------------------------------------------- */}
         {/* LOGO STORAGE UPLOAD SECTION */}
         {/* ------------------------------------------------------------- */}
-        <div className="p-4 rounded-xl border border-slate-200 bg-slate-50/50 space-y-3">
+        <div className="p-4 rounded-xl border border-hairline bg-cloud space-y-3">
           <div className="flex items-center justify-between">
             <div className="space-y-0.5">
-              <label className="text-xs font-bold text-slate-800 flex items-center gap-1.5">
-                <ImageIcon className="h-4 w-4 text-blue-600" />
+              <label className="text-xs font-bold text-ink-navy flex items-center gap-1.5">
+                <ImageIcon className="h-4 w-4 text-signal-blue" />
                 Biểu trưng {orgTypeLabel} (Logo)
               </label>
-              <p className="text-[11px] text-slate-500">
+              <p className="text-[11px] text-mist-gray">
                 Hình ảnh đại diện lưu trữ bảo mật trên Supabase Storage
               </p>
             </div>
@@ -350,14 +350,14 @@ export function OrganizationInfoCard({
               onClick={!currentDisplayLogo ? handleTriggerFileInput : undefined}
               className={`relative h-28 w-28 sm:h-32 sm:w-32 rounded-xl border-2 overflow-hidden flex flex-col items-center justify-center text-center transition-all shrink-0 ${
                 isDragging
-                  ? 'border-blue-500 bg-blue-50 ring-2 ring-blue-500/20'
-                  : 'border-dashed border-slate-300 bg-white hover:border-slate-400'
+                  ? 'border-signal-blue bg-[#e6f0ff] ring-2 ring-signal-blue/20'
+                  : 'border-dashed border-hairline bg-white hover:border-slate-gray'
               } ${!currentDisplayLogo ? 'cursor-pointer' : ''}`}
             >
               {isUploadingLogo || isDeletingLogo ? (
-                <div className="flex flex-col items-center justify-center p-2 text-slate-500 space-y-1">
-                  <Loader2 strokeWidth={1.5} className="h-6 w-6 animate-spin text-blue-600" />
-                  <span className="text-[10px] font-medium text-slate-600">
+                <div className="flex flex-col items-center justify-center p-2 text-mist-gray space-y-1">
+                  <Loader2 strokeWidth={1.5} className="h-6 w-6 animate-spin text-signal-blue" />
+                  <span className="text-[10px] font-medium text-slate-gray">
                     {isUploadingLogo ? 'Đang tải lên...' : 'Đang xóa...'}
                   </span>
                 </div>
@@ -368,9 +368,9 @@ export function OrganizationInfoCard({
                   className="h-full w-full object-contain p-2"
                 />
               ) : (
-                <div className="flex flex-col items-center justify-center p-3 text-slate-400 space-y-1">
-                  <Building2 strokeWidth={1.5} className="h-7 w-7 text-slate-300" />
-                  <span className="text-[11px] font-medium text-slate-500 leading-tight">
+                <div className="flex flex-col items-center justify-center p-3 text-mist-gray space-y-1">
+                  <Building2 strokeWidth={1.5} className="h-7 w-7 text-mist-gray" />
+                  <span className="text-[11px] font-medium text-slate-gray leading-tight">
                     Chưa có biểu trưng
                   </span>
                 </div>
@@ -398,12 +398,12 @@ export function OrganizationInfoCard({
                         variant="outline"
                         onClick={handleTriggerFileInput}
                         disabled={isUploadingLogo || isDeletingLogo}
-                        className="text-xs h-8 text-slate-700 hover:bg-slate-100"
+                        className="text-xs h-8 text-slate-gray hover:bg-pebble border-hairline"
                       >
                         {isUploadingLogo ? (
-                          <Loader2 className="h-3.5 w-3.5 mr-1.5 animate-spin text-blue-600" />
+                          <Loader2 className="h-3.5 w-3.5 mr-1.5 animate-spin text-signal-blue" />
                         ) : (
-                          <RefreshCw className="h-3.5 w-3.5 mr-1.5 text-blue-600" />
+                          <RefreshCw className="h-3.5 w-3.5 mr-1.5 text-signal-blue" />
                         )}
                         Đổi ảnh
                       </Button>
@@ -430,7 +430,7 @@ export function OrganizationInfoCard({
                       size="sm"
                       onClick={handleTriggerFileInput}
                       disabled={isUploadingLogo || isDeletingLogo}
-                      className="text-xs h-8 bg-blue-600 hover:bg-blue-700 text-white"
+                      className="text-xs h-8 bg-signal-blue hover:bg-[#005be0] text-white"
                     >
                       {isUploadingLogo ? (
                         <Loader2 className="h-3.5 w-3.5 mr-1.5 animate-spin" />
@@ -443,7 +443,7 @@ export function OrganizationInfoCard({
                 </div>
               )}
 
-              <div className="text-[11px] text-slate-500 space-y-0.5 leading-relaxed">
+              <div className="text-[11px] text-mist-gray space-y-0.5 leading-relaxed">
                 <p>
                   <strong>Định dạng hỗ trợ:</strong> PNG, JPG, WebP.
                 </p>
@@ -461,7 +461,7 @@ export function OrganizationInfoCard({
         <form onSubmit={handleFormSubmit} className="space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div className="space-y-1.5">
-              <label className="text-xs font-semibold text-slate-700 flex items-center gap-1">
+              <label className="text-xs font-semibold text-slate-gray flex items-center gap-1">
                 Loại hình đơn vị <span className="text-rose-500">*</span>
               </label>
               <Select
@@ -469,7 +469,7 @@ export function OrganizationInfoCard({
                 onValueChange={(val) => setType(val as OrganizationType)}
                 disabled={!canManageLogo || isLoading}
               >
-                <SelectTrigger className="w-full h-9 rounded-md border-slate-200 bg-white text-xs text-slate-800">
+                <SelectTrigger className="w-full h-9 rounded-md border-hairline bg-white text-xs text-ink-navy">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
@@ -480,11 +480,11 @@ export function OrganizationInfoCard({
                   ))}
                 </SelectContent>
               </Select>
-              <span className="text-[10px] text-slate-400">1 trong 4 loại hình chuẩn</span>
+              <span className="text-[10px] text-mist-gray">1 trong 4 loại hình chuẩn</span>
             </div>
 
             <div className="space-y-1.5">
-              <label className="text-xs font-semibold text-slate-700 flex items-center gap-1">
+              <label className="text-xs font-semibold text-slate-gray flex items-center gap-1">
                 Tên {orgTypeLabel} <span className="text-rose-500">*</span>
               </label>
               <Input
@@ -492,14 +492,14 @@ export function OrganizationInfoCard({
                 onChange={(e) => setName(e.target.value)}
                 placeholder={`Ví dụ: ${orgTypeLabel} Sinh viên Kiên Giang`}
                 disabled={!canManageLogo || isLoading}
-                className="text-xs h-9"
+                className="text-xs h-9 border-hairline"
                 required
               />
-              <span className="text-[10px] text-slate-400">Tên chính thức dùng trong văn bản, báo cáo</span>
+              <span className="text-[10px] text-mist-gray">Tên chính thức dùng trong văn bản, báo cáo</span>
             </div>
 
             <div className="space-y-1.5">
-              <label className="text-xs font-semibold text-slate-700 flex items-center gap-1">
+              <label className="text-xs font-semibold text-slate-gray flex items-center gap-1">
                 Mã định danh (Code) <span className="text-rose-500">*</span>
               </label>
               <Input
@@ -507,40 +507,40 @@ export function OrganizationInfoCard({
                 onChange={(e) => setCode(e.target.value.toUpperCase())}
                 placeholder="Ví dụ: CH-KG-2024"
                 disabled={!canManageLogo || isLoading}
-                className="text-xs font-mono h-9"
+                className="text-xs font-mono h-9 border-hairline"
                 required
               />
-              <span className="text-[10px] text-slate-400">Mã viết hoa duy nhất dùng để phân loại</span>
+              <span className="text-[10px] text-mist-gray">Mã viết hoa duy nhất dùng để phân loại</span>
             </div>
           </div>
 
           <div className="space-y-1.5">
-            <label className="text-xs font-semibold text-slate-700">Mô tả / Đơn vị trực thuộc</label>
+            <label className="text-xs font-semibold text-slate-gray">Mô tả / Đơn vị trực thuộc</label>
             <textarea
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               placeholder="Ví dụ: Trực thuộc Liên chi hội sinh viên ĐH Cần Thơ..."
               disabled={!canManageLogo || isLoading}
               rows={3}
-              className="w-full rounded-md border border-slate-200 bg-white px-3 py-2 text-xs shadow-xs focus:outline-hidden focus:ring-2 focus:ring-blue-600 focus:border-transparent text-slate-800 disabled:cursor-not-allowed disabled:opacity-50 resize-none"
+              className="w-full rounded-md border border-hairline bg-white px-3 py-2 text-xs shadow-xs focus:outline-hidden focus:ring-2 focus:ring-signal-blue focus:border-transparent text-ink-navy disabled:cursor-not-allowed disabled:opacity-50 resize-none"
             />
           </div>
 
           {/* Readonly Info Bar */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
-            <div className="p-3 bg-slate-50 rounded-lg border border-slate-200/70 flex items-center gap-2.5 text-xs text-slate-600">
-              <Calendar className="h-4 w-4 text-slate-400" />
+            <div className="p-3 bg-cloud rounded-lg border border-hairline flex items-center gap-2.5 text-xs text-slate-gray">
+              <Calendar className="h-4 w-4 text-mist-gray" />
               <div>
-                <span className="text-[10px] text-slate-400 block">Ngày khởi tạo trên hệ thống</span>
-                <span className="font-medium text-slate-800">{formattedCreatedDate}</span>
+                <span className="text-[10px] text-mist-gray block">Ngày khởi tạo trên hệ thống</span>
+                <span className="font-medium text-ink-navy">{formattedCreatedDate}</span>
               </div>
             </div>
 
-            <div className="p-3 bg-slate-50 rounded-lg border border-slate-200/70 flex items-center gap-2.5 text-xs text-slate-600">
-              <Hash className="h-4 w-4 text-slate-400" />
+            <div className="p-3 bg-cloud rounded-lg border border-hairline flex items-center gap-2.5 text-xs text-slate-gray">
+              <Hash className="h-4 w-4 text-mist-gray" />
               <div>
-                <span className="text-[10px] text-slate-400 block">Organization ID</span>
-                <span className="font-mono text-[11px] text-slate-700 truncate max-w-[180px] block">
+                <span className="text-[10px] text-mist-gray block">Organization ID</span>
+                <span className="font-mono text-[11px] text-slate-gray truncate max-w-[180px] block">
                   {organization?.id || 'N/A'}
                 </span>
               </div>
@@ -553,7 +553,7 @@ export function OrganizationInfoCard({
                 type="submit"
                 size="sm"
                 disabled={isLoading}
-                className="text-xs bg-blue-600 hover:bg-blue-700 text-white"
+                className="text-xs bg-signal-blue hover:bg-[#005be0] text-white"
               >
                 {isLoading ? (
                   <Loader2 className="h-3.5 w-3.5 mr-1.5 animate-spin" />
@@ -567,9 +567,9 @@ export function OrganizationInfoCard({
         </form>
       </CardContent>
 
-      <CardFooter className="bg-slate-50/50 border-t border-slate-100 py-3 text-xs text-slate-500 justify-between">
+      <CardFooter className="bg-cloud border-t border-hairline py-3 text-xs text-mist-gray justify-between">
         <span>Bảo mật dữ liệu và tài nguyên hình ảnh cách ly theo từng đơn vị sinh viên</span>
-        <span className="text-[11px] text-slate-400">Supabase Storage & RLS Active</span>
+        <span className="text-[11px] text-mist-gray">Supabase Storage &amp; RLS Active</span>
       </CardFooter>
     </Card>
   );

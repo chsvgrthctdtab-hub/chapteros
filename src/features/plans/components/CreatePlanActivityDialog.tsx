@@ -153,17 +153,17 @@ export function CreatePlanActivityDialog({
 
   return (
     <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
-      <DialogContent id="create-plan-activity-dialog" className="sm:max-w-2xl max-h-[90vh] overflow-y-auto bg-white border border-slate-200 shadow-xl rounded-2xl p-6">
+      <DialogContent id="create-plan-activity-dialog" className="sm:max-w-2xl max-h-[90vh] overflow-y-auto bg-white border border-hairline shadow-sm rounded-2xl p-6">
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           <DialogHeader className="space-y-1 text-left">
-            <div className="flex items-center gap-2 text-blue-600 font-semibold text-xs mb-0.5">
+            <div className="flex items-center gap-2 text-signal-blue font-semibold text-xs mb-0.5">
               <Calendar className="h-4 w-4" />
               <span>Kế hoạch / Chiến dịch</span>
             </div>
-            <DialogTitle className="text-lg font-bold text-slate-900">
+            <DialogTitle className="text-lg font-bold text-ink-navy">
               Thêm Hoạt Động Vào Kế Hoạch
             </DialogTitle>
-            <DialogDescription className="text-xs text-slate-500">
+            <DialogDescription className="text-xs text-slate-gray">
               Tạo sự kiện hoặc hoạt động thành phần trực thuộc chiến dịch này.
             </DialogDescription>
           </DialogHeader>
@@ -178,23 +178,23 @@ export function CreatePlanActivityDialog({
           <div className="space-y-4">
             {/* Choose Responsible Organization */}
             <div className="space-y-1">
-              <label htmlFor="activity-org" className="block text-xs font-semibold text-slate-700">
+              <label htmlFor="activity-org" className="block text-xs font-semibold text-ink-navy">
                 Đơn vị phụ trách thực hiện <span className="text-rose-500">*</span>
               </label>
               <Select value={selectedOrgId} onValueChange={setSelectedOrgId}>
-                <SelectTrigger id="activity-org" className="h-9 bg-slate-50/50 border-slate-200 text-xs">
+                <SelectTrigger id="activity-org" className="h-9 bg-cloud border-hairline text-xs text-ink-navy">
                   <SelectValue placeholder="Chọn đơn vị phụ trách" />
                 </SelectTrigger>
-                <SelectContent className="bg-white border-slate-200">
+                <SelectContent className="bg-white border-hairline shadow-sm">
                   {hostOrganizations.map((h) => (
                     <SelectItem key={h.organizationId} value={h.organizationId} className="text-xs">
                       <div className="flex items-center gap-2">
-                        <Building2 className="h-3.5 w-3.5 text-blue-600" />
-                        <span className="font-medium text-slate-800">
+                        <Building2 className="h-3.5 w-3.5 text-signal-blue" />
+                        <span className="font-medium text-ink-navy">
                           {h.organization?.name || 'Đơn vị'}
                         </span>
                         {h.isHost && (
-                          <span className="text-[10px] bg-blue-50 text-blue-700 border border-blue-200 px-1.5 py-0.2 rounded">
+                          <span className="text-[10px] bg-[#e6f0ff] text-signal-blue border border-[#d4e4fa] px-1.5 py-0.2 rounded">
                             Chủ trì
                           </span>
                         )}
@@ -207,14 +207,14 @@ export function CreatePlanActivityDialog({
 
             {/* Title */}
             <div className="space-y-1">
-              <label htmlFor="activity-title" className="block text-xs font-semibold text-slate-700">
+              <label htmlFor="activity-title" className="block text-xs font-semibold text-ink-navy">
                 Tên hoạt động <span className="text-rose-500">*</span>
               </label>
               <Input
                 id="activity-title"
                 {...register('title')}
                 placeholder="Ví dụ: Ngày Chủ Nhật Xanh, Gian hàng gây quỹ..."
-                className="h-9 bg-slate-50/50 border-slate-200 text-xs"
+                className="h-9 bg-cloud border-hairline text-xs text-ink-navy placeholder:text-mist-gray focus:border-signal-blue"
               />
               {errors.title && (
                 <p className="text-[11px] text-rose-600 font-medium">{errors.title.message}</p>
@@ -224,7 +224,7 @@ export function CreatePlanActivityDialog({
             {/* Term & Code & Category */}
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
               <div className="space-y-1">
-                <label htmlFor="activity-term" className="block text-xs font-semibold text-slate-700">
+                <label htmlFor="activity-term" className="block text-xs font-semibold text-ink-navy">
                   Nhiệm kỳ <span className="text-rose-500">*</span>
                 </label>
                 <Controller
@@ -235,10 +235,10 @@ export function CreatePlanActivityDialog({
                       value={field.value || ''}
                       onValueChange={field.onChange}
                     >
-                      <SelectTrigger id="activity-term" className="h-9 bg-slate-50/50 border-slate-200 text-xs">
+                      <SelectTrigger id="activity-term" className="h-9 bg-cloud border-hairline text-xs text-ink-navy">
                         <SelectValue placeholder="Chọn nhiệm kỳ" />
                       </SelectTrigger>
-                      <SelectContent className="bg-white border-slate-200">
+                      <SelectContent className="bg-white border-hairline shadow-sm">
                         {terms.map((t) => (
                           <SelectItem key={t.id} value={t.id} className="text-xs">
                             {t.name} {t.isCurrent ? '(Hiện tại)' : ''}
@@ -254,19 +254,19 @@ export function CreatePlanActivityDialog({
               </div>
 
               <div className="space-y-1">
-                <label htmlFor="activity-code" className="block text-xs font-semibold text-slate-700">
+                <label htmlFor="activity-code" className="block text-xs font-semibold text-ink-navy">
                   Mã hoạt động
                 </label>
                 <Input
                   id="activity-code"
                   {...register('code')}
                   placeholder="ACT-2025-01"
-                  className="h-9 bg-slate-50/50 border-slate-200 text-xs font-mono uppercase"
+                  className="h-9 bg-cloud border-hairline text-xs font-mono uppercase text-ink-navy placeholder:text-mist-gray focus:border-signal-blue"
                 />
               </div>
 
               <div className="space-y-1">
-                <label htmlFor="activity-cat" className="block text-xs font-semibold text-slate-700">
+                <label htmlFor="activity-cat" className="block text-xs font-semibold text-ink-navy">
                   Phân loại <span className="text-rose-500">*</span>
                 </label>
                 <Controller
@@ -277,10 +277,10 @@ export function CreatePlanActivityDialog({
                       value={field.value || 'volunteer'}
                       onValueChange={field.onChange}
                     >
-                      <SelectTrigger id="activity-cat" className="h-9 bg-slate-50/50 border-slate-200 text-xs">
+                      <SelectTrigger id="activity-cat" className="h-9 bg-cloud border-hairline text-xs text-ink-navy">
                         <SelectValue placeholder="Chọn loại" />
                       </SelectTrigger>
-                      <SelectContent className="bg-white border-slate-200">
+                      <SelectContent className="bg-white border-hairline shadow-sm">
                         {Object.entries(ACTIVITY_CATEGORIES).map(([key, cat]) => (
                           <SelectItem key={key} value={key} className="text-xs">
                             {cat.label}
@@ -296,7 +296,7 @@ export function CreatePlanActivityDialog({
             {/* Dates & Location */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div className="space-y-1">
-                <label className="block text-xs font-semibold text-slate-700">
+                <label className="block text-xs font-semibold text-ink-navy">
                   Thời gian bắt đầu <span className="text-rose-500">*</span>
                 </label>
                 <Controller
@@ -308,6 +308,7 @@ export function CreatePlanActivityDialog({
                       value={field.value}
                       onChange={field.onChange}
                       placeholder="Chọn ngày và giờ bắt đầu"
+                      className="h-9 bg-cloud border-hairline text-xs"
                     />
                   )}
                 />
@@ -317,7 +318,7 @@ export function CreatePlanActivityDialog({
               </div>
 
               <div className="space-y-1">
-                <label className="block text-xs font-semibold text-slate-700">
+                <label className="block text-xs font-semibold text-ink-navy">
                   Thời gian kết thúc <span className="text-rose-500">*</span>
                 </label>
                 <Controller
@@ -329,6 +330,7 @@ export function CreatePlanActivityDialog({
                       value={field.value}
                       onChange={field.onChange}
                       placeholder="Chọn ngày và giờ kết thúc"
+                      className="h-9 bg-cloud border-hairline text-xs"
                     />
                   )}
                 />
@@ -341,19 +343,19 @@ export function CreatePlanActivityDialog({
             {/* Location & Target */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div className="space-y-1">
-                <label htmlFor="activity-location" className="block text-xs font-semibold text-slate-700">
+                <label htmlFor="activity-location" className="block text-xs font-semibold text-ink-navy">
                   Địa điểm tổ chức
                 </label>
                 <Input
                   id="activity-location"
                   {...register('location')}
                   placeholder="Hội trường A, Sân trường..."
-                  className="h-9 bg-slate-50/50 border-slate-200 text-xs"
+                  className="h-9 bg-cloud border-hairline text-xs text-ink-navy placeholder:text-mist-gray focus:border-signal-blue"
                 />
               </div>
 
               <div className="space-y-1">
-                <label htmlFor="activity-target" className="block text-xs font-semibold text-slate-700">
+                <label htmlFor="activity-target" className="block text-xs font-semibold text-ink-navy">
                   Số lượng dự kiến
                 </label>
                 <Input
@@ -361,14 +363,14 @@ export function CreatePlanActivityDialog({
                   type="number"
                   {...register('targetMembers')}
                   placeholder="50"
-                  className="h-9 bg-slate-50/50 border-slate-200 text-xs"
+                  className="h-9 bg-cloud border-hairline text-xs text-ink-navy placeholder:text-mist-gray focus:border-signal-blue"
                 />
               </div>
             </div>
 
             {/* Lead Member */}
             <div className="space-y-1">
-              <label htmlFor="activity-lead" className="block text-xs font-semibold text-slate-700">
+              <label htmlFor="activity-lead" className="block text-xs font-semibold text-ink-navy">
                 Trưởng ban tổ chức (Hội viên phụ trách)
               </label>
               <Controller
@@ -379,26 +381,26 @@ export function CreatePlanActivityDialog({
                     value={field.value || 'none'}
                     onValueChange={(val) => field.onChange(val === 'none' ? '' : val)}
                   >
-                    <SelectTrigger id="activity-lead" className="h-9 bg-slate-50/50 border-slate-200 text-xs">
+                    <SelectTrigger id="activity-lead" className="h-9 bg-cloud border-hairline text-xs text-ink-navy">
                       <SelectValue placeholder="Chọn người phụ trách" />
                     </SelectTrigger>
-                    <SelectContent className="bg-white border-slate-200 max-h-64">
-                      <SelectItem value="none" className="text-xs text-slate-500">
+                    <SelectContent className="bg-white border-hairline shadow-sm max-h-64">
+                      <SelectItem value="none" className="text-xs text-slate-gray italic">
                         -- Không chọn --
                       </SelectItem>
                       {leadCandidates.map((m) => (
                         <SelectItem key={m.id} value={m.id} className="text-xs">
-                          <span className="font-medium text-slate-900">{m.fullName}</span>
+                          <span className="font-medium text-ink-navy">{m.fullName}</span>
                           {m.position ? (
-                            <span className="text-slate-500 ml-1 font-normal">
+                            <span className="text-slate-gray ml-1 font-normal">
                               - {m.position}
                             </span>
                           ) : m.email ? (
-                            <span className="text-slate-400 ml-1 font-normal">
+                            <span className="text-mist-gray ml-1 font-normal">
                               ({m.email})
                             </span>
                           ) : m.studentId ? (
-                            <span className="text-slate-400 ml-1 font-normal">
+                            <span className="text-mist-gray ml-1 font-normal">
                               ({m.studentId})
                             </span>
                           ) : null}
@@ -412,7 +414,7 @@ export function CreatePlanActivityDialog({
 
             {/* Description */}
             <div className="space-y-1">
-              <label htmlFor="activity-desc" className="block text-xs font-semibold text-slate-700">
+              <label htmlFor="activity-desc" className="block text-xs font-semibold text-ink-navy">
                 Nội dung chi tiết
               </label>
               <textarea
@@ -420,18 +422,18 @@ export function CreatePlanActivityDialog({
                 {...register('description')}
                 rows={3}
                 placeholder="Kế hoạch, phân công công việc, timeline sự kiện..."
-                className="w-full rounded-md border border-slate-200 bg-slate-50/50 p-2.5 text-xs text-slate-800 placeholder:text-slate-400 focus:outline-none focus:ring-1 focus:ring-blue-500 resize-none"
+                className="w-full rounded-md border border-hairline bg-cloud p-2.5 text-xs text-ink-navy placeholder:text-mist-gray focus:outline-none focus:border-signal-blue focus:ring-1 focus:ring-signal-blue/20 resize-none"
               />
             </div>
           </div>
 
-          <DialogFooter className="pt-3 gap-2">
+          <DialogFooter className="pt-3 gap-2 border-t border-hairline">
             <Button
               type="button"
               variant="outline"
               size="sm"
               onClick={onClose}
-              className="text-xs"
+              className="text-xs h-9 px-4 rounded-lg border-hairline text-ink-navy hover:bg-pebble"
               disabled={isSubmitting}
             >
               Hủy
@@ -440,7 +442,7 @@ export function CreatePlanActivityDialog({
               id="btn-submit-plan-activity"
               type="submit"
               size="sm"
-              className="text-xs bg-blue-600 hover:bg-blue-700 text-white gap-1.5"
+              className="text-xs h-9 px-4 rounded-lg bg-signal-blue hover:bg-[#005be0] text-white font-semibold shadow-sm gap-1.5"
               disabled={isSubmitting}
             >
               {isSubmitting ? (

@@ -61,27 +61,27 @@ export function NotificationItemRow({
     switch (item.type) {
       case 'danger':
         return {
-          iconBg: 'bg-rose-100 text-rose-700',
+          iconBg: 'bg-rose-50 text-rose-700',
           dotBg: 'bg-rose-600',
           border: 'border-rose-100',
         };
       case 'warning':
         return {
-          iconBg: 'bg-amber-100 text-amber-700',
+          iconBg: 'bg-amber-50 text-amber-700',
           dotBg: 'bg-amber-500',
           border: 'border-amber-100',
         };
       case 'success':
         return {
-          iconBg: 'bg-emerald-100 text-emerald-700',
+          iconBg: 'bg-emerald-50 text-emerald-700',
           dotBg: 'bg-emerald-600',
           border: 'border-emerald-100',
         };
       default:
         return {
-          iconBg: 'bg-blue-100 text-blue-700',
-          dotBg: 'bg-blue-600',
-          border: 'border-blue-100',
+          iconBg: 'bg-[#e6f0ff] text-signal-blue',
+          dotBg: 'bg-signal-blue',
+          border: 'border-[#d4e4fa]',
         };
     }
   };
@@ -91,8 +91,8 @@ export function NotificationItemRow({
   return (
     <div
       onClick={handleClick}
-      className={`group relative p-3 transition-colors cursor-pointer border-b border-slate-100 last:border-b-0 hover:bg-slate-50 flex items-start gap-3 ${
-        !item.isRead ? 'bg-blue-50/30' : 'bg-white'
+      className={`group relative p-3 transition-colors cursor-pointer border-b border-hairline last:border-b-0 hover:bg-cloud flex items-start gap-3 ${
+        !item.isRead ? 'bg-[#e6f0ff]/40' : 'bg-white'
       }`}
     >
       {/* Icon */}
@@ -106,8 +106,8 @@ export function NotificationItemRow({
       <div className="flex-1 min-w-0 space-y-0.5">
         <div className="flex items-center justify-between gap-1.5">
           <h4
-            className={`text-xs font-semibold truncate leading-tight ${
-              !item.isRead ? 'text-slate-900 font-bold' : 'text-slate-700'
+            className={`text-xs truncate leading-tight ${
+              !item.isRead ? 'text-ink-navy font-bold' : 'text-slate-gray font-medium'
             }`}
           >
             {item.title}
@@ -120,11 +120,11 @@ export function NotificationItemRow({
           )}
         </div>
 
-        <p className="text-xs text-slate-600 line-clamp-2 leading-relaxed">
+        <p className="text-xs text-slate-gray line-clamp-2 leading-relaxed">
           {item.message}
         </p>
 
-        <div className="flex items-center justify-between pt-1 text-[11px] text-slate-400">
+        <div className="flex items-center justify-between pt-1 text-[11px] text-mist-gray">
           <span>{formatRelativeTime(item.createdAt)}</span>
 
           {!item.isRead && (
@@ -134,7 +134,7 @@ export function NotificationItemRow({
                 e.stopPropagation();
                 onMarkRead(item.key);
               }}
-              className="text-[10px] text-blue-600 hover:text-blue-800 font-semibold flex items-center gap-0.5 opacity-0 group-hover:opacity-100 transition-opacity"
+              className="text-[10px] text-signal-blue hover:text-[#005be0] font-semibold flex items-center gap-0.5 opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer"
               title="Đánh dấu đã đọc"
             >
               <Check className="w-3 h-3" />

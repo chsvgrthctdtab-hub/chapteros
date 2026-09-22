@@ -184,16 +184,16 @@ export function TermDetailModal({
       <Dialog open={open} onOpenChange={onOpenChange}>
         <DialogContent className="max-w-4xl max-h-[90vh] flex flex-col p-0 gap-0 overflow-hidden">
           {/* Modal Header */}
-          <div className="p-6 border-b border-slate-200 bg-white">
+          <div className="p-6 border-b border-hairline bg-white">
             <DialogHeader className="gap-2">
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                 <div className="flex items-start gap-3">
-                  <div className="h-11 w-11 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center shrink-0 mt-0.5">
+                  <div className="h-11 w-11 rounded-xl bg-[#e6f0ff] text-signal-blue flex items-center justify-center shrink-0 mt-0.5">
                     <CalendarRange className="h-6 w-6" />
                   </div>
                   <div>
                     <div className="flex items-center gap-2 flex-wrap">
-                      <DialogTitle className="text-xl font-bold text-slate-900">
+                      <DialogTitle className="text-xl font-bold text-ink-navy">
                         {term?.name || 'Chi tiết Nhiệm kỳ'}
                       </DialogTitle>
                       {term?.isCurrent && (
@@ -208,14 +208,14 @@ export function TermDetailModal({
                         </Badge>
                       )}
                     </div>
-                    <DialogDescription className="text-xs text-slate-500 mt-1 flex flex-wrap items-center gap-x-4 gap-y-1">
+                    <DialogDescription className="text-xs text-mist-gray mt-1 flex flex-wrap items-center gap-x-4 gap-y-1">
                       <span className="flex items-center gap-1">
-                        <Calendar className="h-3.5 w-3.5 text-slate-400" />
+                        <Calendar className="h-3.5 w-3.5 text-mist-gray" />
                         Thời gian: {term?.startDate} → {term?.endDate}
                       </span>
                       <span className="flex items-center gap-1">
-                        <Users className="h-3.5 w-3.5 text-slate-400" />
-                        Tổng hội viên nhiệm kỳ: <strong className="text-slate-700">{members.length}</strong>
+                        <Users className="h-3.5 w-3.5 text-mist-gray" />
+                        Tổng hội viên nhiệm kỳ: <strong className="text-slate-gray">{members.length}</strong>
                       </span>
                     </DialogDescription>
                   </div>
@@ -244,7 +244,7 @@ export function TermDetailModal({
                           size="sm"
                           variant="outline"
                           onClick={() => setIsTransferOpen(true)}
-                          className="text-blue-700 border-blue-200 hover:bg-blue-50 text-xs h-8 font-medium"
+                          className="text-signal-blue border-[#d4e4fa] hover:bg-[#e6f0ff] text-xs h-8 font-medium"
                         >
                           <ArrowRightLeft className="h-3.5 w-3.5 mr-1.5" />
                           Bàn giao nhiệm kỳ
@@ -253,7 +253,7 @@ export function TermDetailModal({
                           size="sm"
                           variant="outline"
                           onClick={() => onCompleteTerm(term)}
-                          className="text-slate-700 border-slate-200 hover:bg-slate-50 text-xs h-8"
+                          className="text-slate-gray border-hairline hover:bg-cloud text-xs h-8"
                         >
                           <CheckCircle className="h-3.5 w-3.5 mr-1.5" />
                           Đóng nhiệm kỳ
@@ -275,8 +275,8 @@ export function TermDetailModal({
                             Xem Snapshot Bàn giao
                           </Button>
                         )}
-                        <div className="flex items-center gap-1 text-xs text-slate-500 bg-slate-100 px-2.5 py-1 rounded-md border border-slate-200">
-                          <Lock className="h-3.5 w-3.5 text-slate-400" />
+                        <div className="flex items-center gap-1 text-xs text-mist-gray bg-cloud px-2.5 py-1 rounded-md border border-hairline">
+                          <Lock className="h-3.5 w-3.5 text-mist-gray" />
                           Đã kết thúc (Chỉ đọc)
                         </div>
                       </div>
@@ -287,7 +287,7 @@ export function TermDetailModal({
                         size="sm"
                         variant="outline"
                         onClick={() => onEditTerm(term)}
-                        className="text-slate-700 border-slate-200 hover:bg-slate-50 text-xs h-8"
+                        className="text-slate-gray border-hairline hover:bg-cloud text-xs h-8"
                       >
                         <Edit2 className="h-3.5 w-3.5 mr-1.5" />
                         Chỉnh sửa
@@ -301,7 +301,7 @@ export function TermDetailModal({
 
           {/* Action error */}
           {actionError && (
-            <div className="mx-6 mt-4 p-3 bg-red-50 border border-red-200 rounded-lg flex items-start gap-2 text-xs text-red-700">
+            <div className="mx-6 mt-4 p-3 bg-rose-50 border border-rose-200 rounded-lg flex items-start gap-2 text-xs text-rose-700">
               <AlertCircle className="h-4 w-4 shrink-0 mt-0.5" />
               <div className="flex-1">{actionError}</div>
             </div>
@@ -326,8 +326,8 @@ export function TermDetailModal({
 
           {/* Read-only notification banner for completed terms */}
           {isTermClosed && (
-            <div className="mx-6 mt-4 p-3 bg-slate-100 border border-slate-200 rounded-lg flex items-center gap-2 text-xs text-slate-600">
-              <Lock className="h-4 w-4 text-slate-500 shrink-0" />
+            <div className="mx-6 mt-4 p-3 bg-cloud border border-hairline rounded-lg flex items-center gap-2 text-xs text-slate-gray">
+              <Lock className="h-4 w-4 text-mist-gray shrink-0" />
               <span>
                 Nhiệm kỳ này đã kết thúc. Toàn bộ danh sách phân công và hội viên được bảo lưu nguyên vẹn để tra cứu lịch sử (chế độ chỉ đọc).
               </span>
@@ -335,27 +335,27 @@ export function TermDetailModal({
           )}
 
           {/* Modal Body / Member Roster Section */}
-          <div className="flex-1 overflow-y-auto p-6 space-y-4 bg-slate-50/50">
+          <div className="flex-1 overflow-y-auto p-6 space-y-4 bg-cloud">
             {/* Section Header & Toolbar */}
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-white p-3 rounded-xl border border-slate-200/80 shadow-xs">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-white p-3 rounded-xl border border-hairline shadow-xs">
               <div className="flex items-center gap-2 flex-1 max-w-md">
-                <div className="text-sm font-bold text-slate-800 shrink-0 mr-2">
+                <div className="text-sm font-bold text-ink-navy shrink-0 mr-2">
                   Thành viên nhiệm kỳ
                 </div>
                 <div className="relative flex-1">
-                  <Search className="h-3.5 w-3.5 absolute left-2.5 top-1/2 -translate-y-1/2 text-slate-400" />
+                  <Search className="h-3.5 w-3.5 absolute left-2.5 top-1/2 -translate-y-1/2 text-mist-gray" />
                   <Input
                     placeholder="Tìm theo tên, MSSV, chức vụ, bộ phận..."
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    className="pl-8 h-8 text-xs bg-slate-50 border-slate-200"
+                    className="pl-8 h-8 text-xs bg-cloud border-hairline"
                   />
                 </div>
                 <Select
                   value={statusFilter}
                   onValueChange={setStatusFilter}
                 >
-                  <SelectTrigger className="h-8 rounded-md border-slate-200 bg-slate-50 px-2 text-xs text-slate-700 w-auto min-w-[140px]">
+                  <SelectTrigger className="h-8 rounded-md border-hairline bg-cloud px-2 text-xs text-slate-gray w-auto min-w-[140px]">
                     <SelectValue placeholder="Tất cả trạng thái" />
                   </SelectTrigger>
                   <SelectContent>
@@ -376,7 +376,7 @@ export function TermDetailModal({
                     setEditingMember(null);
                     setIsAddMemberOpen(true);
                   }}
-                  className="bg-blue-600 hover:bg-blue-700 text-white h-8 text-xs shadow-xs"
+                  className="bg-signal-blue hover:bg-[#005be0] text-white h-8 text-xs shadow-xs"
                 >
                   <UserPlus className="h-3.5 w-3.5 mr-1.5" />
                   + Thêm hội viên
@@ -386,19 +386,19 @@ export function TermDetailModal({
 
             {/* Members Roster Table */}
             {isLoadingMembers || isLoadingTerm ? (
-              <div className="py-16 flex flex-col items-center justify-center text-slate-500 gap-2 bg-white rounded-xl border border-slate-200">
-                <Loader2 strokeWidth={1.5} className="h-6 w-6 animate-spin text-blue-600" />
+              <div className="py-16 flex flex-col items-center justify-center text-mist-gray gap-2 bg-white rounded-xl border border-hairline">
+                <Loader2 strokeWidth={1.5} className="h-6 w-6 animate-spin text-signal-blue" />
                 <p className="text-xs">Đang tải danh sách hội viên nhiệm kỳ...</p>
               </div>
             ) : filteredMembers.length === 0 ? (
-              <div className="py-14 text-center bg-white rounded-xl border border-slate-200 p-6">
-                <Users strokeWidth={1.5} className="h-10 w-10 text-slate-300 mx-auto mb-2" />
-                <p className="text-sm font-semibold text-slate-700">
+              <div className="py-14 text-center bg-white rounded-xl border border-hairline p-6">
+                <Users strokeWidth={1.5} className="h-10 w-10 text-mist-gray mx-auto mb-2" />
+                <p className="text-sm font-semibold text-ink-navy">
                   {searchQuery || statusFilter !== 'all'
                     ? 'Không tìm thấy hội viên phù hợp với bộ lọc'
                     : 'Chưa có hội viên nào trong nhiệm kỳ này.'}
                 </p>
-                <p className="text-xs text-slate-500 mt-1 max-w-md mx-auto">
+                <p className="text-xs text-mist-gray mt-1 max-w-md mx-auto">
                   {searchQuery || statusFilter !== 'all'
                     ? 'Thử thay đổi từ khóa tìm kiếm hoặc đặt lại trạng thái sinh hoạt.'
                     : isTermClosed
@@ -412,7 +412,7 @@ export function TermDetailModal({
                       setEditingMember(null);
                       setIsAddMemberOpen(true);
                     }}
-                    className="mt-4 bg-blue-600 hover:bg-blue-700 text-white text-xs"
+                    className="mt-4 bg-signal-blue hover:bg-[#005be0] text-white text-xs"
                   >
                     <UserPlus className="h-3.5 w-3.5 mr-1.5" />
                     Thêm hội viên
@@ -420,11 +420,11 @@ export function TermDetailModal({
                 )}
               </div>
             ) : (
-              <div className="bg-white rounded-xl border border-slate-200 overflow-hidden shadow-xs">
+              <div className="bg-white rounded-xl border border-hairline overflow-hidden shadow-xs">
                 <div className="overflow-x-auto">
                   <table className="w-full text-left text-xs border-collapse">
                     <thead>
-                      <tr className="bg-slate-50/80 border-b border-slate-200 text-slate-600 font-semibold uppercase tracking-wider text-[11px]">
+                      <tr className="bg-cloud border-b border-hairline text-slate-gray font-semibold uppercase tracking-wider text-[11px]">
                         <th className="py-3 px-4">Hội viên</th>
                         <th className="py-3 px-4">MSSV</th>
                         <th className="py-3 px-4">Chức vụ</th>
@@ -434,45 +434,45 @@ export function TermDetailModal({
                         {!isTermClosed && <th className="py-3 px-4 text-right">Thao tác</th>}
                       </tr>
                     </thead>
-                    <tbody className="divide-y divide-slate-100">
+                    <tbody className="divide-y divide-hairline">
                       {filteredMembers.map((tm) => {
                         const mStatus =
                           TERM_MEMBER_STATUS_OPTIONS.find((s) => s.value === tm.status) ||
                           TERM_MEMBER_STATUS_OPTIONS[0];
 
                         return (
-                          <tr key={tm.id} className="hover:bg-slate-50/60 transition-colors">
+                          <tr key={tm.id} className="hover:bg-cloud/60 transition-colors">
                             <td className="py-3 px-4">
-                              <div className="font-semibold text-slate-900">
+                              <div className="font-semibold text-ink-navy">
                                 {tm.member?.fullName || '—'}
                               </div>
                               {tm.member?.email && (
-                                <div className="text-[11px] text-slate-500 font-normal">
+                                <div className="text-[11px] text-mist-gray font-normal">
                                   {tm.member.email}
                                 </div>
                               )}
                             </td>
-                            <td className="py-3 px-4 text-slate-600">
+                            <td className="py-3 px-4 text-slate-gray">
                               <div>{tm.member?.studentId || '—'}</div>
                               {tm.member?.className && (
-                                <div className="text-[11px] text-slate-400">
+                                <div className="text-[11px] text-mist-gray">
                                   {tm.member.className}
                                 </div>
                               )}
                             </td>
                             <td className="py-3 px-4">
-                              <div className="font-medium text-slate-800 flex items-center gap-1.5">
+                              <div className="font-medium text-ink-navy flex items-center gap-1.5">
                                 {tm.position}
                               </div>
                             </td>
                             <td className="py-3 px-4">
                               {tm.department ? (
-                                <div className="text-[11px] text-blue-600 font-medium flex items-center gap-1">
+                                <div className="text-[11px] text-signal-blue font-medium flex items-center gap-1">
                                   <Layers className="h-3 w-3" />
                                   {tm.department}
                                 </div>
                               ) : (
-                                <span className="text-slate-400">—</span>
+                                <span className="text-mist-gray">—</span>
                               )}
                             </td>
                             <td className="py-3 px-4">
@@ -480,7 +480,7 @@ export function TermDetailModal({
                                 {mStatus.label}
                               </Badge>
                             </td>
-                            <td className="py-3 px-4 text-slate-500">
+                            <td className="py-3 px-4 text-mist-gray">
                               {tm.joinedDate || '—'}
                             </td>
                             {!isTermClosed && (
@@ -493,7 +493,7 @@ export function TermDetailModal({
                                       setEditingMember(tm);
                                       setIsAddMemberOpen(true);
                                     }}
-                                    className="h-7 px-2 text-xs text-slate-600 hover:text-blue-600 hover:bg-blue-50"
+                                    className="h-7 px-2 text-xs text-slate-gray hover:text-signal-blue hover:bg-[#e6f0ff]"
                                     title="Chỉnh sửa phân công"
                                   >
                                     <Edit2 className="h-3 w-3 mr-1" />
@@ -503,7 +503,7 @@ export function TermDetailModal({
                                     variant="ghost"
                                     size="sm"
                                     onClick={() => setDeletingMember(tm)}
-                                    className="h-7 px-2 text-xs text-slate-600 hover:text-red-600 hover:bg-red-50"
+                                    className="h-7 px-2 text-xs text-slate-gray hover:text-rose-600 hover:bg-rose-50"
                                     title="Xóa khỏi nhiệm kỳ"
                                   >
                                     <Trash2 className="h-3 w-3 mr-1" />
@@ -563,27 +563,27 @@ export function TermDetailModal({
         <DialogContent className="max-w-md">
           <DialogHeader>
             <div className="flex items-center gap-2.5">
-              <div className="h-9 w-9 rounded-lg bg-red-50 text-red-600 flex items-center justify-center">
+              <div className="h-9 w-9 rounded-lg bg-rose-50 text-rose-600 flex items-center justify-center">
                 <Trash2 strokeWidth={1.5} className="h-5 w-5" />
               </div>
               <div>
-                <DialogTitle className="text-lg font-bold text-slate-900">
+                <DialogTitle className="text-lg font-bold text-ink-navy">
                   Xóa hội viên khỏi nhiệm kỳ?
                 </DialogTitle>
-                <DialogDescription className="text-xs text-slate-500">
+                <DialogDescription className="text-xs text-mist-gray">
                   Xác nhận xóa phân công của hội viên
                 </DialogDescription>
               </div>
             </div>
           </DialogHeader>
 
-          <div className="py-2 text-sm text-slate-600 space-y-2">
+          <div className="py-2 text-sm text-slate-gray space-y-2">
             <p>
               Bạn có chắc chắn muốn xóa hội viên{' '}
-              <strong className="text-slate-900">{deletingMember?.member?.fullName}</strong> khỏi nhiệm kỳ{' '}
-              <strong className="text-slate-900">{term?.name}</strong>?
+              <strong className="text-ink-navy">{deletingMember?.member?.fullName}</strong> khỏi nhiệm kỳ{' '}
+              <strong className="text-ink-navy">{term?.name}</strong>?
             </p>
-            <p className="text-xs text-slate-500 bg-slate-50 p-2.5 rounded border border-slate-200">
+            <p className="text-xs text-mist-gray bg-cloud p-2.5 rounded border border-hairline">
               Thao tác này chỉ xóa phân công của hội viên trong nhiệm kỳ hiện tại. Hồ sơ hội viên trong Đơn vị vẫn được giữ nguyên.
             </p>
           </div>
@@ -601,7 +601,7 @@ export function TermDetailModal({
               type="button"
               onClick={handleConfirmRemoveMember}
               disabled={removeMemberMutation.isPending}
-              className="bg-red-600 hover:bg-red-700 text-white"
+              className="bg-rose-600 hover:bg-rose-700 text-white"
             >
               {removeMemberMutation.isPending && (
                 <Loader2 className="h-4 w-4 mr-2 animate-spin" />

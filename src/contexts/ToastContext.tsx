@@ -140,7 +140,7 @@ function ToastCard({ toast, onDismiss }: { toast: ToastItem; onDismiss: () => vo
           containerClass: 'bg-white border-emerald-200 shadow-emerald-500/10',
           badgeClass: 'bg-emerald-50 text-emerald-800 border-emerald-100',
           titleColor: 'text-emerald-950',
-          textColor: 'text-slate-600',
+          textColor: 'text-slate-gray',
         };
       case 'error':
         return {
@@ -148,7 +148,7 @@ function ToastCard({ toast, onDismiss }: { toast: ToastItem; onDismiss: () => vo
           containerClass: 'bg-white border-rose-200 shadow-rose-500/10',
           badgeClass: 'bg-rose-50 text-rose-800 border-rose-100',
           titleColor: 'text-rose-950',
-          textColor: 'text-slate-600',
+          textColor: 'text-slate-gray',
         };
       case 'warning':
         return {
@@ -156,16 +156,16 @@ function ToastCard({ toast, onDismiss }: { toast: ToastItem; onDismiss: () => vo
           containerClass: 'bg-white border-amber-200 shadow-amber-500/10',
           badgeClass: 'bg-amber-50 text-amber-800 border-amber-100',
           titleColor: 'text-amber-950',
-          textColor: 'text-slate-600',
+          textColor: 'text-slate-gray',
         };
       case 'info':
       default:
         return {
-          icon: <Info strokeWidth={1.5} className="w-5 h-5 text-sky-600 shrink-0 mt-0.5" />,
-          containerClass: 'bg-white border-sky-200 shadow-sky-500/10',
-          badgeClass: 'bg-sky-50 text-sky-800 border-sky-100',
-          titleColor: 'text-sky-950',
-          textColor: 'text-slate-600',
+          icon: <Info strokeWidth={1.5} className="w-5 h-5 text-signal-blue shrink-0 mt-0.5" />,
+          containerClass: 'bg-white border-[#d4e4fa] shadow-signal-blue/10',
+          badgeClass: 'bg-[#e6f0ff] text-signal-blue border-[#d4e4fa]',
+          titleColor: 'text-ink-navy',
+          textColor: 'text-slate-gray',
         };
     }
   };
@@ -192,7 +192,7 @@ function ToastCard({ toast, onDismiss }: { toast: ToastItem; onDismiss: () => vo
         type="button"
         onClick={onDismiss}
         aria-label="Đóng thông báo"
-        className="text-slate-400 hover:text-slate-600 p-1 rounded-lg hover:bg-slate-100 transition-colors shrink-0 -mr-1 -mt-1 cursor-pointer"
+        className="text-mist-gray hover:text-ink-navy p-1 rounded-lg hover:bg-pebble transition-colors shrink-0 -mr-1 -mt-1 cursor-pointer"
       >
         <X className="w-4 h-4" />
       </button>

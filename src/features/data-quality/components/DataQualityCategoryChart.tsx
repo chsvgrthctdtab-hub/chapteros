@@ -47,24 +47,24 @@ export function DataQualityCategoryChart({
   const totalIssues = summary?.totalIssues ?? 0;
 
   return (
-    <div className="rounded-xl bg-white p-6 border border-slate-200/90 shadow-2xs space-y-5">
+    <div className="rounded-xl bg-white p-6 border border-hairline shadow-xs space-y-5">
       <div className="flex items-center justify-between">
         <div className="space-y-1">
-          <h2 className="text-base font-bold text-slate-900 flex items-center gap-2">
-            <PieChartIcon className="w-4 h-4 text-emerald-700" />
+          <h2 className="text-base font-bold text-ink-navy flex items-center gap-2">
+            <PieChartIcon className="w-4 h-4 text-signal-blue" />
             <span>Phân bổ theo danh mục</span>
           </h2>
-          <p className="text-xs text-slate-500">Tỷ lệ vấn đề dữ liệu qua các phân hệ</p>
+          <p className="text-xs text-mist-gray">Tỷ lệ vấn đề dữ liệu qua các phân hệ</p>
         </div>
       </div>
 
       {totalIssues === 0 || chartData.length === 0 ? (
-        <div className="flex flex-col items-center justify-center py-8 text-center bg-slate-50/60 rounded-xl border border-dashed border-slate-200">
+        <div className="flex flex-col items-center justify-center py-8 text-center bg-cloud/60 rounded-xl border border-dashed border-hairline">
           <div className="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center mb-2">
             <CheckCircle2 strokeWidth={1.5} className="w-5 h-5" />
           </div>
-          <span className="text-sm font-semibold text-slate-800">Không có dữ liệu lệch chuẩn</span>
-          <span className="text-xs text-slate-500 mt-0.5">Tất cả các danh mục đều đạt chuẩn 100%</span>
+          <span className="text-sm font-semibold text-ink-navy">Không có dữ liệu lệch chuẩn</span>
+          <span className="text-xs text-mist-gray mt-0.5">Tất cả các danh mục đều đạt chuẩn 100%</span>
         </div>
       ) : (
         <div className="space-y-4">
@@ -97,7 +97,7 @@ export function DataQualityCategoryChart({
                     if (active && payload && payload.length) {
                       const data = payload[0].payload;
                       return (
-                        <div className="rounded-xl bg-slate-900 text-white p-2.5 shadow-xl text-xs space-y-1 z-50">
+                        <div className="rounded-xl bg-ink-navy text-white p-2.5 shadow-xl text-xs space-y-1 z-50">
                           <div className="font-bold flex items-center gap-1.5">
                             <span
                               className="w-2.5 h-2.5 rounded-full"
@@ -105,11 +105,11 @@ export function DataQualityCategoryChart({
                             />
                             <span>{data.name}</span>
                           </div>
-                          <div className="text-slate-300">Tổng: {data.value} mục</div>
-                          <div className="flex gap-2 text-[10px] text-slate-400 pt-1 border-t border-slate-800">
+                          <div className="text-cloud">Tổng: {data.value} mục</div>
+                          <div className="flex gap-2 text-[10px] text-mist-gray pt-1 border-t border-hairline">
                             <span className="text-rose-400">Khẩn: {data.critical}</span>
                             <span className="text-amber-400">Cảnh báo: {data.warning}</span>
-                            <span className="text-sky-400">Gợi ý: {data.info}</span>
+                            <span className="text-signal-blue">Gợi ý: {data.info}</span>
                           </div>
                         </div>
                       );
@@ -122,15 +122,15 @@ export function DataQualityCategoryChart({
 
             {/* Inner text */}
             <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
-              <span className="text-2xl font-bold text-slate-800 tabular-nums">{totalIssues}</span>
-              <span className="text-[10px] font-semibold text-slate-400 uppercase tracking-wider">
+              <span className="text-2xl font-bold text-ink-navy tabular-nums">{totalIssues}</span>
+              <span className="text-[10px] font-semibold text-mist-gray uppercase tracking-wider">
                 Vấn đề
               </span>
             </div>
           </div>
 
           {/* Interactive Legend List */}
-          <div className="space-y-1.5 pt-2 border-t border-slate-100">
+          <div className="space-y-1.5 pt-2 border-t border-hairline">
             {chartData.map((item) => {
               const isSelected = selectedCategory === item.id;
               const percentage = Math.round((item.value / totalIssues) * 100);
@@ -146,8 +146,8 @@ export function DataQualityCategoryChart({
                   }
                   className={`w-full flex items-center justify-between p-2 rounded-lg text-xs transition-colors cursor-pointer text-left ${
                     isSelected
-                      ? 'bg-emerald-50 text-emerald-900 font-semibold ring-1 ring-emerald-300'
-                      : 'hover:bg-slate-50 text-slate-700'
+                      ? 'bg-[#e6f0ff] text-signal-blue font-semibold ring-1 ring-[#d4e4fa]'
+                      : 'hover:bg-cloud text-slate-gray'
                   }`}
                 >
                   <div className="flex items-center gap-2 truncate">
@@ -159,8 +159,8 @@ export function DataQualityCategoryChart({
                   </div>
 
                   <div className="flex items-center gap-2 shrink-0">
-                    <span className="text-slate-400 font-normal">{percentage}%</span>
-                    <span className="font-bold text-slate-800 bg-slate-100 px-1.5 py-0.5 rounded-md text-[11px]">
+                    <span className="text-mist-gray font-normal">{percentage}%</span>
+                    <span className="font-bold text-ink-navy bg-cloud px-1.5 py-0.5 rounded-md text-[11px] border border-hairline">
                       {item.value}
                     </span>
                   </div>

@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   Search,
   X,
@@ -18,7 +17,7 @@ import {
   SelectItem,
 } from '@/components/ui/select';
 import { useLanguage } from '@/contexts/LanguageContext';
-import { MEMBER_STATUSES, COMMON_POSITIONS } from '../types/member.types';
+import { MEMBER_STATUSES } from '../types/member.types';
 import type { MemberFilterParams } from '../types/member.types';
 import type { Term } from '@/types';
 
@@ -43,7 +42,7 @@ export function MemberFilters({
   viewMode,
   onViewModeChange,
 }: MemberFiltersProps) {
-  const { t, language } = useLanguage();
+  const { language } = useLanguage();
   const hasActiveFilters = Boolean(
     filters.search ||
       (filters.status && filters.status !== 'all') ||
@@ -53,12 +52,12 @@ export function MemberFilters({
   );
 
   return (
-    <div className="bg-white border border-slate-200/80 rounded-3xl p-4 sm:p-5 shadow-2xs space-y-4">
+    <div className="bg-white border border-hairline rounded-2xl p-4 sm:p-5 shadow-xs space-y-4">
       {/* Top row: Search, Dropdowns, View Switcher */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-3 items-center">
         {/* Search Input */}
         <div className="lg:col-span-4 relative">
-          <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400 pointer-events-none" />
+          <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-mist-gray pointer-events-none" />
           <Input
             type="text"
             placeholder={
@@ -68,12 +67,12 @@ export function MemberFilters({
             }
             value={filters.search || ''}
             onChange={(e) => onFilterChange({ search: e.target.value, page: 1 })}
-            className="pl-10 pr-9 text-xs h-10 bg-slate-50/70 border-slate-300/80 focus:bg-white transition-colors rounded-full"
+            className="pl-10 pr-9 text-xs h-9 bg-cloud border-hairline text-ink-navy placeholder:text-mist-gray focus:bg-white focus:outline-hidden focus:ring-2 focus:ring-signal-blue/20 focus:border-signal-blue transition-colors rounded-lg font-medium"
           />
           {filters.search && (
             <button
               onClick={() => onFilterChange({ search: '', page: 1 })}
-              className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 p-1 rounded-full hover:bg-slate-200/60 cursor-pointer"
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-mist-gray hover:text-ink-navy p-1 rounded-md hover:bg-pebble cursor-pointer"
               title={language === 'vi' ? 'Xóa tìm kiếm' : 'Clear search'}
             >
               <X className="h-3.5 w-3.5" />
@@ -87,7 +86,7 @@ export function MemberFilters({
             value={filters.termId || 'all'}
             onValueChange={(val) => onFilterChange({ termId: val, page: 1 })}
           >
-            <SelectTrigger className="w-full h-10 rounded-full border-slate-300/80 bg-slate-50/70 text-xs text-slate-700 font-medium">
+            <SelectTrigger className="w-full h-9 rounded-lg border-hairline bg-cloud text-xs text-ink-navy font-medium">
               <SelectValue placeholder={language === 'vi' ? 'Tất cả nhiệm kỳ' : 'All Terms'} />
             </SelectTrigger>
             <SelectContent>
@@ -114,7 +113,7 @@ export function MemberFilters({
               })
             }
           >
-            <SelectTrigger className="w-full h-10 rounded-full border-slate-300/80 bg-slate-50/70 text-xs text-slate-700 font-medium">
+            <SelectTrigger className="w-full h-9 rounded-lg border-hairline bg-cloud text-xs text-ink-navy font-medium">
               <SelectValue placeholder={language === 'vi' ? 'Tất cả trạng thái' : 'All Statuses'} />
             </SelectTrigger>
             <SelectContent>
@@ -138,39 +137,39 @@ export function MemberFilters({
 
         {/* View Switcher & Actions */}
         <div className="lg:col-span-3 flex items-center justify-end gap-2">
-          <div className="flex items-center bg-slate-100/90 p-1 rounded-full border border-slate-200">
+          <div className="flex items-center bg-pebble p-0.5 rounded-lg border border-hairline gap-0.5">
             <button
               type="button"
               onClick={() => onViewModeChange('table')}
-              className={`p-1.5 rounded-full transition-all cursor-pointer ${
+              className={`p-1.5 rounded-md transition-all cursor-pointer ${
                 viewMode === 'table'
-                  ? 'bg-white text-slate-900 shadow-2xs font-semibold'
-                  : 'text-slate-500 hover:text-slate-900'
+                  ? 'bg-white text-ink-navy shadow-xs font-semibold'
+                  : 'text-slate-gray hover:text-ink-navy'
               }`}
               title={language === 'vi' ? 'Xem dạng bảng' : 'Table view'}
             >
-              <List className="h-4 w-4" />
+              <List className="h-4 w-4 text-signal-blue" />
             </button>
             <button
               type="button"
               onClick={() => onViewModeChange('cards')}
-              className={`p-1.5 rounded-full transition-all cursor-pointer ${
+              className={`p-1.5 rounded-md transition-all cursor-pointer ${
                 viewMode === 'cards'
-                  ? 'bg-white text-slate-900 shadow-2xs font-semibold'
-                  : 'text-slate-500 hover:text-slate-900'
+                  ? 'bg-white text-ink-navy shadow-xs font-semibold'
+                  : 'text-slate-gray hover:text-ink-navy'
               }`}
               title={language === 'vi' ? 'Xem dạng lưới thẻ' : 'Cards view'}
             >
-              <LayoutGrid className="h-4 w-4" />
+              <LayoutGrid className="h-4 w-4 text-signal-blue" />
             </button>
           </div>
         </div>
       </div>
 
       {/* Bottom row: Quick Filter Chips & Results Count */}
-      <div className="flex flex-wrap items-center justify-between gap-3 pt-3 border-t border-slate-100 text-xs">
+      <div className="flex flex-wrap items-center justify-between gap-3 pt-3 border-t border-hairline text-xs">
         <div className="flex flex-wrap items-center gap-2">
-          <span className="text-slate-400 font-semibold uppercase tracking-wider text-[10px] flex items-center gap-1.5 mr-1">
+          <span className="text-slate-gray font-semibold uppercase tracking-wider text-[10px] flex items-center gap-1.5 mr-1">
             <SlidersHorizontal className="h-3 w-3" />
             {language === 'vi' ? 'Lọc nhanh:' : 'Quick Filter:'}
           </span>
@@ -181,8 +180,8 @@ export function MemberFilters({
             className={`px-3.5 py-1 rounded-full text-xs font-semibold border transition-all duration-150 cursor-pointer active:scale-95 tracking-wide ${
               (!filters.position || filters.position === 'all') &&
               (!filters.status || filters.status === 'all')
-                ? 'bg-slate-900 text-white border-slate-900 shadow-2xs'
-                : 'bg-white text-slate-700 border-slate-300/80 hover:bg-slate-100'
+                ? 'bg-ink-navy text-white border-ink-navy shadow-xs'
+                : 'bg-white text-slate-gray border-hairline hover:bg-pebble hover:text-ink-navy'
             }`}
           >
             {language === 'vi' ? 'Tất cả' : 'All'}
@@ -198,8 +197,8 @@ export function MemberFilters({
             }
             className={`inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full text-xs font-semibold border transition-all duration-150 cursor-pointer active:scale-95 tracking-wide ${
               filters.position === 'bch'
-                ? 'bg-indigo-100 text-indigo-950 border-indigo-300 font-bold shadow-2xs'
-                : 'bg-white text-indigo-800 border-indigo-200 hover:bg-indigo-50'
+                ? 'bg-[#e6f0ff] text-signal-blue border-[#d4e4fa] font-bold shadow-xs'
+                : 'bg-white text-slate-gray border-hairline hover:bg-pebble hover:text-ink-navy'
             }`}
           >
             <Shield className="h-3.5 w-3.5" />
@@ -216,8 +215,8 @@ export function MemberFilters({
             }
             className={`px-3.5 py-1 rounded-full text-xs font-semibold border transition-all duration-150 cursor-pointer active:scale-95 tracking-wide ${
               filters.status === 'active'
-                ? 'bg-emerald-100 text-emerald-950 border-emerald-300 font-bold shadow-2xs'
-                : 'bg-white text-emerald-800 border-emerald-200 hover:bg-emerald-50'
+                ? 'bg-emerald-50 text-emerald-800 border-emerald-300 font-bold shadow-xs'
+                : 'bg-white text-slate-gray border-hairline hover:bg-pebble hover:text-ink-navy'
             }`}
           >
             {language === 'vi' ? 'Đang hoạt động' : 'Active'}
@@ -233,18 +232,18 @@ export function MemberFilters({
             }
             className={`px-3.5 py-1 rounded-full text-xs font-semibold border transition-all duration-150 cursor-pointer active:scale-95 tracking-wide ${
               filters.status === 'alumni'
-                ? 'bg-slate-200 text-slate-900 border-slate-300 font-bold shadow-2xs'
-                : 'bg-white text-slate-700 border-slate-300/80 hover:bg-slate-100'
+                ? 'bg-cloud text-ink-navy border-hairline font-bold shadow-xs'
+                : 'bg-white text-slate-gray border-hairline hover:bg-pebble hover:text-ink-navy'
             }`}
           >
             {language === 'vi' ? 'Cựu hội viên' : 'Alumni'}
           </button>
         </div>
 
-        <div className="flex items-center space-x-3 text-slate-500">
+        <div className="flex items-center space-x-3 text-slate-gray">
           <span>
             {language === 'vi' ? 'Kết quả:' : 'Results:'}{' '}
-            <strong className="text-slate-800 font-semibold">{totalResults ?? 0}</strong>{' '}
+            <strong className="text-ink-navy font-semibold tabular-nums">{totalResults ?? 0}</strong>{' '}
             {filters.position === 'bch'
               ? language === 'vi'
                 ? 'cán bộ BCH'
@@ -259,7 +258,7 @@ export function MemberFilters({
               variant="ghost"
               size="sm"
               onClick={onReset}
-              className="h-6 text-xs text-slate-600 hover:text-slate-900 px-1.5 cursor-pointer"
+              className="h-6 text-xs text-signal-blue hover:text-[#005be0] hover:bg-transparent px-1.5 cursor-pointer font-semibold"
             >
               <RotateCcw className="h-3 w-3 mr-1" />
               {language === 'vi' ? 'Đặt lại' : 'Reset'}
@@ -270,4 +269,3 @@ export function MemberFilters({
     </div>
   );
 }
-

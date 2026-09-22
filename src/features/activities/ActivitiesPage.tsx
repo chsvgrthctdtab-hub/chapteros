@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import {
   Plus,
   Calendar,
@@ -41,6 +41,7 @@ import { EmptyState } from '@/components/common/EmptyState';
 import { Button } from '@/components/ui/button';
 import { GoogleSheetsExportModal } from '@/integrations/google/sheets/components/GoogleSheetsExportModal';
 import { GoogleSheetsImportWizardModal } from '@/integrations/google/sheets/components/GoogleSheetsImportWizardModal';
+import { parseActivityMetadata } from '@/features/activities/utils/activity-metadata';
 import type {
   ActivityFilterParams,
   ActivityListItem,
@@ -59,6 +60,8 @@ export function ActivitiesPage() {
     status: 'all',
     category: 'all',
     termId: 'all',
+    semester: 'all',
+    organizerScope: 'all',
     page: 1,
     pageSize: 12,
     sortBy: 'start_date',
@@ -90,10 +93,28 @@ export function ActivitiesPage() {
   const createMutation = useCreateActivity(currentOrg?.id);
   const updateMutation = useUpdateActivity(editingActivity?.id || '', currentOrg?.id);
 
-  const activities = activitiesData?.data || [];
+  const rawActivities = activitiesData?.data || [];
   const totalCount = activitiesData?.totalCount || 0;
   const totalPages = activitiesData?.totalPages || 1;
   const currentPage = filters.page || 1;
+
+  // Filter activities in memory by semester & scope metadata
+  const activities = useMemo(() => {
+    let list = rawActivities;
+    if (filters.semester && filters.semester !== 'all') {
+      list = list.filter((a) => {
+        const meta = parseActivityMetadata(a.description);
+        return meta.semester === filters.semester;
+      });
+    }
+    if (filters.organizerScope && filters.organizerScope !== 'all') {
+      list = list.filter((a) => {
+        const meta = parseActivityMetadata(a.description);
+        return meta.organizerScope === filters.organizerScope;
+      });
+    }
+    return list;
+  }, [rawActivities, filters.semester, filters.organizerScope]);
 
   // Compute status counts for status navigation
   const statusCounts: ActivityStatusCount = {
@@ -157,17 +178,17 @@ export function ActivitiesPage() {
   return (
     <div className="space-y-6 pb-12">
       {/* 1. Page Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pb-2 border-b border-slate-200/80">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pb-2 border-b border-hairline">
         <div>
           <div className="flex items-center gap-2.5">
-            <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-slate-900">
+            <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-ink-navy">
               Activities
             </h1>
-            <span className="text-xs font-bold text-slate-600 bg-slate-100 px-2.5 py-0.5 rounded-full tabular-nums border border-slate-200">
+            <span className="text-xs font-bold text-signal-blue bg-[#e6f0ff] px-2.5 py-0.5 rounded-full tabular-nums border border-hairline">
               {totalCount}
             </span>
           </div>
-          <p className="text-sm text-slate-500 mt-1">
+          <p className="text-sm text-slate-gray mt-1">
             Manage chapter activities, participants and execution.
           </p>
         </div>
@@ -182,9 +203,9 @@ export function ActivitiesPage() {
             id="activity-export-sheets-header-btn"
             onClick={() => setSheetsExportOpen(true)}
             title="Xuất Google Sheets"
-            className="h-8 px-2 sm:px-2.5 text-xs font-semibold text-slate-700 bg-white hover:bg-slate-50 border-slate-200 shadow-2xs"
+            className="h-8 px-2 sm:px-2.5 text-xs font-semibold text-ink-navy bg-white hover:bg-pebble border-hairline rounded-lg shadow-xs"
           >
-            <Download className="w-3.5 h-3.5 sm:mr-1 text-emerald-600 shrink-0" />
+            <Download className="w-3.5 h-3.5 sm:mr-1 text-signal-blue shrink-0" />
             <span className="hidden sm:inline">Xuất Sheets</span>
           </Button>
 
@@ -197,9 +218,9 @@ export function ActivitiesPage() {
               id="activity-import-sheets-header-btn"
               onClick={() => setSheetsImportOpen(true)}
               title="Nhập Google Sheets"
-              className="h-8 px-2 sm:px-2.5 text-xs font-semibold text-slate-700 bg-white hover:bg-slate-50 border-slate-200 shadow-2xs"
+              className="h-8 px-2 sm:px-2.5 text-xs font-semibold text-ink-navy bg-white hover:bg-pebble border-hairline rounded-lg shadow-xs"
             >
-              <Upload className="w-3.5 h-3.5 sm:mr-1 text-blue-600 shrink-0" />
+              <Upload className="w-3.5 h-3.5 sm:mr-1 text-signal-blue shrink-0" />
               <span className="hidden sm:inline">Nhập Sheets</span>
             </Button>
           )}
@@ -212,7 +233,7 @@ export function ActivitiesPage() {
               id="create-new-activity-btn"
               onClick={handleOpenCreate}
               title="Tạo hoạt động mới"
-              className="h-8 px-2.5 sm:px-3 text-xs font-bold text-white bg-emerald-700 hover:bg-emerald-800 shadow-xs flex items-center gap-1"
+              className="h-8 px-2.5 sm:px-3 text-xs font-semibold text-white bg-signal-blue hover:bg-[#005be0] rounded-lg shadow-sm flex items-center gap-1"
             >
               <Plus className="w-3.5 h-3.5 shrink-0" />
               <span className="hidden sm:inline">Tạo hoạt động</span>
@@ -265,7 +286,7 @@ export function ActivitiesPage() {
         />
       ) : activities.length === 0 ? (
         <EmptyState
-          icon={<Calendar className="w-7 h-7 text-emerald-600" />}
+          icon={<Calendar className="w-7 h-7 text-signal-blue" />}
           title="No activities found"
           description={
             filters.search || filters.status !== 'all' || filters.category !== 'all'
@@ -302,10 +323,10 @@ export function ActivitiesPage() {
 
       {/* 6. Pagination Bar */}
       {totalPages > 1 && !isLoading && (
-        <div className="flex items-center justify-between bg-white px-4 py-2.5 border border-slate-200/90 rounded-xl text-xs text-slate-600 shadow-2xs">
+        <div className="flex items-center justify-between bg-white px-4 py-2.5 border border-hairline rounded-xl text-xs text-slate-gray shadow-sm">
           <div>
-            Showing page <strong className="text-slate-900">{currentPage}</strong> of{' '}
-            <strong className="text-slate-900">{totalPages}</strong> ({totalCount} total activities)
+            Showing page <strong className="text-ink-navy font-semibold">{currentPage}</strong> of{' '}
+            <strong className="text-ink-navy font-semibold">{totalPages}</strong> ({totalCount} total activities)
           </div>
           <div className="flex items-center gap-1">
             <button
@@ -313,7 +334,7 @@ export function ActivitiesPage() {
               id="activity-prev-page-btn"
               disabled={currentPage <= 1}
               onClick={() => handleFilterChange({ page: currentPage - 1 })}
-              className="p-1.5 rounded-lg border border-slate-200 hover:bg-slate-50 disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
+              className="p-1.5 rounded-lg border border-hairline text-ink-navy hover:bg-pebble disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer transition-colors"
               title="Previous page"
             >
               <ChevronLeft className="w-4 h-4" />
@@ -323,7 +344,7 @@ export function ActivitiesPage() {
               id="activity-next-page-btn"
               disabled={currentPage >= totalPages}
               onClick={() => handleFilterChange({ page: currentPage + 1 })}
-              className="p-1.5 rounded-lg border border-slate-200 hover:bg-slate-50 disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
+              className="p-1.5 rounded-lg border border-hairline text-ink-navy hover:bg-pebble disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer transition-colors"
               title="Next page"
             >
               <ChevronRight className="w-4 h-4" />

@@ -95,11 +95,11 @@ export const ORGANIZATION_TYPE_CONFIG: Record<string, OrganizationTypeConfig> = 
     type: 'lien_chi_hoi' as OrganizationType,
     label: 'Liên chi hội',
     shortLabel: 'LCH',
-    badgeClass: 'bg-indigo-50 text-indigo-700 border-indigo-200',
-    badgeBg: 'bg-indigo-50',
-    badgeText: 'text-indigo-700',
-    badgeBorder: 'border-indigo-200',
-    iconBg: 'bg-indigo-600',
+    badgeClass: 'bg-[#e6f0ff] text-signal-blue border-[#d4e4fa]',
+    badgeBg: 'bg-[#e6f0ff]',
+    badgeText: 'text-signal-blue',
+    badgeBorder: 'border-[#d4e4fa]',
+    iconBg: 'bg-signal-blue',
     iconText: 'text-white',
     description: 'Đơn vị cấp Liên chi hội sinh viên quản lý các Chi hội trực thuộc',
   },
@@ -107,11 +107,11 @@ export const ORGANIZATION_TYPE_CONFIG: Record<string, OrganizationTypeConfig> = 
     type: 'lien_chi_hoi',
     label: 'Liên chi hội',
     shortLabel: 'LCH',
-    badgeClass: 'bg-indigo-50 text-indigo-700 border-indigo-200',
-    badgeBg: 'bg-indigo-50',
-    badgeText: 'text-indigo-700',
-    badgeBorder: 'border-indigo-200',
-    iconBg: 'bg-indigo-600',
+    badgeClass: 'bg-[#e6f0ff] text-signal-blue border-[#d4e4fa]',
+    badgeBg: 'bg-[#e6f0ff]',
+    badgeText: 'text-signal-blue',
+    badgeBorder: 'border-[#d4e4fa]',
+    iconBg: 'bg-signal-blue',
     iconText: 'text-white',
     description: 'Đơn vị cấp Liên chi hội sinh viên quản lý các Chi hội trực thuộc',
   },
@@ -119,11 +119,11 @@ export const ORGANIZATION_TYPE_CONFIG: Record<string, OrganizationTypeConfig> = 
     type: 'chi_hoi',
     label: 'Chi hội',
     shortLabel: 'CH',
-    badgeClass: 'bg-blue-50 text-blue-700 border-blue-200',
-    badgeBg: 'bg-blue-50',
-    badgeText: 'text-blue-700',
-    badgeBorder: 'border-blue-200',
-    iconBg: 'bg-blue-600',
+    badgeClass: 'bg-[#e6f0ff] text-signal-blue border-[#d4e4fa]',
+    badgeBg: 'bg-[#e6f0ff]',
+    badgeText: 'text-signal-blue',
+    badgeBorder: 'border-[#d4e4fa]',
+    iconBg: 'bg-signal-blue',
     iconText: 'text-white',
     description: 'Chi hội sinh viên lớp / khóa / chuyên ngành',
   },
@@ -149,9 +149,34 @@ export const ORGANIZATION_TYPE_CONFIG: Record<string, OrganizationTypeConfig> = 
     badgeBorder: 'border-emerald-200',
     iconBg: 'bg-emerald-600',
     iconText: 'text-white',
-    description: 'Đội hình chuyên trách / công tác xã hội / xung kích',
+    description: 'Đội hình tình nguyện / công tác xã hội / xung kích',
   },
 };
+
+/**
+ * Lấy nhãn tiếng Việt chuẩn xác theo loại hình đơn vị
+ */
+export function getOrgTypeLabel(type?: OrganizationType | string | null): string {
+  if (!type) return 'Đơn vị';
+  return getOrgTypeFullName(type);
+}
+
+/**
+ * Lấy viết tắt chuẩn xác theo loại hình đơn vị
+ */
+export function getOrgTypeShortLabel(type?: OrganizationType | string | null): string {
+  return getOrgTypeShort(type);
+}
+
+/**
+ * Lấy CSS classes cho Badge hiển thị loại hình đơn vị
+ */
+export function getOrgTypeBadgeClass(type?: OrganizationType | string | null): string {
+  if (!type) return 'bg-cloud text-slate-gray border-hairline';
+  const normalized = type.trim().toLowerCase();
+  const config = ORGANIZATION_TYPE_CONFIG[normalized];
+  return config ? config.badgeClass : 'bg-cloud text-slate-gray border-hairline';
+}
 
 export const ORGANIZATION_TYPES: OrganizationType[] = [
   'chi_hoi',
@@ -186,31 +211,6 @@ export const ORGANIZATION_TYPE_OPTIONS: { value: string; label: string; shortLab
     description: 'Đội hình tình nguyện / xung kích / chuyên môn',
   },
 ];
-
-/**
- * Lấy nhãn tiếng Việt chuẩn xác theo loại hình đơn vị
- */
-export function getOrgTypeLabel(type?: OrganizationType | string | null): string {
-  if (!type) return 'Đơn vị';
-  return getOrgTypeFullName(type);
-}
-
-/**
- * Lấy viết tắt chuẩn xác theo loại hình đơn vị
- */
-export function getOrgTypeShortLabel(type?: OrganizationType | string | null): string {
-  return getOrgTypeShort(type);
-}
-
-/**
- * Lấy CSS classes cho Badge hiển thị loại hình đơn vị
- */
-export function getOrgTypeBadgeClass(type?: OrganizationType | string | null): string {
-  if (!type) return 'bg-slate-50 text-slate-700 border-slate-200';
-  const normalized = type.trim().toLowerCase();
-  const config = ORGANIZATION_TYPE_CONFIG[normalized];
-  return config ? config.badgeClass : 'bg-slate-50 text-slate-700 border-slate-200';
-}
 
 /**
  * Format tên hiển thị đơn vị kèm loại hình và đơn vị trực thuộc (phân cấp)

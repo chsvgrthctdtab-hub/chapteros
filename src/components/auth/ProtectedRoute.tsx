@@ -15,17 +15,17 @@ export function ProtectedRoute({ children, allowNoOrganization = false }: Protec
   // Chốt chặn 1: Trong lúc isLoading hoặc đang đồng bộ memberships, luôn giữ màn hình Loading
   if (isLoading || (user && isSyncingMemberships && (!memberships || memberships.length === 0))) {
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center bg-slate-50 text-slate-700 p-4">
+      <div className="min-h-screen flex flex-col items-center justify-center bg-cloud text-slate-gray p-4">
         <div className="flex flex-col items-center space-y-4 max-w-sm text-center">
-          <div className="relative flex items-center justify-center h-16 w-16 rounded-2xl bg-blue-600 text-white shadow-lg">
+          <div className="relative flex items-center justify-center h-16 w-16 rounded-2xl bg-signal-blue text-white shadow-lg">
             <GraduationCap strokeWidth={1.5} className="h-9 w-9 animate-pulse" />
             <div className="absolute -bottom-1 -right-1 bg-white rounded-full p-0.5 shadow">
-              <Loader2 className="h-4 w-4 animate-spin text-blue-600" />
+              <Loader2 className="h-4 w-4 animate-spin text-signal-blue" />
             </div>
           </div>
           <div className="space-y-1">
-            <h3 className="text-base font-semibold text-slate-900">ChapterOS</h3>
-            <p className="text-xs text-slate-500">Đang kiểm tra quyền truy cập & đồng bộ tổ chức...</p>
+            <h3 className="text-base font-semibold text-ink-navy">ChapterOS</h3>
+            <p className="text-xs text-slate-gray">Đang kiểm tra quyền truy cập & đồng bộ tổ chức...</p>
           </div>
         </div>
       </div>

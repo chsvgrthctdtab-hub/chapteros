@@ -258,17 +258,17 @@ export function GoogleDriveLinkModal({
 
   return (
     <Dialog open={isOpen} onOpenChange={(open) => !open && handleClose()}>
-      <DialogContent className="sm:max-w-2xl max-h-[90vh] overflow-y-auto p-5 pr-10 sm:p-6 sm:pr-12 rounded-3xl border border-slate-200/80 shadow-xl [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+      <DialogContent className="sm:max-w-2xl max-h-[90vh] overflow-y-auto p-5 pr-10 sm:p-6 sm:pr-12 rounded-3xl border border-hairline shadow-xl [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
         <DialogHeader className="pb-1">
           <div className="flex items-center gap-3">
             <div className="w-11 h-11 rounded-2xl bg-emerald-50 border border-emerald-200 flex items-center justify-center text-emerald-600 shrink-0">
               <HardDrive strokeWidth={1.5} className="w-5 h-5" />
             </div>
             <div>
-              <DialogTitle className="text-lg font-bold text-slate-900 tracking-tight">
+              <DialogTitle className="text-lg font-bold text-ink-navy tracking-tight">
                 Liên kết tài liệu từ Google Drive
               </DialogTitle>
-              <DialogDescription className="text-xs text-slate-500">
+              <DialogDescription className="text-xs text-slate-gray">
                 Gắn liên kết Docs, Sheets, Slides, Forms hoặc thư mục Drive vào hồ sơ Đơn vị
               </DialogDescription>
             </div>
@@ -277,8 +277,8 @@ export function GoogleDriveLinkModal({
 
         {/* Scope Context Banner */}
         {(activityTitle || taskTitle) && (
-          <div className="p-2.5 rounded-lg bg-blue-50/70 border border-blue-100 flex items-center gap-2 text-xs text-blue-900">
-            <Sparkles className="w-4 h-4 text-blue-600 shrink-0" />
+          <div className="p-2.5 rounded-lg bg-[#e6f0ff] border border-[#d4e4fa] flex items-center gap-2 text-xs text-ink-navy">
+            <Sparkles className="w-4 h-4 text-signal-blue shrink-0" />
             <span>
               Liên kết trực tiếp vào:{' '}
               <strong>{activityTitle ? `Hoạt động "${activityTitle}"` : `Công việc "${taskTitle}"`}</strong>
@@ -287,14 +287,14 @@ export function GoogleDriveLinkModal({
         )}
 
         {/* Tab Selector */}
-        <div className="flex items-center gap-1 p-1 bg-slate-100 rounded-lg text-xs font-semibold">
+        <div className="flex items-center gap-1 p-1 bg-pebble rounded-lg text-xs font-semibold">
           <button
             type="button"
             onClick={() => setActiveTab('url')}
             className={`flex-1 py-1.5 px-3 rounded-md flex items-center justify-center gap-1.5 transition-all ${
               activeTab === 'url'
-                ? 'bg-white text-slate-900 shadow-sm'
-                : 'text-slate-600 hover:text-slate-900'
+                ? 'bg-white text-ink-navy shadow-sm'
+                : 'text-slate-gray hover:text-ink-navy'
             }`}
           >
             <Link2 className="w-3.5 h-3.5" />
@@ -305,8 +305,8 @@ export function GoogleDriveLinkModal({
             onClick={() => setActiveTab('browse')}
             className={`flex-1 py-1.5 px-3 rounded-md flex items-center justify-center gap-1.5 transition-all ${
               activeTab === 'browse'
-                ? 'bg-white text-slate-900 shadow-sm'
-                : 'text-slate-600 hover:text-slate-900'
+                ? 'bg-white text-ink-navy shadow-sm'
+                : 'text-slate-gray hover:text-ink-navy'
             }`}
           >
             <Search className="w-3.5 h-3.5" />
@@ -326,7 +326,7 @@ export function GoogleDriveLinkModal({
           {activeTab === 'url' && (
             <div className="space-y-3">
               <div className="space-y-1">
-                <label className="text-xs font-semibold text-slate-700">
+                <label className="text-xs font-semibold text-ink-navy">
                   Đường dẫn (URL) hoặc Mã ID tệp Google Drive <span className="text-rose-500">*</span>
                 </label>
                 <div className="relative">
@@ -335,7 +335,7 @@ export function GoogleDriveLinkModal({
                     value={urlInput}
                     onChange={(e) => setUrlInput(e.target.value)}
                     placeholder="https://docs.google.com/document/d/... hoặc https://drive.google.com/file/d/..."
-                    className="text-xs pr-8 font-mono"
+                    className="text-xs pr-8 font-mono border-hairline focus:ring-signal-blue"
                     required
                   />
                   {extractedId && (
@@ -344,7 +344,7 @@ export function GoogleDriveLinkModal({
                     </span>
                   )}
                 </div>
-                <p className="text-[11px] text-slate-500 leading-snug">
+                <p className="text-[11px] text-mist-gray leading-snug">
                   Hỗ trợ định dạng: Google Docs, Google Sheets, Google Slides, Google Forms, PDF, Thư mục và Tệp Drive.
                 </p>
               </div>
@@ -355,7 +355,7 @@ export function GoogleDriveLinkModal({
                     <span className="px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-emerald-600 text-white">
                       ID Hợp lệ
                     </span>
-                    <span className="font-mono text-[11px] text-slate-700 font-semibold">{extractedId}</span>
+                    <span className="font-mono text-[11px] text-ink-navy font-semibold">{extractedId}</span>
                   </div>
                   <Badge variant="outline" className={`text-[10px] ${typeInfo.badgeColor}`}>
                     {typeInfo.label}
@@ -370,13 +370,13 @@ export function GoogleDriveLinkModal({
             <div className="space-y-3">
               <div className="flex items-center gap-2">
                 <div className="relative flex-1">
-                  <Search className="w-3.5 h-3.5 absolute left-2.5 top-1/2 -translate-y-1/2 text-slate-400" />
+                  <Search className="w-3.5 h-3.5 absolute left-2.5 top-1/2 -translate-y-1/2 text-mist-gray" />
                   <Input
                     type="text"
                     value={searchKeyword}
                     onChange={(e) => setSearchKeyword(e.target.value)}
                     placeholder="Tìm theo tên tệp trên Google Drive..."
-                    className="text-xs pl-8"
+                    className="text-xs pl-8 border-hairline"
                   />
                 </div>
               </div>
@@ -388,8 +388,8 @@ export function GoogleDriveLinkModal({
                   onClick={() => setSelectedTypeGroup('all')}
                   className={`px-2 py-1 rounded-md border whitespace-nowrap ${
                     selectedTypeGroup === 'all'
-                      ? 'bg-slate-800 text-white border-slate-800'
-                      : 'bg-white text-slate-600 border-slate-200 hover:bg-slate-50'
+                      ? 'bg-ink-navy text-white border-ink-navy'
+                      : 'bg-white text-slate-gray border-hairline hover:bg-cloud'
                   }`}
                 >
                   Tất cả ({searchResults?.files.length || 0})
@@ -405,7 +405,7 @@ export function GoogleDriveLinkModal({
                       className={`px-2 py-1 rounded-md border whitespace-nowrap transition-all ${
                         isSelected
                           ? `${info.badgeColor} font-semibold shadow-xs`
-                          : 'bg-white text-slate-600 border-slate-200 hover:bg-slate-50'
+                          : 'bg-white text-slate-gray border-hairline hover:bg-cloud'
                       }`}
                     >
                       {info.label.split('/')[0]}
@@ -415,14 +415,14 @@ export function GoogleDriveLinkModal({
               </div>
 
               {/* Files Grid / List */}
-              <div className="border border-slate-200 rounded-lg max-h-52 overflow-y-auto divide-y divide-slate-100 bg-slate-50/50">
+              <div className="border border-hairline rounded-lg max-h-52 overflow-y-auto divide-y divide-hairline bg-cloud/50">
                 {isSearching ? (
-                  <div className="p-6 text-center text-slate-500">
+                  <div className="p-6 text-center text-mist-gray">
                     <Loader2 strokeWidth={1.5} className="w-5 h-5 animate-spin mx-auto mb-1 text-emerald-600" />
                     Đang tải danh sách tệp Google Drive...
                   </div>
                 ) : !searchResults?.files.length ? (
-                  <div className="p-6 text-center text-slate-500">
+                  <div className="p-6 text-center text-mist-gray">
                     Không tìm thấy tệp nào phù hợp từ khóa tìm kiếm.
                   </div>
                 ) : (
@@ -439,7 +439,7 @@ export function GoogleDriveLinkModal({
                       >
                         <div className="flex items-center gap-2.5 min-w-0">
                           <div className={`p-1.5 rounded-lg border ${info.bgColor} ${info.borderColor}`}>
-                            {file.fileTypeGroup === 'doc' && <FileText className="w-4 h-4 text-blue-600" />}
+                            {file.fileTypeGroup === 'doc' && <FileText className="w-4 h-4 text-signal-blue" />}
                             {file.fileTypeGroup === 'sheet' && <FileSpreadsheet className="w-4 h-4 text-emerald-600" />}
                             {file.fileTypeGroup === 'slide' && <Presentation className="w-4 h-4 text-amber-600" />}
                             {file.fileTypeGroup === 'form' && <CheckSquare className="w-4 h-4 text-purple-600" />}
@@ -447,8 +447,8 @@ export function GoogleDriveLinkModal({
                             {file.fileTypeGroup === 'folder' && <Folder className="w-4 h-4 text-amber-600" />}
                           </div>
                           <div className="min-w-0">
-                            <div className="font-semibold text-slate-800 truncate text-xs">{file.name}</div>
-                            <div className="text-[10px] text-slate-500 flex items-center gap-2 mt-0.5">
+                            <div className="font-semibold text-ink-navy truncate text-xs">{file.name}</div>
+                            <div className="text-[10px] text-mist-gray flex items-center gap-2 mt-0.5">
                               <span>{info.label}</span>
                               {file.owners?.[0] && <span>• {file.owners[0].displayName}</span>}
                             </div>
@@ -465,7 +465,7 @@ export function GoogleDriveLinkModal({
                               type="button"
                               variant="ghost"
                               size="sm"
-                              className="h-7 text-[11px] text-slate-600 hover:text-emerald-700"
+                              className="h-7 text-[11px] text-slate-gray hover:text-emerald-700"
                               onClick={(e) => {
                                 e.stopPropagation();
                                 handleSelectDriveFile(file);
@@ -494,9 +494,9 @@ export function GoogleDriveLinkModal({
           )}
 
           {/* Common Metadata Fields */}
-          <div className="space-y-3 pt-2 border-t border-slate-200">
+          <div className="space-y-3 pt-2 border-t border-hairline">
             <div className="space-y-1">
-              <label className="text-xs font-semibold text-slate-700">
+              <label className="text-xs font-semibold text-slate-gray">
                 Tên tài liệu hiển thị trong Đơn vị <span className="text-rose-500">*</span>
               </label>
               <Input
@@ -512,12 +512,12 @@ export function GoogleDriveLinkModal({
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               {/* Category */}
               <div className="space-y-1">
-                <label className="text-xs font-semibold text-slate-700">Danh mục tài liệu</label>
+                <label className="text-xs font-semibold text-slate-gray">Danh mục tài liệu</label>
                 <Select
                   value={category}
                   onValueChange={(val) => setCategory(val as DocumentCategory)}
                 >
-                  <SelectTrigger className="w-full h-9 rounded-md border-slate-200 bg-white text-xs text-slate-800">
+                  <SelectTrigger className="w-full h-9 rounded-md border-hairline bg-white text-xs text-ink-navy">
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
@@ -532,12 +532,12 @@ export function GoogleDriveLinkModal({
 
               {/* Access Level */}
               <div className="space-y-1">
-                <label className="text-xs font-semibold text-slate-700">Quyền truy cập nội bộ</label>
+                <label className="text-xs font-semibold text-slate-gray">Quyền truy cập nội bộ</label>
                 <Select
                   value={accessLevel}
                   onValueChange={(val) => setAccessLevel(val as DocumentAccessLevel)}
                 >
-                  <SelectTrigger className="w-full h-9 rounded-md border-slate-200 bg-white text-xs text-slate-800">
+                  <SelectTrigger className="w-full h-9 rounded-md border-hairline bg-white text-xs text-ink-navy">
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
@@ -553,8 +553,8 @@ export function GoogleDriveLinkModal({
           </div>
 
           {/* Notice */}
-          <div className="p-2.5 rounded-lg bg-slate-50 border border-slate-200 text-slate-600 text-[11px] flex items-start gap-2">
-            <ShieldAlert className="w-3.5 h-3.5 text-slate-500 shrink-0 mt-0.5" />
+          <div className="p-2.5 rounded-lg bg-cloud border border-hairline text-slate-gray text-[11px] flex items-start gap-2">
+            <ShieldAlert className="w-3.5 h-3.5 text-mist-gray shrink-0 mt-0.5" />
             <span>
               Tài liệu được liên kết dưới dạng tham chiếu an toàn. Quyền xem và chỉnh sửa thực tế sẽ tuân theo phân quyền trên Google Drive của tổ chức.
             </span>

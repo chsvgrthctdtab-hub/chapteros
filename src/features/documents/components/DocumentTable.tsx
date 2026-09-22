@@ -108,9 +108,9 @@ export function DocumentTable({
   };
 
   return (
-    <div className="overflow-x-auto rounded-xl border border-slate-200 bg-white shadow-2xs [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
-      <table className="w-full text-left text-xs text-slate-600 border-collapse">
-        <thead className="bg-slate-50/80 text-[11px] font-bold uppercase tracking-wider text-slate-500 border-b border-slate-200">
+    <div className="overflow-x-auto rounded-xl border border-hairline bg-white shadow-xs [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+      <table className="w-full text-left text-xs text-slate-gray border-collapse">
+        <thead className="bg-cloud text-[11px] font-bold uppercase tracking-wider text-mist-gray border-b border-hairline">
           <tr>
             <th scope="col" className="py-3 px-4 min-w-[260px]">
               Tài liệu & Nguồn lưu trữ
@@ -138,7 +138,7 @@ export function DocumentTable({
             </th>
           </tr>
         </thead>
-        <tbody className="divide-y divide-slate-100">
+        <tbody className="divide-y divide-hairline">
           {documents.map((doc) => {
             const isDriveDoc = doc.sourceType === 'google_drive';
             const ext = getFileExtension(doc.filePath);
@@ -155,7 +155,7 @@ export function DocumentTable({
               <tr
                 key={doc.id}
                 onClick={() => onSelect(doc)}
-                className="hover:bg-slate-50/80 transition-colors group cursor-pointer"
+                className="hover:bg-cloud transition-colors group cursor-pointer"
               >
                 {/* 1. File icon & Title */}
                 <td className="py-3 px-4">
@@ -172,14 +172,14 @@ export function DocumentTable({
                           target="_blank"
                           rel="noopener noreferrer"
                           onClick={(e) => e.stopPropagation()}
-                          className="font-semibold text-slate-900 line-clamp-1 hover:text-blue-600 hover:underline transition-colors block"
+                          className="font-semibold text-ink-navy line-clamp-1 hover:text-signal-blue hover:underline transition-colors block"
                           title={doc.title}
                         >
                           {doc.title}
                         </a>
                       ) : (
                         <p
-                          className="font-semibold text-slate-900 line-clamp-1 group-hover:text-blue-600 transition-colors"
+                          className="font-semibold text-ink-navy line-clamp-1 group-hover:text-signal-blue transition-colors"
                           title={doc.title}
                         >
                           {doc.title}
@@ -192,7 +192,7 @@ export function DocumentTable({
                             <span>Drive</span>
                           </span>
                         ) : (
-                          <span className="inline-flex items-center gap-0.5 text-[10px] font-medium text-slate-500 bg-slate-100 px-1.5 py-0.2 rounded border border-slate-200">
+                          <span className="inline-flex items-center gap-0.5 text-[10px] font-medium text-slate-gray bg-cloud px-1.5 py-0.2 rounded border border-hairline">
                             <HardDrive className="w-2.5 h-2.5" />
                             <span>Storage</span>
                           </span>
@@ -203,14 +203,14 @@ export function DocumentTable({
                             target="_blank"
                             rel="noopener noreferrer"
                             onClick={(e) => e.stopPropagation()}
-                            className="text-[11px] text-blue-600 hover:underline truncate max-w-[220px] font-mono inline-flex items-center gap-0.5"
+                            className="text-[11px] text-signal-blue hover:underline truncate max-w-[220px] font-mono inline-flex items-center gap-0.5"
                             title={doc.driveUrl}
                           >
                             <span className="truncate">{doc.driveUrl}</span>
-                            <ExternalLink className="w-2.5 h-2.5 shrink-0 ml-0.5 text-blue-500" />
+                            <ExternalLink className="w-2.5 h-2.5 shrink-0 ml-0.5 text-signal-blue" />
                           </a>
                         ) : (
-                          <span className="text-[11px] text-slate-400 truncate max-w-[180px] font-mono">
+                          <span className="text-[11px] text-mist-gray truncate max-w-[180px] font-mono">
                             {displayFilename}
                           </span>
                         )}
@@ -221,7 +221,7 @@ export function DocumentTable({
 
                 {/* 2. File Format / Type Badge */}
                 <td className="py-3 px-3">
-                  <span className="inline-block px-2 py-0.5 rounded text-[11px] font-semibold uppercase bg-slate-100 text-slate-700 border border-slate-200">
+                  <span className="inline-block px-2 py-0.5 rounded text-[11px] font-semibold uppercase bg-cloud text-slate-gray border border-hairline">
                     {ext ? ext.toUpperCase() : isDriveDoc ? 'G-DOC' : 'FILE'}
                   </span>
                 </td>
@@ -246,7 +246,7 @@ export function DocumentTable({
                       )}
                       {doc.term && !doc.activity && (
                         <div
-                          className="inline-flex items-center gap-1 text-[11px] font-medium text-blue-700 bg-blue-50/80 px-2 py-0.5 rounded border border-blue-200 max-w-[200px] truncate"
+                          className="inline-flex items-center gap-1 text-[11px] font-medium text-signal-blue bg-[#e6f0ff]/80 px-2 py-0.5 rounded border border-[#d4e4fa] max-w-[200px] truncate"
                           title={doc.term.name}
                         >
                           <CalendarRange className="w-3 h-3 shrink-0" />
@@ -255,16 +255,16 @@ export function DocumentTable({
                       )}
                       {doc.task && (
                         <div
-                          className="flex items-center gap-1 text-[11px] text-slate-600 truncate max-w-[180px]"
+                          className="flex items-center gap-1 text-[11px] text-slate-gray truncate max-w-[180px]"
                           title={doc.task.title}
                         >
-                          <CheckSquare className="w-3 h-3 text-slate-400 shrink-0" />
+                          <CheckSquare className="w-3 h-3 text-mist-gray shrink-0" />
                           <span className="truncate">{doc.task.title}</span>
                         </div>
                       )}
                     </div>
                   ) : (
-                    <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-medium bg-slate-50 text-slate-400 border border-slate-200">
+                    <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-medium bg-cloud text-mist-gray border border-hairline">
                       <Link2Off className="w-3 h-3" />
                       <span>Unlinked</span>
                     </span>
@@ -274,10 +274,10 @@ export function DocumentTable({
                 {/* 5. Uploader */}
                 <td className="py-3 px-3">
                   <div className="flex items-center gap-1.5">
-                    <div className="w-5 h-5 rounded-full bg-slate-100 text-slate-600 flex items-center justify-center font-bold text-[10px] shrink-0 border border-slate-200">
+                    <div className="w-5 h-5 rounded-full bg-cloud text-slate-gray flex items-center justify-center font-bold text-[10px] shrink-0 border border-hairline">
                       {doc.uploader?.fullName?.charAt(0) || <User className="w-3 h-3" />}
                     </div>
-                    <span className="font-medium text-slate-800 truncate max-w-[120px]" title={doc.uploader?.fullName || 'Chapter Member'}>
+                    <span className="font-medium text-ink-navy truncate max-w-[120px]" title={doc.uploader?.fullName || 'Chapter Member'}>
                       {doc.uploader?.fullName || 'Chapter Member'}
                     </span>
                   </div>
@@ -287,7 +287,7 @@ export function DocumentTable({
                 <td className="py-3 px-3">
                   <div className="space-y-0.5">
                     <DocumentAccessLevelBadge accessLevel={doc.accessLevel} />
-                    <p className="text-[11px] text-slate-500 font-mono mt-0.5">
+                    <p className="text-[11px] text-mist-gray font-mono mt-0.5">
                       {formatFileSize(doc.fileSize)}
                     </p>
                   </div>
@@ -295,7 +295,7 @@ export function DocumentTable({
 
                 {/* 7. Last Updated */}
                 <td className="py-3 px-3">
-                  <span className="text-[11px] text-slate-600 font-medium" title={formatDate(doc.updatedAt || doc.createdAt)}>
+                  <span className="text-[11px] text-slate-gray font-medium" title={formatDate(doc.updatedAt || doc.createdAt)}>
                     {formatDate(doc.updatedAt || doc.createdAt)}
                   </span>
                 </td>
@@ -309,7 +309,7 @@ export function DocumentTable({
                       variant="ghost"
                       onClick={(e) => handlePreview(e, doc)}
                       disabled={isPreviewing}
-                      className="h-7 w-7 text-slate-500 hover:text-slate-900 hover:bg-slate-100 rounded-md cursor-pointer"
+                      className="h-7 w-7 text-slate-gray hover:text-ink-navy hover:bg-cloud rounded-md cursor-pointer"
                       title={isDriveDoc ? 'Open on Drive' : 'View file'}
                     >
                       {isPreviewing ? (
@@ -326,7 +326,7 @@ export function DocumentTable({
                         variant="ghost"
                         onClick={(e) => handleDownload(e, doc)}
                         disabled={isDownloading}
-                        className="h-7 w-7 text-slate-500 hover:text-slate-900 hover:bg-slate-100 rounded-md cursor-pointer"
+                        className="h-7 w-7 text-slate-gray hover:text-ink-navy hover:bg-cloud rounded-md cursor-pointer"
                         title="Download file"
                       >
                         {isDownloading ? (
@@ -343,19 +343,19 @@ export function DocumentTable({
                         <Button
                           variant="ghost"
                           size="icon"
-                          className="h-7 w-7 text-slate-400 hover:text-slate-700 hover:bg-slate-100 rounded-md cursor-pointer"
+                          className="h-7 w-7 text-mist-gray hover:text-ink-navy hover:bg-cloud rounded-md cursor-pointer"
                         >
                           <MoreHorizontal className="w-3.5 h-3.5" />
                         </Button>
                       </DropdownMenuTrigger>
                       <DropdownMenuContent align="end" className="w-44 rounded-xl text-xs">
                         <DropdownMenuItem onClick={() => onSelect(doc)} className="gap-2 cursor-pointer">
-                          <Eye className="w-3.5 h-3.5 text-slate-500" />
+                          <Eye className="w-3.5 h-3.5 text-slate-gray" />
                           <span>View Details</span>
                         </DropdownMenuItem>
 
                         <DropdownMenuItem onClick={(e) => handleCopyLink(e, doc)} className="gap-2 cursor-pointer">
-                          {isCopied ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <Copy className="w-3.5 h-3.5 text-slate-500" />}
+                          {isCopied ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <Copy className="w-3.5 h-3.5 text-slate-gray" />}
                           <span>{isCopied ? 'Link Copied' : 'Copy Link'}</span>
                         </DropdownMenuItem>
 
@@ -367,9 +367,9 @@ export function DocumentTable({
                                 e.stopPropagation();
                                 onEdit(doc);
                               }}
-                              className="gap-2 cursor-pointer text-slate-700"
+                              className="gap-2 cursor-pointer text-slate-gray"
                             >
-                              <Edit3 className="w-3.5 h-3.5 text-slate-500" />
+                              <Edit3 className="w-3.5 h-3.5 text-slate-gray" />
                               <span>Edit Metadata</span>
                             </DropdownMenuItem>
                             <DropdownMenuItem

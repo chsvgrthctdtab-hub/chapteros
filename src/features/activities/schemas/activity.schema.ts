@@ -70,6 +70,35 @@ export const activityFormSchema = z
       .optional()
       .or(z.literal(''))
       .nullable(),
+    semester: z
+      .enum(['hk1', 'hk2', 'hk3'], {
+        error: 'Vui lòng chọn học kỳ hợp lệ',
+      })
+      .default('hk1'),
+    organizerScope: z
+      .enum(['chapter', 'collab', 'university_faculty'], {
+        error: 'Vui lòng chọn cấp tổ chức hợp lệ',
+      })
+      .default('chapter'),
+    competencyTags: z
+      .array(z.string())
+      .default([]),
+    sv5tCriteria: z
+      .array(z.string())
+      .default([]),
+    activityScale: z
+      .enum(['large', 'medium', 'small'], {
+        error: 'Vui lòng chọn quy mô hoạt động',
+      })
+      .default('small'),
+    isMonthlyUnionMeeting: z
+      .boolean()
+      .default(false),
+    estimatedBudget: z
+      .coerce
+      .number()
+      .min(0, 'Dự toán kinh phí không được âm')
+      .default(0),
   })
   .refine(
     (data) => {

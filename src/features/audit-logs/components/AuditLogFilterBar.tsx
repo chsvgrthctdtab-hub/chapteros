@@ -2,7 +2,6 @@ import React from 'react';
 import {
   Search,
   RotateCcw,
-  Calendar,
   Layers,
   Download,
   Filter,
@@ -10,7 +9,6 @@ import {
 } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
 import { DatePicker } from '@/components/ui/date-picker';
 import {
   Select,
@@ -80,7 +78,7 @@ export function AuditLogFilterBar({
   };
 
   return (
-    <div className="bg-white rounded-xl border border-slate-200/90 p-4 space-y-3.5 shadow-2xs">
+    <div className="bg-white rounded-xl border border-hairline p-4 space-y-3.5 shadow-xs">
       {/* Category Pills Header */}
       <div className="flex items-center justify-between gap-2 overflow-x-auto pb-1 scrollbar-none">
         <div className="flex items-center gap-1.5 shrink-0">
@@ -94,10 +92,10 @@ export function AuditLogFilterBar({
                 onClick={() =>
                   onFilterChange({ module: cat.id === 'all' ? 'all' : cat.id, page: 1 })
                 }
-                className={`text-xs font-semibold px-3 py-1.5 rounded-lg transition-all shrink-0 ${
+                className={`text-xs font-semibold px-3 py-1.5 rounded-lg transition-all shrink-0 cursor-pointer ${
                   isSelected
-                    ? 'bg-slate-900 text-white shadow-xs'
-                    : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100/80 bg-slate-50 border border-slate-200/60'
+                    ? 'bg-ink-navy text-white shadow-xs'
+                    : 'text-slate-gray hover:text-ink-navy hover:bg-pebble bg-cloud border border-hairline'
                 }`}
               >
                 {cat.label}
@@ -112,10 +110,10 @@ export function AuditLogFilterBar({
             size="sm"
             onClick={onExport}
             disabled={isExporting || totalCount === 0}
-            className="text-xs h-8 px-2.5 shrink-0 text-slate-700 bg-white hover:bg-slate-50 border-slate-200"
+            className="text-xs h-8 px-2.5 shrink-0 text-slate-gray hover:text-ink-navy bg-white hover:bg-cloud border-hairline"
             title="Xuất dữ liệu kiểm toán CSV"
           >
-            <Download className="w-3.5 h-3.5 mr-1.5 text-slate-500" />
+            <Download className="w-3.5 h-3.5 mr-1.5 text-mist-gray" />
             <span>Xuất CSV</span>
           </Button>
         )}
@@ -125,18 +123,18 @@ export function AuditLogFilterBar({
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-2.5">
         {/* Search by text */}
         <div className="sm:col-span-2 lg:col-span-4 relative">
-          <Search className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
+          <Search className="w-4 h-4 text-mist-gray absolute left-3 top-1/2 -translate-y-1/2" />
           <Input
             value={filters.search || ''}
             onChange={(e) => onFilterChange({ search: e.target.value, page: 1 })}
             placeholder="Tìm theo hành động, tên, ID..."
-            className="pl-9 pr-8 text-xs h-9"
+            className="pl-9 pr-8 text-xs h-9 border-hairline bg-white"
           />
           {filters.search && (
             <button
               type="button"
               onClick={() => onFilterChange({ search: '', page: 1 })}
-              className="absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600"
+              className="absolute right-2.5 top-1/2 -translate-y-1/2 text-mist-gray hover:text-slate-gray cursor-pointer"
             >
               <X className="w-3.5 h-3.5" />
             </button>
@@ -149,9 +147,9 @@ export function AuditLogFilterBar({
             value={filters.module || 'all'}
             onValueChange={(val) => onFilterChange({ module: val, page: 1 })}
           >
-            <SelectTrigger className="text-xs h-9">
+            <SelectTrigger className="text-xs h-9 border-hairline bg-white text-ink-navy">
               <div className="flex items-center gap-2 truncate">
-                <Layers className="w-3.5 h-3.5 text-slate-400 shrink-0" />
+                <Layers className="w-3.5 h-3.5 text-mist-gray shrink-0" />
                 <SelectValue placeholder="Tất cả phân hệ" />
               </div>
             </SelectTrigger>
@@ -204,7 +202,7 @@ export function AuditLogFilterBar({
               variant="ghost"
               size="sm"
               disabled
-              className="w-full text-xs h-9 px-2 text-slate-300"
+              className="w-full text-xs h-9 px-2 text-mist-gray"
             >
               <Filter className="w-3.5 h-3.5" />
             </Button>
@@ -213,34 +211,34 @@ export function AuditLogFilterBar({
       </div>
 
       {/* Date Quick Presets */}
-      <div className="flex items-center gap-2 pt-0.5 text-xs text-slate-500">
-        <span className="text-[11px] font-semibold text-slate-400 shrink-0">Lọc nhanh thời gian:</span>
+      <div className="flex items-center gap-2 pt-0.5 text-xs text-mist-gray">
+        <span className="text-[11px] font-semibold text-slate-gray shrink-0">Lọc nhanh thời gian:</span>
         <div className="flex items-center gap-1.5 flex-wrap">
           <button
             type="button"
             onClick={() => handleDatePreset('today')}
-            className="text-[11px] px-2 py-0.5 rounded bg-slate-100 hover:bg-slate-200 text-slate-600 transition-colors"
+            className="text-[11px] px-2 py-0.5 rounded bg-cloud hover:bg-pebble text-slate-gray transition-colors cursor-pointer"
           >
             Hôm nay
           </button>
           <button
             type="button"
             onClick={() => handleDatePreset('7days')}
-            className="text-[11px] px-2 py-0.5 rounded bg-slate-100 hover:bg-slate-200 text-slate-600 transition-colors"
+            className="text-[11px] px-2 py-0.5 rounded bg-cloud hover:bg-pebble text-slate-gray transition-colors cursor-pointer"
           >
             7 ngày qua
           </button>
           <button
             type="button"
             onClick={() => handleDatePreset('30days')}
-            className="text-[11px] px-2 py-0.5 rounded bg-slate-100 hover:bg-slate-200 text-slate-600 transition-colors"
+            className="text-[11px] px-2 py-0.5 rounded bg-cloud hover:bg-pebble text-slate-gray transition-colors cursor-pointer"
           >
             30 ngày qua
           </button>
           <button
             type="button"
             onClick={() => handleDatePreset('all')}
-            className="text-[11px] px-2 py-0.5 rounded bg-slate-100 hover:bg-slate-200 text-slate-600 transition-colors"
+            className="text-[11px] px-2 py-0.5 rounded bg-cloud hover:bg-pebble text-slate-gray transition-colors cursor-pointer"
           >
             Tất cả thời gian
           </button>

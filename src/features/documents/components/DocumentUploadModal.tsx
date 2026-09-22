@@ -240,17 +240,17 @@ export function DocumentUploadModal({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-2xl md:max-w-3xl max-h-[92vh] overflow-y-auto p-6 pr-10 sm:p-8 sm:pr-12 rounded-3xl border border-slate-200/80 shadow-2xl [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+      <DialogContent className="sm:max-w-2xl md:max-w-3xl max-h-[92vh] overflow-y-auto p-6 pr-10 sm:p-8 sm:pr-12 rounded-3xl border border-hairline shadow-2xl [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
         <DialogHeader className="pb-2">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center border border-emerald-100 shrink-0">
               <HardDrive strokeWidth={1.5} className="w-5 h-5" />
             </div>
             <div>
-              <DialogTitle className="text-lg font-bold text-slate-900 tracking-tight">
+              <DialogTitle className="text-lg font-bold text-ink-navy tracking-tight">
                 Tải tệp lên Google Drive
               </DialogTitle>
-              <DialogDescription className="text-xs text-slate-500">
+              <DialogDescription className="text-xs text-mist-gray">
                 Lưu trữ trực tiếp và an toàn trên Google Drive của Đơn vị
               </DialogDescription>
             </div>
@@ -269,7 +269,7 @@ export function DocumentUploadModal({
               <Link
                 to="/integrations"
                 onClick={() => onOpenChange(false)}
-                className="inline-flex items-center gap-1 text-[11px] font-semibold text-emerald-700 hover:underline pt-0.5"
+                className="inline-flex items-center gap-1 text-[11px] font-semibold text-signal-blue hover:underline pt-0.5"
               >
                 Mở trang Tích hợp Google Workspace
                 <ExternalLink className="w-3 h-3" />
@@ -281,7 +281,7 @@ export function DocumentUploadModal({
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-3.5 mt-1">
           {/* 1. File Dropzone */}
           <div className="space-y-1">
-            <label className="text-xs font-semibold text-slate-700 block">
+            <label className="text-xs font-semibold text-slate-gray block">
               Tệp đính kèm <span className="text-rose-500">*</span>
             </label>
 
@@ -294,8 +294,8 @@ export function DocumentUploadModal({
                 className={cn(
                   'border-2 border-dashed rounded-2xl p-4 text-center cursor-pointer transition-all duration-150',
                   isDragging
-                    ? 'border-emerald-500 bg-emerald-50/60 scale-[0.99]'
-                    : 'border-slate-200 hover:border-emerald-400 hover:bg-slate-50/80 bg-slate-50/40'
+                    ? 'border-signal-blue bg-[#e6f0ff]/60 scale-[0.99]'
+                    : 'border-hairline hover:border-signal-blue hover:bg-cloud/80 bg-cloud/40'
                 )}
               >
                 <input
@@ -308,13 +308,13 @@ export function DocumentUploadModal({
                     }
                   }}
                 />
-                <div className="w-9 h-9 rounded-xl bg-white shadow-xs border border-slate-200 text-slate-400 flex items-center justify-center mx-auto mb-2">
-                  <Upload className="w-4 h-4 text-emerald-600" />
+                <div className="w-9 h-9 rounded-xl bg-white shadow-xs border border-hairline text-mist-gray flex items-center justify-center mx-auto mb-2">
+                  <Upload className="w-4 h-4 text-signal-blue" />
                 </div>
-                <p className="text-xs font-semibold text-slate-800">
-                  Kéo thả tệp vào đây, hoặc <span className="text-emerald-600 underline">duyệt tệp từ máy tính</span>
+                <p className="text-xs font-semibold text-ink-navy">
+                  Kéo thả tệp vào đây, hoặc <span className="text-signal-blue underline">duyệt tệp từ máy tính</span>
                 </p>
-                <p className="text-[11px] text-slate-500 mt-0.5">
+                <p className="text-[11px] text-mist-gray mt-0.5">
                   Hỗ trợ PDF, Word, Excel, PowerPoint, Ảnh, ZIP (Tối đa {formatFileSize(MAX_FILE_SIZE_BYTES)})
                 </p>
               </div>
@@ -327,10 +327,10 @@ export function DocumentUploadModal({
                     size="md"
                   />
                   <div className="min-w-0">
-                    <p className="text-xs font-bold text-slate-900 truncate max-w-xs sm:max-w-sm">
+                    <p className="text-xs font-bold text-ink-navy truncate max-w-xs sm:max-w-sm">
                       {selectedFile.name}
                     </p>
-                    <p className="text-[11px] text-slate-500">
+                    <p className="text-[11px] text-mist-gray">
                       {formatFileSize(selectedFile.size)} • {selectedFile.type || 'Tệp nhị phân'}
                     </p>
                   </div>
@@ -339,7 +339,7 @@ export function DocumentUploadModal({
                   type="button"
                   variant="ghost"
                   size="icon"
-                  className="h-7 w-7 text-slate-400 hover:text-rose-600 hover:bg-rose-50 rounded-lg"
+                  className="h-7 w-7 text-mist-gray hover:text-rose-600 hover:bg-rose-50 rounded-lg"
                   onClick={() => {
                     setSelectedFile(null);
                     setFileError(null);
@@ -360,14 +360,14 @@ export function DocumentUploadModal({
 
           {/* 2. Document Title */}
           <div className="space-y-1.5">
-            <label className="text-xs font-semibold text-slate-700 block">
+            <label className="text-xs font-semibold text-slate-gray block">
               Tên tài liệu hiển thị trong Đơn vị <span className="text-rose-500">*</span>
             </label>
             <Input
               {...register('title')}
               placeholder="VD: Kế hoạch tổ chức Chiến dịch Mùa hè xanh 2026"
               className={cn(
-                'rounded-xl text-xs h-10',
+                'rounded-xl text-xs h-10 border-hairline bg-cloud text-ink-navy placeholder:text-mist-gray focus:bg-white',
                 errors.title ? 'border-rose-400 focus-visible:ring-rose-200' : ''
               )}
             />
@@ -380,8 +380,8 @@ export function DocumentUploadModal({
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             {/* Category */}
             <div className="space-y-1.5">
-              <label className="text-xs font-semibold text-slate-700 flex items-center gap-1.5">
-                <Tag className="w-3.5 h-3.5 text-slate-400" />
+              <label className="text-xs font-semibold text-slate-gray flex items-center gap-1.5">
+                <Tag className="w-3.5 h-3.5 text-mist-gray" />
                 <span>Danh mục tài liệu</span>
                 <span className="text-rose-500">*</span>
               </label>
@@ -393,7 +393,7 @@ export function DocumentUploadModal({
                     value={field.value || 'general'}
                     onValueChange={field.onChange}
                   >
-                    <SelectTrigger className="w-full h-10 rounded-xl border-slate-200 bg-white text-xs font-medium">
+                    <SelectTrigger className="w-full h-10 rounded-xl border-hairline bg-white text-xs font-medium text-ink-navy">
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent>
@@ -410,8 +410,8 @@ export function DocumentUploadModal({
 
             {/* Access Level */}
             <div className="space-y-1.5">
-              <label className="text-xs font-semibold text-slate-700 flex items-center gap-1.5">
-                <Shield className="w-3.5 h-3.5 text-slate-400" />
+              <label className="text-xs font-semibold text-slate-gray flex items-center gap-1.5">
+                <Shield className="w-3.5 h-3.5 text-mist-gray" />
                 <span>Mức độ truy cập</span>
                 <span className="text-rose-500">*</span>
               </label>
@@ -423,7 +423,7 @@ export function DocumentUploadModal({
                     value={field.value || 'organization_internal'}
                     onValueChange={field.onChange}
                   >
-                    <SelectTrigger className="w-full h-10 rounded-xl border-slate-200 bg-white text-xs font-medium">
+                    <SelectTrigger className="w-full h-10 rounded-xl border-hairline bg-white text-xs font-medium text-ink-navy">
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent>
@@ -440,17 +440,17 @@ export function DocumentUploadModal({
           </div>
 
           {/* 4. Relationships */}
-          <div className="p-3.5 bg-slate-50/80 border border-slate-200 rounded-2xl space-y-3">
+          <div className="p-3.5 bg-cloud/80 border border-hairline rounded-2xl space-y-3">
             <div className="flex items-center justify-between">
-              <span className="text-xs font-bold text-slate-800">Liên kết ngữ cảnh (Tùy chọn)</span>
-              <span className="text-[11px] text-slate-400">Giúp phân loại và tra cứu hồ sơ</span>
+              <span className="text-xs font-bold text-ink-navy">Liên kết ngữ cảnh (Tùy chọn)</span>
+              <span className="text-[11px] text-mist-gray">Giúp phân loại và tra cứu hồ sơ</span>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               {/* Term */}
               <div className="space-y-1">
-                <label className="text-[11px] font-medium text-slate-600 flex items-center gap-1">
-                  <CalendarRange className="w-3 h-3 text-slate-400" />
+                <label className="text-[11px] font-medium text-slate-gray flex items-center gap-1">
+                  <CalendarRange className="w-3 h-3 text-mist-gray" />
                   <span>Nhiệm kỳ</span>
                 </label>
                 <Controller
@@ -461,7 +461,7 @@ export function DocumentUploadModal({
                       value={field.value || 'none'}
                       onValueChange={(val) => field.onChange(val === 'none' ? null : val)}
                     >
-                      <SelectTrigger className="w-full h-9 rounded-lg border-slate-200 bg-white text-xs">
+                      <SelectTrigger className="w-full h-9 rounded-lg border-hairline bg-white text-xs text-ink-navy">
                         <SelectValue placeholder="-- Tài liệu chung của Đơn vị --" />
                       </SelectTrigger>
                       <SelectContent>
@@ -479,8 +479,8 @@ export function DocumentUploadModal({
 
               {/* Activity */}
               <div className="space-y-1">
-                <label className="text-[11px] font-medium text-slate-600 flex items-center gap-1">
-                  <CalendarCheck className="w-3 h-3 text-slate-400" />
+                <label className="text-[11px] font-medium text-slate-gray flex items-center gap-1">
+                  <CalendarCheck className="w-3 h-3 text-mist-gray" />
                   <span>Hoạt động liên kết</span>
                 </label>
                 <Controller
@@ -491,7 +491,7 @@ export function DocumentUploadModal({
                       value={field.value || 'none'}
                       onValueChange={(val) => field.onChange(val === 'none' ? null : val)}
                     >
-                      <SelectTrigger className="w-full h-9 rounded-lg border-slate-200 bg-white text-xs">
+                      <SelectTrigger className="w-full h-9 rounded-lg border-hairline bg-white text-xs text-ink-navy">
                         <SelectValue placeholder="-- Không gắn hoạt động --" />
                       </SelectTrigger>
                       <SelectContent>
@@ -509,8 +509,8 @@ export function DocumentUploadModal({
 
               {/* Task */}
               <div className="space-y-1">
-                <label className="text-[11px] font-medium text-slate-600 flex items-center gap-1">
-                  <CheckSquare className="w-3 h-3 text-slate-400" />
+                <label className="text-[11px] font-medium text-slate-gray flex items-center gap-1">
+                  <CheckSquare className="w-3 h-3 text-mist-gray" />
                   <span>Công việc (Task)</span>
                 </label>
                 <Controller
@@ -521,7 +521,7 @@ export function DocumentUploadModal({
                       value={field.value || 'none'}
                       onValueChange={(val) => field.onChange(val === 'none' ? null : val)}
                     >
-                      <SelectTrigger className="w-full h-9 rounded-lg border-slate-200 bg-white text-xs">
+                      <SelectTrigger className="w-full h-9 rounded-lg border-hairline bg-white text-xs text-ink-navy">
                         <SelectValue placeholder="-- Không gắn công việc --" />
                       </SelectTrigger>
                       <SelectContent>
@@ -539,8 +539,8 @@ export function DocumentUploadModal({
 
               {/* Member */}
               <div className="space-y-1">
-                <label className="text-[11px] font-medium text-slate-600 flex items-center gap-1">
-                  <Users className="w-3 h-3 text-slate-400" />
+                <label className="text-[11px] font-medium text-slate-gray flex items-center gap-1">
+                  <Users className="w-3 h-3 text-mist-gray" />
                   <span>Hội viên liên quan</span>
                 </label>
                 <Controller
@@ -551,7 +551,7 @@ export function DocumentUploadModal({
                       value={field.value || 'none'}
                       onValueChange={(val) => field.onChange(val === 'none' ? null : val)}
                     >
-                      <SelectTrigger className="w-full h-9 rounded-lg border-slate-200 bg-white text-xs">
+                      <SelectTrigger className="w-full h-9 rounded-lg border-hairline bg-white text-xs text-ink-navy">
                         <SelectValue placeholder="-- Không gắn hội viên --" />
                       </SelectTrigger>
                       <SelectContent>
@@ -593,7 +593,7 @@ export function DocumentUploadModal({
               variant="outline"
               onClick={() => onOpenChange(false)}
               disabled={isPending}
-              className="rounded-xl text-xs"
+              className="rounded-xl text-xs border-hairline text-slate-gray hover:bg-cloud hover:text-ink-navy"
             >
               Hủy
             </Button>
@@ -601,7 +601,7 @@ export function DocumentUploadModal({
             <Button
               type="submit"
               disabled={!selectedFile || isPending || !isDriveConnected}
-              className="rounded-xl text-xs text-white font-semibold gap-2 bg-emerald-600 hover:bg-emerald-700 transition-colors shadow-xs"
+              className="rounded-xl text-xs text-white font-semibold gap-2 bg-signal-blue hover:bg-[#005be0] transition-colors shadow-xs"
             >
               {isPending ? (
                 <>

@@ -120,7 +120,7 @@ export function DocumentCard({
   return (
     <div
       onClick={() => onSelect(document)}
-      className="group bg-white border border-slate-200 hover:border-slate-300 rounded-xl p-4 shadow-2xs hover:shadow-sm transition-all duration-150 flex flex-col justify-between cursor-pointer"
+      className="group bg-white border border-hairline hover:border-slate-gray rounded-xl p-4 shadow-xs hover:shadow-sm transition-all duration-150 flex flex-col justify-between cursor-pointer"
     >
       {/* Top Header: File Icon + Badges + Menu */}
       <div className="space-y-3">
@@ -138,14 +138,14 @@ export function DocumentCard({
                   target="_blank"
                   rel="noopener noreferrer"
                   onClick={(e) => e.stopPropagation()}
-                  className="text-xs font-bold text-slate-900 line-clamp-1 hover:text-blue-600 hover:underline transition-colors block"
+                  className="text-xs font-bold text-ink-navy line-clamp-1 hover:text-signal-blue hover:underline transition-colors block"
                   title={document.title}
                 >
                   {document.title}
                 </a>
               ) : (
                 <h4
-                  className="text-xs font-bold text-slate-900 line-clamp-1 group-hover:text-blue-600 transition-colors"
+                  className="text-xs font-bold text-ink-navy line-clamp-1 group-hover:text-signal-blue transition-colors"
                   title={document.title}
                 >
                   {document.title}
@@ -158,12 +158,12 @@ export function DocumentCard({
                     <span>Drive</span>
                   </span>
                 ) : (
-                  <span className="inline-flex items-center gap-0.5 text-[10px] font-medium text-slate-500 bg-slate-100 px-1 py-0.2 rounded border border-slate-200">
+                  <span className="inline-flex items-center gap-0.5 text-[10px] font-medium text-slate-gray bg-cloud px-1 py-0.2 rounded border border-hairline">
                     <HardDrive className="w-2.5 h-2.5" />
                     <span>Storage</span>
                   </span>
                 )}
-                <span className="text-[11px] text-slate-400 truncate max-w-[140px] font-mono">
+                <span className="text-[11px] text-mist-gray truncate max-w-[140px] font-mono">
                   {formatFileSize(document.fileSize)}
                 </span>
               </div>
@@ -176,31 +176,31 @@ export function DocumentCard({
               <Button
                 variant="ghost"
                 size="icon"
-                className="h-7 w-7 rounded-lg text-slate-400 hover:text-slate-700 hover:bg-slate-100 shrink-0 cursor-pointer"
+                className="h-7 w-7 rounded-lg text-mist-gray hover:text-ink-navy hover:bg-cloud shrink-0 cursor-pointer"
               >
                 <MoreHorizontal className="w-3.5 h-3.5" />
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" className="w-44 rounded-xl text-xs">
               <DropdownMenuItem onClick={() => onSelect(document)} className="gap-2 cursor-pointer">
-                <Eye className="w-3.5 h-3.5 text-slate-500" />
+                <Eye className="w-3.5 h-3.5 text-slate-gray" />
                 <span>Xem chi tiết</span>
               </DropdownMenuItem>
 
               <DropdownMenuItem onClick={handlePreview} className="gap-2 cursor-pointer">
-                <ExternalLink className="w-3.5 h-3.5 text-slate-500" />
+                <ExternalLink className="w-3.5 h-3.5 text-slate-gray" />
                 <span>{isDriveDoc ? 'Mở trên Google Drive' : 'Xem / Mở tệp'}</span>
               </DropdownMenuItem>
 
               {!isDriveDoc && (
                 <DropdownMenuItem onClick={handleDownload} className="gap-2 cursor-pointer">
-                  <Download className="w-3.5 h-3.5 text-slate-500" />
+                  <Download className="w-3.5 h-3.5 text-slate-gray" />
                   <span>Download</span>
                 </DropdownMenuItem>
               )}
 
               <DropdownMenuItem onClick={handleCopyLink} className="gap-2 cursor-pointer">
-                {copied ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <Copy className="w-3.5 h-3.5 text-slate-500" />}
+                {copied ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <Copy className="w-3.5 h-3.5 text-slate-gray" />}
                 <span>{copied ? 'Đã sao chép link' : 'Sao chép liên kết'}</span>
               </DropdownMenuItem>
 
@@ -212,9 +212,9 @@ export function DocumentCard({
                       e.stopPropagation();
                       onEdit(document);
                     }}
-                    className="gap-2 cursor-pointer text-slate-700"
+                    className="gap-2 cursor-pointer text-slate-gray"
                   >
-                    <Edit3 className="w-3.5 h-3.5 text-slate-500" />
+                    <Edit3 className="w-3.5 h-3.5 text-slate-gray" />
                     <span>Chỉnh sửa thông tin</span>
                   </DropdownMenuItem>
                   <DropdownMenuItem
@@ -238,7 +238,7 @@ export function DocumentCard({
           <DocumentCategoryBadge category={document.category} />
           <DocumentAccessLevelBadge accessLevel={document.accessLevel} />
           {ext && (
-            <span className="inline-block px-1.5 py-0.5 rounded text-[10px] font-semibold uppercase bg-slate-100 text-slate-600 border border-slate-200">
+            <span className="inline-block px-1.5 py-0.5 rounded text-[10px] font-semibold uppercase bg-cloud text-slate-gray border border-hairline">
               {ext}
             </span>
           )}
@@ -259,7 +259,7 @@ export function DocumentCard({
               )}
               {document.term && !document.activity && (
                 <div
-                  className="inline-flex items-center gap-1 text-[11px] font-medium text-blue-700 bg-blue-50/90 px-2 py-0.5 rounded border border-blue-200 max-w-full truncate"
+                  className="inline-flex items-center gap-1 text-[11px] font-medium text-signal-blue bg-[#e6f0ff]/90 px-2 py-0.5 rounded border border-[#d4e4fa] max-w-full truncate"
                   title={document.term.name}
                 >
                   <CalendarRange className="w-3 h-3 shrink-0" />
@@ -268,7 +268,7 @@ export function DocumentCard({
               )}
             </div>
           ) : (
-            <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-medium bg-slate-50 text-slate-400 border border-slate-200">
+            <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-medium bg-cloud text-mist-gray border border-hairline">
               <Link2Off className="w-3 h-3" />
               <span>Unlinked</span>
             </span>
@@ -277,17 +277,17 @@ export function DocumentCard({
       </div>
 
       {/* Bottom Footer: Uploader + Date */}
-      <div className="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-[11px] text-slate-500">
+      <div className="mt-4 pt-3 border-t border-hairline flex items-center justify-between text-[11px] text-mist-gray">
         <div className="flex items-center gap-1.5 min-w-0">
-          <div className="w-4 h-4 rounded-full bg-slate-100 text-slate-600 flex items-center justify-center font-bold text-[9px] shrink-0 border border-slate-200">
+          <div className="w-4 h-4 rounded-full bg-cloud text-slate-gray flex items-center justify-center font-bold text-[9px] shrink-0 border border-hairline">
             {document.uploader?.fullName?.charAt(0) || <User className="w-2.5 h-2.5" />}
           </div>
-          <span className="truncate max-w-[100px] font-medium text-slate-700">
+          <span className="truncate max-w-[100px] font-medium text-slate-gray">
             {document.uploader?.fullName || 'Member'}
           </span>
         </div>
 
-        <span className="font-medium text-slate-500 shrink-0">
+        <span className="font-medium text-mist-gray shrink-0">
           {formatDate(document.updatedAt || document.createdAt)}
         </span>
       </div>

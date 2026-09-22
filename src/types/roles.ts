@@ -73,9 +73,9 @@ export const ROLES: Record<OrganizationRole, RoleDefinition> = {
     level: 2,
     badgeVariant: 'default',
     colorClasses: {
-      bg: 'bg-blue-50',
-      text: 'text-blue-700',
-      border: 'border-blue-200',
+      bg: 'bg-[#e6f0ff]',
+      text: 'text-signal-blue',
+      border: 'border-[#d4e4fa]',
     },
   },
   deputy: {
@@ -86,9 +86,9 @@ export const ROLES: Record<OrganizationRole, RoleDefinition> = {
     level: 3,
     badgeVariant: 'secondary',
     colorClasses: {
-      bg: 'bg-indigo-50',
-      text: 'text-indigo-700',
-      border: 'border-indigo-200',
+      bg: 'bg-purple-50',
+      text: 'text-purple-700',
+      border: 'border-purple-200',
     },
   },
   treasurer: {

@@ -72,14 +72,14 @@ export const TASK_PRIORITY_META: Record<
   medium: {
     label: 'Trung bình',
     badgeVariant: 'secondary',
-    colorClass: 'text-blue-700',
-    bgClass: 'bg-blue-50 border-blue-200 text-blue-700',
+    colorClass: 'text-signal-blue font-medium',
+    bgClass: 'bg-[#e6f0ff] border-[#d4e4fa] text-signal-blue',
   },
   low: {
     label: 'Thấp',
     badgeVariant: 'outline',
-    colorClass: 'text-slate-600',
-    bgClass: 'bg-slate-50 border-slate-200 text-slate-600',
+    colorClass: 'text-slate-gray',
+    bgClass: 'bg-cloud border-hairline text-slate-gray',
   },
 };
 
@@ -92,13 +92,13 @@ export const TASK_STATUS_META: Record<
 > = {
   todo: {
     label: 'Cần làm',
-    colorClass: 'text-slate-700',
-    bgClass: 'bg-slate-100 text-slate-700 border-slate-200',
+    colorClass: 'text-slate-gray',
+    bgClass: 'bg-cloud text-slate-gray border-hairline',
   },
   in_progress: {
     label: 'Đang làm',
-    colorClass: 'text-blue-700',
-    bgClass: 'bg-blue-50 text-blue-700 border-blue-200',
+    colorClass: 'text-signal-blue',
+    bgClass: 'bg-[#e6f0ff] text-signal-blue border-[#d4e4fa]',
   },
   in_review: {
     label: 'Đang duyệt',
@@ -112,8 +112,8 @@ export const TASK_STATUS_META: Record<
   },
   cancelled: {
     label: 'Đã hủy',
-    colorClass: 'text-slate-400',
-    bgClass: 'bg-slate-50 text-slate-400 border-slate-200',
+    colorClass: 'text-mist-gray',
+    bgClass: 'bg-cloud text-mist-gray border-hairline',
   },
 };
 
@@ -126,18 +126,18 @@ export const ACTIVITY_STATUS_META: Record<
 > = {
   draft: {
     label: 'Nháp',
-    colorClass: 'text-slate-600',
-    bgClass: 'bg-slate-100 text-slate-700 border-slate-200',
+    colorClass: 'text-slate-gray',
+    bgClass: 'bg-cloud text-slate-gray border-hairline',
   },
   planning: {
     label: 'Lập kế hoạch',
-    colorClass: 'text-indigo-700',
-    bgClass: 'bg-indigo-50 text-indigo-700 border-indigo-200',
+    colorClass: 'text-signal-blue',
+    bgClass: 'bg-[#e6f0ff] text-signal-blue border-[#d4e4fa]',
   },
   published: {
     label: 'Sắp diễn ra',
-    colorClass: 'text-blue-700',
-    bgClass: 'bg-blue-50 text-blue-700 border-blue-200',
+    colorClass: 'text-signal-blue',
+    bgClass: 'bg-[#e6f0ff] text-signal-blue border-[#d4e4fa]',
   },
   in_progress: {
     label: 'Đang diễn ra',

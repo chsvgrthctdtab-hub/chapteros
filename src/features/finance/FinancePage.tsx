@@ -413,10 +413,10 @@ export function FinancePage() {
     return (
       <div className="p-8 text-center space-y-4">
         <AlertCircle className="w-10 h-10 text-amber-500 mx-auto" />
-        <h3 className="text-lg font-bold text-slate-800">
+        <h3 className="text-lg font-bold text-ink-navy">
           Chưa chọn Đơn vị làm việc
         </h3>
-        <p className="text-sm text-slate-500">
+        <p className="text-sm text-mist-gray">
           Vui lòng chọn hoặc tham gia một Chi hội để truy cập sổ quỹ tài chính.
         </p>
       </div>
@@ -428,15 +428,14 @@ export function FinancePage() {
       {/* 1. Page Header */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-slate-900">
+          <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-ink-navy">
             Finance
           </h1>
-          <p className="text-sm text-slate-500 mt-1">
+          <p className="text-sm text-mist-gray mt-1">
             Manage chapter funds, transactions, approvals and reconciliation.
           </p>
         </div>
 
-        {/* Top Actions Row */}
         {/* Top Actions Row */}
         <div className="flex flex-wrap items-center gap-1.5 sm:gap-2">
           <Button
@@ -446,10 +445,10 @@ export function FinancePage() {
             onClick={handleRefreshAll}
             disabled={isTransactionsFetching}
             title="Làm mới sổ quỹ"
-            className="h-8 w-8 text-slate-600 hover:text-slate-900 bg-white hover:bg-slate-50 border-slate-200 shadow-2xs shrink-0"
+            className="h-8 w-8 text-slate-gray hover:text-ink-navy bg-white hover:bg-cloud border-hairline shadow-xs shrink-0"
           >
             <RefreshCw
-              className={`w-3.5 h-3.5 ${isTransactionsFetching ? 'animate-spin text-emerald-600' : ''}`}
+              className={`w-3.5 h-3.5 ${isTransactionsFetching ? 'animate-spin text-signal-blue' : ''}`}
             />
           </Button>
 
@@ -460,9 +459,9 @@ export function FinancePage() {
               size="sm"
               onClick={() => setIsThresholdModalOpen(true)}
               title={`Hạn mức duyệt chi: ${formatVND(threshold)}`}
-              className="h-8 px-2 sm:px-2.5 text-xs font-semibold text-slate-700 bg-white hover:bg-slate-50 border-slate-200 shadow-2xs"
+              className="h-8 px-2 sm:px-2.5 text-xs font-semibold text-slate-gray hover:text-ink-navy bg-white hover:bg-cloud border-hairline shadow-xs"
             >
-              <ShieldCheck className="w-3.5 h-3.5 text-emerald-600 sm:mr-1 shrink-0" />
+              <ShieldCheck className="w-3.5 h-3.5 text-signal-blue sm:mr-1 shrink-0" />
               <span className="hidden sm:inline">Hạn mức: {formatVND(threshold)}</span>
             </Button>
           )}
@@ -473,9 +472,9 @@ export function FinancePage() {
             size="sm"
             onClick={() => setIsCategoryModalOpen(true)}
             title={`Danh mục thu chi (${categories.length})`}
-            className="h-8 px-2 sm:px-2.5 text-xs font-semibold text-slate-700 bg-white hover:bg-slate-50 border-slate-200 shadow-2xs"
+            className="h-8 px-2 sm:px-2.5 text-xs font-semibold text-slate-gray hover:text-ink-navy bg-white hover:bg-cloud border-hairline shadow-xs"
           >
-            <Layers className="w-3.5 h-3.5 text-slate-500 sm:mr-1 shrink-0" />
+            <Layers className="w-3.5 h-3.5 text-mist-gray sm:mr-1 shrink-0" />
             <span className="hidden sm:inline">Danh mục ({categories.length})</span>
           </Button>
 
@@ -485,7 +484,7 @@ export function FinancePage() {
             size="sm"
             onClick={() => setSheetsExportOpen(true)}
             title="Xuất Google Sheets"
-            className="h-8 px-2 sm:px-2.5 text-xs font-semibold text-slate-700 bg-white hover:bg-slate-50 border-slate-200 shadow-2xs"
+            className="h-8 px-2 sm:px-2.5 text-xs font-semibold text-slate-gray hover:text-ink-navy bg-white hover:bg-cloud border-hairline shadow-xs"
           >
             <FileSpreadsheet className="w-3.5 h-3.5 text-emerald-600 sm:mr-1 shrink-0" />
             <span className="hidden sm:inline">Xuất Sheets</span>
@@ -498,9 +497,9 @@ export function FinancePage() {
               size="sm"
               onClick={() => setSheetsImportOpen(true)}
               title="Nhập Google Sheets"
-              className="h-8 px-2 sm:px-2.5 text-xs font-semibold text-slate-700 bg-white hover:bg-slate-50 border-slate-200 shadow-2xs"
+              className="h-8 px-2 sm:px-2.5 text-xs font-semibold text-slate-gray hover:text-ink-navy bg-white hover:bg-cloud border-hairline shadow-xs"
             >
-              <FileSpreadsheet className="w-3.5 h-3.5 text-blue-600 sm:mr-1 shrink-0" />
+              <FileSpreadsheet className="w-3.5 h-3.5 text-signal-blue sm:mr-1 shrink-0" />
               <span className="hidden sm:inline">Nhập Sheets</span>
             </Button>
           )}
@@ -510,7 +509,7 @@ export function FinancePage() {
               size="sm"
               onClick={() => handleOpenCreate('income')}
               title="Ghi thu / chi mới"
-              className="bg-emerald-700 hover:bg-emerald-800 text-white text-xs h-8 px-2.5 sm:px-3 shadow-xs font-semibold flex items-center gap-1 shrink-0"
+              className="bg-signal-blue hover:bg-[#005be0] text-white text-xs h-8 px-2.5 sm:px-3 shadow-xs font-semibold flex items-center gap-1 shrink-0"
             >
               <Plus className="w-3.5 h-3.5 shrink-0" />
               <span className="hidden sm:inline">Ghi thu / chi</span>
@@ -531,19 +530,19 @@ export function FinancePage() {
       />
 
       {/* 3. Primary Workspace Navigation Tabs */}
-      <div className="flex items-center gap-1 border-b border-slate-200">
+      <div className="flex items-center gap-1 border-b border-hairline">
         <button
           type="button"
           onClick={() => setActiveTab('ledger')}
           className={`flex items-center gap-2 px-4 py-2.5 text-xs font-bold border-b-2 transition-all cursor-pointer ${
             activeTab === 'ledger'
-              ? 'border-slate-900 text-slate-900'
-              : 'border-transparent text-slate-500 hover:text-slate-800'
+              ? 'border-signal-blue text-ink-navy'
+              : 'border-transparent text-mist-gray hover:text-ink-navy'
           }`}
         >
           <Receipt className="w-3.5 h-3.5" />
           <span>Ledger</span>
-          <span className="px-1.5 py-0.2 text-[10px] font-semibold rounded-full bg-slate-100 text-slate-600">
+          <span className="px-1.5 py-0.2 text-[10px] font-semibold rounded-full bg-cloud text-slate-gray">
             {totalCount}
           </span>
         </button>
@@ -553,8 +552,8 @@ export function FinancePage() {
           onClick={() => setActiveTab('approvals')}
           className={`flex items-center gap-2 px-4 py-2.5 text-xs font-bold border-b-2 transition-all cursor-pointer ${
             activeTab === 'approvals'
-              ? 'border-slate-900 text-slate-900'
-              : 'border-transparent text-slate-500 hover:text-slate-800'
+              ? 'border-signal-blue text-ink-navy'
+              : 'border-transparent text-mist-gray hover:text-ink-navy'
           }`}
         >
           <Clock className="w-3.5 h-3.5" />
@@ -571,13 +570,13 @@ export function FinancePage() {
           onClick={() => setActiveTab('closings')}
           className={`flex items-center gap-2 px-4 py-2.5 text-xs font-bold border-b-2 transition-all cursor-pointer ${
             activeTab === 'closings'
-              ? 'border-slate-900 text-slate-900'
-              : 'border-transparent text-slate-500 hover:text-slate-800'
+              ? 'border-signal-blue text-ink-navy'
+              : 'border-transparent text-mist-gray hover:text-ink-navy'
           }`}
         >
           <Lock className="w-3.5 h-3.5" />
           <span>Period Closing</span>
-          <span className="px-1.5 py-0.2 text-[10px] font-semibold rounded-full bg-slate-100 text-slate-600">
+          <span className="px-1.5 py-0.2 text-[10px] font-semibold rounded-full bg-cloud text-slate-gray">
             {periodClosings.length}
           </span>
         </button>
@@ -597,27 +596,27 @@ export function FinancePage() {
           />
 
           {/* Counts & View Mode Switcher */}
-          <div className="flex items-center justify-between text-xs text-slate-500 px-1">
+          <div className="flex items-center justify-between text-xs text-mist-gray px-1">
             <div className="flex items-center gap-2">
               <span>
-                Showing <strong className="text-slate-900 font-semibold">{transactions.length}</strong> of {totalCount} transactions
+                Showing <strong className="text-ink-navy font-semibold">{transactions.length}</strong> of {totalCount} transactions
               </span>
               {isTransactionsFetching && (
-                <span className="text-blue-600 font-medium animate-pulse text-[11px]">
+                <span className="text-signal-blue font-medium animate-pulse text-[11px]">
                   (Syncing...)
                 </span>
               )}
             </div>
 
-            <div className="flex items-center gap-1 bg-slate-100 p-0.5 rounded-lg border border-slate-200">
+            <div className="flex items-center gap-1 bg-pebble p-0.5 rounded-lg border border-hairline">
               <button
                 type="button"
                 onClick={() => setViewMode('table')}
                 title="Table view"
                 className={`p-1 rounded transition-all cursor-pointer ${
                   viewMode === 'table'
-                    ? 'bg-white text-slate-900 shadow-2xs font-bold'
-                    : 'text-slate-500 hover:text-slate-900'
+                    ? 'bg-white text-ink-navy shadow-xs font-bold'
+                    : 'text-mist-gray hover:text-ink-navy'
                 }`}
               >
                 <List className="w-3.5 h-3.5" />
@@ -628,8 +627,8 @@ export function FinancePage() {
                 title="Card view"
                 className={`p-1 rounded transition-all cursor-pointer ${
                   viewMode === 'cards'
-                    ? 'bg-white text-slate-900 shadow-2xs font-bold'
-                    : 'text-slate-500 hover:text-slate-900'
+                    ? 'bg-white text-ink-navy shadow-xs font-bold'
+                    : 'text-mist-gray hover:text-ink-navy'
                 }`}
               >
                 <LayoutGrid className="w-3.5 h-3.5" />
@@ -657,7 +656,7 @@ export function FinancePage() {
             />
           ) : transactions.length === 0 ? (
             <EmptyState
-              icon={<Receipt strokeWidth={1.5} className="w-8 h-8 text-slate-400" />}
+              icon={<Receipt strokeWidth={1.5} className="w-8 h-8 text-mist-gray" />}
               title={
                 filters.search ||
                 filters.type !== 'all' ||
@@ -730,8 +729,8 @@ export function FinancePage() {
           {/* Pagination Controls */}
           {totalPages > 1 && (
             <div className="flex items-center justify-between pt-2 px-1 text-xs">
-              <span className="text-slate-500">
-                Page <strong className="text-slate-800 font-semibold">{currentPage}</strong> of {totalPages}
+              <span className="text-mist-gray">
+                Page <strong className="text-ink-navy font-semibold">{currentPage}</strong> of {totalPages}
               </span>
               <div className="flex items-center gap-1.5">
                 <Button

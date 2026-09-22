@@ -11,12 +11,10 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import { 
-  Building2, 
   ShieldCheck, 
   Loader2, 
   Check, 
   Lock,
-  ExternalLink
 } from 'lucide-react';
 import { GOOGLE_SCOPES_CATALOGUE, DEFAULT_IDENTITY_SCOPES, WORKSPACE_INTEGRATION_SCOPES } from '../constants/scopes';
 import type { ConnectGooglePayload } from '../types/google.types';
@@ -155,10 +153,10 @@ export function ConnectGoogleDialog({
 
   return (
     <Dialog open={isOpen} onOpenChange={(open) => !isLoading && !isAuthenticating && !open && onClose()}>
-      <DialogContent className="sm:max-w-2xl max-h-[92vh] overflow-y-auto p-6 pr-10 sm:p-8 sm:pr-12 rounded-3xl border border-slate-200/80 shadow-2xl [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+      <DialogContent className="sm:max-w-2xl max-h-[92vh] overflow-y-auto p-6 pr-10 sm:p-8 sm:pr-12 rounded-3xl border border-hairline shadow-2xl [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] bg-white">
         <DialogHeader className="pb-2">
           <div className="flex items-center gap-3">
-            <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-blue-50 text-blue-600 border border-blue-100">
+            <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-[#e6f0ff] text-signal-blue border border-[#d4e4fa]">
               <svg className="h-6 w-6" viewBox="0 0 24 24">
                 <path
                   fill="#4285F4"
@@ -179,10 +177,10 @@ export function ConnectGoogleDialog({
               </svg>
             </div>
             <div>
-              <DialogTitle className="text-lg font-bold text-slate-900 tracking-tight">
+              <DialogTitle className="text-lg font-bold text-ink-navy tracking-tight">
                 Ủy quyền Google Workspace Đơn vị
               </DialogTitle>
-              <DialogDescription className="text-xs text-slate-500">
+              <DialogDescription className="text-xs text-mist-gray">
                 Xác thực OAuth 2.0 cấp quyền đồng bộ Drive, Sheets, Forms và Calendar vào tài khoản Gmail của bạn
               </DialogDescription>
             </div>
@@ -199,7 +197,7 @@ export function ConnectGoogleDialog({
           {/* Google Account Fields */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div className="space-y-1">
-              <label className="text-xs font-semibold text-slate-700">Email Google của bạn <span className="text-rose-500">*</span></label>
+              <label className="text-xs font-semibold text-slate-gray">Email Google của bạn <span className="text-rose-500">*</span></label>
               <Input
                 type="email"
                 value={googleEmail}
@@ -210,7 +208,7 @@ export function ConnectGoogleDialog({
               />
             </div>
             <div className="space-y-1">
-              <label className="text-xs font-semibold text-slate-700">Tên hiển thị Đơn vị</label>
+              <label className="text-xs font-semibold text-slate-gray">Tên hiển thị Đơn vị</label>
               <Input
                 type="text"
                 value={googleName}
@@ -224,20 +222,20 @@ export function ConnectGoogleDialog({
           {/* Scopes Selection Matrix */}
           <div className="space-y-2 pt-1">
             <div className="flex items-center justify-between">
-              <label className="text-xs font-semibold text-slate-700 flex items-center gap-1.5">
-                <Lock className="h-3.5 w-3.5 text-blue-600" />
+              <label className="text-xs font-semibold text-slate-gray flex items-center gap-1.5">
+                <Lock className="h-3.5 w-3.5 text-signal-blue" />
                 Phạm vi quyền hạn Google OAuth 2.0
               </label>
               <button
                 type="button"
                 onClick={handleSelectAllScopes}
-                className="text-[11px] text-blue-600 hover:underline font-medium cursor-pointer"
+                className="text-[11px] text-signal-blue hover:underline font-medium cursor-pointer"
               >
                 Cấp toàn quyền ({selectedScopes.length}/{GOOGLE_SCOPES_CATALOGUE.length})
               </button>
             </div>
 
-            <div className="border border-slate-200 rounded-2xl divide-y divide-slate-100 bg-slate-50/50 max-h-48 overflow-y-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+            <div className="border border-hairline rounded-2xl divide-y divide-hairline bg-cloud max-h-48 overflow-y-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
               {GOOGLE_SCOPES_CATALOGUE.map((scopeItem) => {
                 const isSelected = selectedScopes.includes(scopeItem.scope);
                 return (
@@ -245,21 +243,21 @@ export function ConnectGoogleDialog({
                     key={scopeItem.scope}
                     onClick={() => toggleScope(scopeItem.scope)}
                     className={`p-2.5 flex items-start gap-2.5 cursor-pointer transition-colors ${
-                      isSelected ? 'bg-white' : 'opacity-70 hover:opacity-100 hover:bg-slate-100/50'
+                      isSelected ? 'bg-white' : 'opacity-70 hover:opacity-100 hover:bg-cloud/50'
                     }`}
                   >
                     <div
                       className={`h-4 w-4 rounded mt-0.5 shrink-0 flex items-center justify-center border ${
                         isSelected
-                          ? 'bg-blue-600 border-blue-600 text-white'
-                          : 'border-slate-300 bg-white'
+                          ? 'bg-signal-blue border-signal-blue text-white'
+                          : 'border-hairline bg-white'
                       }`}
                     >
                       {isSelected && <Check className="h-3 w-3" />}
                     </div>
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-1.5 flex-wrap">
-                        <span className="font-semibold text-xs text-slate-800">
+                        <span className="font-semibold text-xs text-ink-navy">
                           {scopeItem.name}
                         </span>
                         {scopeItem.isRequired && (
@@ -267,11 +265,11 @@ export function ConnectGoogleDialog({
                             Bắt buộc
                           </Badge>
                         )}
-                        <span className="font-mono text-[10px] text-slate-400 truncate">
+                        <span className="font-mono text-[10px] text-mist-gray truncate">
                           {scopeItem.scope.replace('https://www.googleapis.com/auth/', '')}
                         </span>
                       </div>
-                      <p className="text-[11px] text-slate-500 leading-snug mt-0.5">
+                      <p className="text-[11px] text-mist-gray leading-snug mt-0.5">
                         {scopeItem.description}
                       </p>
                     </div>
@@ -282,8 +280,8 @@ export function ConnectGoogleDialog({
           </div>
 
           {/* Security Notice */}
-          <div className="rounded-2xl bg-blue-50/60 border border-blue-100 p-3.5 text-blue-900 flex items-start gap-2.5 text-[11px] leading-relaxed">
-            <ShieldCheck className="h-4 w-4 text-blue-600 shrink-0 mt-0.5" />
+          <div className="rounded-2xl bg-[#e6f0ff] border border-[#d4e4fa] p-3.5 text-signal-blue flex items-start gap-2.5 text-[11px] leading-relaxed">
+            <ShieldCheck className="h-4 w-4 text-signal-blue shrink-0 mt-0.5" />
             <div>
               <strong>Xác thực trực tiếp với Google:</strong> Khi nhấn nút bên dưới, Google sẽ mở cửa sổ popup chính thức để bạn chọn tài khoản Gmail và cấp quyền. Mã truy cập được bảo mật và tự động đồng bộ tài liệu vào đúng Drive của bạn.
             </div>
@@ -296,7 +294,7 @@ export function ConnectGoogleDialog({
               size="sm"
               onClick={onClose}
               disabled={isLoading || isAuthenticating}
-              className="text-xs rounded-xl"
+              className="text-xs rounded-xl border-hairline text-slate-gray hover:bg-cloud cursor-pointer"
             >
               Hủy
             </Button>
@@ -304,7 +302,7 @@ export function ConnectGoogleDialog({
               type="submit"
               size="sm"
               disabled={isLoading || isAuthenticating}
-              className="text-xs bg-blue-600 hover:bg-blue-700 text-white font-medium shadow-xs cursor-pointer rounded-xl"
+              className="text-xs bg-signal-blue hover:bg-[#005be0] text-white font-medium shadow-xs cursor-pointer rounded-xl"
             >
               {isLoading || isAuthenticating ? (
                 <Loader2 className="h-3.5 w-3.5 animate-spin mr-1.5" />

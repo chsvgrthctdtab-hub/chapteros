@@ -14,7 +14,7 @@ const TableHeader = React.forwardRef<
   HTMLTableSectionElement,
   React.HTMLAttributes<HTMLTableSectionElement>
 >(({ className, ...props }, ref) => (
-  <thead ref={ref} className={cn('bg-slate-50/90 border-b border-slate-200/90 text-slate-600', className)} {...props} />
+  <thead ref={ref} className={cn('bg-cloud border-b border-hairline text-slate-gray', className)} {...props} />
 ));
 TableHeader.displayName = 'TableHeader';
 
@@ -22,7 +22,7 @@ const TableBody = React.forwardRef<
   HTMLTableSectionElement,
   React.HTMLAttributes<HTMLTableSectionElement>
 >(({ className, ...props }, ref) => (
-  <tbody ref={ref} className={cn('divide-y divide-slate-100 bg-white [&_tr:last-child]:border-0', className)} {...props} />
+  <tbody ref={ref} className={cn('divide-y divide-hairline bg-white [&_tr:last-child]:border-0', className)} {...props} />
 ));
 TableBody.displayName = 'TableBody';
 
@@ -32,7 +32,7 @@ const TableFooter = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <tfoot
     ref={ref}
-    className={cn('border-t border-slate-200 bg-slate-50/80 font-medium [&>tr]:last:border-b-0', className)}
+    className={cn('border-t border-hairline bg-cloud font-medium [&>tr]:last:border-b-0', className)}
     {...props}
   />
 ));
@@ -43,7 +43,7 @@ const TableRow = React.forwardRef<HTMLTableRowElement, React.HTMLAttributes<HTML
     <tr
       ref={ref}
       className={cn(
-        'border-b border-slate-100 transition-colors duration-150 hover:bg-slate-50/80 data-[state=selected]:bg-emerald-50/60',
+        'border-b border-hairline transition-colors duration-150 hover:bg-pebble/70 data-[state=selected]:bg-[#e6f0ff]/50',
         className
       )}
       {...props}
@@ -59,7 +59,7 @@ const TableHead = React.forwardRef<
   <th
     ref={ref}
     className={cn(
-      'h-10 px-4 text-left align-middle text-[11px] font-bold uppercase tracking-wider text-slate-500 [&:has([role=checkbox])]:pr-0 whitespace-nowrap',
+      'h-9.5 px-4 text-left align-middle text-[11px] font-semibold uppercase tracking-wider text-slate-gray [&:has([role=checkbox])]:pr-0 whitespace-nowrap',
       className
     )}
     {...props}
@@ -73,7 +73,7 @@ const TableCell = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <td
     ref={ref}
-    className={cn('py-3.5 px-4 align-middle text-xs sm:text-sm text-slate-700 [&:has([role=checkbox])]:pr-0', className)}
+    className={cn('py-3 px-4 align-middle text-xs sm:text-sm text-ink-navy [&:has([role=checkbox])]:pr-0', className)}
     {...props}
   />
 ));
@@ -83,7 +83,7 @@ const TableCaption = React.forwardRef<
   HTMLTableCaptionElement,
   React.HTMLAttributes<HTMLTableCaptionElement>
 >(({ className, ...props }, ref) => (
-  <caption ref={ref} className={cn('mt-4 text-sm text-slate-500', className)} {...props} />
+  <caption ref={ref} className={cn('mt-4 text-sm text-mist-gray', className)} {...props} />
 ));
 TableCaption.displayName = 'TableCaption';
 

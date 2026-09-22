@@ -1,4 +1,4 @@
-import { useState, useMemo, useEffect } from 'react';
+import { useState, useMemo } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
@@ -9,18 +9,13 @@ import {
   Wallet,
   Plus,
   Search,
-  Filter,
   FileText,
   ExternalLink,
   Trash2,
   Edit,
-  Building2,
-  Calendar,
   AlertCircle,
   Loader2,
-  Sparkles,
   PieChart,
-  CheckCircle2,
 } from 'lucide-react';
 import {
   Dialog,
@@ -345,82 +340,76 @@ export function CollabFinanceModule({
       {/* Overview Metric Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         {/* Total Income Card */}
-        <div className="bg-emerald-50/50 border border-emerald-200/80 rounded-2xl p-4 shadow-sm relative overflow-hidden">
+        <div className="bg-white border border-hairline rounded-2xl p-4 shadow-sm relative overflow-hidden">
           <div className="flex items-center justify-between">
             <span className="text-xs font-semibold text-emerald-800 uppercase tracking-wider">
               Tổng Thu (Gây Quỹ & Tài Trợ)
             </span>
-            <div className="w-8 h-8 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center">
+            <div className="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-700 flex items-center justify-center">
               <TrendingUp className="h-4 w-4" />
             </div>
           </div>
           <div className="mt-2.5">
-            <p className="text-xl font-bold text-emerald-950 tabular-nums">
+            <p className="text-xl font-bold text-ink-navy tabular-nums">
               {formatVND(totalIncome)}
             </p>
-            <p className="text-[11px] text-emerald-700 mt-0.5">
+            <p className="text-[11px] text-slate-gray mt-0.5">
               Từ các nguồn tài trợ, quỹ hội & đóng góp
             </p>
           </div>
         </div>
 
         {/* Total Expense Card */}
-        <div className="bg-rose-50/50 border border-rose-200/80 rounded-2xl p-4 shadow-sm relative overflow-hidden">
+        <div className="bg-white border border-hairline rounded-2xl p-4 shadow-sm relative overflow-hidden">
           <div className="flex items-center justify-between">
             <span className="text-xs font-semibold text-rose-800 uppercase tracking-wider">
               Tổng Chi (Hậu Cần & Vật Tư)
             </span>
-            <div className="w-8 h-8 rounded-xl bg-rose-100 text-rose-700 flex items-center justify-center">
+            <div className="w-8 h-8 rounded-lg bg-rose-50 text-rose-700 flex items-center justify-center">
               <TrendingDown className="h-4 w-4" />
             </div>
           </div>
           <div className="mt-2.5">
-            <p className="text-xl font-bold text-rose-950 tabular-nums">
+            <p className="text-xl font-bold text-ink-navy tabular-nums">
               {formatVND(totalExpense)}
             </p>
-            <p className="text-[11px] text-rose-700 mt-0.5">
+            <p className="text-[11px] text-slate-gray mt-0.5">
               Kinh phí triển khai các hoạt động collab
             </p>
           </div>
         </div>
 
         {/* Net Balance Card */}
-        <div
-          className={`border rounded-2xl p-4 shadow-sm relative overflow-hidden ${
-            netBalance >= 0
-              ? 'bg-blue-50/50 border-blue-200/80 text-blue-900'
-              : 'bg-amber-50/50 border-amber-200/80 text-amber-900'
-          }`}
-        >
+        <div className="bg-white border border-hairline rounded-2xl p-4 shadow-sm relative overflow-hidden text-ink-navy">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-semibold uppercase tracking-wider">
+            <span className="text-xs font-semibold uppercase tracking-wider text-slate-gray">
               Số Dư Khả Dụng
             </span>
             <div
-              className={`w-8 h-8 rounded-xl flex items-center justify-center ${
-                netBalance >= 0 ? 'bg-blue-100 text-blue-700' : 'bg-amber-100 text-amber-700'
+              className={`w-8 h-8 rounded-lg flex items-center justify-center ${
+                netBalance >= 0 ? 'bg-[#e6f0ff] text-signal-blue' : 'bg-amber-50 text-amber-800'
               }`}
             >
               <Wallet className="h-4 w-4" />
             </div>
           </div>
           <div className="mt-2.5">
-            <p className="text-xl font-bold tabular-nums">
+            <p className="text-xl font-bold tabular-nums text-ink-navy">
               {formatVND(netBalance)}
             </p>
-            <p className="text-[11px] opacity-80 mt-0.5">
+            <p className="text-[11px] text-slate-gray mt-0.5">
               {netBalance >= 0 ? 'Quỹ hoạt động dương' : 'Cần bổ sung nguồn quỹ'}
             </p>
           </div>
         </div>
 
         {/* Quick Actions & Count */}
-        <div className="bg-white border border-slate-200/80 rounded-2xl p-4 shadow-sm flex flex-col justify-between">
+        <div className="bg-white border border-hairline rounded-2xl p-4 shadow-sm flex flex-col justify-between">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-semibold text-slate-600 uppercase tracking-wider">
+            <span className="text-xs font-semibold text-slate-gray uppercase tracking-wider">
               Giao Dịch Ghi Nhận
             </span>
-            <span className="tabular-nums font-bold text-slate-800 text-sm">
+            <span className="tabular-nums font-bold text-ink-navy text-sm">
               {transactions.length} khoản
             </span>
           </div>
@@ -430,7 +419,7 @@ export function CollabFinanceModule({
                 id="btn-add-income"
                 size="sm"
                 onClick={() => openCreateDialog('income')}
-                className="flex-1 text-xs bg-emerald-600 hover:bg-emerald-700 text-white h-8"
+                className="flex-1 text-xs bg-signal-blue hover:bg-[#005be0] text-white h-8 rounded-lg shadow-sm font-semibold"
               >
                 <Plus className="h-3.5 w-3.5 mr-1" />
                 Thu quỹ
@@ -439,7 +428,7 @@ export function CollabFinanceModule({
                 id="btn-add-expense"
                 size="sm"
                 onClick={() => openCreateDialog('expense')}
-                className="flex-1 text-xs bg-rose-600 hover:bg-rose-700 text-white h-8"
+                className="flex-1 text-xs bg-ink-navy hover:bg-[#082640] text-white h-8 rounded-lg shadow-sm font-semibold"
               >
                 <Plus className="h-3.5 w-3.5 mr-1" />
                 Ghi Chi
@@ -451,13 +440,13 @@ export function CollabFinanceModule({
 
       {/* Organization Financial Breakdown Section */}
       {participatingOrganizations.length > 1 && (
-        <div className="bg-slate-50/70 border border-slate-200 rounded-2xl p-4">
+        <div className="bg-cloud/60 border border-hairline rounded-2xl p-4">
           <div className="flex items-center justify-between mb-3">
-            <div className="flex items-center gap-2 text-xs font-bold text-slate-800">
-              <PieChart className="h-4 w-4 text-blue-600" />
+            <div className="flex items-center gap-2 text-xs font-bold text-ink-navy">
+              <PieChart className="h-4 w-4 text-signal-blue" />
               <span>Phân bổ Thu / Chi theo Đơn vị tham gia</span>
             </div>
-            <span className="text-[11px] text-slate-500">
+            <span className="text-[11px] text-slate-gray">
               Minh bạch tài chính giữa {participatingOrganizations.length} đơn vị
             </span>
           </div>
@@ -471,42 +460,42 @@ export function CollabFinanceModule({
               return (
                 <div
                   key={org.id}
-                  className="bg-white border border-slate-200/80 rounded-xl p-3.5 text-xs space-y-2 shadow-2xs"
+                  className="bg-white border border-hairline rounded-xl p-3.5 text-xs space-y-2 shadow-sm"
                 >
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2 min-w-0">
-                      <div className="w-6 h-6 rounded-md bg-blue-100 text-blue-700 font-bold flex items-center justify-center text-[10px] shrink-0">
+                      <div className="w-6 h-6 rounded-md bg-[#e6f0ff] text-signal-blue font-bold flex items-center justify-center text-[10px] shrink-0">
                         {org.code.slice(0, 2)}
                       </div>
-                      <span className="font-semibold text-slate-900 truncate">
+                      <span className="font-semibold text-ink-navy truncate">
                         {org.name}
                       </span>
                     </div>
                     {isLead && (
-                      <Badge className="bg-blue-50 text-blue-700 border border-blue-200/80 text-[10px] px-1.5 py-0.5 shrink-0 font-semibold">
+                      <Badge className="bg-[#e6f0ff] text-signal-blue border border-hairline text-[10px] px-1.5 py-0.5 shrink-0 font-semibold">
                         Chủ trì
                       </Badge>
                     )}
                   </div>
 
-                  <div className="grid grid-cols-3 gap-1 pt-1 text-[11px] border-t border-slate-100">
+                  <div className="grid grid-cols-3 gap-1 pt-1 text-[11px] border-t border-hairline">
                     <div>
-                      <span className="text-slate-400 block text-[10px]">Đã thu/gây</span>
-                      <span className="font-semibold text-emerald-600 tabular-nums">
+                      <span className="text-mist-gray block text-[10px]">Đã thu/gây</span>
+                      <span className="font-semibold text-emerald-700 tabular-nums">
                         {formatVND(orgStats.income)}
                       </span>
                     </div>
                     <div>
-                      <span className="text-slate-400 block text-[10px]">Đã giải ngân</span>
-                      <span className="font-semibold text-rose-600 tabular-nums">
+                      <span className="text-mist-gray block text-[10px]">Đã giải ngân</span>
+                      <span className="font-semibold text-rose-700 tabular-nums">
                         {formatVND(orgStats.expense)}
                       </span>
                     </div>
                     <div>
-                      <span className="text-slate-400 block text-[10px]">Chênh lệch</span>
+                      <span className="text-mist-gray block text-[10px]">Chênh lệch</span>
                       <span
                         className={`font-semibold tabular-nums ${
-                          orgNet >= 0 ? 'text-blue-600' : 'text-amber-600'
+                          orgNet >= 0 ? 'text-signal-blue' : 'text-amber-700'
                         }`}
                       >
                         {formatVND(orgNet)}
@@ -521,14 +510,14 @@ export function CollabFinanceModule({
       )}
 
       {/* Transactions List with Search & Filters */}
-      <div className="bg-white border border-slate-200/80 rounded-2xl p-5 shadow-sm space-y-4">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-2 border-b border-slate-100">
+      <div className="bg-white border border-hairline rounded-2xl p-5 shadow-sm space-y-4">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-2 border-b border-hairline">
           <div>
-            <h3 className="text-sm font-bold text-slate-900 flex items-center gap-2">
-              <DollarSign className="h-4 w-4 text-blue-600" />
+            <h3 className="text-sm font-bold text-ink-navy flex items-center gap-2">
+              <DollarSign className="h-4 w-4 text-signal-blue" />
               Sổ Nhật Ký Thu - Chi & Chứng Từ
             </h3>
-            <p className="text-xs text-slate-500 mt-0.5">
+            <p className="text-xs text-slate-gray mt-0.5">
               Toàn bộ các khoản thu chi, phân bổ kinh phí và đính kèm hóa đơn kiểm toán.
             </p>
           </div>
@@ -536,21 +525,21 @@ export function CollabFinanceModule({
           <div className="flex items-center gap-2 flex-wrap">
             {/* Search Input */}
             <div className="relative min-w-[200px]">
-              <Search className="absolute left-2.5 top-2 h-3.5 w-3.5 text-slate-400" />
+              <Search className="absolute left-2.5 top-2 h-3.5 w-3.5 text-mist-gray" />
               <Input
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Tìm nội dung, danh mục..."
-                className="pl-8 h-8 text-xs bg-slate-50/70 border-slate-200/90 focus:bg-white"
+                className="pl-8 h-8 text-xs bg-white border-hairline text-ink-navy placeholder:text-mist-gray focus:bg-white"
               />
             </div>
 
             {/* Filter by Type */}
             <Select value={filterType} onValueChange={setFilterType}>
-              <SelectTrigger className="h-8 text-xs w-[110px] bg-slate-50/70 border-slate-200/90">
+              <SelectTrigger className="h-8 text-xs w-[110px] bg-white border-hairline text-ink-navy">
                 <SelectValue placeholder="Loại" />
               </SelectTrigger>
-              <SelectContent className="bg-white border-slate-200">
+              <SelectContent className="bg-white border-hairline text-ink-navy">
                 <SelectItem value="all" className="text-xs">Tất cả loại</SelectItem>
                 <SelectItem value="income" className="text-xs">Khoản Thu</SelectItem>
                 <SelectItem value="expense" className="text-xs">Khoản Chi</SelectItem>
@@ -560,10 +549,10 @@ export function CollabFinanceModule({
             {/* Filter by Org */}
             {participatingOrganizations.length > 1 && (
               <Select value={filterOrg} onValueChange={setFilterOrg}>
-                <SelectTrigger className="h-8 text-xs w-[130px] bg-slate-50/70 border-slate-200/90">
+                <SelectTrigger className="h-8 text-xs w-[130px] bg-white border-hairline text-ink-navy">
                   <SelectValue placeholder="Đơn vị" />
                 </SelectTrigger>
-                <SelectContent className="bg-white border-slate-200">
+                <SelectContent className="bg-white border-hairline text-ink-navy">
                   <SelectItem value="all" className="text-xs">Tất cả đơn vị</SelectItem>
                   {participatingOrganizations.map((org) => (
                     <SelectItem key={org.id} value={org.id} className="text-xs">
@@ -578,22 +567,22 @@ export function CollabFinanceModule({
 
         {/* Transactions Table */}
         {isLoading ? (
-          <div className="p-12 text-center text-xs text-slate-400 flex items-center justify-center gap-2">
-            <Loader2 className="h-4 w-4 animate-spin text-blue-600" />
+          <div className="p-12 text-center text-xs text-mist-gray flex items-center justify-center gap-2">
+            <Loader2 className="h-4 w-4 animate-spin text-signal-blue" />
             <span>Đang tải dữ liệu thu chi...</span>
           </div>
         ) : filteredTransactions.length === 0 ? (
-          <div className="p-12 text-center bg-slate-50/50 rounded-xl border border-dashed border-slate-200 text-slate-500 text-xs">
-            <Wallet strokeWidth={1.5} className="h-8 w-8 text-slate-300 mx-auto mb-2" />
-            <p className="font-semibold text-slate-700">Chưa có giao dịch tài chính nào</p>
-            <p className="mt-1">
+          <div className="p-12 text-center bg-pebble/40 rounded-xl border border-dashed border-hairline text-slate-gray text-xs">
+            <Wallet strokeWidth={1.5} className="h-8 w-8 text-mist-gray mx-auto mb-2" />
+            <p className="font-semibold text-ink-navy">Chưa có giao dịch tài chính nào</p>
+            <p className="mt-1 text-slate-gray">
               Bắt đầu ghi nhận các khoản thu gây quỹ hoặc chi phí triển khai chiến dịch.
             </p>
             {canManage && (
               <Button
                 size="sm"
                 onClick={() => openCreateDialog('expense')}
-                className="mt-3 text-xs h-8 px-3.5 bg-blue-600 hover:bg-blue-700 text-white font-semibold shadow-2xs active:scale-[0.98]"
+                className="mt-3 text-xs h-8 px-3.5 bg-signal-blue hover:bg-[#005be0] text-white font-semibold shadow-sm rounded-lg active:scale-[0.98]"
               >
                 <Plus className="h-3.5 w-3.5 mr-1" />
                 Ghi nhận giao dịch đầu tiên
@@ -601,9 +590,9 @@ export function CollabFinanceModule({
             )}
           </div>
         ) : (
-          <div className="overflow-x-auto border border-slate-200/80 rounded-xl">
-            <table className="w-full text-left text-xs text-slate-700">
-              <thead className="bg-slate-50/80 text-[11px] font-semibold text-slate-500 uppercase tracking-wider border-b border-slate-200">
+          <div className="overflow-x-auto border border-hairline rounded-xl shadow-sm">
+            <table className="w-full text-left text-xs text-ink-navy">
+              <thead className="bg-cloud text-[11px] font-semibold text-slate-gray uppercase tracking-wider border-b border-hairline">
                 <tr>
                   <th className="px-4 py-3">Ngày</th>
                   <th className="px-4 py-3">Loại & Danh mục</th>
@@ -614,14 +603,14 @@ export function CollabFinanceModule({
                   {canManage && <th className="px-4 py-3 text-right">Thao tác</th>}
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-100 bg-white">
+              <tbody className="divide-y divide-hairline bg-white">
                 {filteredTransactions.map((tx) => {
                   const isIncome = tx.transactionType === 'income';
 
                   return (
-                    <tr key={tx.id} className="hover:bg-slate-50/60 transition-colors">
+                    <tr key={tx.id} className="hover:bg-pebble/60 transition-colors">
                       {/* Ngày giao dịch */}
-                      <td className="px-4 py-3 tabular-nums whitespace-nowrap text-slate-600">
+                      <td className="px-4 py-3 tabular-nums whitespace-nowrap text-slate-gray">
                         {formatDate(tx.transactionDate)}
                       </td>
 
@@ -631,13 +620,13 @@ export function CollabFinanceModule({
                           <Badge
                             className={`text-[10px] px-1.5 py-0.5 font-medium border-none ${
                               isIncome
-                                ? 'bg-emerald-100 text-emerald-800'
-                                : 'bg-rose-100 text-rose-800'
+                                ? 'bg-emerald-50 text-emerald-800 border border-emerald-200/60'
+                                : 'bg-rose-50 text-rose-800 border border-rose-200/60'
                             }`}
                           >
                             {isIncome ? 'Thu / Gây quỹ' : 'Khoản Chi'}
                           </Badge>
-                          <span className="font-semibold text-slate-900">
+                          <span className="font-semibold text-ink-navy">
                             {tx.categoryName}
                           </span>
                         </div>
@@ -646,22 +635,22 @@ export function CollabFinanceModule({
                       {/* Đơn vị thực hiện */}
                       <td className="px-4 py-3 whitespace-nowrap">
                         <div className="flex items-center gap-1.5">
-                          <div className="w-5 h-5 rounded bg-slate-100 text-slate-600 font-bold text-[9px] flex items-center justify-center">
+                          <div className="w-5 h-5 rounded bg-pebble text-ink-navy border border-hairline font-bold text-[9px] flex items-center justify-center">
                             {tx.organization?.code?.slice(0, 2) || 'OR'}
                           </div>
-                          <span className="text-slate-800 font-medium truncate max-w-[140px]">
+                          <span className="text-ink-navy font-medium truncate max-w-[140px]">
                             {tx.organization?.name || 'Đơn vị'}
                           </span>
                         </div>
                         {tx.collabActivity && (
-                          <span className="text-[10px] text-blue-700 block mt-0.5 truncate max-w-[150px]">
+                          <span className="text-[10px] text-signal-blue block mt-0.5 truncate max-w-[150px]">
                             ↳ {tx.collabActivity.title}
                           </span>
                         )}
                       </td>
 
                       {/* Nội dung */}
-                      <td className="px-4 py-3 text-slate-800 max-w-xs">
+                      <td className="px-4 py-3 text-slate-gray max-w-xs">
                         <p className="line-clamp-2 leading-relaxed">{tx.description}</p>
                       </td>
 
@@ -683,7 +672,7 @@ export function CollabFinanceModule({
                             href={tx.receiptUrl}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="inline-flex items-center gap-1 text-[11px] font-medium text-blue-700 hover:text-blue-900 hover:underline bg-blue-50 px-2 py-1 rounded-lg border border-blue-200/70 active:scale-[0.98]"
+                            className="inline-flex items-center gap-1 text-[11px] font-medium text-signal-blue hover:text-[#005be0] hover:underline bg-[#e6f0ff] px-2 py-1 rounded-lg border border-[#d4e4fa] active:scale-[0.98]"
                             title="Xem hóa đơn / chứng từ minh bạch"
                           >
                             <FileText className="h-3 w-3" />
@@ -691,7 +680,7 @@ export function CollabFinanceModule({
                             <ExternalLink className="h-2.5 w-2.5 ml-0.5" />
                           </a>
                         ) : (
-                          <span className="text-[11px] text-slate-400 italic">
+                          <span className="text-[11px] text-mist-gray italic">
                             Chưa đính kèm
                           </span>
                         )}
@@ -705,7 +694,7 @@ export function CollabFinanceModule({
                               variant="ghost"
                               size="sm"
                               onClick={() => openEditDialog(tx)}
-                              className="h-7 w-7 p-0 text-slate-400 hover:text-blue-700 hover:bg-blue-50 rounded-lg active:scale-[0.95]"
+                              className="h-7 w-7 p-0 text-mist-gray hover:text-signal-blue hover:bg-[#e6f0ff] rounded-lg active:scale-[0.95]"
                               title="Sửa giao dịch"
                             >
                               <Edit className="h-3.5 w-3.5" />
@@ -714,7 +703,7 @@ export function CollabFinanceModule({
                               variant="ghost"
                               size="sm"
                               onClick={() => handleDelete(tx.id)}
-                              className="h-7 w-7 p-0 text-slate-400 hover:text-rose-600 hover:bg-rose-50 rounded-lg active:scale-[0.95]"
+                              className="h-7 w-7 p-0 text-mist-gray hover:text-rose-600 hover:bg-rose-50 rounded-lg active:scale-[0.95]"
                               title="Xóa giao dịch"
                             >
                               <Trash2 className="h-3.5 w-3.5" />
@@ -733,13 +722,13 @@ export function CollabFinanceModule({
 
       {/* Dialog: Create / Edit Transaction */}
       <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-        <DialogContent className="sm:max-w-lg bg-white border border-slate-200 rounded-2xl p-6 pr-10 shadow-2xl">
+        <DialogContent className="sm:max-w-lg bg-white border border-hairline rounded-2xl p-6 pr-10 shadow-sm">
           <DialogHeader className="space-y-1 text-left">
-            <DialogTitle className="text-base font-bold text-slate-900 flex items-center gap-2">
-              <DollarSign className="h-4 w-4 text-blue-600" />
+            <DialogTitle className="text-base font-bold text-ink-navy flex items-center gap-2">
+              <DollarSign className="h-4 w-4 text-signal-blue" />
               {editingTransaction ? 'Chỉnh Sửa Giao Dịch' : 'Ghi Nhận Thu / Chi Chiến Dịch'}
             </DialogTitle>
-            <DialogDescription className="text-xs text-slate-500">
+            <DialogDescription className="text-xs text-slate-gray">
               Ghi lại các khoản thu gây quỹ, giải ngân hậu cần và đính kèm đường link hóa đơn minh bạch.
             </DialogDescription>
           </DialogHeader>
@@ -753,17 +742,17 @@ export function CollabFinanceModule({
 
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-3.5 py-1 text-left">
             {/* Loại giao dịch */}
-            <div className="grid grid-cols-2 gap-2 p-1 bg-slate-100 rounded-xl">
+            <div className="grid grid-cols-2 gap-2 p-1 bg-pebble rounded-xl border border-hairline">
               <button
                 type="button"
                 onClick={() => {
                   setValue('transactionType', 'income');
                   setValue('categoryName', 'Gây quỹ sự kiện');
                 }}
-                className={`py-1.5 text-xs font-semibold rounded-lg flex items-center justify-center gap-1.5 transition-all ${
+                className={`py-1.5 text-xs font-semibold rounded-lg flex items-center justify-center gap-1.5 transition-all cursor-pointer ${
                   selectedType === 'income'
                     ? 'bg-emerald-600 text-white shadow-xs'
-                    : 'text-slate-600 hover:text-slate-900'
+                    : 'text-slate-gray hover:text-ink-navy'
                 }`}
               >
                 <TrendingUp className="h-3.5 w-3.5" />
@@ -775,10 +764,10 @@ export function CollabFinanceModule({
                   setValue('transactionType', 'expense');
                   setValue('categoryName', 'Hậu cần & Vật tư');
                 }}
-                className={`py-1.5 text-xs font-semibold rounded-lg flex items-center justify-center gap-1.5 transition-all ${
+                className={`py-1.5 text-xs font-semibold rounded-lg flex items-center justify-center gap-1.5 transition-all cursor-pointer ${
                   selectedType === 'expense'
                     ? 'bg-rose-600 text-white shadow-xs'
-                    : 'text-slate-600 hover:text-slate-900'
+                    : 'text-slate-gray hover:text-ink-navy'
                 }`}
               >
                 <TrendingDown className="h-3.5 w-3.5" />
@@ -789,7 +778,7 @@ export function CollabFinanceModule({
             {/* Số tiền & Ngày */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div className="space-y-1">
-                <label htmlFor="tx-amount" className="block text-xs font-semibold text-slate-700">
+                <label htmlFor="tx-amount" className="block text-xs font-semibold text-ink-navy">
                   Số tiền (VND) <span className="text-rose-500">*</span>
                 </label>
                 <Input
@@ -797,7 +786,7 @@ export function CollabFinanceModule({
                   type="number"
                   {...register('amount')}
                   placeholder="500000"
-                  className="h-9 text-xs tabular-nums bg-slate-50/50"
+                  className="h-9 text-xs tabular-nums bg-cloud border-hairline text-ink-navy placeholder:text-mist-gray"
                 />
                 {errors.amount && (
                   <p className="text-[11px] text-rose-500">{errors.amount.message}</p>
@@ -805,7 +794,7 @@ export function CollabFinanceModule({
               </div>
 
               <div className="space-y-1">
-                <label className="block text-xs font-semibold text-slate-700">
+                <label className="block text-xs font-semibold text-ink-navy">
                   Ngày giao dịch <span className="text-rose-500">*</span>
                 </label>
                 <Controller
@@ -827,7 +816,7 @@ export function CollabFinanceModule({
 
             {/* Danh mục */}
             <div className="space-y-1">
-              <label htmlFor="tx-category" className="block text-xs font-semibold text-slate-700">
+              <label htmlFor="tx-category" className="block text-xs font-semibold text-ink-navy">
                 Danh mục Thu / Chi <span className="text-rose-500">*</span>
               </label>
               <Controller
@@ -838,10 +827,10 @@ export function CollabFinanceModule({
                     value={field.value || ''}
                     onValueChange={field.onChange}
                   >
-                    <SelectTrigger id="tx-category" className="h-9 text-xs bg-slate-50/50">
+                    <SelectTrigger id="tx-category" className="h-9 text-xs bg-cloud border-hairline text-ink-navy">
                       <SelectValue placeholder="Chọn danh mục" />
                     </SelectTrigger>
-                    <SelectContent className="bg-white border-slate-200">
+                    <SelectContent className="bg-white border-hairline text-ink-navy">
                       {(selectedType === 'income'
                         ? DEFAULT_INCOME_CATEGORIES
                         : DEFAULT_EXPENSE_CATEGORIES
@@ -859,7 +848,7 @@ export function CollabFinanceModule({
             {/* Đơn vị thực hiện & Hoạt động liên quan */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div className="space-y-1">
-                <label htmlFor="tx-org" className="block text-xs font-semibold text-slate-700">
+                <label htmlFor="tx-org" className="block text-xs font-semibold text-ink-navy">
                   Đơn vị chịu trách nhiệm <span className="text-rose-500">*</span>
                 </label>
                 <Controller
@@ -870,10 +859,10 @@ export function CollabFinanceModule({
                       value={field.value || ''}
                       onValueChange={field.onChange}
                     >
-                      <SelectTrigger id="tx-org" className="h-9 text-xs bg-slate-50/50">
+                      <SelectTrigger id="tx-org" className="h-9 text-xs bg-cloud border-hairline text-ink-navy">
                         <SelectValue placeholder="Chọn đơn vị" />
                       </SelectTrigger>
-                      <SelectContent className="bg-white border-slate-200">
+                      <SelectContent className="bg-white border-hairline text-ink-navy">
                         {participatingOrganizations.map((org) => (
                           <SelectItem key={org.id} value={org.id} className="text-xs">
                             {org.name} ({org.code})
@@ -886,7 +875,7 @@ export function CollabFinanceModule({
               </div>
 
               <div className="space-y-1">
-                <label htmlFor="tx-activity" className="block text-xs font-semibold text-slate-700">
+                <label htmlFor="tx-activity" className="block text-xs font-semibold text-ink-navy">
                   Thuộc Hoạt Động (Tùy chọn)
                 </label>
                 <Controller
@@ -897,11 +886,11 @@ export function CollabFinanceModule({
                       value={field.value || 'none'}
                       onValueChange={(val) => field.onChange(val === 'none' ? null : val)}
                     >
-                      <SelectTrigger id="tx-activity" className="h-9 text-xs bg-slate-50/50">
+                      <SelectTrigger id="tx-activity" className="h-9 text-xs bg-cloud border-hairline text-ink-navy">
                         <SelectValue placeholder="Chọn hoạt động" />
                       </SelectTrigger>
-                      <SelectContent className="bg-white border-slate-200 max-h-48">
-                        <SelectItem value="none" className="text-xs text-slate-400">
+                      <SelectContent className="bg-white border-hairline text-ink-navy max-h-48">
+                        <SelectItem value="none" className="text-xs text-mist-gray">
                           -- Chung cho toàn chiến dịch --
                         </SelectItem>
                         {collabActivities.map((act) => (
@@ -918,7 +907,7 @@ export function CollabFinanceModule({
 
             {/* Nội dung chi tiết */}
             <div className="space-y-1">
-              <label htmlFor="tx-description" className="block text-xs font-semibold text-slate-700">
+              <label htmlFor="tx-description" className="block text-xs font-semibold text-ink-navy">
                 Nội dung diễn giải <span className="text-rose-500">*</span>
               </label>
               <Textarea
@@ -926,7 +915,7 @@ export function CollabFinanceModule({
                 {...register('description')}
                 rows={2}
                 placeholder="Ví dụ: Mua 100 chai nước suối, in ấn 2 backdrop sân khấu A..."
-                className="text-xs bg-slate-50/50 resize-none"
+                className="text-xs bg-cloud border-hairline text-ink-navy placeholder:text-mist-gray resize-none"
               />
               {errors.description && (
                 <p className="text-[11px] text-rose-500">{errors.description.message}</p>
@@ -935,28 +924,28 @@ export function CollabFinanceModule({
 
             {/* Link chứng từ / Hóa đơn */}
             <div className="space-y-1">
-              <label htmlFor="tx-receipt" className="block text-xs font-semibold text-slate-700 flex items-center justify-between">
+              <label htmlFor="tx-receipt" className="block text-xs font-semibold text-ink-navy flex items-center justify-between">
                 <span>Link Chứng từ / Hóa đơn VAT (Google Drive / Ảnh)</span>
-                <span className="text-[10px] text-slate-400 font-normal">Minh bạch kiểm toán</span>
+                <span className="text-[10px] text-mist-gray font-normal">Minh bạch kiểm toán</span>
               </label>
               <Input
                 id="tx-receipt"
                 {...register('receiptUrl')}
                 placeholder="https://drive.google.com/file/d/..."
-                className="h-9 text-xs bg-slate-50/50 font-mono"
+                className="h-9 text-xs bg-cloud border-hairline text-ink-navy placeholder:text-mist-gray font-mono"
               />
               {errors.receiptUrl && (
                 <p className="text-[11px] text-rose-500">{errors.receiptUrl.message}</p>
               )}
             </div>
 
-            <DialogFooter className="pt-3 gap-2">
+            <DialogFooter className="pt-3 gap-2 border-t border-hairline">
               <Button
                 type="button"
                 variant="outline"
                 size="sm"
                 onClick={() => setIsDialogOpen(false)}
-                className="text-xs"
+                className="text-xs border-hairline text-slate-gray hover:text-ink-navy hover:bg-pebble"
               >
                 Hủy
               </Button>

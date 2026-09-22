@@ -45,7 +45,6 @@ export function AddParticipantDialog({
     handleSubmit,
     setValue,
     reset,
-    watch,
     control,
     formState: { errors },
   } = useForm<AddParticipantFormData>({
@@ -103,27 +102,27 @@ export function AddParticipantDialog({
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 overflow-y-auto bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4">
+    <div className="fixed inset-0 z-50 overflow-y-auto bg-ink-navy/40 backdrop-blur-xs flex items-center justify-center p-4">
       <div
         id="add-participant-dialog"
-        className="bg-white rounded-2xl shadow-xl w-full max-w-lg max-h-[90vh] flex flex-col overflow-hidden animate-in fade-in zoom-in-95 duration-200"
+        className="bg-white rounded-2xl border border-hairline shadow-xl w-full max-w-lg max-h-[90vh] flex flex-col overflow-hidden animate-in fade-in zoom-in-95 duration-200"
       >
         {/* Header */}
-        <div className="px-6 py-4 border-b border-slate-200 flex items-center justify-between bg-slate-50/50">
-          <div className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-lg bg-indigo-50 border border-indigo-100 flex items-center justify-center text-indigo-600">
+        <div className="px-6 py-4 border-b border-hairline flex items-center justify-between bg-cloud">
+          <div className="flex items-center gap-2.5">
+            <div className="w-8 h-8 rounded-lg bg-[#e6f0ff] border border-[#d4e4fa] flex items-center justify-center text-signal-blue">
               <UserPlus className="w-4 h-4" />
             </div>
             <div>
-              <h2 className="text-base font-bold text-slate-900">Thêm người tham gia</h2>
-              <p className="text-xs text-slate-500">Ghi danh hội viên Đơn vị vào hoạt động</p>
+              <h2 className="text-base font-bold text-ink-navy">Thêm người tham gia</h2>
+              <p className="text-xs text-slate-gray">Ghi danh hội viên Đơn vị vào hoạt động</p>
             </div>
           </div>
           <button
             type="button"
             id="close-add-participant-dialog-btn"
             onClick={handleClose}
-            className="text-slate-400 hover:text-slate-600 p-1.5 rounded-lg hover:bg-slate-100 transition-colors"
+            className="text-slate-gray hover:text-ink-navy p-1.5 rounded-lg hover:bg-pebble transition-colors"
           >
             <X className="w-5 h-5" />
           </button>
@@ -141,34 +140,34 @@ export function AddParticipantDialog({
 
           {/* Member Picker */}
           <div>
-            <label className="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1.5">
+            <label className="block text-xs font-semibold text-slate-gray uppercase tracking-wider mb-1.5">
               Chọn hội viên <span className="text-rose-500">*</span>
             </label>
 
             {/* Member search input */}
             <div className="relative mb-2">
-              <Search className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
+              <Search className="w-4 h-4 text-mist-gray absolute left-3 top-1/2 -translate-y-1/2" />
               <input
                 id="participant-search-member-input"
                 type="text"
                 placeholder="Tìm theo họ tên, MSSV, lớp sinh viên..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-9 pr-3.5 py-2 text-xs bg-slate-50 border border-slate-200 rounded-lg focus:outline-hidden focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500"
+                className="w-full pl-9 pr-3.5 py-2 text-xs bg-cloud border border-hairline rounded-lg text-ink-navy placeholder:text-mist-gray focus:outline-hidden focus:ring-2 focus:ring-signal-blue/20 focus:border-signal-blue"
               />
             </div>
 
             {/* Selected Member Preview Card */}
             {selectedMember ? (
-              <div className="p-3 bg-indigo-50/70 border border-indigo-200 rounded-xl flex items-center justify-between gap-3 mb-2">
+              <div className="p-3 bg-[#e6f0ff]/60 border border-[#d4e4fa] rounded-xl flex items-center justify-between gap-3 mb-2">
                 <div className="flex items-center gap-2.5 min-w-0">
-                  <div className="w-8 h-8 rounded-full bg-indigo-600 text-white font-bold text-xs flex items-center justify-center shrink-0">
+                  <div className="w-8 h-8 rounded-full bg-signal-blue text-white font-bold text-xs flex items-center justify-center shrink-0">
                     {selectedMember.fullName.charAt(0)}
                   </div>
                   <div className="min-w-0">
-                    <p className="text-xs font-bold text-slate-900 truncate">{selectedMember.fullName}</p>
-                    <p className="text-[11px] text-slate-500">
-                      MSSV: <span className="font-mono font-medium text-slate-700">{selectedMember.studentId}</span>
+                    <p className="text-xs font-bold text-ink-navy truncate">{selectedMember.fullName}</p>
+                    <p className="text-[11px] text-slate-gray">
+                      MSSV: <span className="font-mono tabular-nums font-medium text-ink-navy">{selectedMember.studentId}</span>
                       {selectedMember.className && ` • ${selectedMember.className}`}
                     </p>
                   </div>
@@ -179,21 +178,21 @@ export function AddParticipantDialog({
                     setSelectedMember(null);
                     setValue('memberId', '');
                   }}
-                  className="text-xs text-indigo-600 hover:text-indigo-800 font-medium shrink-0 cursor-pointer"
+                  className="text-xs text-signal-blue hover:text-[#005be0] font-semibold shrink-0 cursor-pointer"
                 >
                   Đổi người
                 </button>
               </div>
             ) : (
               /* Members selection list */
-              <div className="border border-slate-200 rounded-xl overflow-hidden max-h-44 overflow-y-auto divide-y divide-slate-100 bg-white">
+              <div className="border border-hairline rounded-xl overflow-hidden max-h-44 overflow-y-auto divide-y divide-hairline bg-white">
                 {isLoadingMembers ? (
-                  <div className="p-4 text-center text-xs text-slate-400 flex items-center justify-center gap-2">
-                    <Loader2 className="w-4 h-4 animate-spin" />
+                  <div className="p-4 text-center text-xs text-slate-gray flex items-center justify-center gap-2">
+                    <Loader2 className="w-4 h-4 animate-spin text-signal-blue" />
                     <span>Đang tải danh sách hội viên...</span>
                   </div>
                 ) : filteredMembers.length === 0 ? (
-                  <div className="p-4 text-center text-xs text-slate-500">
+                  <div className="p-4 text-center text-xs text-slate-gray">
                     {availableMembers.length === 0
                       ? 'Tất cả hội viên trong Đơn vị đã có trong hoạt động này'
                       : 'Không tìm thấy hội viên phù hợp với từ khóa'}
@@ -205,21 +204,21 @@ export function AddParticipantDialog({
                       type="button"
                       id={`select-member-row-${member.id}`}
                       onClick={() => handleSelectMember(member)}
-                      className="w-full p-2.5 px-3 flex items-center justify-between text-left hover:bg-slate-50 transition-colors cursor-pointer"
+                      className="w-full p-2.5 px-3 flex items-center justify-between text-left hover:bg-cloud transition-colors cursor-pointer"
                     >
                       <div className="flex items-center gap-2.5 min-w-0">
-                        <div className="w-7 h-7 rounded-full bg-slate-100 border border-slate-200 text-slate-600 text-xs flex items-center justify-center shrink-0">
+                        <div className="w-7 h-7 rounded-full bg-pebble border border-hairline text-slate-gray text-xs flex items-center justify-center shrink-0">
                           <User className="w-3.5 h-3.5" />
                         </div>
                         <div className="min-w-0">
-                          <p className="text-xs font-semibold text-slate-900 truncate">{member.fullName}</p>
-                          <p className="text-[11px] text-slate-500">
-                            MSSV: <span className="font-mono text-slate-700">{member.studentId}</span>
+                          <p className="text-xs font-semibold text-ink-navy truncate">{member.fullName}</p>
+                          <p className="text-[11px] text-slate-gray">
+                            MSSV: <span className="font-mono tabular-nums text-ink-navy">{member.studentId}</span>
                             {member.className && ` • ${member.className}`}
                           </p>
                         </div>
                       </div>
-                      <span className="text-xs text-indigo-600 font-medium">Chọn</span>
+                      <span className="text-xs text-signal-blue font-semibold">Chọn</span>
                     </button>
                   ))
                 )}
@@ -232,7 +231,7 @@ export function AddParticipantDialog({
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
             {/* Registration Status */}
             <div>
-              <label className="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1">
+              <label className="block text-xs font-semibold text-slate-gray uppercase tracking-wider mb-1">
                 Trạng thái đăng ký
               </label>
               <Controller
@@ -243,7 +242,7 @@ export function AddParticipantDialog({
                     value={field.value || 'registered'}
                     onValueChange={field.onChange}
                   >
-                    <SelectTrigger id="participant-registration-status-select" className="w-full h-9 text-xs bg-white">
+                    <SelectTrigger id="participant-registration-status-select" className="w-full h-9 text-xs bg-cloud border-hairline text-ink-navy">
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent>
@@ -260,7 +259,7 @@ export function AddParticipantDialog({
 
             {/* Attendance Status */}
             <div>
-              <label className="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1">
+              <label className="block text-xs font-semibold text-slate-gray uppercase tracking-wider mb-1">
                 Trạng thái điểm danh
               </label>
               <Controller
@@ -271,7 +270,7 @@ export function AddParticipantDialog({
                     value={field.value || 'unmarked'}
                     onValueChange={field.onChange}
                   >
-                    <SelectTrigger id="participant-attendance-status-select" className="w-full h-9 text-xs bg-white">
+                    <SelectTrigger id="participant-attendance-status-select" className="w-full h-9 text-xs bg-cloud border-hairline text-ink-navy">
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent>
@@ -289,7 +288,7 @@ export function AddParticipantDialog({
 
           {/* Notes */}
           <div>
-            <label className="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1">
+            <label className="block text-xs font-semibold text-slate-gray uppercase tracking-wider mb-1">
               Ghi chú thêm (Tùy chọn)
             </label>
             <input
@@ -297,18 +296,18 @@ export function AddParticipantDialog({
               type="text"
               placeholder="VD: Phụ trách đội hậu cần, đăng ký xe chung..."
               onChange={(e) => setValue('notes', e.target.value)}
-              className="w-full px-3 py-2 text-xs bg-white border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500"
+              className="w-full px-3 py-2 text-xs bg-cloud border border-hairline rounded-lg text-ink-navy placeholder:text-mist-gray focus:outline-hidden focus:ring-2 focus:ring-signal-blue/20 focus:border-signal-blue"
             />
           </div>
 
           {/* Modal Footer Actions */}
-          <div className="pt-3 border-t border-slate-200 flex items-center justify-end gap-2.5">
+          <div className="pt-3 border-t border-hairline flex items-center justify-end gap-2.5">
             <button
               type="button"
               id="cancel-add-participant-btn"
               onClick={handleClose}
               disabled={isSubmitting}
-              className="px-3.5 py-1.5 text-xs font-medium text-slate-700 bg-white border border-slate-300 rounded-lg hover:bg-slate-50 transition-colors cursor-pointer"
+              className="px-3.5 py-1.5 text-xs font-medium text-slate-gray bg-white border border-hairline rounded-lg hover:bg-pebble hover:text-ink-navy transition-colors cursor-pointer"
             >
               Hủy
             </button>
@@ -316,7 +315,7 @@ export function AddParticipantDialog({
               type="submit"
               id="submit-add-participant-btn"
               disabled={isSubmitting || !selectedMember}
-              className="inline-flex items-center gap-1.5 px-4 py-1.5 text-xs font-medium text-white bg-indigo-600 rounded-lg hover:bg-indigo-700 shadow-xs focus:ring-2 focus:ring-indigo-500/30 transition-colors disabled:opacity-50 cursor-pointer"
+              className="inline-flex items-center gap-1.5 px-4 py-1.5 text-xs font-medium text-white bg-signal-blue rounded-lg hover:bg-[#005be0] shadow-xs focus:ring-2 focus:ring-signal-blue/30 transition-colors disabled:opacity-50 cursor-pointer"
             >
               {isSubmitting ? (
                 <>

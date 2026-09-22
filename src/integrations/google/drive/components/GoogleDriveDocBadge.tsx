@@ -37,7 +37,7 @@ export function GoogleDriveDocBadge({
     const renderIcon = () => {
       switch (group) {
         case 'doc':
-          return <FileText className="w-3 h-3 text-blue-600 shrink-0" />;
+          return <FileText className="w-3 h-3 text-signal-blue shrink-0" />;
         case 'sheet':
           return <FileSpreadsheet className="w-3 h-3 text-emerald-600 shrink-0" />;
         case 'slide':
@@ -47,7 +47,7 @@ export function GoogleDriveDocBadge({
         case 'folder':
           return <Folder className="w-3 h-3 text-amber-600 shrink-0" />;
         case 'image':
-          return <ImageIcon className="w-3 h-3 text-indigo-600 shrink-0" />;
+          return <ImageIcon className="w-3 h-3 text-purple-600 shrink-0" />;
         default:
           return <HardDrive className="w-3 h-3 text-emerald-600 shrink-0" />;
       }
@@ -79,20 +79,20 @@ export function GoogleDriveDocBadge({
   if (showIconOnly) {
     return (
       <span
-        className={`inline-flex items-center justify-center p-1 rounded-md bg-slate-50 border border-slate-200 ${className}`}
+        className={`inline-flex items-center justify-center p-1 rounded-md bg-cloud border border-hairline ${className}`}
         title="Supabase Storage"
       >
-        <Cloud className="w-3 h-3 text-slate-500 shrink-0" />
+        <Cloud className="w-3 h-3 text-mist-gray shrink-0" />
       </span>
     );
   }
 
   return (
     <span
-      className={`inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md text-[11px] font-medium bg-slate-50 text-slate-700 border border-slate-200 ${className}`}
+      className={`inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md text-[11px] font-medium bg-cloud text-slate-gray border border-hairline ${className}`}
       title="Lưu trữ nội bộ Supabase"
     >
-      <Cloud className="w-3 h-3 text-slate-500 shrink-0" />
+      <Cloud className="w-3 h-3 text-mist-gray shrink-0" />
       <span>Supabase Storage</span>
     </span>
   );

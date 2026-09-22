@@ -2,28 +2,17 @@ import { useState } from 'react';
 import { 
   X, 
   CheckCircle2, 
-  AlertCircle, 
-  Clock, 
-  ExternalLink, 
   FileSpreadsheet, 
   FileText, 
   CalendarDays, 
   FolderSync, 
   ShieldCheck, 
-  KeyRound, 
-  ArrowRight, 
-  RefreshCw, 
-  Layers, 
-  Table,
-  Check,
-  Building2,
-  Lock
+  Check, 
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import type { GoogleServiceKey } from '@/types';
 import type { GoogleIntegrationOverview, GoogleServiceMetrics } from '../types/google.types';
-import { GOOGLE_SCOPES_CATALOGUE } from '../constants/scopes';
 import { formatDate } from '@/lib/date';
 
 interface ServiceDetailDrawerProps {
@@ -59,8 +48,8 @@ export function ServiceDetailDrawer({
         return {
           name: 'Google Forms Automation',
           subtitle: 'Thu thập đơn đăng ký, khảo sát ý kiến & đối soát MSSV',
-          icon: <FileText strokeWidth={1.5} className="h-6 w-6 text-purple-600" />,
-          colorBg: 'bg-purple-50 border-purple-100',
+          icon: <FileText strokeWidth={1.5} className="h-6 w-6 text-signal-blue" />,
+          colorBg: 'bg-[#e6f0ff] border-[#d4e4fa]',
           scope: 'https://www.googleapis.com/auth/forms.responses.readonly',
           description:
             'Tự động thu thập câu trả lời từ Google Forms đăng ký tham gia sự kiện của sinh viên, khớp MSSV với hồ sơ hội viên và ghi nhận điểm danh tức thì vào PostgreSQL.',
@@ -80,8 +69,8 @@ export function ServiceDetailDrawer({
         return {
           name: 'Google Sheets Integration',
           subtitle: 'Quản lý bảng tính, xuất snapshot & nhập đối soát 4 bước',
-          icon: <FileSpreadsheet strokeWidth={1.5} className="h-6 w-6 text-emerald-600" />,
-          colorBg: 'bg-emerald-50 border-emerald-100',
+          icon: <FileSpreadsheet strokeWidth={1.5} className="h-6 w-6 text-signal-blue" />,
+          colorBg: 'bg-[#e6f0ff] border-[#d4e4fa]',
           scope: 'https://www.googleapis.com/auth/spreadsheets.readonly',
           description:
             'Liên kết bảng tính Google Sheets của Đơn vị, xuất dữ liệu snapshot chuẩn hóa UTF-8 BOM và quy trình nhập dữ liệu 4 bước có đối soát trùng lặp & giải quyết xung đột trước khi lưu.',
@@ -101,8 +90,8 @@ export function ServiceDetailDrawer({
         return {
           name: 'Google Calendar Schedule',
           subtitle: 'Đồng bộ lịch hoạt động, lịch họp BCH & hạn chót nhiệm vụ',
-          icon: <CalendarDays className="h-6 w-6 text-blue-600" />,
-          colorBg: 'bg-blue-50 border-blue-100',
+          icon: <CalendarDays className="h-6 w-6 text-signal-blue" />,
+          colorBg: 'bg-[#e6f0ff] border-[#d4e4fa]',
           scope: 'https://www.googleapis.com/auth/calendar.events',
           description:
             'Tự động đồng bộ các sự kiện chi hội, lịch họp Ban Chấp Hành định kỳ và nhắc nhở hạn chót hoàn thành nhiệm vụ vào Google Calendar của các thành viên liên quan.',
@@ -122,8 +111,8 @@ export function ServiceDetailDrawer({
         return {
           name: 'Google Drive Knowledge Repository',
           subtitle: 'Cấu trúc thư mục nhiệm kỳ & sao lưu chứng từ bảo mật',
-          icon: <FolderSync strokeWidth={1.5} className="h-6 w-6 text-teal-600" />,
-          colorBg: 'bg-teal-50 border-teal-100',
+          icon: <FolderSync strokeWidth={1.5} className="h-6 w-6 text-signal-blue" />,
+          colorBg: 'bg-[#e6f0ff] border-[#d4e4fa]',
           scope: 'https://www.googleapis.com/auth/drive.file',
           description:
             'Tự động tạo cây thư mục chuẩn theo từng nhiệm kỳ Chi hội. Sao lưu quyết định, kế hoạch, biên bản họp và tài liệu chứng từ có chữ ký số an toàn.',
@@ -147,21 +136,21 @@ export function ServiceDetailDrawer({
   const isReady = isOrgConnected && isScopeGranted;
 
   return (
-    <div className="fixed inset-0 z-50 overflow-hidden bg-slate-900/40 backdrop-blur-xs flex justify-end animate-in fade-in duration-200">
+    <div className="fixed inset-0 z-50 overflow-hidden bg-ink-navy/40 backdrop-blur-xs flex justify-end animate-in fade-in duration-200">
       <div 
         id="service-detail-drawer"
-        className="w-full max-w-xl bg-white h-full shadow-2xl flex flex-col justify-between border-l border-slate-200 animate-in slide-in-from-right duration-300"
+        className="w-full max-w-xl bg-white h-full shadow-2xl flex flex-col justify-between border-l border-hairline animate-in slide-in-from-right duration-300"
       >
         {/* Drawer Header */}
         <div>
-          <div className="p-5 border-b border-slate-200 bg-slate-50/70 flex items-start justify-between gap-4">
+          <div className="p-5 border-b border-hairline bg-cloud flex items-start justify-between gap-4">
             <div className="flex items-center gap-3">
               <div className={`h-12 w-12 rounded-xl flex items-center justify-center shrink-0 border ${config.colorBg}`}>
                 {config.icon}
               </div>
               <div>
                 <div className="flex items-center gap-2">
-                  <h2 className="text-base font-bold text-slate-900">{config.name}</h2>
+                  <h2 className="text-base font-bold text-ink-navy">{config.name}</h2>
                   {isReady ? (
                     <Badge variant="success" className="text-[10px] px-2 py-0.5 bg-emerald-50 text-emerald-700 border-emerald-200">
                       Sẵn sàng
@@ -172,28 +161,28 @@ export function ServiceDetailDrawer({
                     </Badge>
                   )}
                 </div>
-                <p className="text-xs text-slate-500 mt-0.5">{config.subtitle}</p>
+                <p className="text-xs text-mist-gray mt-0.5">{config.subtitle}</p>
               </div>
             </div>
 
             <button
               type="button"
               onClick={onClose}
-              className="p-1.5 rounded-lg text-slate-400 hover:text-slate-700 hover:bg-slate-200/60 transition-colors"
+              className="p-1.5 rounded-lg text-mist-gray hover:text-ink-navy hover:bg-pebble transition-colors cursor-pointer"
             >
               <X className="h-5 w-5" />
             </button>
           </div>
 
           {/* Drawer Navigation Tabs */}
-          <div className="flex border-b border-slate-200 px-5 bg-white">
+          <div className="flex border-b border-hairline px-5 bg-white">
             <button
               type="button"
               onClick={() => setActiveTab('overview')}
-              className={`py-3 px-4 text-xs font-semibold border-b-2 transition-colors ${
+              className={`py-3 px-4 text-xs font-semibold border-b-2 transition-colors cursor-pointer ${
                 activeTab === 'overview'
-                  ? 'border-blue-600 text-blue-600'
-                  : 'border-transparent text-slate-500 hover:text-slate-800'
+                  ? 'border-signal-blue text-signal-blue'
+                  : 'border-transparent text-mist-gray hover:text-ink-navy'
               }`}
             >
               Tổng quan & Phân quyền
@@ -202,10 +191,10 @@ export function ServiceDetailDrawer({
             <button
               type="button"
               onClick={() => setActiveTab('resources')}
-              className={`py-3 px-4 text-xs font-semibold border-b-2 transition-colors ${
+              className={`py-3 px-4 text-xs font-semibold border-b-2 transition-colors cursor-pointer ${
                 activeTab === 'resources'
-                  ? 'border-blue-600 text-blue-600'
-                  : 'border-transparent text-slate-500 hover:text-slate-800'
+                  ? 'border-signal-blue text-signal-blue'
+                  : 'border-transparent text-mist-gray hover:text-ink-navy'
               }`}
             >
               Tài nguyên & Cấu hình
@@ -214,10 +203,10 @@ export function ServiceDetailDrawer({
             <button
               type="button"
               onClick={() => setActiveTab('diagnostics')}
-              className={`py-3 px-4 text-xs font-semibold border-b-2 transition-colors ${
+              className={`py-3 px-4 text-xs font-semibold border-b-2 transition-colors cursor-pointer ${
                 activeTab === 'diagnostics'
-                  ? 'border-blue-600 text-blue-600'
-                  : 'border-transparent text-slate-500 hover:text-slate-800'
+                  ? 'border-signal-blue text-signal-blue'
+                  : 'border-transparent text-mist-gray hover:text-ink-navy'
               }`}
             >
               Chẩn đoán & Bảo mật
@@ -230,26 +219,26 @@ export function ServiceDetailDrawer({
           {activeTab === 'overview' && (
             <div className="space-y-4">
               <div className="space-y-2">
-                <h4 className="text-xs font-bold uppercase tracking-wider text-slate-500">
+                <h4 className="text-xs font-bold uppercase tracking-wider text-mist-gray">
                   Mô tả Dịch vụ
                 </h4>
-                <p className="text-slate-700 leading-relaxed bg-slate-50 p-3 rounded-lg border border-slate-200/80">
+                <p className="text-slate-gray leading-relaxed bg-cloud p-3 rounded-lg border border-hairline">
                   {config.description}
                 </p>
               </div>
 
               {/* How it works */}
               <div className="space-y-2">
-                <h4 className="text-xs font-bold uppercase tracking-wider text-slate-500">
+                <h4 className="text-xs font-bold uppercase tracking-wider text-mist-gray">
                   Quy trình Vận hành
                 </h4>
                 <div className="space-y-2">
                   {config.howItWorks.map((step, idx) => (
-                    <div key={idx} className="p-2.5 rounded-lg border border-slate-200/70 bg-white flex items-start gap-2.5">
-                      <div className="h-5 w-5 rounded-full bg-blue-50 text-blue-600 font-bold flex items-center justify-center shrink-0 text-[10px]">
+                    <div key={idx} className="p-2.5 rounded-lg border border-hairline bg-white flex items-start gap-2.5">
+                      <div className="h-5 w-5 rounded-full bg-[#e6f0ff] text-signal-blue font-bold flex items-center justify-center shrink-0 text-[10px]">
                         {idx + 1}
                       </div>
-                      <span className="text-slate-700 leading-relaxed text-xs">{step}</span>
+                      <span className="text-slate-gray leading-relaxed text-xs">{step}</span>
                     </div>
                   ))}
                 </div>
@@ -257,12 +246,12 @@ export function ServiceDetailDrawer({
 
               {/* Scopes requirement */}
               <div className="space-y-2">
-                <h4 className="text-xs font-bold uppercase tracking-wider text-slate-500">
+                <h4 className="text-xs font-bold uppercase tracking-wider text-mist-gray">
                   OAuth 2.0 Scope Yêu cầu
                 </h4>
-                <div className="p-3 rounded-lg border border-slate-200 bg-slate-50 space-y-2">
+                <div className="p-3 rounded-lg border border-hairline bg-cloud space-y-2">
                   <div className="flex items-center justify-between">
-                    <span className="font-mono text-xs text-slate-800 font-semibold truncate">
+                    <span className="font-mono text-xs text-ink-navy font-semibold truncate">
                       {config.scope}
                     </span>
                     {isScopeGranted ? (
@@ -276,7 +265,7 @@ export function ServiceDetailDrawer({
                       </Badge>
                     )}
                   </div>
-                  <p className="text-[11px] text-slate-500">
+                  <p className="text-[11px] text-mist-gray">
                     Tuân thủ tiêu chuẩn phân quyền tối thiểu (Least Privilege). Chỉ đọc dữ liệu cần thiết cho Đơn vị.
                   </p>
                 </div>
@@ -286,14 +275,14 @@ export function ServiceDetailDrawer({
 
           {activeTab === 'resources' && (
             <div className="space-y-4">
-              <div className="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-2">
+              <div className="p-4 rounded-xl bg-cloud border border-hairline space-y-2">
                 <div className="flex items-center justify-between">
-                  <span className="font-semibold text-slate-800 text-xs">{config.resourcesTitle}</span>
+                  <span className="font-semibold text-ink-navy text-xs">{config.resourcesTitle}</span>
                   <Badge variant="outline" className="text-xs font-bold font-mono">
                     {config.resourcesCount} Bản ghi
                   </Badge>
                 </div>
-                <p className="text-slate-600 leading-relaxed text-xs">
+                <p className="text-slate-gray leading-relaxed text-xs">
                   {config.resourcesSummary}
                 </p>
               </div>
@@ -315,7 +304,7 @@ export function ServiceDetailDrawer({
                       onClose();
                       onOpenSheetsManager();
                     }}
-                    className="text-xs bg-emerald-600 hover:bg-emerald-700 text-white w-full"
+                    className="text-xs bg-signal-blue hover:bg-[#005be0] text-white w-full cursor-pointer font-medium"
                   >
                     <FileSpreadsheet className="h-3.5 w-3.5 mr-1.5" />
                     Mở Trình Quản Lý Bảng Tính Google Sheets
@@ -324,9 +313,9 @@ export function ServiceDetailDrawer({
               )}
 
               {/* Service specific guidance */}
-              <div className="rounded-lg border border-slate-200 p-3.5 bg-white space-y-2">
-                <span className="font-semibold text-slate-800 text-xs">Nguyên tắc Bảo toàn Dữ liệu:</span>
-                <ul className="space-y-1.5 text-[11px] text-slate-600">
+              <div className="rounded-lg border border-hairline p-3.5 bg-white space-y-2">
+                <span className="font-semibold text-ink-navy text-xs">Nguyên tắc Bảo toàn Dữ liệu:</span>
+                <ul className="space-y-1.5 text-[11px] text-slate-gray">
                   <li className="flex items-start gap-1.5">
                     <CheckCircle2 className="h-3.5 w-3.5 text-emerald-600 shrink-0 mt-0.5" />
                     <span>PostgreSQL là cơ sở dữ liệu gốc (Source of Truth) bất biến.</span>
@@ -346,26 +335,26 @@ export function ServiceDetailDrawer({
 
           {activeTab === 'diagnostics' && (
             <div className="space-y-4">
-              <div className="rounded-xl border border-slate-200 p-4 space-y-3 bg-slate-50/50">
+              <div className="rounded-xl border border-hairline p-4 space-y-3 bg-cloud">
                 <div className="flex items-center justify-between">
-                  <span className="font-semibold text-slate-800 text-xs">Kiểm tra Tính khả dụng API</span>
+                  <span className="font-semibold text-ink-navy text-xs">Kiểm tra Tính khả dụng API</span>
                   <Badge variant="success" className="text-[10px] bg-emerald-50 text-emerald-700 border-emerald-200">
                     200 OK
                   </Badge>
                 </div>
-                <div className="text-[11px] text-slate-500 space-y-1">
+                <div className="text-[11px] text-mist-gray space-y-1">
                   <div>• Điểm cuối (Endpoint): Google Workspace REST v3/v4</div>
                   <div>• Xác thực: OAuth 2.0 Bearer Token (Server-Side Isolate)</div>
                   <div>• Hạn mức (Rate Limit): 100 requests/100s per user</div>
                 </div>
               </div>
 
-              <div className="rounded-xl bg-blue-50/60 border border-blue-100 p-3.5 text-blue-900 space-y-1.5 text-xs">
-                <div className="flex items-center gap-2 font-bold text-blue-800">
-                  <ShieldCheck className="h-4 w-4 text-blue-600" />
+              <div className="rounded-xl bg-[#e6f0ff] border border-[#d4e4fa] p-3.5 text-signal-blue space-y-1.5 text-xs">
+                <div className="flex items-center gap-2 font-bold text-signal-blue">
+                  <ShieldCheck className="h-4 w-4 text-signal-blue" />
                   <span>Cam kết An toàn Dữ liệu & Phân quyền RLS</span>
                 </div>
-                <p className="text-[11px] text-blue-800/90 leading-relaxed">
+                <p className="text-[11px] text-signal-blue leading-relaxed">
                   ChapterOS cách ly toàn bộ dữ liệu tổ chức bằng cơ chế Row Level Security (RLS). Google Access Token được lưu trữ bảo mật và chỉ được gọi trong các tác vụ được ủy quyền của Ban Chấp Hành.
                 </p>
               </div>
@@ -374,13 +363,13 @@ export function ServiceDetailDrawer({
         </div>
 
         {/* Drawer Footer Actions */}
-        <div className="p-4 border-t border-slate-200 bg-slate-50/70 flex items-center justify-between gap-3">
+        <div className="p-4 border-t border-hairline bg-cloud flex items-center justify-between gap-3">
           <Button
             type="button"
             variant="outline"
             size="sm"
             onClick={onClose}
-            className="text-xs"
+            className="text-xs border-hairline text-slate-gray hover:bg-cloud cursor-pointer"
           >
             Đóng
           </Button>
@@ -393,7 +382,7 @@ export function ServiceDetailDrawer({
                 onClose();
                 onOpenSheetsManager();
               }}
-              className="text-xs bg-emerald-600 hover:bg-emerald-700 text-white font-medium"
+              className="text-xs bg-signal-blue hover:bg-[#005be0] text-white font-medium cursor-pointer"
             >
               <FileSpreadsheet className="h-3.5 w-3.5 mr-1.5" />
               Mở Trình Quản lý Sheets
@@ -403,7 +392,7 @@ export function ServiceDetailDrawer({
               type="button"
               size="sm"
               onClick={onClose}
-              className="text-xs bg-blue-600 hover:bg-blue-700 text-white font-medium"
+              className="text-xs bg-signal-blue hover:bg-[#005be0] text-white font-medium cursor-pointer"
             >
               Đã hiểu & Xác nhận
             </Button>

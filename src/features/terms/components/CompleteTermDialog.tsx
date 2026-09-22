@@ -103,17 +103,17 @@ export function CompleteTermDialog({
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-2xl max-h-[90vh] flex flex-col p-0 gap-0 overflow-hidden">
         {/* Header */}
-        <div className="p-6 border-b border-slate-200 bg-white">
+        <div className="p-6 border-b border-hairline bg-white">
           <DialogHeader>
             <div className="flex items-center gap-3">
               <div className="h-10 w-10 rounded-xl bg-amber-50 text-amber-700 flex items-center justify-center shrink-0 border border-amber-200/80">
                 <Lock strokeWidth={1.5} className="h-5 w-5" />
               </div>
               <div>
-                <DialogTitle className="text-lg font-bold text-slate-900">
+                <DialogTitle className="text-lg font-bold text-ink-navy">
                   Tổng kết & Đóng nhiệm kỳ ({term.name})
                 </DialogTitle>
-                <DialogDescription className="text-xs text-slate-500">
+                <DialogDescription className="text-xs text-mist-gray">
                   Kiểm tra checklist bàn giao, tạo snapshot lưu trữ bất biến và khóa dữ liệu nghiệp vụ
                 </DialogDescription>
               </div>
@@ -122,9 +122,9 @@ export function CompleteTermDialog({
         </div>
 
         {/* Body */}
-        <div className="flex-1 overflow-y-auto p-6 space-y-4 bg-slate-50/50">
+        <div className="flex-1 overflow-y-auto p-6 space-y-4 bg-cloud">
           {error && (
-            <div className="p-3 bg-red-50 border border-red-200 rounded-lg flex items-start gap-2 text-xs text-red-700">
+            <div className="p-3 bg-rose-50 border border-rose-200 rounded-lg flex items-start gap-2 text-xs text-rose-700">
               <AlertCircle className="h-4 w-4 shrink-0 mt-0.5" />
               <div className="flex-1">{error}</div>
             </div>
@@ -132,8 +132,8 @@ export function CompleteTermDialog({
 
           {/* Checklist loading state */}
           {isLoadingChecklist ? (
-            <div className="py-12 flex flex-col items-center justify-center text-slate-500 gap-2 bg-white rounded-xl border border-slate-200">
-              <Loader2 strokeWidth={1.5} className="h-6 w-6 animate-spin text-blue-600" />
+            <div className="py-12 flex flex-col items-center justify-center text-mist-gray gap-2 bg-white rounded-xl border border-hairline">
+              <Loader2 strokeWidth={1.5} className="h-6 w-6 animate-spin text-signal-blue" />
               <p className="text-xs">Đang tổng hợp dữ liệu kiểm tra nhiệm kỳ...</p>
             </div>
           ) : checklist ? (
@@ -178,54 +178,54 @@ export function CompleteTermDialog({
 
               {/* Statistics Overview */}
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
-                <div className="bg-white p-3 rounded-lg border border-slate-200 shadow-xs">
-                  <div className="flex items-center gap-1.5 text-slate-500 text-[11px] font-medium">
-                    <Users className="h-3.5 w-3.5 text-blue-500" />
+                <div className="bg-white p-3 rounded-lg border border-hairline shadow-xs">
+                  <div className="flex items-center gap-1.5 text-mist-gray text-[11px] font-medium">
+                    <Users className="h-3.5 w-3.5 text-signal-blue" />
                     Hội viên
                   </div>
-                  <div className="text-lg font-bold text-slate-900 mt-1">
+                  <div className="text-lg font-bold text-ink-navy mt-1">
                     {checklist.stats.members.total}
                   </div>
-                  <div className="text-[10px] text-slate-400">
+                  <div className="text-[10px] text-mist-gray">
                     {checklist.stats.members.active} đang sinh hoạt
                   </div>
                 </div>
 
-                <div className="bg-white p-3 rounded-lg border border-slate-200 shadow-xs">
-                  <div className="flex items-center gap-1.5 text-slate-500 text-[11px] font-medium">
-                    <Calendar className="h-3.5 w-3.5 text-indigo-500" />
+                <div className="bg-white p-3 rounded-lg border border-hairline shadow-xs">
+                  <div className="flex items-center gap-1.5 text-mist-gray text-[11px] font-medium">
+                    <Calendar className="h-3.5 w-3.5 text-signal-blue" />
                     Hoạt động
                   </div>
-                  <div className="text-lg font-bold text-slate-900 mt-1">
+                  <div className="text-lg font-bold text-ink-navy mt-1">
                     {checklist.stats.activities.completed}/{checklist.stats.activities.total}
                   </div>
-                  <div className="text-[10px] text-slate-400">
+                  <div className="text-[10px] text-mist-gray">
                     {checklist.stats.activities.inProgressOrDraft} chưa đóng
                   </div>
                 </div>
 
-                <div className="bg-white p-3 rounded-lg border border-slate-200 shadow-xs">
-                  <div className="flex items-center gap-1.5 text-slate-500 text-[11px] font-medium">
+                <div className="bg-white p-3 rounded-lg border border-hairline shadow-xs">
+                  <div className="flex items-center gap-1.5 text-mist-gray text-[11px] font-medium">
                     <CheckSquare className="h-3.5 w-3.5 text-emerald-500" />
                     Công việc
                   </div>
-                  <div className="text-lg font-bold text-slate-900 mt-1">
+                  <div className="text-lg font-bold text-ink-navy mt-1">
                     {checklist.stats.tasks.completed}/{checklist.stats.tasks.total}
                   </div>
-                  <div className="text-[10px] text-slate-400">
+                  <div className="text-[10px] text-mist-gray">
                     {checklist.stats.tasks.open} đang mở
                   </div>
                 </div>
 
-                <div className="bg-white p-3 rounded-lg border border-slate-200 shadow-xs">
-                  <div className="flex items-center gap-1.5 text-slate-500 text-[11px] font-medium">
+                <div className="bg-white p-3 rounded-lg border border-hairline shadow-xs">
+                  <div className="flex items-center gap-1.5 text-mist-gray text-[11px] font-medium">
                     <DollarSign className="h-3.5 w-3.5 text-emerald-600" />
                     Số dư quỹ
                   </div>
-                  <div className="text-lg font-bold text-slate-900 mt-1">
+                  <div className="text-lg font-bold text-ink-navy mt-1">
                     {new Intl.NumberFormat('vi-VN').format(checklist.stats.finance.balance)} ₫
                   </div>
-                  <div className="text-[10px] text-slate-400">
+                  <div className="text-[10px] text-mist-gray">
                     {checklist.stats.finance.transactionCount} giao dịch
                   </div>
                 </div>
@@ -246,8 +246,8 @@ export function CompleteTermDialog({
                       >
                         <span className="w-1.5 h-1.5 rounded-full bg-amber-500 mt-1.5 shrink-0" />
                         <div className="flex-1">
-                          <div className="font-semibold text-slate-800">{issue.title}</div>
-                          <div className="text-slate-500 text-[11px] mt-0.5">{issue.description}</div>
+                          <div className="font-semibold text-ink-navy">{issue.title}</div>
+                          <div className="text-mist-gray text-[11px] mt-0.5">{issue.description}</div>
                         </div>
                       </div>
                     ))}
@@ -269,8 +269,8 @@ export function CompleteTermDialog({
 
                     {isOverridden && (
                       <div className="pl-6 space-y-1">
-                        <label className="block text-[11px] font-medium text-slate-700">
-                          Lý do bỏ qua cảnh báo đóng nhiệm kỳ <span className="text-red-500">*</span>:
+                        <label className="block text-[11px] font-medium text-slate-gray">
+                          Lý do bỏ qua cảnh báo đóng nhiệm kỳ <span className="text-rose-600">*</span>:
                         </label>
                         <textarea
                           rows={2}
@@ -286,27 +286,27 @@ export function CompleteTermDialog({
               )}
 
               {/* Handover notes input */}
-              <div className="bg-white rounded-xl border border-slate-200 p-4 space-y-2">
+              <div className="bg-white rounded-xl border border-hairline p-4 space-y-2">
                 <div className="flex items-center justify-between">
-                  <label className="text-xs font-bold text-slate-800 flex items-center gap-1.5">
-                    <FileSpreadsheet className="h-3.5 w-3.5 text-blue-600" />
+                  <label className="text-xs font-bold text-ink-navy flex items-center gap-1.5">
+                    <FileSpreadsheet className="h-3.5 w-3.5 text-signal-blue" />
                     Biên bản & Ghi chú bàn giao (Lưu vào Snapshot)
                   </label>
-                  <span className="text-[11px] text-slate-400">Tùy chọn</span>
+                  <span className="text-[11px] text-mist-gray">Tùy chọn</span>
                 </div>
                 <textarea
                   rows={3}
                   value={handoverNotes}
                   onChange={(e) => setHandoverNotes(e.target.value)}
                   placeholder="Ghi chú tóm tắt bàn giao tài chính, hồ sơ sổ sách, con dấu, cơ sở vật chất hoặc chỉ đạo cho Ban Chấp hành nhiệm kỳ mới..."
-                  className="w-full text-xs p-2.5 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-slate-50/50"
+                  className="w-full text-xs p-2.5 border border-hairline rounded-lg focus:outline-none focus:ring-2 focus:ring-signal-blue bg-cloud"
                 />
               </div>
 
               {/* Locking warning reminder */}
-              <div className="p-3 bg-slate-100 border border-slate-200 rounded-lg text-xs text-slate-600 space-y-1">
-                <p className="font-semibold text-slate-800 flex items-center gap-1">
-                  <Lock className="h-3.5 w-3.5 text-slate-500" />
+              <div className="p-3 bg-cloud border border-hairline rounded-lg text-xs text-slate-gray space-y-1">
+                <p className="font-semibold text-ink-navy flex items-center gap-1">
+                  <Lock className="h-3.5 w-3.5 text-mist-gray" />
                   Hiệu lực của việc Đóng nhiệm kỳ:
                 </p>
                 <p>• Hệ thống sẽ snapshot toàn bộ tài chính, danh sách hội viên và hoạt động vào thời điểm đóng.</p>
@@ -317,7 +317,7 @@ export function CompleteTermDialog({
         </div>
 
         {/* Footer */}
-        <DialogFooter className="p-4 border-t border-slate-200 bg-white flex items-center justify-between sm:justify-between">
+        <DialogFooter className="p-4 border-t border-hairline bg-white flex items-center justify-between sm:justify-between">
           <Button
             type="button"
             variant="outline"

@@ -121,23 +121,23 @@ export function OrganizationMembershipsCard({
   };
 
   return (
-    <Card className="border-slate-200 shadow-2xs">
-      <CardHeader className="border-b border-slate-100 bg-slate-50/40 pb-4">
+    <Card className="border-hairline shadow-xs">
+      <CardHeader className="border-b border-hairline bg-cloud pb-4">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
           <div className="flex items-center gap-2.5">
-            <div className="h-10 w-10 rounded-xl bg-indigo-600 flex items-center justify-center text-white shadow-xs">
+            <div className="h-10 w-10 rounded-xl bg-signal-blue flex items-center justify-center text-white shadow-xs">
               <Users strokeWidth={1.5} className="h-5 w-5" />
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <CardTitle className="text-base font-bold text-slate-900">
-                  Thành viên & Phân quyền Hệ thống
+                <CardTitle className="text-base font-bold text-ink-navy">
+                  Thành viên &amp; Phân quyền Hệ thống
                 </CardTitle>
-                <Badge variant="outline" className="text-[11px] bg-white text-slate-700">
+                <Badge variant="outline" className="text-[11px] bg-white text-slate-gray border-hairline">
                   {memberships.length} tài khoản
                 </Badge>
               </div>
-              <CardDescription className="text-xs text-slate-500 mt-0.5">
+              <CardDescription className="text-xs text-mist-gray mt-0.5">
                 Danh sách tài khoản được cấp quyền truy cập vào không gian làm việc của Đơn vị
               </CardDescription>
             </div>
@@ -147,13 +147,13 @@ export function OrganizationMembershipsCard({
 
       <CardContent className="pt-5 space-y-4">
         {/* Important Concept Explanatory Banner */}
-        <div className="p-3.5 bg-blue-50/70 border border-blue-200/80 rounded-xl flex items-start gap-2.5 text-xs text-blue-900">
-          <Info className="h-4 w-4 text-blue-600 shrink-0 mt-0.5" />
+        <div className="p-3.5 bg-[#e6f0ff] border border-[#d4e4fa] rounded-xl flex items-start gap-2.5 text-xs text-signal-blue">
+          <Info className="h-4 w-4 text-signal-blue shrink-0 mt-0.5" />
           <div className="space-y-1">
-            <p className="font-semibold text-blue-950 flex items-center gap-1.5">
+            <p className="font-semibold text-ink-navy flex items-center gap-1.5">
               Phân biệt: Vai trò hệ thống (System Role) vs Chức vụ nhiệm kỳ (Term Position)
             </p>
-            <p className="text-[11px] text-blue-800 leading-relaxed">
+            <p className="text-[11px] text-signal-blue leading-relaxed">
               <strong>Vai trò hệ thống</strong> (Admin, Chi hội trưởng, Thủ quỹ, Thư ký, Hội viên) quyết định quyền thao tác trên phần mềm và cơ sở dữ liệu (RLS). Trong khi đó, <strong>Chức vụ nhiệm kỳ</strong> (Bí thư, BCH...) là chức danh thực tế theo từng nhiệm kỳ hoạt động được quản lý tại phân hệ <em>Quản lý Nhiệm kỳ</em>.
             </p>
           </div>
@@ -176,12 +176,12 @@ export function OrganizationMembershipsCard({
         {/* Search & Filter Toolbar */}
         <div className="flex flex-col sm:flex-row gap-3 items-stretch sm:items-center justify-between">
           <div className="relative flex-1 max-w-sm">
-            <Search className="h-3.5 w-3.5 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
+            <Search className="h-3.5 w-3.5 absolute left-3 top-1/2 -translate-y-1/2 text-mist-gray" />
             <Input
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               placeholder="Tìm theo tên, email, MSSV..."
-              className="pl-8 text-xs h-8"
+              className="pl-8 text-xs h-8 border-hairline"
             />
           </div>
 
@@ -190,7 +190,7 @@ export function OrganizationMembershipsCard({
               value={roleFilter}
               onValueChange={setRoleFilter}
             >
-              <SelectTrigger className="h-8 rounded-md border-slate-200 bg-white text-xs text-slate-800 w-auto min-w-[130px]">
+              <SelectTrigger className="h-8 rounded-md border-hairline bg-white text-xs text-ink-navy w-auto min-w-[130px]">
                 <SelectValue placeholder="Tất cả vai trò" />
               </SelectTrigger>
               <SelectContent>
@@ -206,11 +206,11 @@ export function OrganizationMembershipsCard({
         </div>
 
         {/* Members Table */}
-        <div className="border border-slate-200 rounded-lg overflow-hidden">
+        <div className="border border-hairline rounded-lg overflow-hidden">
           <div className="overflow-x-auto">
             <table className="w-full text-left text-xs border-collapse">
               <thead>
-                <tr className="border-b border-slate-200 bg-slate-50/80 text-[11px] font-semibold text-slate-600">
+                <tr className="border-b border-hairline bg-cloud text-[11px] font-semibold text-slate-gray">
                   <th className="py-2.5 px-3">Họ và tên / Email</th>
                   <th className="py-2.5 px-3">MSSV / Liên hệ</th>
                   <th className="py-2.5 px-3">Vai trò hệ thống</th>
@@ -219,18 +219,18 @@ export function OrganizationMembershipsCard({
                   {isAdmin && <th className="py-2.5 px-3 text-right">Thao tác</th>}
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-100">
+              <tbody className="divide-y divide-hairline">
                 {isLoading ? (
                   <tr>
-                    <td colSpan={isAdmin ? 6 : 5} className="py-8 text-center text-slate-400">
-                      <Loader2 strokeWidth={1.5} className="h-5 w-5 animate-spin mx-auto mb-2 text-blue-600" />
+                    <td colSpan={isAdmin ? 6 : 5} className="py-8 text-center text-mist-gray">
+                      <Loader2 strokeWidth={1.5} className="h-5 w-5 animate-spin mx-auto mb-2 text-signal-blue" />
                       Đang tải danh sách thành viên...
                     </td>
                   </tr>
                 ) : filteredMemberships.length === 0 ? (
                   <tr>
-                    <td colSpan={isAdmin ? 6 : 5} className="py-8 text-center text-slate-400">
-                      <HelpCircle strokeWidth={1.5} className="h-6 w-6 mx-auto mb-1 text-slate-300" />
+                    <td colSpan={isAdmin ? 6 : 5} className="py-8 text-center text-mist-gray">
+                      <HelpCircle strokeWidth={1.5} className="h-6 w-6 mx-auto mb-1 text-mist-gray" />
                       Không tìm thấy thành viên nào phù hợp
                     </td>
                   </tr>
@@ -251,28 +251,28 @@ export function OrganizationMembershipsCard({
                     return (
                       <tr
                         key={membership.id}
-                        className={`hover:bg-slate-50/60 transition-colors ${
-                          isSelf ? 'bg-blue-50/20' : ''
+                        className={`hover:bg-cloud transition-colors ${
+                          isSelf ? 'bg-[#f0f6ff]' : ''
                         }`}
                       >
                         {/* Name & Email */}
                         <td className="py-3 px-3">
                           <div className="flex items-center gap-2.5">
-                            <div className="h-7 w-7 rounded-full bg-slate-100 border border-slate-200 flex items-center justify-center font-semibold text-[11px] text-slate-700 shrink-0">
+                            <div className="h-7 w-7 rounded-full bg-pebble border border-hairline flex items-center justify-center font-semibold text-[11px] text-ink-navy shrink-0">
                               {membership.profile?.fullName
                                 ? membership.profile.fullName.charAt(0).toUpperCase()
                                 : 'U'}
                             </div>
                             <div>
-                              <div className="font-semibold text-slate-900 flex items-center gap-1.5">
+                              <div className="font-semibold text-ink-navy flex items-center gap-1.5">
                                 {membership.profile?.fullName || 'Chưa cập nhật tên'}
                                 {isSelf && (
-                                  <Badge variant="outline" className="text-[9px] py-0 px-1 text-blue-600 bg-blue-50 border-blue-200">
+                                  <Badge variant="outline" className="text-[9px] py-0 px-1 text-signal-blue bg-[#e6f0ff] border-[#d4e4fa]">
                                     Bạn
                                   </Badge>
                                 )}
                               </div>
-                              <span className="text-[11px] text-slate-500 block">
+                              <span className="text-[11px] text-mist-gray block">
                                 {membership.profile?.email || '—'}
                               </span>
                             </div>
@@ -282,10 +282,10 @@ export function OrganizationMembershipsCard({
                         {/* Student ID / Contact */}
                         <td className="py-3 px-3">
                           <div className="space-y-0.5">
-                            <span className="tabular-nums text-[11px] text-slate-800 block">
+                            <span className="tabular-nums text-[11px] text-ink-navy block">
                               {membership.profile?.studentId || 'Chưa có MSSV'}
                             </span>
-                            <span className="text-[10px] text-slate-400 block">
+                            <span className="text-[10px] text-mist-gray block">
                               {membership.profile?.phone || 'Chưa có SĐT'}
                             </span>
                           </div>
@@ -301,7 +301,7 @@ export function OrganizationMembershipsCard({
                               {roleInfo.label}
                             </span>
                           ) : (
-                            <span className="text-slate-400">—</span>
+                            <span className="text-mist-gray">—</span>
                           )}
                         </td>
 
@@ -313,7 +313,7 @@ export function OrganizationMembershipsCard({
                             </Badge>
                           )}
                           {membership.status === 'inactive' && (
-                            <Badge className="bg-slate-100 text-slate-600 border-slate-200 text-[10px]">
+                            <Badge className="bg-cloud text-slate-gray border-hairline text-[10px]">
                               Tạm ngưng
                             </Badge>
                           )}
@@ -330,7 +330,7 @@ export function OrganizationMembershipsCard({
                         </td>
 
                         {/* Joined Date */}
-                        <td className="py-3 px-3 text-[11px] text-slate-500 tabular-nums">
+                        <td className="py-3 px-3 text-[11px] text-mist-gray tabular-nums">
                           {joinedDate}
                         </td>
 
@@ -342,7 +342,7 @@ export function OrganizationMembershipsCard({
                                 variant="ghost"
                                 size="sm"
                                 onClick={() => handleEditClick(membership)}
-                                className="h-7 px-2 text-xs text-blue-600 hover:text-blue-700 hover:bg-blue-50"
+                                className="h-7 px-2 text-xs text-signal-blue hover:text-[#005be0] hover:bg-[#e6f0ff]"
                                 title="Phân quyền vai trò"
                               >
                                 <UserCog className="h-3.5 w-3.5 mr-1" />

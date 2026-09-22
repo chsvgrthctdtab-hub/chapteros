@@ -182,36 +182,36 @@ export function ParticipantListTable({
       {/* KPI Stats & Attendance Overview Bar (4 clean cards) */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
         {/* Total */}
-        <div className="p-3.5 bg-slate-50 border border-slate-200/80 rounded-xl">
-          <p className="text-[11px] font-semibold text-slate-500">Tổng người tham gia</p>
-          <p className="text-xl font-bold text-slate-900 mt-1">{totalCount}</p>
+        <div className="p-3.5 bg-white border border-hairline rounded-2xl shadow-sm">
+          <p className="text-[11px] font-semibold text-slate-gray">Tổng người tham gia</p>
+          <p className="text-xl font-bold text-ink-navy mt-1 tabular-nums">{totalCount}</p>
         </div>
 
         {/* Present */}
-        <div className="p-3.5 bg-emerald-50/70 border border-emerald-200/70 rounded-xl">
+        <div className="p-3.5 bg-white border border-hairline rounded-2xl shadow-sm">
           <div className="flex items-center justify-between">
-            <p className="text-[11px] font-semibold text-emerald-700">Có mặt</p>
-            <CheckCircle2 className="w-4 h-4 text-emerald-600" />
+            <p className="text-[11px] font-semibold text-signal-blue">Có mặt</p>
+            <CheckCircle2 className="w-4 h-4 text-signal-blue" />
           </div>
-          <p className="text-xl font-bold text-emerald-900 mt-1">{presentCount}</p>
+          <p className="text-xl font-bold text-signal-blue mt-1 tabular-nums">{presentCount}</p>
         </div>
 
         {/* Absent */}
-        <div className="p-3.5 bg-rose-50/70 border border-rose-200/70 rounded-xl">
+        <div className="p-3.5 bg-white border border-hairline rounded-2xl shadow-sm">
           <div className="flex items-center justify-between">
             <p className="text-[11px] font-semibold text-rose-700">Vắng</p>
             <XCircle className="w-4 h-4 text-rose-600" />
           </div>
-          <p className="text-xl font-bold text-rose-900 mt-1">{absentCount}</p>
+          <p className="text-xl font-bold text-rose-900 mt-1 tabular-nums">{absentCount}</p>
         </div>
 
         {/* Participation Rate */}
-        <div className="p-3.5 bg-indigo-50/70 border border-indigo-200/70 rounded-xl">
+        <div className="p-3.5 bg-white border border-hairline rounded-2xl shadow-sm">
           <div className="flex items-center justify-between">
-            <p className="text-[11px] font-semibold text-indigo-700">Tỉ lệ có mặt</p>
-            <Percent className="w-4 h-4 text-indigo-600" />
+            <p className="text-[11px] font-semibold text-signal-blue">Tỉ lệ có mặt</p>
+            <Percent className="w-4 h-4 text-signal-blue" />
           </div>
-          <p className="text-xl font-bold text-indigo-950 mt-1">{participationRate}%</p>
+          <p className="text-xl font-bold text-signal-blue mt-1 tabular-nums">{participationRate}%</p>
         </div>
       </div>
 
@@ -219,14 +219,14 @@ export function ParticipantListTable({
       <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-2.5">
         {/* Search */}
         <div className="relative flex-1">
-          <Search className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
+          <Search className="w-4 h-4 text-mist-gray absolute left-3 top-1/2 -translate-y-1/2" />
           <input
             id="participant-table-search"
             type="text"
             placeholder="Tìm theo họ và tên, MSSV, lớp, khóa, SĐT..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full pl-9 pr-3.5 py-1.5 text-xs bg-slate-50 border border-slate-200 rounded-lg focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500"
+            className="w-full pl-9 pr-3.5 py-1.5 text-xs bg-cloud border border-hairline rounded-lg focus:bg-white focus:outline-none focus:ring-1 focus:ring-signal-blue focus:border-signal-blue text-ink-navy transition-all"
           />
         </div>
 
@@ -237,7 +237,7 @@ export function ParticipantListTable({
             value={attFilter}
             onValueChange={setAttFilter}
           >
-            <SelectTrigger id="participant-att-filter-select" className="h-8 text-xs bg-slate-50 border-slate-200 w-auto min-w-[140px]">
+            <SelectTrigger id="participant-att-filter-select" className="h-8 text-xs bg-cloud border-hairline rounded-lg text-ink-navy w-auto min-w-[140px]">
               <SelectValue placeholder="Điểm danh: Tất cả" />
             </SelectTrigger>
             <SelectContent>
@@ -254,10 +254,10 @@ export function ParticipantListTable({
             id="export-participants-csv-btn"
             onClick={handleExportCSV}
             disabled={filteredList.length === 0}
-            className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-slate-700 bg-white border border-slate-200 rounded-lg hover:bg-slate-50 transition-colors disabled:opacity-50 cursor-pointer"
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-ink-navy bg-white border border-hairline rounded-lg hover:bg-pebble transition-colors disabled:opacity-50 cursor-pointer shadow-xs"
             title="Xuất danh sách Excel (CSV)"
           >
-            <FileSpreadsheet className="w-3.5 h-3.5 text-emerald-600" />
+            <FileSpreadsheet className="w-3.5 h-3.5 text-signal-blue" />
             <span className="hidden sm:inline">Xuất CSV</span>
           </button>
         </div>
@@ -265,14 +265,14 @@ export function ParticipantListTable({
 
       {/* Bulk Action Bar (when selected) */}
       {canManage && selectedIds.length > 0 && (
-        <div className="p-3 px-4 bg-emerald-50 border border-emerald-200/80 rounded-xl flex items-center justify-between gap-3 text-xs text-emerald-950 shadow-xs animate-in fade-in duration-150">
+        <div className="p-3 px-4 bg-[#e6f0ff] border border-[#d4e4fa] rounded-xl flex items-center justify-between gap-3 text-xs text-ink-navy shadow-sm animate-in fade-in duration-150">
           <span className="font-bold">Đã chọn {selectedIds.length} người:</span>
           <div className="flex items-center gap-2 flex-wrap">
             <button
               type="button"
               id="bulk-mark-present-btn"
               onClick={() => handleBulkAttendance('present')}
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-700 active:bg-emerald-800 text-white font-semibold shadow-2xs cursor-pointer active:scale-95 transition-all"
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-signal-blue hover:bg-[#005be0] text-white font-semibold shadow-sm cursor-pointer active:scale-95 transition-all"
             >
               <Check className="w-3.5 h-3.5" />
               <span>Đánh dấu có mặt</span>
@@ -281,7 +281,7 @@ export function ParticipantListTable({
               type="button"
               id="bulk-mark-absent-btn"
               onClick={() => handleBulkAttendance('absent')}
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-rose-600 hover:bg-rose-700 active:bg-rose-800 text-white font-semibold shadow-2xs cursor-pointer active:scale-95 transition-all"
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-rose-600 hover:bg-rose-700 text-white font-semibold shadow-sm cursor-pointer active:scale-95 transition-all"
             >
               <XCircle className="w-3.5 h-3.5" />
               <span>Đánh dấu vắng</span>
@@ -290,7 +290,7 @@ export function ParticipantListTable({
               type="button"
               id="bulk-mark-unmarked-btn"
               onClick={() => handleBulkAttendance('unmarked')}
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white border border-slate-300 text-slate-700 hover:bg-slate-50 font-semibold cursor-pointer active:scale-95 transition-all"
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white border border-hairline text-slate-gray hover:bg-pebble font-semibold cursor-pointer active:scale-95 transition-all"
             >
               <Clock className="w-3.5 h-3.5" />
               <span>Hủy điểm danh</span>
@@ -300,10 +300,10 @@ export function ParticipantListTable({
       )}
 
       {/* Table Container */}
-      <div className="bg-white border border-slate-200/80 rounded-2xl overflow-hidden shadow-2xs">
+      <div className="bg-white border border-hairline rounded-2xl overflow-hidden shadow-sm">
         <div className="overflow-x-auto">
           <table className="w-full text-left text-xs">
-            <thead className="bg-slate-50/90 text-slate-600 font-bold uppercase tracking-wider text-[11px] border-b border-slate-200/90">
+            <thead className="bg-cloud text-slate-gray font-semibold uppercase tracking-wider text-[11px] border-b border-hairline">
               <tr>
                 {canManage && (
                   <th className="py-3.5 px-3 w-10 text-center">
@@ -311,7 +311,7 @@ export function ParticipantListTable({
                       type="checkbox"
                       checked={filteredList.length > 0 && selectedIds.length === filteredList.length}
                       onChange={handleToggleSelectAll}
-                      className="rounded border-slate-300 text-emerald-600 focus:ring-emerald-500"
+                      className="rounded border-hairline text-signal-blue focus:ring-signal-blue"
                     />
                   </th>
                 )}
@@ -323,20 +323,20 @@ export function ParticipantListTable({
                 {canManage && <th className="py-3.5 px-2 w-14 text-center">Thao tác</th>}
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-100">
+            <tbody className="divide-y divide-hairline">
               {isLoading ? (
                 <tr>
-                  <td colSpan={canManage ? 7 : 6} className="py-8 text-center text-slate-400">
+                  <td colSpan={canManage ? 7 : 6} className="py-8 text-center text-mist-gray">
                     Đang tải danh sách người tham gia...
                   </td>
                 </tr>
               ) : filteredList.length === 0 ? (
                 <tr>
-                  <td colSpan={canManage ? 7 : 6} className="py-8 text-center text-slate-500">
+                  <td colSpan={canManage ? 7 : 6} className="py-8 text-center text-slate-gray">
                     <div className="flex flex-col items-center justify-center gap-1.5">
-                      <UserX strokeWidth={1.5} className="w-6 h-6 text-slate-300" />
-                      <p className="font-medium text-slate-600">Không tìm thấy người tham gia nào</p>
-                      <p className="text-[11px] text-slate-400">
+                      <UserX strokeWidth={1.5} className="w-6 h-6 text-mist-gray" />
+                      <p className="font-semibold text-ink-navy">Không tìm thấy người tham gia nào</p>
+                      <p className="text-[11px] text-slate-gray">
                         {searchTerm || attFilter !== 'all'
                           ? 'Thử điều chỉnh lại bộ lọc tìm kiếm'
                           : 'Sử dụng nút "Thêm người tham gia" ở trên để ghi danh'}
@@ -355,7 +355,7 @@ export function ParticipantListTable({
                     <tr
                       key={item.id}
                       id={`participant-row-${item.id}`}
-                      className={`hover:bg-slate-50/70 transition-colors ${isSelected ? 'bg-emerald-50/40' : ''}`}
+                      className={`hover:bg-pebble/60 transition-colors ${isSelected ? 'bg-[#e6f0ff]/40' : ''}`}
                     >
                       {canManage && (
                         <td className="py-2.5 px-3 text-center">
@@ -363,7 +363,7 @@ export function ParticipantListTable({
                             type="checkbox"
                             checked={isSelected}
                             onChange={() => handleToggleSelect(item.id)}
-                            className="rounded border-slate-300 text-emerald-600 focus:ring-emerald-500"
+                            className="rounded border-hairline text-signal-blue focus:ring-signal-blue"
                           />
                         </td>
                       )}
@@ -371,18 +371,18 @@ export function ParticipantListTable({
                       {/* Full Name & Contacts */}
                       <td className="py-2.5 px-4 text-left">
                         <div className="flex items-center gap-1.5 flex-wrap">
-                          <span className="font-semibold text-slate-900">{item.member.fullName}</span>
+                          <span className="font-semibold text-ink-navy">{item.member.fullName}</span>
                           {item.source === 'google_form' && (
                             <span
                               title="Đăng ký qua Google Forms"
-                              className="inline-flex items-center gap-1 text-[9px] font-semibold text-emerald-700 bg-emerald-50 border border-emerald-200 px-1.5 py-0.2 rounded"
+                              className="inline-flex items-center gap-1 text-[9px] font-semibold text-signal-blue bg-[#e6f0ff] border border-[#d4e4fa] px-1.5 py-0.2 rounded-full"
                             >
-                              <FileSpreadsheet className="w-2.5 h-2.5" />
+                              <FileSpreadsheet className="w-2.5 h-2.5 text-signal-blue" />
                               <span>Forms</span>
                             </span>
                           )}
                         </div>
-                        <div className="flex items-center gap-2 text-[11px] text-slate-400">
+                        <div className="flex items-center gap-2 text-[11px] text-slate-gray">
                           {item.member.email && (
                             <span className="truncate max-w-[150px]">{item.member.email}</span>
                           )}
@@ -394,18 +394,18 @@ export function ParticipantListTable({
 
                       {/* Student ID */}
                       <td className="py-2.5 px-2 text-center">
-                        <span className="font-mono font-medium text-slate-700 bg-slate-100 px-2 py-0.5 rounded text-[11px]">
+                        <span className="font-mono font-medium text-slate-gray bg-pebble px-2 py-0.5 rounded text-[11px] tabular-nums">
                           {item.member.studentId || '—'}
                         </span>
                       </td>
 
                       {/* Class */}
-                      <td className="py-2.5 px-2 text-center text-slate-700 font-medium text-xs">
+                      <td className="py-2.5 px-2 text-center text-slate-gray font-medium text-xs">
                         {item.member.className || '—'}
                       </td>
 
                       {/* Cohort / Khóa */}
-                      <td className="py-2.5 px-2 text-center text-slate-700 font-semibold tabular-nums text-xs">
+                      <td className="py-2.5 px-2 text-center text-slate-gray font-semibold tabular-nums text-xs">
                         {cohortText}
                       </td>
 
@@ -424,11 +424,11 @@ export function ParticipantListTable({
                             className={cn(
                               'inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer select-none',
                               isPresent
-                                ? 'bg-emerald-600 text-white shadow-xs'
-                                : 'bg-slate-100 text-slate-600 hover:bg-emerald-50 hover:text-emerald-700'
+                                ? 'bg-signal-blue text-white shadow-sm'
+                                : 'bg-pebble text-slate-gray hover:bg-[#e6f0ff] hover:text-signal-blue'
                             )}
                           >
-                            <CheckCircle2 className={cn('w-3.5 h-3.5', isPresent ? 'text-white' : 'text-slate-400')} />
+                            <CheckCircle2 className={cn('w-3.5 h-3.5', isPresent ? 'text-white' : 'text-mist-gray')} />
                             <span>Có mặt</span>
                           </button>
 
@@ -444,11 +444,11 @@ export function ParticipantListTable({
                             className={cn(
                               'inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer select-none',
                               isAbsent
-                                ? 'bg-rose-600 text-white shadow-xs'
-                                : 'bg-slate-100 text-slate-600 hover:bg-rose-50 hover:text-rose-700'
+                                ? 'bg-rose-600 text-white shadow-sm'
+                                : 'bg-pebble text-slate-gray hover:bg-rose-50 hover:text-rose-700'
                             )}
                           >
-                            <XCircle className={cn('w-3.5 h-3.5', isAbsent ? 'text-white' : 'text-slate-400')} />
+                            <XCircle className={cn('w-3.5 h-3.5', isAbsent ? 'text-white' : 'text-mist-gray')} />
                             <span>Vắng</span>
                           </button>
                         </div>
@@ -465,7 +465,7 @@ export function ParticipantListTable({
                                 onRemoveParticipant(item.id);
                               }
                             }}
-                            className="p-1.5 text-slate-400 hover:text-rose-600 rounded-lg hover:bg-rose-50 transition-colors cursor-pointer"
+                            className="p-1.5 text-mist-gray hover:text-rose-600 rounded-lg hover:bg-rose-50 transition-colors cursor-pointer"
                             title="Xóa khỏi hoạt động"
                           >
                             <Trash2 className="w-3.5 h-3.5" />
@@ -481,12 +481,12 @@ export function ParticipantListTable({
         </div>
 
         {/* Footer Summary */}
-        <div className="p-2.5 px-4 bg-slate-50 border-t border-slate-200 text-xs text-slate-500 flex items-center justify-between flex-wrap gap-2">
+        <div className="p-2.5 px-4 bg-cloud border-t border-hairline text-xs text-slate-gray flex items-center justify-between flex-wrap gap-2">
           <span>
-            Hiển thị <strong className="text-slate-800">{filteredList.length}</strong> / {participants.length} người tham gia
+            Hiển thị <strong className="text-ink-navy font-semibold">{filteredList.length}</strong> / {participants.length} người tham gia
           </span>
-          <span className="text-[11px]">
-            Có mặt: <strong className="text-emerald-700">{presentCount}</strong> • Vắng: <strong className="text-rose-700">{absentCount}</strong> • Chưa điểm danh: <strong className="text-slate-700">{unmarkedCount}</strong>
+          <span className="text-[11px] tabular-nums">
+            Có mặt: <strong className="text-signal-blue font-semibold">{presentCount}</strong> • Vắng: <strong className="text-rose-700 font-semibold">{absentCount}</strong> • Chưa điểm danh: <strong className="text-ink-navy font-semibold">{unmarkedCount}</strong>
           </span>
         </div>
       </div>

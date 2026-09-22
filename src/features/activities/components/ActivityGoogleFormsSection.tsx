@@ -6,18 +6,15 @@ import {
   ExternalLink,
   Copy,
   Check,
-  AlertTriangle,
   CheckCircle2,
   Eye,
   Globe,
   Upload,
-  User,
 } from 'lucide-react';
 import type { ActivityDetail } from '../types/activity.types';
-import type { ActivityForm, Member } from '@/types';
+import type { Member } from '@/types';
 import {
   useActivityForms,
-  usePrimaryActivityForm,
   useFormResponses,
 } from '@/integrations/google/forms/google-forms.queries';
 import {
@@ -45,7 +42,6 @@ interface ActivityGoogleFormsSectionProps {
 export function ActivityGoogleFormsSection({
   activity,
   canManage = false,
-  members = [],
 }: ActivityGoogleFormsSectionProps) {
   const toast = useToast();
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -190,15 +186,15 @@ export function ActivityGoogleFormsSection({
   if (!primaryForm && !isLoadingForms) {
     return (
       <div className="p-8 sm:p-12 text-center max-w-lg mx-auto space-y-4">
-        <div className="w-14 h-14 rounded-2xl bg-indigo-50 border border-indigo-100 text-indigo-600 flex items-center justify-center mx-auto shadow-xs">
+        <div className="w-14 h-14 rounded-2xl bg-[#e6f0ff] border border-[#d4e4fa] text-signal-blue flex items-center justify-center mx-auto shadow-xs">
           <FileSpreadsheet strokeWidth={1.5} className="w-7 h-7" />
         </div>
 
         <div className="space-y-1.5">
-          <h3 className="text-base font-bold text-slate-900">
+          <h3 className="text-base font-bold text-ink-navy">
             Chưa có Google Form đăng ký cho hoạt động này
           </h3>
-          <p className="text-xs text-slate-500 leading-relaxed">
+          <p className="text-xs text-slate-gray leading-relaxed">
             Tạo biểu mẫu Google Form chuẩn hóa hoặc liên kết Google Form có sẵn để thu thập thông tin đăng ký và tự động đồng bộ vào danh sách người tham gia.
           </p>
         </div>
@@ -209,7 +205,7 @@ export function ActivityGoogleFormsSection({
               type="button"
               id="open-create-google-form-btn"
               onClick={() => setIsCreateOpen(true)}
-              className="inline-flex items-center gap-2 px-4 py-2.5 text-xs font-semibold text-white bg-indigo-600 hover:bg-indigo-700 rounded-xl shadow-xs transition-all cursor-pointer"
+              className="inline-flex items-center gap-2 px-4 py-2.5 text-xs font-semibold text-white bg-signal-blue hover:bg-[#005be0] rounded-lg shadow-xs transition-all cursor-pointer"
             >
               <Plus className="w-4 h-4" />
               <span>Thiết lập Google Form ngay</span>
@@ -229,7 +225,6 @@ export function ActivityGoogleFormsSection({
   }
 
   const syncStatus = primaryForm ? SYNC_STATUS_CONFIG[primaryForm.syncStatus] : null;
-  const unmatchedCount = primaryForm ? primaryForm.unmatchedCount : 0;
 
   return (
     <div className="space-y-6">
@@ -243,7 +238,7 @@ export function ActivityGoogleFormsSection({
           <button
             type="button"
             onClick={() => setSyncFeedback(null)}
-            className="text-xs text-emerald-700 hover:text-emerald-900 font-bold"
+            className="text-xs text-emerald-700 hover:text-emerald-900 font-bold cursor-pointer"
           >
             ✕
           </button>
@@ -252,25 +247,25 @@ export function ActivityGoogleFormsSection({
 
       {/* Main Google Form Card */}
       {primaryForm && (
-        <div className="bg-white border border-slate-200 rounded-2xl p-5 sm:p-6 space-y-5 shadow-2xs">
+        <div className="bg-white border border-hairline rounded-2xl p-5 sm:p-6 space-y-5 shadow-xs">
           {/* Header row */}
-          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pb-4 border-b border-slate-100">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pb-4 border-b border-hairline">
             <div className="flex items-start gap-3.5">
-              <div className="w-11 h-11 rounded-xl bg-indigo-600 text-white flex items-center justify-center shrink-0 shadow-xs">
+              <div className="w-11 h-11 rounded-xl bg-signal-blue text-white flex items-center justify-center shrink-0 shadow-xs">
                 <FileSpreadsheet strokeWidth={1.5} className="w-6 h-6" />
               </div>
               <div className="space-y-1">
                 <div className="flex items-center gap-2 flex-wrap">
-                  <h3 className="text-base font-bold text-slate-900">{primaryForm.title}</h3>
+                  <h3 className="text-base font-bold text-ink-navy">{primaryForm.title}</h3>
                   {syncStatus && (
                     <span
-                      className={`text-[10px] font-semibold px-2 py-0.5 rounded-full border ${syncStatus.badgeClass}`}
+                      className={`text-[10px] font-semibold px-2.5 py-0.5 rounded-full border tabular-nums ${syncStatus.badgeClass}`}
                     >
                       {syncStatus.label}
                     </span>
                   )}
                 </div>
-                <p className="text-xs text-slate-500 line-clamp-2">
+                <p className="text-xs text-slate-gray line-clamp-2">
                   {primaryForm.description || 'Biểu mẫu thu thập đăng ký tham gia sự kiện của Đơn vị.'}
                 </p>
               </div>
@@ -292,7 +287,7 @@ export function ActivityGoogleFormsSection({
                   id="import-csv-responses-btn"
                   disabled={importCsvMutation.isPending}
                   onClick={() => fileInputRef.current?.click()}
-                  className="inline-flex items-center gap-1.5 px-3 py-2 text-xs font-semibold text-slate-700 bg-white border border-slate-300 hover:bg-slate-50 rounded-lg shadow-2xs transition-colors cursor-pointer disabled:opacity-50"
+                  className="inline-flex items-center gap-1.5 px-3 py-2 text-xs font-semibold text-slate-gray bg-white border border-hairline hover:bg-pebble hover:text-ink-navy rounded-lg shadow-xs transition-colors cursor-pointer disabled:opacity-50"
                   title="Tải câu trả lời dạng CSV từ Google Forms về máy rồi nhập vào đây"
                 >
                   <Upload className={`w-3.5 h-3.5 ${importCsvMutation.isPending ? 'animate-spin' : ''}`} />
@@ -304,9 +299,9 @@ export function ActivityGoogleFormsSection({
                   id="sync-google-forms-responses-btn"
                   disabled={syncMutation.isPending}
                   onClick={handleSync}
-                  className="inline-flex items-center gap-1.5 px-3 py-2 text-xs font-semibold text-white bg-indigo-600 hover:bg-indigo-700 rounded-lg shadow-xs transition-colors cursor-pointer disabled:opacity-50"
+                  className="inline-flex items-center gap-1.5 px-3 py-2 text-xs font-semibold text-white bg-signal-blue hover:bg-[#005be0] rounded-lg shadow-xs transition-colors cursor-pointer disabled:opacity-50"
                 >
-                  <RefreshCw className={`w-3.5 h-3.5 ${syncMutation.isPending ? 'animate-spin' : ''}`} />
+                  <RefreshCw className={`w-3.5 h-3.5 ${syncMutation.isPending ? 'animate-spin text-white' : ''}`} />
                   <span>{syncMutation.isPending ? 'Đang đồng bộ...' : 'Đồng bộ phản hồi'}</span>
                 </button>
 
@@ -314,10 +309,10 @@ export function ActivityGoogleFormsSection({
                   type="button"
                   id="view-all-responses-btn"
                   onClick={() => setIsResponsesOpen(true)}
-                  className="inline-flex items-center gap-1.5 px-3 py-2 text-xs font-semibold text-slate-700 bg-slate-100 hover:bg-slate-200 rounded-lg transition-colors cursor-pointer"
+                  className="inline-flex items-center gap-1.5 px-3 py-2 text-xs font-semibold text-slate-gray bg-pebble hover:bg-cloud hover:text-ink-navy rounded-lg transition-colors cursor-pointer"
                 >
-                  <Eye className="w-3.5 h-3.5 text-slate-500" />
-                  <span>Xem phản hồi ({primaryForm.responseCount})</span>
+                  <Eye className="w-3.5 h-3.5 text-slate-gray" />
+                  <span className="tabular-nums">Xem phản hồi ({primaryForm.responseCount})</span>
                 </button>
               </div>
             )}
@@ -330,12 +325,12 @@ export function ActivityGoogleFormsSection({
                 <CheckCircle2 className="w-4 h-4 text-emerald-600" />
                 <span>Người đăng ký tham gia</span>
               </p>
-              <p className="text-xl font-black text-emerald-950">{primaryForm.responseCount} người</p>
+              <p className="text-xl font-bold tabular-nums text-emerald-950">{primaryForm.responseCount} người</p>
             </div>
 
-            <div className="p-3.5 bg-slate-50 border border-slate-200/80 rounded-xl space-y-1">
-              <p className="text-[11px] font-medium text-slate-500">Lần đồng bộ gần nhất</p>
-              <p className="text-xs font-semibold text-slate-700 mt-1">
+            <div className="p-3.5 bg-cloud border border-hairline rounded-xl space-y-1">
+              <p className="text-[11px] font-medium text-slate-gray">Lần đồng bộ gần nhất</p>
+              <p className="text-xs font-semibold tabular-nums text-ink-navy mt-1">
                 {primaryForm.lastSyncedAt ? formatDateTime(primaryForm.lastSyncedAt) : 'Chưa từng đồng bộ'}
               </p>
             </div>
@@ -345,13 +340,13 @@ export function ActivityGoogleFormsSection({
           <div className="space-y-3 pt-1">
             {/* Google Form Link */}
             <div className="space-y-1.5">
-              <h4 className="text-xs font-bold text-slate-800 flex items-center gap-1.5">
-                <Globe className="w-3.5 h-3.5 text-indigo-600" />
+              <h4 className="text-xs font-bold text-ink-navy flex items-center gap-1.5">
+                <Globe className="w-3.5 h-3.5 text-signal-blue" />
                 <span>Đường dẫn biểu mẫu (Gửi cho sinh viên điền đơn)</span>
               </h4>
 
               <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
-                <div className="flex-1 bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-xs font-mono text-slate-700 truncate">
+                <div className="flex-1 bg-cloud border border-hairline rounded-lg px-3 py-2 text-xs font-mono text-ink-navy truncate">
                   {primaryForm.formUrl}
                 </div>
 
@@ -360,7 +355,7 @@ export function ActivityGoogleFormsSection({
                     type="button"
                     id="copy-form-url-btn"
                     onClick={() => handleCopyLink(primaryForm.formUrl)}
-                    className="inline-flex items-center gap-1.5 px-3 py-2 text-xs font-semibold text-slate-700 bg-white border border-slate-200 hover:bg-slate-50 rounded-lg transition-colors cursor-pointer"
+                    className="inline-flex items-center gap-1.5 px-3 py-2 text-xs font-semibold text-slate-gray bg-white border border-hairline hover:bg-pebble hover:text-ink-navy rounded-lg transition-colors cursor-pointer"
                   >
                     {copiedLink ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <Copy className="w-3.5 h-3.5" />}
                     <span>{copiedLink ? 'Đã chép link' : 'Sao chép link'}</span>
@@ -371,7 +366,7 @@ export function ActivityGoogleFormsSection({
                     target="_blank"
                     rel="noreferrer"
                     id="open-google-form-external-btn"
-                    className="inline-flex items-center gap-1.5 px-3 py-2 text-xs font-semibold text-white bg-indigo-600 hover:bg-indigo-700 rounded-lg transition-colors shadow-xs"
+                    className="inline-flex items-center gap-1.5 px-3 py-2 text-xs font-semibold text-white bg-signal-blue hover:bg-[#005be0] rounded-lg transition-colors shadow-xs"
                   >
                     <ExternalLink className="w-3.5 h-3.5" />
                     <span>Mở Google Form</span>
@@ -395,7 +390,7 @@ export function ActivityGoogleFormsSection({
                       setSheetUrlInput('');
                       setIsAttachSheetOpen(true);
                     }}
-                    className="text-xs font-bold text-indigo-600 hover:text-indigo-800 hover:underline cursor-pointer"
+                    className="text-xs font-semibold text-signal-blue hover:text-[#005be0] hover:underline cursor-pointer"
                   >
                     + Gắn link Trang tính
                   </button>
@@ -413,7 +408,7 @@ export function ActivityGoogleFormsSection({
                       type="button"
                       id="copy-sheet-url-btn"
                       onClick={() => handleCopySheetLink((primaryForm.metadata as any).sheetUrl)}
-                      className="inline-flex items-center gap-1.5 px-3 py-2 text-xs font-semibold text-slate-700 bg-white border border-slate-200 hover:bg-slate-50 rounded-lg transition-colors cursor-pointer"
+                      className="inline-flex items-center gap-1.5 px-3 py-2 text-xs font-semibold text-slate-gray bg-white border border-hairline hover:bg-pebble hover:text-ink-navy rounded-lg transition-colors cursor-pointer"
                     >
                       {copiedSheetLink ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <Copy className="w-3.5 h-3.5" />}
                       <span>{copiedSheetLink ? 'Đã chép' : 'Sao chép'}</span>
@@ -437,7 +432,7 @@ export function ActivityGoogleFormsSection({
                           setSheetUrlInput((primaryForm.metadata as any).sheetUrl || '');
                           setIsAttachSheetOpen(true);
                         }}
-                        className="inline-flex items-center gap-1.5 px-3 py-2 text-xs font-semibold text-slate-700 bg-white border border-slate-200 hover:bg-slate-50 rounded-lg transition-colors cursor-pointer"
+                        className="inline-flex items-center gap-1.5 px-3 py-2 text-xs font-semibold text-slate-gray bg-white border border-hairline hover:bg-pebble hover:text-ink-navy rounded-lg transition-colors cursor-pointer"
                       >
                         <span>Đổi link Sheet</span>
                       </button>
@@ -445,10 +440,10 @@ export function ActivityGoogleFormsSection({
                   </div>
                 </div>
               ) : (
-                <div className="p-3.5 bg-slate-50 border border-slate-200 rounded-xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-xs text-slate-600">
+                <div className="p-3.5 bg-cloud border border-hairline rounded-xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-xs text-slate-gray">
                   <div>
-                    <p className="font-semibold text-slate-800">Chưa liên kết Google Sheet chứa câu trả lời</p>
-                    <p className="text-[11px] text-slate-500 mt-0.5">
+                    <p className="font-semibold text-ink-navy">Chưa liên kết Google Sheet chứa câu trả lời</p>
+                    <p className="text-[11px] text-slate-gray mt-0.5">
                       Gắn link Trang tính để hệ thống tự động đọc danh sách người đăng ký mỗi khi bạn bấm &quot;Đồng bộ phản hồi&quot;.
                     </p>
                   </div>
@@ -460,7 +455,7 @@ export function ActivityGoogleFormsSection({
                         setSheetUrlInput('');
                         setIsAttachSheetOpen(true);
                       }}
-                      className="inline-flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-bold text-indigo-700 bg-indigo-50 hover:bg-indigo-100 border border-indigo-200 rounded-lg transition-colors shrink-0 cursor-pointer"
+                      className="inline-flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-bold text-signal-blue bg-[#e6f0ff] hover:bg-[#d4e4fa] border border-[#d4e4fa] rounded-lg transition-colors shrink-0 cursor-pointer"
                     >
                       <Plus className="w-3.5 h-3.5" />
                       <span>Liên kết Google Sheet</span>
@@ -473,11 +468,11 @@ export function ActivityGoogleFormsSection({
 
           {/* Form Actions (Change Form, Unlink) */}
           {canManage && (
-            <div className="pt-3 border-t border-slate-100 flex items-center justify-end gap-3 text-xs">
+            <div className="pt-3 border-t border-hairline flex items-center justify-end gap-3 text-xs">
               <button
                 type="button"
                 onClick={() => setIsCreateOpen(true)}
-                className="text-indigo-600 hover:text-indigo-800 font-semibold cursor-pointer"
+                className="text-signal-blue hover:text-[#005be0] font-semibold cursor-pointer"
               >
                 + Thay đổi Form khác
               </button>
@@ -504,34 +499,34 @@ export function ActivityGoogleFormsSection({
 
       {/* Attach Google Sheet Dialog */}
       {isAttachSheetOpen && (
-        <div className="fixed inset-0 z-50 overflow-y-auto bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4">
-          <div className="bg-white rounded-2xl shadow-xl w-full max-w-lg overflow-hidden animate-in fade-in zoom-in-95 duration-150 border border-slate-200">
-            <div className="px-6 py-4 border-b border-slate-200 flex items-center justify-between bg-slate-50/80">
+        <div className="fixed inset-0 z-50 overflow-y-auto bg-ink-navy/40 backdrop-blur-xs flex items-center justify-center p-4">
+          <div className="bg-white rounded-2xl shadow-xl w-full max-w-lg overflow-hidden animate-in fade-in zoom-in-95 duration-150 border border-hairline">
+            <div className="px-6 py-4 border-b border-hairline flex items-center justify-between bg-cloud">
               <div className="flex items-center gap-2.5">
                 <div className="w-8 h-8 rounded-lg bg-emerald-50 border border-emerald-100 text-emerald-600 flex items-center justify-center">
                   <FileSpreadsheet className="w-4 h-4" />
                 </div>
                 <div>
-                  <h3 className="text-sm font-bold text-slate-900">Liên kết Google Sheet câu trả lời</h3>
-                  <p className="text-[11px] text-slate-500">Đồng bộ tự động dữ liệu người đăng ký</p>
+                  <h3 className="text-sm font-bold text-ink-navy">Liên kết Google Sheet câu trả lời</h3>
+                  <p className="text-[11px] text-slate-gray">Đồng bộ tự động dữ liệu người đăng ký</p>
                 </div>
               </div>
               <button
                 type="button"
                 onClick={() => setIsAttachSheetOpen(false)}
-                className="p-1 rounded-lg text-slate-400 hover:text-slate-600 hover:bg-slate-100 transition-colors"
+                className="p-1 rounded-lg text-slate-gray hover:text-ink-navy hover:bg-pebble transition-colors cursor-pointer"
               >
                 ✕
               </button>
             </div>
 
             <form onSubmit={handleSaveSheet} className="p-6 space-y-4">
-              <div className="p-3.5 bg-indigo-50/60 border border-indigo-100 rounded-xl space-y-2 text-xs text-indigo-950">
-                <p className="font-bold flex items-center gap-1.5 text-indigo-900">
-                  <CheckCircle2 className="w-4 h-4 text-indigo-600" />
+              <div className="p-3.5 bg-[#e6f0ff]/50 border border-[#d4e4fa] rounded-xl space-y-2 text-xs text-ink-navy">
+                <p className="font-bold flex items-center gap-1.5 text-ink-navy">
+                  <CheckCircle2 className="w-4 h-4 text-signal-blue" />
                   <span>Cách lấy link Google Sheet từ Google Form (3 bước):</span>
                 </p>
-                <ol className="list-decimal list-inside space-y-1 text-[11px] text-indigo-900/90 pl-1 leading-relaxed">
+                <ol className="list-decimal list-inside space-y-1 text-[11px] text-slate-gray pl-1 leading-relaxed">
                   <li>Mở biểu mẫu Google Form của bạn trên trình duyệt.</li>
                   <li>Bấm vào tab <strong>Câu trả lời (Responses)</strong>.</li>
                   <li>
@@ -541,7 +536,7 @@ export function ActivityGoogleFormsSection({
               </div>
 
               <div>
-                <label htmlFor="sheet-url-dialog-input" className="block text-xs font-bold text-slate-800 mb-1.5">
+                <label htmlFor="sheet-url-dialog-input" className="block text-xs font-semibold text-slate-gray mb-1.5 uppercase tracking-wider">
                   Đường dẫn (URL) Google Sheet <span className="text-rose-500">*</span>
                 </label>
                 <input
@@ -551,18 +546,18 @@ export function ActivityGoogleFormsSection({
                   autoFocus
                   onChange={(e) => setSheetUrlInput(e.target.value)}
                   placeholder="https://docs.google.com/spreadsheets/d/..."
-                  className="w-full text-xs px-3.5 py-2.5 bg-white border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-500 font-mono shadow-2xs"
+                  className="w-full text-xs px-3.5 py-2.5 bg-cloud border border-hairline rounded-lg text-ink-navy placeholder:text-mist-gray focus:outline-hidden focus:ring-2 focus:ring-signal-blue/20 focus:border-signal-blue font-mono shadow-xs"
                 />
-                <p className="text-[10px] text-slate-500 mt-1">
+                <p className="text-[10px] text-slate-gray mt-1">
                   💡 Hãy đảm bảo Google Sheet đã được mở quyền xem (Bất kỳ ai có liên kết đều có thể xem).
                 </p>
               </div>
 
-              <div className="flex items-center justify-end gap-2 pt-3 border-t border-slate-200">
+              <div className="flex items-center justify-end gap-2.5 pt-3 border-t border-hairline">
                 <button
                   type="button"
                   onClick={() => setIsAttachSheetOpen(false)}
-                  className="px-4 py-2 text-xs font-medium text-slate-600 hover:text-slate-800 hover:bg-slate-100 rounded-xl transition-colors cursor-pointer"
+                  className="px-3.5 py-1.5 text-xs font-medium text-slate-gray bg-white border border-hairline rounded-lg hover:bg-pebble hover:text-ink-navy transition-colors cursor-pointer"
                 >
                   Hủy bỏ
                 </button>
@@ -570,7 +565,7 @@ export function ActivityGoogleFormsSection({
                 <button
                   type="submit"
                   disabled={attachSheetMutation.isPending}
-                  className="inline-flex items-center gap-1.5 px-5 py-2 text-xs font-semibold text-white bg-emerald-600 hover:bg-emerald-700 rounded-xl transition-colors shadow-xs disabled:opacity-50 cursor-pointer"
+                  className="inline-flex items-center gap-1.5 px-4 py-1.5 text-xs font-medium text-white bg-signal-blue hover:bg-[#005be0] rounded-lg transition-colors shadow-xs disabled:opacity-50 cursor-pointer"
                 >
                   <span>{attachSheetMutation.isPending ? 'Đang đồng bộ...' : 'Lưu & Đồng bộ ngay'}</span>
                 </button>

@@ -44,13 +44,13 @@ export function RoleGuard({
   const roleLabel = activeRole ? ROLES[activeRole]?.label : 'Chưa phân quyền';
 
   return (
-    <div className="flex flex-col items-center justify-center p-8 rounded-xl border border-slate-200 bg-white text-center space-y-4 max-w-lg mx-auto my-8 shadow-sm">
+    <div className="flex flex-col items-center justify-center p-8 rounded-xl border border-hairline bg-white text-center space-y-4 max-w-lg mx-auto my-8 shadow-sm">
       <div className="h-12 w-12 rounded-full bg-rose-50 flex items-center justify-center text-rose-600">
         <ShieldAlert strokeWidth={1.5} className="h-6 w-6" />
       </div>
       <div className="space-y-1.5">
-        <h3 className="text-base font-semibold text-slate-900">Giới hạn quyền truy cập</h3>
-        <p className="text-xs text-slate-500 leading-relaxed">
+        <h3 className="text-base font-semibold text-ink-navy">Giới hạn quyền truy cập</h3>
+        <p className="text-xs text-slate-gray leading-relaxed">
           Tài khoản của bạn hiện có vai trò <strong>{roleLabel}</strong>. Tính năng này yêu cầu quyền quản trị cao hơn (Ban Chấp Hành hoặc Quản trị viên).
         </p>
       </div>
@@ -58,7 +58,7 @@ export function RoleGuard({
         variant="outline"
         size="sm"
         onClick={() => navigate(-1)}
-        className="text-xs"
+        className="text-xs border-hairline hover:bg-cloud text-slate-gray hover:text-ink-navy"
       >
         <ArrowLeft className="h-3.5 w-3.5 mr-1.5" />
         Quay lại trang trước

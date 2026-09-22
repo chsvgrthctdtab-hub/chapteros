@@ -12,18 +12,18 @@ export function WorkProgressCard({ tasks }: WorkProgressCardProps) {
   const hasData = total > 0;
 
   return (
-    <Card className="border-slate-200/90 shadow-2xs rounded-xl overflow-hidden bg-white">
-      <CardHeader className="p-4 sm:p-5 pb-3 border-b border-slate-100">
+    <Card className="border-hairline shadow-sm rounded-2xl overflow-hidden bg-white">
+      <CardHeader className="p-4 sm:p-5 pb-3 border-b border-hairline">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-lg bg-slate-100 text-slate-700 border border-slate-200/80 flex items-center justify-center">
+            <div className="w-8 h-8 rounded-lg bg-pebble text-ink-navy border border-hairline flex items-center justify-center">
               <CheckSquare className="w-4 h-4" />
             </div>
             <div>
-              <CardTitle className="text-base sm:text-lg font-bold text-slate-900 leading-tight">
+              <CardTitle className="text-base sm:text-lg font-bold text-ink-navy leading-tight">
                 Work Progress
               </CardTitle>
-              <p className="text-xs text-slate-500 mt-0.5">
+              <p className="text-xs text-slate-gray mt-0.5">
                 Completion rate & task health metrics
               </p>
             </div>
@@ -31,11 +31,11 @@ export function WorkProgressCard({ tasks }: WorkProgressCardProps) {
 
           {hasData ? (
             <div className="text-right">
-              <span className="text-lg sm:text-xl font-bold text-emerald-700 tabular-nums">{completionRate}%</span>
-              <span className="text-[11px] text-slate-400 block -mt-0.5">completed</span>
+              <span className="text-lg sm:text-xl font-bold text-signal-blue tabular-nums">{completionRate}%</span>
+              <span className="text-[11px] text-slate-gray block -mt-0.5">completed</span>
             </div>
           ) : (
-            <span className="text-xs text-slate-400 italic">No tasks</span>
+            <span className="text-xs text-mist-gray italic">No tasks</span>
           )}
         </div>
       </CardHeader>
@@ -45,54 +45,48 @@ export function WorkProgressCard({ tasks }: WorkProgressCardProps) {
         <div className="space-y-1.5">
           <Progress
             value={hasData ? completionRate : 0}
-            className="h-2 bg-slate-100 rounded-full"
-            indicatorClassName={
-              completionRate >= 80
-                ? 'bg-emerald-600'
-                : completionRate >= 50
-                ? 'bg-slate-700'
-                : 'bg-amber-500'
-            }
+            className="h-2 bg-pebble rounded-full border border-hairline/40"
+            indicatorClassName="bg-signal-blue"
           />
-          <div className="flex items-center justify-between text-xs text-slate-500">
+          <div className="flex items-center justify-between text-xs text-slate-gray">
             <span>
-              Đã xong: <strong className="text-slate-800 tabular-nums">{completed}</strong> / <span className="tabular-nums">{total}</span> công việc
+              Đã xong: <strong className="text-ink-navy tabular-nums">{completed}</strong> / <span className="tabular-nums">{total}</span> công việc
             </span>
-            <span>Đang làm: <strong className="text-slate-800 tabular-nums">{active}</strong></span>
+            <span>Đang làm: <strong className="text-ink-navy tabular-nums">{active}</strong></span>
           </div>
         </div>
 
         {/* Breakdown Badges */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-2 border-t border-slate-100 text-xs">
-          <div className="flex items-center gap-2 p-2 rounded-lg bg-slate-50 border border-slate-200/80">
-            <Clock className="w-3.5 h-3.5 text-slate-500 shrink-0" />
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-2 border-t border-hairline text-xs">
+          <div className="flex items-center gap-2 p-2 rounded-xl bg-pebble border border-hairline">
+            <Clock className="w-3.5 h-3.5 text-slate-gray shrink-0" />
             <div className="truncate">
-              <div className="text-[11px] text-slate-500 font-medium">Đang làm</div>
-              <div className="font-bold text-slate-800 text-xs sm:text-sm tabular-nums">{active}</div>
+              <div className="text-[11px] text-slate-gray font-medium">Đang làm</div>
+              <div className="font-bold text-ink-navy text-xs sm:text-sm tabular-nums">{active}</div>
             </div>
           </div>
 
-          <div className="flex items-center gap-2 p-2 rounded-lg bg-emerald-50/50 border border-emerald-100">
+          <div className="flex items-center gap-2 p-2 rounded-xl bg-emerald-50/50 border border-emerald-100">
             <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
             <div className="truncate">
               <div className="text-[11px] text-emerald-800 font-medium">Hoàn thành</div>
-              <div className="font-bold text-emerald-900 text-xs sm:text-sm tabular-nums">{completed}</div>
+              <div className="font-bold text-emerald-950 text-xs sm:text-sm tabular-nums">{completed}</div>
             </div>
           </div>
 
-          <div className="flex items-center gap-2 p-2 rounded-lg bg-rose-50/50 border border-rose-100">
+          <div className="flex items-center gap-2 p-2 rounded-xl bg-rose-50/50 border border-rose-100">
             <AlertCircle className="w-3.5 h-3.5 text-rose-600 shrink-0" />
             <div className="truncate">
               <div className="text-[11px] text-rose-800 font-medium">Quá hạn</div>
-              <div className="font-bold text-rose-900 text-xs sm:text-sm tabular-nums">{overdue}</div>
+              <div className="font-bold text-rose-950 text-xs sm:text-sm tabular-nums">{overdue}</div>
             </div>
           </div>
 
-          <div className="flex items-center gap-2 p-2 rounded-lg bg-amber-50/50 border border-amber-100">
+          <div className="flex items-center gap-2 p-2 rounded-xl bg-amber-50/50 border border-amber-100">
             <AlertCircle className="w-3.5 h-3.5 text-amber-600 shrink-0" />
             <div className="truncate">
               <div className="text-[11px] text-amber-800 font-medium">Ưu tiên cao</div>
-              <div className="font-bold text-amber-900 text-xs sm:text-sm tabular-nums">{highOrUrgent}</div>
+              <div className="font-bold text-amber-950 text-xs sm:text-sm tabular-nums">{highOrUrgent}</div>
             </div>
           </div>
         </div>

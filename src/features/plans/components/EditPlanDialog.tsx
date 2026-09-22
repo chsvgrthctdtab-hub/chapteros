@@ -126,17 +126,17 @@ export function EditPlanDialog({
 
   return (
     <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
-      <DialogContent id="edit-plan-dialog" className="sm:max-w-2xl md:max-w-3xl max-h-[92vh] overflow-y-auto bg-white border border-slate-200/80 shadow-2xl rounded-3xl p-6 sm:p-8 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+      <DialogContent id="edit-plan-dialog" className="sm:max-w-2xl md:max-w-3xl max-h-[92vh] overflow-y-auto bg-white border border-hairline shadow-sm rounded-2xl p-6 sm:p-8 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-          <DialogHeader className="space-y-1 text-left pb-1">
-            <div className="flex items-center gap-2 text-blue-600 font-semibold text-xs mb-0.5">
+          <DialogHeader className="space-y-1 text-left pb-2 border-b border-hairline">
+            <div className="flex items-center gap-2 text-signal-blue font-semibold text-xs mb-0.5">
               <Edit3 className="h-4 w-4" />
               <span>Chỉnh sửa chương trình Collab</span>
             </div>
-            <DialogTitle className="text-lg sm:text-xl font-bold text-slate-900">
+            <DialogTitle className="text-lg sm:text-xl font-bold text-ink-navy">
               Cập Nhật Thông Tin Collab
             </DialogTitle>
-            <DialogDescription className="text-xs text-slate-500 leading-relaxed">
+            <DialogDescription className="text-xs text-slate-gray leading-relaxed">
               Thay đổi tên chương trình, tiến độ, thời gian diễn ra và thông tin phối hợp.
             </DialogDescription>
           </DialogHeader>
@@ -151,14 +151,14 @@ export function EditPlanDialog({
           <div className="space-y-3.5">
             {/* Plan Name */}
             <div className="space-y-1">
-              <label htmlFor="edit-plan-name" className="block text-xs font-semibold text-slate-700">
+              <label htmlFor="edit-plan-name" className="block text-xs font-semibold text-ink-navy">
                 Tên chương trình Collab <span className="text-rose-500">*</span>
               </label>
               <Input
                 id="edit-plan-name"
                 {...register('name')}
                 placeholder="Ví dụ: Chiến dịch Xuân Tình Nguyện 2026..."
-                className="h-10 bg-slate-50/50 border-slate-200 text-xs rounded-xl"
+                className="h-9.5 bg-white border-hairline text-xs rounded-lg text-ink-navy placeholder:text-mist-gray focus:border-signal-blue"
               />
               {errors.name && (
                 <p className="text-[11px] text-rose-600 font-medium">{errors.name.message}</p>
@@ -168,13 +168,13 @@ export function EditPlanDialog({
             {/* Code & Status in 2 columns */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div className="space-y-1">
-                <label htmlFor="edit-plan-code" className="block text-xs font-semibold text-slate-700">
+                <label htmlFor="edit-plan-code" className="block text-xs font-semibold text-ink-navy">
                   Mã code định danh <span className="text-rose-500">*</span>
                 </label>
                 <Input
                   id="edit-plan-code"
                   {...register('code')}
-                  className="h-10 font-mono text-xs uppercase bg-slate-50/50 border-slate-200 rounded-xl"
+                  className="h-9.5 font-mono text-xs uppercase bg-white border-hairline rounded-lg text-ink-navy tabular-nums focus:border-signal-blue"
                 />
                 {errors.code && (
                   <p className="text-[11px] text-rose-600 font-medium">{errors.code.message}</p>
@@ -182,7 +182,7 @@ export function EditPlanDialog({
               </div>
 
               <div className="space-y-1">
-                <label className="block text-xs font-semibold text-slate-700">
+                <label className="block text-xs font-semibold text-ink-navy">
                   Trạng thái thực hiện <span className="text-rose-500">*</span>
                 </label>
                 <Controller
@@ -193,10 +193,10 @@ export function EditPlanDialog({
                       value={field.value || 'active'}
                       onValueChange={field.onChange}
                     >
-                      <SelectTrigger className="h-10 bg-slate-50/50 border-slate-200 text-xs rounded-xl">
+                      <SelectTrigger className="h-9.5 bg-white border-hairline text-xs rounded-lg text-ink-navy">
                         <SelectValue placeholder="Chọn trạng thái" />
                       </SelectTrigger>
-                      <SelectContent className="rounded-xl shadow-xl">
+                      <SelectContent className="rounded-xl border-hairline shadow-sm">
                         <SelectItem value="planning" className="text-xs">Đang lập kế hoạch</SelectItem>
                         <SelectItem value="active" className="text-xs">Đang triển khai</SelectItem>
                         <SelectItem value="completed" className="text-xs">Đã hoàn thành</SelectItem>
@@ -212,7 +212,7 @@ export function EditPlanDialog({
             {/* Dates in 2 columns */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div className="space-y-1">
-                <label className="block text-xs font-semibold text-slate-700">
+                <label className="block text-xs font-semibold text-ink-navy">
                   Ngày bắt đầu
                 </label>
                 <Controller
@@ -223,13 +223,14 @@ export function EditPlanDialog({
                       value={field.value}
                       onChange={field.onChange}
                       placeholder="Chọn ngày bắt đầu"
+                      className="h-9.5 text-xs rounded-lg border-hairline"
                     />
                   )}
                 />
               </div>
 
               <div className="space-y-1">
-                <label className="block text-xs font-semibold text-slate-700">
+                <label className="block text-xs font-semibold text-ink-navy">
                   Ngày kết thúc dự kiến
                 </label>
                 <Controller
@@ -240,6 +241,7 @@ export function EditPlanDialog({
                       value={field.value}
                       onChange={field.onChange}
                       placeholder="Chọn ngày kết thúc"
+                      className="h-9.5 text-xs rounded-lg border-hairline"
                     />
                   )}
                 />
@@ -248,7 +250,7 @@ export function EditPlanDialog({
 
             {/* Description */}
             <div className="space-y-1">
-              <label htmlFor="edit-plan-desc" className="block text-xs font-semibold text-slate-700">
+              <label htmlFor="edit-plan-desc" className="block text-xs font-semibold text-ink-navy">
                 Mô tả chi tiết mục tiêu & nội dung
               </label>
               <textarea
@@ -256,7 +258,7 @@ export function EditPlanDialog({
                 {...register('description')}
                 rows={3}
                 placeholder="Mô tả mục tiêu, đối tượng hướng đến và đơn vị phối hợp..."
-                className="w-full p-3 bg-slate-50/50 border border-slate-200 rounded-xl text-xs text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:bg-white transition-all resize-none"
+                className="w-full p-3 bg-white border border-hairline rounded-lg text-xs text-ink-navy placeholder:text-mist-gray focus:outline-none focus:border-signal-blue transition-all resize-none"
               />
               {errors.description && (
                 <p className="text-[11px] text-rose-600 font-medium">{errors.description.message}</p>
@@ -264,20 +266,20 @@ export function EditPlanDialog({
             </div>
           </div>
 
-          <DialogFooter className="gap-2 sm:gap-0 pt-3 border-t border-slate-100">
+          <DialogFooter className="gap-2 sm:gap-0 pt-3 border-t border-hairline">
             <Button
               type="button"
               variant="outline"
               onClick={onClose}
               disabled={isSubmitting || updatePlanMutation.isPending}
-              className="rounded-xl text-xs h-9"
+              className="rounded-lg text-xs h-9 px-4 border-hairline text-ink-navy hover:bg-pebble"
             >
               Hủy bỏ
             </Button>
             <Button
               type="submit"
               disabled={isSubmitting || updatePlanMutation.isPending}
-              className="rounded-xl text-xs h-9 bg-blue-600 hover:bg-blue-700 text-white font-semibold gap-1.5 shadow-2xs cursor-pointer"
+              className="rounded-lg text-xs h-9 px-4 bg-signal-blue hover:bg-[#005be0] text-white font-semibold gap-1.5 shadow-sm cursor-pointer"
             >
               {isSubmitting || updatePlanMutation.isPending ? (
                 <>

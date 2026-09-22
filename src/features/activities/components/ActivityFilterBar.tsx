@@ -56,6 +56,8 @@ export function ActivityFilterBar({
   // Calculate active filters count
   let activeFilterCount = 0;
   if (filters.termId && filters.termId !== 'all') activeFilterCount++;
+  if (filters.semester && filters.semester !== 'all') activeFilterCount++;
+  if (filters.organizerScope && filters.organizerScope !== 'all') activeFilterCount++;
   if (filters.category && filters.category !== 'all') activeFilterCount++;
   if (filters.startDateFrom) activeFilterCount++;
   if (filters.startDateTo) activeFilterCount++;
@@ -66,24 +68,24 @@ export function ActivityFilterBar({
   return (
     <div className="space-y-2.5">
       {/* Primary Toolbar */}
-      <div className="bg-white rounded-2xl border border-slate-200/80 p-3 shadow-2xs flex flex-col md:flex-row items-stretch md:items-center justify-between gap-2.5">
+      <div className="bg-white rounded-2xl border border-hairline p-3 shadow-sm flex flex-col md:flex-row items-stretch md:items-center justify-between gap-2.5">
         {/* Left: Search input */}
         <div className="relative flex-1 min-w-[200px] max-w-md">
-          <Search className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
+          <Search className="w-4 h-4 text-mist-gray absolute left-3 top-1/2 -translate-y-1/2" />
           <input
             id="activity-search-input"
             type="text"
-            placeholder="Search activities by name, code, venue..."
+            placeholder="Tìm theo tên, mã hoạt động, địa điểm..."
             value={filters.search || ''}
             onChange={(e) => onFilterChange({ search: e.target.value, page: 1 })}
-            className="w-full pl-9 pr-8 py-1.5 text-xs bg-slate-50/80 border border-slate-200 rounded-lg focus:bg-white focus:outline-none focus:ring-1 focus:ring-emerald-600 focus:border-emerald-600 font-medium transition-all"
+            className="w-full pl-9 pr-8 py-1.5 text-xs bg-cloud border border-hairline rounded-lg focus:bg-white focus:outline-none focus:ring-1 focus:ring-signal-blue focus:border-signal-blue text-ink-navy font-medium transition-all"
           />
           {filters.search && (
             <button
               type="button"
               id="clear-activity-search-btn"
               onClick={() => onFilterChange({ search: '', page: 1 })}
-              className="absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 p-0.5 cursor-pointer"
+              className="absolute right-2.5 top-1/2 -translate-y-1/2 text-mist-gray hover:text-ink-navy p-0.5 cursor-pointer"
             >
               <X className="w-3.5 h-3.5" />
             </button>
@@ -97,7 +99,7 @@ export function ActivityFilterBar({
             value={filters.termId || 'all'}
             onValueChange={(val) => onFilterChange({ termId: val, page: 1 })}
           >
-            <SelectTrigger id="activity-filter-term" className="h-8.5 text-xs bg-slate-50 border-slate-200 w-auto min-w-[140px]">
+            <SelectTrigger id="activity-filter-term" className="h-8.5 text-xs bg-cloud border-hairline rounded-lg text-ink-navy w-auto min-w-[130px]">
               <SelectValue placeholder="Tất cả nhiệm kỳ" />
             </SelectTrigger>
             <SelectContent>
@@ -110,12 +112,28 @@ export function ActivityFilterBar({
             </SelectContent>
           </Select>
 
+          {/* Semester Selector */}
+          <Select
+            value={filters.semester || 'all'}
+            onValueChange={(val) => onFilterChange({ semester: val as ActivityFilterParams['semester'], page: 1 })}
+          >
+            <SelectTrigger id="activity-filter-semester" className="h-8.5 text-xs bg-cloud border-hairline rounded-lg text-ink-navy w-auto min-w-[115px]">
+              <SelectValue placeholder="Tất cả học kỳ" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">Tất cả học kỳ</SelectItem>
+              <SelectItem value="hk1">Học kỳ I</SelectItem>
+              <SelectItem value="hk2">Học kỳ II</SelectItem>
+              <SelectItem value="hk3">Học kỳ III</SelectItem>
+            </SelectContent>
+          </Select>
+
           {/* Category Selector */}
           <Select
             value={filters.category || 'all'}
             onValueChange={(val) => onFilterChange({ category: val as ActivityCategory | 'all', page: 1 })}
           >
-            <SelectTrigger id="activity-filter-category" className="h-8.5 text-xs bg-slate-50 border-slate-200 w-auto min-w-[140px]">
+            <SelectTrigger id="activity-filter-category" className="h-8.5 text-xs bg-cloud border-hairline rounded-lg text-ink-navy w-auto min-w-[130px]">
               <SelectValue placeholder="Tất cả phân loại" />
             </SelectTrigger>
             <SelectContent>
@@ -136,7 +154,7 @@ export function ActivityFilterBar({
               onFilterChange({ sortBy, sortOrder, page: 1 });
             }}
           >
-            <SelectTrigger id="activity-filter-sort" className="h-8.5 text-xs bg-slate-50 border-slate-200 w-auto min-w-[150px]">
+            <SelectTrigger id="activity-filter-sort" className="h-8.5 text-xs bg-cloud border-hairline rounded-lg text-ink-navy w-auto min-w-[145px]">
               <SelectValue placeholder="Sắp xếp theo..." />
             </SelectTrigger>
             <SelectContent>
@@ -158,14 +176,14 @@ export function ActivityFilterBar({
             className={cn(
               'lg:hidden inline-flex items-center gap-1.5 px-2.5 py-1.5 text-xs font-semibold rounded-lg border transition-colors cursor-pointer',
               activeFilterCount > 0 || isDrawerOpen
-                ? 'bg-emerald-50 text-emerald-800 border-emerald-300'
-                : 'bg-white text-slate-700 border-slate-200 hover:bg-slate-50'
+                ? 'bg-[#e6f0ff] text-signal-blue border-[#d4e4fa]'
+                : 'bg-white text-slate-gray border-hairline hover:bg-pebble'
             )}
           >
             <SlidersHorizontal className="w-3.5 h-3.5" />
             <span>Bộ lọc</span>
             {activeFilterCount > 0 && (
-              <span className="w-4 h-4 rounded-full bg-emerald-700 text-white text-[10px] flex items-center justify-center font-bold">
+              <span className="w-4 h-4 rounded-full bg-signal-blue text-white text-[10px] flex items-center justify-center font-bold">
                 {activeFilterCount}
               </span>
             )}
@@ -185,7 +203,7 @@ export function ActivityFilterBar({
           )}
 
           {/* View Mode Toggle: Table | Cards | Calendar */}
-          <div className="flex items-center border border-slate-200/90 rounded-lg p-0.5 bg-slate-100/80 shrink-0 gap-0.5">
+          <div className="flex items-center border border-hairline rounded-lg p-0.5 bg-pebble shrink-0 gap-0.5">
             <button
               type="button"
               id="activity-view-table-btn"
@@ -193,12 +211,12 @@ export function ActivityFilterBar({
               className={cn(
                 'inline-flex items-center gap-1 px-2.5 py-1 rounded-md text-xs font-medium transition-all cursor-pointer',
                 viewMode === 'table'
-                  ? 'bg-white text-slate-900 shadow-2xs font-semibold'
-                  : 'text-slate-500 hover:text-slate-900'
+                  ? 'bg-white text-ink-navy shadow-sm font-semibold'
+                  : 'text-slate-gray hover:text-ink-navy'
               )}
               title="Bảng"
             >
-              <TableIcon className="w-3.5 h-3.5 text-emerald-700" />
+              <TableIcon className="w-3.5 h-3.5 text-signal-blue" />
               <span className="hidden md:inline">Bảng</span>
             </button>
 
@@ -209,12 +227,12 @@ export function ActivityFilterBar({
               className={cn(
                 'inline-flex items-center gap-1 px-2.5 py-1 rounded-md text-xs font-medium transition-all cursor-pointer',
                 viewMode === 'cards'
-                  ? 'bg-white text-slate-900 shadow-2xs font-semibold'
-                  : 'text-slate-500 hover:text-slate-900'
+                  ? 'bg-white text-ink-navy shadow-sm font-semibold'
+                  : 'text-slate-gray hover:text-ink-navy'
               )}
               title="Thẻ"
             >
-              <LayoutGrid className="w-3.5 h-3.5 text-emerald-700" />
+              <LayoutGrid className="w-3.5 h-3.5 text-signal-blue" />
               <span className="hidden md:inline">Thẻ</span>
             </button>
 
@@ -225,12 +243,12 @@ export function ActivityFilterBar({
               className={cn(
                 'inline-flex items-center gap-1 px-2.5 py-1 rounded-md text-xs font-medium transition-all cursor-pointer',
                 viewMode === 'calendar'
-                  ? 'bg-white text-slate-900 shadow-2xs font-semibold'
-                  : 'text-slate-500 hover:text-slate-900'
+                  ? 'bg-white text-ink-navy shadow-sm font-semibold'
+                  : 'text-slate-gray hover:text-ink-navy'
               )}
               title="Lịch"
             >
-              <CalendarDays className="w-3.5 h-3.5 text-emerald-700" />
+              <CalendarDays className="w-3.5 h-3.5 text-signal-blue" />
               <span className="hidden md:inline">Lịch</span>
             </button>
           </div>
@@ -239,15 +257,15 @@ export function ActivityFilterBar({
 
       {/* Expanded / Mobile Filters Drawer Panel */}
       {isDrawerOpen && (
-        <div className="lg:hidden bg-slate-50/90 rounded-xl border border-slate-200/90 p-3.5 space-y-3 animate-in fade-in slide-in-from-top-1 duration-150">
+        <div className="lg:hidden bg-cloud rounded-xl border border-hairline p-3.5 space-y-3 animate-in fade-in slide-in-from-top-1 duration-150">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-bold text-slate-800 uppercase tracking-wider">
+            <span className="text-xs font-bold text-ink-navy uppercase tracking-wider">
               Tùy chọn bộ lọc
             </span>
             <button
               type="button"
               onClick={() => setIsDrawerOpen(false)}
-              className="p-1 text-slate-400 hover:text-slate-600 rounded-md"
+              className="p-1 text-mist-gray hover:text-ink-navy rounded-md"
             >
               <X className="w-4 h-4" />
             </button>
@@ -256,12 +274,12 @@ export function ActivityFilterBar({
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
             {/* Term */}
             <div>
-              <label className="block text-[11px] font-bold text-slate-600 mb-1">Nhiệm kỳ</label>
+              <label className="block text-[11px] font-bold text-slate-gray mb-1">Nhiệm kỳ</label>
               <Select
                 value={filters.termId || 'all'}
                 onValueChange={(val) => onFilterChange({ termId: val, page: 1 })}
               >
-                <SelectTrigger className="w-full h-8.5 text-xs bg-white">
+                <SelectTrigger className="w-full h-8.5 text-xs bg-white border-hairline rounded-lg">
                   <SelectValue placeholder="Tất cả nhiệm kỳ" />
                 </SelectTrigger>
                 <SelectContent>
@@ -277,12 +295,12 @@ export function ActivityFilterBar({
 
             {/* Category */}
             <div>
-              <label className="block text-[11px] font-bold text-slate-600 mb-1">Phân loại</label>
+              <label className="block text-[11px] font-bold text-slate-gray mb-1">Phân loại</label>
               <Select
                 value={filters.category || 'all'}
                 onValueChange={(val) => onFilterChange({ category: val as ActivityCategory | 'all', page: 1 })}
               >
-                <SelectTrigger className="w-full h-8.5 text-xs bg-white">
+                <SelectTrigger className="w-full h-8.5 text-xs bg-white border-hairline rounded-lg">
                   <SelectValue placeholder="Tất cả phân loại" />
                 </SelectTrigger>
                 <SelectContent>
@@ -298,7 +316,7 @@ export function ActivityFilterBar({
 
             {/* Start Date From */}
             <div>
-              <label className="block text-[11px] font-bold text-slate-600 mb-1">Từ ngày</label>
+              <label className="block text-[11px] font-bold text-slate-gray mb-1">Từ ngày</label>
               <DatePicker
                 value={filters.startDateFrom || ''}
                 onChange={(val) => onFilterChange({ startDateFrom: val || undefined, page: 1 })}
@@ -309,7 +327,7 @@ export function ActivityFilterBar({
 
             {/* Start Date To */}
             <div>
-              <label className="block text-[11px] font-bold text-slate-600 mb-1">Đến ngày</label>
+              <label className="block text-[11px] font-bold text-slate-gray mb-1">Đến ngày</label>
               <DatePicker
                 value={filters.startDateTo || ''}
                 onChange={(val) => onFilterChange({ startDateTo: val || undefined, page: 1 })}

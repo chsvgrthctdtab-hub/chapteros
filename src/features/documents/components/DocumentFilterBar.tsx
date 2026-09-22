@@ -98,23 +98,23 @@ export function DocumentFilterBar({
   };
 
   return (
-    <div className="bg-white border border-slate-200 rounded-xl p-4 shadow-2xs space-y-3">
+    <div className="bg-white border border-hairline rounded-xl p-4 shadow-xs space-y-3">
       {/* Row 1: Search + Dropdown Filters + View Mode */}
       <div className="flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-2.5">
         {/* Search input */}
         <div className="relative flex-1 min-w-[240px]">
-          <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
+          <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-mist-gray" />
           <Input
             value={filters.search || ''}
             onChange={(e) => onFilterChange({ ...filters, search: e.target.value })}
             placeholder="Tìm kiếm tài liệu, Google Docs, Sheets, Drive..."
-            className="pl-9 pr-8 h-9 rounded-lg text-xs bg-slate-50/50 border-slate-200 focus:bg-white"
+            className="pl-9 pr-8 h-9 rounded-lg text-xs bg-cloud border-hairline focus:bg-white text-ink-navy placeholder:text-mist-gray"
           />
           {filters.search && (
             <button
               type="button"
               onClick={() => onFilterChange({ ...filters, search: '' })}
-              className="absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 p-0.5 cursor-pointer"
+              className="absolute right-2.5 top-1/2 -translate-y-1/2 text-mist-gray hover:text-ink-navy p-0.5 cursor-pointer"
             >
               <X className="w-3.5 h-3.5" />
             </button>
@@ -128,7 +128,7 @@ export function DocumentFilterBar({
             value={filters.termId || 'all'}
             onValueChange={(val) => onFilterChange({ ...filters, termId: val })}
           >
-            <SelectTrigger className="h-9 text-xs bg-slate-50 border-slate-200 w-auto min-w-[130px]">
+            <SelectTrigger className="h-9 text-xs bg-cloud border-hairline text-ink-navy w-auto min-w-[130px]">
               <SelectValue placeholder="Tất cả nhiệm kỳ" />
             </SelectTrigger>
             <SelectContent>
@@ -148,7 +148,7 @@ export function DocumentFilterBar({
               onFilterChange({ ...filters, category: val as DocumentCategory | 'all' })
             }
           >
-            <SelectTrigger className="h-9 text-xs bg-slate-50 border-slate-200 w-auto min-w-[130px]">
+            <SelectTrigger className="h-9 text-xs bg-cloud border-hairline text-ink-navy w-auto min-w-[130px]">
               <SelectValue placeholder="Tất cả danh mục" />
             </SelectTrigger>
             <SelectContent>
@@ -168,7 +168,7 @@ export function DocumentFilterBar({
               onFilterChange({ ...filters, linkedStatus: val as 'all' | 'linked' | 'unlinked' })
             }
           >
-            <SelectTrigger className="h-9 text-xs bg-slate-50 border-slate-200 w-auto min-w-[130px]">
+            <SelectTrigger className="h-9 text-xs bg-cloud border-hairline text-ink-navy w-auto min-w-[130px]">
               <SelectValue placeholder="Tất cả liên kết" />
             </SelectTrigger>
             <SelectContent>
@@ -188,7 +188,7 @@ export function DocumentFilterBar({
               })
             }
           >
-            <SelectTrigger className="h-9 text-xs bg-slate-50 border-slate-200 w-auto min-w-[130px]">
+            <SelectTrigger className="h-9 text-xs bg-cloud border-hairline text-ink-navy w-auto min-w-[130px]">
               <SelectValue placeholder="Quyền truy cập" />
             </SelectTrigger>
             <SelectContent>
@@ -202,15 +202,15 @@ export function DocumentFilterBar({
           </Select>
 
           {/* View Mode Toggle: List / Grid */}
-          <div className="flex items-center bg-slate-100 p-0.5 rounded-lg border border-slate-200 shrink-0">
+          <div className="flex items-center bg-cloud p-0.5 rounded-lg border border-hairline shrink-0">
             <button
               type="button"
               onClick={() => onViewModeChange('table')}
               className={cn(
                 'flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-semibold transition-all cursor-pointer',
                 viewMode === 'table'
-                  ? 'bg-white text-slate-900 shadow-2xs'
-                  : 'text-slate-500 hover:text-slate-800'
+                  ? 'bg-white text-ink-navy shadow-xs'
+                  : 'text-mist-gray hover:text-ink-navy'
               )}
               title="Dạng danh sách (Bảng)"
             >
@@ -223,8 +223,8 @@ export function DocumentFilterBar({
               className={cn(
                 'flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-semibold transition-all cursor-pointer',
                 viewMode === 'grid'
-                  ? 'bg-white text-slate-900 shadow-2xs'
-                  : 'text-slate-500 hover:text-slate-800'
+                  ? 'bg-white text-ink-navy shadow-xs'
+                  : 'text-mist-gray hover:text-ink-navy'
               )}
               title="Dạng lưới (Thẻ)"
             >
@@ -236,7 +236,7 @@ export function DocumentFilterBar({
       </div>
 
       {/* Row 2: File Type Filter Chips + Sort + Reset */}
-      <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-2 border-t border-slate-100 pt-2.5">
+      <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-2 border-t border-hairline pt-2.5">
         {/* File Type Quick Pills */}
         <div className="flex items-center gap-1 overflow-x-auto pb-1 sm:pb-0 scrollbar-none">
           {FILE_TYPE_OPTIONS.map((opt) => {
@@ -249,8 +249,8 @@ export function DocumentFilterBar({
                 className={cn(
                   'px-2.5 py-1 rounded-md text-[11px] font-semibold whitespace-nowrap transition-colors cursor-pointer shrink-0',
                   isSelected
-                    ? 'bg-slate-900 text-white shadow-xs'
-                    : 'bg-slate-100/80 text-slate-600 hover:bg-slate-200 hover:text-slate-900'
+                    ? 'bg-ink-navy text-white shadow-xs'
+                    : 'bg-cloud text-slate-gray hover:bg-pebble hover:text-ink-navy border border-hairline'
                 )}
               >
                 {opt.label}
@@ -261,8 +261,8 @@ export function DocumentFilterBar({
 
         {/* Right side: Sort controls + Count + Reset */}
         <div className="flex items-center gap-2 justify-end shrink-0">
-          <span className="text-[11px] text-slate-500 font-medium">
-            Hiển thị <strong className="text-slate-900">{totalFiltered}</strong> tệp
+          <span className="text-[11px] text-mist-gray font-medium">
+            Hiển thị <strong className="text-ink-navy">{totalFiltered}</strong> tệp
           </span>
 
           {/* Sort selector */}
@@ -273,7 +273,7 @@ export function DocumentFilterBar({
                 onFilterChange({ ...filters, sortBy: val as DocumentSortBy })
               }
             >
-              <SelectTrigger className="h-7 text-[11px] bg-slate-50 border-slate-200 w-auto min-w-[100px]">
+              <SelectTrigger className="h-7 text-[11px] bg-cloud border-hairline text-ink-navy w-auto min-w-[100px]">
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
@@ -291,10 +291,10 @@ export function DocumentFilterBar({
                   sortOrder: filters.sortOrder === 'asc' ? 'desc' : 'asc',
                 })
               }
-              className="h-7 w-7 rounded-md bg-slate-50 border border-slate-200 text-slate-600 hover:text-slate-900 flex items-center justify-center cursor-pointer"
+              className="h-7 w-7 rounded-md bg-cloud border border-hairline text-slate-gray hover:text-ink-navy flex items-center justify-center cursor-pointer"
               title={filters.sortOrder === 'asc' ? 'Tăng dần' : 'Giảm dần'}
             >
-              <ArrowUpDown className="w-3 h-3" />
+              <ArrowUpDown className="w-3.5 h-3.5" />
             </button>
           </div>
 

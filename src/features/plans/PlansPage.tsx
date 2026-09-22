@@ -6,23 +6,14 @@ import {
   Search,
   Building2,
   Calendar,
-  Layers,
-  ArrowUpRight,
-  Filter,
-  CheckCircle2,
-  Clock,
-  Archive,
-  XCircle,
   Users2,
   ChevronRight,
-  Sparkles,
   Edit3,
   Trash2,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Badge } from '@/components/ui/badge';
-import { Card, CardContent } from '@/components/ui/card';
+import { Card } from '@/components/ui/card';
 import { useAuth } from '@/contexts/AuthContext';
 import { usePlansList } from '@/features/plans/queries/plan.queries';
 import { CreatePlanDialog } from '@/features/plans/components/CreatePlanDialog';
@@ -38,34 +29,34 @@ const PLAN_STATUS_CONFIG: Record<
 > = {
   active: {
     label: 'Đang triển khai',
-    badgeVariant: 'success',
-    colorClasses: 'bg-emerald-50 text-emerald-700 border-emerald-200',
+    badgeVariant: 'default',
+    colorClasses: 'bg-[#e6f0ff] text-signal-blue border-[#d4e4fa]',
   },
   planning: {
     label: 'Đang lập kế hoạch',
     badgeVariant: 'warning',
-    colorClasses: 'bg-amber-50 text-amber-700 border-amber-200',
+    colorClasses: 'bg-amber-50 text-amber-800 border-amber-200/70',
   },
   draft: {
     label: 'Bản nháp',
     badgeVariant: 'outline',
-    colorClasses: 'bg-slate-50 text-slate-700 border-slate-200',
+    colorClasses: 'bg-pebble text-slate-gray border-hairline',
   },
   completed: {
     label: 'Đã hoàn thành',
-    badgeVariant: 'default',
-    colorClasses: 'bg-blue-50 text-blue-700 border-blue-200',
+    badgeVariant: 'success',
+    colorClasses: 'bg-emerald-50 text-emerald-800 border-emerald-200/70',
   },
   cancelled: {
     label: 'Đã hủy',
     badgeVariant: 'outline',
-    colorClasses: 'bg-rose-50 text-rose-700 border-rose-200',
+    colorClasses: 'bg-rose-50 text-rose-800 border-rose-200/70',
   },
 };
 
 export function PlansPage() {
   const navigate = useNavigate();
-  const { user, memberships, activeOrganization, activeRole } = useAuth();
+  const { memberships, activeOrganization, activeRole } = useAuth();
 
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedStatus, setSelectedStatus] = useState<PlanStatus | 'all'>('all');
@@ -114,12 +105,12 @@ export function PlansPage() {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <div className="flex items-center gap-2">
-            <h1 className="text-xl sm:text-2xl font-bold text-slate-900 tracking-tight flex items-center gap-2.5">
-              <FolderKanban strokeWidth={1.5} className="h-6 w-6 text-blue-600" />
+            <h1 className="text-xl sm:text-2xl font-bold text-ink-navy tracking-tight flex items-center gap-2.5">
+              <FolderKanban strokeWidth={1.5} className="h-6 w-6 text-signal-blue" />
               Collab
             </h1>
           </div>
-          <p className="text-xs sm:text-sm text-slate-500 mt-1">
+          <p className="text-xs sm:text-sm text-slate-gray mt-1">
             Quản lý các chiến dịch quy mô lớn, chương trình phối hợp liên đơn vị và theo dõi hoạt động tập trung.
           </p>
         </div>
@@ -130,7 +121,7 @@ export function PlansPage() {
               id="btn-create-plan"
               onClick={() => setIsCreateOpen(true)}
               title="Tạo chiến dịch Collab mới"
-              className="h-8 sm:h-9 px-2.5 sm:px-4 text-xs font-semibold bg-blue-600 hover:bg-blue-700 text-white gap-1 sm:gap-1.5 shadow-2xs cursor-pointer"
+              className="h-8 sm:h-9 px-2.5 sm:px-4 text-xs font-semibold bg-signal-blue hover:bg-[#005be0] text-white gap-1 sm:gap-1.5 shadow-sm cursor-pointer rounded-lg"
             >
               <Plus className="h-4 w-4 shrink-0" />
               <span className="hidden sm:inline">Tạo Collab mới</span>
@@ -140,29 +131,29 @@ export function PlansPage() {
       </div>
 
       {/* Filter Bar */}
-      <div className="flex flex-col sm:flex-row gap-3 items-center justify-between bg-white p-3 rounded-2xl border border-slate-200/80 shadow-2xs">
+      <div className="flex flex-col sm:flex-row gap-3 items-center justify-between bg-white p-3 rounded-2xl border border-hairline shadow-sm">
         <div className="relative w-full sm:w-80">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-mist-gray" />
           <Input
             id="input-search-plans"
             type="text"
             placeholder="Tìm theo tên hoặc mã code..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="pl-9 h-9 text-xs bg-slate-50/50 border-slate-200 w-full"
+            className="pl-9 h-9 text-xs bg-white border-hairline text-ink-navy placeholder:text-mist-gray w-full"
           />
         </div>
 
-        <div className="flex items-center gap-1 p-1 bg-slate-100/90 border border-slate-200/60 rounded-xl overflow-x-auto w-full sm:w-auto scrollbar-none">
+        <div className="flex items-center gap-1 p-1 bg-pebble border border-hairline rounded-lg overflow-x-auto w-full sm:w-auto scrollbar-none">
           {(['all', 'active', 'planning', 'completed', 'draft'] as const).map((status) => (
             <button
               key={status}
               type="button"
               onClick={() => setSelectedStatus(status)}
-              className={`h-7 px-3 text-xs font-semibold rounded-lg transition-all cursor-pointer whitespace-nowrap ${
+              className={`h-7 px-3 text-xs font-semibold rounded-md transition-all cursor-pointer whitespace-nowrap ${
                 selectedStatus === status
-                  ? 'bg-white text-slate-900 shadow-2xs border border-slate-200/60'
-                  : 'text-slate-600 hover:text-slate-900 hover:bg-slate-200/50'
+                  ? 'bg-white text-ink-navy shadow-sm font-semibold'
+                  : 'text-slate-gray hover:text-ink-navy hover:bg-white/50'
               }`}
             >
               {status === 'all' ? 'Tất cả' : PLAN_STATUS_CONFIG[status]?.label}
@@ -175,20 +166,20 @@ export function PlansPage() {
       {isLoading ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {[1, 2, 3].map((i) => (
-            <Card key={i} className="animate-pulse bg-white border border-slate-200 rounded-2xl p-5 space-y-4">
-              <div className="h-5 bg-slate-100 rounded-md w-3/4" />
-              <div className="h-4 bg-slate-100 rounded-md w-1/2" />
-              <div className="h-16 bg-slate-50 rounded-xl" />
+            <Card key={i} className="animate-pulse bg-white border border-hairline rounded-2xl p-5 space-y-4 shadow-sm">
+              <div className="h-5 bg-pebble rounded-md w-3/4" />
+              <div className="h-4 bg-pebble rounded-md w-1/2" />
+              <div className="h-16 bg-pebble/60 rounded-xl" />
             </Card>
           ))}
         </div>
       ) : plans.length === 0 ? (
-        <Card className="bg-white border border-slate-200/80 rounded-2xl p-12 text-center shadow-2xs">
-          <div className="h-16 w-16 bg-blue-50 border border-blue-100 rounded-2xl flex items-center justify-center mx-auto mb-4 text-blue-600">
+        <Card className="bg-white border border-hairline rounded-2xl p-12 text-center shadow-sm">
+          <div className="h-16 w-16 bg-[#e6f0ff] border border-hairline rounded-2xl flex items-center justify-center mx-auto mb-4 text-signal-blue">
             <FolderKanban strokeWidth={1.5} className="h-8 w-8" />
           </div>
-          <h3 className="text-base font-bold text-slate-900">Không tìm thấy chiến dịch nào</h3>
-          <p className="text-xs text-slate-500 max-w-md mx-auto mt-1 mb-6">
+          <h3 className="text-base font-bold text-ink-navy">Không tìm thấy chiến dịch nào</h3>
+          <p className="text-xs text-slate-gray max-w-md mx-auto mt-1 mb-6">
             {searchTerm || selectedStatus !== 'all'
               ? 'Không có kế hoạch nào phù hợp với bộ lọc tìm kiếm hiện tại.'
               : 'Hiện chưa có chiến dịch phối hợp nào được tạo. Hãy khởi tạo chiến dịch đầu tiên để kết nối các đơn vị!'}
@@ -197,7 +188,7 @@ export function PlansPage() {
             <Button
               id="btn-empty-create-plan"
               onClick={() => setIsCreateOpen(true)}
-              className="text-xs bg-blue-600 hover:bg-blue-700 text-white gap-1.5"
+              className="text-xs bg-signal-blue hover:bg-[#005be0] text-white gap-1.5 shadow-sm rounded-lg"
             >
               <Plus className="h-4 w-4" />
               Tạo chiến dịch mới
@@ -209,20 +200,19 @@ export function PlansPage() {
           {plans.map((plan) => {
             const statusConfig = PLAN_STATUS_CONFIG[plan.status] || PLAN_STATUS_CONFIG.active;
             const cohostsCount = (plan.organizations || []).length;
-            const isHost = activeOrganization?.id === plan.leadOrganizationId;
 
             return (
               <Card
                 key={plan.id}
                 id={`plan-card-${plan.id}`}
                 onClick={() => navigate(`/plans/${plan.id}`)}
-                className="group bg-white hover:bg-slate-50/50 border border-slate-200 hover:border-blue-300 transition-all duration-200 rounded-2xl overflow-hidden shadow-2xs hover:shadow-md cursor-pointer flex flex-col justify-between"
+                className="group bg-white hover:bg-white border border-hairline hover:border-signal-blue/40 transition-all duration-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-md cursor-pointer flex flex-col justify-between"
               >
                 <div className="p-5 space-y-4">
                   {/* Top badges & actions */}
                   <div className="flex items-center justify-between gap-2">
                     <div className="flex items-center gap-2">
-                      <span className="inline-flex items-center px-2.5 py-1 rounded-md text-[11px] font-bold tracking-tight bg-slate-100 text-slate-700 border border-slate-200">
+                      <span className="inline-flex items-center px-2.5 py-1 rounded-md text-[11px] font-semibold tracking-tight bg-pebble text-ink-navy border border-hairline">
                         {plan.code}
                       </span>
 
@@ -241,7 +231,7 @@ export function PlansPage() {
                             e.stopPropagation();
                             setEditingPlan(plan);
                           }}
-                          className="p-1 rounded-lg hover:bg-slate-100 text-slate-400 hover:text-blue-600 cursor-pointer transition-colors"
+                          className="p-1 rounded-lg hover:bg-pebble text-slate-gray hover:text-signal-blue cursor-pointer transition-colors"
                           title="Chỉnh sửa Collab"
                         >
                           <Edit3 className="w-3.5 h-3.5" />
@@ -252,7 +242,7 @@ export function PlansPage() {
                             e.stopPropagation();
                             setDeletingPlan(plan);
                           }}
-                          className="p-1 rounded-lg hover:bg-rose-50 text-slate-400 hover:text-rose-600 cursor-pointer transition-colors"
+                          className="p-1 rounded-lg hover:bg-rose-50 text-slate-gray hover:text-rose-600 cursor-pointer transition-colors"
                           title="Xóa Collab"
                         >
                           <Trash2 className="w-3.5 h-3.5" />
@@ -263,37 +253,37 @@ export function PlansPage() {
 
                   {/* Title & Description */}
                   <div>
-                    <h3 className="text-base font-bold text-slate-900 group-hover:text-blue-600 transition-colors line-clamp-1 leading-snug">
+                    <h3 className="text-base font-bold text-ink-navy group-hover:text-signal-blue transition-colors line-clamp-1 leading-snug">
                       {plan.name}
                     </h3>
-                    <p className="text-xs text-slate-500 mt-1 line-clamp-2 leading-relaxed min-h-[32px]">
+                    <p className="text-xs text-slate-gray mt-1 line-clamp-2 leading-relaxed min-h-[32px]">
                       {plan.description || 'Chưa có mô tả chi tiết cho kế hoạch này.'}
                     </p>
                   </div>
 
                   {/* Host Organization Info */}
-                  <div className="p-3 bg-slate-50/70 border border-slate-100 rounded-xl space-y-2 text-xs">
-                    <div className="flex items-center justify-between text-slate-600">
-                      <span className="flex items-center gap-1.5 font-medium text-slate-500 text-[11px]">
-                        <Building2 className="h-3.5 w-3.5 text-blue-600" />
+                  <div className="p-3 bg-pebble/60 border border-hairline rounded-xl space-y-2 text-xs">
+                    <div className="flex items-center justify-between text-slate-gray">
+                      <span className="flex items-center gap-1.5 font-medium text-slate-gray text-[11px]">
+                        <Building2 className="h-3.5 w-3.5 text-signal-blue" />
                         Chủ trì:
                       </span>
                       <div className="flex items-center gap-1.5 min-w-0 max-w-[170px]">
                         <span className={`text-[9px] px-1.5 py-0.2 rounded font-semibold border ${getOrgTypeBadgeClass(plan.leadOrganization?.type)}`}>
                           {getOrgTypeLabel(plan.leadOrganization?.type)}
                         </span>
-                        <span className="font-semibold text-slate-800 truncate">
+                        <span className="font-semibold text-ink-navy truncate">
                           {plan.leadOrganization?.name || 'Đơn vị chủ trì'}
                         </span>
                       </div>
                     </div>
 
-                    <div className="flex items-center justify-between text-slate-600">
-                      <span className="flex items-center gap-1.5 font-medium text-slate-500 text-[11px]">
-                        <Users2 className="h-3.5 w-3.5 text-blue-600" />
+                    <div className="flex items-center justify-between text-slate-gray">
+                      <span className="flex items-center gap-1.5 font-medium text-slate-gray text-[11px]">
+                        <Users2 className="h-3.5 w-3.5 text-signal-blue" />
                         Đồng tổ chức:
                       </span>
-                      <span className="font-semibold text-slate-800">
+                      <span className="font-semibold text-ink-navy">
                         {cohostsCount > 0 ? `${cohostsCount} đơn vị` : 'Chưa có'}
                       </span>
                     </div>
@@ -301,16 +291,16 @@ export function PlansPage() {
                 </div>
 
                 {/* Footer Strip */}
-                <div className="px-5 py-3 bg-slate-50/50 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500">
-                  <div className="flex items-center gap-1.5 text-[11px]">
-                    <Calendar className="h-3.5 w-3.5 text-slate-400" />
+                <div className="px-5 py-3 bg-cloud border-t border-hairline flex items-center justify-between text-xs text-slate-gray">
+                  <div className="flex items-center gap-1.5 text-[11px] tabular-nums">
+                    <Calendar className="h-3.5 w-3.5 text-mist-gray" />
                     <span>
                       {plan.startDate ? formatDate(plan.startDate) : 'Chưa rõ'}
                       {plan.endDate ? ` - ${formatDate(plan.endDate)}` : ''}
                     </span>
                   </div>
 
-                  <div className="flex items-center gap-1 font-semibold text-blue-600 group-hover:translate-x-0.5 transition-transform text-[11px]">
+                  <div className="flex items-center gap-1 font-semibold text-signal-blue group-hover:translate-x-0.5 transition-transform text-[11px] tabular-nums">
                     <span>{plan.activitiesCount || 0} sự kiện</span>
                     <ChevronRight className="h-3.5 w-3.5" />
                   </div>

@@ -16,6 +16,8 @@ import { ActivityStatusBadge } from './ActivityStatusBadge';
 import { ActivityCategoryBadge } from './ActivityCategoryBadge';
 import { formatDateRange, formatDateTime } from '@/lib/date';
 import type { ActivityListItem } from '../types/activity.types';
+import { parseActivityMetadata } from '../utils/activity-metadata';
+import { ORGANIZER_SCOPES, LEAN_COMPETENCY_TAGS } from '../types/competency.types';
 import { cn } from '@/lib/utils';
 
 interface ActivityTableProps {
@@ -43,9 +45,9 @@ export function ActivityTable({
       if (diffDays === 0) {
         return { label: 'Hôm nay', color: 'text-amber-700 bg-amber-50 border-amber-200 font-semibold' };
       } else if (diffDays === 1) {
-        return { label: 'Ngày mai', color: 'text-sky-700 bg-sky-50 border-sky-200' };
+        return { label: 'Ngày mai', color: 'text-signal-blue bg-[#e6f0ff] border-[#d4e4fa]' };
       } else if (diffDays > 1 && diffDays <= 7) {
-        return { label: `Còn ${diffDays} ngày`, color: 'text-slate-600 bg-slate-100 border-slate-200' };
+        return { label: `Còn ${diffDays} ngày`, color: 'text-slate-gray bg-cloud border-hairline' };
       }
       return null;
     } catch {
@@ -54,11 +56,11 @@ export function ActivityTable({
   };
 
   return (
-    <div className="bg-white rounded-2xl border border-slate-200/80 shadow-2xs overflow-hidden">
+    <div className="bg-white rounded-2xl border border-hairline shadow-sm overflow-hidden">
       <div className="overflow-x-auto overflow-y-auto max-h-[640px] [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
         <table className="w-full text-left text-xs border-collapse">
           {/* Table Header */}
-          <thead className="sticky top-0 z-10 bg-slate-50/95 backdrop-blur-xs text-slate-600 font-bold border-b border-slate-200/90 uppercase tracking-wider text-[11px] shadow-2xs">
+          <thead className="sticky top-0 z-10 bg-cloud/95 backdrop-blur-xs text-slate-gray font-semibold border-b border-hairline uppercase tracking-wider text-[11px]">
             <tr>
               <th className="py-3.5 px-4 min-w-[220px]">Hoạt động</th>
               <th className="py-3.5 px-3 w-28 text-center">Trạng thái</th>
@@ -71,7 +73,7 @@ export function ActivityTable({
           </thead>
 
           {/* Table Body */}
-          <tbody className="divide-y divide-slate-100">
+          <tbody className="divide-y divide-hairline">
             {activities.map((activity) => {
               const targetMembers = activity.targetMembers || 0;
               const participantTotal = activity.participantStats?.total || 0;
@@ -91,11 +93,22 @@ export function ActivityTable({
                     .toUpperCase()
                 : null;
 
+              const meta = parseActivityMetadata(activity.description);
+              const scopeMeta = meta.organizerScope ? ORGANIZER_SCOPES[meta.organizerScope] : null;
+              const semesterLabel =
+                meta.semester === 'hk1'
+                  ? 'HK I'
+                  : meta.semester === 'hk2'
+                  ? 'HK II'
+                  : meta.semester === 'hk3'
+                  ? 'HK III'
+                  : null;
+
               return (
                 <tr
                   key={activity.id}
                   id={`activity-table-row-${activity.id}`}
-                  className="hover:bg-slate-50/70 transition-colors group"
+                  className="hover:bg-pebble/60 transition-colors group"
                 >
                   {/* Activity Name & Category */}
                   <td className="py-3 px-4">
@@ -103,13 +116,23 @@ export function ActivityTable({
                       <div className="space-y-1 min-w-0">
                         <Link
                           to={`/activities/${activity.id}`}
-                          className="font-bold text-slate-900 hover:text-blue-600 transition-colors text-xs leading-snug line-clamp-1 block"
+                          className="font-semibold text-ink-navy hover:text-signal-blue transition-colors text-xs leading-snug line-clamp-1 block"
                         >
                           {activity.title}
                         </Link>
                         <div className="flex items-center gap-1.5 flex-wrap">
+                          {semesterLabel && (
+                            <span className="text-[10px] font-bold text-signal-blue bg-[#e6f0ff] px-1.5 py-0.2 rounded border border-[#d4e4fa]">
+                              {semesterLabel}
+                            </span>
+                          )}
+                          {scopeMeta && (
+                            <span className={`text-[10px] font-bold px-1.5 py-0.2 rounded border ${scopeMeta.badgeClass}`}>
+                              {scopeMeta.badgeLabel}
+                            </span>
+                          )}
                           {activity.code && (
-                            <span className="tabular-nums text-[10px] font-semibold text-slate-600 bg-slate-100 px-1.5 py-0.5 rounded border border-slate-200/80">
+                            <span className="tabular-nums text-[10px] font-semibold text-slate-gray bg-pebble px-1.5 py-0.5 rounded border border-hairline">
                               {activity.code}
                             </span>
                           )}
@@ -128,22 +151,22 @@ export function ActivityTable({
                   <td className="py-3 px-3">
                     {activity.leadMember ? (
                       <div className="flex items-center gap-2 min-w-0">
-                        <div className="w-6 h-6 rounded-full bg-blue-600 text-white text-[10px] font-bold flex items-center justify-center shrink-0">
+                        <div className="w-6 h-6 rounded-full bg-[#e6f0ff] text-signal-blue border border-[#d4e4fa] text-[10px] font-bold flex items-center justify-center shrink-0">
                           {leadInitials || <User className="w-3 h-3" />}
                         </div>
                         <div className="min-w-0 truncate">
-                          <p className="font-semibold text-slate-900 text-xs truncate">
+                          <p className="font-semibold text-ink-navy text-xs truncate">
                             {activity.leadMember.fullName}
                           </p>
                           {activity.leadMember.studentId && (
-                            <p className="text-[10px] text-slate-500 tabular-nums font-medium">
+                            <p className="text-[10px] text-slate-gray tabular-nums font-medium">
                               {activity.leadMember.studentId}
                             </p>
                           )}
                         </div>
                       </div>
                     ) : (
-                      <span className="inline-flex items-center gap-1 text-[11px] text-slate-400 italic">
+                      <span className="inline-flex items-center gap-1 text-[11px] text-mist-gray italic">
                         <User className="w-3 h-3" />
                         <span>Unassigned</span>
                       </span>
@@ -153,8 +176,8 @@ export function ActivityTable({
                   {/* Date & Time */}
                   <td className="py-3 px-3 whitespace-nowrap">
                     <div className="space-y-0.5">
-                      <div className="flex items-center gap-1.5 font-medium text-slate-800 text-xs">
-                        <Calendar className="w-3.5 h-3.5 text-slate-400 shrink-0" />
+                      <div className="flex items-center gap-1.5 font-medium text-ink-navy text-xs">
+                        <Calendar className="w-3.5 h-3.5 text-mist-gray shrink-0" />
                         <span>{formatDateRange(activity.startDate, activity.endDate)}</span>
                       </div>
                       {dateContext && (
@@ -171,14 +194,14 @@ export function ActivityTable({
                   </td>
 
                   {/* Location */}
-                  <td className="py-3 px-3 text-slate-600 max-w-[160px] truncate">
+                  <td className="py-3 px-3 text-slate-gray max-w-[160px] truncate">
                     {activity.location ? (
                       <div className="flex items-center gap-1 truncate" title={activity.location}>
-                        <MapPin className="w-3 h-3 text-slate-400 shrink-0" />
+                        <MapPin className="w-3 h-3 text-mist-gray shrink-0" />
                         <span className="truncate">{activity.location}</span>
                       </div>
                     ) : (
-                      <span className="text-slate-400">—</span>
+                      <span className="text-mist-gray">—</span>
                     )}
                   </td>
 
@@ -186,21 +209,21 @@ export function ActivityTable({
                   <td className="py-3 px-3">
                     <div className="space-y-1">
                       <div className="flex items-center justify-between text-xs">
-                        <span className="font-bold text-slate-900">
-                          {participantTotal} <span className="font-normal text-slate-500">registered</span>
+                        <span className="font-bold text-ink-navy tabular-nums">
+                          {participantTotal} <span className="font-normal text-slate-gray">registered</span>
                         </span>
                         {presentTotal > 0 && (
-                          <span className="text-[11px] text-emerald-700 font-semibold bg-emerald-50 px-1 rounded border border-emerald-100">
+                          <span className="text-[11px] text-signal-blue font-semibold bg-[#e6f0ff] px-1.5 py-0.2 rounded border border-[#d4e4fa] tabular-nums">
                             {presentTotal} present
                           </span>
                         )}
                       </div>
                       {targetMembers > 0 && percentage !== null && (
-                        <div className="w-full bg-slate-100 rounded-full h-1 overflow-hidden">
+                        <div className="w-full bg-pebble rounded-full h-1 overflow-hidden">
                           <div
                             className={cn(
                               'h-full rounded-full transition-all',
-                              percentage >= 100 ? 'bg-emerald-600' : 'bg-slate-500'
+                              percentage >= 100 ? 'bg-signal-blue' : 'bg-slate-gray'
                             )}
                             style={{ width: `${percentage}%` }}
                           />
@@ -217,7 +240,7 @@ export function ActivityTable({
                           type="button"
                           id={`activity-row-edit-btn-${activity.id}`}
                           onClick={() => onEdit(activity)}
-                          className="p-1 text-slate-400 hover:text-slate-700 hover:bg-slate-100 rounded-md transition-colors cursor-pointer"
+                          className="p-1 text-slate-gray hover:text-ink-navy hover:bg-pebble rounded-lg transition-colors cursor-pointer"
                           title="Edit activity"
                         >
                           <Edit3 className="w-3.5 h-3.5" />
@@ -226,7 +249,7 @@ export function ActivityTable({
                       <Link
                         to={`/activities/${activity.id}`}
                         id={`activity-row-view-btn-${activity.id}`}
-                        className="inline-flex items-center gap-0.5 px-2 py-1 text-xs font-semibold text-emerald-700 hover:text-emerald-900 hover:bg-emerald-50 rounded-md transition-colors"
+                        className="inline-flex items-center gap-0.5 px-2 py-1 text-xs font-semibold text-signal-blue hover:text-[#005be0] hover:bg-[#e6f0ff] rounded-lg transition-colors"
                         title="View details"
                       >
                         <span>View</span>

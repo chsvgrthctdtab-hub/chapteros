@@ -47,15 +47,15 @@ export function TermComparison({
   return (
     <div
       id="term-comparison-matrix"
-      className="rounded-2xl border border-slate-200/90 bg-white p-5 sm:p-6 shadow-2xs space-y-4"
+      className="rounded-2xl border border-hairline bg-white p-5 sm:p-6 shadow-xs space-y-4"
     >
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-100 pb-3">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-hairline pb-3">
         <div>
-          <h3 className="text-sm sm:text-base font-bold text-slate-900 flex items-center gap-2">
+          <h3 className="text-sm sm:text-base font-bold text-ink-navy flex items-center gap-2">
             <Columns className="h-4 w-4 text-emerald-600" />
             Term-over-Term Operational Comparison Matrix
           </h3>
-          <p className="text-xs text-slate-500 mt-0.5">
+          <p className="text-xs text-mist-gray mt-0.5">
             Side-by-side comparative analysis of organizational parameters across all recorded terms.
           </p>
         </div>
@@ -64,7 +64,7 @@ export function TermComparison({
       <div className="overflow-x-auto pb-2">
         <table className="w-full text-xs text-left border-collapse min-w-[650px]">
           <thead>
-            <tr className="border-b border-slate-200 bg-slate-50/75 text-slate-600 font-semibold">
+            <tr className="border-b border-hairline bg-cloud text-slate-gray font-semibold">
               <th className="py-3 px-4 w-44">Operational Dimension</th>
               {sortedTerms.map((term) => {
                 const isCurrent = term.isCurrent || term.id === currentTermId;
@@ -77,7 +77,7 @@ export function TermComparison({
                   >
                     <button
                       onClick={() => onSelectTerm(term)}
-                      className="hover:underline font-bold text-slate-900 text-xs block mx-auto"
+                      className="hover:underline font-bold text-ink-navy text-xs block mx-auto"
                     >
                       {term.name}
                     </button>
@@ -89,11 +89,11 @@ export function TermComparison({
               })}
             </tr>
           </thead>
-          <tbody className="divide-y divide-slate-100 text-slate-700">
+          <tbody className="divide-y divide-hairline text-slate-gray">
             {/* Timeline Row */}
-            <tr className="hover:bg-slate-50/40">
-              <td className="py-2.5 px-4 font-semibold text-slate-800 flex items-center gap-1.5">
-                <Calendar className="h-3.5 w-3.5 text-slate-400" />
+            <tr className="hover:bg-cloud/50">
+              <td className="py-2.5 px-4 font-semibold text-ink-navy flex items-center gap-1.5">
+                <Calendar className="h-3.5 w-3.5 text-mist-gray" />
                 Date Range
               </td>
               {sortedTerms.map((term) => (
@@ -104,9 +104,9 @@ export function TermComparison({
             </tr>
 
             {/* Duration (Months) */}
-            <tr className="hover:bg-slate-50/40">
-              <td className="py-2.5 px-4 font-semibold text-slate-800 flex items-center gap-1.5">
-                <Clock className="h-3.5 w-3.5 text-slate-400" />
+            <tr className="hover:bg-cloud/50">
+              <td className="py-2.5 px-4 font-semibold text-ink-navy flex items-center gap-1.5">
+                <Clock className="h-3.5 w-3.5 text-mist-gray" />
                 Duration
               </td>
               {sortedTerms.map((term) => {
@@ -122,47 +122,47 @@ export function TermComparison({
             </tr>
 
             {/* Members Roster */}
-            <tr className="hover:bg-slate-50/40">
-              <td className="py-2.5 px-4 font-semibold text-slate-800 flex items-center gap-1.5">
-                <Users className="h-3.5 w-3.5 text-blue-500" />
+            <tr className="hover:bg-cloud/50">
+              <td className="py-2.5 px-4 font-semibold text-ink-navy flex items-center gap-1.5">
+                <Users className="h-3.5 w-3.5 text-signal-blue" />
                 Members Assigned
               </td>
               {sortedTerms.map((term) => (
-                <td key={term.id} className="py-2.5 px-4 text-center font-bold text-slate-900">
+                <td key={term.id} className="py-2.5 px-4 text-center font-bold text-ink-navy">
                   {term.memberCount ?? 0}
                 </td>
               ))}
             </tr>
 
             {/* Activities Count */}
-            <tr className="hover:bg-slate-50/40">
-              <td className="py-2.5 px-4 font-semibold text-slate-800 flex items-center gap-1.5">
-                <Activity className="h-3.5 w-3.5 text-indigo-500" />
+            <tr className="hover:bg-cloud/50">
+              <td className="py-2.5 px-4 font-semibold text-ink-navy flex items-center gap-1.5">
+                <Activity className="h-3.5 w-3.5 text-signal-blue" />
                 Activities Executed
               </td>
               {sortedTerms.map((term) => (
-                <td key={term.id} className="py-2.5 px-4 text-center font-bold text-slate-900">
+                <td key={term.id} className="py-2.5 px-4 text-center font-bold text-ink-navy">
                   {activitiesCountMap[term.id] ?? 0}
                 </td>
               ))}
             </tr>
 
             {/* Tasks Count */}
-            <tr className="hover:bg-slate-50/40">
-              <td className="py-2.5 px-4 font-semibold text-slate-800 flex items-center gap-1.5">
+            <tr className="hover:bg-cloud/50">
+              <td className="py-2.5 px-4 font-semibold text-ink-navy flex items-center gap-1.5">
                 <CheckSquare className="h-3.5 w-3.5 text-amber-500" />
                 Tasks Managed
               </td>
               {sortedTerms.map((term) => (
-                <td key={term.id} className="py-2.5 px-4 text-center font-bold text-slate-900">
+                <td key={term.id} className="py-2.5 px-4 text-center font-bold text-ink-navy">
                   {tasksCountMap[term.id] ?? 0}
                 </td>
               ))}
             </tr>
 
             {/* Treasury Balance */}
-            <tr className="hover:bg-slate-50/40">
-              <td className="py-2.5 px-4 font-semibold text-slate-800 flex items-center gap-1.5">
+            <tr className="hover:bg-cloud/50">
+              <td className="py-2.5 px-4 font-semibold text-ink-navy flex items-center gap-1.5">
                 <Wallet className="h-3.5 w-3.5 text-emerald-500" />
                 Treasury Balance
               </td>
@@ -176,7 +176,7 @@ export function TermComparison({
                     }).format(bal)
                   : '—';
                 return (
-                  <td key={term.id} className="py-2.5 px-4 text-center font-mono font-medium text-slate-800">
+                  <td key={term.id} className="py-2.5 px-4 text-center font-mono font-medium text-slate-gray">
                     {formatted}
                   </td>
                 );
@@ -184,8 +184,8 @@ export function TermComparison({
             </tr>
 
             {/* Closing Snapshot State */}
-            <tr className="hover:bg-slate-50/40">
-              <td className="py-2.5 px-4 font-semibold text-slate-800 flex items-center gap-1.5">
+            <tr className="hover:bg-cloud/50">
+              <td className="py-2.5 px-4 font-semibold text-ink-navy flex items-center gap-1.5">
                 <ShieldCheck className="h-3.5 w-3.5 text-teal-500" />
                 Audit Snapshot
               </td>
@@ -197,7 +197,7 @@ export function TermComparison({
                       Recorded
                     </span>
                   ) : (
-                    <span className="text-[11px] text-slate-400">—</span>
+                    <span className="text-[11px] text-mist-gray">—</span>
                   )}
                 </td>
               ))}

@@ -1,4 +1,3 @@
-import React from 'react';
 import { MEMBER_STATUSES, TERM_MEMBER_STATUSES } from '../types/member.types';
 import type { MemberStatus, TermMemberStatus } from '@/types/database.types';
 
@@ -13,9 +12,9 @@ export function MemberStatusBadge({
     label: status,
     badgeVariant: 'secondary',
     colorClasses: {
-      bg: 'bg-slate-100',
-      text: 'text-slate-700',
-      border: 'border-slate-200',
+      bg: 'bg-cloud',
+      text: 'text-slate-gray',
+      border: 'border-hairline',
     },
     description: '',
   };
@@ -25,12 +24,12 @@ export function MemberStatusBadge({
     status === 'active'
       ? 'bg-emerald-500'
       : status === 'alumni'
-      ? 'bg-indigo-500'
-      : 'bg-slate-400';
+      ? 'bg-signal-blue'
+      : 'bg-mist-gray';
 
   return (
     <span
-      className={`inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md text-[11px] font-medium border shadow-2xs ${config.colorClasses.bg} ${config.colorClasses.text} ${config.colorClasses.border} ${className}`}
+      className={`inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-semibold border shadow-xs tabular-nums ${config.colorClasses.bg} ${config.colorClasses.text} ${config.colorClasses.border} ${className}`}
       title={config.description || config.label}
     >
       <span className={`h-1.5 w-1.5 rounded-full shrink-0 ${dotColor}`} />
@@ -50,16 +49,16 @@ export function TermMemberStatusBadge({
     label: status,
     badgeVariant: 'secondary',
     colorClasses: {
-      bg: 'bg-slate-100',
-      text: 'text-slate-700',
-      border: 'border-slate-200',
+      bg: 'bg-cloud',
+      text: 'text-slate-gray',
+      border: 'border-hairline',
     },
     description: '',
   };
 
   return (
     <span
-      className={`inline-flex items-center px-2 py-0.5 rounded-md text-[10px] font-medium border ${config.colorClasses.bg} ${config.colorClasses.text} ${config.colorClasses.border} ${className}`}
+      className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-semibold border tabular-nums ${config.colorClasses.bg} ${config.colorClasses.text} ${config.colorClasses.border} ${className}`}
       title={config.description || config.label}
     >
       {config.label}

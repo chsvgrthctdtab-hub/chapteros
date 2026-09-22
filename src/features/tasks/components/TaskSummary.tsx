@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   ListTodo,
   Clock,
@@ -34,8 +33,8 @@ export function TaskSummary({
       icon: ListTodo,
       isActive: currentStatusFilter === 'all' && !isOverdueFilterActive,
       onClick: () => onSelectStatusFilter('all'),
-      accentColor: 'text-slate-900',
-      badgeColor: 'bg-slate-100 text-slate-700',
+      accentColor: 'text-ink-navy',
+      badgeColor: 'bg-cloud text-ink-navy border-hairline',
     },
     {
       id: 'in_progress',
@@ -46,8 +45,8 @@ export function TaskSummary({
       icon: Clock,
       isActive: currentStatusFilter === 'in_progress' && !isOverdueFilterActive,
       onClick: () => onSelectStatusFilter('in_progress'),
-      accentColor: 'text-sky-700',
-      badgeColor: 'bg-sky-50 text-sky-700 border-sky-200/80',
+      accentColor: 'text-signal-blue',
+      badgeColor: 'bg-[#e6f0ff] text-signal-blue border-[#d4e4fa]',
     },
     {
       id: 'in_review',
@@ -82,8 +81,8 @@ export function TaskSummary({
       icon: AlertTriangle,
       isActive: isOverdueFilterActive,
       onClick: onToggleOverdueFilter,
-      accentColor: stats.overdue > 0 ? 'text-rose-600' : 'text-slate-500',
-      badgeColor: stats.overdue > 0 ? 'bg-rose-50 text-rose-700 border-rose-200' : 'bg-slate-100 text-slate-600',
+      accentColor: stats.overdue > 0 ? 'text-rose-600' : 'text-slate-gray',
+      badgeColor: stats.overdue > 0 ? 'bg-rose-50 text-rose-700 border-rose-200' : 'bg-cloud text-slate-gray border-hairline',
     },
   ];
 
@@ -100,15 +99,15 @@ export function TaskSummary({
             id={`task-summary-${item.id}`}
             onClick={item.onClick}
             className={cn(
-              'group relative flex items-center justify-between p-3.5 rounded-2xl border text-left transition-all cursor-pointer shadow-2xs active:scale-[0.98]',
+              'group relative flex items-center justify-between p-3.5 rounded-2xl border text-left transition-all cursor-pointer shadow-xs active:scale-[0.98]',
               isSelected
-                ? 'bg-emerald-50/50 border-emerald-600/80 ring-1 ring-emerald-600/20 shadow-xs'
-                : 'bg-white border-slate-200/80 hover:border-slate-300/80 hover:bg-slate-50/60 hover:shadow-xs'
+                ? 'bg-[#e6f0ff]/50 border-signal-blue ring-1 ring-signal-blue/20 shadow-xs'
+                : 'bg-white border-hairline hover:border-slate-gray/40 hover:bg-cloud hover:shadow-xs'
             )}
           >
             <div className="min-w-0 flex-1 pr-2">
               <div className="flex items-center gap-1.5 mb-1">
-                <span className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider truncate group-hover:text-slate-700">
+                <span className="text-[11px] font-semibold text-slate-gray uppercase tracking-wider truncate group-hover:text-ink-navy">
                   {item.label}
                 </span>
               </div>
@@ -116,7 +115,7 @@ export function TaskSummary({
                 <span className={cn('text-base sm:text-xl font-bold tracking-tight leading-none tabular-nums', item.accentColor)}>
                   {item.value}
                 </span>
-                <span className="text-[11px] text-slate-400 font-normal truncate hidden sm:inline">
+                <span className="text-[11px] text-slate-gray font-normal truncate hidden sm:inline tabular-nums">
                   {item.subtext}
                 </span>
               </div>
@@ -124,7 +123,7 @@ export function TaskSummary({
 
             <div
               className={cn(
-                'w-8 h-8 rounded-xl border flex items-center justify-center shrink-0 transition-colors shadow-2xs',
+                'w-8 h-8 rounded-xl border flex items-center justify-center shrink-0 transition-colors shadow-xs',
                 item.badgeColor
               )}
             >

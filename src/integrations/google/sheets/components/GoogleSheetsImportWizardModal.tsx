@@ -308,14 +308,14 @@ B2102222\tTrần Thị Mai Anh\tĐã xác nhận\tCó mặt\tgoogle_form\tTrư�
           <DialogHeader>
             <div className="flex items-center justify-between pr-6">
               <div className="flex items-center gap-2.5">
-                <div className="h-9 w-9 rounded-lg bg-blue-600 text-white flex items-center justify-center shadow-xs">
+                <div className="h-9 w-9 rounded-lg bg-signal-blue text-white flex items-center justify-center shadow-xs">
                   <Upload strokeWidth={1.5} className="w-5 h-5" />
                 </div>
                 <div>
-                  <DialogTitle className="text-base font-semibold text-slate-900">
+                  <DialogTitle className="text-base font-semibold text-ink-navy">
                     Nhập dữ liệu: {moduleInfo?.title || module}
                   </DialogTitle>
-                  <DialogDescription className="text-xs text-slate-500">
+                  <DialogDescription className="text-xs text-slate-gray">
                     Quy trình 4 bước: Chọn nguồn → Khớp cột → Đối soát & Xung đột → Xác nhận nhập
                   </DialogDescription>
                 </div>
@@ -333,10 +333,10 @@ B2102222\tTrần Thị Mai Anh\tĐã xác nhận\tCó mặt\tgoogle_form\tTrư�
                     key={s.step}
                     className={`px-2.5 py-1 rounded-md font-medium text-xs transition-colors ${
                       currentStep === s.step
-                        ? 'bg-blue-600 text-white shadow-xs'
+                        ? 'bg-signal-blue text-white shadow-xs'
                         : currentStep > s.step
-                        ? 'bg-blue-100 text-blue-800'
-                        : 'bg-slate-100 text-slate-500'
+                        ? 'bg-[#e6f0ff] text-signal-blue'
+                        : 'bg-pebble text-slate-gray'
                     }`}
                   >
                     {s.label}
@@ -370,14 +370,14 @@ B2102222\tTrần Thị Mai Anh\tĐã xác nhận\tCó mặt\tgoogle_form\tTrư�
                   onDrop={handleDrop}
                   className={`border-2 border-dashed rounded-lg p-4 text-center transition-colors ${
                     isDragging
-                      ? 'border-blue-500 bg-blue-50/50'
-                      : 'border-slate-300 bg-slate-50/60 hover:bg-slate-50'
+                      ? 'border-signal-blue bg-[#e6f0ff]/50'
+                      : 'border-hairline bg-cloud hover:bg-white'
                   }`}
                 >
-                  <Upload strokeWidth={1.5} className="w-6 h-6 text-slate-400 mx-auto mb-1.5" />
-                  <p className="text-xs font-medium text-slate-700">
+                  <Upload strokeWidth={1.5} className="w-6 h-6 text-mist-gray mx-auto mb-1.5" />
+                  <p className="text-xs font-medium text-slate-gray">
                     Kéo và thả tệp CSV, TSV hoặc TXT vào đây, hoặc{' '}
-                    <label className="text-blue-600 font-semibold cursor-pointer hover:underline">
+                    <label className="text-signal-blue font-semibold cursor-pointer hover:underline">
                       chọn tệp từ máy tính
                       <input
                         type="file"
@@ -391,16 +391,16 @@ B2102222\tTrần Thị Mai Anh\tĐã xác nhận\tCó mặt\tgoogle_form\tTrư�
                       />
                     </label>
                   </p>
-                  <p className="text-[11px] text-slate-500 mt-1">Hỗ trợ mã hóa UTF-8 với tiêu đề tiếng Việt chuẩn</p>
+                  <p className="text-[11px] text-mist-gray mt-1">Hỗ trợ mã hóa UTF-8 với tiêu đề tiếng Việt chuẩn</p>
                 </div>
 
                 <div className="flex items-center justify-between">
-                  <label className="text-xs font-semibold text-slate-700">Hoặc dán trực tiếp dữ liệu bảng tính:</label>
+                  <label className="text-xs font-semibold text-ink-navy">Hoặc dán trực tiếp dữ liệu bảng tính:</label>
                   <Button
                     variant="outline"
                     size="sm"
                     onClick={handleLoadSampleData}
-                    className="h-7 text-xs px-2.5 text-blue-700 bg-blue-50 border-blue-200 hover:bg-blue-100"
+                    className="h-7 text-xs px-2.5 text-signal-blue bg-[#e6f0ff] border-[#d4e4fa] hover:bg-[#d8e8fc]"
                   >
                     Nạp dữ liệu mẫu ({moduleInfo?.tabName})
                   </Button>
@@ -410,11 +410,11 @@ B2102222\tTrần Thị Mai Anh\tĐã xác nhận\tCó mặt\tgoogle_form\tTrư�
                   value={pastedData}
                   onChange={(e) => setPastedData(e.target.value)}
                   placeholder={`Sao chép (Ctrl+C) các ô từ Google Sheets hoặc Excel bao gồm dòng tiêu đề và dán vào đây...\nVí dụ:\nMSSV\tHọ và tên\tEmail\tSố điện thoại\nB2101234\tNguyễn Văn A\tan.nv@student.edu.vn\t0912345678`}
-                  className="w-full h-44 p-3 text-xs font-mono border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white"
+                  className="w-full h-44 p-3 text-xs font-mono border border-hairline rounded-lg focus:outline-none focus:ring-2 focus:ring-signal-blue bg-white"
                 />
 
-                <div className="p-3 bg-slate-50 border border-slate-200 rounded-lg text-xs text-slate-600 flex items-start gap-2">
-                  <Info className="w-4 h-4 text-blue-600 shrink-0 mt-0.5" />
+                <div className="p-3 bg-cloud border border-hairline rounded-lg text-xs text-slate-gray flex items-start gap-2">
+                  <Info className="w-4 h-4 text-signal-blue shrink-0 mt-0.5" />
                   <div>
                     <strong>Mẹo:</strong> Mở bảng tính Google Sheets của bạn, bôi đen vùng dữ liệu có dòng tiêu đề tiếng Việt, nhấn <strong>Ctrl+C</strong> và dán trực tiếp vào ô trên. Hệ thống sẽ tự động phân tách cột và nhận diện tiêu đề tiếng Việt chuẩn.
                   </div>
@@ -425,31 +425,31 @@ B2102222\tTrần Thị Mai Anh\tĐã xác nhận\tCó mặt\tgoogle_form\tTrư�
             {/* STEP 2: COLUMN MAPPING */}
             {currentStep === 2 && (
               <div className="space-y-4">
-                <div className="p-3 bg-blue-50/70 border border-blue-200 rounded-lg text-xs text-blue-900 flex items-start gap-2">
-                  <Layers className="w-4 h-4 text-blue-600 shrink-0 mt-0.5" />
+                <div className="p-3 bg-[#e6f0ff] border border-[#d4e4fa] rounded-lg text-xs text-ink-navy flex items-start gap-2">
+                  <Layers className="w-4 h-4 text-signal-blue shrink-0 mt-0.5" />
                   <div>
                     Hệ thống đã tự động nhận diện tiêu đề cột từ bảng tính của bạn. Vui lòng kiểm tra lại sự tương ứng giữa <strong>Cột trong Sheet</strong> và <strong>Trường trong Hệ thống</strong>.
                   </div>
                 </div>
 
-                <div className="border border-slate-200 rounded-lg overflow-hidden max-h-72 overflow-y-auto">
+                <div className="border border-hairline rounded-lg overflow-hidden max-h-72 overflow-y-auto">
                   <table className="w-full text-xs text-left">
-                    <thead className="sticky top-0 bg-slate-100 text-slate-700 font-semibold border-b border-slate-200">
+                    <thead className="sticky top-0 bg-cloud text-ink-navy font-semibold border-b border-hairline">
                       <tr>
                         <th className="py-2.5 px-3">Cột trong Google Sheet</th>
                         <th className="py-2.5 px-3">Mẫu giá trị dòng 1</th>
                         <th className="py-2.5 px-3">Trường tương ứng trong ChapterOS</th>
                       </tr>
                     </thead>
-                    <tbody className="divide-y divide-slate-100">
+                    <tbody className="divide-y divide-hairline">
                       {parsedHeaders.map((header) => {
                         const mappedKey = columnMapping[header] || '';
                         const sampleVal = String(rawRowsData[0]?.[header] || '—');
 
                         return (
-                          <tr key={header} className="hover:bg-slate-50">
-                            <td className="py-2 px-3 font-semibold text-slate-800">{header}</td>
-                            <td className="py-2 px-3 text-slate-500 font-mono max-w-[160px] truncate">
+                          <tr key={header} className="hover:bg-cloud">
+                            <td className="py-2 px-3 font-semibold text-ink-navy">{header}</td>
+                            <td className="py-2 px-3 text-mist-gray font-mono max-w-[160px] truncate">
                               {sampleVal}
                             </td>
                             <td className="py-2 px-3">
@@ -459,8 +459,8 @@ B2102222\tTrần Thị Mai Anh\tĐã xác nhận\tCó mặt\tgoogle_form\tTrư�
                               >
                                 <SelectTrigger className={`w-full h-8 text-xs font-medium ${
                                   mappedKey && mappedKey !== '_none'
-                                    ? 'bg-blue-50/60 border-blue-300 text-blue-900 font-semibold'
-                                    : 'bg-white border-slate-300 text-slate-500'
+                                    ? 'bg-[#e6f0ff] border-[#d4e4fa] text-ink-navy font-semibold'
+                                    : 'bg-white border-hairline text-slate-gray'
                                 }`}>
                                   <SelectValue placeholder="-- Bỏ qua cột này --" />
                                 </SelectTrigger>
@@ -503,17 +503,17 @@ B2102222\tTrần Thị Mai Anh\tĐã xác nhận\tCó mặt\tgoogle_form\tTrư�
               <div className="space-y-4">
                 {/* Summary Stat Bar */}
                 <div className="grid grid-cols-2 sm:grid-cols-5 gap-2 text-center text-xs">
-                  <div className="p-2.5 bg-slate-100 rounded-lg border border-slate-200">
-                    <div className="text-base font-bold text-slate-800">{previewResult.summary.totalRows}</div>
-                    <div className="text-slate-500 text-[11px] mt-0.5">Tổng số dòng</div>
+                  <div className="p-2.5 bg-pebble rounded-lg border border-hairline">
+                    <div className="text-base font-bold text-ink-navy">{previewResult.summary.totalRows}</div>
+                    <div className="text-mist-gray text-[11px] mt-0.5">Tổng số dòng</div>
                   </div>
                   <div className="p-2.5 bg-emerald-50 rounded-lg border border-emerald-200">
                     <div className="text-base font-bold text-emerald-700">{previewResult.summary.validRows}</div>
                     <div className="text-emerald-800 text-[11px] mt-0.5">Hợp lệ hoàn toàn</div>
                   </div>
-                  <div className="p-2.5 bg-blue-50 rounded-lg border border-blue-200">
-                    <div className="text-base font-bold text-blue-700">{previewResult.summary.duplicateRows}</div>
-                    <div className="text-blue-800 text-[11px] mt-0.5">Trùng MSSV/ID</div>
+                  <div className="p-2.5 bg-[#e6f0ff] rounded-lg border border-[#d4e4fa]">
+                    <div className="text-base font-bold text-signal-blue">{previewResult.summary.duplicateRows}</div>
+                    <div className="text-ink-navy text-[11px] mt-0.5">Trùng MSSV/ID</div>
                   </div>
                   <div className="p-2.5 bg-purple-50 rounded-lg border border-purple-200">
                     <div className="text-base font-bold text-purple-700">{previewResult.summary.conflictRows}</div>
@@ -537,15 +537,15 @@ B2102222\tTrần Thị Mai Anh\tĐã xác nhận\tCó mặt\tgoogle_form\tTrư�
             {/* STEP 4: POLICIES & COMMIT */}
             {currentStep === 4 && previewResult && (
               <div className="space-y-4">
-                <div className="p-3 bg-slate-50 border border-slate-200 rounded-lg text-xs text-slate-700 space-y-3">
-                  <div className="font-semibold text-slate-900 flex items-center gap-1.5">
-                    <SlidersHorizontal className="w-4 h-4 text-blue-600" />
+                <div className="p-3 bg-cloud border border-hairline rounded-lg text-xs text-slate-gray space-y-3">
+                  <div className="font-semibold text-ink-navy flex items-center gap-1.5">
+                    <SlidersHorizontal className="w-4 h-4 text-signal-blue" />
                     Chính sách xử lý bản ghi trùng lặp & xung đột:
                   </div>
 
                   {/* Duplicate Policy */}
                   <div className="space-y-1.5">
-                    <label className="font-medium text-slate-800">1. Khi gặp bản ghi đã tồn tại (Trùng MSSV / ID):</label>
+                    <label className="font-medium text-ink-navy">1. Khi gặp bản ghi đã tồn tại (Trùng MSSV / ID):</label>
                     <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
                       {[
                         {
@@ -570,20 +570,20 @@ B2102222\tTrần Thị Mai Anh\tĐã xác nhận\tCó mặt\tgoogle_form\tTrư�
                           onClick={() => setDuplicatePolicy(item.key as DuplicatePolicy)}
                           className={`p-2.5 rounded-lg border text-left text-xs transition-all ${
                             duplicatePolicy === item.key
-                              ? 'border-blue-600 bg-blue-50/60 ring-1 ring-blue-500'
-                              : 'border-slate-200 bg-white hover:bg-slate-50'
+                              ? 'border-signal-blue bg-[#e6f0ff] ring-1 ring-signal-blue'
+                              : 'border-hairline bg-white hover:bg-cloud'
                           }`}
                         >
-                          <div className="font-semibold text-slate-900">{item.title}</div>
-                          <div className="text-[11px] text-slate-500 mt-0.5">{item.desc}</div>
+                          <div className="font-semibold text-ink-navy">{item.title}</div>
+                          <div className="text-[11px] text-slate-gray mt-0.5">{item.desc}</div>
                         </button>
                       ))}
                     </div>
                   </div>
 
                   {/* Conflict Policy */}
-                  <div className="space-y-1.5 pt-2 border-t border-slate-200">
-                    <label className="font-medium text-slate-800">2. Khi phát hiện xung đột giá trị cụ thể:</label>
+                  <div className="space-y-1.5 pt-2 border-t border-hairline">
+                    <label className="font-medium text-ink-navy">2. Khi phát hiện xung đột giá trị cụ thể:</label>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                       <button
                         type="button"
@@ -591,11 +591,11 @@ B2102222\tTrần Thị Mai Anh\tĐã xác nhận\tCó mặt\tgoogle_form\tTrư�
                         className={`p-2.5 rounded-lg border text-left text-xs transition-all ${
                           conflictPolicy === 'use_sheet'
                             ? 'border-purple-600 bg-purple-50/60 ring-1 ring-purple-500'
-                            : 'border-slate-200 bg-white hover:bg-slate-50'
+                            : 'border-hairline bg-white hover:bg-cloud'
                         }`}
                       >
                         <div className="font-semibold text-purple-900">Ưu tiên giá trị từ Google Sheets</div>
-                        <div className="text-[11px] text-slate-500 mt-0.5">Dùng giá trị trên Sheet để ghi nhận.</div>
+                        <div className="text-[11px] text-slate-gray mt-0.5">Dùng giá trị trên Sheet để ghi nhận.</div>
                       </button>
 
                       <button
@@ -603,12 +603,12 @@ B2102222\tTrần Thị Mai Anh\tĐã xác nhận\tCó mặt\tgoogle_form\tTrư�
                         onClick={() => setConflictPolicy('keep_supabase')}
                         className={`p-2.5 rounded-lg border text-left text-xs transition-all ${
                           conflictPolicy === 'keep_supabase'
-                            ? 'border-slate-800 bg-slate-100 ring-1 ring-slate-700'
-                            : 'border-slate-200 bg-white hover:bg-slate-50'
+                            ? 'border-hairline bg-pebble ring-1 ring-slate-gray'
+                            : 'border-hairline bg-white hover:bg-cloud'
                         }`}
                       >
-                        <div className="font-semibold text-slate-900">Giữ nguyên giá trị gốc trong Supabase</div>
-                        <div className="text-[11px] text-slate-500 mt-0.5">Không thay đổi các trường có xung đột.</div>
+                        <div className="font-semibold text-ink-navy">Giữ nguyên giá trị gốc trong Supabase</div>
+                        <div className="text-[11px] text-slate-gray mt-0.5">Không thay đổi các trường có xung đột.</div>
                       </button>
                     </div>
                   </div>
@@ -630,7 +630,7 @@ B2102222\tTrần Thị Mai Anh\tĐã xác nhận\tCó mặt\tgoogle_form\tTrư�
             )}
           </div>
 
-          <DialogFooter className="gap-2 sm:gap-0 border-t border-slate-200 pt-3">
+          <DialogFooter className="gap-2 sm:gap-0 border-t border-hairline pt-3">
             <div className="flex items-center justify-between w-full">
               {currentStep > 1 ? (
                 <Button
@@ -657,7 +657,7 @@ B2102222\tTrần Thị Mai Anh\tĐã xác nhận\tCó mặt\tgoogle_form\tTrư�
                   size="sm"
                   onClick={handleParseInputData}
                   disabled={!pastedData.trim()}
-                  className="bg-blue-600 text-white hover:bg-blue-700 text-xs gap-1.5"
+                  className="bg-signal-blue text-white hover:bg-[#005be0] text-xs gap-1.5"
                 >
                   Tiếp tục: Khớp cột <ArrowRight className="w-3.5 h-3.5" />
                 </Button>
@@ -668,7 +668,7 @@ B2102222\tTrần Thị Mai Anh\tĐã xác nhận\tCó mặt\tgoogle_form\tTrư�
                   size="sm"
                   onClick={handleValidateAndPreview}
                   disabled={isValidating}
-                  className="bg-blue-600 text-white hover:bg-blue-700 text-xs gap-1.5"
+                  className="bg-signal-blue text-white hover:bg-[#005be0] text-xs gap-1.5"
                 >
                   {isValidating ? (
                     <>
@@ -686,7 +686,7 @@ B2102222\tTrần Thị Mai Anh\tĐã xác nhận\tCó mặt\tgoogle_form\tTrư�
                 <Button
                   size="sm"
                   onClick={() => setCurrentStep(4)}
-                  className="bg-blue-600 text-white hover:bg-blue-700 text-xs gap-1.5"
+                  className="bg-signal-blue text-white hover:bg-[#005be0] text-xs gap-1.5"
                 >
                   Thiết lập chính sách & Xác nhận <ArrowRight className="w-3.5 h-3.5" />
                 </Button>

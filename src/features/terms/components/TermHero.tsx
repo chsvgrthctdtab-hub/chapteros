@@ -52,7 +52,7 @@ export function TermHero({
     return (
       <div
         id="term-no-current-hero"
-        className="rounded-2xl border border-amber-200/90 bg-gradient-to-br from-amber-50/70 via-amber-50/40 to-white p-5 sm:p-6 shadow-2xs"
+        className="rounded-2xl border border-amber-200/90 bg-gradient-to-br from-amber-50/70 via-amber-50/40 to-white p-5 sm:p-6 shadow-xs"
       >
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-5">
           <div className="flex items-start gap-3.5">
@@ -68,10 +68,10 @@ export function TermHero({
                   Unset Current Term
                 </span>
               </div>
-              <h2 className="text-base sm:text-lg font-bold text-slate-900">
+              <h2 className="text-base sm:text-lg font-bold text-ink-navy">
                 No current term configured
               </h2>
-              <p className="text-xs sm:text-sm text-slate-600 max-w-2xl leading-relaxed">
+              <p className="text-xs sm:text-sm text-slate-gray max-w-2xl leading-relaxed">
                 Set an existing term as current to establish the active organizational period for
                 member roster assignments, activity scheduling, and financial reconciliations.
               </p>
@@ -82,7 +82,7 @@ export function TermHero({
             <Button
               onClick={onActivateFirstAvailable}
               size="sm"
-              className="bg-emerald-600 hover:bg-emerald-700 text-white text-xs h-9 px-4 shrink-0 shadow-2xs font-medium self-start sm:self-auto cursor-pointer"
+              className="bg-emerald-600 hover:bg-emerald-700 text-white text-xs h-9 px-4 shrink-0 shadow-xs font-medium self-start sm:self-auto cursor-pointer"
             >
               <Sparkles className="h-3.5 w-3.5 mr-1.5" />
               Set Active Term
@@ -116,11 +116,11 @@ export function TermHero({
   return (
     <div
       id="current-term-hero"
-      className="relative overflow-hidden rounded-2xl border border-slate-200 bg-white p-5 sm:p-7 shadow-xs transition-all"
+      className="relative overflow-hidden rounded-2xl border border-hairline bg-white p-5 sm:p-7 shadow-xs transition-all"
     >
       {/* Subtle background ambient accents */}
       <div className="absolute top-0 right-0 -translate-y-12 translate-x-12 w-96 h-96 bg-emerald-500/5 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute bottom-0 left-1/3 translate-y-12 w-64 h-64 bg-blue-500/5 rounded-full blur-2xl pointer-events-none" />
+      <div className="absolute bottom-0 left-1/3 translate-y-12 w-64 h-64 bg-signal-blue/5 rounded-full blur-2xl pointer-events-none" />
 
       <div className="relative z-10 flex flex-col lg:flex-row lg:items-center justify-between gap-6">
         {/* Left Column: Term Identity & Timeline */}
@@ -130,23 +130,23 @@ export function TermHero({
               Current Term
             </span>
             <TermStatusBadge status={currentTerm.status} isCurrent={true} />
-            <span className="text-xs text-slate-400 font-mono">
+            <span className="text-xs text-mist-gray font-mono">
               ID: {currentTerm.id.slice(0, 8)}
             </span>
           </div>
 
           <div>
-            <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-slate-900">
+            <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-ink-navy">
               {currentTerm.name}
             </h2>
-            <div className="flex items-center gap-2 text-xs sm:text-sm text-slate-600 mt-1.5 flex-wrap">
-              <span className="flex items-center gap-1.5 font-medium text-slate-700">
+            <div className="flex items-center gap-2 text-xs sm:text-sm text-slate-gray mt-1.5 flex-wrap">
+              <span className="flex items-center gap-1.5 font-medium text-slate-gray">
                 <Calendar className="h-4 w-4 text-emerald-600 shrink-0" />
                 {formattedStart} → {formattedEnd}
               </span>
-              <span className="text-slate-300">•</span>
-              <span className="text-slate-500 flex items-center gap-1">
-                <Clock className="h-3.5 w-3.5 text-slate-400" />
+              <span className="text-mist-gray">•</span>
+              <span className="text-mist-gray flex items-center gap-1">
+                <Clock className="h-3.5 w-3.5 text-mist-gray" />
                 {daysRemaining > 0 ? `${daysRemaining} days remaining` : 'Term timeline completed'}
               </span>
             </div>
@@ -154,11 +154,11 @@ export function TermHero({
 
           {/* Timeline progress mini bar */}
           <div className="space-y-1.5 max-w-md pt-0.5">
-            <div className="flex items-center justify-between text-[11px] text-slate-500">
+            <div className="flex items-center justify-between text-[11px] text-mist-gray">
               <span>Term Elapsed ({progressPercent}%)</span>
               <span>{daysRemaining}d left</span>
             </div>
-            <div className="h-1.5 w-full bg-slate-100 rounded-full overflow-hidden">
+            <div className="h-1.5 w-full bg-cloud rounded-full overflow-hidden">
               <div
                 className="h-full bg-emerald-600 rounded-full transition-all duration-500"
                 style={{ width: `${progressPercent}%` }}
@@ -171,7 +171,7 @@ export function TermHero({
         <div className="flex flex-wrap items-center gap-2.5 shrink-0 self-start lg:self-center">
           <Button
             onClick={() => onOpenDetail(currentTerm)}
-            className="bg-slate-900 hover:bg-slate-800 text-white text-xs h-9 px-4 font-medium shadow-2xs cursor-pointer"
+            className="bg-ink-navy hover:bg-[#1a2536] text-white text-xs h-9 px-4 font-medium shadow-xs cursor-pointer"
           >
             <Eye className="h-3.5 w-3.5 mr-1.5" />
             Inspect Workspace
@@ -182,10 +182,10 @@ export function TermHero({
               <Button
                 variant="outline"
                 onClick={() => onTransfer(currentTerm)}
-                className="border-slate-200 hover:bg-slate-50 text-slate-700 text-xs h-9 px-3 font-medium cursor-pointer"
+                className="border-hairline hover:bg-cloud text-slate-gray text-xs h-9 px-3 font-medium cursor-pointer"
                 title="Transfer members to another term"
               >
-                <ArrowRightLeft className="h-3.5 w-3.5 mr-1.5 text-slate-500" />
+                <ArrowRightLeft className="h-3.5 w-3.5 mr-1.5 text-mist-gray" />
                 Transfer
               </Button>
               <Button
@@ -200,7 +200,7 @@ export function TermHero({
               <Button
                 variant="ghost"
                 onClick={() => onEdit(currentTerm)}
-                className="h-9 w-9 p-0 text-slate-500 hover:text-slate-900 hover:bg-slate-100 cursor-pointer"
+                className="h-9 w-9 p-0 text-mist-gray hover:text-ink-navy hover:bg-cloud cursor-pointer"
                 title="Edit term metadata"
               >
                 <Edit2 className="h-3.5 w-3.5" />
@@ -211,49 +211,49 @@ export function TermHero({
       </div>
 
       {/* Operational Statistics Grid */}
-      <div className="mt-6 pt-5 border-t border-slate-100 grid grid-cols-2 sm:grid-cols-4 gap-4">
+      <div className="mt-6 pt-5 border-t border-hairline grid grid-cols-2 sm:grid-cols-4 gap-4">
         <div className="space-y-1">
-          <div className="flex items-center gap-1.5 text-xs text-slate-500 font-medium">
-            <Users className="h-3.5 w-3.5 text-blue-600" />
+          <div className="flex items-center gap-1.5 text-xs text-mist-gray font-medium">
+            <Users className="h-3.5 w-3.5 text-signal-blue" />
             <span>Members Roster</span>
           </div>
-          <p className="text-xl sm:text-2xl font-bold text-slate-900 tracking-tight">
+          <p className="text-xl sm:text-2xl font-bold text-ink-navy tracking-tight">
             {termStats?.memberCount ?? currentTerm.memberCount ?? 0}
           </p>
-          <span className="text-[11px] text-slate-400">Assigned BCH & Members</span>
+          <span className="text-[11px] text-mist-gray">Assigned BCH & Members</span>
         </div>
 
         <div className="space-y-1">
-          <div className="flex items-center gap-1.5 text-xs text-slate-500 font-medium">
-            <Activity className="h-3.5 w-3.5 text-indigo-600" />
+          <div className="flex items-center gap-1.5 text-xs text-mist-gray font-medium">
+            <Activity className="h-3.5 w-3.5 text-signal-blue" />
             <span>Activities</span>
           </div>
-          <p className="text-xl sm:text-2xl font-bold text-slate-900 tracking-tight">
+          <p className="text-xl sm:text-2xl font-bold text-ink-navy tracking-tight">
             {termStats?.activityCount ?? 0}
           </p>
-          <span className="text-[11px] text-slate-400">Program operations</span>
+          <span className="text-[11px] text-mist-gray">Program operations</span>
         </div>
 
         <div className="space-y-1">
-          <div className="flex items-center gap-1.5 text-xs text-slate-500 font-medium">
+          <div className="flex items-center gap-1.5 text-xs text-mist-gray font-medium">
             <CheckSquare className="h-3.5 w-3.5 text-amber-600" />
             <span>Tasks</span>
           </div>
-          <p className="text-xl sm:text-2xl font-bold text-slate-900 tracking-tight">
+          <p className="text-xl sm:text-2xl font-bold text-ink-navy tracking-tight">
             {termStats?.taskCount ?? 0}
           </p>
-          <span className="text-[11px] text-slate-400">Deliverables tracked</span>
+          <span className="text-[11px] text-mist-gray">Deliverables tracked</span>
         </div>
 
         <div className="space-y-1">
-          <div className="flex items-center gap-1.5 text-xs text-slate-500 font-medium">
+          <div className="flex items-center gap-1.5 text-xs text-mist-gray font-medium">
             <Wallet className="h-3.5 w-3.5 text-emerald-600" />
             <span>Treasury Balance</span>
           </div>
-          <p className="text-lg sm:text-xl font-bold text-slate-900 tracking-tight tabular-nums">
+          <p className="text-lg sm:text-xl font-bold text-ink-navy tracking-tight tabular-nums">
             {formattedBalance}
           </p>
-          <span className="text-[11px] text-slate-400">Net term funds</span>
+          <span className="text-[11px] text-mist-gray">Net term funds</span>
         </div>
       </div>
     </div>

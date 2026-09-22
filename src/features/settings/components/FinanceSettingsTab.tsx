@@ -1,17 +1,13 @@
 import React, { useState, useEffect, type FormEvent } from 'react';
 import {
-  Wallet,
   ShieldAlert,
   Coins,
-  Receipt,
   Scale,
   Save,
   Loader2,
   ArrowRight,
   Shield,
   HelpCircle,
-  AlertCircle,
-  CheckCircle2,
 } from 'lucide-react';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -84,19 +80,19 @@ export function FinanceSettingsTab({
   return (
     <div id="settings-finance-tab" className="space-y-6">
       {/* Finance Governance Banner */}
-      <div className="rounded-2xl border border-slate-200/90 bg-white p-5 sm:p-6 shadow-2xs">
+      <div className="rounded-2xl border border-hairline bg-white p-5 sm:p-6 shadow-xs">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
             <div className="flex items-center gap-2">
               <Badge variant="outline" className="text-[10px] font-semibold bg-amber-50 text-amber-800 border-amber-200">
                 Quy chế Quản lý Quỹ
               </Badge>
-              <span className="text-xs text-slate-400 font-mono">Kiểm soát thu chi hai lớp</span>
+              <span className="text-xs text-mist-gray font-mono">Kiểm soát thu chi hai lớp</span>
             </div>
-            <h3 className="text-lg font-bold text-slate-900 mt-1">
+            <h3 className="text-lg font-bold text-ink-navy mt-1">
               Cấu hình Quản trị Tài chính & Hạn mức Phê duyệt
             </h3>
-            <p className="text-xs text-slate-500 mt-0.5 max-w-2xl">
+            <p className="text-xs text-mist-gray mt-0.5 max-w-2xl">
               Thiết lập quy trình kiểm soát chi tiêu, hạn mức giao dịch tự động và nguyên tắc khóa sổ định kỳ theo nhiệm kỳ.
             </p>
           </div>
@@ -105,25 +101,25 @@ export function FinanceSettingsTab({
             <Button
               variant="outline"
               size="sm"
-              className="text-xs h-8 text-slate-700 border-slate-200 hover:bg-slate-50 cursor-pointer shadow-2xs font-medium shrink-0"
+              className="text-xs h-8 text-slate-gray border-hairline hover:bg-cloud cursor-pointer shadow-xs font-medium shrink-0"
             >
               Mở Sổ Quỹ Chi Hội
-              <ArrowRight className="h-3.5 w-3.5 ml-1.5 text-slate-500" />
+              <ArrowRight className="h-3.5 w-3.5 ml-1.5 text-mist-gray" />
             </Button>
           </Link>
         </div>
       </div>
 
       {/* Approval Threshold Card */}
-      <Card className="border-slate-200 shadow-2xs">
-        <CardHeader className="pb-4 border-b border-slate-100">
+      <Card className="border-hairline shadow-xs bg-white">
+        <CardHeader className="pb-4 border-b border-hairline">
           <div className="flex items-center justify-between">
             <div>
-              <CardTitle className="text-sm sm:text-base font-bold text-slate-900 flex items-center gap-2">
+              <CardTitle className="text-sm sm:text-base font-bold text-ink-navy flex items-center gap-2">
                 <ShieldAlert className="h-4 w-4 text-amber-600" />
                 Hạn Mức Phê Duyệt Chi Tiêu (Approval Threshold)
               </CardTitle>
-              <CardDescription className="text-xs text-slate-500 mt-0.5">
+              <CardDescription className="text-xs text-mist-gray mt-0.5">
                 Các khoản chi vượt hạn mức này bắt buộc phải có phê duyệt của Đơn vị trưởng hoặc Quản trị viên
               </CardDescription>
             </div>
@@ -146,8 +142,8 @@ export function FinanceSettingsTab({
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="space-y-1.5">
-                <label className="text-xs font-semibold text-slate-700 flex items-center gap-1.5">
-                  <Coins className="h-3.5 w-3.5 text-slate-400" />
+                <label className="text-xs font-semibold text-slate-gray flex items-center gap-1.5">
+                  <Coins className="h-3.5 w-3.5 text-mist-gray" />
                   Số tiền hạn mức tối đa tự động (VNĐ) <span className="text-rose-500">*</span>
                 </label>
                 <div className="relative">
@@ -157,24 +153,24 @@ export function FinanceSettingsTab({
                     onChange={(e) => setThreshold(e.target.value.replace(/[^0-9]/g, ''))}
                     disabled={!canManage || isSaving}
                     placeholder="2000000"
-                    className="text-xs font-mono pr-10 font-bold text-slate-900"
+                    className="text-xs font-mono pr-10 font-bold text-ink-navy"
                   />
-                  <div className="absolute right-3 top-1/2 -translate-y-1/2 text-xs font-bold text-slate-400">
+                  <div className="absolute right-3 top-1/2 -translate-y-1/2 text-xs font-bold text-mist-gray">
                     ₫
                   </div>
                 </div>
-                <div className="flex items-center justify-between text-[10px] text-slate-400">
+                <div className="flex items-center justify-between text-[10px] text-mist-gray">
                   <span>Quy đổi hiển thị: {formattedDisplay()}</span>
                   <span>Mặc định khuyến nghị: 2.000.000 ₫</span>
                 </div>
               </div>
 
-              <div className="rounded-xl border border-slate-200/80 bg-slate-50/60 p-3.5 space-y-1.5 text-xs">
-                <div className="font-bold text-slate-800 flex items-center gap-1.5">
-                  <HelpCircle className="h-3.5 w-3.5 text-blue-600" />
+              <div className="rounded-xl border border-hairline bg-cloud p-3.5 space-y-1.5 text-xs">
+                <div className="font-bold text-ink-navy flex items-center gap-1.5">
+                  <HelpCircle className="h-3.5 w-3.5 text-signal-blue" />
                   Nguyên tắc kiểm soát chi
                 </div>
-                <ul className="space-y-1 text-[11px] text-slate-600 list-disc list-inside">
+                <ul className="space-y-1 text-[11px] text-slate-gray list-disc list-inside">
                   <li>Khoản chi ≤ {formattedDisplay()}: Thủ quỹ có thể ghi nhận và hạch toán trực tiếp.</li>
                   <li>Khoản chi &gt; {formattedDisplay()}: Hệ thống tự động chuyển trạng thái Chờ phê duyệt (Pending Approval).</li>
                   <li>Mọi giao dịch sau khi duyệt đều lưu vết người duyệt (Approved By) và thời điểm duyệt.</li>
@@ -184,12 +180,12 @@ export function FinanceSettingsTab({
           </CardContent>
 
           {canManage && (
-            <CardFooter className="bg-slate-50/70 border-t border-slate-100 flex items-center justify-end py-3 px-5">
+            <CardFooter className="bg-cloud border-t border-hairline flex items-center justify-end py-3 px-5">
               <Button
                 type="submit"
                 size="sm"
                 disabled={isSaving || updateOrgMutation.isPending}
-                className="text-xs h-8 bg-emerald-600 hover:bg-emerald-700 text-white cursor-pointer shadow-2xs font-medium"
+                className="text-xs h-8 bg-signal-blue hover:bg-[#005be0] text-white cursor-pointer shadow-xs font-medium"
               >
                 {isSaving || updateOrgMutation.isPending ? (
                   <Loader2 className="h-3.5 w-3.5 mr-1.5 animate-spin" />
@@ -204,41 +200,41 @@ export function FinanceSettingsTab({
       </Card>
 
       {/* Accounting Standards & Period Closing Info */}
-      <Card className="border-slate-200 shadow-2xs">
-        <CardHeader className="pb-4 border-b border-slate-100">
-          <CardTitle className="text-sm sm:text-base font-bold text-slate-900 flex items-center gap-2">
-            <Scale className="h-4 w-4 text-emerald-600" />
+      <Card className="border-hairline shadow-xs bg-white">
+        <CardHeader className="pb-4 border-b border-hairline">
+          <CardTitle className="text-sm sm:text-base font-bold text-ink-navy flex items-center gap-2">
+            <Scale className="h-4 w-4 text-signal-blue" />
             Chuẩn Mực Kế Toán & Quy Định Khóa Sổ Kỳ
           </CardTitle>
-          <CardDescription className="text-xs text-slate-500 mt-0.5">
+          <CardDescription className="text-xs text-mist-gray mt-0.5">
             Các thiết lập hạch toán cơ bản được áp dụng thống nhất cho toàn bộ hệ thống quỹ Chi hội
           </CardDescription>
         </CardHeader>
 
         <CardContent className="p-0">
-          <div className="divide-y divide-slate-100 text-xs">
+          <div className="divide-y divide-hairline text-xs">
             <div className="p-4 flex items-center justify-between">
               <div>
-                <p className="font-bold text-slate-900">Đơn vị tiền tệ chính thức</p>
-                <p className="text-[11px] text-slate-500">Đồng Việt Nam (VND - ₫)</p>
+                <p className="font-bold text-ink-navy">Đơn vị tiền tệ chính thức</p>
+                <p className="text-[11px] text-mist-gray">Đồng Việt Nam (VND - ₫)</p>
               </div>
-              <Badge variant="outline" className="font-mono text-xs bg-slate-50">VND (₫)</Badge>
+              <Badge variant="outline" className="font-mono text-xs bg-cloud">VND (₫)</Badge>
             </div>
 
             <div className="p-4 flex items-center justify-between">
               <div>
-                <p className="font-bold text-slate-900">Phương pháp Khóa sổ Kỳ (Period Closing)</p>
-                <p className="text-[11px] text-slate-500">Đóng sổ định kỳ theo Tháng / Quý và lưu ảnh chụp số dư (Snapshot)</p>
+                <p className="font-bold text-ink-navy">Phương pháp Khóa sổ Kỳ (Period Closing)</p>
+                <p className="text-[11px] text-mist-gray">Đóng sổ định kỳ theo Tháng / Quý và lưu ảnh chụp số dư (Snapshot)</p>
               </div>
               <Badge variant="success" className="text-xs">Đang áp dụng</Badge>
             </div>
 
             <div className="p-4 flex items-center justify-between">
               <div>
-                <p className="font-bold text-slate-900">Tính bất biến sau Khóa sổ</p>
-                <p className="text-[11px] text-slate-500">Không cho phép tạo/sửa/xóa giao dịch thuộc kỳ đã đóng trừ khi mở lại sổ</p>
+                <p className="font-bold text-ink-navy">Tính bất biến sau Khóa sổ</p>
+                <p className="text-[11px] text-mist-gray">Không cho phép tạo/sửa/xóa giao dịch thuộc kỳ đã đóng trừ khi mở lại sổ</p>
               </div>
-              <Badge variant="outline" className="font-mono text-xs text-slate-700 bg-slate-50">Bảo mật RLS</Badge>
+              <Badge variant="outline" className="font-mono text-xs text-slate-gray bg-cloud">Bảo mật RLS</Badge>
             </div>
           </div>
         </CardContent>

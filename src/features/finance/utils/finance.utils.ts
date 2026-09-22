@@ -101,10 +101,10 @@ export function getTransactionTypeConfig(type: FinanceType) {
         label: 'Khác',
         shortLabel: '—',
         prefix: '',
-        badgeBg: 'bg-slate-50 text-slate-700 border-slate-200',
-        amountColor: 'text-slate-700',
-        iconColor: 'text-slate-400',
-        accentBorder: 'border-l-slate-300',
+        badgeBg: 'bg-cloud text-slate-gray border-hairline',
+        amountColor: 'text-slate-gray',
+        iconColor: 'text-mist-gray',
+        accentBorder: 'border-l-pebble',
       };
   }
 }
@@ -118,8 +118,8 @@ export function getTransactionStatusConfig(status?: TransactionStatus) {
       return {
         key: 'draft',
         label: 'Bản nháp',
-        badgeBg: 'bg-slate-100 text-slate-700 border-slate-200',
-        dotColor: 'bg-slate-400',
+        badgeBg: 'bg-cloud text-slate-gray border-hairline',
+        dotColor: 'bg-mist-gray',
       };
     case 'pending_approval':
       return {
@@ -132,8 +132,8 @@ export function getTransactionStatusConfig(status?: TransactionStatus) {
       return {
         key: 'approved',
         label: 'Đã phê duyệt',
-        badgeBg: 'bg-blue-50 text-blue-800 border-blue-200',
-        dotColor: 'bg-blue-500',
+        badgeBg: 'bg-[#e6f0ff] text-signal-blue border-[#d4e4fa]',
+        dotColor: 'bg-signal-blue',
       };
     case 'posted':
       return {
@@ -167,7 +167,7 @@ export function getPeriodClosingStatusConfig(status?: PeriodClosingStatus) {
     case 'closed':
       return {
         label: 'Đã chốt sổ (Khóa)',
-        badgeBg: 'bg-slate-900 text-white border-slate-700',
+        badgeBg: 'bg-ink-navy text-white border-hairline',
         isLocked: true,
       };
     case 'reopened':
@@ -179,7 +179,7 @@ export function getPeriodClosingStatusConfig(status?: PeriodClosingStatus) {
     default:
       return {
         label: 'Đã chốt sổ',
-        badgeBg: 'bg-slate-900 text-white border-slate-700',
+        badgeBg: 'bg-ink-navy text-white border-hairline',
         isLocked: true,
       };
   }
@@ -203,12 +203,12 @@ export function getReconciliationStatusConfig(status?: ReconciliationStatus) {
     case 'override':
       return {
         label: 'Đã giải trình lệch',
-        badgeBg: 'bg-indigo-50 text-indigo-700 border-indigo-200',
+        badgeBg: 'bg-[#e6f0ff] text-signal-blue border-[#d4e4fa]',
       };
     default:
       return {
         label: 'Đã kiểm tra',
-        badgeBg: 'bg-slate-50 text-slate-700 border-slate-200',
+        badgeBg: 'bg-cloud text-slate-gray border-hairline',
       };
   }
 }

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import {
   Plus,
   RefreshCw,
@@ -160,8 +160,7 @@ export function TasksPage() {
           data,
           updatedBy: user?.id,
         });
-        toast.success(`Updated task "${data.title}" successfully.`);
-        // Update selected task in drawer if open
+        toast.success(`Đã cập nhật nhiệm vụ "${data.title}" thành công.`);
         if (selectedTask && selectedTask.id === editingTask.id) {
           setSelectedTask((prev) => (prev ? { ...prev, ...data } : null));
         }
@@ -172,7 +171,7 @@ export function TasksPage() {
           data,
           createdBy: user?.id,
         });
-        toast.success(`Created task "${data.title}" successfully.`);
+        toast.success(`Đã tạo nhiệm vụ "${data.title}" thành công.`);
         setIsCreateOpen(false);
       }
     } catch (err: unknown) {
@@ -192,7 +191,7 @@ export function TasksPage() {
         updatedBy: user?.id,
         userRole: role,
       });
-      toast.success('Task status updated successfully.');
+      toast.success('Đã cập nhật trạng thái nhiệm vụ.');
       if (selectedTask && selectedTask.id === quickStatusTask.id) {
         setSelectedTask((prev) => (prev ? { ...prev, status, progress: progress !== undefined ? progress : prev.progress } : null));
       }
@@ -215,7 +214,7 @@ export function TasksPage() {
         updatedBy: user?.id,
         userRole: role,
       });
-      toast.success('Task status updated.');
+      toast.success('Đã cập nhật trạng thái nhiệm vụ.');
       if (selectedTask && selectedTask.id === taskId) {
         setSelectedTask((prev) => (prev ? { ...prev, status: targetStatus } : null));
       }
@@ -235,7 +234,7 @@ export function TasksPage() {
         activityId: target.activityId,
         updatedBy: user?.id,
       });
-      toast.success(`Updated progress to ${progress}%.`);
+      toast.success(`Đã cập nhật tiến độ lên ${progress}%.`);
       if (selectedTask && selectedTask.id === target.id) {
         setSelectedTask((prev) => (prev ? { ...prev, progress } : null));
       }
@@ -258,7 +257,7 @@ export function TasksPage() {
         activityId: taskToDelete.activityId,
         deletedBy: user?.id,
       });
-      toast.success(`Deleted task "${taskToDelete.title}".`);
+      toast.success(`Đã xóa nhiệm vụ "${taskToDelete.title}".`);
       if (selectedTask?.id === taskToDelete.id) {
         setSelectedTask(null);
       }
@@ -286,18 +285,18 @@ export function TasksPage() {
   return (
     <div className="w-full space-y-4 pb-12">
       {/* 1. PAGE HEADER */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 pb-3 border-b border-slate-200/80">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 pb-3 border-b border-hairline">
         <div>
           <div className="flex items-center gap-2.5">
-            <h1 className="text-2xl font-bold tracking-tight text-slate-900">
-              Tasks
+            <h1 className="text-2xl font-bold tracking-tight text-ink-navy">
+              Nhiệm vụ & Công việc
             </h1>
-            <span className="text-xs font-semibold text-slate-600 bg-slate-100 border border-slate-200/80 px-2.5 py-0.5 rounded-full tabular-nums">
-              {stats.total} tasks
+            <span className="text-xs font-semibold text-slate-gray bg-cloud border border-hairline px-2.5 py-0.5 rounded-full tabular-nums">
+              {stats.total} việc
             </span>
           </div>
-          <p className="text-sm text-slate-500 mt-1">
-            Manage assignments, deadlines and execution progress.
+          <p className="text-xs text-slate-gray mt-1">
+            Quản lý phân công công việc, tiến độ triển khai và giám sát hoàn thành.
           </p>
         </div>
 
@@ -307,9 +306,9 @@ export function TasksPage() {
             type="button"
             onClick={() => setSheetsExportOpen(true)}
             title="Xuất Google Sheets"
-            className="inline-flex items-center gap-1 px-2.5 sm:px-3 py-1.5 sm:py-2 text-xs font-medium text-slate-700 bg-white hover:bg-slate-50 border border-slate-200/90 rounded-lg shadow-2xs transition-colors cursor-pointer"
+            className="inline-flex items-center gap-1.5 px-3 py-2 text-xs font-medium text-slate-gray bg-white hover:bg-pebble hover:text-ink-navy border border-hairline rounded-lg shadow-xs transition-colors cursor-pointer"
           >
-            <FileSpreadsheet className="w-3.5 h-3.5 text-emerald-700 shrink-0" />
+            <FileSpreadsheet className="w-3.5 h-3.5 text-signal-blue shrink-0" />
             <span className="hidden sm:inline">Xuất Sheets</span>
           </button>
 
@@ -318,9 +317,9 @@ export function TasksPage() {
               type="button"
               onClick={() => setSheetsImportOpen(true)}
               title="Nhập Google Sheets"
-              className="inline-flex items-center gap-1 px-2.5 sm:px-3 py-1.5 sm:py-2 text-xs font-medium text-slate-700 bg-white hover:bg-slate-50 border border-slate-200/90 rounded-lg shadow-2xs transition-colors cursor-pointer"
+              className="inline-flex items-center gap-1.5 px-3 py-2 text-xs font-medium text-slate-gray bg-white hover:bg-pebble hover:text-ink-navy border border-hairline rounded-lg shadow-xs transition-colors cursor-pointer"
             >
-              <FileSpreadsheet className="w-3.5 h-3.5 text-blue-600 shrink-0" />
+              <FileSpreadsheet className="w-3.5 h-3.5 text-signal-blue shrink-0" />
               <span className="hidden sm:inline">Nhập Sheets</span>
             </button>
           )}
@@ -331,7 +330,7 @@ export function TasksPage() {
               id="create-task-main-btn"
               onClick={() => setIsCreateOpen(true)}
               title="Tạo nhiệm vụ mới"
-              className="inline-flex items-center gap-1 px-2.5 sm:px-3.5 py-1.5 sm:py-2 text-xs font-semibold text-white bg-emerald-700 hover:bg-emerald-800 rounded-lg shadow-2xs transition-colors cursor-pointer"
+              className="inline-flex items-center gap-1.5 px-3.5 py-2 text-xs font-medium text-white bg-signal-blue hover:bg-[#005be0] rounded-lg shadow-xs transition-colors cursor-pointer"
             >
               <Plus className="w-3.5 h-3.5 sm:w-4 sm:h-4 shrink-0" />
               <span className="hidden sm:inline">Tạo nhiệm vụ</span>
@@ -340,7 +339,7 @@ export function TasksPage() {
         </div>
       </div>
 
-      {/* 2. TASK SUMMARY (Compact Horizontal Metrics) */}
+      {/* 2. TASK SUMMARY */}
       <TaskSummary
         stats={stats}
         currentStatusFilter={filters.status}
@@ -375,39 +374,39 @@ export function TasksPage() {
       {isTasksLoading ? (
         <TaskSkeleton viewMode={viewMode} count={viewMode === 'table' ? 8 : 6} />
       ) : tasksError ? (
-        <div className="bg-white rounded-xl border border-rose-200 p-8 text-center max-w-lg mx-auto shadow-2xs space-y-3 my-8">
+        <div className="bg-white rounded-2xl border border-rose-200 p-8 text-center max-w-lg mx-auto shadow-xs space-y-3 my-8">
           <div className="w-10 h-10 rounded-full bg-rose-50 border border-rose-200 flex items-center justify-center mx-auto text-rose-600">
             <AlertCircle className="w-5 h-5" />
           </div>
           <div>
-            <h3 className="text-base font-bold text-slate-900">Unable to load tasks</h3>
-            <p className="text-xs text-slate-500 mt-1">
-              Something went wrong while loading the task list.
+            <h3 className="text-base font-bold text-ink-navy">Không thể tải danh sách nhiệm vụ</h3>
+            <p className="text-xs text-slate-gray mt-1">
+              Đã xảy ra lỗi khi kết nối dữ liệu nhiệm vụ. Vui lòng thử lại.
             </p>
           </div>
           <button
             type="button"
             onClick={() => refetch()}
-            className="inline-flex items-center gap-1.5 px-4 py-2 text-xs font-semibold text-white bg-emerald-700 hover:bg-emerald-800 rounded-lg shadow-2xs transition-colors cursor-pointer"
+            className="inline-flex items-center gap-1.5 px-4 py-2 text-xs font-medium text-white bg-signal-blue hover:bg-[#005be0] rounded-lg shadow-xs transition-colors cursor-pointer"
           >
             <RefreshCw className="w-3.5 h-3.5" />
-            <span>Try again</span>
+            <span>Thử lại</span>
           </button>
         </div>
       ) : tasksList.length === 0 ? (
         <EmptyState
-          icon={<ListTodo strokeWidth={1.5} className="w-8 h-8 text-slate-400" />}
-          title={hasActiveFilters ? 'No tasks found' : 'No tasks created yet'}
+          icon={<ListTodo strokeWidth={1.5} className="w-8 h-8 text-mist-gray" />}
+          title={hasActiveFilters ? 'Không tìm thấy nhiệm vụ' : 'Chưa có nhiệm vụ nào'}
           description={
             hasActiveFilters
-              ? 'Try changing your filters or create a new task.'
-              : 'Create tasks and assign them to team members to track execution.'
+              ? 'Thử thay đổi bộ lọc hoặc tạo một nhiệm vụ mới.'
+              : 'Tạo nhiệm vụ và phân công cho cán bộ để bắt đầu theo dõi tiến độ thực hiện.'
           }
           actionLabel={
             hasActiveFilters
-              ? 'Clear filters'
+              ? 'Xóa bộ lọc'
               : canManage
-              ? 'Create Task'
+              ? 'Tạo nhiệm vụ'
               : undefined
           }
           onAction={
@@ -463,10 +462,10 @@ export function TasksPage() {
 
           {/* Pagination Controls */}
           {totalPages > 1 && viewMode !== 'kanban' && (
-            <div className="bg-white rounded-xl border border-slate-200/90 p-3 sm:p-4 flex flex-col sm:flex-row items-center justify-between gap-3 shadow-2xs">
-              <div className="text-xs text-slate-500">
-                Showing page <strong className="font-semibold text-slate-900 tabular-nums">{currentPage}</strong> of{' '}
-                <strong className="font-semibold text-slate-900 tabular-nums">{totalPages}</strong> (<span className="tabular-nums">{totalCount}</span> tasks)
+            <div className="bg-white rounded-2xl border border-hairline p-3 sm:p-4 flex flex-col sm:flex-row items-center justify-between gap-3 shadow-xs">
+              <div className="text-xs text-slate-gray tabular-nums">
+                Hiển thị trang <strong className="font-semibold text-ink-navy tabular-nums">{currentPage}</strong> /{' '}
+                <strong className="font-semibold text-ink-navy tabular-nums">{totalPages}</strong> (<span className="tabular-nums">{totalCount}</span> nhiệm vụ)
               </div>
 
               <div className="flex items-center gap-1.5">
@@ -475,8 +474,8 @@ export function TasksPage() {
                   id="prev-page-btn"
                   disabled={currentPage <= 1}
                   onClick={() => handleFilterChange({ page: currentPage - 1 })}
-                  className="p-1.5 rounded-lg border border-slate-200 text-slate-600 hover:bg-slate-50 disabled:opacity-40 disabled:cursor-not-allowed transition-colors cursor-pointer"
-                  title="Previous page"
+                  className="p-1.5 rounded-lg border border-hairline text-slate-gray hover:text-ink-navy hover:bg-pebble disabled:opacity-40 disabled:cursor-not-allowed transition-colors cursor-pointer"
+                  title="Trang trước"
                 >
                   <ChevronLeft className="w-4 h-4" />
                 </button>
@@ -496,8 +495,8 @@ export function TasksPage() {
                         className={cn(
                           'w-7.5 h-7.5 rounded-lg text-xs font-semibold transition-all cursor-pointer tabular-nums',
                           currentPage === pageNum
-                            ? 'bg-blue-600 text-white shadow-2xs'
-                            : 'text-slate-600 hover:bg-slate-100 border border-slate-200'
+                            ? 'bg-signal-blue text-white shadow-xs'
+                            : 'text-slate-gray hover:text-ink-navy hover:bg-pebble border border-hairline'
                         )}
                       >
                         {pageNum}
@@ -511,8 +510,8 @@ export function TasksPage() {
                   id="next-page-btn"
                   disabled={currentPage >= totalPages}
                   onClick={() => handleFilterChange({ page: currentPage + 1 })}
-                  className="p-1.5 rounded-lg border border-slate-200 text-slate-600 hover:bg-slate-50 disabled:opacity-40 disabled:cursor-not-allowed transition-colors cursor-pointer"
-                  title="Next page"
+                  className="p-1.5 rounded-lg border border-hairline text-slate-gray hover:text-ink-navy hover:bg-pebble disabled:opacity-40 disabled:cursor-not-allowed transition-colors cursor-pointer"
+                  title="Trang tiếp"
                 >
                   <ChevronRight className="w-4 h-4" />
                 </button>
@@ -583,10 +582,10 @@ export function TasksPage() {
       <ConfirmDialog
         open={Boolean(taskToDelete)}
         onOpenChange={(open) => !open && setTaskToDelete(null)}
-        title="Delete task?"
-        description={`Are you sure you want to delete task "${taskToDelete?.title}"?`}
-        warningNote="This action cannot be undone and will permanently remove the task."
-        confirmLabel="Confirm delete"
+        title="Xóa nhiệm vụ?"
+        description={`Bạn có chắc chắn muốn xóa nhiệm vụ "${taskToDelete?.title}" không?`}
+        warningNote="Hành động này không thể hoàn tác và sẽ xóa vĩnh viễn nhiệm vụ khỏi hệ thống."
+        confirmLabel="Xác nhận xóa"
         variant="destructive"
         isLoading={deleteTaskMutation.isPending}
         onConfirm={handleConfirmDelete}

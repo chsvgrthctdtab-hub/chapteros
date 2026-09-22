@@ -126,10 +126,10 @@ export function GoogleServiceCardsGrid({
     <div className="space-y-3">
       <div className="flex items-center justify-between">
         <div>
-          <h3 className="text-base font-bold text-slate-900 tracking-tight">
+          <h3 className="text-base font-bold text-ink-navy tracking-tight">
             Trung tâm Điều khiển Dịch vụ Google Workspace
           </h3>
-          <p className="text-xs text-slate-500">
+          <p className="text-xs text-mist-gray">
             Trạng thái phân quyền, năng lực tự động hóa và thông số vận hành của từng dịch vụ
           </p>
         </div>

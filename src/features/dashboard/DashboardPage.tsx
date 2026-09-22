@@ -141,19 +141,19 @@ export function DashboardPage() {
   if (!currentOrg) {
     return (
       <div className="py-16 px-4 text-center max-w-md mx-auto space-y-4">
-        <div className="w-12 h-12 rounded-2xl bg-amber-100 text-amber-700 flex items-center justify-center mx-auto border border-amber-200">
+        <div className="w-12 h-12 rounded-2xl bg-amber-50 text-amber-700 flex items-center justify-center mx-auto border border-amber-200">
           <Building2 strokeWidth={1.5} className="w-6 h-6" />
         </div>
         <div className="space-y-1">
-          <h3 className="text-base font-bold text-slate-900">
+          <h3 className="text-base font-bold text-ink-navy">
             Chưa chọn Đơn vị hoạt động
           </h3>
-          <p className="text-xs text-slate-500">
+          <p className="text-xs text-slate-gray">
             Tài khoản của bạn chưa được liên kết hoặc chưa chọn Chi hội quản lý. Vui lòng chuyển đổi hoặc liên kết Chi hội trong mục Cài đặt.
           </p>
         </div>
         <Link to="/chapters">
-          <Button size="sm" className="text-xs cursor-pointer">
+          <Button size="sm" className="text-xs bg-signal-blue hover:bg-[#005be0] text-white rounded-lg shadow-sm cursor-pointer">
             Chọn Chi hội
           </Button>
         </Link>
@@ -184,7 +184,7 @@ export function DashboardPage() {
       {isStatsLoading ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-3.5 sm:gap-4">
           {[1, 2, 3, 4, 5, 6].map((i) => (
-            <div key={i} className="h-28 rounded-xl bg-slate-100 animate-pulse" />
+            <div key={i} className="h-28 rounded-xl bg-pebble animate-pulse" />
           ))}
         </div>
       ) : statsError || !stats ? (
@@ -210,7 +210,7 @@ export function DashboardPage() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 sm:gap-6 items-start">
         {/* Upcoming Activities */}
         {isActivitiesLoading ? (
-          <div className="h-60 rounded-xl bg-slate-100 animate-pulse" />
+          <div className="h-60 rounded-xl bg-pebble animate-pulse" />
         ) : activitiesError ? (
           <DashboardErrorState
             title="Lỗi tải hoạt động sắp tới"
@@ -225,7 +225,7 @@ export function DashboardPage() {
 
         {/* Task Center */}
         {isTasksLoading ? (
-          <div className="h-60 rounded-xl bg-slate-100 animate-pulse" />
+          <div className="h-60 rounded-xl bg-pebble animate-pulse" />
         ) : tasksError ? (
           <DashboardErrorState
             title="Lỗi tải công việc cần xử lý"
@@ -250,14 +250,14 @@ export function DashboardPage() {
         <div className="lg:col-span-7 xl:col-span-7 space-y-5 sm:space-y-6">
           {/* Finance Snapshot */}
           {isStatsLoading ? (
-            <div className="h-48 rounded-xl bg-slate-100 animate-pulse" />
+            <div className="h-48 rounded-xl bg-pebble animate-pulse" />
           ) : stats ? (
             <FinanceSummaryCard finance={stats.finance} />
           ) : null}
 
           {/* Work Progress Bar */}
           {isStatsLoading ? (
-            <div className="h-40 rounded-xl bg-slate-100 animate-pulse" />
+            <div className="h-40 rounded-xl bg-pebble animate-pulse" />
           ) : stats ? (
             <WorkProgressCard tasks={stats.tasks} />
           ) : null}
@@ -267,8 +267,8 @@ export function DashboardPage() {
       {/* TẦNG 4: Financial Trend & Task Status / Analytics */}
       {isChartsLoading ? (
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 sm:gap-6">
-          <div className="h-68 rounded-xl bg-slate-100 animate-pulse" />
-          <div className="h-68 rounded-xl bg-slate-100 animate-pulse" />
+          <div className="h-68 rounded-xl bg-pebble animate-pulse" />
+          <div className="h-68 rounded-xl bg-pebble animate-pulse" />
         </div>
       ) : chartsError || !chartData ? (
         <DashboardErrorState

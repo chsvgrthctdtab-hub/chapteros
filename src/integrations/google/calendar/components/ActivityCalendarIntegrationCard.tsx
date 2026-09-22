@@ -197,19 +197,19 @@ export function ActivityCalendarIntegrationCard({
   return (
     <div id="google-calendar-integration-section" className="space-y-6">
       {/* Header Info */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-100">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-hairline">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-xl bg-blue-50 border border-blue-100 text-blue-600 flex items-center justify-center shrink-0 shadow-2xs">
+          <div className="w-10 h-10 rounded-xl bg-[#e6f0ff] border border-[#d4e4fa] text-signal-blue flex items-center justify-center shrink-0 shadow-xs">
             <CalendarDays className="w-5 h-5" />
           </div>
           <div>
             <div className="flex items-center gap-2">
-              <h3 className="text-sm font-bold text-slate-900">Tích hợp Google Calendar</h3>
-              <Badge variant="outline" className="text-[10px] px-1.5 py-0 text-blue-700 bg-blue-50/60 border-blue-200">
+              <h3 className="text-sm font-bold text-ink-navy">Tích hợp Google Calendar</h3>
+              <Badge variant="outline" className="text-[10px] px-1.5 py-0 text-signal-blue bg-[#e6f0ff]/60 border-[#d4e4fa]">
                 Phase 13
               </Badge>
             </div>
-            <p className="text-xs text-slate-500">
+            <p className="text-xs text-mist-gray">
               Chiếu lịch hoạt động sang Google Calendar để theo dõi lịch trình và nhận thông báo nhắc nhở.
             </p>
           </div>
@@ -223,7 +223,7 @@ export function ActivityCalendarIntegrationCard({
             variant="outline"
             size="sm"
             onClick={handleOpenGoogleCalendar}
-            className="text-xs text-blue-600 hover:text-blue-700 hover:bg-blue-50/50 border-blue-200"
+            className="text-xs text-signal-blue hover:text-[#005be0] hover:bg-[#e6f0ff]/50 border-[#d4e4fa]"
           >
             <ExternalLink className="w-3.5 h-3.5 mr-1.5" />
             Mở Google Calendar
@@ -238,7 +238,7 @@ export function ActivityCalendarIntegrationCard({
                   size="sm"
                   onClick={handleOpenCreateModal}
                   disabled={!validation.isValid || isPending}
-                  className="text-xs bg-blue-600 hover:bg-blue-700 text-white shadow-xs"
+                  className="text-xs bg-signal-blue hover:bg-[#005be0] text-white shadow-xs"
                 >
                   <Plus className="w-3.5 h-3.5 mr-1.5" />
                   Lưu liên kết Lịch
@@ -251,9 +251,9 @@ export function ActivityCalendarIntegrationCard({
                   size="sm"
                   onClick={handleUpdateEvent}
                   disabled={isPending}
-                  className="text-xs text-slate-700 hover:bg-slate-50"
+                  className="text-xs text-slate-gray hover:bg-cloud"
                 >
-                  <RefreshCw className={`w-3.5 h-3.5 mr-1.5 text-slate-500 ${updateMutation.isPending ? 'animate-spin' : ''}`} />
+                  <RefreshCw className={`w-3.5 h-3.5 mr-1.5 text-mist-gray ${updateMutation.isPending ? 'animate-spin' : ''}`} />
                   Cập nhật liên kết
                 </Button>
               )}
@@ -276,12 +276,12 @@ export function ActivityCalendarIntegrationCard({
       {/* Main State Box */}
       {isLoadingEvent ? (
         <div className="py-12 flex flex-col items-center justify-center gap-2">
-          <Loader2 strokeWidth={1.5} className="w-6 h-6 animate-spin text-blue-600" />
-          <p className="text-xs text-slate-500 font-medium">Đang kiểm tra liên kết Google Calendar...</p>
+          <Loader2 strokeWidth={1.5} className="w-6 h-6 animate-spin text-signal-blue" />
+          <p className="text-xs text-mist-gray font-medium">Đang kiểm tra liên kết Google Calendar...</p>
         </div>
       ) : isLinked && calendarEvent ? (
         /* LINKED STATE */
-        <div className="bg-slate-50/70 border border-slate-200/90 rounded-xl p-5 space-y-4">
+        <div className="bg-cloud border border-hairline rounded-xl p-5 space-y-4">
           <div className="flex items-start justify-between gap-4 flex-wrap">
             <div className="space-y-1">
               <div className="flex items-center gap-2 flex-wrap">
@@ -289,11 +289,11 @@ export function ActivityCalendarIntegrationCard({
                   <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
                   Đã liên kết Lịch Google
                 </span>
-                <span className="text-[11px] text-slate-400">
-                  ID: <code className="font-mono text-slate-600">{calendarEvent.googleEventId}</code>
+                <span className="text-[11px] text-mist-gray">
+                  ID: <code className="font-mono text-slate-gray">{calendarEvent.googleEventId}</code>
                 </span>
               </div>
-              <h4 className="text-base font-bold text-slate-900 pt-1">
+              <h4 className="text-base font-bold text-ink-navy pt-1">
                 {activity.title}
               </h4>
             </div>
@@ -303,9 +303,9 @@ export function ActivityCalendarIntegrationCard({
                 type="button"
                 id="copy-calendar-link-btn"
                 onClick={handleCopyLink}
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-slate-600 bg-white hover:bg-slate-100 border border-slate-200 rounded-lg transition-colors cursor-pointer"
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-slate-gray bg-white hover:bg-cloud border border-hairline rounded-lg transition-colors cursor-pointer"
               >
-                {isCopied ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <Copy className="w-3.5 h-3.5 text-slate-400" />}
+                {isCopied ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <Copy className="w-3.5 h-3.5 text-mist-gray" />}
                 <span>{isCopied ? 'Đã sao chép' : 'Sao chép link'}</span>
               </button>
 
@@ -315,9 +315,9 @@ export function ActivityCalendarIntegrationCard({
                     type="button"
                     id="open-unlink-calendar-dialog-btn"
                     onClick={() => setIsUnlinkModalOpen(true)}
-                    className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-slate-600 bg-white hover:bg-slate-100 border border-slate-200 rounded-lg transition-colors cursor-pointer"
+                    className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-slate-gray bg-white hover:bg-cloud border border-hairline rounded-lg transition-colors cursor-pointer"
                   >
-                    <Unlink className="w-3.5 h-3.5 text-slate-400" />
+                    <Unlink className="w-3.5 h-3.5 text-mist-gray" />
                     <span>Ngắt liên kết</span>
                   </button>
 
@@ -336,35 +336,35 @@ export function ActivityCalendarIntegrationCard({
           </div>
 
           {/* Details Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-3 pt-3 border-t border-slate-200/70 text-xs">
-            <div className="bg-white p-3 rounded-lg border border-slate-200/60 space-y-1">
-              <div className="flex items-center gap-1.5 text-slate-400 font-medium text-[11px]">
-                <Clock className="w-3.5 h-3.5 text-blue-600" />
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-3 pt-3 border-t border-hairline text-xs">
+            <div className="bg-white p-3 rounded-lg border border-hairline space-y-1">
+              <div className="flex items-center gap-1.5 text-mist-gray font-medium text-[11px]">
+                <Clock className="w-3.5 h-3.5 text-signal-blue" />
                 <span>Thời gian sự kiện</span>
               </div>
-              <p className="font-semibold text-slate-800 truncate">
+              <p className="font-semibold text-ink-navy truncate">
                 {formatDateRange(activity.startDate, activity.endDate)}
               </p>
-              <p className="text-[10px] text-slate-500">{APP_DEFAULT_TIMEZONE_LABEL}</p>
+              <p className="text-[10px] text-mist-gray">{APP_DEFAULT_TIMEZONE_LABEL}</p>
             </div>
 
-            <div className="bg-white p-3 rounded-lg border border-slate-200/60 space-y-1">
-              <div className="flex items-center gap-1.5 text-slate-400 font-medium text-[11px]">
-                <Layers className="w-3.5 h-3.5 text-blue-600" />
+            <div className="bg-white p-3 rounded-lg border border-hairline space-y-1">
+              <div className="flex items-center gap-1.5 text-mist-gray font-medium text-[11px]">
+                <Layers className="w-3.5 h-3.5 text-signal-blue" />
                 <span>Lịch đích (Calendar)</span>
               </div>
-              <p className="font-semibold text-slate-800 truncate">
+              <p className="font-semibold text-ink-navy truncate">
                 {calendarEvent.googleCalendarSummary || 'Lịch chính (Primary Calendar)'}
               </p>
-              <p className="text-[10px] text-slate-500">Tài khoản Google liên kết</p>
+              <p className="text-[10px] text-mist-gray">Tài khoản Google liên kết</p>
             </div>
 
-            <div className="bg-white p-3 rounded-lg border border-slate-200/60 space-y-1">
-              <div className="flex items-center gap-1.5 text-slate-400 font-medium text-[11px]">
-                <RefreshCw className="w-3.5 h-3.5 text-blue-600" />
+            <div className="bg-white p-3 rounded-lg border border-hairline space-y-1">
+              <div className="flex items-center gap-1.5 text-mist-gray font-medium text-[11px]">
+                <RefreshCw className="w-3.5 h-3.5 text-signal-blue" />
                 <span>Lần đồng bộ cuối</span>
               </div>
-              <p className="font-semibold text-slate-800">
+              <p className="font-semibold text-ink-navy">
                 {calendarEvent.lastSyncedAt ? formatDateTime(calendarEvent.lastSyncedAt) : 'Vừa xong'}
               </p>
               <p className="text-[10px] text-emerald-600 font-medium">Trạng thái: Đã khớp liên kết</p>
@@ -372,14 +372,14 @@ export function ActivityCalendarIntegrationCard({
           </div>
 
           {/* Sync Direction Notice */}
-          <div className="p-3 bg-blue-50/50 border border-blue-100 rounded-lg text-xs text-blue-900 flex items-center justify-between gap-3">
+          <div className="p-3 bg-[#e6f0ff]/50 border border-[#d4e4fa] rounded-lg text-xs text-ink-navy flex items-center justify-between gap-3">
             <div className="flex items-center gap-2">
-              <Globe className="w-4 h-4 text-blue-600 shrink-0" />
+              <Globe className="w-4 h-4 text-signal-blue shrink-0" />
               <span>
                 <strong>Mô hình liên kết:</strong> ChapterOS (Nguồn dữ liệu gốc) → Google Calendar (Chiếu lịch trình).
               </span>
             </div>
-            <span className="text-[11px] text-blue-700 shrink-0 hidden sm:inline">
+            <span className="text-[11px] text-signal-blue shrink-0 hidden sm:inline">
               Múi giờ chuẩn GMT+7
             </span>
           </div>
@@ -412,16 +412,16 @@ export function ActivityCalendarIntegrationCard({
         </div>
       ) : (
         /* NOT LINKED STATE */
-        <div className="bg-slate-50/50 border border-dashed border-slate-200 rounded-xl p-6 sm:p-8 text-center space-y-4">
-          <div className="w-12 h-12 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center mx-auto border border-blue-100 shadow-2xs">
+        <div className="bg-cloud/50 border border-dashed border-hairline rounded-xl p-6 sm:p-8 text-center space-y-4">
+          <div className="w-12 h-12 rounded-2xl bg-[#e6f0ff] text-signal-blue flex items-center justify-center mx-auto border border-[#d4e4fa] shadow-xs">
             <CalendarDays className="w-6 h-6" />
           </div>
 
           <div className="space-y-1.5 max-w-md mx-auto">
-            <h4 className="text-sm font-bold text-slate-900">
+            <h4 className="text-sm font-bold text-ink-navy">
               Thêm hoạt động vào Google Calendar
             </h4>
-            <p className="text-xs text-slate-500 leading-relaxed">
+            <p className="text-xs text-mist-gray leading-relaxed">
               Bạn có thể mở ngay trên Google Calendar để lưu vào lịch cá nhân, hoặc lưu bản ghi liên kết vào hệ thống quản lý chi hội.
             </p>
           </div>
@@ -449,7 +449,7 @@ export function ActivityCalendarIntegrationCard({
               size="sm"
               onClick={handleOpenGoogleCalendar}
               disabled={!validation.isValid}
-              className="text-xs text-blue-600 hover:text-blue-700 hover:bg-blue-50/50 border-blue-200"
+              className="text-xs text-signal-blue hover:text-[#005be0] hover:bg-[#e6f0ff]/50 border-[#d4e4fa]"
             >
               <ExternalLink className="w-3.5 h-3.5 mr-1.5" />
               Thêm vào Google Calendar ngay
@@ -462,7 +462,7 @@ export function ActivityCalendarIntegrationCard({
                 size="sm"
                 onClick={handleOpenCreateModal}
                 disabled={!validation.isValid || isPending}
-                className="text-xs bg-blue-600 hover:bg-blue-700 text-white shadow-xs"
+                className="text-xs bg-signal-blue hover:bg-[#005be0] text-white shadow-xs"
               >
                 <Plus className="w-3.5 h-3.5 mr-1.5" />
                 Lưu liên kết Lịch Chi hội
@@ -473,27 +473,27 @@ export function ActivityCalendarIntegrationCard({
       )}
 
       {/* Projection Principles Guide */}
-      <div className="p-4 bg-slate-50/70 border border-slate-200/80 rounded-xl space-y-3 text-xs">
-        <h5 className="font-bold text-slate-900 flex items-center gap-1.5">
-          <HelpCircle className="w-4 h-4 text-blue-600" />
+      <div className="p-4 bg-cloud border border-hairline rounded-xl space-y-3 text-xs">
+        <h5 className="font-bold text-ink-navy flex items-center gap-1.5">
+          <HelpCircle className="w-4 h-4 text-signal-blue" />
           <span>Nguyên tắc quản lý & Nguồn sự thật (Source of Truth):</span>
         </h5>
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-slate-600 leading-relaxed">
-          <div className="p-2.5 rounded-lg bg-white border border-slate-200/60 space-y-1">
-            <span className="font-semibold text-slate-800 block text-[11px]">1. Supabase là nguồn sự thật</span>
-            <p className="text-[11px] text-slate-500">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-slate-gray leading-relaxed">
+          <div className="p-2.5 rounded-lg bg-white border border-hairline space-y-1">
+            <span className="font-semibold text-ink-navy block text-[11px]">1. Supabase là nguồn sự thật</span>
+            <p className="text-[11px] text-mist-gray">
               ChapterOS nắm giữ dữ liệu gốc. Google Calendar đóng vai trò là lớp hiển thị chiếu (projection layer).
             </p>
           </div>
-          <div className="p-2.5 rounded-lg bg-white border border-slate-200/60 space-y-1">
-            <span className="font-semibold text-slate-800 block text-[11px]">2. Phân định ngắt liên kết</span>
-            <p className="text-[11px] text-slate-500">
+          <div className="p-2.5 rounded-lg bg-white border border-hairline space-y-1">
+            <span className="font-semibold text-ink-navy block text-[11px]">2. Phân định ngắt liên kết</span>
+            <p className="text-[11px] text-mist-gray">
               Ngắt liên kết chỉ xóa bản ghi mapping trong hệ thống, không xóa hoạt động Chi hội và không ảnh hưởng tài khoản cá nhân.
             </p>
           </div>
-          <div className="p-2.5 rounded-lg bg-white border border-slate-200/60 space-y-1">
-            <span className="font-semibold text-slate-800 block text-[11px]">3. Chuẩn hóa Múi giờ GMT+7</span>
-            <p className="text-[11px] text-slate-500">
+          <div className="p-2.5 rounded-lg bg-white border border-hairline space-y-1">
+            <span className="font-semibold text-ink-navy block text-[11px]">3. Chuẩn hóa Múi giờ GMT+7</span>
+            <p className="text-[11px] text-mist-gray">
               Đảm bảo thời gian bắt đầu và kết thúc sự kiện được cố định theo giờ chuẩn Việt Nam ({APP_DEFAULT_TIMEZONE_LABEL}).
             </p>
           </div>
@@ -504,29 +504,29 @@ export function ActivityCalendarIntegrationCard({
       <Dialog open={isCreateModalOpen} onOpenChange={(open) => !isPending && setIsCreateModalOpen(open)}>
         <DialogContent className="sm:max-w-md">
           <DialogHeader>
-            <div className="flex items-center gap-2 text-blue-600">
+            <div className="flex items-center gap-2 text-signal-blue">
               <CalendarDays className="w-5 h-5" />
-              <DialogTitle className="text-base font-bold text-slate-900">
+              <DialogTitle className="text-base font-bold text-ink-navy">
                 Lưu liên kết Google Calendar
               </DialogTitle>
             </div>
-            <DialogDescription className="text-xs text-slate-500">
+            <DialogDescription className="text-xs text-mist-gray">
               Chọn Lịch đích để liên kết thông tin hoạt động từ ChapterOS với Google Calendar.
             </DialogDescription>
           </DialogHeader>
 
           <div className="space-y-4 py-2 text-xs">
             {/* Activity Summary Preview */}
-            <div className="p-3.5 bg-slate-50 rounded-xl border border-slate-200 space-y-2">
-              <p className="font-bold text-slate-900 text-sm">{activity.title}</p>
-              <div className="space-y-1 text-slate-600">
+            <div className="p-3.5 bg-cloud rounded-xl border border-hairline space-y-2">
+              <p className="font-bold text-ink-navy text-sm">{activity.title}</p>
+              <div className="space-y-1 text-slate-gray">
                 <div className="flex items-center gap-1.5">
-                  <Calendar className="w-3.5 h-3.5 text-slate-400" />
+                  <Calendar className="w-3.5 h-3.5 text-mist-gray" />
                   <span>{formatDateRange(activity.startDate, activity.endDate)}</span>
                 </div>
                 {activity.location && (
                   <div className="flex items-center gap-1.5">
-                    <MapPin className="w-3.5 h-3.5 text-slate-400" />
+                    <MapPin className="w-3.5 h-3.5 text-mist-gray" />
                     <span>{activity.location}</span>
                   </div>
                 )}
@@ -535,12 +535,12 @@ export function ActivityCalendarIntegrationCard({
 
             {/* Calendar Selector */}
             <div className="space-y-1.5">
-              <label className="font-semibold text-slate-800 block">
+              <label className="font-semibold text-ink-navy block">
                 Chọn Lịch Google nhận sự kiện:
               </label>
               {isLoadingCalendars ? (
-                <div className="flex items-center gap-2 p-2.5 bg-slate-50 border border-slate-200 rounded-lg text-slate-500">
-                  <Loader2 className="w-4 h-4 animate-spin text-blue-600" />
+                <div className="flex items-center gap-2 p-2.5 bg-cloud border border-hairline rounded-lg text-mist-gray">
+                  <Loader2 className="w-4 h-4 animate-spin text-signal-blue" />
                   <span>Đang tải danh sách lịch...</span>
                 </div>
               ) : (
@@ -553,17 +553,17 @@ export function ActivityCalendarIntegrationCard({
                         onClick={() => setSelectedCalendarId(cal.id)}
                         className={`p-3 rounded-xl border transition-all cursor-pointer flex items-center justify-between ${
                           isSelected
-                            ? 'bg-blue-50/70 border-blue-300 ring-1 ring-blue-300'
-                            : 'bg-white border-slate-200 hover:bg-slate-50'
+                            ? 'bg-[#e6f0ff]/70 border-signal-blue ring-1 ring-signal-blue'
+                            : 'bg-white border-hairline hover:bg-cloud'
                         }`}
                       >
                         <div className="space-y-0.5 min-w-0 pr-2">
-                          <p className="font-bold text-slate-900 truncate">{cal.summary}</p>
-                          <p className="text-[11px] text-slate-500 truncate">
+                          <p className="font-bold text-ink-navy truncate">{cal.summary}</p>
+                          <p className="text-[11px] text-mist-gray truncate">
                             {cal.description || (cal.primary ? 'Lịch cá nhân chính' : 'Lịch Google Chi hội')}
                           </p>
                         </div>
-                        {isSelected && <CheckCircle2 className="w-4 h-4 text-blue-600 shrink-0" />}
+                        {isSelected && <CheckCircle2 className="w-4 h-4 text-signal-blue shrink-0" />}
                       </div>
                     );
                   })}
@@ -572,7 +572,7 @@ export function ActivityCalendarIntegrationCard({
             </div>
 
             {/* Note on notification */}
-            <p className="text-[11px] text-slate-500 leading-relaxed italic bg-slate-50 p-2.5 rounded-lg border border-slate-200/60">
+            <p className="text-[11px] text-mist-gray leading-relaxed italic bg-cloud p-2.5 rounded-lg border border-hairline">
               ℹ️ Sự kiện sẽ được tạo với cấu hình múi giờ chuẩn Việt Nam (GMT+7). Ban Chấp Hành có thể nhấp để thêm vào Google Calendar bất cứ lúc nào.
             </p>
           </div>
@@ -594,7 +594,7 @@ export function ActivityCalendarIntegrationCard({
               size="sm"
               onClick={handleCreateConfirm}
               disabled={isPending || !selectedCalendarId}
-              className="text-xs bg-blue-600 hover:bg-blue-700 text-white"
+              className="text-xs bg-signal-blue hover:bg-[#005be0] text-white"
             >
               {createMutation.isPending && <Loader2 className="w-3.5 h-3.5 animate-spin mr-1.5" />}
               Xác nhận lưu liên kết
@@ -607,13 +607,13 @@ export function ActivityCalendarIntegrationCard({
       <Dialog open={isUnlinkModalOpen} onOpenChange={(open) => !isPending && setIsUnlinkModalOpen(open)}>
         <DialogContent className="sm:max-w-md">
           <DialogHeader>
-            <div className="flex items-center gap-2 text-slate-700">
+            <div className="flex items-center gap-2 text-slate-gray">
               <Unlink strokeWidth={1.5} className="w-5 h-5 text-amber-600" />
-              <DialogTitle className="text-base font-bold text-slate-900">
+              <DialogTitle className="text-base font-bold text-ink-navy">
                 Ngắt liên kết Google Calendar
               </DialogTitle>
             </div>
-            <DialogDescription className="text-xs text-slate-500">
+            <DialogDescription className="text-xs text-mist-gray">
               Bạn có chắc chắn muốn ngắt liên kết giữa hoạt động này và Google Calendar?
             </DialogDescription>
           </DialogHeader>
@@ -644,7 +644,7 @@ export function ActivityCalendarIntegrationCard({
               size="sm"
               onClick={handleUnlinkConfirm}
               disabled={isPending}
-              className="text-xs bg-slate-900 hover:bg-black text-white"
+              className="text-xs bg-ink-navy hover:bg-black text-white"
             >
               {unlinkMutation.isPending && <Loader2 className="w-3.5 h-3.5 animate-spin mr-1.5" />}
               Xác nhận ngắt liên kết
@@ -659,11 +659,11 @@ export function ActivityCalendarIntegrationCard({
           <DialogHeader>
             <div className="flex items-center gap-2 text-rose-600">
               <Trash2 strokeWidth={1.5} className="w-5 h-5" />
-              <DialogTitle className="text-base font-bold text-slate-900">
+              <DialogTitle className="text-base font-bold text-ink-navy">
                 Xóa bản ghi liên kết Google Calendar
               </DialogTitle>
             </div>
-            <DialogDescription className="text-xs text-slate-500">
+            <DialogDescription className="text-xs text-mist-gray">
               Thao tác này sẽ xóa bản ghi liên kết lịch trong hệ thống ChapterOS.
             </DialogDescription>
           </DialogHeader>

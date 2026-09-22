@@ -28,16 +28,16 @@ interface TaskReportProps {
 const PRIORITY_META: Record<string, { label: string; color: string; badgeClass: string }> = {
   urgent: { label: 'Khẩn cấp', color: '#e11d48', badgeClass: 'bg-rose-50 text-rose-700 border-rose-200' },
   high: { label: 'Ưu tiên cao', color: '#f59e0b', badgeClass: 'bg-amber-50 text-amber-700 border-amber-200' },
-  medium: { label: 'Trung bình', color: '#3b82f6', badgeClass: 'bg-blue-50 text-blue-700 border-blue-200' },
-  low: { label: 'Thấp', color: '#94a3b8', badgeClass: 'bg-slate-100 text-slate-700 border-slate-200' },
+  medium: { label: 'Trung bình', color: '#006bff', badgeClass: 'bg-[#e6f0ff] text-signal-blue border-[#d4e4fa]' },
+  low: { label: 'Thấp', color: '#6b7280', badgeClass: 'bg-cloud text-slate-gray border-hairline' },
 };
 
 const STATUS_META: Record<string, { label: string; color: string; badgeClass: string }> = {
   completed: { label: 'Đã hoàn thành', color: '#10b981', badgeClass: 'bg-emerald-50 text-emerald-700 border-emerald-200' },
-  in_progress: { label: 'Đang thực hiện', color: '#3b82f6', badgeClass: 'bg-blue-50 text-blue-700 border-blue-200' },
+  in_progress: { label: 'Đang thực hiện', color: '#006bff', badgeClass: 'bg-[#e6f0ff] text-signal-blue border-[#d4e4fa]' },
   in_review: { label: 'Đang chờ duyệt', color: '#8b5cf6', badgeClass: 'bg-purple-50 text-purple-700 border-purple-200' },
   todo: { label: 'Cần làm', color: '#f59e0b', badgeClass: 'bg-amber-50 text-amber-700 border-amber-200' },
-  cancelled: { label: 'Đã hủy', color: '#94a3b8', badgeClass: 'bg-slate-100 text-slate-700 border-slate-200' },
+  cancelled: { label: 'Đã hủy', color: '#6b7280', badgeClass: 'bg-cloud text-slate-gray border-hairline' },
 };
 
 export function TaskReport({ organizationId, filterParams }: TaskReportProps) {
@@ -93,21 +93,21 @@ export function TaskReport({ organizationId, filterParams }: TaskReportProps) {
   const statusPieData = byStatus.map((s) => ({
     name: STATUS_META[s.status]?.label || s.status,
     count: s.count,
-    color: STATUS_META[s.status]?.color || '#94a3b8',
+    color: STATUS_META[s.status]?.color || '#6b7280',
   }));
 
   // Format Priority for BarChart
   const priorityBarData = byPriority.map((p) => ({
     priority: PRIORITY_META[p.priority]?.label || p.priority,
     count: p.count,
-    color: PRIORITY_META[p.priority]?.color || '#3b82f6',
+    color: PRIORITY_META[p.priority]?.color || '#006bff',
   }));
 
   return (
     <div className="space-y-6" id="task-report-section">
       {/* Overdue Warning Alert Banner if overdue > 0 */}
       {overdueTasks > 0 && (
-        <div className="rounded-xl border border-rose-200 bg-rose-50/80 p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-rose-900 shadow-2xs">
+        <div className="rounded-xl border border-rose-200 bg-rose-50/80 p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-rose-900 shadow-xs">
           <div className="flex items-center gap-3">
             <div className="w-9 h-9 rounded-lg bg-rose-100 text-rose-600 flex items-center justify-center shrink-0">
               <AlertTriangle className="w-5 h-5" />
@@ -123,7 +123,7 @@ export function TaskReport({ organizationId, filterParams }: TaskReportProps) {
           </div>
           <Link
             to="/tasks"
-            className="shrink-0 inline-flex items-center gap-1 text-2xs font-semibold px-3 py-1.5 bg-rose-600 hover:bg-rose-700 text-white rounded-lg transition-colors shadow-2xs self-start sm:self-center"
+            className="shrink-0 inline-flex items-center gap-1 text-2xs font-semibold px-3 py-1.5 bg-rose-600 hover:bg-rose-700 text-white rounded-lg transition-colors shadow-xs self-start sm:self-center"
           >
             <span>Mở bảng nhiệm vụ</span>
             <ArrowRight className="w-3.5 h-3.5" />
@@ -133,18 +133,18 @@ export function TaskReport({ organizationId, filterParams }: TaskReportProps) {
 
       {/* 1. KPI Strip */}
       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3.5">
-        <Card className="border-slate-200/90 shadow-2xs bg-white">
+        <Card className="border-hairline shadow-xs bg-white">
           <CardContent className="p-3.5">
             <div className="flex items-center justify-between">
-              <span className="text-2xs font-bold uppercase tracking-wider text-slate-500">Tổng đầu việc</span>
-              <CheckSquare className="w-3.5 h-3.5 text-blue-600" />
+              <span className="text-2xs font-bold uppercase tracking-wider text-mist-gray">Tổng đầu việc</span>
+              <CheckSquare className="w-3.5 h-3.5 text-signal-blue" />
             </div>
-            <div className="mt-2 text-xl font-black text-slate-900">{totalTasks}</div>
-            <div className="mt-0.5 text-3xs text-slate-400">Đã giao cho nhân sự</div>
+            <div className="mt-2 text-xl font-black text-ink-navy">{totalTasks}</div>
+            <div className="mt-0.5 text-3xs text-mist-gray">Đã giao cho nhân sự</div>
           </CardContent>
         </Card>
 
-        <Card className="border-slate-200/90 shadow-2xs bg-white">
+        <Card className="border-hairline shadow-xs bg-white">
           <CardContent className="p-3.5">
             <div className="flex items-center justify-between">
               <span className="text-2xs font-bold uppercase tracking-wider text-emerald-600">Đã hoàn thành</span>
@@ -155,49 +155,49 @@ export function TaskReport({ organizationId, filterParams }: TaskReportProps) {
           </CardContent>
         </Card>
 
-        <Card className="border-slate-200/90 shadow-2xs bg-white">
+        <Card className="border-hairline shadow-xs bg-white">
           <CardContent className="p-3.5">
             <div className="flex items-center justify-between">
-              <span className="text-2xs font-bold uppercase tracking-wider text-blue-600">Đang triển khai</span>
-              <PlayCircle className="w-3.5 h-3.5 text-blue-600" />
+              <span className="text-2xs font-bold uppercase tracking-wider text-signal-blue">Đang triển khai</span>
+              <PlayCircle className="w-3.5 h-3.5 text-signal-blue" />
             </div>
-            <div className="mt-2 text-xl font-black text-blue-700">{ongoingTasks}</div>
-            <div className="mt-0.5 text-3xs text-slate-400">{inProgressTasks} đang làm • {inReviewTasks} chờ duyệt</div>
+            <div className="mt-2 text-xl font-black text-signal-blue">{ongoingTasks}</div>
+            <div className="mt-0.5 text-3xs text-mist-gray">{inProgressTasks} đang làm • {inReviewTasks} chờ duyệt</div>
           </CardContent>
         </Card>
 
-        <Card className="border-slate-200/90 shadow-2xs bg-white">
+        <Card className="border-hairline shadow-xs bg-white">
           <CardContent className="p-3.5">
             <div className="flex items-center justify-between">
               <span className="text-2xs font-bold uppercase tracking-wider text-amber-600">Cần làm</span>
               <Clock className="w-3.5 h-3.5 text-amber-600" />
             </div>
             <div className="mt-2 text-xl font-black text-amber-700">{todoTasks}</div>
-            <div className="mt-0.5 text-3xs text-slate-400">Chưa bắt đầu</div>
+            <div className="mt-0.5 text-3xs text-mist-gray">Chưa bắt đầu</div>
           </CardContent>
         </Card>
 
-        <Card className="border-slate-200/90 shadow-2xs bg-white">
+        <Card className="border-hairline shadow-xs bg-white">
           <CardContent className="p-3.5">
             <div className="flex items-center justify-between">
               <span className="text-2xs font-bold uppercase tracking-wider text-rose-600">Quá hạn</span>
               <AlertTriangle className="w-3.5 h-3.5 text-rose-600" />
             </div>
-            <div className={`mt-2 text-xl font-black ${overdueTasks > 0 ? 'text-rose-700' : 'text-slate-700'}`}>
+            <div className={`mt-2 text-xl font-black ${overdueTasks > 0 ? 'text-rose-700' : 'text-slate-gray'}`}>
               {overdueTasks}
             </div>
-            <div className="mt-0.5 text-3xs text-slate-400">Vượt quá hạn chót</div>
+            <div className="mt-0.5 text-3xs text-mist-gray">Vượt quá hạn chót</div>
           </CardContent>
         </Card>
 
-        <Card className="border-slate-200/90 shadow-2xs bg-white">
+        <Card className="border-hairline shadow-xs bg-white">
           <CardContent className="p-3.5">
             <div className="flex items-center justify-between">
-              <span className="text-2xs font-bold uppercase tracking-wider text-purple-600">Tiến độ TB</span>
-              <div className="w-3.5 h-3.5 rounded-full bg-purple-100 text-purple-600 flex items-center justify-center text-3xs font-bold">%</div>
+              <span className="text-2xs font-bold uppercase tracking-wider text-signal-blue">Tiến độ TB</span>
+              <div className="w-3.5 h-3.5 rounded-full bg-[#e6f0ff] text-signal-blue flex items-center justify-center text-3xs font-bold">%</div>
             </div>
-            <div className="mt-2 text-xl font-black text-purple-700">{averageProgress}%</div>
-            <div className="mt-0.5 text-3xs text-slate-400">Toàn bộ danh mục</div>
+            <div className="mt-2 text-xl font-black text-signal-blue">{averageProgress}%</div>
+            <div className="mt-0.5 text-3xs text-mist-gray">Toàn bộ danh mục</div>
           </CardContent>
         </Card>
       </div>
@@ -205,12 +205,12 @@ export function TaskReport({ organizationId, filterParams }: TaskReportProps) {
       {/* 2. Charts Section */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
         {/* Status Distribution Pie Chart */}
-        <Card className="border-slate-200/90 shadow-2xs bg-white">
-          <CardHeader className="p-4 pb-2 border-b border-slate-100">
-            <CardTitle className="text-xs font-bold uppercase tracking-wider text-slate-900">
+        <Card className="border-hairline shadow-xs bg-white">
+          <CardHeader className="p-4 pb-2 border-b border-hairline">
+            <CardTitle className="text-xs font-bold uppercase tracking-wider text-ink-navy">
               Phân bổ Trạng thái Nhiệm vụ
             </CardTitle>
-            <CardDescription className="text-2xs text-slate-500">
+            <CardDescription className="text-2xs text-mist-gray">
               Tỷ lệ hoàn thành và các giai đoạn thực hiện công việc
             </CardDescription>
           </CardHeader>
@@ -239,7 +239,7 @@ export function TaskReport({ organizationId, filterParams }: TaskReportProps) {
                   <Legend
                     verticalAlign="bottom"
                     height={36}
-                    formatter={(val: string) => <span className="text-2xs font-medium text-slate-700">{val}</span>}
+                    formatter={(val: string) => <span className="text-2xs font-medium text-slate-gray">{val}</span>}
                   />
                 </PieChart>
               </ResponsiveContainer>
@@ -248,12 +248,12 @@ export function TaskReport({ organizationId, filterParams }: TaskReportProps) {
         </Card>
 
         {/* Priority Distribution Bar Chart */}
-        <Card className="border-slate-200/90 shadow-2xs bg-white">
-          <CardHeader className="p-4 pb-2 border-b border-slate-100">
-            <CardTitle className="text-xs font-bold uppercase tracking-wider text-slate-900">
+        <Card className="border-hairline shadow-xs bg-white">
+          <CardHeader className="p-4 pb-2 border-b border-hairline">
+            <CardTitle className="text-xs font-bold uppercase tracking-wider text-ink-navy">
               Phân loại theo Mức độ Ưu tiên
             </CardTitle>
-            <CardDescription className="text-2xs text-slate-500">
+            <CardDescription className="text-2xs text-mist-gray">
               Khối lượng công việc theo mức độ khẩn cấp
             </CardDescription>
           </CardHeader>
@@ -269,7 +269,7 @@ export function TaskReport({ organizationId, filterParams }: TaskReportProps) {
                       formatter={(val: number) => [`${val} nhiệm vụ`, 'Số lượng']}
                       contentStyle={{ backgroundColor: '#ffffff', borderColor: '#e2e8f0', borderRadius: '8px', fontSize: '12px' }}
                     />
-                    <Bar dataKey="count" fill="#6366f1" radius={[0, 4, 4, 0]} barSize={16}>
+                    <Bar dataKey="count" fill="#006bff" radius={[0, 4, 4, 0]} barSize={16}>
                       {priorityBarData.map((entry, index) => (
                         <Cell key={`bar-${index}`} fill={entry.color} />
                       ))}
@@ -278,7 +278,7 @@ export function TaskReport({ organizationId, filterParams }: TaskReportProps) {
                 </ResponsiveContainer>
               </div>
             ) : (
-              <div className="h-48 flex items-center justify-center text-xs text-slate-400">
+              <div className="h-48 flex items-center justify-center text-xs text-mist-gray">
                 Chưa có số liệu ưu tiên
               </div>
             )}
@@ -287,19 +287,19 @@ export function TaskReport({ organizationId, filterParams }: TaskReportProps) {
       </div>
 
       {/* 3. Detailed Task Status Table */}
-      <Card className="border-slate-200/90 shadow-2xs bg-white">
-        <CardHeader className="p-4 pb-3 border-b border-slate-100 flex flex-row items-center justify-between">
+      <Card className="border-hairline shadow-xs bg-white">
+        <CardHeader className="p-4 pb-3 border-b border-hairline flex flex-row items-center justify-between">
           <div>
-            <CardTitle className="text-xs font-bold uppercase tracking-wider text-slate-900">
+            <CardTitle className="text-xs font-bold uppercase tracking-wider text-ink-navy">
               Bảng Tổng kết Thực thi Nhiệm vụ theo Trạng thái
             </CardTitle>
-            <CardDescription className="text-2xs text-slate-500">
+            <CardDescription className="text-2xs text-mist-gray">
               Chi tiết số lượng và tỷ trọng các giai đoạn xử lý công việc
             </CardDescription>
           </div>
           <Link
             to="/tasks"
-            className="text-2xs font-semibold text-indigo-700 hover:text-indigo-800 flex items-center gap-1"
+            className="text-2xs font-semibold text-signal-blue hover:text-[#005be0] flex items-center gap-1"
           >
             <span>Mở bảng nhiệm vụ Kanban</span>
             <ArrowRight className="w-3 h-3" />
@@ -308,7 +308,7 @@ export function TaskReport({ organizationId, filterParams }: TaskReportProps) {
         <CardContent className="p-0">
           <div className="overflow-x-auto">
             <table className="w-full text-xs text-left border-collapse">
-              <thead className="bg-slate-50/80 border-b border-slate-200/80 text-slate-600 font-semibold uppercase tracking-wider text-2xs">
+              <thead className="bg-cloud border-b border-hairline text-slate-gray font-semibold uppercase tracking-wider text-2xs">
                 <tr>
                   <th className="py-2.5 px-4">Trạng thái nhiệm vụ</th>
                   <th className="py-2.5 px-3 text-center">Số lượng</th>
@@ -316,32 +316,32 @@ export function TaskReport({ organizationId, filterParams }: TaskReportProps) {
                   <th className="py-2.5 px-4 text-right">Điều hướng</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-100">
+              <tbody className="divide-y divide-hairline">
                 {byStatus.map((st) => {
                   const percentage = totalTasks > 0 ? Math.round((st.count / totalTasks) * 100) : 0;
-                  const meta = STATUS_META[st.status] || { label: st.status, badgeClass: 'bg-slate-100 text-slate-700' };
+                  const meta = STATUS_META[st.status] || { label: st.status, badgeClass: 'bg-cloud text-slate-gray border-hairline' };
                   return (
-                    <tr key={st.status} className="hover:bg-slate-50/60 transition-colors">
+                    <tr key={st.status} className="hover:bg-cloud/60 transition-colors">
                       <td className="py-3 px-4">
                         <span className={`inline-flex items-center px-2 py-0.5 rounded text-2xs font-semibold border ${meta.badgeClass}`}>
                           {meta.label}
                         </span>
                       </td>
-                      <td className="py-3 px-3 text-center font-bold text-slate-900">
+                      <td className="py-3 px-3 text-center font-bold text-ink-navy">
                         {st.count}
                       </td>
                       <td className="py-3 px-3 text-center">
                         <div className="inline-flex items-center gap-1.5">
-                          <div className="w-16 h-1.5 rounded-full bg-slate-100 overflow-hidden">
-                            <div className="h-full bg-indigo-500 rounded-full" style={{ width: `${percentage}%` }} />
+                          <div className="w-16 h-1.5 rounded-full bg-cloud overflow-hidden border border-hairline">
+                            <div className="h-full bg-signal-blue rounded-full" style={{ width: `${percentage}%` }} />
                           </div>
-                          <span className="text-2xs text-slate-500 font-medium">{percentage}%</span>
+                          <span className="text-2xs text-mist-gray font-medium">{percentage}%</span>
                         </div>
                       </td>
                       <td className="py-3 px-4 text-right">
                         <Link
                           to="/tasks"
-                          className="text-2xs font-semibold text-indigo-600 hover:text-indigo-800"
+                          className="text-2xs font-semibold text-signal-blue hover:text-[#005be0]"
                         >
                           Xem danh sách việc
                         </Link>

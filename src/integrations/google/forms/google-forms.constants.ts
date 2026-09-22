@@ -24,8 +24,8 @@ export const FORM_STATUS_CONFIG: Record<
   closed: {
     label: 'Đã đóng đơn (Ngừng nhận)',
     description: 'Biểu mẫu đã hết hạn hoặc tạm dừng nhận câu trả lời.',
-    badgeClass: 'bg-slate-100 text-slate-700 border-slate-200',
-    dotClass: 'bg-slate-400',
+    badgeClass: 'bg-pebble text-slate-gray border-hairline',
+    dotClass: 'bg-mist-gray',
   },
 };
 
@@ -38,11 +38,11 @@ export const SYNC_STATUS_CONFIG: Record<
 > = {
   idle: {
     label: 'Chưa đồng bộ',
-    badgeClass: 'bg-slate-100 text-slate-600 border-slate-200',
+    badgeClass: 'bg-pebble text-slate-gray border-hairline',
   },
   syncing: {
     label: 'Đang đồng bộ...',
-    badgeClass: 'bg-blue-50 text-blue-700 border-blue-200 animate-pulse',
+    badgeClass: 'bg-[#e6f0ff] text-signal-blue border-[#d4e4fa] animate-pulse',
   },
   success: {
     label: 'Đã đồng bộ',
@@ -75,7 +75,7 @@ export const MATCH_STATUS_CONFIG: Record<
   duplicate: {
     label: 'Đăng ký trùng lặp',
     description: 'Người tham gia đã gửi đơn nhiều lần, hệ thống giữ bản ghi hợp lệ duy nhất.',
-    badgeClass: 'bg-slate-100 text-slate-700 border-slate-200',
+    badgeClass: 'bg-pebble text-slate-gray border-hairline',
   },
   invalid: {
     label: 'Dữ liệu không hợp lệ',

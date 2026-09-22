@@ -1,5 +1,5 @@
 import { useState, useEffect, useId } from 'react';
-import { Calendar, Filter, Layers, RotateCcw, ChevronDown, Check } from 'lucide-react';
+import { Calendar, Filter, Layers, RotateCcw } from 'lucide-react';
 import type { Term } from '@/types';
 import type { ReportFilterParams } from '@/types/report';
 import { Button } from '@/components/ui/button';
@@ -15,7 +15,7 @@ import dayjs from 'dayjs';
 
 export type TimeRangePreset = 'all' | 'this_month' | 'this_quarter' | 'this_year' | 'custom';
 
-export type ReportScope = 'overview' | 'activities' | 'members' | 'tasks' | 'finance' | 'terms';
+export type ReportScope = 'overview' | 'scorecard' | 'activities' | 'members' | 'tasks' | 'finance' | 'terms';
 
 interface ReportControlBarProps {
   terms: Term[];
@@ -41,8 +41,6 @@ export function ReportControlBar({
 
   const termSelectId = useId();
   const timePresetSelectId = useId();
-  const startDateInputId = useId();
-  const endDateInputId = useId();
 
   // Sync internal selected term if parent changes it
   useEffect(() => {
@@ -121,6 +119,7 @@ export function ReportControlBar({
 
   const scopes: Array<{ id: ReportScope; label: string }> = [
     { id: 'overview', label: 'Tổng quan điều hành' },
+    { id: 'scorecard', label: 'Thi đua Chi hội (1.000đ)' },
     { id: 'activities', label: 'Hoạt động & Sự kiện' },
     { id: 'members', label: 'Nhân sự & Hội viên' },
     { id: 'tasks', label: 'Thực thi Nhiệm vụ' },
@@ -131,12 +130,12 @@ export function ReportControlBar({
   return (
     <div className="space-y-3 print:hidden" id="report-control-bar">
       {/* Top row: Filter selectors and Quick Reset */}
-      <div className="rounded-xl border border-slate-200/90 bg-white p-3 sm:p-4 shadow-2xs">
+      <div className="rounded-xl border border-hairline bg-white p-3 sm:p-4 shadow-xs">
         <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-3">
           {/* Left: Active context indicator */}
           <div className="flex flex-wrap items-center gap-2">
-            <span className="text-2xs font-bold uppercase tracking-wider text-slate-500 mr-1 flex items-center gap-1.5">
-              <Filter className="w-3.5 h-3.5 text-slate-400" />
+            <span className="text-2xs font-bold uppercase tracking-wider text-slate-gray mr-1 flex items-center gap-1.5">
+              <Filter className="w-3.5 h-3.5 text-mist-gray" />
               Bộ lọc báo cáo:
             </span>
 
@@ -146,9 +145,9 @@ export function ReportControlBar({
               onValueChange={handleTermChange}
               disabled={isTermsLoading}
             >
-              <SelectTrigger id={termSelectId} className="h-8.5 text-xs font-semibold bg-slate-50 border-slate-200/90 w-auto min-w-[140px]">
+              <SelectTrigger id={termSelectId} className="h-8.5 text-xs font-semibold bg-cloud border-hairline w-auto min-w-[140px] text-ink-navy">
                 <div className="flex items-center gap-1.5">
-                  <Layers className="w-3.5 h-3.5 text-slate-500 shrink-0" />
+                  <Layers className="w-3.5 h-3.5 text-mist-gray shrink-0" />
                   <SelectValue placeholder="Tất cả nhiệm kỳ" />
                 </div>
               </SelectTrigger>
@@ -167,9 +166,9 @@ export function ReportControlBar({
               value={timePreset}
               onValueChange={(val) => handlePresetChange(val as TimeRangePreset)}
             >
-              <SelectTrigger id={timePresetSelectId} className="h-8.5 text-xs font-semibold bg-slate-50 border-slate-200/90 w-auto min-w-[140px]">
+              <SelectTrigger id={timePresetSelectId} className="h-8.5 text-xs font-semibold bg-cloud border-hairline w-auto min-w-[140px] text-ink-navy">
                 <div className="flex items-center gap-1.5">
-                  <Calendar className="w-3.5 h-3.5 text-slate-500 shrink-0" />
+                  <Calendar className="w-3.5 h-3.5 text-mist-gray shrink-0" />
                   <SelectValue placeholder="Toàn thời gian" />
                 </div>
               </SelectTrigger>
@@ -188,7 +187,7 @@ export function ReportControlBar({
                 variant="ghost"
                 size="sm"
                 onClick={handleResetFilters}
-                className="h-8 px-2.5 text-2xs font-semibold text-slate-600 hover:text-rose-600 hover:bg-rose-50 rounded-lg transition-colors"
+                className="h-8 px-2.5 text-2xs font-semibold text-slate-gray hover:text-rose-600 hover:bg-rose-50 rounded-lg transition-colors"
               >
                 <RotateCcw className="w-3 h-3 mr-1" />
                 Đặt lại
@@ -197,13 +196,13 @@ export function ReportControlBar({
           </div>
 
           {/* Right: Active Period Summary Chip */}
-          <div className="flex items-center gap-2 text-2xs text-slate-500 bg-slate-50 border border-slate-200/70 rounded-lg px-3 py-1.5 self-start lg:self-center">
-            <span className="font-medium text-slate-700">
+          <div className="flex items-center gap-2 text-2xs text-mist-gray bg-cloud border border-hairline rounded-lg px-3 py-1.5 self-start lg:self-center">
+            <span className="font-medium text-slate-gray">
               Phạm vi: {currentTermObj ? currentTermObj.name : 'Toàn thời gian'}
             </span>
             {(filterParams.startDate || filterParams.endDate) && (
               <>
-                <span className="text-slate-300">•</span>
+                <span className="text-mist-gray">•</span>
                 <span>
                   {filterParams.startDate ? dayjs(filterParams.startDate).format('DD/MM/YYYY') : 'Từ đầu'}
                   {' → '}
@@ -216,9 +215,9 @@ export function ReportControlBar({
 
         {/* Custom date range row */}
         {timePreset === 'custom' && (
-          <div className="mt-3 pt-3 border-t border-slate-100 flex flex-wrap items-center gap-3 text-xs">
+          <div className="mt-3 pt-3 border-t border-hairline flex flex-wrap items-center gap-3 text-xs">
             <div className="flex items-center gap-1.5">
-              <span className="text-2xs font-medium text-slate-500">Từ ngày:</span>
+              <span className="text-2xs font-medium text-slate-gray">Từ ngày:</span>
               <DatePicker
                 value={customStartDate}
                 onChange={(val) => handleCustomDateChange(val || '', customEndDate)}
@@ -226,7 +225,7 @@ export function ReportControlBar({
               />
             </div>
             <div className="flex items-center gap-1.5">
-              <span className="text-2xs font-medium text-slate-500">Đến ngày:</span>
+              <span className="text-2xs font-medium text-slate-gray">Đến ngày:</span>
               <DatePicker
                 value={customEndDate}
                 onChange={(val) => handleCustomDateChange(customStartDate, val || '')}
@@ -239,7 +238,7 @@ export function ReportControlBar({
 
       {/* Scope Navigation Tabs */}
       <div className="overflow-x-auto pb-1">
-        <div className="inline-flex items-center gap-1 bg-slate-100/90 p-1 rounded-xl border border-slate-200/70 min-w-max">
+        <div className="inline-flex items-center gap-1 bg-pebble p-1 rounded-xl border border-hairline min-w-max">
           {scopes.map((scope) => {
             const isActive = activeScope === scope.id;
             return (
@@ -247,10 +246,10 @@ export function ReportControlBar({
                 key={scope.id}
                 type="button"
                 onClick={() => onScopeChange(scope.id)}
-                className={`px-3.5 py-1.5 text-xs font-semibold rounded-lg transition-all ${
+                className={`px-3.5 py-1.5 text-xs font-semibold rounded-lg transition-all cursor-pointer ${
                   isActive
-                    ? 'bg-white text-slate-900 shadow-2xs border border-slate-200/80'
-                    : 'text-slate-600 hover:text-slate-900 hover:bg-slate-200/60'
+                    ? 'bg-white text-ink-navy shadow-xs border border-hairline'
+                    : 'text-slate-gray hover:text-ink-navy hover:bg-cloud'
                 }`}
               >
                 {scope.label}

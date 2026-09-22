@@ -116,17 +116,17 @@ export function InviteCohostDialog({
     <Dialog open={isOpen} onOpenChange={(open) => !open && handleClose()}>
       <DialogContent
         id="invite-cohost-dialog"
-        className="sm:max-w-2xl md:max-w-3xl max-h-[92vh] overflow-y-auto bg-white border border-slate-200/80 shadow-2xl rounded-3xl p-6 sm:p-8 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
+        className="sm:max-w-2xl md:max-w-3xl max-h-[92vh] overflow-y-auto bg-white border border-hairline shadow-sm rounded-2xl p-6 sm:p-8 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
       >
-        <DialogHeader className="space-y-1 text-left pb-1">
-          <div className="flex items-center gap-2 text-blue-600 font-semibold text-xs mb-0.5">
+        <DialogHeader className="space-y-1 text-left pb-2 border-b border-hairline">
+          <div className="flex items-center gap-2 text-signal-blue font-semibold text-xs mb-0.5">
             <Users2 className="h-4 w-4" />
             <span>Mời đơn vị phối hợp</span>
           </div>
-          <DialogTitle className="text-lg font-bold text-slate-900">
+          <DialogTitle className="text-lg font-bold text-ink-navy">
             Mời Đơn Vị Phối Hợp (Co-host)
           </DialogTitle>
-          <DialogDescription className="text-xs text-slate-500 leading-relaxed">
+          <DialogDescription className="text-xs text-slate-gray leading-relaxed">
             Tìm kiếm các Liên chi hội, Chi hội, Câu lạc bộ hoặc Đội trên hệ thống theo tên hoặc mã định danh để cùng phối hợp triển khai chiến dịch.
           </DialogDescription>
         </DialogHeader>
@@ -138,46 +138,46 @@ export function InviteCohostDialog({
           </div>
         )}
 
-        <div className="space-y-4 py-1">
+        <div className="space-y-4 py-2">
           {/* Search Input */}
           <div className="space-y-1.5">
-            <label htmlFor="search-org-input" className="block text-xs font-semibold text-slate-700">
+            <label htmlFor="search-org-input" className="block text-xs font-semibold text-ink-navy">
               Tìm kiếm đơn vị phối hợp
             </label>
             <div className="relative">
-              <Search className="absolute left-3 top-2.5 h-4 w-4 text-slate-400" />
+              <Search className="absolute left-3 top-2.5 h-4 w-4 text-mist-gray" />
               <Input
                 id="search-org-input"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Nhập tên đơn vị hoặc mã code (ví dụ: LCH CNTT, CH-01, CLB Guitar, Đội CTXH)..."
-                className="pl-9 h-9 bg-slate-50/50 border-slate-200 text-xs focus:bg-white"
+                className="pl-9 h-9.5 bg-white border-hairline rounded-lg text-xs text-ink-navy placeholder:text-mist-gray focus:border-signal-blue"
               />
               {isSearching && (
-                <Loader2 className="absolute right-3 top-2.5 h-4 w-4 animate-spin text-slate-400" />
+                <Loader2 className="absolute right-3 top-2.5 h-4 w-4 animate-spin text-signal-blue" />
               )}
             </div>
           </div>
 
           {/* Search Results List */}
           <div className="space-y-1.5">
-            <div className="flex items-center justify-between text-[11px] font-semibold text-slate-600 px-0.5">
+            <div className="flex items-center justify-between text-[11px] font-semibold text-slate-gray px-0.5">
               <span>Danh sách kết quả ({eligibleOrganizations.length})</span>
               {selectedOrg && (
-                <span className="text-blue-600 font-medium truncate max-w-[240px]">
-                  Đã chọn: <span className="font-semibold">{selectedOrg.name}</span>
+                <span className="text-signal-blue font-medium truncate max-w-[240px]">
+                  Đã chọn: <span className="font-semibold text-ink-navy">{selectedOrg.name}</span>
                 </span>
               )}
             </div>
 
-            <div className="max-h-56 overflow-y-auto border border-slate-200 rounded-xl divide-y divide-slate-100 bg-slate-50/30">
+            <div className="max-h-56 overflow-y-auto border border-hairline rounded-xl divide-y divide-hairline bg-white shadow-inner">
               {isSearching ? (
-                <div className="p-6 text-center text-xs text-slate-400 flex items-center justify-center gap-2">
-                  <Loader2 className="h-4 w-4 animate-spin text-blue-600" />
+                <div className="p-6 text-center text-xs text-slate-gray flex items-center justify-center gap-2">
+                  <Loader2 className="h-4 w-4 animate-spin text-signal-blue" />
                   <span>Đang tìm kiếm đơn vị...</span>
                 </div>
               ) : eligibleOrganizations.length === 0 ? (
-                <div className="p-6 text-center text-xs text-slate-500">
+                <div className="p-6 text-center text-xs text-slate-gray">
                   {searchQuery.trim() ? (
                     <p>Không tìm thấy đơn vị nào phù hợp hoặc đơn vị đã tham gia chiến dịch.</p>
                   ) : (
@@ -197,16 +197,16 @@ export function InviteCohostDialog({
                       onClick={() => handleSelectOrg(org)}
                       className={`p-3 flex items-center justify-between cursor-pointer transition-colors text-left ${
                         isSelected
-                          ? 'bg-blue-50/80 border-blue-200 text-blue-900'
-                          : 'hover:bg-slate-100/70 text-slate-800'
+                          ? 'bg-[#e6f0ff]/60 border-hairline text-ink-navy'
+                          : 'hover:bg-pebble text-ink-navy'
                       }`}
                     >
                       <div className="flex items-center gap-2.5 min-w-0">
                         <div
                           className={`w-8 h-8 rounded-lg flex items-center justify-center font-bold text-xs shrink-0 ${
                             isSelected
-                              ? 'bg-blue-600 text-white shadow-2xs'
-                              : 'bg-white border border-slate-200 text-slate-700'
+                              ? 'bg-signal-blue text-white shadow-sm'
+                              : 'bg-cloud border border-hairline text-slate-gray'
                           }`}
                         >
                           {org.logoUrl ? (
@@ -221,17 +221,17 @@ export function InviteCohostDialog({
                         </div>
                         <div className="min-w-0">
                           <div className="flex items-center gap-1.5 flex-wrap">
-                            <span className={`text-[10px] px-1.5 py-0.2 rounded font-semibold border ${typeBadgeClass}`}>
+                            <span className={`text-[10px] px-1.5 py-0.2 rounded-full font-semibold border ${typeBadgeClass}`}>
                               {typeLabel}
                             </span>
-                            <p className="text-xs font-semibold text-slate-900 truncate">
+                            <p className="text-xs font-semibold text-ink-navy truncate">
                               {org.name}
                             </p>
                           </div>
-                          <div className="flex items-center gap-2 text-[11px] text-slate-500 font-mono mt-0.5">
+                          <div className="flex items-center gap-2 text-[11px] text-slate-gray font-mono mt-0.5 tabular-nums">
                             <span>Mã: {org.code}</span>
                             {parentName && (
-                              <span className="text-indigo-600 font-sans">
+                              <span className="text-signal-blue font-sans">
                                 • Trực thuộc: {parentName}
                               </span>
                             )}
@@ -241,7 +241,7 @@ export function InviteCohostDialog({
 
                       <div className="shrink-0 ml-2">
                         {isSelected ? (
-                          <div className="w-6 h-6 rounded-full bg-blue-600 text-white flex items-center justify-center shadow-2xs">
+                          <div className="w-6 h-6 rounded-full bg-signal-blue text-white flex items-center justify-center shadow-sm">
                             <Check className="h-3.5 w-3.5" />
                           </div>
                         ) : (
@@ -249,7 +249,7 @@ export function InviteCohostDialog({
                             type="button"
                             variant="ghost"
                             size="sm"
-                            className="h-7 text-xs text-slate-600 hover:text-blue-700 hover:bg-blue-50 active:scale-[0.98]"
+                            className="h-7 text-xs text-slate-gray hover:text-signal-blue hover:bg-pebble"
                           >
                             Chọn
                           </Button>
@@ -264,9 +264,9 @@ export function InviteCohostDialog({
 
           {/* Role / Responsibility in Campaign */}
           {selectedOrg && (
-            <div className="space-y-3 pt-1 bg-blue-50/40 p-3.5 rounded-xl border border-blue-100">
+            <div className="space-y-3 pt-1 bg-pebble p-3.5 rounded-xl border border-hairline">
               <div className="space-y-1.5">
-                <label htmlFor="cohost-role-in-plan" className="block text-xs font-semibold text-blue-900">
+                <label htmlFor="cohost-role-in-plan" className="block text-xs font-semibold text-ink-navy">
                   Phân loại vai trò tham gia <span className="text-rose-500">*</span>
                 </label>
                 <Select
@@ -279,15 +279,15 @@ export function InviteCohostDialog({
                     if (val === 'observer') setRoleDescription('Đơn vị quan sát');
                   }}
                 >
-                  <SelectTrigger id="cohost-role-in-plan" className="h-9 bg-white border-blue-200 text-xs">
+                  <SelectTrigger id="cohost-role-in-plan" className="h-9.5 bg-white border-hairline text-xs rounded-lg text-ink-navy">
                     <SelectValue placeholder="Chọn vai trò tham gia" />
                   </SelectTrigger>
-                  <SelectContent>
+                  <SelectContent className="bg-white border-hairline rounded-xl shadow-sm">
                     {COLLAB_ROLES.map((r) => (
                       <SelectItem key={r.value} value={r.value} className="text-xs py-2">
                         <div>
-                          <div className="font-semibold text-slate-900">{r.label}</div>
-                          <div className="text-[11px] text-slate-500">{r.description}</div>
+                          <div className="font-semibold text-ink-navy">{r.label}</div>
+                          <div className="text-[11px] text-slate-gray">{r.description}</div>
                         </div>
                       </SelectItem>
                     ))}
@@ -296,7 +296,7 @@ export function InviteCohostDialog({
               </div>
 
               <div className="space-y-1.5">
-                <label htmlFor="cohost-role-input" className="block text-xs font-semibold text-blue-900">
+                <label htmlFor="cohost-role-input" className="block text-xs font-semibold text-ink-navy">
                   Nội dung trách nhiệm / Mô tả phân công
                 </label>
                 <Input
@@ -304,9 +304,9 @@ export function InviteCohostDialog({
                   value={roleDescription}
                   onChange={(e) => setRoleDescription(e.target.value)}
                   placeholder="Ví dụ: Phụ trách mảng Tình nguyện, Hậu cần & Truyền thông..."
-                  className="h-9 bg-white border-blue-200 text-xs focus:border-blue-400"
+                  className="h-9.5 bg-white border-hairline rounded-lg text-xs text-ink-navy placeholder:text-mist-gray focus:border-signal-blue"
                 />
-                <p className="text-[11px] text-slate-500">
+                <p className="text-[11px] text-slate-gray">
                   Mô tả này sẽ hiển thị công khai trên danh sách ban tổ chức chiến dịch.
                 </p>
               </div>
@@ -314,12 +314,12 @@ export function InviteCohostDialog({
           )}
         </div>
 
-        <DialogFooter className="pt-2 gap-2">
+        <DialogFooter className="pt-3 gap-2 border-t border-hairline">
           <Button
             variant="outline"
             size="sm"
             onClick={handleClose}
-            className="text-xs h-8 px-3 border-slate-200 hover:bg-slate-50 active:scale-[0.98]"
+            className="text-xs h-9 px-4 rounded-lg border-hairline text-ink-navy hover:bg-pebble"
           >
             Hủy
           </Button>
@@ -328,7 +328,7 @@ export function InviteCohostDialog({
             size="sm"
             onClick={handleConfirmInvite}
             disabled={!selectedOrg || addCohostMutation.isPending}
-            className="text-xs h-8 px-3.5 bg-blue-600 hover:bg-blue-700 text-white font-semibold shadow-2xs active:scale-[0.98]"
+            className="text-xs h-9 px-4 rounded-lg bg-signal-blue hover:bg-[#005be0] text-white font-semibold shadow-sm"
           >
             {addCohostMutation.isPending ? (
               <>

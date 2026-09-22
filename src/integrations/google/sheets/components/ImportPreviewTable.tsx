@@ -71,8 +71,8 @@ export function ImportPreviewTable({ module, rows, onResolutionChange }: ImportP
         );
       case 'duplicate':
         return (
-          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800 border border-blue-200">
-            <Copy className="w-3.5 h-3.5 text-blue-600" />
+          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium bg-[#e6f0ff] text-signal-blue border border-[#d4e4fa]">
+            <Copy className="w-3.5 h-3.5 text-signal-blue" />
             Đã tồn tại
           </span>
         );
@@ -100,7 +100,7 @@ export function ImportPreviewTable({ module, rows, onResolutionChange }: ImportP
       {/* Search and Filters */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5">
         <div className="relative flex-1 max-w-sm">
-          <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
+          <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-mist-gray" />
           <Input
             placeholder="Tìm kiếm dòng, MSSV, tên..."
             value={searchTerm}
@@ -110,7 +110,7 @@ export function ImportPreviewTable({ module, rows, onResolutionChange }: ImportP
         </div>
 
         <div className="flex items-center gap-2 overflow-x-auto pb-1 sm:pb-0">
-          <span className="text-xs text-slate-500 font-medium whitespace-nowrap flex items-center gap-1">
+          <span className="text-xs text-slate-gray font-medium whitespace-nowrap flex items-center gap-1">
             <Filter className="w-3.5 h-3.5" /> Lọc:
           </span>
           {[
@@ -127,8 +127,8 @@ export function ImportPreviewTable({ module, rows, onResolutionChange }: ImportP
               onClick={() => setStatusFilter(item.key)}
               className={`text-xs px-2.5 py-1 rounded-md font-medium transition-colors whitespace-nowrap ${
                 statusFilter === item.key
-                  ? 'bg-slate-900 text-white'
-                  : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
+                  ? 'bg-ink-navy text-white'
+                  : 'bg-pebble text-slate-gray hover:bg-cloud'
               }`}
             >
               {item.label}
@@ -138,9 +138,9 @@ export function ImportPreviewTable({ module, rows, onResolutionChange }: ImportP
       </div>
 
       {/* Table */}
-      <div className="border border-slate-200 rounded-lg overflow-hidden max-h-[380px] overflow-y-auto bg-white shadow-xs">
+      <div className="border border-hairline rounded-lg overflow-hidden max-h-[380px] overflow-y-auto bg-white shadow-xs">
         <table className="w-full text-left text-xs border-collapse">
-          <thead className="sticky top-0 bg-slate-50 text-slate-700 font-semibold border-b border-slate-200 z-10">
+          <thead className="sticky top-0 bg-cloud text-ink-navy font-semibold border-b border-hairline z-10">
             <tr>
               <th className="py-2.5 px-3 w-12 text-center">Dòng</th>
               <th className="py-2.5 px-3 w-28">Trạng thái</th>
@@ -150,10 +150,10 @@ export function ImportPreviewTable({ module, rows, onResolutionChange }: ImportP
               <th className="py-2.5 px-3 text-right">Chi tiết</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-slate-100">
+          <tbody className="divide-y divide-hairline">
             {filteredRows.length === 0 ? (
               <tr>
-                <td colSpan={6} className="py-8 text-center text-slate-400 text-sm">
+                <td colSpan={6} className="py-8 text-center text-mist-gray text-sm">
                   Không tìm thấy dòng dữ liệu nào phù hợp với bộ lọc.
                 </td>
               </tr>
@@ -174,22 +174,22 @@ export function ImportPreviewTable({ module, rows, onResolutionChange }: ImportP
                         ? 'bg-purple-50/40 hover:bg-purple-50/70'
                         : row.status === 'warning'
                         ? 'bg-amber-50/40 hover:bg-amber-50/70'
-                        : 'hover:bg-slate-50'
+                        : 'hover:bg-cloud'
                     }`}
                   >
-                    <td className="py-2 px-3 text-center font-mono text-slate-500">{row.rowIndex}</td>
+                    <td className="py-2 px-3 text-center font-mono text-mist-gray">{row.rowIndex}</td>
                     <td className="py-2 px-3">
                       {getStatusBadge(row.status, row.isDuplicate, row.conflicts.length)}
                     </td>
-                    <td className="py-2 px-3 font-medium text-slate-900">{firstVal}</td>
-                    <td className="py-2 px-3 text-slate-700">{secondVal}</td>
-                    <td className="py-2 px-3 text-slate-500 truncate max-w-[150px]">{thirdVal}</td>
+                    <td className="py-2 px-3 font-medium text-ink-navy">{firstVal}</td>
+                    <td className="py-2 px-3 text-slate-gray">{secondVal}</td>
+                    <td className="py-2 px-3 text-mist-gray truncate max-w-[150px]">{thirdVal}</td>
                     <td className="py-2 px-3 text-right">
                       <Button
                         variant="ghost"
                         size="sm"
                         onClick={() => toggleRow(row.rowIndex)}
-                        className="h-7 px-2 text-xs text-slate-600 hover:text-slate-900"
+                        className="h-7 px-2 text-xs text-slate-gray hover:text-ink-navy"
                       >
                         {isExpanded ? <ChevronDown className="w-3.5 h-3.5" /> : <ChevronRight className="w-3.5 h-3.5" />}
                         {row.errors.length > 0 || row.conflicts.length > 0 ? (
@@ -209,14 +209,14 @@ export function ImportPreviewTable({ module, rows, onResolutionChange }: ImportP
 
       {/* Expanded Row Detail Inspection (if any) */}
       {filteredRows.some((r) => expandedRows.has(r.rowIndex)) && (
-        <div className="p-3 bg-slate-50 border border-slate-200 rounded-lg space-y-3">
-          <div className="text-xs font-semibold text-slate-700 flex items-center justify-between">
+        <div className="p-3 bg-cloud border border-hairline rounded-lg space-y-3">
+          <div className="text-xs font-semibold text-ink-navy flex items-center justify-between">
             <span>Chi tiết dòng được chọn:</span>
             <Button
               variant="ghost"
               size="sm"
               onClick={() => setExpandedRows(new Set())}
-              className="h-6 px-2 text-xs text-slate-500"
+              className="h-6 px-2 text-xs text-mist-gray hover:text-ink-navy"
             >
               Đóng tất cả
             </Button>
@@ -228,10 +228,10 @@ export function ImportPreviewTable({ module, rows, onResolutionChange }: ImportP
               .map((row) => (
                 <div
                   key={row.rowIndex}
-                  className="p-2.5 bg-white rounded border border-slate-200 text-xs space-y-1.5 shadow-2xs"
+                  className="p-2.5 bg-white rounded border border-hairline text-xs space-y-1.5 shadow-xs"
                 >
                   <div className="flex items-center justify-between font-medium">
-                    <span className="font-mono text-slate-500">Dòng {row.rowIndex}</span>
+                    <span className="font-mono text-mist-gray">Dòng {row.rowIndex}</span>
                     <span>{getStatusBadge(row.status, row.isDuplicate, row.conflicts.length)}</span>
                   </div>
 
@@ -275,13 +275,13 @@ export function ImportPreviewTable({ module, rows, onResolutionChange }: ImportP
                           className="bg-white p-2 rounded border border-purple-200 flex flex-col sm:flex-row sm:items-center justify-between gap-2"
                         >
                           <div>
-                            <span className="font-semibold text-slate-800">{conflict.fieldLabel}:</span>
+                            <span className="font-semibold text-ink-navy">{conflict.fieldLabel}:</span>
                             <div className="flex items-center gap-2 text-[11px] mt-0.5">
-                              <span className="text-slate-500">Hiện tại (Supabase):</span>
-                              <span className="font-medium text-slate-700 bg-slate-100 px-1.5 py-0.5 rounded">
+                              <span className="text-slate-gray">Hiện tại (Supabase):</span>
+                              <span className="font-medium text-ink-navy bg-pebble px-1.5 py-0.5 rounded">
                                 {String(conflict.existingValue || 'Trống')}
                               </span>
-                              <span className="text-slate-400">→</span>
+                              <span className="text-mist-gray">→</span>
                               <span className="text-purple-700">Mới (Sheet):</span>
                               <span className="font-medium text-purple-800 bg-purple-100 px-1.5 py-0.5 rounded">
                                 {String(conflict.incomingValue || 'Trống')}
@@ -296,8 +296,8 @@ export function ImportPreviewTable({ module, rows, onResolutionChange }: ImportP
                                 onClick={() => onResolutionChange(row.rowIndex, conflict.fieldKey, 'keep_supabase')}
                                 className={`px-2 py-0.5 text-[11px] rounded transition-colors ${
                                   conflict.selectedResolution === 'keep_supabase'
-                                    ? 'bg-slate-800 text-white font-medium'
-                                    : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
+                                    ? 'bg-ink-navy text-white font-medium'
+                                    : 'bg-pebble text-slate-gray hover:bg-cloud'
                                 }`}
                               >
                                 Giữ Supabase
@@ -308,7 +308,7 @@ export function ImportPreviewTable({ module, rows, onResolutionChange }: ImportP
                                 className={`px-2 py-0.5 text-[11px] rounded transition-colors ${
                                   conflict.selectedResolution === 'use_sheet'
                                     ? 'bg-purple-700 text-white font-medium'
-                                    : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
+                                    : 'bg-pebble text-slate-gray hover:bg-cloud'
                                 }`}
                               >
                                 Dùng Sheet

@@ -82,7 +82,6 @@ export function TaskFormModal({
     },
   });
 
-  const currentStatus = watch('status');
   const currentProgress = watch('progress');
   const selectedTermId = watch('termId');
 
@@ -122,32 +121,24 @@ export function TaskFormModal({
     }
   }, [isOpen, initialTask, defaultTermId, defaultActivityId, terms, reset]);
 
-  const handleStatusChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const newStatus = e.target.value as TaskStatus;
-    setValue('status', newStatus);
-    if (newStatus === 'completed' && currentProgress < 100) {
-      setValue('progress', 100);
-    }
-  };
-
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/50 backdrop-blur-xs overflow-y-auto">
-      <div className="bg-white rounded-xl border border-slate-200 shadow-xl w-full max-w-2xl overflow-hidden my-8 animate-in fade-in zoom-in-95 duration-150">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-ink-navy/40 backdrop-blur-xs overflow-y-auto">
+      <div className="bg-white rounded-2xl border border-hairline shadow-xl w-full max-w-2xl overflow-hidden my-8 animate-in fade-in zoom-in-95 duration-150">
         {/* Modal Header */}
-        <div className="flex items-center justify-between px-5 py-4 border-b border-slate-100 bg-slate-50/60">
+        <div className="flex items-center justify-between px-6 py-4 border-b border-hairline bg-cloud">
           <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-lg bg-emerald-700 text-white flex items-center justify-center shadow-2xs">
+            <div className="w-8 h-8 rounded-lg bg-[#e6f0ff] border border-[#d4e4fa] text-signal-blue flex items-center justify-center shadow-xs">
               <CheckSquare className="w-4 h-4" />
             </div>
             <div>
-              <h3 className="text-base font-bold text-slate-900">
+              <h3 className="text-base font-bold text-ink-navy">
                 {isEditing
                   ? t('task.modal.title_edit', 'Chỉnh sửa nhiệm vụ')
                   : t('task.modal.title_new', 'Thêm nhiệm vụ mới')}
               </h3>
-              <p className="text-xs text-slate-500">
+              <p className="text-xs text-slate-gray">
                 {isEditing
                   ? t('task.modal.subtitle_edit', 'Cập nhật phân công, tiến độ và hạn hoàn thành')
                   : t('task.modal.subtitle_new', 'Phân công nhiệm vụ cho cán bộ hoặc tạo công việc Chi hội')}
@@ -158,17 +149,17 @@ export function TaskFormModal({
             type="button"
             id="close-task-modal-btn"
             onClick={onClose}
-            className="p-1.5 text-slate-400 hover:text-slate-600 rounded-lg hover:bg-slate-100 transition-colors cursor-pointer"
+            className="p-1.5 text-slate-gray hover:text-ink-navy rounded-lg hover:bg-pebble transition-colors cursor-pointer"
           >
             <X className="w-4.5 h-4.5" />
           </button>
         </div>
 
         {/* Modal Form */}
-        <form onSubmit={handleSubmit(onSubmit)} className="p-5 space-y-4">
+        <form onSubmit={handleSubmit(onSubmit)} className="p-6 space-y-4">
           {/* Title */}
           <div>
-            <label htmlFor="task-form-title" className="block text-[11px] font-bold text-slate-700 uppercase tracking-wider mb-1">
+            <label htmlFor="task-form-title" className="block text-[11px] font-semibold text-slate-gray uppercase tracking-wider mb-1.5">
               {t('task.form.title', 'Tên nhiệm vụ')} <span className="text-rose-500">*</span>
             </label>
             <input
@@ -181,8 +172,8 @@ export function TaskFormModal({
                   : 'e.g. Design event banner, Prepare audio equipment...'
               }
               className={cn(
-                'w-full text-xs px-3.5 py-2.5 bg-slate-50 border rounded-lg focus:bg-white focus:outline-hidden focus:ring-1 focus:ring-emerald-600 focus:border-emerald-600 transition-all font-medium',
-                errors.title ? 'border-rose-400 bg-rose-50/20' : 'border-slate-200'
+                'w-full text-xs px-3.5 py-2.5 bg-cloud border rounded-lg text-ink-navy placeholder:text-mist-gray focus:bg-white focus:outline-hidden focus:ring-2 focus:ring-signal-blue/20 focus:border-signal-blue transition-all font-medium',
+                errors.title ? 'border-rose-400 bg-rose-50/20' : 'border-hairline'
               )}
             />
             {errors.title && (
@@ -197,7 +188,7 @@ export function TaskFormModal({
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
             {/* Term */}
             <div>
-              <label htmlFor="task-form-term" className="block text-[11px] font-bold text-slate-700 uppercase tracking-wider mb-1">
+              <label htmlFor="task-form-term" className="block text-[11px] font-semibold text-slate-gray uppercase tracking-wider mb-1.5">
                 {t('task.form.term', 'Nhiệm kỳ')} <span className="text-rose-500">*</span>
               </label>
               <Controller
@@ -208,7 +199,7 @@ export function TaskFormModal({
                     value={field.value || ''}
                     onValueChange={field.onChange}
                   >
-                    <SelectTrigger id="task-form-term" className="w-full text-xs h-9 bg-slate-50">
+                    <SelectTrigger id="task-form-term" className="w-full text-xs h-9 bg-cloud border-hairline text-ink-navy">
                       <SelectValue placeholder="Chọn nhiệm kỳ..." />
                     </SelectTrigger>
                     <SelectContent>
@@ -228,7 +219,7 @@ export function TaskFormModal({
 
             {/* Related Activity */}
             <div>
-              <label htmlFor="task-form-activity" className="block text-[11px] font-bold text-slate-700 uppercase tracking-wider mb-1">
+              <label htmlFor="task-form-activity" className="block text-[11px] font-semibold text-slate-gray uppercase tracking-wider mb-1.5">
                 {t('task.form.activity', 'Hoạt động liên kết')}
               </label>
               <Controller
@@ -239,7 +230,7 @@ export function TaskFormModal({
                     value={field.value || 'none'}
                     onValueChange={(val) => field.onChange(val === 'none' ? null : val)}
                   >
-                    <SelectTrigger id="task-form-activity" className="w-full text-xs h-9 bg-slate-50">
+                    <SelectTrigger id="task-form-activity" className="w-full text-xs h-9 bg-cloud border-hairline text-ink-navy">
                       <SelectValue placeholder={language === 'vi' ? '— Độc lập (Không liên kết) —' : '— Standalone —'} />
                     </SelectTrigger>
                     <SelectContent>
@@ -259,14 +250,13 @@ export function TaskFormModal({
           </div>
 
           {/* Assignee & Due Date Row */}
-          {/* Row: Assignee, Due Date & Priority */}
           <div className={cn(
             'grid gap-3.5',
             isEditing ? 'grid-cols-1 sm:grid-cols-2' : 'grid-cols-1 sm:grid-cols-3'
           )}>
             {/* Assignee */}
             <div>
-              <label htmlFor="task-form-assignee" className="block text-[11px] font-bold text-slate-700 uppercase tracking-wider mb-1">
+              <label htmlFor="task-form-assignee" className="block text-[11px] font-semibold text-slate-gray uppercase tracking-wider mb-1.5">
                 {t('task.form.assignee', 'Người phụ trách')}
               </label>
               <Controller
@@ -277,7 +267,7 @@ export function TaskFormModal({
                     value={field.value || 'none'}
                     onValueChange={(val) => field.onChange(val === 'none' ? null : val)}
                   >
-                    <SelectTrigger id="task-form-assignee" className="w-full text-xs h-9 bg-slate-50">
+                    <SelectTrigger id="task-form-assignee" className="w-full text-xs h-9 bg-cloud border-hairline text-ink-navy">
                       <SelectValue placeholder={language === 'vi' ? '— Chưa phân công —' : '— Unassigned —'} />
                     </SelectTrigger>
                     <SelectContent>
@@ -297,7 +287,7 @@ export function TaskFormModal({
 
             {/* Due Date */}
             <div>
-              <label htmlFor="task-form-due-date" className="block text-[11px] font-bold text-slate-700 uppercase tracking-wider mb-1">
+              <label htmlFor="task-form-due-date" className="block text-[11px] font-semibold text-slate-gray uppercase tracking-wider mb-1.5">
                 {t('task.form.due_date', 'Hạn hoàn thành')}
               </label>
               <Controller
@@ -308,7 +298,7 @@ export function TaskFormModal({
                     value={field.value}
                     onChange={field.onChange}
                     placeholder={t('task.form.due_date_placeholder', 'Chọn hạn hoàn thành...')}
-                    className="w-full text-xs"
+                    className="w-full text-xs bg-cloud border-hairline text-ink-navy"
                   />
                 )}
               />
@@ -317,7 +307,7 @@ export function TaskFormModal({
             {/* Priority on Create Mode */}
             {!isEditing && (
               <div>
-                <label htmlFor="task-form-priority-create" className="block text-[11px] font-bold text-slate-700 uppercase tracking-wider mb-1">
+                <label htmlFor="task-form-priority-create" className="block text-[11px] font-semibold text-slate-gray uppercase tracking-wider mb-1.5">
                   {t('task.form.priority', 'Mức độ ưu tiên')}
                 </label>
                 <Controller
@@ -328,7 +318,7 @@ export function TaskFormModal({
                       value={field.value || 'medium'}
                       onValueChange={field.onChange}
                     >
-                      <SelectTrigger id="task-form-priority-create" className="w-full text-xs h-9 bg-slate-50">
+                      <SelectTrigger id="task-form-priority-create" className="w-full text-xs h-9 bg-cloud border-hairline text-ink-navy">
                         <SelectValue />
                       </SelectTrigger>
                       <SelectContent>
@@ -347,10 +337,10 @@ export function TaskFormModal({
 
           {/* Edit-only Status & Progress tracking section */}
           {isEditing && (
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 p-3.5 bg-slate-50/80 rounded-xl border border-slate-200/80">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 p-3.5 bg-cloud/80 rounded-xl border border-hairline">
               {/* Priority */}
               <div>
-                <label htmlFor="task-form-priority" className="block text-[10px] font-bold text-slate-600 uppercase tracking-wider mb-1">
+                <label htmlFor="task-form-priority" className="block text-[10px] font-semibold text-slate-gray uppercase tracking-wider mb-1">
                   {t('task.form.priority', 'Mức độ ưu tiên')}
                 </label>
                 <Controller
@@ -361,7 +351,7 @@ export function TaskFormModal({
                       value={field.value || 'medium'}
                       onValueChange={field.onChange}
                     >
-                      <SelectTrigger id="task-form-priority" className="w-full text-xs h-8 bg-white">
+                      <SelectTrigger id="task-form-priority" className="w-full text-xs h-8 bg-white border-hairline text-ink-navy">
                         <SelectValue />
                       </SelectTrigger>
                       <SelectContent>
@@ -378,7 +368,7 @@ export function TaskFormModal({
 
               {/* Status */}
               <div>
-                <label htmlFor="task-form-status" className="block text-[10px] font-bold text-slate-600 uppercase tracking-wider mb-1">
+                <label htmlFor="task-form-status" className="block text-[10px] font-semibold text-slate-gray uppercase tracking-wider mb-1">
                   {t('task.form.status', 'Trạng thái')}
                 </label>
                 <Controller
@@ -394,7 +384,7 @@ export function TaskFormModal({
                         }
                       }}
                     >
-                      <SelectTrigger id="task-form-status" className="w-full text-xs h-8 bg-white">
+                      <SelectTrigger id="task-form-status" className="w-full text-xs h-8 bg-white border-hairline text-ink-navy">
                         <SelectValue />
                       </SelectTrigger>
                       <SelectContent>
@@ -412,10 +402,10 @@ export function TaskFormModal({
               {/* Progress (%) */}
               <div>
                 <div className="flex items-center justify-between mb-1">
-                  <label htmlFor="task-form-progress" className="block text-[10px] font-bold text-slate-600 uppercase tracking-wider">
+                  <label htmlFor="task-form-progress" className="block text-[10px] font-semibold text-slate-gray uppercase tracking-wider">
                     {t('task.form.progress', 'Tiến độ (%)')}
                   </label>
-                  <span className="font-mono font-bold text-xs text-emerald-700">{currentProgress}%</span>
+                  <span className="font-mono tabular-nums font-bold text-xs text-signal-blue">{currentProgress}%</span>
                 </div>
                 <input
                   type="range"
@@ -424,7 +414,7 @@ export function TaskFormModal({
                   max="100"
                   step="5"
                   {...register('progress')}
-                  className="w-full h-1.5 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-emerald-700 mt-1.5"
+                  className="w-full h-1.5 bg-pebble rounded-lg appearance-none cursor-pointer accent-signal-blue mt-1.5"
                 />
               </div>
             </div>
@@ -432,7 +422,7 @@ export function TaskFormModal({
 
           {/* Description */}
           <div>
-            <label htmlFor="task-form-desc" className="block text-[11px] font-bold text-slate-700 uppercase tracking-wider mb-1">
+            <label htmlFor="task-form-desc" className="block text-[11px] font-semibold text-slate-gray uppercase tracking-wider mb-1.5">
               {t('task.form.description', 'Mô tả & Yêu cầu kết quả')}
             </label>
             <textarea
@@ -444,7 +434,7 @@ export function TaskFormModal({
                   ? 'Ghi rõ hướng dẫn thực hiện, kết quả bàn giao cần có, tiêu chuẩn chất lượng...'
                   : 'Provide specific instructions, deliverables, quality expectations...'
               }
-              className="w-full text-xs px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-lg focus:bg-white focus:outline-hidden focus:ring-1 focus:ring-emerald-600 focus:border-emerald-600 leading-relaxed resize-none font-medium"
+              className="w-full text-xs px-3.5 py-2.5 bg-cloud border border-hairline rounded-lg text-ink-navy placeholder:text-mist-gray focus:bg-white focus:outline-hidden focus:ring-2 focus:ring-signal-blue/20 focus:border-signal-blue leading-relaxed resize-none font-medium"
             />
             {errors.description && (
               <p className="text-xs text-rose-600 mt-1">{errors.description.message}</p>
@@ -452,13 +442,13 @@ export function TaskFormModal({
           </div>
 
           {/* Footer Actions */}
-          <div className="flex items-center justify-end gap-2.5 pt-3 border-t border-slate-100">
+          <div className="flex items-center justify-end gap-2.5 pt-3 border-t border-hairline">
             <button
               type="button"
               id="cancel-task-btn"
               onClick={onClose}
               disabled={isSubmitting || isLoading}
-              className="px-3.5 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-100 rounded-lg border border-slate-200 transition-colors cursor-pointer"
+              className="px-3.5 py-2 text-xs font-medium text-slate-gray hover:text-ink-navy bg-white hover:bg-pebble rounded-lg border border-hairline transition-colors cursor-pointer"
             >
               {t('common.cancel', 'Hủy')}
             </button>
@@ -466,7 +456,7 @@ export function TaskFormModal({
               type="submit"
               id="submit-task-btn"
               disabled={isSubmitting || isLoading}
-              className="px-4 py-2 text-xs font-semibold text-white bg-emerald-700 hover:bg-emerald-800 disabled:opacity-50 rounded-lg shadow-2xs transition-colors flex items-center gap-1.5 cursor-pointer"
+              className="px-4 py-2 text-xs font-medium text-white bg-signal-blue hover:bg-[#005be0] disabled:opacity-50 rounded-lg shadow-xs transition-colors flex items-center gap-1.5 cursor-pointer"
             >
               {isSubmitting || isLoading ? (
                 <span>{language === 'vi' ? 'Đang lưu...' : 'Saving...'}</span>
@@ -484,4 +474,3 @@ export function TaskFormModal({
     </div>
   );
 }
-

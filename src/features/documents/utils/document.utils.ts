@@ -201,7 +201,7 @@ export const DOCUMENT_CATEGORY_CONFIGS: Record<DocumentCategory, CategoryConfig>
     value: 'general',
     label: 'Tài liệu chung',
     description: 'Văn bản, biểu mẫu, tài liệu thông tin chung',
-    badgeClass: 'bg-slate-100 text-slate-700 border-slate-200',
+    badgeClass: 'bg-cloud text-slate-gray border-hairline',
   },
   resolution: {
     value: 'resolution',
@@ -219,13 +219,13 @@ export const DOCUMENT_CATEGORY_CONFIGS: Record<DocumentCategory, CategoryConfig>
     value: 'plan',
     label: 'Kế hoạch công tác',
     description: 'Kế hoạch tổ chức hoạt động, đề án chiến dịch',
-    badgeClass: 'bg-indigo-50 text-indigo-700 border-indigo-200',
+    badgeClass: 'bg-[#e6f0ff] text-signal-blue border-[#d4e4fa]',
   },
   report: {
     value: 'report',
     label: 'Báo cáo tổng kết',
     description: 'Báo cáo định kỳ, sơ kết, tổng kết nhiệm kỳ',
-    badgeClass: 'bg-blue-50 text-blue-700 border-blue-200',
+    badgeClass: 'bg-[#e6f0ff] text-signal-blue border-[#d4e4fa]',
   },
   template: {
     value: 'template',
@@ -268,7 +268,7 @@ export const DOCUMENT_ACCESS_CONFIGS: Record<DocumentAccessLevel, AccessLevelCon
     value: 'internal',
     label: 'Nội bộ Đơn vị',
     description: 'Chỉ hội viên trực thuộc Đơn vị mới có thể xem',
-    badgeClass: 'bg-blue-50 text-blue-700 border-blue-200',
+    badgeClass: 'bg-[#e6f0ff] text-signal-blue border-[#d4e4fa]',
   },
   board_only: {
     value: 'board_only',

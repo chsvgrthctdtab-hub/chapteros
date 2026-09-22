@@ -52,10 +52,10 @@ export function TermCardsGrid({
 }: TermCardsGridProps) {
   if (terms.length === 0) {
     return (
-      <div className="rounded-xl border border-dashed border-slate-200 bg-white p-12 text-center">
-        <Calendar className="h-10 w-10 text-slate-300 mx-auto mb-3" />
-        <h3 className="text-sm font-semibold text-slate-800">No terms found</h3>
-        <p className="text-xs text-slate-500 max-w-sm mx-auto mt-1">
+      <div className="rounded-xl border border-dashed border-hairline bg-white p-12 text-center">
+        <Calendar className="h-10 w-10 text-mist-gray mx-auto mb-3" />
+        <h3 className="text-sm font-semibold text-ink-navy">No terms found</h3>
+        <p className="text-xs text-mist-gray max-w-sm mx-auto mt-1">
           No terms matched your search filters. Try adjusting your query or filter selections.
         </p>
       </div>
@@ -88,10 +88,10 @@ export function TermCardsGrid({
         return (
           <div
             key={term.id}
-            className={`rounded-xl border bg-white p-5 shadow-2xs transition-all flex flex-col justify-between ${
+            className={`rounded-xl border bg-white p-5 shadow-xs transition-all flex flex-col justify-between ${
               isCurrent
                 ? 'border-emerald-500 ring-2 ring-emerald-500/20 bg-emerald-50/20'
-                : 'border-slate-200/90 hover:border-slate-300 hover:shadow-xs'
+                : 'border-hairline hover:border-[#d4e4fa] hover:shadow-xs'
             }`}
           >
             <div>
@@ -106,7 +106,7 @@ export function TermCardsGrid({
                       </span>
                     )}
                   </div>
-                  <h3 className="text-base font-bold text-slate-900 mt-1">{term.name}</h3>
+                  <h3 className="text-base font-bold text-ink-navy mt-1">{term.name}</h3>
                 </div>
 
                 <div className="flex items-center gap-1">
@@ -115,7 +115,7 @@ export function TermCardsGrid({
                       variant="ghost"
                       size="sm"
                       onClick={() => onEdit(term)}
-                      className="h-7 w-7 p-0 text-slate-400 hover:text-slate-700"
+                      className="h-7 w-7 p-0 text-mist-gray hover:text-slate-gray"
                     >
                       <Edit2 className="h-3.5 w-3.5" />
                     </Button>
@@ -124,49 +124,49 @@ export function TermCardsGrid({
               </div>
 
               {/* Dates */}
-              <div className="flex items-center gap-1.5 text-xs text-slate-500 font-mono mt-2">
-                <Calendar className="h-3.5 w-3.5 text-slate-400 shrink-0" />
+              <div className="flex items-center gap-1.5 text-xs text-mist-gray font-mono mt-2">
+                <Calendar className="h-3.5 w-3.5 text-mist-gray shrink-0" />
                 <span>{formattedDates}</span>
               </div>
 
               {/* Operational Metrics Matrix */}
-              <div className="grid grid-cols-2 gap-2 mt-4 pt-3 border-t border-slate-100 text-xs">
-                <div className="bg-slate-50/80 rounded-lg p-2 border border-slate-100">
-                  <span className="text-[11px] text-slate-500 flex items-center gap-1">
-                    <Users className="h-3 w-3 text-blue-500" />
+              <div className="grid grid-cols-2 gap-2 mt-4 pt-3 border-t border-hairline text-xs">
+                <div className="bg-cloud rounded-lg p-2 border border-hairline">
+                  <span className="text-[11px] text-mist-gray flex items-center gap-1">
+                    <Users className="h-3 w-3 text-signal-blue" />
                     Members
                   </span>
-                  <span className="text-sm font-bold text-slate-800 block mt-0.5">
+                  <span className="text-sm font-bold text-ink-navy block mt-0.5">
                     {term.memberCount ?? 0}
                   </span>
                 </div>
 
-                <div className="bg-slate-50/80 rounded-lg p-2 border border-slate-100">
-                  <span className="text-[11px] text-slate-500 flex items-center gap-1">
-                    <Activity className="h-3 w-3 text-indigo-500" />
+                <div className="bg-cloud rounded-lg p-2 border border-hairline">
+                  <span className="text-[11px] text-mist-gray flex items-center gap-1">
+                    <Activity className="h-3 w-3 text-signal-blue" />
                     Activities
                   </span>
-                  <span className="text-sm font-bold text-slate-800 block mt-0.5">
+                  <span className="text-sm font-bold text-ink-navy block mt-0.5">
                     {activityCount}
                   </span>
                 </div>
 
-                <div className="bg-slate-50/80 rounded-lg p-2 border border-slate-100">
-                  <span className="text-[11px] text-slate-500 flex items-center gap-1">
+                <div className="bg-cloud rounded-lg p-2 border border-hairline">
+                  <span className="text-[11px] text-mist-gray flex items-center gap-1">
                     <CheckSquare className="h-3 w-3 text-amber-500" />
                     Tasks
                   </span>
-                  <span className="text-sm font-bold text-slate-800 block mt-0.5">
+                  <span className="text-sm font-bold text-ink-navy block mt-0.5">
                     {taskCount}
                   </span>
                 </div>
 
-                <div className="bg-slate-50/80 rounded-lg p-2 border border-slate-100">
-                  <span className="text-[11px] text-slate-500 flex items-center gap-1">
+                <div className="bg-cloud rounded-lg p-2 border border-hairline">
+                  <span className="text-[11px] text-mist-gray flex items-center gap-1">
                     <Wallet className="h-3 w-3 text-emerald-500" />
                     Treasury
                   </span>
-                  <span className="text-xs font-bold text-slate-800 block mt-0.5 tabular-nums truncate">
+                  <span className="text-xs font-bold text-ink-navy block mt-0.5 tabular-nums truncate">
                     {formattedBalance}
                   </span>
                 </div>
@@ -174,14 +174,14 @@ export function TermCardsGrid({
             </div>
 
             {/* Card Actions */}
-            <div className="mt-5 pt-3 border-t border-slate-100 flex items-center justify-between gap-2">
+            <div className="mt-5 pt-3 border-t border-hairline flex items-center justify-between gap-2">
               <Button
                 variant="outline"
                 size="sm"
                 onClick={() => onOpenDetail(term)}
-                className="text-xs h-8 px-3 text-slate-700 hover:bg-slate-50 border-slate-200 cursor-pointer flex-1"
+                className="text-xs h-8 px-3 text-slate-gray hover:bg-cloud border-hairline cursor-pointer flex-1"
               >
-                <Eye className="h-3.5 w-3.5 mr-1 text-slate-400" />
+                <Eye className="h-3.5 w-3.5 mr-1 text-mist-gray" />
                 Inspect
               </Button>
 

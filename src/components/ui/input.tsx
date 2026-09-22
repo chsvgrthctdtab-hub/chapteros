@@ -11,7 +11,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
       <input
         type={type}
         className={cn(
-          "flex h-10 w-full rounded-xl border border-slate-300/80 bg-white px-3.5 py-2 text-sm text-slate-900 shadow-2xs transition-all duration-150 file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-slate-400 hover:border-slate-400/90 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-emerald-600/30 focus-visible:border-emerald-600 disabled:cursor-not-allowed disabled:opacity-50 disabled:bg-slate-50",
+          "flex h-9.5 w-full rounded-lg border border-hairline bg-white px-3.5 py-2 text-sm text-ink-navy shadow-sm transition-all duration-150 file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-mist-gray hover:border-[#b8cce0] focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-signal-blue/25 focus-visible:border-signal-blue disabled:cursor-not-allowed disabled:opacity-50 disabled:bg-pebble",
           className
         )}
         ref={ref}
@@ -32,14 +32,14 @@ const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
 
     return (
       <div className="relative flex items-center w-full">
-        <Search className="absolute left-3.5 h-4 w-4 text-slate-400 pointer-events-none shrink-0" />
+        <Search className="absolute left-3.5 h-4 w-4 text-mist-gray pointer-events-none shrink-0" />
         <input
           type="text"
           value={value}
           onChange={onChange}
           placeholder={placeholder}
           className={cn(
-            "flex h-10 w-full rounded-xl border border-slate-300/80 bg-white pl-10 pr-9 py-2 text-sm text-slate-900 shadow-2xs transition-all duration-150 placeholder:text-slate-400 hover:border-slate-400/90 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-emerald-600/30 focus-visible:border-emerald-600 disabled:cursor-not-allowed disabled:opacity-50",
+            "flex h-9.5 w-full rounded-lg border border-hairline bg-white pl-10 pr-9 py-2 text-sm text-ink-navy shadow-sm transition-all duration-150 placeholder:text-mist-gray hover:border-[#b8cce0] focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-signal-blue/25 focus-visible:border-signal-blue disabled:cursor-not-allowed disabled:opacity-50 disabled:bg-pebble",
             className
           )}
           ref={ref}
@@ -49,7 +49,7 @@ const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
           <button
             type="button"
             onClick={onClear}
-            className="absolute right-3 p-1 rounded-lg text-slate-400 hover:text-slate-600 hover:bg-slate-100 transition-colors cursor-pointer"
+            className="absolute right-3 p-1 rounded-md text-mist-gray hover:text-ink-navy hover:bg-pebble transition-colors cursor-pointer"
             aria-label="Clear search input"
           >
             <X className="h-4 w-4" />

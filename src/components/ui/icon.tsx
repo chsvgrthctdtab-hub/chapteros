@@ -83,10 +83,10 @@ export function IconContainer({
   }[size];
 
   const variantClasses = {
-    tonal: "bg-blue-50 text-blue-800 border border-blue-200/60",
-    primary: "bg-blue-600 text-white shadow-2xs",
-    surface: "bg-slate-100 text-slate-700 border border-slate-200/80",
-    outline: "bg-white text-slate-700 border border-slate-300",
+    tonal: "bg-[#e6f0ff] text-signal-blue border border-[#d4e4fa]",
+    primary: "bg-signal-blue text-white shadow-xs",
+    surface: "bg-pebble text-slate-gray border border-hairline",
+    outline: "bg-white text-slate-gray border border-hairline",
   }[variant];
 
   return (

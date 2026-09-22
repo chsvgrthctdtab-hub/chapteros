@@ -104,7 +104,7 @@ export function AlertCenter({
     alerts.push({
       id: 'google-sync-error',
       type: 'info',
-      icon: <Unlink className="w-4 h-4 text-indigo-600" />,
+      icon: <Unlink className="w-4 h-4 text-signal-blue" />,
       title: 'Kết nối Google Workspace cần xác thực lại',
       description: 'Một số tính năng đồng bộ Lịch/Drive có thể tạm gián đoạn.',
       actionLabel: 'Kết nối lại',
@@ -115,7 +115,7 @@ export function AlertCenter({
   // If no active alerts, show positive operational status banner
   if (alerts.length === 0) {
     return (
-      <Card className="rounded-xl border-slate-200/90 bg-white shadow-2xs">
+      <Card className="rounded-2xl border-hairline bg-white shadow-sm">
         <CardContent className="p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-3.5">
           <div className="flex items-center gap-3">
             <div className="w-9 h-9 rounded-xl bg-emerald-50 text-emerald-700 flex items-center justify-center shrink-0 border border-emerald-200/60">
@@ -123,20 +123,20 @@ export function AlertCenter({
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <h4 className="text-xs sm:text-sm font-semibold text-slate-900 leading-tight">
+                <h4 className="text-xs sm:text-sm font-semibold text-ink-navy leading-tight">
                   All Systems & Operations Normal
                 </h4>
-                <Badge className="bg-emerald-50 text-emerald-800 border-emerald-200/80 text-[11px] py-0 px-2 font-medium hover:bg-emerald-50">
+                <Badge className="bg-emerald-50 text-emerald-800 border-emerald-200/80 text-[11px] py-0.5 px-2.5 rounded-full font-medium hover:bg-emerald-50">
                   Optimal
                 </Badge>
               </div>
-              <p className="text-xs text-slate-500 mt-0.5">
+              <p className="text-xs text-slate-gray mt-0.5">
                 No overdue tasks, chapter treasury is balanced, and planned activities are on track.
               </p>
             </div>
           </div>
 
-          <Link to="/tasks" className="text-xs sm:text-sm font-semibold text-slate-600 hover:text-slate-900 flex items-center shrink-0 self-end sm:self-auto transition-colors">
+          <Link to="/tasks" className="text-xs sm:text-sm font-semibold text-slate-gray hover:text-signal-blue flex items-center shrink-0 self-end sm:self-auto transition-colors">
             <span>Operational queue</span>
             <ArrowRight className="w-3.5 h-3.5 ml-1 opacity-60" />
           </Link>
@@ -146,21 +146,21 @@ export function AlertCenter({
   }
 
   return (
-    <Card className="rounded-xl border-slate-200/90 bg-white shadow-2xs">
-      <CardHeader className="p-4 sm:p-5 pb-3 border-b border-slate-100">
+    <Card className="rounded-2xl border-hairline bg-white shadow-sm">
+      <CardHeader className="p-4 sm:p-5 pb-3 border-b border-hairline">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
             <div className="w-8 h-8 rounded-lg bg-amber-50 text-amber-700 flex items-center justify-center shrink-0 border border-amber-200/60">
               <AlertTriangle className="w-4 h-4" />
             </div>
             <div>
-              <CardTitle className="text-sm sm:text-base font-bold text-slate-900 flex items-center gap-2">
+              <CardTitle className="text-sm sm:text-base font-bold text-ink-navy flex items-center gap-2">
                 <span>Attention Required</span>
-                <Badge variant="outline" className="text-[11px] px-1.5 py-0 bg-amber-50 text-amber-800 border-amber-200 font-semibold">
+                <Badge variant="outline" className="text-[11px] px-2 py-0.5 rounded-full bg-amber-50 text-amber-800 border-amber-200 font-semibold">
                   {alerts.length} action items
                 </Badge>
               </CardTitle>
-              <p className="text-xs text-slate-500 mt-0.5">
+              <p className="text-xs text-slate-gray mt-0.5">
                 High-priority operational items requiring immediate review
               </p>
             </div>
@@ -169,7 +169,7 @@ export function AlertCenter({
       </CardHeader>
 
       <CardContent className="p-4 sm:p-5 pt-1.5">
-        <div className="divide-y divide-slate-100">
+        <div className="divide-y divide-hairline">
           {alerts.map((alert) => (
             <div
               key={alert.id}
@@ -181,15 +181,15 @@ export function AlertCenter({
                     ? 'bg-rose-50 text-rose-700 border border-rose-200/60'
                     : alert.type === 'warning'
                     ? 'bg-amber-50 text-amber-700 border border-amber-200/60'
-                    : 'bg-indigo-50 text-indigo-700 border border-indigo-200/60'
+                    : 'bg-[#e6f0ff] text-signal-blue border border-hairline'
                 }`}>
                   {alert.icon}
                 </div>
                 <div className="space-y-0.5">
-                  <h5 className="text-xs sm:text-sm font-semibold text-slate-900">
+                  <h5 className="text-xs sm:text-sm font-semibold text-ink-navy">
                     {alert.title}
                   </h5>
-                  <p className="text-xs text-slate-500">
+                  <p className="text-xs text-slate-gray">
                     {alert.description}
                   </p>
                 </div>
@@ -199,7 +199,7 @@ export function AlertCenter({
                 <Button
                   size="sm"
                   variant={alert.type === 'danger' ? 'destructive' : 'outline'}
-                  className="text-xs h-7.5 px-2.5 rounded-lg shadow-2xs font-semibold cursor-pointer"
+                  className="text-xs h-7.5 px-3 rounded-lg shadow-sm font-semibold cursor-pointer border-hairline"
                 >
                   <span>{alert.actionLabel}</span>
                   <ArrowRight className="w-3 h-3 ml-1.5" />

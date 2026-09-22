@@ -22,11 +22,11 @@ export function DashboardErrorState({
           <AlertTriangle className="w-6 h-6" />
         </div>
         <div className="space-y-1">
-          <h3 className="text-base font-bold text-slate-900">{title}</h3>
-          <p className="text-xs text-slate-500">{message}</p>
+          <h3 className="text-base font-bold text-ink-navy">{title}</h3>
+          <p className="text-xs text-slate-gray">{message}</p>
         </div>
         {onRetry && (
-          <Button size="sm" onClick={onRetry} className="text-xs">
+          <Button size="sm" onClick={onRetry} className="text-xs bg-signal-blue hover:bg-[#005be0] text-white font-semibold rounded-lg shadow-sm">
             <RefreshCw className="w-3.5 h-3.5 mr-1.5" />
             Thử tải lại dữ liệu
           </Button>
@@ -36,7 +36,7 @@ export function DashboardErrorState({
   }
 
   return (
-    <Card className="border-rose-200 bg-rose-50/40 shadow-2xs">
+    <Card className="border-rose-200 bg-rose-50/40 shadow-xs">
       <CardContent className="p-4 flex items-center justify-between gap-3">
         <div className="flex items-center gap-2.5">
           <AlertTriangle className="w-4 h-4 text-rose-600 shrink-0" />

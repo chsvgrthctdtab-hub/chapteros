@@ -176,9 +176,9 @@ export function DatePicker({
           type="button"
           disabled={disabled}
           className={cn(
-            'flex h-10 w-full items-center justify-between rounded-xl border border-slate-200 bg-slate-50/50 px-3.5 py-2 text-xs text-left transition-all hover:bg-white hover:border-slate-300 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:bg-white cursor-pointer disabled:cursor-not-allowed disabled:opacity-50 group',
-            displayLabel ? 'text-slate-900 font-medium' : 'text-slate-400',
-            open && 'ring-1 ring-blue-500 border-blue-400 bg-white shadow-2xs',
+            'flex h-10 w-full items-center justify-between rounded-xl border border-hairline bg-cloud px-3.5 py-2 text-xs text-left transition-all hover:bg-white hover:border-[#d4e4fa] focus:outline-none focus:ring-1 focus:ring-signal-blue focus:bg-white cursor-pointer disabled:cursor-not-allowed disabled:opacity-50 group',
+            displayLabel ? 'text-ink-navy font-medium' : 'text-mist-gray',
+            open && 'ring-1 ring-signal-blue border-signal-blue bg-white shadow-xs',
             className
           )}
         >
@@ -191,29 +191,29 @@ export function DatePicker({
               <span
                 role="button"
                 onClick={handleClear}
-                className="p-1 rounded-md text-slate-400 hover:text-slate-700 hover:bg-slate-200/60 transition-colors"
+                className="p-1 rounded-md text-mist-gray hover:text-ink-navy hover:bg-pebble transition-colors"
                 title="Xóa ngày"
               >
                 <X className="w-3 h-3" />
               </span>
             )}
-            <CalendarIcon className="w-4 h-4 text-slate-400 group-hover:text-blue-600 transition-colors" />
+            <CalendarIcon className="w-4 h-4 text-mist-gray group-hover:text-signal-blue transition-colors" />
           </div>
         </button>
       </PopoverTrigger>
 
       <PopoverContent
         align="start"
-        className="w-auto p-4 bg-white border border-slate-200/90 rounded-3xl shadow-2xl z-50 animate-in fade-in-0 zoom-in-95"
+        className="w-auto p-4 bg-white border border-hairline rounded-3xl shadow-lg z-50 animate-in fade-in-0 zoom-in-95"
       >
         <div className="w-[280px] space-y-3.5">
           {/* Header Navigation */}
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-1.5">
-              <span className="text-xs font-bold text-slate-900">
+              <span className="text-xs font-bold text-ink-navy">
                 {MONTH_NAMES[viewDate.month()]}
               </span>
-              <span className="text-xs font-semibold text-slate-500">
+              <span className="text-xs font-semibold text-slate-gray">
                 {viewDate.year()}
               </span>
             </div>
@@ -222,7 +222,7 @@ export function DatePicker({
               <button
                 type="button"
                 onClick={() => setViewDate((prev) => prev.subtract(1, 'month'))}
-                className="p-1.5 rounded-xl hover:bg-slate-100 text-slate-600 transition-colors cursor-pointer"
+                className="p-1.5 rounded-xl hover:bg-cloud text-slate-gray transition-colors cursor-pointer"
                 title="Tháng trước"
               >
                 <ChevronLeft className="w-4 h-4" />
@@ -230,7 +230,7 @@ export function DatePicker({
               <button
                 type="button"
                 onClick={() => setViewDate((prev) => prev.add(1, 'month'))}
-                className="p-1.5 rounded-xl hover:bg-slate-100 text-slate-600 transition-colors cursor-pointer"
+                className="p-1.5 rounded-xl hover:bg-cloud text-slate-gray transition-colors cursor-pointer"
                 title="Tháng sau"
               >
                 <ChevronRight className="w-4 h-4" />
@@ -245,7 +245,7 @@ export function DatePicker({
                 key={day}
                 className={cn(
                   'text-[10px] font-bold py-1',
-                  idx === 5 || idx === 6 ? 'text-amber-600' : 'text-slate-400'
+                  idx === 5 || idx === 6 ? 'text-amber-600' : 'text-mist-gray'
                 )}
               >
                 {day}
@@ -265,12 +265,12 @@ export function DatePicker({
                   className={cn(
                     'h-8 w-8 mx-auto rounded-xl text-xs flex items-center justify-center font-medium transition-all cursor-pointer',
                     item.isSelected
-                      ? 'bg-blue-600 text-white font-bold shadow-xs hover:bg-blue-700'
+                      ? 'bg-signal-blue text-white font-bold shadow-xs hover:bg-[#005be0]'
                       : item.isToday
-                      ? 'border border-blue-500 text-blue-600 font-bold bg-blue-50/50 hover:bg-blue-100/60'
+                      ? 'border border-signal-blue text-signal-blue font-bold bg-[#e6f0ff] hover:bg-[#d8e8fc]'
                       : item.isCurrentMonth
-                      ? 'text-slate-700 hover:bg-slate-100 hover:text-slate-900'
-                      : 'text-slate-300 hover:bg-slate-50',
+                      ? 'text-slate-gray hover:bg-cloud hover:text-ink-navy'
+                      : 'text-mist-gray hover:bg-cloud',
                     item.isDisabled && 'opacity-30 cursor-not-allowed hover:bg-transparent'
                   )}
                 >
@@ -282,27 +282,27 @@ export function DatePicker({
 
           {/* Time Picker Bar (if showTime) */}
           {showTime && (
-            <div className="pt-2 border-t border-slate-100 flex items-center justify-between text-xs">
-              <div className="flex items-center gap-1.5 text-slate-600 font-semibold">
-                <Clock className="w-3.5 h-3.5 text-blue-600" />
+            <div className="pt-2 border-t border-hairline flex items-center justify-between text-xs">
+              <div className="flex items-center gap-1.5 text-slate-gray font-semibold">
+                <Clock className="w-3.5 h-3.5 text-signal-blue" />
                 <span>Giờ:</span>
               </div>
               <div className="flex items-center gap-1">
                 <select
                   value={selectedHour}
                   onChange={(e) => handleTimeChange(e.target.value, selectedMinute)}
-                  className="h-7 rounded-lg border border-slate-200 bg-slate-50 px-1 text-xs tabular-nums font-semibold"
+                  className="h-7 rounded-lg border border-hairline bg-cloud px-1 text-xs tabular-nums font-semibold text-ink-navy"
                 >
                   {Array.from({ length: 24 }).map((_, i) => {
                     const val = i.toString().padStart(2, '0');
                     return <option key={val} value={val}>{val}</option>;
                   })}
                 </select>
-                <span className="font-bold text-slate-400">:</span>
+                <span className="font-bold text-mist-gray">:</span>
                 <select
                   value={selectedMinute}
                   onChange={(e) => handleTimeChange(selectedHour, e.target.value)}
-                  className="h-7 rounded-lg border border-slate-200 bg-slate-50 px-1 text-xs tabular-nums font-semibold"
+                  className="h-7 rounded-lg border border-hairline bg-cloud px-1 text-xs tabular-nums font-semibold text-ink-navy"
                 >
                   {Array.from({ length: 12 }).map((_, i) => {
                     const val = (i * 5).toString().padStart(2, '0');
@@ -314,11 +314,11 @@ export function DatePicker({
           )}
 
           {/* Bottom Actions */}
-          <div className="pt-2.5 border-t border-slate-100 flex items-center justify-between text-xs">
+          <div className="pt-2.5 border-t border-hairline flex items-center justify-between text-xs">
             <button
               type="button"
               onClick={handleQuickSelectToday}
-              className="text-[11px] font-semibold text-blue-600 hover:text-blue-700 hover:underline cursor-pointer"
+              className="text-[11px] font-semibold text-signal-blue hover:text-[#005be0] hover:underline cursor-pointer"
             >
               Hôm nay
             </button>
@@ -326,7 +326,7 @@ export function DatePicker({
               type="button"
               size="sm"
               onClick={() => setOpen(false)}
-              className="h-7 px-3 text-[11px] font-semibold rounded-lg bg-slate-900 text-white hover:bg-slate-800"
+              className="h-7 px-3 text-[11px] font-semibold rounded-lg bg-ink-navy text-white hover:bg-[#07243d]"
             >
               Xong
             </Button>
