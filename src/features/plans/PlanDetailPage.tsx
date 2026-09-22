@@ -939,290 +939,241 @@ export function PlanDetailPage() {
             </Card>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            {/* Left 2 Cols: Collab Activities in Plan */}
-            <div className="lg:col-span-2 space-y-4">
-              <div className="flex items-center justify-between">
-                <div>
-                  <h2 className="text-base font-bold text-ink-navy flex items-center gap-2">
-                    <CalendarCheck className="h-5 w-5 text-signal-blue" />
-                    Danh Sách Hoạt Động Phối Hợp ({collabActivities.length})
-                  </h2>
-                  <p className="text-xs text-slate-gray mt-0.5">
-                    Các sự kiện độc lập trong chiến dịch. Nhấp vào bất kỳ thẻ nào để mở chi tiết hoạt động.
-                  </p>
-                </div>
+          {/* Participating Organizations Compact Strip */}
+          <div className="bg-white border border-hairline rounded-2xl p-3 sm:p-4 shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div className="flex items-center gap-2.5 flex-wrap">
+              <div className="flex items-center gap-1.5 text-xs font-bold text-ink-navy shrink-0">
+                <Building2 strokeWidth={1.75} className="h-4 w-4 text-signal-blue" />
+                <span>Đơn vị tham gia ({cohosts.filter((c) => c.status !== 'removed').length}):</span>
               </div>
+              <div className="flex items-center gap-2 flex-wrap">
+                {cohosts
+                  .filter((c) => c.status !== 'removed')
+                  .map((cohost) => {
+                    const roleLabel =
+                      cohost.roleInPlan === 'host'
+                        ? 'Chủ trì'
+                        : cohost.roleInPlan === 'co_host'
+                        ? 'Đồng tổ chức'
+                        : cohost.roleInPlan === 'partner'
+                        ? 'Đối tác'
+                        : cohost.roleInPlan === 'supporter'
+                        ? 'Tài trợ'
+                        : cohost.roleInPlan === 'observer'
+                        ? 'Quan sát'
+                        : 'Đồng tổ chức';
 
-              {isActivitiesLoading ? (
-                <div className="space-y-3">
-                  {[1, 2].map((i) => (
-                    <div key={i} className="h-28 bg-white border border-hairline rounded-2xl animate-pulse shadow-sm" />
-                  ))}
-                </div>
-              ) : collabActivities.length === 0 ? (
-                <Card className="bg-white border border-hairline rounded-2xl p-8 text-center shadow-sm">
-                  <div className="h-12 w-12 bg-[#e6f0ff] border border-hairline rounded-xl flex items-center justify-center mx-auto mb-3 text-signal-blue">
-                    <CalendarCheck className="h-6 w-6" />
-                  </div>
-                  <h3 className="text-sm font-bold text-ink-navy">Chưa có hoạt động collab nào</h3>
-                  <p className="text-xs text-slate-gray mt-0.5 mb-4">
-                    Chiến dịch chưa có sự kiện độc lập nào được thiết lập. Hãy tạo hoạt động phối hợp đầu tiên!
-                  </p>
-                  {canManageOperational && (
-                    <Button
-                      onClick={() => setIsCreateActivityOpen(true)}
-                      size="sm"
-                      className="text-xs bg-signal-blue hover:bg-[#005be0] text-white gap-1.5 shadow-sm font-semibold rounded-lg active:scale-[0.98]"
-                    >
-                      <Plus className="h-3.5 w-3.5" />
-                      Tạo hoạt động Collab
-                    </Button>
-                  )}
-                </Card>
-              ) : (
-                <div className="space-y-3">
-                  {collabActivities.map((act) => {
-                    const actTasks = collabTasks.filter((t) => t.collabActivityId === act.id);
-                    const totalTasks = actTasks.length > 0 ? actTasks.length : (act.tasksCount || 0);
-                    const completedTasks = actTasks.length > 0
-                      ? actTasks.filter((t) => t.status === 'done').length
-                      : (act.completedTasksCount || 0);
-                    const isAllDone = totalTasks > 0 && completedTasks === totalTasks;
-                    const percent = totalTasks > 0 ? Math.round((completedTasks / totalTasks) * 100) : 0;
+                    const code = cohost.organization?.code || 'ORG';
+                    const isHost = cohost.isHost;
 
                     return (
-                      <Card
-                        key={act.id}
-                        id={`collab-act-card-${act.id}`}
-                        onClick={() => navigate(`/plans/${planId}/collab-activities/${act.id}`)}
-                        className="group bg-white hover:bg-white border border-hairline hover:border-signal-blue/40 rounded-2xl p-5 transition-all duration-200 shadow-sm hover:shadow-md cursor-pointer flex flex-col md:flex-row md:items-center justify-between gap-4 min-w-0"
+                      <div
+                        key={cohost.id}
+                        className={cn(
+                          'inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-bold border transition-colors',
+                          isHost
+                            ? 'bg-[#e6f0ff] text-signal-blue border-[#d4e4fa]'
+                            : 'bg-pebble text-slate-gray border-hairline hover:border-slate-300'
+                        )}
+                        title={`${cohost.organization?.name || 'Đơn vị'} (${roleLabel})`}
                       >
-                        {/* Left: Activity Details */}
-                        <div className="space-y-2 min-w-0 flex-1">
-                          <div className="flex items-center gap-2 flex-wrap min-w-0">
-                            <span className="text-[10px] font-semibold tabular-nums bg-pebble text-ink-navy px-2 py-0.5 rounded border border-hairline shrink-0">
-                              {act.code}
-                            </span>
-                            <Badge className="bg-[#e6f0ff] text-signal-blue border border-[#d4e4fa] text-[10px] shrink-0 font-medium">
-                              {act.category === 'volunteer'
-                                ? 'Tình nguyện'
-                                : act.category === 'academic'
-                                ? 'Học thuật'
-                                : act.category === 'sports'
-                                ? 'Thể thao'
-                                : act.category === 'culture'
-                                ? 'Văn hóa'
-                                : act.category === 'meeting'
-                                ? 'Hội thảo / Họp'
-                                : act.category === 'training'
-                                ? 'Tập huấn'
-                                : 'Sự kiện'}
-                            </Badge>
-                            {act.leadOrganization && (
-                              <span className="text-[11px] text-signal-blue font-semibold flex items-center gap-1 min-w-0 truncate" title={act.leadOrganization.name}>
-                                <Building2 className="h-3 w-3 text-signal-blue shrink-0" />
-                                <span className="truncate">{act.leadOrganization.name}</span>
-                              </span>
-                            )}
-                          </div>
-
-                          <h3 className="text-sm sm:text-base font-bold text-ink-navy group-hover:text-signal-blue transition-colors break-words break-all min-w-0">
-                            {act.title}
-                          </h3>
-
-                          <div className="flex items-center gap-4 text-xs text-slate-gray flex-wrap min-w-0">
-                            <span className="flex items-center gap-1.5 text-[11px] shrink-0 text-slate-gray tabular-nums">
-                              <Clock className="h-3.5 w-3.5 text-mist-gray" />
-                              {formatDate(act.startDate)} - {formatDate(act.endDate)}
-                            </span>
-                            {act.location && (
-                              <span className="flex items-center gap-1.5 text-[11px] text-slate-gray min-w-0 break-words break-all max-w-[280px]" title={act.location}>
-                                <MapPin className="h-3.5 w-3.5 text-mist-gray shrink-0" />
-                                <span className="truncate">{act.location}</span>
-                              </span>
-                            )}
-                          </div>
-                        </div>
-
-                        {/* Right: Progress Metric & Chevron Indicator */}
-                        <div className="flex items-center justify-between md:justify-end gap-4 pt-3 md:pt-0 border-t md:border-t-0 border-hairline shrink-0">
-                          {/* Progress Metric Block */}
-                          <div className="flex flex-col items-start md:items-end min-w-[130px]">
-                            <div className="flex items-center gap-1.5">
-                              <span className="text-xs font-bold tabular-nums text-ink-navy">
-                                {totalTasks > 0 ? `${completedTasks}/${totalTasks} việc` : '0 việc'}
-                              </span>
-                              {totalTasks > 0 && (
-                                <span className={`text-[10px] font-bold tabular-nums ${isAllDone ? 'text-emerald-700' : 'text-signal-blue'}`}>
-                                  ({percent}%)
-                                </span>
-                              )}
-                            </div>
-
-                            {/* Progress Bar / Ready Badge */}
-                            <div className="mt-1 flex items-center gap-1.5">
-                              {isAllDone ? (
-                                <Badge className="bg-emerald-50 text-emerald-800 border border-emerald-200/70 text-[10px] font-semibold px-2 py-0">
-                                  Sẵn sàng triển khai
-                                </Badge>
-                              ) : totalTasks > 0 ? (
-                                <div className="w-24 bg-pebble border border-hairline rounded-full h-1.5 overflow-hidden">
-                                  <div
-                                    className="bg-signal-blue h-full rounded-full transition-all duration-300"
-                                    style={{ width: `${percent}%` }}
-                                  />
-                                </div>
-                              ) : (
-                                <span className="text-[10px] text-mist-gray italic">Chưa giao việc</span>
-                              )}
-                            </div>
-                          </div>
-
-                          {/* Navigation Indicator Arrow */}
-                          <div className="w-8 h-8 rounded-full bg-pebble group-hover:bg-[#e6f0ff] text-slate-gray group-hover:text-signal-blue flex items-center justify-center transition-colors">
-                            <ChevronRight className="h-4 w-4 group-hover:translate-x-0.5 transition-transform" />
-                          </div>
-                        </div>
-                      </Card>
+                        <span>
+                          [{code} - {roleLabel}]
+                        </span>
+                        {canManagePlan && !isHost && (
+                          <button
+                            type="button"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handleRemoveCohost(cohost.organizationId);
+                            }}
+                            className="text-slate-gray hover:text-rose-600 transition-colors ml-0.5 cursor-pointer"
+                            title="Gỡ đơn vị"
+                          >
+                            <X className="h-3 w-3" />
+                          </button>
+                        )}
+                      </div>
                     );
                   })}
-                </div>
-              )}
+              </div>
             </div>
 
-          {/* Right 1 Col: Participating Organizations / Co-hosts */}
+            {canManagePlan && (
+              <Button
+                id="btn-open-invite-cohost"
+                variant="outline"
+                size="sm"
+                onClick={() => setIsInviteCohostOpen(true)}
+                className="h-8 text-xs text-signal-blue hover:text-[#005be0] hover:bg-[#e6f0ff] border-hairline gap-1.5 rounded-lg shrink-0 font-semibold self-start sm:self-auto cursor-pointer"
+              >
+                <UserPlus className="h-3.5 w-3.5" />
+                <span>Mời đơn vị</span>
+              </Button>
+            )}
+          </div>
+
+          {/* Collab Activities in Plan (Full Width) */}
           <div className="space-y-4">
             <div className="flex items-center justify-between">
               <div>
                 <h2 className="text-base font-bold text-ink-navy flex items-center gap-2">
-                  <Building2 strokeWidth={1.5} className="h-5 w-5 text-signal-blue" />
-                  Đơn Vị Tham Gia ({cohosts.length})
+                  <CalendarCheck className="h-5 w-5 text-signal-blue" />
+                  Danh Sách Hoạt Động Phối Hợp ({collabActivities.length})
                 </h2>
-                <p className="text-[11px] text-slate-gray">Chỉ những đơn vị được mời mới có quyền phân công</p>
+                <p className="text-xs text-slate-gray mt-0.5">
+                  Các sự kiện độc lập trong chiến dịch. Nhấp vào bất kỳ thẻ nào để mở chi tiết hoạt động.
+                </p>
               </div>
 
-              {canManagePlan && (
+              {canManageOperational && collabActivities.length > 0 && (
                 <Button
-                  id="btn-open-invite-cohost"
-                  variant="ghost"
+                  onClick={() => setIsCreateActivityOpen(true)}
                   size="sm"
-                  onClick={() => setIsInviteCohostOpen(true)}
-                  className="text-xs text-signal-blue hover:text-[#005be0] gap-1.5 hover:bg-[#e6f0ff] rounded-lg active:scale-[0.98]"
+                  className="h-8 text-xs bg-signal-blue hover:bg-[#005be0] text-white gap-1.5 shadow-sm font-semibold rounded-lg active:scale-[0.98] cursor-pointer"
                 >
-                  <UserPlus className="h-3.5 w-3.5" />
-                  Mời đơn vị
+                  <Plus className="h-3.5 w-3.5" />
+                  <span>Tạo hoạt động</span>
                 </Button>
               )}
             </div>
 
-            <div className="space-y-3">
-              {cohosts.map((cohost) => {
-                const orgType = cohost.organization?.type;
-                const typeLabel = getOrgTypeLabel(orgType);
-                const typeBadgeClass = getOrgTypeBadgeClass(orgType);
-                const parentName = cohost.organization?.parent?.name;
-                const isPending = cohost.status === 'pending';
-                const isRejected = cohost.status === 'rejected';
-                const isRemoved = cohost.status === 'removed';
-
-                if (isRemoved) return null;
-
-                const roleLabel =
-                  cohost.roleInPlan === 'host'
-                    ? 'Chủ trì'
-                    : cohost.roleInPlan === 'co_host'
-                    ? 'Đồng tổ chức'
-                    : cohost.roleInPlan === 'partner'
-                    ? 'Đối tác'
-                    : cohost.roleInPlan === 'supporter'
-                    ? 'Tài trợ'
-                    : cohost.roleInPlan === 'observer'
-                    ? 'Quan sát'
-                    : 'Đồng tổ chức';
-
-                return (
-                  <Card
-                    key={cohost.id}
-                    className={`bg-white border rounded-2xl p-3.5 transition-all shadow-sm ${
-                      cohost.isHost
-                        ? 'border-hairline bg-[#e6f0ff]/20'
-                        : isPending
-                        ? 'border-amber-200/70 bg-amber-50/30'
-                        : 'border-hairline'
-                    }`}
+            {isActivitiesLoading ? (
+              <div className="space-y-3">
+                {[1, 2].map((i) => (
+                  <div key={i} className="h-28 bg-white border border-hairline rounded-2xl animate-pulse shadow-sm" />
+                ))}
+              </div>
+            ) : collabActivities.length === 0 ? (
+              <Card className="bg-white border border-hairline rounded-2xl p-8 text-center shadow-sm">
+                <div className="h-12 w-12 bg-[#e6f0ff] border border-hairline rounded-xl flex items-center justify-center mx-auto mb-3 text-signal-blue">
+                  <CalendarCheck className="h-6 w-6" />
+                </div>
+                <h3 className="text-sm font-bold text-ink-navy">Chưa có hoạt động collab nào</h3>
+                <p className="text-xs text-slate-gray mt-0.5 mb-4">
+                  Chiến dịch chưa có sự kiện độc lập nào được thiết lập. Hãy tạo hoạt động phối hợp đầu tiên!
+                </p>
+                {canManageOperational && (
+                  <Button
+                    onClick={() => setIsCreateActivityOpen(true)}
+                    size="sm"
+                    className="text-xs bg-signal-blue hover:bg-[#005be0] text-white gap-1.5 shadow-sm font-semibold rounded-lg active:scale-[0.98] cursor-pointer"
                   >
-                    <div className="flex items-start justify-between gap-2">
-                      <div className="flex items-center gap-3 min-w-0">
-                        <div
-                          className={`h-9 w-9 rounded-lg flex items-center justify-center font-bold text-xs shrink-0 ${
-                            cohost.isHost
-                              ? 'bg-signal-blue text-white'
-                              : isPending
-                              ? 'bg-amber-100 text-amber-800'
-                              : 'bg-pebble text-ink-navy border border-hairline'
-                          }`}
-                        >
-                          {cohost.organization?.code?.substring(0, 3) || 'ORG'}
+                    <Plus className="h-3.5 w-3.5" />
+                    Tạo hoạt động Collab
+                  </Button>
+                )}
+              </Card>
+            ) : (
+              <div className="space-y-3">
+                {collabActivities.map((act) => {
+                  const actTasks = collabTasks.filter((t) => t.collabActivityId === act.id);
+                  const totalTasks = actTasks.length > 0 ? actTasks.length : (act.tasksCount || 0);
+                  const completedTasks = actTasks.length > 0
+                    ? actTasks.filter((t) => t.status === 'done').length
+                    : (act.completedTasksCount || 0);
+                  const isAllDone = totalTasks > 0 && completedTasks === totalTasks;
+                  const percent = totalTasks > 0 ? Math.round((completedTasks / totalTasks) * 100) : 0;
+
+                  return (
+                    <Card
+                      key={act.id}
+                      id={`collab-act-card-${act.id}`}
+                      onClick={() => navigate(`/plans/${planId}/collab-activities/${act.id}`)}
+                      className="group bg-white hover:bg-white border border-hairline hover:border-signal-blue/40 rounded-2xl p-5 transition-all duration-200 shadow-sm hover:shadow-md cursor-pointer flex flex-col md:flex-row md:items-center justify-between gap-4 min-w-0"
+                    >
+                      {/* Left: Activity Details */}
+                      <div className="space-y-2 min-w-0 flex-1">
+                        <div className="flex items-center gap-2 flex-wrap min-w-0">
+                          <span className="text-[10px] font-semibold tabular-nums bg-pebble text-ink-navy px-2 py-0.5 rounded border border-hairline shrink-0">
+                            {act.code}
+                          </span>
+                          <Badge className="bg-[#e6f0ff] text-signal-blue border border-[#d4e4fa] text-[10px] shrink-0 font-medium">
+                            {act.category === 'volunteer'
+                              ? 'Tình nguyện'
+                              : act.category === 'academic'
+                              ? 'Học thuật'
+                              : act.category === 'sports'
+                              ? 'Thể thao'
+                              : act.category === 'culture'
+                              ? 'Văn hóa'
+                              : act.category === 'meeting'
+                              ? 'Hội thảo / Họp'
+                              : act.category === 'training'
+                              ? 'Tập huấn'
+                              : 'Sự kiện'}
+                          </Badge>
+                          {act.leadOrganization && (
+                            <span className="text-[11px] text-signal-blue font-semibold flex items-center gap-1 shrink-0" title={act.leadOrganization.name}>
+                              <Building2 className="h-3 w-3 text-signal-blue shrink-0" />
+                              <span>{act.leadOrganization.code || act.leadOrganization.name}</span>
+                            </span>
+                          )}
                         </div>
 
-                        <div className="min-w-0">
-                          <div className="flex items-center gap-1.5 flex-wrap">
-                            <span className={`text-[10px] px-1.5 py-0.2 rounded font-semibold border ${typeBadgeClass}`}>
-                              {typeLabel}
+                        <h3 className="text-sm sm:text-base font-bold text-ink-navy group-hover:text-signal-blue transition-colors break-words break-all min-w-0">
+                          {act.title}
+                        </h3>
+
+                        <div className="flex items-center gap-4 text-xs text-slate-gray flex-wrap min-w-0">
+                          <span className="flex items-center gap-1.5 text-[11px] shrink-0 text-slate-gray tabular-nums">
+                            <Clock className="h-3.5 w-3.5 text-mist-gray" />
+                            {formatDate(act.startDate)} - {formatDate(act.endDate)}
+                          </span>
+                          {act.location && (
+                            <span className="flex items-center gap-1.5 text-[11px] text-slate-gray min-w-0 break-words break-all max-w-[280px]" title={act.location}>
+                              <MapPin className="h-3.5 w-3.5 text-mist-gray shrink-0" />
+                              <span className="truncate">{act.location}</span>
                             </span>
-                            <span className="font-semibold text-xs text-ink-navy truncate">
-                              {cohost.organization?.name || 'Đơn vị thành viên'}
-                            </span>
-                            <span className={`px-1.5 py-0.2 rounded text-[10px] font-semibold shrink-0 ${
-                              cohost.isHost
-                                ? 'bg-[#e6f0ff] text-signal-blue border border-[#d4e4fa]'
-                                : 'bg-pebble text-slate-gray border border-hairline'
-                            }`}>
-                              {roleLabel}
-                            </span>
-                            {isPending && (
-                              <span className="px-1.5 py-0.2 rounded text-[10px] font-semibold bg-amber-100 text-amber-800 shrink-0 border border-amber-200/60">
-                                Chờ xác nhận
-                              </span>
-                            )}
-                            {isRejected && (
-                              <span className="px-1.5 py-0.2 rounded text-[10px] font-semibold bg-rose-100 text-rose-800 shrink-0 border border-rose-200/60">
-                                Đã từ chối
-                              </span>
-                            )}
-                          </div>
-                          <div className="flex items-center gap-2 text-[11px] text-slate-gray mt-0.5">
-                            <p className="truncate">
-                              {cohost.roleDescription || (cohost.isHost ? 'Đơn vị chủ trì chiến dịch' : 'Đơn vị đồng tổ chức')}
-                            </p>
-                            {parentName && (
-                              <span className="text-signal-blue shrink-0">
-                                • {parentName}
-                              </span>
-                            )}
-                          </div>
+                          )}
                         </div>
                       </div>
 
-                      {canManagePlan && !cohost.isHost && (
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          onClick={() => handleRemoveCohost(cohost.organizationId)}
-                          className="h-7 w-7 p-0 text-slate-gray hover:text-rose-600 hover:bg-rose-50 rounded-lg shrink-0"
-                          title="Gỡ đơn vị này khỏi chiến dịch"
-                        >
-                          <Trash2 className="h-3.5 w-3.5" />
-                        </Button>
-                      )}
-                    </div>
-                  </Card>
-                );
-              })}
-            </div>
+                      {/* Right: Progress Metric & Chevron Indicator */}
+                      <div className="flex items-center justify-between md:justify-end gap-4 pt-3 md:pt-0 border-t md:border-t-0 border-hairline shrink-0">
+                        {/* Progress Metric Block */}
+                        <div className="flex flex-col items-start md:items-end min-w-[130px]">
+                          <div className="flex items-center gap-1.5">
+                            <span className="text-xs font-bold tabular-nums text-ink-navy">
+                              {totalTasks > 0 ? `${completedTasks}/${totalTasks} việc` : '0 việc'}
+                            </span>
+                            {totalTasks > 0 && (
+                              <span className={`text-[10px] font-bold tabular-nums ${isAllDone ? 'text-emerald-700' : 'text-signal-blue'}`}>
+                                ({percent}%)
+                              </span>
+                            )}
+                          </div>
+
+                          {/* Progress Bar / Ready Badge */}
+                          <div className="mt-1 flex items-center gap-1.5">
+                            {isAllDone ? (
+                              <Badge className="bg-emerald-50 text-emerald-800 border border-emerald-200/70 text-[10px] font-semibold px-2 py-0">
+                                Sẵn sàng triển khai
+                              </Badge>
+                            ) : totalTasks > 0 ? (
+                              <div className="w-24 bg-pebble border border-hairline rounded-full h-1.5 overflow-hidden">
+                                <div
+                                  className="bg-signal-blue h-full rounded-full transition-all duration-300"
+                                  style={{ width: `${percent}%` }}
+                                />
+                              </div>
+                            ) : (
+                              <span className="text-[10px] text-mist-gray italic">Chưa giao việc</span>
+                            )}
+                          </div>
+                        </div>
+
+                        {/* Navigation Indicator Arrow */}
+                        <div className="w-8 h-8 rounded-full bg-pebble group-hover:bg-[#e6f0ff] text-slate-gray group-hover:text-signal-blue flex items-center justify-center transition-colors">
+                          <ChevronRight className="h-4 w-4 group-hover:translate-x-0.5 transition-transform" />
+                        </div>
+                      </div>
+                    </Card>
+                  );
+                })}
+              </div>
+            )}
           </div>
-        </div>
       </div>
       )}
 
