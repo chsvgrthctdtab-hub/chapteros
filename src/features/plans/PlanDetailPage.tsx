@@ -714,7 +714,7 @@ export function PlanDetailPage() {
                 {getOrgTypeLabel(plan.leadOrganization?.type)}
               </span>
               <span className="font-semibold text-ink-navy truncate max-w-[200px]" title={plan.leadOrganization?.name}>
-                {plan.leadOrganization?.name || 'Đơn vị chủ trì'}
+                {plan.leadOrganization?.code || plan.leadOrganization?.name || 'Đơn vị chủ trì'}
               </span>
             </div>
 

@@ -272,8 +272,8 @@ export function PlansPage() {
                         <span className={`text-[9px] px-1.5 py-0.2 rounded font-semibold border ${getOrgTypeBadgeClass(plan.leadOrganization?.type)}`}>
                           {getOrgTypeLabel(plan.leadOrganization?.type)}
                         </span>
-                        <span className="font-semibold text-ink-navy truncate">
-                          {plan.leadOrganization?.name || 'Đơn vị chủ trì'}
+                        <span className="font-semibold text-ink-navy truncate" title={plan.leadOrganization?.name}>
+                          {plan.leadOrganization?.code || plan.leadOrganization?.name || 'Đơn vị chủ trì'}
                         </span>
                       </div>
                     </div>

@@ -536,7 +536,7 @@ export function CollabActivityDetailPage() {
               {getOrgTypeLabel(activity.leadOrganization?.type)}
             </span>
             <span className="font-semibold text-ink-navy truncate max-w-[200px]" title={activity.leadOrganization?.name}>
-              {activity.leadOrganization?.name || 'Đơn vị phụ trách'}
+              {activity.leadOrganization?.code || activity.leadOrganization?.name || 'Đơn vị phụ trách'}
             </span>
           </div>
 

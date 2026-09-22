@@ -638,8 +638,8 @@ export function CollabFinanceModule({
                           <div className="w-5 h-5 rounded bg-pebble text-ink-navy border border-hairline font-bold text-[9px] flex items-center justify-center">
                             {tx.organization?.code?.slice(0, 2) || 'OR'}
                           </div>
-                          <span className="text-ink-navy font-medium truncate max-w-[140px]">
-                            {tx.organization?.name || 'Đơn vị'}
+                          <span className="text-ink-navy font-semibold truncate max-w-[140px]" title={tx.organization?.name}>
+                            {tx.organization?.code || tx.organization?.name || 'Đơn vị'}
                           </span>
                         </div>
                         {tx.collabActivity && (
