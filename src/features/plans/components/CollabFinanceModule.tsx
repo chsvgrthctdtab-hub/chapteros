@@ -729,7 +729,7 @@ export function CollabFinanceModule({
               {editingTransaction ? 'Chỉnh Sửa Giao Dịch' : 'Ghi Nhận Thu / Chi Chiến Dịch'}
             </DialogTitle>
             <DialogDescription className="text-xs text-slate-gray">
-              Ghi lại các khoản thu gây quỹ, giải ngân hậu cần và đính kèm đường link hóa đơn minh bạch.
+              Theo dõi thu chi và hóa đơn minh bạch.
             </DialogDescription>
           </DialogHeader>
 
@@ -755,8 +755,8 @@ export function CollabFinanceModule({
                     : 'text-slate-gray hover:text-ink-navy'
                 }`}
               >
-                <TrendingUp className="h-3.5 w-3.5" />
-                Khoản Thu (Gây quỹ / Tài trợ)
+                <Plus className="h-3.5 w-3.5 stroke-[2.5]" />
+                <span>Thu (Gây quỹ)</span>
               </button>
               <button
                 type="button"
@@ -770,8 +770,8 @@ export function CollabFinanceModule({
                     : 'text-slate-gray hover:text-ink-navy'
                 }`}
               >
-                <TrendingDown className="h-3.5 w-3.5" />
-                Khoản Chi (Giải ngân / Mua sắm)
+                <TrendingDown className="h-3.5 w-3.5 stroke-[2.5]" />
+                <span>Chi (Giải ngân)</span>
               </button>
             </div>
 
@@ -779,7 +779,7 @@ export function CollabFinanceModule({
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div className="space-y-1">
                 <label htmlFor="tx-amount" className="block text-xs font-semibold text-ink-navy">
-                  Số tiền (VND) <span className="text-rose-500">*</span>
+                  Số tiền (₫) <span className="text-rose-500">*</span>
                 </label>
                 <Input
                   id="tx-amount"
@@ -795,7 +795,7 @@ export function CollabFinanceModule({
 
               <div className="space-y-1">
                 <label className="block text-xs font-semibold text-ink-navy">
-                  Ngày giao dịch <span className="text-rose-500">*</span>
+                  Ngày GD <span className="text-rose-500">*</span>
                 </label>
                 <Controller
                   name="transactionDate"
@@ -804,7 +804,7 @@ export function CollabFinanceModule({
                     <DatePicker
                       value={field.value}
                       onChange={field.onChange}
-                      placeholder="Chọn ngày giao dịch"
+                      placeholder="Chọn ngày"
                     />
                   )}
                 />
@@ -817,7 +817,7 @@ export function CollabFinanceModule({
             {/* Danh mục */}
             <div className="space-y-1">
               <label htmlFor="tx-category" className="block text-xs font-semibold text-ink-navy">
-                Danh mục Thu / Chi <span className="text-rose-500">*</span>
+                Danh mục <span className="text-rose-500">*</span>
               </label>
               <Controller
                 name="categoryName"
@@ -849,7 +849,7 @@ export function CollabFinanceModule({
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div className="space-y-1">
                 <label htmlFor="tx-org" className="block text-xs font-semibold text-ink-navy">
-                  Đơn vị chịu trách nhiệm <span className="text-rose-500">*</span>
+                  Đơn vị phụ trách <span className="text-rose-500">*</span>
                 </label>
                 <Controller
                   name="organizationId"
@@ -859,13 +859,13 @@ export function CollabFinanceModule({
                       value={field.value || ''}
                       onValueChange={field.onChange}
                     >
-                      <SelectTrigger id="tx-org" className="h-9 text-xs bg-cloud border-hairline text-ink-navy">
-                        <SelectValue placeholder="Chọn đơn vị" />
+                      <SelectTrigger id="tx-org" className="h-9 text-xs bg-cloud border-hairline text-ink-navy font-semibold">
+                        <SelectValue placeholder="Chọn mã đơn vị" />
                       </SelectTrigger>
                       <SelectContent className="bg-white border-hairline text-ink-navy">
                         {participatingOrganizations.map((org) => (
-                          <SelectItem key={org.id} value={org.id} className="text-xs">
-                            {org.name} ({org.code})
+                          <SelectItem key={org.id} value={org.id} className="text-xs font-semibold" title={org.name}>
+                            {org.code || org.name}
                           </SelectItem>
                         ))}
                       </SelectContent>
@@ -876,7 +876,7 @@ export function CollabFinanceModule({
 
               <div className="space-y-1">
                 <label htmlFor="tx-activity" className="block text-xs font-semibold text-ink-navy">
-                  Thuộc Hoạt Động (Tùy chọn)
+                  Hoạt động (tùy chọn)
                 </label>
                 <Controller
                   name="collabActivityId"
@@ -891,7 +891,7 @@ export function CollabFinanceModule({
                       </SelectTrigger>
                       <SelectContent className="bg-white border-hairline text-ink-navy max-h-48">
                         <SelectItem value="none" className="text-xs text-mist-gray">
-                          -- Chung cho toàn chiến dịch --
+                          -- Toàn chiến dịch --
                         </SelectItem>
                         {collabActivities.map((act) => (
                           <SelectItem key={act.id} value={act.id} className="text-xs">
@@ -908,13 +908,13 @@ export function CollabFinanceModule({
             {/* Nội dung chi tiết */}
             <div className="space-y-1">
               <label htmlFor="tx-description" className="block text-xs font-semibold text-ink-navy">
-                Nội dung diễn giải <span className="text-rose-500">*</span>
+                Nội dung <span className="text-rose-500">*</span>
               </label>
               <Textarea
                 id="tx-description"
                 {...register('description')}
                 rows={2}
-                placeholder="Ví dụ: Mua 100 chai nước suối, in ấn 2 backdrop sân khấu A..."
+                placeholder="Ví dụ: Mua 100 chai nước suối, in ấn backdrop..."
                 className="text-xs bg-cloud border-hairline text-ink-navy placeholder:text-mist-gray resize-none"
               />
               {errors.description && (
@@ -925,13 +925,13 @@ export function CollabFinanceModule({
             {/* Link chứng từ / Hóa đơn */}
             <div className="space-y-1">
               <label htmlFor="tx-receipt" className="block text-xs font-semibold text-ink-navy flex items-center justify-between">
-                <span>Link Chứng từ / Hóa đơn VAT (Google Drive / Ảnh)</span>
-                <span className="text-[10px] text-mist-gray font-normal">Minh bạch kiểm toán</span>
+                <span>Link chứng từ / Hóa đơn</span>
+                <span className="text-[10px] text-mist-gray font-normal">Drive, ảnh...</span>
               </label>
               <Input
                 id="tx-receipt"
                 {...register('receiptUrl')}
-                placeholder="https://drive.google.com/file/d/..."
+                placeholder="https://drive.google.com/..."
                 className="h-9 text-xs bg-cloud border-hairline text-ink-navy placeholder:text-mist-gray font-mono"
               />
               {errors.receiptUrl && (
