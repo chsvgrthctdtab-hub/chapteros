@@ -330,7 +330,7 @@ export function formatDueDateInfo(dueDate?: string | null, status?: TaskStatus):
   }
 
   return {
-    text: formattedDate,
+    text: `Còn ${daysDiff} ngày`,
     isOverdue: false,
     daysDiff,
     formattedDate,
