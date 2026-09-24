@@ -54,15 +54,13 @@ export function useCreateTask() {
       return taskService.createTask(organizationId, data, createdBy);
     },
     onSuccess: (createdTask, variables) => {
-      queryClient.invalidateQueries({ queryKey: taskKeys.lists(variables.organizationId) });
-      queryClient.invalidateQueries({ queryKey: taskKeys.stats(variables.organizationId) });
-      queryClient.invalidateQueries({ queryKey: ['dashboard', 'stats', variables.organizationId] });
-      queryClient.invalidateQueries({ queryKey: ['dashboard', 'upcoming-tasks', variables.organizationId] });
-      queryClient.invalidateQueries({ queryKey: ['dashboard', 'overdue-tasks', variables.organizationId] });
-      queryClient.invalidateQueries({ queryKey: ['dashboard', 'charts', variables.organizationId] });
+      queryClient.invalidateQueries({ queryKey: taskKeys.lists(variables.organizationId), refetchType: 'active' });
+      queryClient.invalidateQueries({ queryKey: taskKeys.stats(variables.organizationId), refetchType: 'active' });
+      queryClient.invalidateQueries({ queryKey: ['dashboard'], refetchType: 'active' });
       if (variables.data.activityId) {
         queryClient.invalidateQueries({
           queryKey: taskKeys.byActivity(variables.organizationId, variables.data.activityId),
+          refetchType: 'active',
         });
       }
     },
@@ -80,16 +78,14 @@ export function useUpdateTask() {
       return taskService.updateTask(taskId, organizationId, data, updatedBy);
     },
     onSuccess: (_, variables) => {
-      queryClient.invalidateQueries({ queryKey: taskKeys.lists(variables.organizationId) });
-      queryClient.invalidateQueries({ queryKey: taskKeys.detail(variables.organizationId, variables.taskId) });
-      queryClient.invalidateQueries({ queryKey: taskKeys.stats(variables.organizationId) });
-      queryClient.invalidateQueries({ queryKey: ['dashboard', 'stats', variables.organizationId] });
-      queryClient.invalidateQueries({ queryKey: ['dashboard', 'upcoming-tasks', variables.organizationId] });
-      queryClient.invalidateQueries({ queryKey: ['dashboard', 'overdue-tasks', variables.organizationId] });
-      queryClient.invalidateQueries({ queryKey: ['dashboard', 'charts', variables.organizationId] });
+      queryClient.invalidateQueries({ queryKey: taskKeys.lists(variables.organizationId), refetchType: 'active' });
+      queryClient.invalidateQueries({ queryKey: taskKeys.detail(variables.organizationId, variables.taskId), refetchType: 'active' });
+      queryClient.invalidateQueries({ queryKey: taskKeys.stats(variables.organizationId), refetchType: 'active' });
+      queryClient.invalidateQueries({ queryKey: ['dashboard'], refetchType: 'active' });
       if (variables.data.activityId) {
         queryClient.invalidateQueries({
           queryKey: taskKeys.byActivity(variables.organizationId, variables.data.activityId),
+          refetchType: 'active',
         });
       }
     },
@@ -106,19 +102,39 @@ export function useUpdateTaskStatus() {
     mutationFn: async ({ taskId, organizationId, status, progress, updatedBy, userRole }: UpdateTaskStatusPayload) => {
       return taskService.updateTaskStatus(taskId, organizationId, status, progress, updatedBy, userRole);
     },
+    onMutate: async ({ taskId, organizationId, status, progress }) => {
+      await queryClient.cancelQueries({ queryKey: taskKeys.detail(organizationId, taskId) });
+      const previousTask = queryClient.getQueryData(taskKeys.detail(organizationId, taskId));
+
+      if (previousTask) {
+        queryClient.setQueryData(taskKeys.detail(organizationId, taskId), (old: any) => {
+          if (!old) return old;
+          const nextProgress = progress !== undefined ? progress : (status === 'completed' ? 100 : (status === 'todo' ? 0 : old.progress));
+          return {
+            ...old,
+            status,
+            progress: nextProgress,
+          };
+        });
+      }
+
+      return { previousTask };
+    },
+    onError: (_err, variables, context) => {
+      if (context?.previousTask) {
+        queryClient.setQueryData(taskKeys.detail(variables.organizationId, variables.taskId), context.previousTask);
+      }
+    },
     onSuccess: (_, variables) => {
-      queryClient.invalidateQueries({ queryKey: taskKeys.lists(variables.organizationId) });
-      queryClient.invalidateQueries({ queryKey: taskKeys.detail(variables.organizationId, variables.taskId) });
-      queryClient.invalidateQueries({ queryKey: taskKeys.stats(variables.organizationId) });
-      queryClient.invalidateQueries({ queryKey: ['dashboard', 'stats', variables.organizationId] });
-      queryClient.invalidateQueries({ queryKey: ['dashboard', 'upcoming-tasks', variables.organizationId] });
-      queryClient.invalidateQueries({ queryKey: ['dashboard', 'overdue-tasks', variables.organizationId] });
-      queryClient.invalidateQueries({ queryKey: ['dashboard', 'charts', variables.organizationId] });
-      queryClient.invalidateQueries({ queryKey: ['notifications', 'org', variables.organizationId] });
-      queryClient.invalidateQueries({ queryKey: ['notifications', 'unread-count', variables.organizationId] });
+      queryClient.invalidateQueries({ queryKey: taskKeys.lists(variables.organizationId), refetchType: 'active' });
+      queryClient.invalidateQueries({ queryKey: taskKeys.detail(variables.organizationId, variables.taskId), refetchType: 'active' });
+      queryClient.invalidateQueries({ queryKey: taskKeys.stats(variables.organizationId), refetchType: 'active' });
+      queryClient.invalidateQueries({ queryKey: ['dashboard'], refetchType: 'active' });
+      queryClient.invalidateQueries({ queryKey: ['notifications'], refetchType: 'active' });
       if (variables.activityId) {
         queryClient.invalidateQueries({
           queryKey: taskKeys.byActivity(variables.organizationId, variables.activityId),
+          refetchType: 'active',
         });
       }
     },
@@ -135,17 +151,37 @@ export function useUpdateTaskProgress() {
     mutationFn: async ({ taskId, organizationId, progress, status, updatedBy }: UpdateTaskProgressPayload) => {
       return taskService.updateTaskProgress(taskId, organizationId, progress, status, updatedBy);
     },
+    onMutate: async ({ taskId, organizationId, progress, status }) => {
+      await queryClient.cancelQueries({ queryKey: taskKeys.detail(organizationId, taskId) });
+      const previousTask = queryClient.getQueryData(taskKeys.detail(organizationId, taskId));
+
+      if (previousTask) {
+        queryClient.setQueryData(taskKeys.detail(organizationId, taskId), (old: any) => {
+          if (!old) return old;
+          return {
+            ...old,
+            progress,
+            status: status || (progress === 100 ? 'completed' : old.status),
+          };
+        });
+      }
+
+      return { previousTask };
+    },
+    onError: (_err, variables, context) => {
+      if (context?.previousTask) {
+        queryClient.setQueryData(taskKeys.detail(variables.organizationId, variables.taskId), context.previousTask);
+      }
+    },
     onSuccess: (_, variables) => {
-      queryClient.invalidateQueries({ queryKey: taskKeys.lists(variables.organizationId) });
-      queryClient.invalidateQueries({ queryKey: taskKeys.detail(variables.organizationId, variables.taskId) });
-      queryClient.invalidateQueries({ queryKey: taskKeys.stats(variables.organizationId) });
-      queryClient.invalidateQueries({ queryKey: ['dashboard', 'stats', variables.organizationId] });
-      queryClient.invalidateQueries({ queryKey: ['dashboard', 'upcoming-tasks', variables.organizationId] });
-      queryClient.invalidateQueries({ queryKey: ['dashboard', 'overdue-tasks', variables.organizationId] });
-      queryClient.invalidateQueries({ queryKey: ['dashboard', 'charts', variables.organizationId] });
+      queryClient.invalidateQueries({ queryKey: taskKeys.lists(variables.organizationId), refetchType: 'active' });
+      queryClient.invalidateQueries({ queryKey: taskKeys.detail(variables.organizationId, variables.taskId), refetchType: 'active' });
+      queryClient.invalidateQueries({ queryKey: taskKeys.stats(variables.organizationId), refetchType: 'active' });
+      queryClient.invalidateQueries({ queryKey: ['dashboard'], refetchType: 'active' });
       if (variables.activityId) {
         queryClient.invalidateQueries({
           queryKey: taskKeys.byActivity(variables.organizationId, variables.activityId),
+          refetchType: 'active',
         });
       }
     },
@@ -164,15 +200,13 @@ export function useDeleteTask() {
       return { success: true, taskId };
     },
     onSuccess: (_, variables) => {
-      queryClient.invalidateQueries({ queryKey: taskKeys.lists(variables.organizationId) });
-      queryClient.invalidateQueries({ queryKey: taskKeys.stats(variables.organizationId) });
-      queryClient.invalidateQueries({ queryKey: ['dashboard', 'stats', variables.organizationId] });
-      queryClient.invalidateQueries({ queryKey: ['dashboard', 'upcoming-tasks', variables.organizationId] });
-      queryClient.invalidateQueries({ queryKey: ['dashboard', 'overdue-tasks', variables.organizationId] });
-      queryClient.invalidateQueries({ queryKey: ['dashboard', 'charts', variables.organizationId] });
+      queryClient.invalidateQueries({ queryKey: taskKeys.lists(variables.organizationId), refetchType: 'active' });
+      queryClient.invalidateQueries({ queryKey: taskKeys.stats(variables.organizationId), refetchType: 'active' });
+      queryClient.invalidateQueries({ queryKey: ['dashboard'], refetchType: 'active' });
       if (variables.activityId) {
         queryClient.invalidateQueries({
           queryKey: taskKeys.byActivity(variables.organizationId, variables.activityId),
+          refetchType: 'active',
         });
       }
     },

@@ -111,37 +111,45 @@ export const taskService = {
       throw new Error('Mã chi hội không hợp lệ');
     }
 
-    // 1. Validate Term ownership & lock status
-    if (formData.termId) {
-      const term = await termRepository.getById(formData.termId);
-      if (!term || term.organizationId !== organizationId) {
-        throw new Error('Nhiệm kỳ không thuộc Đơn vị hiện tại');
-      }
-      validateTermMutation(term.status, 'tạo công việc trong nhiệm kỳ đã khóa');
-    } else {
-      throw new Error('Vui lòng chọn nhiệm kỳ thực hiện');
-    }
+    // 1. Parallelize Multi-Tenant Validations
+    await Promise.all([
+      // Validate Term ownership & lock status
+      (async () => {
+        if (!formData.termId) {
+          throw new Error('Vui lòng chọn nhiệm kỳ thực hiện');
+        }
+        const term = await termRepository.getById(formData.termId);
+        if (!term || term.organizationId !== organizationId) {
+          throw new Error('Nhiệm kỳ không thuộc Đơn vị hiện tại');
+        }
+        validateTermMutation(term.status, 'tạo công việc trong nhiệm kỳ đã khóa');
+      })(),
 
-    // 2. Validate Activity ownership if provided
-    if (formData.activityId) {
-      const activity = await activityRepository.getById(formData.activityId);
-      if (!activity || activity.organizationId !== organizationId) {
-        throw new Error('Hoạt động không thuộc Đơn vị hiện tại');
-      }
-    }
+      // Validate Activity ownership if provided
+      formData.activityId
+        ? (async () => {
+            const activity = await activityRepository.getById(formData.activityId!);
+            if (!activity || activity.organizationId !== organizationId) {
+              throw new Error('Hoạt động không thuộc Đơn vị hiện tại');
+            }
+          })()
+        : Promise.resolve(),
 
-    // 3. Validate Assignee membership if provided
-    if (formData.assignedTo) {
-      const isValidAssignee = await taskRepository.validateAssigneeMembership(
-        organizationId,
-        formData.assignedTo
-      );
-      if (!isValidAssignee) {
-        throw new Error('Hội viên được giao nhiệm vụ không thuộc Đơn vị hiện tại');
-      }
-    }
+      // Validate Assignee membership if provided
+      formData.assignedTo
+        ? (async () => {
+            const isValidAssignee = await taskRepository.validateAssigneeMembership(
+              organizationId,
+              formData.assignedTo!
+            );
+            if (!isValidAssignee) {
+              throw new Error('Hội viên được giao nhiệm vụ không thuộc Đơn vị hiện tại');
+            }
+          })()
+        : Promise.resolve(),
+    ]);
 
-    // 4. Progress & Status synchronization
+    // 2. Progress & Status synchronization
     let finalProgress = formData.progress ?? 0;
     if (formData.status === 'completed' && finalProgress < 100) {
       finalProgress = 100;
@@ -163,22 +171,24 @@ export const taskService = {
 
     const task = await taskRepository.create(payload);
 
-    // 5. Audit Logging
+    // 3. Non-blocking Background Audit Logging
     if (actorUserId) {
-      await auditLogRepository.log({
-        organization_id: organizationId,
-        user_id: actorUserId,
-        action: 'task.create',
-        entity_type: 'task',
-        entity_id: task.id,
-        metadata: {
-          title: task.title,
-          priority: task.priority,
-          status: task.status,
-          assigned_to: task.assignedTo,
-          activity_id: task.activityId,
-        },
-      });
+      auditLogRepository
+        .log({
+          organization_id: organizationId,
+          user_id: actorUserId,
+          action: 'task.create',
+          entity_type: 'task',
+          entity_id: task.id,
+          metadata: {
+            title: task.title,
+            priority: task.priority,
+            status: task.status,
+            assigned_to: task.assignedTo,
+            activity_id: task.activityId,
+          },
+        })
+        .catch((err) => console.warn('Audit log ignored during task create:', err));
     }
 
     return task;
@@ -203,44 +213,52 @@ export const taskService = {
       throw new Error('Không tìm thấy công việc trong chi hội hiện tại');
     }
 
-    if (existing.termId) {
-      const currentTerm = await termRepository.getById(existing.termId);
-      validateTermMutation(currentTerm?.status, 'chỉnh sửa công việc thuộc nhiệm kỳ đã khóa');
-    }
+    // Parallelize all validation checks
+    await Promise.all([
+      // Check existing term lock
+      existing.termId
+        ? (async () => {
+            const currentTerm = await termRepository.getById(existing.termId!);
+            validateTermMutation(currentTerm?.status, 'chỉnh sửa công việc thuộc nhiệm kỳ đã khóa');
+          })()
+        : Promise.resolve(),
 
-    // 1. Validate Term ownership if updated
-    if (formData.termId !== undefined && formData.termId !== existing.termId) {
-      const term = await termRepository.getById(formData.termId);
-      if (!term || term.organizationId !== organizationId) {
-        throw new Error('Nhiệm kỳ không thuộc Đơn vị hiện tại');
-      }
-      validateTermMutation(term.status, 'chuyển công việc sang nhiệm kỳ đã khóa');
-    }
+      // Check updated term ownership
+      formData.termId !== undefined && formData.termId !== existing.termId
+        ? (async () => {
+            const term = await termRepository.getById(formData.termId!);
+            if (!term || term.organizationId !== organizationId) {
+              throw new Error('Nhiệm kỳ không thuộc Đơn vị hiện tại');
+            }
+            validateTermMutation(term.status, 'chuyển công việc sang nhiệm kỳ đã khóa');
+          })()
+        : Promise.resolve(),
 
-    // 2. Validate Activity ownership if updated
-    if (formData.activityId !== undefined && formData.activityId !== existing.activityId) {
-      if (formData.activityId) {
-        const activity = await activityRepository.getById(formData.activityId);
-        if (!activity || activity.organizationId !== organizationId) {
-          throw new Error('Hoạt động không thuộc Đơn vị hiện tại');
-        }
-      }
-    }
+      // Check updated activity ownership
+      formData.activityId !== undefined && formData.activityId !== existing.activityId && formData.activityId
+        ? (async () => {
+            const activity = await activityRepository.getById(formData.activityId!);
+            if (!activity || activity.organizationId !== organizationId) {
+              throw new Error('Hoạt động không thuộc Đơn vị hiện tại');
+            }
+          })()
+        : Promise.resolve(),
 
-    // 3. Validate Assignee membership if updated
-    if (formData.assignedTo !== undefined && formData.assignedTo !== existing.assignedTo) {
-      if (formData.assignedTo) {
-        const isValidAssignee = await taskRepository.validateAssigneeMembership(
-          organizationId,
-          formData.assignedTo
-        );
-        if (!isValidAssignee) {
-          throw new Error('Hội viên được giao nhiệm vụ không thuộc Đơn vị hiện tại');
-        }
-      }
-    }
+      // Check updated assignee membership
+      formData.assignedTo !== undefined && formData.assignedTo !== existing.assignedTo && formData.assignedTo
+        ? (async () => {
+            const isValidAssignee = await taskRepository.validateAssigneeMembership(
+              organizationId,
+              formData.assignedTo!
+            );
+            if (!isValidAssignee) {
+              throw new Error('Hội viên được giao nhiệm vụ không thuộc Đơn vị hiện tại');
+            }
+          })()
+        : Promise.resolve(),
+    ]);
 
-    // 4. Progress and Status alignment
+    // Progress and Status alignment
     const payload: DbTaskUpdate = {};
     if (formData.title !== undefined) payload.title = formData.title.trim();
     if (formData.description !== undefined) payload.description = formData.description?.trim() || null;
@@ -276,22 +294,24 @@ export const taskService = {
 
     const updatedTask = await taskRepository.update(taskId, payload, organizationId);
 
-    // 5. Audit Logging
+    // Non-blocking Background Audit Logging
     if (actorUserId) {
-      await auditLogRepository.log({
-        organization_id: organizationId,
-        user_id: actorUserId,
-        action: 'task.update',
-        entity_type: 'task',
-        entity_id: taskId,
-        metadata: {
-          title: updatedTask.title,
-          status: updatedTask.status,
-          priority: updatedTask.priority,
-          progress: updatedTask.progress,
-          previous_status: existing.status,
-        },
-      });
+      auditLogRepository
+        .log({
+          organization_id: organizationId,
+          user_id: actorUserId,
+          action: 'task.update',
+          entity_type: 'task',
+          entity_id: taskId,
+          metadata: {
+            title: updatedTask.title,
+            status: updatedTask.status,
+            priority: updatedTask.priority,
+            progress: updatedTask.progress,
+            previous_status: existing.status,
+          },
+        })
+        .catch((err) => console.warn('Audit log ignored during task update:', err));
     }
 
     return updatedTask;
@@ -351,10 +371,10 @@ export const taskService = {
 
     const updatedTask = await taskRepository.update(taskId, payload, organizationId);
 
-    // 4. Audit Logging
+    // 4. Non-blocking Background Audit Logging
     if (actorUserId) {
-      try {
-        await auditLogRepository.log({
+      auditLogRepository
+        .log({
           organization_id: organizationId,
           user_id: actorUserId,
           action: 'task.status_change',
@@ -368,10 +388,8 @@ export const taskService = {
             changed_by: actorUserId,
             progress: updatedTask.progress,
           },
-        });
-      } catch (logErr) {
-        console.warn('Audit log ignored during task status change:', logErr);
-      }
+        })
+        .catch((err) => console.warn('Audit log ignored during task status change:', err));
     }
 
     return updatedTask;
@@ -412,18 +430,21 @@ export const taskService = {
 
     const updatedTask = await taskRepository.update(taskId, payload, organizationId);
 
+    // Non-blocking Background Audit Logging
     if (actorUserId) {
-      await auditLogRepository.log({
-        organization_id: organizationId,
-        user_id: actorUserId,
-        action: 'task.progress_update',
-        entity_type: 'task',
-        entity_id: taskId,
-        metadata: {
-          progress: cleanProgress,
-          status: updatedTask.status,
-        },
-      });
+      auditLogRepository
+        .log({
+          organization_id: organizationId,
+          user_id: actorUserId,
+          action: 'task.progress_update',
+          entity_type: 'task',
+          entity_id: taskId,
+          metadata: {
+            progress: cleanProgress,
+            status: updatedTask.status,
+          },
+        })
+        .catch((err) => console.warn('Audit log ignored during task progress update:', err));
     }
 
     return updatedTask;

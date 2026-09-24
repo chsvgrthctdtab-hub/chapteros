@@ -60,7 +60,7 @@ export function useCreateActivity(organizationId?: string) {
       }
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: activityKeys.lists() });
+      queryClient.invalidateQueries({ queryKey: activityKeys.lists(), refetchType: 'active' });
     },
   });
 }
@@ -118,8 +118,8 @@ export function useUpdateActivity(activityId: string, organizationId?: string) {
       }
     },
     onSettled: () => {
-      queryClient.invalidateQueries({ queryKey: activityKeys.lists() });
-      queryClient.invalidateQueries({ queryKey: [...activityKeys.details(), activityId] });
+      queryClient.invalidateQueries({ queryKey: activityKeys.lists(), refetchType: 'active' });
+      queryClient.invalidateQueries({ queryKey: [...activityKeys.details(), activityId], refetchType: 'active' });
     },
   });
 }
@@ -179,8 +179,8 @@ export function useUpdateActivityStatus(activityId: string, organizationId?: str
       }
     },
     onSettled: () => {
-      queryClient.invalidateQueries({ queryKey: activityKeys.lists() });
-      queryClient.invalidateQueries({ queryKey: [...activityKeys.details(), activityId] });
+      queryClient.invalidateQueries({ queryKey: activityKeys.lists(), refetchType: 'active' });
+      queryClient.invalidateQueries({ queryKey: [...activityKeys.details(), activityId], refetchType: 'active' });
     },
   });
 }
@@ -214,8 +214,8 @@ export function useDeleteOrArchiveActivity(organizationId?: string) {
       }
     },
     onSuccess: (_, variables) => {
-      queryClient.invalidateQueries({ queryKey: activityKeys.lists() });
-      queryClient.invalidateQueries({ queryKey: activityKeys.detail(variables.activityId) });
+      queryClient.invalidateQueries({ queryKey: activityKeys.lists(), refetchType: 'active' });
+      queryClient.invalidateQueries({ queryKey: activityKeys.detail(variables.activityId), refetchType: 'active' });
     },
   });
 }
@@ -245,10 +245,9 @@ export function useAddActivityParticipant(activityId: string, organizationId?: s
       }
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: activityKeys.participants(activityId) });
-      queryClient.invalidateQueries({ queryKey: activityKeys.detail(activityId) });
-      queryClient.invalidateQueries({ queryKey: activityKeys.lists() });
-      queryClient.invalidateQueries({ queryKey: activityKeys.all });
+      queryClient.invalidateQueries({ queryKey: activityKeys.participants(activityId), refetchType: 'active' });
+      queryClient.invalidateQueries({ queryKey: activityKeys.detail(activityId), refetchType: 'active' });
+      queryClient.invalidateQueries({ queryKey: activityKeys.lists(), refetchType: 'active' });
     },
   });
 }
@@ -351,9 +350,10 @@ export function useUpdateActivityParticipant(activityId: string, organizationId?
     onSettled: () => {
       queryClient.invalidateQueries({
         queryKey: [...activityKeys.details(), activityId, 'participants'],
+        refetchType: 'active',
       });
-      queryClient.invalidateQueries({ queryKey: activityKeys.detail(activityId) });
-      queryClient.invalidateQueries({ queryKey: activityKeys.lists() });
+      queryClient.invalidateQueries({ queryKey: activityKeys.detail(activityId), refetchType: 'active' });
+      queryClient.invalidateQueries({ queryKey: activityKeys.lists(), refetchType: 'active' });
     },
   });
 }
@@ -385,10 +385,10 @@ export function useRemoveActivityParticipant(activityId: string, organizationId?
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: [...activityKeys.details(), activityId, 'participants'],
+        refetchType: 'active',
       });
-      queryClient.invalidateQueries({ queryKey: activityKeys.detail(activityId) });
-      queryClient.invalidateQueries({ queryKey: activityKeys.lists() });
-      queryClient.invalidateQueries({ queryKey: activityKeys.all });
+      queryClient.invalidateQueries({ queryKey: activityKeys.detail(activityId), refetchType: 'active' });
+      queryClient.invalidateQueries({ queryKey: activityKeys.lists(), refetchType: 'active' });
     },
   });
 }
@@ -483,9 +483,10 @@ export function useBulkUpdateAttendance(activityId: string, organizationId?: str
     onSettled: () => {
       queryClient.invalidateQueries({
         queryKey: [...activityKeys.details(), activityId, 'participants'],
+        refetchType: 'active',
       });
-      queryClient.invalidateQueries({ queryKey: activityKeys.detail(activityId) });
-      queryClient.invalidateQueries({ queryKey: activityKeys.lists() });
+      queryClient.invalidateQueries({ queryKey: activityKeys.detail(activityId), refetchType: 'active' });
+      queryClient.invalidateQueries({ queryKey: activityKeys.lists(), refetchType: 'active' });
     },
   });
 }
@@ -525,10 +526,9 @@ export function useBulkAddActivityParticipants(activityId: string, organizationI
       }
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: activityKeys.participants(activityId) });
-      queryClient.invalidateQueries({ queryKey: activityKeys.detail(activityId) });
-      queryClient.invalidateQueries({ queryKey: activityKeys.lists() });
-      queryClient.invalidateQueries({ queryKey: activityKeys.all });
+      queryClient.invalidateQueries({ queryKey: activityKeys.participants(activityId), refetchType: 'active' });
+      queryClient.invalidateQueries({ queryKey: activityKeys.detail(activityId), refetchType: 'active' });
+      queryClient.invalidateQueries({ queryKey: activityKeys.lists(), refetchType: 'active' });
     },
   });
 }

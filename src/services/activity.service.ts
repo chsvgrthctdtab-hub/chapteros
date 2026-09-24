@@ -122,30 +122,42 @@ export const activityService = {
       throw new Error('Số lượng hội viên mục tiêu phải lớn hơn hoặc bằng 0');
     }
 
-    // 1. Multi-Tenant Verification & Term Lock: Term belongs to this organization and is not closed
+    // 1. Parallelize Multi-Tenant Verification & Term Lock & Code Uniqueness
     if (!formData.termId) {
       throw new Error('Vui lòng chọn nhiệm kỳ cho hoạt động');
     }
-    const term = await termRepository.getById(formData.termId);
-    if (!term || term.organizationId !== organizationId) {
-      throw new Error('Nhiệm kỳ đã chọn không tồn tại hoặc không thuộc Đơn vị hiện tại');
-    }
-    validateTermMutation(term.status, 'tạo hoạt động trong nhiệm kỳ đã khóa');
 
-    // 2. Multi-Tenant Verification: Lead Member belongs to this organization if provided
-    let cleanLeadMemberId: string | null = null;
-    if (formData.leadMemberId && formData.leadMemberId.trim() && formData.leadMemberId !== 'none') {
-      cleanLeadMemberId = await activityService.resolveLeadMemberId(organizationId, formData.leadMemberId.trim());
-    }
-
-    // 3. Unique Code Verification within organization
     const cleanCode = formData.code?.trim() || null;
-    if (cleanCode) {
-      const existingWithCode = await activityRepository.findByCode(organizationId, cleanCode);
-      if (existingWithCode) {
-        throw new Error(`Mã hoạt động "${cleanCode}" đã được sử dụng trong Đơn vị. Vui lòng chọn mã khác.`);
-      }
-    }
+    const rawLeadId =
+      formData.leadMemberId && formData.leadMemberId.trim() && formData.leadMemberId !== 'none'
+        ? formData.leadMemberId.trim()
+        : null;
+
+    const [, cleanLeadMemberId] = await Promise.all([
+      // Validate Term
+      (async () => {
+        const term = await termRepository.getById(formData.termId);
+        if (!term || term.organizationId !== organizationId) {
+          throw new Error('Nhiệm kỳ đã chọn không tồn tại hoặc không thuộc Đơn vị hiện tại');
+        }
+        validateTermMutation(term.status, 'tạo hoạt động trong nhiệm kỳ đã khóa');
+      })(),
+
+      // Resolve Lead Member
+      rawLeadId
+        ? activityService.resolveLeadMemberId(organizationId, rawLeadId)
+        : Promise.resolve(null),
+
+      // Verify Unique Code
+      cleanCode
+        ? (async () => {
+            const existingWithCode = await activityRepository.findByCode(organizationId, cleanCode);
+            if (existingWithCode) {
+              throw new Error(`Mã hoạt động "${cleanCode}" đã được sử dụng trong Đơn vị. Vui lòng chọn mã khác.`);
+            }
+          })()
+        : Promise.resolve(),
+    ]);
 
     const payload: DbActivityInsert = {
       organization_id: organizationId,
@@ -166,10 +178,10 @@ export const activityService = {
 
     const activity = await activityRepository.create(payload);
 
-    // Audit Logging
+    // Non-blocking Background Audit Logging
     if (actorUserId) {
-      try {
-        await auditLogRepository.log({
+      auditLogRepository
+        .log({
           organization_id: organizationId,
           user_id: actorUserId,
           action: 'activity.create',
@@ -184,10 +196,8 @@ export const activityService = {
             endDate: activity.endDate,
             leadMemberId: cleanLeadMemberId,
           },
-        });
-      } catch (logErr) {
-        console.warn('Could not record activity.create audit log:', logErr);
-      }
+        })
+        .catch((logErr) => console.warn('Could not record activity.create audit log:', logErr));
     }
 
     return activity;
@@ -215,12 +225,6 @@ export const activityService = {
       throw new Error('Hoạt động không tồn tại hoặc bạn không có quyền chỉnh sửa');
     }
 
-    // Validate term lock on existing activity
-    if (existing.termId) {
-      const currentTerm = await termRepository.getById(existing.termId);
-      validateTermMutation(currentTerm?.status, 'chỉnh sửa hoạt động thuộc nhiệm kỳ đã khóa');
-    }
-
     // 2. Validate field update lock for terminal/completed/cancelled states
     validateActivityFieldUpdate(existing, formData);
 
@@ -228,6 +232,53 @@ export const activityService = {
     if (formData.status !== undefined && formData.status !== existing.status) {
       validateActivityStatusTransition(existing.status, formData.status);
     }
+
+    const cleanCode = formData.code !== undefined ? (formData.code ? formData.code.trim() : null) : undefined;
+    const rawLeadId =
+      formData.leadMemberId !== undefined
+        ? formData.leadMemberId && formData.leadMemberId.trim() && formData.leadMemberId !== 'none'
+          ? formData.leadMemberId.trim()
+          : null
+        : undefined;
+
+    // Parallelize all validation checks
+    const [, , cleanLeadId] = await Promise.all([
+      // Check existing term lock
+      existing.termId
+        ? (async () => {
+            const currentTerm = await termRepository.getById(existing.termId!);
+            validateTermMutation(currentTerm?.status, 'chỉnh sửa hoạt động thuộc nhiệm kỳ đã khóa');
+          })()
+        : Promise.resolve(),
+
+      // Check new term if updated
+      formData.termId !== undefined && formData.termId !== existing.termId
+        ? (async () => {
+            const term = await termRepository.getById(formData.termId!);
+            if (!term || term.organizationId !== organizationId) {
+              throw new Error('Nhiệm kỳ đã chọn không tồn tại hoặc không thuộc Đơn vị hiện tại');
+            }
+            validateTermMutation(term.status, 'chuyển hoạt động sang nhiệm kỳ đã khóa');
+          })()
+        : Promise.resolve(),
+
+      // Check code uniqueness if updated
+      cleanCode !== undefined && cleanCode && cleanCode !== existing.code
+        ? (async () => {
+            const existingWithCode = await activityRepository.findByCode(organizationId, cleanCode);
+            if (existingWithCode && existingWithCode.id !== id) {
+              throw new Error(`Mã hoạt động "${cleanCode}" đã được sử dụng trong Đơn vị.`);
+            }
+          })()
+        : Promise.resolve(),
+
+      // Resolve lead member if updated
+      rawLeadId !== undefined
+        ? rawLeadId
+          ? activityService.resolveLeadMemberId(organizationId, rawLeadId)
+          : Promise.resolve(null)
+        : Promise.resolve(undefined),
+    ]);
 
     const payload: DbActivityUpdate = {};
 
@@ -240,33 +291,15 @@ export const activityService = {
     }
 
     if (formData.termId !== undefined) {
-      const term = await termRepository.getById(formData.termId);
-      if (!term || term.organizationId !== organizationId) {
-        throw new Error('Nhiệm kỳ đã chọn không tồn tại hoặc không thuộc Đơn vị hiện tại');
-      }
-      validateTermMutation(term.status, 'chuyển hoạt động sang nhiệm kỳ đã khóa');
       payload.term_id = formData.termId;
     }
 
-    if (formData.code !== undefined) {
-      const cleanCode = formData.code ? formData.code.trim() : null;
-      if (cleanCode && cleanCode !== existing.code) {
-        const existingWithCode = await activityRepository.findByCode(organizationId, cleanCode);
-        if (existingWithCode && existingWithCode.id !== id) {
-          throw new Error(`Mã hoạt động "${cleanCode}" đã được sử dụng trong Đơn vị.`);
-        }
-      }
+    if (cleanCode !== undefined) {
       payload.code = cleanCode;
     }
 
     if (formData.leadMemberId !== undefined) {
-      const rawLeadId = formData.leadMemberId ? formData.leadMemberId.trim() : null;
-      if (rawLeadId && rawLeadId !== 'none') {
-        const cleanLeadId = await activityService.resolveLeadMemberId(organizationId, rawLeadId);
-        payload.lead_member_id = cleanLeadId;
-      } else {
-        payload.lead_member_id = null;
-      }
+      payload.lead_member_id = cleanLeadId ?? null;
     }
 
     if (formData.category !== undefined) {
@@ -319,11 +352,11 @@ export const activityService = {
 
     const updated = await activityRepository.update(id, payload);
 
-    // Audit Logging
+    // Non-blocking Background Audit Logging
     if (actorUserId) {
-      try {
-        const isStatusChange = formData.status !== undefined && formData.status !== existing.status;
-        await auditLogRepository.log({
+      const isStatusChange = formData.status !== undefined && formData.status !== existing.status;
+      auditLogRepository
+        .log({
           organization_id: organizationId,
           user_id: actorUserId,
           action: isStatusChange ? 'activity.status_change' : 'activity.update',
@@ -336,10 +369,8 @@ export const activityService = {
             previousLeadMemberId: existing.leadMemberId,
             newLeadMemberId: payload.lead_member_id,
           },
-        });
-      } catch (logErr) {
-        console.warn('Could not record activity update audit log:', logErr);
-      }
+        })
+        .catch((logErr) => console.warn('Could not record activity update audit log:', logErr));
     }
 
     return updated;
@@ -368,9 +399,10 @@ export const activityService = {
 
     const updated = await activityRepository.update(id, { status: newStatus });
 
+    // Non-blocking Background Audit Logging
     if (actorUserId) {
-      try {
-        await auditLogRepository.log({
+      auditLogRepository
+        .log({
           organization_id: organizationId,
           user_id: actorUserId,
           action: 'activity.status_change',
@@ -382,10 +414,8 @@ export const activityService = {
             previousStatusLabel: ACTIVITY_STATUS_VIETNAMESE_LABELS[existing.status] || existing.status,
             newStatusLabel: ACTIVITY_STATUS_VIETNAMESE_LABELS[newStatus] || newStatus,
           },
-        });
-      } catch (logErr) {
-        console.warn('Could not record activity status_change audit log:', logErr);
-      }
+        })
+        .catch((logErr) => console.warn('Could not record activity status_change audit log:', logErr));
     }
 
     return updated;
