@@ -66,7 +66,7 @@ export function TermTimeline({
               <React.Fragment key={term.id}>
                 <div
                   onClick={() => onSelectTerm(term)}
-                  className={`group relative flex flex-col justify-between w-64 p-4 rounded-xl border transition-all cursor-pointer select-none ${
+                  className={`group relative flex flex-col justify-between w-72 min-w-[280px] p-4 rounded-xl border transition-all cursor-pointer select-none ${
                     isCurrent
                       ? 'border-emerald-500 bg-emerald-50/30 shadow-xs ring-2 ring-emerald-500/20'
                       : isClosed
@@ -76,7 +76,7 @@ export function TermTimeline({
                 >
                   {/* Node Header */}
                   <div className="space-y-2">
-                    <div className="flex items-center justify-between gap-1.5">
+                    <div className="flex items-center justify-between gap-1.5 flex-nowrap">
                       <TermStatusBadge status={term.status} isCurrent={isCurrent} />
                       {term.closingSnapshot && (
                         <span className="text-[10px] text-teal-700 bg-teal-50 border border-teal-200 px-1.5 py-0.5 rounded font-mono">

@@ -149,11 +149,6 @@ export function TermTable({
                         <span className="text-sm font-bold text-ink-navy group-hover:text-emerald-700 transition-colors">
                           {term.name}
                         </span>
-                        {isCurrent && (
-                          <span className="text-[10px] font-bold text-emerald-800 bg-emerald-100/90 px-1.5 py-0.2 rounded border border-emerald-300">
-                            Active
-                          </span>
-                        )}
                         {term.closingSnapshot && (
                           <span className="text-[10px] text-teal-700 bg-teal-50 border border-teal-200 px-1.5 py-0.2 rounded font-mono">
                             Snapshot
@@ -181,7 +176,7 @@ export function TermTable({
                 </TableCell>
 
                 {/* Status */}
-                <TableCell className="py-3.5">
+                <TableCell className="py-3.5 whitespace-nowrap">
                   <TermStatusBadge status={term.status} isCurrent={isCurrent} />
                 </TableCell>
 
