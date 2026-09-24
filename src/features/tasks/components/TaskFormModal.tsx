@@ -10,6 +10,7 @@ import { taskFormSchema, type TaskFormData } from '../schemas/task.schema';
 import type { TaskListItem, TaskAssigneeOption, TaskPriority, TaskStatus } from '../types/task.types';
 import { TASK_STATUSES, TASK_PRIORITIES } from '../types/task.types';
 import { useLanguage } from '@/contexts/LanguageContext';
+import { useToast } from '@/contexts/ToastContext';
 import { DatePicker } from '@/components/ui/date-picker';
 import {
   Select,
@@ -47,6 +48,7 @@ export function TaskFormModal({
   isLoading = false,
 }: TaskFormModalProps) {
   const { t, language } = useLanguage();
+  const toast = useToast();
   const isEditing = Boolean(initialTask);
 
   const formatForDateInput = (isoDate?: string | null) => {
@@ -96,7 +98,7 @@ export function TaskFormModal({
         reset({
           title: initialTask.title,
           description: initialTask.description || '',
-          termId: initialTask.termId,
+          termId: initialTask.termId || defaultTermId || terms.find((t) => t.isCurrent)?.id || terms[0]?.id || '',
           activityId: initialTask.activityId || null,
           assignedTo: initialTask.assignedTo || null,
           status: initialTask.status,
@@ -122,6 +124,16 @@ export function TaskFormModal({
   }, [isOpen, initialTask, defaultTermId, defaultActivityId, terms, reset]);
 
   if (!isOpen) return null;
+
+  const onFormError = (formErrors: any) => {
+    const errorKeys = Object.keys(formErrors);
+    if (errorKeys.length > 0) {
+      const firstError = formErrors[errorKeys[0]];
+      if (firstError?.message) {
+        toast.error(String(firstError.message));
+      }
+    }
+  };
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-ink-navy/40 backdrop-blur-xs overflow-y-auto">
@@ -156,7 +168,7 @@ export function TaskFormModal({
         </div>
 
         {/* Modal Form */}
-        <form onSubmit={handleSubmit(onSubmit)} className="p-6 space-y-4">
+        <form onSubmit={handleSubmit(onSubmit, onFormError)} className="p-6 space-y-4">
           {/* Title */}
           <div>
             <label htmlFor="task-form-title" className="block text-[11px] font-semibold text-slate-gray uppercase tracking-wider mb-1.5">
@@ -208,6 +220,11 @@ export function TaskFormModal({
                           {tItem.name} {tItem.isCurrent ? (language === 'vi' ? '(Hiện tại)' : '(Active)') : ''}
                         </SelectItem>
                       ))}
+                      {initialTask?.term && !terms.some((tItem) => tItem.id === initialTask.term?.id) && (
+                        <SelectItem value={initialTask.term.id}>
+                          {initialTask.term.name} {language === 'vi' ? '(Lịch sử)' : '(Archived)'}
+                        </SelectItem>
+                      )}
                     </SelectContent>
                   </Select>
                 )}

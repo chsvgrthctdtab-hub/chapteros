@@ -4,7 +4,7 @@ import type { TaskStatus, TaskPriority } from '../types/task.types';
 export const taskFormSchema = z.object({
   title: z
     .string()
-    .min(3, 'Tên công việc phải có ít nhất 3 ký tự')
+    .min(1, 'Tên công việc không được để trống')
     .max(200, 'Tên công việc không vượt quá 200 ký tự'),
   description: z.string().max(2000, 'Mô tả không vượt quá 2000 ký tự').optional(),
   termId: z.string().min(1, 'Vui lòng chọn nhiệm kỳ thực hiện'),

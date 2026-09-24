@@ -15,6 +15,7 @@ interface UpdateTaskPayload {
   organizationId: string;
   data: Partial<TaskFormData>;
   updatedBy?: string;
+  userRole?: string | null;
 }
 
 interface UpdateTaskStatusPayload {
@@ -74,8 +75,8 @@ export function useUpdateTask() {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async ({ taskId, organizationId, data, updatedBy }: UpdateTaskPayload) => {
-      return taskService.updateTask(taskId, organizationId, data, updatedBy);
+    mutationFn: async ({ taskId, organizationId, data, updatedBy, userRole }: UpdateTaskPayload) => {
+      return taskService.updateTask(taskId, organizationId, data, updatedBy, userRole);
     },
     onSuccess: (_, variables) => {
       queryClient.invalidateQueries({ queryKey: taskKeys.lists(variables.organizationId), refetchType: 'active' });

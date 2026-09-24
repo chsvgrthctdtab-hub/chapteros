@@ -159,6 +159,7 @@ export function TasksPage() {
           organizationId: currentOrg.id,
           data,
           updatedBy: user?.id,
+          userRole: role,
         });
         toast.success(`Đã cập nhật nhiệm vụ "${data.title}" thành công.`);
         if (selectedTask && selectedTask.id === editingTask.id) {

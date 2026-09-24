@@ -89,6 +89,7 @@ export function TaskDetailPage() {
         organizationId: currentOrg.id,
         data,
         updatedBy: user?.id,
+        userRole: role,
       });
       showNotice('Đã cập nhật nhiệm vụ thành công.', 'success');
       setIsEditModalOpen(false);

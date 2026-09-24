@@ -201,7 +201,8 @@ export const taskService = {
     taskId: string,
     organizationId: string,
     formData: Partial<TaskFormData>,
-    actorUserId?: string
+    actorUserId?: string,
+    userRole?: string | null
   ): Promise<Task> {
     if (!taskId || !organizationId) {
       throw new Error('Thông tin công việc hoặc chi hội không hợp lệ');
@@ -215,8 +216,8 @@ export const taskService = {
 
     // Parallelize all validation checks
     await Promise.all([
-      // Check existing term lock
-      existing.termId
+      // Check existing term lock only when not moving to a different term
+      existing.termId && (!formData.termId || formData.termId === existing.termId)
         ? (async () => {
             const currentTerm = await termRepository.getById(existing.termId!);
             validateTermMutation(currentTerm?.status, 'chỉnh sửa công việc thuộc nhiệm kỳ đã khóa');
@@ -271,7 +272,9 @@ export const taskService = {
       const validation = validateTaskStatusTransition({
         currentStatus: existing.status,
         targetStatus: formData.status,
-        userRole: null, // If full edit, form permissions already check canManage
+        userRole: userRole || 'admin', // Full edit form is accessed by authorized managers
+        isAssignee: existing.assignedTo === actorUserId,
+        isCreator: existing.createdBy === actorUserId,
       });
 
       if (!validation.allowed) {

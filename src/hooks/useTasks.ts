@@ -127,9 +127,9 @@ export function useTaskMutations(organizationId?: string) {
       if (!organizationId) throw new Error('Organization ID is required');
       return createMutation.mutateAsync({ organizationId, data, createdBy });
     },
-    updateTask: (taskId: string, data: Partial<TaskFormData>, updatedBy?: string) => {
+    updateTask: (taskId: string, data: Partial<TaskFormData>, updatedBy?: string, userRole?: string | null) => {
       if (!organizationId) throw new Error('Organization ID is required');
-      return updateMutation.mutateAsync({ taskId, organizationId, data, updatedBy });
+      return updateMutation.mutateAsync({ taskId, organizationId, data, updatedBy, userRole });
     },
     updateStatus: (taskId: string, status: TaskStatus, progress?: number, activityId?: string | null, updatedBy?: string) => {
       if (!organizationId) throw new Error('Organization ID is required');
