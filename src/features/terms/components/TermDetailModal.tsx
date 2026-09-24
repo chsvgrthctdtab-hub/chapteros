@@ -5,7 +5,6 @@ import {
   UserPlus,
   Edit2,
   Trash2,
-  Sparkles,
   CheckCircle,
   Search,
   AlertCircle,
@@ -42,6 +41,7 @@ import {
 import { AddTermMemberDialog } from './AddTermMemberDialog';
 import { TransferTermMembersDialog } from './TransferTermMembersDialog';
 import { TermClosingSnapshotModal } from './TermClosingSnapshotModal';
+import { TermStatusBadge } from './TermStatusBadge';
 import { TERM_STATUS_OPTIONS, TERM_MEMBER_STATUS_OPTIONS } from '../types/term.types';
 import type { Term, TermMember } from '@/types';
 import type { TermMemberAssignmentFormData } from '../schemas/term.schema';
@@ -192,20 +192,12 @@ export function TermDetailModal({
                     <CalendarRange className="h-6 w-6" />
                   </div>
                   <div>
-                    <div className="flex items-center gap-2 flex-wrap">
-                      <DialogTitle className="text-xl font-bold text-ink-navy">
+                    <div className="flex items-center gap-2.5 flex-nowrap shrink-0">
+                      <DialogTitle className="text-xl font-bold text-ink-navy truncate">
                         {term?.name || 'Chi tiết Nhiệm kỳ'}
                       </DialogTitle>
-                      {term?.isCurrent && (
-                        <Badge className="bg-emerald-50 text-emerald-700 border border-emerald-200 gap-1 font-medium">
-                          <Sparkles className="h-3 w-3" />
-                          Nhiệm kỳ hiện tại
-                        </Badge>
-                      )}
-                      {statusConfig && (
-                        <Badge variant={statusConfig.variant}>
-                          {statusConfig.label}
-                        </Badge>
+                      {term && (
+                        <TermStatusBadge status={term.status} isCurrent={term.isCurrent} />
                       )}
                     </div>
                     <DialogDescription className="text-xs text-mist-gray mt-1 flex flex-wrap items-center gap-x-4 gap-y-1">
@@ -232,7 +224,7 @@ export function TermDetailModal({
                         onClick={() => onActivateTerm(term)}
                         className="text-emerald-700 border-emerald-200 hover:bg-emerald-50 text-xs h-8"
                       >
-                        <Sparkles className="h-3.5 w-3.5 mr-1.5" />
+                        <CheckCircle className="h-3.5 w-3.5 mr-1.5" />
                         Kích hoạt
                       </Button>
                     )}

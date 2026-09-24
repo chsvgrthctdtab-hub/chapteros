@@ -6,7 +6,6 @@ import {
   Activity,
   CheckSquare,
   Wallet,
-  Sparkles,
   ShieldCheck,
   CheckCircle2,
   Clock,
@@ -53,10 +52,10 @@ export function TermComparison({
         <div>
           <h3 className="text-sm sm:text-base font-bold text-ink-navy flex items-center gap-2">
             <Columns className="h-4 w-4 text-emerald-600" />
-            Term-over-Term Operational Comparison Matrix
+            Ma trận so sánh hiệu quả qua các nhiệm kỳ
           </h3>
           <p className="text-xs text-mist-gray mt-0.5">
-            Side-by-side comparative analysis of organizational parameters across all recorded terms.
+            Phân tích và đối chiếu các chỉ số hoạt động giữa các nhiệm kỳ đã ghi nhận.
           </p>
         </div>
       </div>
@@ -65,7 +64,7 @@ export function TermComparison({
         <table className="w-full text-xs text-left border-collapse min-w-[650px]">
           <thead>
             <tr className="border-b border-hairline bg-cloud text-slate-gray font-semibold">
-              <th className="py-3 px-4 w-44">Operational Dimension</th>
+              <th className="py-3 px-4 w-44">Chỉ số theo dõi</th>
               {sortedTerms.map((term) => {
                 const isCurrent = term.isCurrent || term.id === currentTermId;
                 return (
@@ -94,7 +93,7 @@ export function TermComparison({
             <tr className="hover:bg-cloud/50">
               <td className="py-2.5 px-4 font-semibold text-ink-navy flex items-center gap-1.5">
                 <Calendar className="h-3.5 w-3.5 text-mist-gray" />
-                Date Range
+                Thời gian nhiệm kỳ
               </td>
               {sortedTerms.map((term) => (
                 <td key={term.id} className="py-2.5 px-4 text-center font-mono text-[11px]">
@@ -107,7 +106,7 @@ export function TermComparison({
             <tr className="hover:bg-cloud/50">
               <td className="py-2.5 px-4 font-semibold text-ink-navy flex items-center gap-1.5">
                 <Clock className="h-3.5 w-3.5 text-mist-gray" />
-                Duration
+                Thời lượng
               </td>
               {sortedTerms.map((term) => {
                 const start = dayjs(term.startDate);
@@ -115,7 +114,7 @@ export function TermComparison({
                 const months = start.isValid() && end.isValid() ? Math.round(end.diff(start, 'month', true)) : '—';
                 return (
                   <td key={term.id} className="py-2.5 px-4 text-center font-medium">
-                    {months} months
+                    {months} tháng
                   </td>
                 );
               })}
@@ -125,7 +124,7 @@ export function TermComparison({
             <tr className="hover:bg-cloud/50">
               <td className="py-2.5 px-4 font-semibold text-ink-navy flex items-center gap-1.5">
                 <Users className="h-3.5 w-3.5 text-signal-blue" />
-                Members Assigned
+                Tổng số hội viên
               </td>
               {sortedTerms.map((term) => (
                 <td key={term.id} className="py-2.5 px-4 text-center font-bold text-ink-navy">
@@ -138,7 +137,7 @@ export function TermComparison({
             <tr className="hover:bg-cloud/50">
               <td className="py-2.5 px-4 font-semibold text-ink-navy flex items-center gap-1.5">
                 <Activity className="h-3.5 w-3.5 text-signal-blue" />
-                Activities Executed
+                Hoạt động triển khai
               </td>
               {sortedTerms.map((term) => (
                 <td key={term.id} className="py-2.5 px-4 text-center font-bold text-ink-navy">
@@ -151,7 +150,7 @@ export function TermComparison({
             <tr className="hover:bg-cloud/50">
               <td className="py-2.5 px-4 font-semibold text-ink-navy flex items-center gap-1.5">
                 <CheckSquare className="h-3.5 w-3.5 text-amber-500" />
-                Tasks Managed
+                Nhiệm vụ theo dõi
               </td>
               {sortedTerms.map((term) => (
                 <td key={term.id} className="py-2.5 px-4 text-center font-bold text-ink-navy">
@@ -164,7 +163,7 @@ export function TermComparison({
             <tr className="hover:bg-cloud/50">
               <td className="py-2.5 px-4 font-semibold text-ink-navy flex items-center gap-1.5">
                 <Wallet className="h-3.5 w-3.5 text-emerald-500" />
-                Treasury Balance
+                Số dư tồn quỹ
               </td>
               {sortedTerms.map((term) => {
                 const bal = financeBalanceMap[term.id];
@@ -187,14 +186,14 @@ export function TermComparison({
             <tr className="hover:bg-cloud/50">
               <td className="py-2.5 px-4 font-semibold text-ink-navy flex items-center gap-1.5">
                 <ShieldCheck className="h-3.5 w-3.5 text-teal-500" />
-                Audit Snapshot
+                Lưu trữ tổng kết
               </td>
               {sortedTerms.map((term) => (
                 <td key={term.id} className="py-2.5 px-4 text-center">
                   {term.closingSnapshot ? (
                     <span className="inline-flex items-center gap-1 text-[11px] text-teal-700 font-semibold bg-teal-50 px-2 py-0.5 rounded border border-teal-200">
                       <CheckCircle2 className="h-3 w-3" />
-                      Recorded
+                      Đã lưu
                     </span>
                   ) : (
                     <span className="text-[11px] text-mist-gray">—</span>

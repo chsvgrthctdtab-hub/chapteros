@@ -107,7 +107,7 @@ export function PlansPage() {
           <div className="flex items-center gap-2">
             <h1 className="text-xl sm:text-2xl font-bold text-ink-navy tracking-tight flex items-center gap-2.5">
               <FolderKanban strokeWidth={1.5} className="h-6 w-6 text-signal-blue" />
-              Collab
+              Chiến dịch phối hợp
             </h1>
           </div>
           <p className="text-xs sm:text-sm text-slate-gray mt-1">
@@ -120,11 +120,11 @@ export function PlansPage() {
             <Button
               id="btn-create-plan"
               onClick={() => setIsCreateOpen(true)}
-              title="Tạo chiến dịch Collab mới"
+              title="Tạo chiến dịch phối hợp mới"
               className="h-8 sm:h-9 px-2.5 sm:px-4 text-xs font-semibold bg-signal-blue hover:bg-[#005be0] text-white gap-1 sm:gap-1.5 shadow-sm cursor-pointer rounded-lg"
             >
               <Plus className="h-4 w-4 shrink-0" />
-              <span className="hidden sm:inline">Tạo Collab mới</span>
+              <span className="hidden sm:inline">Tạo chiến dịch mới</span>
             </Button>
           )}
         </div>
@@ -232,7 +232,7 @@ export function PlansPage() {
                             setEditingPlan(plan);
                           }}
                           className="p-1 rounded-lg hover:bg-pebble text-slate-gray hover:text-signal-blue cursor-pointer transition-colors"
-                          title="Chỉnh sửa Collab"
+                          title="Chỉnh sửa chiến dịch"
                         >
                           <Edit3 className="w-3.5 h-3.5" />
                         </button>
@@ -243,7 +243,7 @@ export function PlansPage() {
                             setDeletingPlan(plan);
                           }}
                           className="p-1 rounded-lg hover:bg-rose-50 text-slate-gray hover:text-rose-600 cursor-pointer transition-colors"
-                          title="Xóa Collab"
+                          title="Xóa chiến dịch"
                         >
                           <Trash2 className="w-3.5 h-3.5" />
                         </button>

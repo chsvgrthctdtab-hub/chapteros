@@ -173,11 +173,11 @@ export function ChaptersPage() {
   return (
     <div id="chapters-page" className="space-y-6">
       <PageHeader
-        title="Chapters"
+        title="Chi hội & Đơn vị"
         description="Quản lý thông tin định danh, biểu trưng chính thức, danh sách tài khoản thành viên và chuyển đổi Đơn vị hoạt động."
         breadcrumbs={[
-          { label: 'Dashboard', href: '/' },
-          { label: 'Chapters' },
+          { label: 'Tổng quan', href: '/' },
+          { label: 'Chi hội & Đơn vị' },
         ]}
       />
 

@@ -3,7 +3,6 @@ import {
   AlertTriangle,
   Info,
   Clock,
-  Sparkles,
   ShieldAlert,
   ArrowRight,
   CheckCircle2,
@@ -42,10 +41,10 @@ export function TermOperationalSignals({
     signals.push({
       id: 'no-current-term',
       type: 'warning',
-      title: 'No active term is designated as current',
+      title: 'Chưa có nhiệm kỳ nào được đặt làm hiện hành',
       description:
-        'The chapter has registered terms but none is marked current. Set a term as current to anchor activities and reports.',
-      actionLabel: candidate ? `Set "${candidate.name}" as Current` : undefined,
+        'Đơn vị đã tạo các nhiệm kỳ nhưng chưa có nhiệm kỳ nào được đặt làm hiện hành. Hãy kích hoạt một nhiệm kỳ làm mốc để liên kết hội viên và hoạt động.',
+      actionLabel: candidate ? `Đặt "${candidate.name}" làm hiện hành` : undefined,
       onAction: candidate ? () => onActivateTerm(candidate) : undefined,
     });
   }
@@ -60,20 +59,20 @@ export function TermOperationalSignals({
       signals.push({
         id: 'term-closing-soon',
         type: 'warning',
-        title: `Current term "${currentTerm.name}" ends in ${daysLeft} days`,
+        title: `Nhiệm kỳ "${currentTerm.name}" sắp kết thúc (còn ${daysLeft} ngày)`,
         description:
-          'Prepare handover documentation, resolve pending tasks, and finalize financial accounts for the closing checklist.',
-        actionLabel: 'Evaluate Closing Checklist',
+          'Chuẩn bị tài liệu bàn giao, giải quyết các nhiệm vụ còn mở và đối soát sổ quỹ phục vụ checklist tổng kết.',
+        actionLabel: 'Kiểm tra checklist tổng kết',
         onAction: () => onCompleteTerm(currentTerm),
       });
     } else if (daysLeft < 0) {
       signals.push({
         id: 'term-overdue',
         type: 'warning',
-        title: `Current term "${currentTerm.name}" has passed its scheduled end date`,
+        title: `Nhiệm kỳ "${currentTerm.name}" đã quá hạn kết thúc theo kế hoạch`,
         description:
-          'The official term date has concluded. Initiate term transition, transfer members, or archive with closing snapshot.',
-        actionLabel: 'Complete Term & Snapshot',
+          'Thời hạn chính thức của nhiệm kỳ đã kết thúc. Vui lòng tiến hành chuyển giao, bàn giao nhân sự hoặc tổng kết lưu trữ.',
+        actionLabel: 'Tổng kết & Lưu trữ',
         onAction: () => onCompleteTerm(currentTerm),
       });
     }
@@ -85,8 +84,8 @@ export function TermOperationalSignals({
     signals.push({
       id: 'draft-term-planned',
       type: 'info',
-      title: `${draftTerms.length} upcoming term(s) configured`,
-      description: `Draft terms (${draftTerms.map((t) => t.name).join(', ')}) are staged for future governance cycles.`,
+      title: `Đã có ${draftTerms.length} nhiệm kỳ kế tiếp được lên lịch`,
+      description: `Các nhiệm kỳ dự thảo (${draftTerms.map((t) => t.name).join(', ')}) đã sẵn sàng cho giai đoạn tiếp theo.`,
       linkTo: `/members`,
     });
   }
@@ -101,13 +100,13 @@ export function TermOperationalSignals({
       <div className="flex items-center justify-between">
         <h4 className="text-xs font-bold uppercase tracking-wider text-mist-gray flex items-center gap-1.5">
           <Info className="h-3.5 w-3.5 text-signal-blue" />
-          Operational Governance Signals
+          Tín hiệu vận hành & Nhiệm kỳ
         </h4>
         <Link
           to="/data-quality"
           className="text-xs font-semibold text-emerald-700 hover:text-emerald-800 flex items-center gap-1"
         >
-          Data Quality Workspace
+          Không gian chất lượng dữ liệu
           <ArrowRight className="h-3 w-3" />
         </Link>
       </div>

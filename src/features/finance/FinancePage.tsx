@@ -525,7 +525,7 @@ export function FinancePage() {
         onSelectPending={() => setActiveTab('approvals')}
         onFilterType={(type) => handleFilterChange({ type, page: 1 })}
         activeTypeFilter={filters.type}
-        currentPeriodName={currentTerm?.name || 'Current Term'}
+        currentPeriodName={currentTerm?.name || 'Nhiệm kỳ hiện hành'}
         isPeriodOpen={Boolean(currentTerm?.isCurrent)}
       />
 

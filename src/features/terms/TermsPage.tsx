@@ -3,7 +3,6 @@ import {
   CalendarRange,
   Plus,
   RefreshCw,
-  Sparkles,
   Users,
   Calendar,
   CheckCircle,
@@ -273,7 +272,7 @@ export function TermsPage() {
         organizationId,
         actorUserId: user?.id,
       });
-      toast.success('Term activated as current organizational period.');
+      toast.success('Đã kích hoạt nhiệm kỳ làm mốc hoạt động hiện hành.');
       setActivatingTerm(null);
     } catch (err: unknown) {
       toast.error(err);
@@ -287,7 +286,7 @@ export function TermsPage() {
         params,
         actorUserName: actorUserName || profile?.fullName || user?.email || undefined,
       });
-      toast.success('Term completed and handover snapshot generated successfully.');
+      toast.success('Đã tổng kết nhiệm kỳ và tạo bản lưu trữ bàn giao thành công.');
       setCompletingTerm(null);
     } catch (err: unknown) {
       toast.error(err);
@@ -302,7 +301,7 @@ export function TermsPage() {
         organizationId,
         actorUserId: user?.id,
       });
-      toast.success(`Term "${term.name}" has been archived.`);
+      toast.success(`Nhiệm kỳ "${term.name}" đã được chuyển vào lưu trữ.`);
     } catch (err: unknown) {
       toast.error(err);
     }
@@ -324,7 +323,7 @@ export function TermsPage() {
           actorUserId: user?.id,
           organizationId,
         });
-        toast.success('Member assignment updated successfully.');
+        toast.success('Đã cập nhật phân công hội viên.');
       } else {
         await addMemberMutation.mutateAsync({
           payload: {
@@ -338,7 +337,7 @@ export function TermsPage() {
           actorUserId: user?.id,
           organizationId,
         });
-        toast.success('Member added to term roster.');
+        toast.success('Đã thêm hội viên vào danh sách nhiệm kỳ.');
       }
       setAddingMemberToTerm(null);
       setEditingTermMember(null);
@@ -348,7 +347,7 @@ export function TermsPage() {
   };
 
   const handleRemoveMember = async (termMemberId: string, memberName: string) => {
-    if (!window.confirm(`Are you sure you want to remove ${memberName} from this term?`)) return;
+    if (!window.confirm(`Bạn có chắc chắn muốn xóa ${memberName} khỏi nhiệm kỳ này?`)) return;
     try {
       await removeMemberMutation.mutateAsync({
         id: termMemberId,
@@ -356,7 +355,7 @@ export function TermsPage() {
         actorUserId: user?.id,
         organizationId,
       });
-      toast.success(`Removed ${memberName} from term.`);
+      toast.success(`Đã xóa ${memberName} khỏi nhiệm kỳ.`);
     } catch (err: unknown) {
       toast.error(err);
     }
@@ -366,11 +365,11 @@ export function TermsPage() {
     <div id="terms-workspace-container" className="p-4 sm:p-6 md:p-8 max-w-7xl mx-auto space-y-6 sm:space-y-8">
       {/* 1. Page Header */}
       <PageHeader
-        title="Terms"
-        description="Manage organizational terms, membership assignments, operational activity and lifecycle status."
+        title="Quản lý Nhiệm kỳ"
+        description="Quản lý các nhiệm kỳ hoạt động, phân bổ nhân sự Ban Chấp Hành, theo dõi tiến độ và chuyển giao bàn giao hồ sơ."
         breadcrumbs={[
-          { label: 'System & Tools' },
-          { label: 'Terms' },
+          { label: 'Hệ thống & Thiết lập' },
+          { label: 'Nhiệm kỳ' },
         ]}
         actions={
           <div className="flex items-center gap-1.5 sm:gap-2">

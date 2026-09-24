@@ -8,7 +8,6 @@ import {
   Wallet,
   FileSpreadsheet,
   FileText,
-  Sparkles,
   ArrowRightLeft,
   CheckCircle,
   Edit2,
@@ -160,14 +159,11 @@ export function TermDetailDrawer({
         <div className="p-5 sm:p-6 border-b border-hairline bg-cloud shrink-0">
           <div className="flex items-start justify-between gap-4">
             <div className="space-y-1.5 min-w-0">
-              <div className="flex items-center gap-2 flex-wrap">
-                <span className="text-[10px] font-bold uppercase tracking-wider text-mist-gray bg-pebble px-2 py-0.5 rounded">
-                  Term Workspace
-                </span>
+              <div className="flex items-center gap-2 flex-nowrap shrink-0">
                 <TermStatusBadge status={term.status} isCurrent={isCurrent} />
                 {snapshot && (
-                  <span className="text-[10px] font-mono text-teal-800 bg-teal-50 border border-teal-200 px-2 py-0.5 rounded">
-                    Audit Snapshot Saved
+                  <span className="text-[10px] font-medium text-teal-800 bg-teal-50 border border-teal-200 px-2 py-0.5 rounded whitespace-nowrap shrink-0">
+                    Đã lưu bản tổng kết
                   </span>
                 )}
               </div>
@@ -198,8 +194,8 @@ export function TermDetailDrawer({
                     onClick={() => onActivateTerm(term)}
                     className="h-8 text-xs bg-emerald-600 hover:bg-emerald-700 text-white font-medium cursor-pointer shadow-xs"
                   >
-                    <Sparkles className="h-3.5 w-3.5 mr-1" />
-                    Set as Current
+                    <CheckCircle className="h-3.5 w-3.5 mr-1" />
+                    Đặt làm hiện hành
                   </Button>
                 )}
 
@@ -211,7 +207,7 @@ export function TermDetailDrawer({
                     className="h-8 text-xs text-slate-gray border-hairline hover:bg-cloud cursor-pointer"
                   >
                     <ArrowRightLeft className="h-3.5 w-3.5 mr-1 text-mist-gray" />
-                    Transfer Members
+                    Chuyển giao nhân sự
                   </Button>
                 )}
 
@@ -223,7 +219,7 @@ export function TermDetailDrawer({
                     className="h-8 text-xs text-slate-gray border-hairline hover:bg-cloud cursor-pointer"
                   >
                     <Edit2 className="h-3.5 w-3.5 mr-1 text-mist-gray" />
-                    Edit Term
+                    Chỉnh sửa
                   </Button>
                 )}
 
@@ -235,7 +231,7 @@ export function TermDetailDrawer({
                     className="h-8 text-xs text-amber-800 border-amber-200 hover:bg-amber-50 cursor-pointer"
                   >
                     <CheckCircle className="h-3.5 w-3.5 mr-1 text-amber-600" />
-                    Close & Snapshot
+                    Tổng kết nhiệm kỳ
                   </Button>
                 )}
               </>
@@ -248,23 +244,23 @@ export function TermDetailDrawer({
           <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
             <TabsList className="bg-pebble p-0.5 h-8 gap-0.5 overflow-x-auto max-w-full">
               <TabsTrigger value="overview" className="text-xs px-2.5 py-1">
-                Overview
+                Tổng quan
               </TabsTrigger>
               <TabsTrigger value="members" className="text-xs px-2.5 py-1">
-                Members ({members.length})
+                Hội viên ({members.length})
               </TabsTrigger>
               <TabsTrigger value="activities" className="text-xs px-2.5 py-1">
-                Activities ({activitiesCount})
+                Hoạt động ({activitiesCount})
               </TabsTrigger>
               <TabsTrigger value="tasks" className="text-xs px-2.5 py-1">
-                Tasks ({tasksCount})
+                Nhiệm vụ ({tasksCount})
               </TabsTrigger>
               <TabsTrigger value="finance" className="text-xs px-2.5 py-1">
-                Finance
+                Tài chính
               </TabsTrigger>
               {snapshot && (
                 <TabsTrigger value="snapshot" className="text-xs px-2.5 py-1 text-teal-800">
-                  Snapshot
+                  Ảnh chụp tổng kết
                 </TabsTrigger>
               )}
             </TabsList>
@@ -285,7 +281,7 @@ export function TermDetailDrawer({
                   <div className="flex items-center justify-between text-xs text-mist-gray font-medium">
                     <span className="flex items-center gap-1.5">
                       <Users className="h-3.5 w-3.5 text-signal-blue" />
-                      Members
+                      Hội viên
                     </span>
                     <ExternalLink className="h-3 w-3 text-mist-gray group-hover:text-signal-blue transition-colors" />
                   </div>
@@ -293,7 +289,7 @@ export function TermDetailDrawer({
                     {members.length || term.memberCount || 0}
                   </p>
                   <span className="text-[11px] text-signal-blue font-medium mt-1 inline-block">
-                    View in Members Module →
+                    Xem danh sách hội viên →
                   </span>
                 </Link>
 
@@ -304,13 +300,13 @@ export function TermDetailDrawer({
                   <div className="flex items-center justify-between text-xs text-mist-gray font-medium">
                     <span className="flex items-center gap-1.5">
                       <Activity className="h-3.5 w-3.5 text-signal-blue" />
-                      Activities
+                      Hoạt động
                     </span>
                     <ExternalLink className="h-3 w-3 text-mist-gray group-hover:text-signal-blue transition-colors" />
                   </div>
                   <p className="text-2xl font-bold text-ink-navy mt-2">{activitiesCount}</p>
                   <span className="text-[11px] text-signal-blue font-medium mt-1 inline-block">
-                    View Activities →
+                    Xem hoạt động →
                   </span>
                 </Link>
 
@@ -321,13 +317,13 @@ export function TermDetailDrawer({
                   <div className="flex items-center justify-between text-xs text-mist-gray font-medium">
                     <span className="flex items-center gap-1.5">
                       <CheckSquare className="h-3.5 w-3.5 text-amber-600" />
-                      Tasks
+                      Nhiệm vụ
                     </span>
                     <ExternalLink className="h-3 w-3 text-mist-gray group-hover:text-amber-600 transition-colors" />
                   </div>
                   <p className="text-2xl font-bold text-ink-navy mt-2">{tasksCount}</p>
                   <span className="text-[11px] text-amber-700 font-medium mt-1 inline-block">
-                    View Tasks →
+                    Xem nhiệm vụ →
                   </span>
                 </Link>
 
@@ -338,7 +334,7 @@ export function TermDetailDrawer({
                   <div className="flex items-center justify-between text-xs text-mist-gray font-medium">
                     <span className="flex items-center gap-1.5">
                       <Wallet className="h-3.5 w-3.5 text-emerald-600" />
-                      Treasury Balance
+                      Số dư quỹ
                     </span>
                     <ExternalLink className="h-3 w-3 text-mist-gray group-hover:text-emerald-600 transition-colors" />
                   </div>
@@ -346,7 +342,7 @@ export function TermDetailDrawer({
                     {formattedBalance}
                   </p>
                   <span className="text-[11px] text-emerald-700 font-medium mt-1 inline-block">
-                    View Finance →
+                    Xem quỹ tài chính →
                   </span>
                 </Link>
               </div>
@@ -354,25 +350,25 @@ export function TermDetailDrawer({
               {/* Term Metadata & Lifecycle Timeline */}
               <div className="rounded-xl border border-hairline bg-white p-4 space-y-3">
                 <h4 className="text-xs font-bold uppercase tracking-wider text-mist-gray">
-                  Lifecycle Record
+                  Thông tin vòng đời nhiệm kỳ
                 </h4>
                 <div className="grid grid-cols-2 gap-3 text-xs">
                   <div>
-                    <span className="text-mist-gray block">Start Date:</span>
+                    <span className="text-mist-gray block">Ngày bắt đầu:</span>
                     <span className="font-medium text-ink-navy">{term.startDate}</span>
                   </div>
                   <div>
-                    <span className="text-mist-gray block">End Date:</span>
+                    <span className="text-mist-gray block">Ngày kết thúc:</span>
                     <span className="font-medium text-ink-navy">{term.endDate}</span>
                   </div>
                   <div>
-                    <span className="text-mist-gray block">Created At:</span>
+                    <span className="text-mist-gray block">Khởi tạo:</span>
                     <span className="font-medium text-ink-navy">
                       {dayjs(term.createdAt).format('DD/MM/YYYY HH:mm')}
                     </span>
                   </div>
                   <div>
-                    <span className="text-mist-gray block">Last Updated:</span>
+                    <span className="text-mist-gray block">Cập nhật:</span>
                     <span className="font-medium text-ink-navy">
                       {dayjs(term.updatedAt).format('DD/MM/YYYY HH:mm')}
                     </span>
@@ -496,17 +492,17 @@ export function TermDetailDrawer({
                 <div className="flex items-center justify-between">
                   <h4 className="text-xs font-bold uppercase tracking-wider text-mist-gray flex items-center gap-1.5">
                     <FileText className="h-3.5 w-3.5 text-teal-600" />
-                    Governance & Documents
+                    Hồ sơ & Văn bản Đơn vị
                   </h4>
                   <Link
                     to={`/documents?term=${term.id}`}
                     className="text-xs font-medium text-teal-700 hover:underline"
                   >
-                    Open Documents Module →
+                    Mở kho Văn bản →
                   </Link>
                 </div>
                 <p className="text-xs text-slate-gray leading-relaxed">
-                  Access official resolutions, handover files, executive decisions and financial receipts associated with this governance cycle.
+                  Truy cập các nghị quyết, biên bản bàn giao, quyết định kiện toàn và chứng từ phát sinh trong nhiệm kỳ này.
                 </p>
               </div>
 
@@ -515,15 +511,15 @@ export function TermDetailDrawer({
                 <div className="rounded-xl border border-teal-200 bg-teal-50/40 p-4 space-y-2">
                   <div className="flex items-center gap-2 text-teal-900 font-bold text-xs">
                     <ShieldCheck className="h-4 w-4 text-teal-600" />
-                    Term Completed with Immutable Closing Snapshot
+                    Nhiệm kỳ đã hoàn tất và lưu trữ ảnh chụp tổng kết
                   </div>
                   <p className="text-xs text-slate-gray">
-                    Closed by: <strong>{snapshot.closedByName || 'Administrator'}</strong> on{' '}
+                    Người đóng: <strong>{snapshot.closedByName || 'Ban Quản trị'}</strong> vào lúc{' '}
                     {dayjs(snapshot.closedAt).format('DD/MM/YYYY HH:mm')}.
                   </p>
                   {snapshot.handoverNotes && (
                     <div className="p-3 bg-white rounded-lg border border-teal-200 text-xs text-slate-gray mt-2">
-                      <span className="font-semibold block text-ink-navy mb-1">Handover Notes:</span>
+                      <span className="font-semibold block text-ink-navy mb-1">Ghi chú bàn giao:</span>
                       {snapshot.handoverNotes}
                     </div>
                   )}
@@ -541,7 +537,7 @@ export function TermDetailDrawer({
                   <Input
                     value={memberSearch}
                     onChange={(e) => setMemberSearch(e.target.value)}
-                    placeholder="Search members in term..."
+                    placeholder="Tìm kiếm hội viên trong nhiệm kỳ..."
                     className="pl-8 h-8 text-xs bg-cloud border-hairline"
                   />
                 </div>
@@ -568,18 +564,18 @@ export function TermDetailDrawer({
                       className="h-8 text-xs bg-emerald-600 hover:bg-emerald-700 text-white font-medium cursor-pointer"
                     >
                       <Plus className="h-3.5 w-3.5 mr-1" />
-                      Add Member
+                      Thêm hội viên
                     </Button>
                   )}
                 </div>
               </div>
 
               {isLoadingMembers ? (
-                <div className="p-8 text-center text-xs text-mist-gray">Loading members roster...</div>
+                <div className="p-8 text-center text-xs text-mist-gray">Đang tải danh sách hội viên...</div>
               ) : filteredMembers.length === 0 ? (
                 <div className="rounded-xl border border-dashed border-hairline p-8 text-center">
                   <Users strokeWidth={1.5} className="h-8 w-8 text-mist-gray mx-auto mb-2" />
-                  <p className="text-xs text-mist-gray font-medium">No members match the query</p>
+                  <p className="text-xs text-mist-gray font-medium">Không tìm thấy hội viên nào phù hợp</p>
                 </div>
               ) : (
                 <div className="divide-y divide-hairline border border-hairline rounded-xl overflow-hidden bg-white">
@@ -591,13 +587,13 @@ export function TermDetailDrawer({
                       <div className="flex items-center gap-3 min-w-0">
                         <Avatar className="h-8 w-8 text-xs shrink-0 border border-hairline">
                           <AvatarFallback className="bg-cloud text-slate-gray font-semibold">
-                            {(tm.member?.fullName || 'M').charAt(0)}
+                            {(tm.member?.fullName || 'H').charAt(0)}
                           </AvatarFallback>
                         </Avatar>
                         <div className="min-w-0">
                           <div className="flex items-center gap-2">
                             <span className="text-xs font-bold text-ink-navy truncate">
-                              {tm.member?.fullName || 'Unnamed Member'}
+                              {tm.member?.fullName || 'Chưa đặt tên'}
                             </span>
                             {tm.member?.studentId && (
                               <span className="text-[11px] text-mist-gray font-mono">
@@ -622,7 +618,7 @@ export function TermDetailDrawer({
                           variant={tm.status === 'active' ? 'default' : 'secondary'}
                           className="text-[10px] h-5"
                         >
-                          {tm.status}
+                          {tm.status === 'active' ? 'Đang đảm nhiệm' : tm.status}
                         </Badge>
 
                         {canManage && !isLocked && (
@@ -642,7 +638,7 @@ export function TermDetailDrawer({
                                 variant="ghost"
                                 size="sm"
                                 onClick={() =>
-                                  onRemoveMember(tm.id, tm.member?.fullName || 'Member')
+                                  onRemoveMember(tm.id, tm.member?.fullName || 'Hội viên')
                                 }
                                 className="h-7 w-7 p-0 text-mist-gray hover:text-rose-600"
                               >
@@ -662,7 +658,7 @@ export function TermDetailDrawer({
                   to={`/members?term=${term.id}`}
                   className="text-xs font-semibold text-signal-blue hover:underline"
                 >
-                  Manage Full Roster in Members Module →
+                  Xem toàn bộ hồ sơ trong Danh sách Hội viên →
                 </Link>
               </div>
             </div>
@@ -673,23 +669,23 @@ export function TermDetailDrawer({
             <div className="space-y-4">
               <div className="flex items-center justify-between">
                 <h4 className="text-xs font-bold uppercase tracking-wider text-mist-gray">
-                  Activities in Term ({activitiesCount})
+                  Hoạt động trong nhiệm kỳ ({activitiesCount})
                 </h4>
                 <Link
                   to={`/activities?term=${term.id}`}
                   className="text-xs font-semibold text-signal-blue hover:underline"
                 >
-                  Open Activities Module →
+                  Mở Quản lý Hoạt động →
                 </Link>
               </div>
 
               <div className="rounded-xl border border-hairline bg-white p-4 text-xs text-slate-gray space-y-2">
                 <p>
-                  All programs, workshops, community volunteer initiatives and meetings conducted within{' '}
+                  Toàn bộ chương trình, tọa đàm, chiến dịch tình nguyện và cuộc họp thuộc nhiệm kỳ{' '}
                   <strong>{term.name}</strong>.
                 </p>
                 <p className="text-mist-gray">
-                  Total recorded events: <strong>{activitiesCount}</strong>. Filter and manage registrations, attendance records and leads in the Activities workspace.
+                  Tổng số hoạt động đã ghi nhận: <strong>{activitiesCount}</strong>. Bạn có thể lọc và theo dõi điểm danh, đăng ký tại trang Hoạt động.
                 </p>
               </div>
             </div>
@@ -700,22 +696,22 @@ export function TermDetailDrawer({
             <div className="space-y-4">
               <div className="flex items-center justify-between">
                 <h4 className="text-xs font-bold uppercase tracking-wider text-mist-gray">
-                  Tasks in Term ({tasksCount})
+                  Nhiệm vụ trong nhiệm kỳ ({tasksCount})
                 </h4>
                 <Link
                   to={`/tasks?term=${term.id}`}
                   className="text-xs font-semibold text-amber-600 hover:underline"
                 >
-                  Open Tasks Module →
+                  Mở Quản lý Nhiệm vụ →
                 </Link>
               </div>
 
               <div className="rounded-xl border border-hairline bg-white p-4 text-xs text-slate-gray space-y-2">
                 <p>
-                  Deliverables, committee assignments and deadlines linked to the <strong>{term.name}</strong> cycle.
+                  Các đầu việc, phân công ban chuyên môn và thời hạn thực hiện gắn với nhiệm kỳ <strong>{term.name}</strong>.
                 </p>
                 <p className="text-mist-gray">
-                  Total tasks tracked: <strong>{tasksCount}</strong>.
+                  Tổng số nhiệm vụ đang theo dõi: <strong>{tasksCount}</strong>.
                 </p>
               </div>
             </div>
@@ -726,25 +722,25 @@ export function TermDetailDrawer({
             <div className="space-y-4">
               <div className="flex items-center justify-between">
                 <h4 className="text-xs font-bold uppercase tracking-wider text-mist-gray">
-                  Financial Overview
+                  Tổng quan Quỹ tài chính
                 </h4>
                 <Link
                   to={`/finance?term=${term.id}`}
                   className="text-xs font-semibold text-emerald-600 hover:underline"
                 >
-                  Open Finance Module →
+                  Mở Quản lý Tài chính →
                 </Link>
               </div>
 
               <div className="rounded-xl border border-hairline bg-white p-4 space-y-3">
                 <div className="flex items-center justify-between">
-                  <span className="text-xs text-mist-gray font-medium">Net Term Balance</span>
+                  <span className="text-xs text-mist-gray font-medium">Số dư tồn quỹ</span>
                   <span className="text-lg font-bold text-emerald-700 tabular-nums">
                     {formattedBalance}
                   </span>
                 </div>
                 <p className="text-xs text-mist-gray leading-relaxed">
-                  Income and expense ledgers, reimbursement approvals, and period closings scoped to{' '}
+                  Sổ quỹ thu chi, duyệt quyết toán và khóa sổ tài chính theo chu kỳ{' '}
                   <strong>{term.name}</strong>.
                 </p>
               </div>
@@ -757,23 +753,23 @@ export function TermDetailDrawer({
               <div className="p-4 rounded-xl border border-teal-200 bg-teal-50/50 space-y-3">
                 <div className="flex items-center gap-2 text-teal-900 font-bold text-sm">
                   <Award className="h-4 w-4 text-teal-600" />
-                  Historical Term Closing Snapshot
+                  Ảnh chụp tổng kết khóa sổ nhiệm kỳ
                 </div>
                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 text-xs pt-2">
                   <div className="bg-white p-2.5 rounded-lg border border-teal-100">
-                    <span className="text-mist-gray block text-[11px]">Final Members</span>
+                    <span className="text-mist-gray block text-[11px]">Tổng hội viên</span>
                     <strong className="text-ink-navy text-sm">
                       {snapshot.stats?.members?.total ?? 0}
                     </strong>
                   </div>
                   <div className="bg-white p-2.5 rounded-lg border border-teal-100">
-                    <span className="text-mist-gray block text-[11px]">Final Activities</span>
+                    <span className="text-mist-gray block text-[11px]">Tổng hoạt động</span>
                     <strong className="text-ink-navy text-sm">
                       {snapshot.stats?.activities?.total ?? 0}
                     </strong>
                   </div>
                   <div className="bg-white p-2.5 rounded-lg border border-teal-100">
-                    <span className="text-mist-gray block text-[11px]">Final Tasks</span>
+                    <span className="text-mist-gray block text-[11px]">Tổng nhiệm vụ</span>
                     <strong className="text-ink-navy text-sm">
                       {snapshot.stats?.tasks?.total ?? 0}
                     </strong>
@@ -782,7 +778,7 @@ export function TermDetailDrawer({
 
                 {snapshot.handoverNotes && (
                   <div className="mt-3 pt-3 border-t border-teal-200 text-xs">
-                    <strong className="text-ink-navy block mb-1">Handover Directives:</strong>
+                    <strong className="text-ink-navy block mb-1">Ý kiến chỉ đạo bàn giao:</strong>
                     <p className="text-slate-gray bg-white p-3 rounded-lg border border-teal-100">
                       {snapshot.handoverNotes}
                     </p>

@@ -107,7 +107,7 @@ export function TermToolbar({
             className="h-8 px-2 text-xs text-rose-600 hover:text-rose-700 hover:bg-rose-50 cursor-pointer"
           >
             <X className="h-3.5 w-3.5 mr-1" />
-            Reset
+            Đặt lại
           </Button>
         )}
 
@@ -118,7 +118,7 @@ export function TermToolbar({
           <button
             type="button"
             onClick={() => onViewModeChange('table')}
-            title="Dense Table View"
+            title="Dạng bảng chi tiết"
             className={`p-1.5 rounded-md text-xs transition-colors cursor-pointer ${
               viewMode === 'table'
                 ? 'bg-white text-ink-navy shadow-xs font-semibold'
@@ -130,7 +130,7 @@ export function TermToolbar({
           <button
             type="button"
             onClick={() => onViewModeChange('cards')}
-            title="Card Grid View"
+            title="Dạng lưới thẻ"
             className={`p-1.5 rounded-md text-xs transition-colors cursor-pointer ${
               viewMode === 'cards'
                 ? 'bg-white text-ink-navy shadow-xs font-semibold'
@@ -142,7 +142,7 @@ export function TermToolbar({
           <button
             type="button"
             onClick={() => onViewModeChange('comparison')}
-            title="Side-by-Side Comparison"
+            title="So sánh trực quan"
             className={`p-1.5 rounded-md text-xs transition-colors cursor-pointer ${
               viewMode === 'comparison'
                 ? 'bg-white text-ink-navy shadow-xs font-semibold'

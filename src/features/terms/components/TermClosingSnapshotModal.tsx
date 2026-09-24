@@ -59,7 +59,7 @@ export function TermClosingSnapshotModal({
                 <div>
                   <div className="flex items-center gap-2 flex-wrap">
                     <DialogTitle className="text-xl font-bold text-ink-navy">
-                      Snapshot Bàn giao — {snapshot.termName || term.name}
+                      Biên bản chốt sổ bàn giao — {snapshot.termName || term.name}
                     </DialogTitle>
                     <Badge className="bg-amber-100 text-amber-800 border-amber-300 gap-1 font-medium">
                       <Lock className="h-3 w-3" />

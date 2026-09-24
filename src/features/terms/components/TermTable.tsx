@@ -5,7 +5,6 @@ import {
   Activity,
   CheckSquare,
   Wallet,
-  Sparkles,
   ArrowRightLeft,
   CheckCircle,
   Eye,
@@ -70,9 +69,9 @@ export function TermTable({
     return (
       <div className="rounded-xl border border-dashed border-hairline bg-white p-12 text-center">
         <Calendar className="h-10 w-10 text-mist-gray mx-auto mb-3" />
-        <h3 className="text-sm font-semibold text-ink-navy">No terms found</h3>
+        <h3 className="text-sm font-semibold text-ink-navy">Không tìm thấy nhiệm kỳ nào</h3>
         <p className="text-xs text-mist-gray max-w-sm mx-auto mt-1">
-          No terms matched your search filters. Try adjusting your query or filter selections.
+          Không có nhiệm kỳ nào phù hợp với bộ lọc tìm kiếm. Hãy thử điều chỉnh từ khóa hoặc bộ lọc.
         </p>
       </div>
     );
@@ -84,28 +83,28 @@ export function TermTable({
         <TableHeader>
           <TableRow className="bg-cloud hover:bg-cloud border-b border-hairline">
             <TableHead className="w-[260px] text-xs font-semibold uppercase tracking-wider text-mist-gray">
-              Term & Period
+              Nhiệm kỳ & Niên khóa
             </TableHead>
             <TableHead className="w-[200px] text-xs font-semibold uppercase tracking-wider text-mist-gray">
-              Date Duration
+              Thời gian
             </TableHead>
             <TableHead className="w-[140px] text-xs font-semibold uppercase tracking-wider text-mist-gray">
-              Status
+              Trạng thái
             </TableHead>
             <TableHead className="w-[110px] text-xs font-semibold uppercase tracking-wider text-mist-gray text-center">
-              Members
+              Hội viên
             </TableHead>
             <TableHead className="w-[100px] text-xs font-semibold uppercase tracking-wider text-mist-gray text-center">
-              Activities
+              Hoạt động
             </TableHead>
             <TableHead className="w-[100px] text-xs font-semibold uppercase tracking-wider text-mist-gray text-center">
-              Tasks
+              Nhiệm vụ
             </TableHead>
             <TableHead className="w-[140px] text-xs font-semibold uppercase tracking-wider text-mist-gray text-right">
-              Treasury
+              Tồn quỹ
             </TableHead>
             <TableHead className="w-[110px] text-xs font-semibold uppercase tracking-wider text-mist-gray text-right">
-              Actions
+              Thao tác
             </TableHead>
           </TableRow>
         </TableHeader>
@@ -145,17 +144,17 @@ export function TermTable({
                       onClick={() => onOpenDetail(term)}
                       className="text-left group cursor-pointer"
                     >
-                      <div className="flex items-center gap-1.5 flex-wrap">
-                        <span className="text-sm font-bold text-ink-navy group-hover:text-emerald-700 transition-colors">
+                      <div className="flex items-center gap-1.5 flex-nowrap shrink-0">
+                        <span className="text-sm font-bold text-ink-navy group-hover:text-emerald-700 transition-colors whitespace-nowrap">
                           {term.name}
                         </span>
                         {term.closingSnapshot && (
-                          <span className="text-[10px] text-teal-700 bg-teal-50 border border-teal-200 px-1.5 py-0.2 rounded font-mono">
-                            Snapshot
+                          <span className="text-[10px] text-teal-700 bg-teal-50 border border-teal-200 px-1.5 py-0.5 rounded font-medium whitespace-nowrap shrink-0">
+                            Đã chốt sổ
                           </span>
                         )}
                       </div>
-                      <span className="text-[11px] text-mist-gray font-mono block mt-0.5">
+                      <span className="text-[11px] text-mist-gray font-mono block mt-0.5 whitespace-nowrap">
                         ID: {term.id.slice(0, 8)}
                       </span>
                     </button>
@@ -163,14 +162,14 @@ export function TermTable({
                 </TableCell>
 
                 {/* Date Duration */}
-                <TableCell className="py-3.5 text-xs text-slate-gray font-mono">
+                <TableCell className="py-3.5 text-xs text-slate-gray font-mono whitespace-nowrap">
                   <div>
                     {start.isValid() ? start.format('DD/MM/YYYY') : term.startDate} →{' '}
                     {end.isValid() ? end.format('DD/MM/YYYY') : term.endDate}
                   </div>
                   {durationMonths !== null && (
                     <span className="text-[11px] text-mist-gray font-sans">
-                      ({durationMonths} months)
+                      ({durationMonths} tháng)
                     </span>
                   )}
                 </TableCell>
@@ -236,7 +235,7 @@ export function TermTable({
                           className="text-xs text-slate-gray cursor-pointer"
                         >
                           <Eye className="h-3.5 w-3.5 mr-2 text-mist-gray" />
-                          Inspect Workspace
+                          Chi tiết nhiệm kỳ
                         </DropdownMenuItem>
 
                         {term.closingSnapshot && (
@@ -245,7 +244,7 @@ export function TermTable({
                             className="text-xs text-teal-700 cursor-pointer"
                           >
                             <FileSpreadsheet className="h-3.5 w-3.5 mr-2 text-teal-500" />
-                            View Closing Snapshot
+                            Xem ảnh chụp tổng kết
                           </DropdownMenuItem>
                         )}
 
@@ -258,8 +257,8 @@ export function TermTable({
                                 onClick={() => onActivate(term)}
                                 className="text-xs text-emerald-700 cursor-pointer"
                               >
-                                <Sparkles className="h-3.5 w-3.5 mr-2 text-emerald-500" />
-                                Set as Current Term
+                                <CheckCircle className="h-3.5 w-3.5 mr-2 text-emerald-500" />
+                                Đặt làm Nhiệm kỳ hiện hành
                               </DropdownMenuItem>
                             )}
 
@@ -268,7 +267,7 @@ export function TermTable({
                               className="text-xs text-slate-gray cursor-pointer"
                             >
                               <ArrowRightLeft className="h-3.5 w-3.5 mr-2 text-mist-gray" />
-                              Transfer Members
+                              Chuyển giao nhân sự
                             </DropdownMenuItem>
 
                             {!isLocked && (
@@ -277,7 +276,7 @@ export function TermTable({
                                 className="text-xs text-slate-gray cursor-pointer"
                               >
                                 <Edit2 className="h-3.5 w-3.5 mr-2 text-mist-gray" />
-                                Edit Term Details
+                                Chỉnh sửa thông tin nhiệm kỳ
                               </DropdownMenuItem>
                             )}
 
@@ -287,7 +286,7 @@ export function TermTable({
                                 className="text-xs text-amber-700 cursor-pointer"
                               >
                                 <CheckCircle className="h-3.5 w-3.5 mr-2 text-amber-500" />
-                                Complete & Snapshot
+                                Tổng kết & Khóa sổ
                               </DropdownMenuItem>
                             )}
 
@@ -297,7 +296,7 @@ export function TermTable({
                                 className="text-xs text-slate-gray cursor-pointer"
                               >
                                 <Archive className="h-3.5 w-3.5 mr-2 text-mist-gray" />
-                                Archive Term
+                                Lưu trữ nhiệm kỳ
                               </DropdownMenuItem>
                             )}
                           </>
