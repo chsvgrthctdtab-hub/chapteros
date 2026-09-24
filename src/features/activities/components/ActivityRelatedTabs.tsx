@@ -238,63 +238,66 @@ export function ActivityRelatedTabs({
               {/* Left Column (2/3): Description & Plan, Schedule Milestones, Location */}
               <div className="lg:col-span-2 space-y-6">
                 {/* Competency Standards & Chapter Evaluation Card */}
-                <div className="bg-white rounded-2xl border border-hairline p-4 sm:p-5 shadow-xs space-y-4">
-                  <div className="flex items-center justify-between border-b border-hairline pb-2.5">
+                <div className="bg-white rounded-2xl border border-hairline p-3.5 sm:p-4 shadow-xs space-y-3">
+                  <div className="flex items-center justify-between border-b border-hairline pb-2.5 gap-2 flex-wrap">
                     <h3 className="text-xs font-bold text-ink-navy uppercase tracking-wider flex items-center gap-1.5">
                       <ShieldCheck className="w-4 h-4 text-signal-blue" />
-                      <span>Chuẩn Năng Lực & Đánh Giá Thi Đua Chi Hội</span>
+                      <span>Chuẩn Đánh Giá Thi Đua Chi Hội</span>
                     </h3>
-                    <span className="text-[11px] text-slate-gray font-medium">Khung chuẩn CTUMP</span>
+                    <span className="text-[11px] text-slate-gray font-medium bg-cloud px-2 py-0.5 rounded-md border border-hairline">
+                      Khung chuẩn CTUMP
+                    </span>
                   </div>
 
-                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                  {/* 4-Item Balanced Metrics Strip */}
+                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 text-xs">
                     {/* Semester */}
-                    <div className="bg-cloud p-3 rounded-xl border border-hairline space-y-1">
-                      <span className="text-[10px] font-bold text-mist-gray uppercase">Học kỳ</span>
-                      <p className="text-xs font-bold text-signal-blue">{semesterLabel || 'Chưa phân loại'}</p>
+                    <div className="bg-cloud/60 p-2.5 rounded-xl border border-hairline flex flex-col justify-center">
+                      <span className="text-[10px] font-bold text-mist-gray uppercase tracking-wider">Học kỳ</span>
+                      <p className="text-xs font-bold text-signal-blue mt-0.5 truncate">{semesterLabel || 'Chưa phân loại'}</p>
                     </div>
 
                     {/* Organizer Scope */}
-                    <div className="bg-cloud p-3 rounded-xl border border-hairline space-y-1">
-                      <span className="text-[10px] font-bold text-mist-gray uppercase">Cấp tổ chức</span>
-                      {scopeMeta ? (
-                        <span className={`inline-block text-[11px] font-bold px-2 py-0.5 rounded border ${scopeMeta.badgeClass}`}>
-                          {scopeMeta.badgeLabel}
-                        </span>
-                      ) : (
-                        <p className="text-xs text-slate-gray font-medium">Cấp Chi hội</p>
-                      )}
+                    <div className="bg-cloud/60 p-2.5 rounded-xl border border-hairline flex flex-col justify-center">
+                      <span className="text-[10px] font-bold text-mist-gray uppercase tracking-wider">Cấp tổ chức</span>
+                      <div className="mt-0.5">
+                        {scopeMeta ? (
+                          <span className={`inline-block text-[11px] font-bold px-2 py-0.5 rounded border leading-tight ${scopeMeta.badgeClass}`}>
+                            {scopeMeta.badgeLabel}
+                          </span>
+                        ) : (
+                          <span className="text-xs text-slate-gray font-medium">Cấp Chi hội</span>
+                        )}
+                      </div>
                     </div>
 
                     {/* Scale & Scorecard */}
-                    <div className="bg-cloud p-3 rounded-xl border border-hairline space-y-1">
-                      <span className="text-[10px] font-bold text-mist-gray uppercase">Quy mô thi đua</span>
-                      <div className="flex items-center gap-1.5 flex-wrap">
-                        <span className="text-xs font-bold text-ink-navy">{scaleMeta?.label || 'Quy mô Nhỏ'}</span>
+                    <div className="bg-cloud/60 p-2.5 rounded-xl border border-hairline flex flex-col justify-center">
+                      <span className="text-[10px] font-bold text-mist-gray uppercase tracking-wider">Quy mô thi đua</span>
+                      <div className="flex items-center gap-1 mt-0.5 flex-wrap">
+                        <span className="text-xs font-bold text-ink-navy truncate">{scaleMeta?.label || 'Quy mô Nhỏ'}</span>
                         {scaleMeta && (
                           <span className={`text-[10px] font-bold px-1.5 py-0.2 rounded border ${scaleMeta.badgeClass}`}>
-                            +{scaleMeta.pointsHsV}đ HSV
+                            +{scaleMeta.pointsHsV}đ
                           </span>
                         )}
                       </div>
                     </div>
+
+                    {/* Estimated Budget */}
+                    <div className="bg-cloud/60 p-2.5 rounded-xl border border-hairline flex flex-col justify-center">
+                      <span className="text-[10px] font-bold text-mist-gray uppercase tracking-wider">Dự toán kinh phí</span>
+                      <p className="text-xs font-bold text-ink-navy mt-0.5 truncate tabular-nums">
+                        {meta.estimatedBudget ? `${(meta.estimatedBudget).toLocaleString('vi-VN')} VNĐ` : '0 VNĐ'}
+                      </p>
+                    </div>
                   </div>
 
-                  {/* Monthly Meeting & Budget Row */}
-                  {(meta.isMonthlyUnionMeeting || meta.estimatedBudget) && (
-                    <div className="flex items-center gap-2 flex-wrap pt-1">
-                      {meta.isMonthlyUnionMeeting && (
-                        <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-sky-50 text-sky-800 border border-sky-200 rounded-lg text-xs font-semibold">
-                          <CheckCircle2 className="w-3.5 h-3.5 text-signal-blue" />
-                          <span>Sinh hoạt Chi đoàn / Chi hội định kỳ (+50đ)</span>
-                        </div>
-                      )}
-                      {Boolean(meta.estimatedBudget) && (
-                        <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-cloud text-ink-navy border border-hairline rounded-lg text-xs font-medium">
-                          <DollarSign className="w-3.5 h-3.5 text-slate-gray" />
-                          <span>Dự toán: {(meta.estimatedBudget || 0).toLocaleString('vi-VN')} VNĐ</span>
-                        </div>
-                      )}
+                  {/* Monthly Meeting Extra Badge if applicable */}
+                  {meta.isMonthlyUnionMeeting && (
+                    <div className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-sky-50 text-sky-800 border border-sky-200 rounded-lg text-xs font-semibold">
+                      <CheckCircle2 className="w-3.5 h-3.5 text-signal-blue" />
+                      <span>Sinh hoạt Chi đoàn / Chi hội định kỳ (+50đ)</span>
                     </div>
                   )}
 
