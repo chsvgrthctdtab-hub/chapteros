@@ -16,7 +16,6 @@ import {
   RotateCcw,
   XCircle,
   ArrowRight,
-  Shield,
 } from 'lucide-react';
 import { useCurrentOrg } from '@/features/auth/hooks/useCurrentOrg';
 import {
@@ -276,17 +275,42 @@ export function TaskDetailPage() {
 
             {/* Workflow Progression Lifecycle */}
             <div className="space-y-3">
-              <h3 className="text-[11px] font-semibold text-slate-gray uppercase tracking-wider">
-                Tiến trình thực hiện
-              </h3>
+              <div className="flex items-center justify-between">
+                <h3 className="text-[11px] font-semibold text-slate-gray uppercase tracking-wider">
+                  Tiến trình thực hiện
+                </h3>
+                {canUpdate && allowedTransitions.includes('cancelled') && (
+                  <button
+                    type="button"
+                    onClick={() => handleStatusTransition('cancelled')}
+                    className="inline-flex items-center gap-1 text-[11px] font-medium text-rose-600 hover:text-rose-700 hover:bg-rose-50 px-2 py-0.5 rounded-md transition-colors cursor-pointer"
+                    title="Hủy nhiệm vụ này"
+                  >
+                    <XCircle className="w-3.5 h-3.5" />
+                    <span>Hủy nhiệm vụ</span>
+                  </button>
+                )}
+              </div>
 
               {task.status === 'cancelled' ? (
-                <div className="p-3.5 bg-rose-50 border border-rose-200 rounded-xl flex items-center gap-2.5 text-rose-800 text-xs font-semibold">
-                  <XCircle className="w-4 h-4 text-rose-600 shrink-0" />
-                  <span>Công việc đã bị hủy</span>
+                <div className="p-3.5 bg-rose-50 border border-rose-200 rounded-xl flex items-center justify-between gap-2.5 text-rose-800 text-xs font-semibold">
+                  <div className="flex items-center gap-2">
+                    <XCircle className="w-4 h-4 text-rose-600 shrink-0" />
+                    <span>Công việc đã bị hủy</span>
+                  </div>
+                  {canUpdate && allowedTransitions.includes('todo') && (
+                    <button
+                      type="button"
+                      onClick={() => handleStatusTransition('todo', 0)}
+                      className="inline-flex items-center gap-1 text-xs font-medium text-signal-blue bg-white hover:bg-pebble border border-hairline px-2.5 py-1 rounded-lg transition-colors cursor-pointer shadow-xs"
+                    >
+                      <RotateCcw className="w-3.5 h-3.5" />
+                      <span>Khôi phục nhiệm vụ</span>
+                    </button>
+                  )}
                 </div>
               ) : (
-                <div className="p-4 bg-cloud/70 border border-hairline rounded-xl space-y-3.5">
+                <div className="p-4 bg-cloud/70 border border-hairline rounded-xl">
                   <div className="relative">
                     {/* Connecting line behind circles */}
                     <div className="absolute top-3 left-[12.5%] right-[12.5%] h-0.5 -translate-y-1/2 bg-mist-gray/25">
@@ -302,16 +326,19 @@ export function TaskDetailPage() {
                       {WORKFLOW_STEPS.map((step, idx) => {
                         const isPassed = currentStepIndex > idx;
                         const isCurrent = currentStepIndex === idx;
+                        const canTransition = canUpdate && allowedTransitions.includes(step.key);
 
-                        return (
-                          <div key={step.key} className="flex flex-col items-center text-center">
+                        const content = (
+                          <>
                             <div
                               className={cn(
                                 'w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-bold border transition-all mb-1.5 tabular-nums',
                                 isCurrent
                                   ? 'bg-signal-blue text-white border-signal-blue ring-4 ring-signal-blue/15 scale-105 shadow-xs'
                                   : isPassed
-                                  ? 'bg-signal-blue text-white border-signal-blue'
+                                  ? 'bg-signal-blue text-white border-signal-blue group-hover:scale-110 group-hover:ring-4 group-hover:ring-signal-blue/20'
+                                  : canTransition
+                                  ? 'bg-white text-mist-gray border-hairline group-hover:border-signal-blue group-hover:text-signal-blue group-hover:scale-110 group-hover:ring-4 group-hover:ring-signal-blue/15'
                                   : 'bg-white text-mist-gray border-hairline'
                               )}
                             >
@@ -319,83 +346,55 @@ export function TaskDetailPage() {
                             </div>
                             <span
                               className={cn(
-                                'text-[11px] font-medium leading-tight',
-                                isCurrent ? 'text-ink-navy font-bold' : isPassed ? 'text-slate-gray' : 'text-mist-gray'
+                                'text-[11px] font-medium leading-tight transition-colors',
+                                isCurrent
+                                  ? 'text-ink-navy font-bold'
+                                  : isPassed
+                                  ? 'text-slate-gray group-hover:text-signal-blue'
+                                  : canTransition
+                                  ? 'text-mist-gray group-hover:text-signal-blue font-medium'
+                                  : 'text-mist-gray'
                               )}
                             >
                               {step.label}
                             </span>
+                          </>
+                        );
+
+                        if (canTransition) {
+                          return (
+                            <button
+                              key={step.key}
+                              type="button"
+                              onClick={() =>
+                                handleStatusTransition(
+                                  step.key,
+                                  step.key === 'completed' ? 100 : (step.key === 'todo' ? 0 : task.progress)
+                                )
+                              }
+                              title={`Chuyển trạng thái sang "${step.label}"`}
+                              className="group flex flex-col items-center text-center cursor-pointer transition-transform focus:outline-none"
+                            >
+                              {content}
+                            </button>
+                          );
+                        }
+
+                        return (
+                          <div
+                            key={step.key}
+                            className={cn(
+                              'flex flex-col items-center text-center select-none',
+                              isCurrent ? 'cursor-default' : 'cursor-not-allowed opacity-60'
+                            )}
+                            title={isCurrent ? `Trạng thái hiện tại: ${step.label}` : undefined}
+                          >
+                            {content}
                           </div>
                         );
                       })}
                     </div>
                   </div>
-
-                  {/* Status Workflow Action Bar */}
-                  {canUpdate && allowedTransitions.length > 0 && (
-                    <div className="pt-3 border-t border-hairline/80 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2.5">
-                      <span className="text-[11px] font-semibold text-slate-gray flex items-center gap-1.5 shrink-0">
-                        <Shield className="w-3.5 h-3.5 text-signal-blue" />
-                        <span>Chuyển trạng thái:</span>
-                      </span>
-
-                      <div className="flex items-center gap-2 flex-wrap">
-                        {allowedTransitions.map((nextStatus) => {
-                          const isNaturalNext =
-                            (task.status === 'todo' && nextStatus === 'in_progress') ||
-                            (task.status === 'in_progress' && nextStatus === 'in_review') ||
-                            (task.status === 'in_review' && nextStatus === 'completed');
-                          const isApprove = nextStatus === 'completed';
-                          const isReject = task.status === 'in_review' && nextStatus === 'in_progress';
-                          const isCancel = nextStatus === 'cancelled';
-                          const isStart = nextStatus === 'in_progress' && task.status === 'todo';
-                          const isReview = nextStatus === 'in_review';
-
-                          let label = 'Chuyển';
-                          if (isApprove) label = 'Duyệt & Hoàn thành';
-                          else if (isReject) label = 'Yêu cầu sửa đổi';
-                          else if (isCancel) label = 'Hủy nhiệm vụ';
-                          else if (isStart) label = 'Bắt đầu làm';
-                          else if (isReview) label = 'Gửi chờ duyệt';
-                          else label = TASK_STATUSES[nextStatus].label;
-
-                          return (
-                            <button
-                              key={nextStatus}
-                              type="button"
-                              id={`action-status-${nextStatus}`}
-                              onClick={() =>
-                                handleStatusTransition(
-                                  nextStatus,
-                                  isApprove ? 100 : task.progress
-                                )
-                              }
-                              className={cn(
-                                'inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold border transition-all cursor-pointer shadow-xs',
-                                isNaturalNext
-                                  ? isApprove
-                                    ? 'bg-emerald-600 hover:bg-emerald-700 text-white border-emerald-700'
-                                    : 'bg-signal-blue hover:bg-[#005be0] text-white border-signal-blue'
-                                  : isApprove
-                                  ? 'bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border-emerald-300'
-                                  : isReject
-                                  ? 'bg-amber-50 hover:bg-amber-100 text-amber-900 border-amber-300'
-                                  : isCancel
-                                  ? 'bg-white hover:bg-rose-50 text-rose-700 border-rose-200'
-                                  : 'bg-white hover:bg-pebble text-ink-navy border-hairline'
-                              )}
-                            >
-                              {isApprove && <Check className="w-3.5 h-3.5" />}
-                              {isReject && <RotateCcw className="w-3.5 h-3.5" />}
-                              {isCancel && <XCircle className="w-3.5 h-3.5" />}
-                              {!isApprove && !isReject && !isCancel && <ArrowRight className="w-3.5 h-3.5" />}
-                              <span>{label}</span>
-                            </button>
-                          );
-                        })}
-                      </div>
-                    </div>
-                  )}
                 </div>
               )}
             </div>
