@@ -83,20 +83,24 @@ export function MemberDetailDialog({
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-2xl md:max-w-3xl max-h-[90vh] p-0 overflow-hidden bg-white border border-hairline rounded-2xl shadow-xl">
         {/* Header with Avatar, Full Name, MSSV, and Badges */}
-        <div className="bg-cloud border-b border-hairline p-5">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pr-8 sm:pr-10">
-            <div className="flex items-center space-x-3.5 min-w-0">
-              <div className="h-12 w-12 rounded-xl bg-[#e6f0ff] text-signal-blue font-bold text-base flex items-center justify-center shadow-xs border border-[#d4e4fa] shrink-0">
+        <div className="bg-cloud border-b border-hairline px-5 pt-5 pb-4">
+          {/* Single row: Avatar + Name/Pills block on left, Buttons on right */}
+          <div className="flex items-start justify-between gap-3 pr-8 sm:pr-10">
+            {/* Left: Avatar + Name + Status + Pills */}
+            <div className="flex items-start gap-3.5 min-w-0">
+              <div className="h-11 w-11 rounded-xl bg-[#e6f0ff] text-signal-blue font-bold text-base flex items-center justify-center shadow-xs border border-[#d4e4fa] shrink-0 mt-0.5">
                 {initials || <User strokeWidth={1.5} className="h-6 w-6" />}
               </div>
-              <div className="space-y-1 min-w-0">
+              <div className="min-w-0 space-y-1.5">
+                {/* Name + Status */}
                 <div className="flex flex-wrap items-center gap-2">
-                  <DialogTitle className="text-lg font-bold text-ink-navy tracking-tight truncate">
+                  <DialogTitle className="text-base font-bold text-ink-navy tracking-tight leading-tight">
                     {member.fullName}
                   </DialogTitle>
                   <MemberStatusBadge status={member.status} />
                 </div>
-                <div className="flex items-center gap-2 text-xs text-slate-gray flex-wrap">
+                {/* Pills — always single row, hidden scroll if needed */}
+                <div className="flex items-center gap-1.5 flex-nowrap overflow-x-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
                   <span className="tabular-nums bg-white px-2.5 py-0.5 rounded-full text-ink-navy font-semibold text-xs border border-hairline shadow-xs whitespace-nowrap shrink-0">
                     MSSV: {member.studentId || 'Chưa cập nhật'}
                   </span>
@@ -110,8 +114,9 @@ export function MemberDetailDialog({
               </div>
             </div>
 
+            {/* Right: Action buttons — top-aligned, never pushed down */}
             {canManage && (
-              <div className="flex items-center space-x-2 shrink-0">
+              <div className="flex items-center gap-2 shrink-0 pt-0.5">
                 <Button
                   variant="outline"
                   size="sm"
