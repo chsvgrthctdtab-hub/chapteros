@@ -81,11 +81,11 @@ export function MemberDetailDialog({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-2xl max-h-[90vh] p-0 overflow-hidden bg-white border border-hairline rounded-2xl shadow-xl">
+      <DialogContent className="sm:max-w-2xl md:max-w-3xl max-h-[90vh] p-0 overflow-hidden bg-white border border-hairline rounded-2xl shadow-xl">
         {/* Header with Avatar, Full Name, MSSV, and Badges */}
         <div className="bg-cloud border-b border-hairline p-5">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-            <div className="flex items-center space-x-3.5">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pr-8 sm:pr-10">
+            <div className="flex items-center space-x-3.5 min-w-0">
               <div className="h-12 w-12 rounded-xl bg-[#e6f0ff] text-signal-blue font-bold text-base flex items-center justify-center shadow-xs border border-[#d4e4fa] shrink-0">
                 {initials || <User strokeWidth={1.5} className="h-6 w-6" />}
               </div>
@@ -96,7 +96,7 @@ export function MemberDetailDialog({
                   </DialogTitle>
                   <MemberStatusBadge status={member.status} />
                 </div>
-                <div className="flex items-center gap-2 text-xs text-slate-gray flex-nowrap shrink-0 overflow-x-auto">
+                <div className="flex items-center gap-2 text-xs text-slate-gray flex-wrap">
                   <span className="tabular-nums bg-white px-2.5 py-0.5 rounded-full text-ink-navy font-semibold text-xs border border-hairline shadow-xs whitespace-nowrap shrink-0">
                     MSSV: {member.studentId || 'Chưa cập nhật'}
                   </span>
@@ -229,7 +229,7 @@ export function MemberDetailDialog({
                   <div className="space-y-1.5 text-xs">
                     <div className="flex justify-between py-1 border-b border-hairline">
                       <span className="text-slate-gray">Email:</span>
-                      <span className="font-medium text-ink-navy truncate max-w-[170px]">
+                      <span className="font-medium text-ink-navy truncate max-w-[170px] sm:max-w-[220px]">
                         {member.email || 'Chưa cập nhật'}
                       </span>
                     </div>
