@@ -35,7 +35,7 @@ export const memberFormSchema = z.object({
   major: z
     .string()
     .trim()
-    .max(100, 'Chuyên ngành không quá 100 ký tự')
+    .max(100, 'Ngành đào tạo không quá 100 ký tự')
     .optional()
     .or(z.literal(''))
     .nullable(),

@@ -23,6 +23,7 @@ import {
 import { Button } from '@/components/ui/button';
 import { MemberStatusBadge } from './MemberStatusBadge';
 import { MemberRoleBadge } from './MemberRoleBadge';
+import { getMajorFromClassOrValue } from '../utils/major.utils';
 import type { MemberListItem } from '../types/member.types';
 import type { Member } from '@/types';
 
@@ -178,7 +179,7 @@ export function MemberListTable({
                         )}
                       </div>
                       <div className="text-[11px] text-slate-gray truncate max-w-[160px]">
-                        {item.major || 'Chưa cập nhật ngành'}
+                        {getMajorFromClassOrValue(item.className, item.major, 'Chưa cập nhật ngành')}
                       </div>
                     </div>
                   </td>

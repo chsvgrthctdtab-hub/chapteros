@@ -22,6 +22,7 @@ import {
 } from '@/components/ui/select';
 import { memberFormSchema, type MemberFormData } from '../schemas/member.schema';
 import { MEMBER_STATUSES, COMMON_DEPARTMENTS } from '../types/member.types';
+import { OFFICIAL_MAJORS, inferMajorFromText } from '../utils/major.utils';
 import type { Member, Term } from '@/types';
 
 interface MemberFormDialogProps {
@@ -51,6 +52,8 @@ export function MemberFormDialog({
     handleSubmit,
     reset,
     control,
+    watch,
+    setValue,
     formState: { errors },
   } = useForm<MemberFormData>({
     resolver: zodResolver(memberFormSchema),
@@ -72,6 +75,19 @@ export function MemberFormDialog({
     },
   });
 
+  const watchedClassName = watch('className');
+  const watchedMajor = watch('major');
+
+  // Tự động nhận diện ngành đào tạo khi người dùng nhập tên lớp
+  useEffect(() => {
+    if (watchedClassName) {
+      const detected = inferMajorFromText(watchedClassName);
+      if (detected && (!watchedMajor || watchedMajor.trim() === '' || watchedMajor === 'Chưa cập nhật')) {
+        setValue('major', detected, { shouldValidate: true, shouldDirty: true });
+      }
+    }
+  }, [watchedClassName, watchedMajor, setValue]);
+
   useEffect(() => {
     if (open) {
       setFormError(null);
@@ -82,7 +98,7 @@ export function MemberFormDialog({
           email: initialData.email || '',
           phone: initialData.phone || '',
           className: initialData.className || '',
-          major: initialData.major || '',
+          major: initialData.major || inferMajorFromText(initialData.className) || '',
           cohort: initialData.cohort || '',
           position: initialData.position || 'Hội viên',
           status: initialData.status || 'active',
@@ -211,11 +227,18 @@ export function MemberFormDialog({
 
               {/* Ngành học */}
               <div className="md:col-span-2 space-y-1.5">
-                <label className="text-xs font-semibold text-slate-gray block">Chuyên ngành đào tạo</label>
+                <label className="text-xs font-semibold text-slate-gray block">Ngành đào tạo</label>
                 <Input
                   {...register('major')}
+                  list="official-majors-list"
+                  placeholder="Chọn hoặc nhập ngành (tự động điền theo lớp)"
                   className="h-10 rounded-lg bg-cloud border-hairline focus:bg-white text-xs text-ink-navy"
                 />
+                <datalist id="official-majors-list">
+                  {OFFICIAL_MAJORS.map((m) => (
+                    <option key={m} value={m} />
+                  ))}
+                </datalist>
               </div>
             </div>
           </div>

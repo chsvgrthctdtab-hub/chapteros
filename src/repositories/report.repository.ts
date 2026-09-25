@@ -23,6 +23,7 @@ import type {
   MemberDepartmentDistribution,
 } from '@/types/report';
 import dayjs from 'dayjs';
+import { getMajorFromClassOrValue } from '@/features/members/utils/major.utils';
 
 type DbMember = Database['public']['Tables']['members']['Row'];
 type DbTerm = Database['public']['Tables']['terms']['Row'];
@@ -270,8 +271,8 @@ export const reportRepository = {
       const pos = (m.position || 'Hội viên').trim();
       positionMap[pos] = (positionMap[pos] || 0) + 1;
 
-      if (m.major && m.major.trim()) {
-        const major = m.major.trim();
+      const major = getMajorFromClassOrValue(m.className, m.major, '');
+      if (major) {
         majorMap[major] = (majorMap[major] || 0) + 1;
       }
 

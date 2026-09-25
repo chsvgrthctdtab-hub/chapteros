@@ -241,10 +241,10 @@ export function MemberReport({ organizationId, termId }: MemberReportProps) {
           <CardHeader className="p-4 pb-3 border-b border-hairline flex flex-row items-center justify-between">
             <div>
               <CardTitle className="text-xs font-bold uppercase tracking-wider text-ink-navy">
-                Phân bổ theo Chuyên ngành Học
+                Phân bổ theo Ngành học
               </CardTitle>
               <CardDescription className="text-2xs text-mist-gray">
-                {majorDistribution.length} chuyên ngành ghi nhận
+                {majorDistribution.length} ngành học ghi nhận
               </CardDescription>
             </div>
             <Link to="/members" className="text-2xs font-semibold text-signal-blue hover:text-[#005be0] flex items-center gap-1">
@@ -256,7 +256,7 @@ export function MemberReport({ organizationId, termId }: MemberReportProps) {
             <table className="w-full text-xs text-left border-collapse">
               <thead className="bg-cloud border-b border-hairline text-slate-gray font-semibold uppercase tracking-wider text-2xs sticky top-0">
                 <tr>
-                  <th className="py-2 px-4">Chuyên ngành</th>
+                  <th className="py-2 px-4">Ngành học</th>
                   <th className="py-2 px-3 text-center">Hội viên</th>
                   <th className="py-2 px-4 text-right">Tỷ trọng</th>
                 </tr>
@@ -276,7 +276,7 @@ export function MemberReport({ organizationId, termId }: MemberReportProps) {
                 ) : (
                   <tr>
                     <td colSpan={3} className="py-6 text-center text-xs text-mist-gray">
-                      Chưa có dữ liệu chuyên ngành
+                      Chưa có dữ liệu ngành học
                     </td>
                   </tr>
                 )}

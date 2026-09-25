@@ -82,7 +82,7 @@ export function MemberRoleBadge({ position, department, className = '' }: Member
   // Regular Member
   return (
     <span
-      className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-medium bg-cloud text-slate-gray border border-hairline ${className}`}
+      className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-medium bg-pebble text-slate-gray ${className}`}
     >
       <User className="h-3 w-3 shrink-0 text-mist-gray" />
       <span>{roleTitle}</span>

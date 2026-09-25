@@ -21,6 +21,7 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { MemberStatusBadge } from './MemberStatusBadge';
 import { MemberRoleBadge } from './MemberRoleBadge';
+import { getMajorFromClassOrValue } from '../utils/major.utils';
 import type { MemberListItem } from '../types/member.types';
 import type { Member } from '@/types';
 
@@ -132,11 +133,14 @@ export function MemberCard({
             )}
           </div>
 
-          {member.major && (
-            <div className="text-[11px] text-slate-gray truncate pl-5">
-              {member.major}
-            </div>
-          )}
+          {(() => {
+            const displayMajor = getMajorFromClassOrValue(member.className, member.major, '');
+            return displayMajor ? (
+              <div className="text-[11px] text-slate-gray truncate pl-5">
+                {displayMajor}
+              </div>
+            ) : null;
+          })()}
         </div>
 
         {/* Contact info */}

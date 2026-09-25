@@ -134,7 +134,7 @@ export function exportMemberReportToCSV(
   });
 
   rows.push(['', '']);
-  rows.push(['PHÂN BỔ THEO CHUYÊN NGÀNH', 'SỐ LƯỢNG']);
+  rows.push(['PHÂN BỔ THEO NGÀNH HỌC', 'SỐ LƯỢNG']);
   stats.majorDistribution.forEach((m) => {
     rows.push([m.major || 'Chưa phân loại', String(m.count)]);
   });

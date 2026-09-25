@@ -1,4 +1,5 @@
 import * as XLSX from 'xlsx';
+import { inferMajorFromText } from './major.utils';
 
 export interface ImportedMemberRow {
   rowIndex: number;
@@ -92,7 +93,7 @@ export function validateImportRows(rows: Record<string, string>[]): ImportValida
       rowIndex, fullName, studentId, className, cohort,
       email: mapped['email'] || undefined,
       phone: mapped['phone'] || undefined,
-      major: mapped['major'] || undefined,
+      major: mapped['major'] || inferMajorFromText(className) || undefined,
       joinedDate: mapped['joinedDate'] ? parseDate(mapped['joinedDate']) : undefined,
       notes: mapped['notes'] || undefined,
     });
@@ -104,8 +105,8 @@ export function downloadTemplateFile() {
   const wb = XLSX.utils.book_new();
   const ws = XLSX.utils.aoa_to_sheet([
     ['Họ và tên', 'MSSV', 'Lớp', 'Khóa', 'Email', 'Số điện thoại', 'Ngành', 'Ngày tham gia', 'Ghi chú'],
-    ['Nguyễn Văn An', '2251001', 'CNTT01', 'K22', 'an@email.com', '0901234567', 'Công nghệ thông tin', '01/09/2022', ''],
-    ['Trần Thị Bảo', '2251002', 'CNTT01', 'K22', '', '0912345678', '', '', 'Hội viên tích cực'],
+    ['Danh Thị Bích Thùy', '2553080049', 'YHCT A', '51', 'thuy@email.com', '0901234567', 'Y học cổ truyền', '01/09/2025', ''],
+    ['Trần Văn An', '2451000123', 'YA K50', '50', '', '0912345678', 'Y khoa', '', 'Hội viên'],
   ]);
   ws['!cols'] = [{ wch: 20 }, { wch: 12 }, { wch: 10 }, { wch: 8 }, { wch: 25 }, { wch: 15 }, { wch: 25 }, { wch: 15 }, { wch: 20 }];
   XLSX.utils.book_append_sheet(wb, ws, 'Danh sách hội viên');

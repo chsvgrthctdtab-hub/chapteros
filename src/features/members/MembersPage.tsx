@@ -28,6 +28,7 @@ import { MemberCard } from './components/MemberCard';
 import { MemberTableSkeleton, MemberCardSkeleton } from './components/MemberSkeleton';
 import { MemberFormDialog } from './components/MemberFormDialog';
 import { MemberDetailDialog } from './components/MemberDetailDialog';
+import { getMajorFromClassOrValue } from './utils/major.utils';
 import { AssignTermDialog } from './components/AssignTermDialog';
 import { ExecutiveBoardSection } from './components/ExecutiveBoardSection';
 import { GoogleSheetsExportModal } from '@/integrations/google/sheets/components/GoogleSheetsExportModal';
@@ -239,7 +240,7 @@ export function MembersPage() {
         'Họ và tên',
         'Lớp',
         'Khóa',
-        'Chuyên ngành',
+        'Ngành',
         'Chức vụ Chi hội',
         'Email',
         'Số điện thoại',
@@ -254,7 +255,7 @@ export function MembersPage() {
         `"${m.fullName}"`,
         `"${m.className || ''}"`,
         `"${m.cohort || ''}"`,
-        `"${m.major || ''}"`,
+        `"${getMajorFromClassOrValue(m.className, m.major, '')}"`,
         `"${m.position || 'Hội viên'}"`,
         `"${m.email || ''}"`,
         `"${m.phone || ''}"`,

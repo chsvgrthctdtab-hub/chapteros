@@ -23,6 +23,7 @@ import { MemberStatusBadge, TermMemberStatusBadge } from './MemberStatusBadge';
 import { MemberRoleBadge } from './MemberRoleBadge';
 import { useMemberTermHistory } from '../queries/member.queries';
 import { useRemoveTermMember } from '../mutations/member.mutations';
+import { getMajorFromClassOrValue } from '../utils/major.utils';
 import type { Member, Term } from '@/types';
 import type { MemberTermHistoryItem } from '../types/member.types';
 
@@ -95,12 +96,16 @@ export function MemberDetailDialog({
                   </DialogTitle>
                   <MemberStatusBadge status={member.status} />
                 </div>
-                <div className="flex flex-wrap items-center gap-2 text-xs text-slate-gray">
-                  <span className="tabular-nums bg-white px-2 py-0.5 rounded text-ink-navy font-semibold border border-hairline shadow-xs">
+                <div className="flex items-center gap-2 text-xs text-slate-gray flex-nowrap shrink-0 overflow-x-auto">
+                  <span className="tabular-nums bg-pebble px-2.5 py-0.5 rounded-full text-ink-navy font-semibold text-xs whitespace-nowrap shrink-0">
                     MSSV: {member.studentId || 'Chưa cập nhật'}
                   </span>
                   <MemberRoleBadge position={member.position} />
-                  {member.className && <span>• Lớp {member.className}</span>}
+                  {member.className && (
+                    <span className="px-2.5 py-0.5 rounded-full bg-[#e6f0ff] text-signal-blue font-medium text-xs whitespace-nowrap shrink-0">
+                      Lớp {member.className}
+                    </span>
+                  )}
                 </div>
               </div>
             </div>
@@ -182,59 +187,59 @@ export function MemberDetailDialog({
             <div className="space-y-4">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5">
                 {/* Academic Information */}
-                <div className="bg-cloud p-3.5 rounded-xl border border-hairline space-y-2.5">
+                <div className="bg-cloud p-4 rounded-xl space-y-2.5">
                   <h4 className="text-[11px] font-bold text-ink-navy uppercase tracking-wider flex items-center space-x-1.5">
                     <GraduationCap className="h-4 w-4 text-signal-blue" />
                     <span>Thông tin học vụ</span>
                   </h4>
                   <div className="space-y-1.5 text-xs">
-                    <div className="flex justify-between py-1 border-b border-hairline">
+                    <div className="flex justify-between py-1 border-b border-hairline/60">
                       <span className="text-slate-gray">Mã số sinh viên:</span>
                       <span className="tabular-nums font-semibold text-ink-navy">
                         {member.studentId || 'Chưa cập nhật'}
                       </span>
                     </div>
-                    <div className="flex justify-between py-1 border-b border-hairline">
+                    <div className="flex justify-between py-1 border-b border-hairline/60">
                       <span className="text-slate-gray">Chi đoàn / Lớp:</span>
                       <span className="font-medium text-ink-navy">
                         {member.className || 'Chưa cập nhật'}
                       </span>
                     </div>
-                    <div className="flex justify-between py-1 border-b border-hairline">
+                    <div className="flex justify-between py-1 border-b border-hairline/60">
                       <span className="text-slate-gray">Khóa sinh viên:</span>
                       <span className="font-medium text-ink-navy">
                         {member.cohort || 'Chưa cập nhật'}
                       </span>
                     </div>
                     <div className="flex justify-between py-1">
-                      <span className="text-slate-gray">Chuyên ngành:</span>
+                      <span className="text-slate-gray">Ngành:</span>
                       <span className="font-medium text-ink-navy">
-                        {member.major || 'Chưa cập nhật'}
+                        {getMajorFromClassOrValue(member.className, member.major)}
                       </span>
                     </div>
                   </div>
                 </div>
 
                 {/* Contact Information */}
-                <div className="bg-cloud p-3.5 rounded-xl border border-hairline space-y-2.5">
+                <div className="bg-cloud p-4 rounded-xl space-y-2.5">
                   <h4 className="text-[11px] font-bold text-ink-navy uppercase tracking-wider flex items-center space-x-1.5">
                     <Mail className="h-4 w-4 text-signal-blue" />
                     <span>Thông tin liên hệ & Gia nhập</span>
                   </h4>
                   <div className="space-y-1.5 text-xs">
-                    <div className="flex justify-between py-1 border-b border-hairline">
+                    <div className="flex justify-between py-1 border-b border-hairline/60">
                       <span className="text-slate-gray">Email:</span>
                       <span className="font-medium text-ink-navy truncate max-w-[170px]">
                         {member.email || 'Chưa cập nhật'}
                       </span>
                     </div>
-                    <div className="flex justify-between py-1 border-b border-hairline">
+                    <div className="flex justify-between py-1 border-b border-hairline/60">
                       <span className="text-slate-gray">Số điện thoại:</span>
                       <span className="font-medium text-ink-navy tabular-nums">
                         {member.phone || 'Chưa cập nhật'}
                       </span>
                     </div>
-                    <div className="flex justify-between py-1 border-b border-hairline">
+                    <div className="flex justify-between py-1 border-b border-hairline/60">
                       <span className="text-slate-gray">Ngày gia nhập:</span>
                       <span className="font-medium text-ink-navy tabular-nums">
                         {member.joinedDate
