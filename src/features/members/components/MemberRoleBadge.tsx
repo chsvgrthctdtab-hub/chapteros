@@ -58,11 +58,11 @@ export function MemberRoleBadge({ position, department, className = '' }: Member
 
     return (
       <span
-        className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-semibold border shadow-xs ${badgeClasses} ${className}`}
+        className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-semibold border shadow-xs whitespace-nowrap shrink-0 ${badgeClasses} ${className}`}
         title={`Ban Chấp Hành: ${roleTitle}${department ? ` (${department})` : ''}`}
       >
-        <Icon className="h-3 w-3 shrink-0" />
-        <span className="truncate max-w-[130px]">{roleTitle}</span>
+        <Icon className="h-3.5 w-3.5 shrink-0" />
+        <span className="truncate max-w-[130px] whitespace-nowrap">{roleTitle}</span>
       </span>
     );
   }
@@ -71,10 +71,10 @@ export function MemberRoleBadge({ position, department, className = '' }: Member
   if (roleTitle.toLowerCase().includes('ctv') || roleTitle.toLowerCase().includes('cộng tác viên')) {
     return (
       <span
-        className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-amber-50 text-amber-700 border border-amber-200/80 ${className}`}
+        className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-amber-50 text-amber-700 border border-amber-200/80 whitespace-nowrap shrink-0 ${className}`}
       >
-        <User className="h-3 w-3 shrink-0 text-amber-500" />
-        <span>{roleTitle}</span>
+        <User className="h-3.5 w-3.5 shrink-0 text-amber-500" />
+        <span className="whitespace-nowrap">{roleTitle}</span>
       </span>
     );
   }
@@ -82,10 +82,10 @@ export function MemberRoleBadge({ position, department, className = '' }: Member
   // Regular Member
   return (
     <span
-      className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-medium bg-pebble text-slate-gray ${className}`}
+      className={`inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-medium bg-white text-slate-gray border border-hairline shadow-xs whitespace-nowrap shrink-0 ${className}`}
     >
-      <User className="h-3 w-3 shrink-0 text-mist-gray" />
-      <span>{roleTitle}</span>
+      <User className="h-3.5 w-3.5 shrink-0 text-mist-gray" />
+      <span className="whitespace-nowrap">{roleTitle}</span>
     </span>
   );
 }
