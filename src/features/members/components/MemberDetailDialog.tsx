@@ -81,7 +81,7 @@ export function MemberDetailDialog({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-2xl md:max-w-3xl max-h-[90vh] p-0 overflow-hidden bg-white border border-hairline rounded-2xl shadow-xl">
+      <DialogContent className="sm:max-w-2xl md:max-w-3xl p-0 sm:p-0 max-h-[90vh] overflow-hidden bg-white border border-hairline rounded-2xl shadow-xl">
         {/* Header with Avatar, Full Name, MSSV, and Badges */}
         <div className="bg-cloud border-b border-hairline px-5 pt-5 pb-4">
           {/* Single row: Avatar + Name/Pills block on left, Buttons on right */}

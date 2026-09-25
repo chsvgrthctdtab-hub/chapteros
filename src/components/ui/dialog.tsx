@@ -41,8 +41,8 @@ const DialogContent = React.forwardRef<
       {...props}
     >
       {/* Close button — absolute top-right, minimal circle */}
-      <DialogPrimitive.Close className="group absolute right-3.5 top-3.5 z-10 flex h-7 w-7 items-center justify-center rounded-lg transition-all duration-150 hover:bg-pebble active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-signal-blue/30 disabled:pointer-events-none cursor-pointer">
-        <X className="h-3.5 w-3.5 text-mist-gray group-hover:text-ink-navy transition-colors duration-150" />
+      <DialogPrimitive.Close className="group absolute right-3.5 top-3.5 z-10 flex h-7 w-7 items-center justify-center rounded-lg transition-all duration-150 hover:bg-white/80 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-signal-blue/30 disabled:pointer-events-none cursor-pointer">
+        <X className="h-3.5 w-3.5 text-slate-gray group-hover:text-ink-navy transition-colors duration-150" />
         <span className="sr-only">Close</span>
       </DialogPrimitive.Close>
       {children}
