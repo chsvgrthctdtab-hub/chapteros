@@ -512,13 +512,44 @@ export const taskRepository = {
    */
   async create(payload: DbTaskInsert): Promise<Task> {
     if (!isSupabaseConfigured) throw new Error('Supabase chưa được cấu hình');
+
+    // If assigned_to is a member.id, check if that member has an associated user_id in profiles
+    if (payload.assigned_to) {
+      const { data: memData } = await supabase
+        .from('members')
+        .select('id, user_id')
+        .eq('id', payload.assigned_to)
+        .maybeSingle();
+
+      const memRecord = memData as unknown as { id: string; user_id: string | null } | null;
+      if (memRecord && memRecord.user_id) {
+        payload.assigned_to = memRecord.user_id;
+      }
+    }
+
     const { data, error } = await supabase
       .from('tasks')
       .insert(payload as never)
       .select()
       .single();
 
-    if (error) throw new Error(error.message || 'Không thể tạo công việc mới');
+    if (error) {
+      const errDetails = (error as any).details || '';
+      const errMsg = error.message || '';
+      if (
+        error.code === '23503' &&
+        (errMsg.includes('tasks_assigned_to_fkey') ||
+          errDetails.includes('tasks_assigned_to_fkey') ||
+          errMsg.includes('profiles') ||
+          errDetails.includes('profiles') ||
+          errDetails.includes('assigned_to'))
+      ) {
+        throw new Error(
+          'Hội viên được phân công chưa đăng ký tài khoản hệ thống (profiles) và cơ sở dữ liệu đang có ràng buộc "tasks_assigned_to_fkey". Vui lòng chạy lệnh SQL sau trong Supabase SQL Editor để gỡ bỏ ràng buộc: ALTER TABLE public.tasks DROP CONSTRAINT IF EXISTS tasks_assigned_to_fkey;'
+        );
+      }
+      throw new Error(error.message || 'Không thể tạo công việc mới');
+    }
     return mapTaskFromDb(data as DbTask);
   },
 
@@ -527,6 +558,20 @@ export const taskRepository = {
    */
   async update(id: string, payload: DbTaskUpdate, organizationId?: string): Promise<Task> {
     if (!isSupabaseConfigured) throw new Error('Supabase chưa được cấu hình');
+
+    // If assigned_to is a member.id, check if that member has an associated user_id in profiles
+    if (payload.assigned_to) {
+      const { data: memData } = await supabase
+        .from('members')
+        .select('id, user_id')
+        .eq('id', payload.assigned_to)
+        .maybeSingle();
+
+      const memRecord = memData as unknown as { id: string; user_id: string | null } | null;
+      if (memRecord && memRecord.user_id) {
+        payload.assigned_to = memRecord.user_id;
+      }
+    }
 
     let query = supabase
       .from('tasks')
@@ -539,7 +584,23 @@ export const taskRepository = {
 
     const { data, error } = await query.select().single();
 
-    if (error) throw new Error(error.message || 'Không thể cập nhật công việc');
+    if (error) {
+      const errDetails = (error as any).details || '';
+      const errMsg = error.message || '';
+      if (
+        error.code === '23503' &&
+        (errMsg.includes('tasks_assigned_to_fkey') ||
+          errDetails.includes('tasks_assigned_to_fkey') ||
+          errMsg.includes('profiles') ||
+          errDetails.includes('profiles') ||
+          errDetails.includes('assigned_to'))
+      ) {
+        throw new Error(
+          'Hội viên được phân công chưa đăng ký tài khoản hệ thống (profiles) và cơ sở dữ liệu đang có ràng buộc "tasks_assigned_to_fkey". Vui lòng chạy lệnh SQL sau trong Supabase SQL Editor để gỡ bỏ ràng buộc: ALTER TABLE public.tasks DROP CONSTRAINT IF EXISTS tasks_assigned_to_fkey;'
+        );
+      }
+      throw new Error(error.message || 'Không thể cập nhật công việc');
+    }
     return mapTaskFromDb(data as DbTask);
   },
 

@@ -145,6 +145,42 @@ export function formatErrorMessage(error: unknown, fallbackMessage = 'Đã xảy
 
   // 5. Foreign Key Constraint Violation (23503)
   if (code === '23503' || lowerMsg.includes('foreign key constraint')) {
+    const isInsertOrUpdate =
+      lowerMsg.includes('insert') ||
+      lowerMsg.includes('update') ||
+      lowerMsg.includes('not present in table') ||
+      lowerMsg.includes('key (assigned_to)') ||
+      lowerMsg.includes('tasks_assigned_to_fkey') ||
+      lowerMsg.includes('collab_tasks_assigned_to_fkey');
+
+    if (isInsertOrUpdate) {
+      if (
+        lowerMsg.includes('assigned_to') ||
+        lowerMsg.includes('tasks_assigned_to_fkey') ||
+        lowerMsg.includes('collab_tasks_assigned_to_fkey') ||
+        lowerMsg.includes('profiles')
+      ) {
+        return {
+          title: 'Hội viên chưa liên kết tài khoản hệ thống',
+          message:
+            'Cán bộ/hội viên này chưa đăng ký tài khoản hệ thống (profiles) và cơ sở dữ liệu đang có ràng buộc khóa ngoại. Vui lòng chạy lệnh SQL migration gỡ bỏ "tasks_assigned_to_fkey" trong Supabase SQL Editor, hoặc chọn cán bộ đã có tài khoản.',
+          isPermissionError: false,
+          isNetworkError: false,
+          isDuplicateError: false,
+          isAuthError: false,
+        };
+      }
+
+      return {
+        title: 'Dữ liệu liên kết không hợp lệ',
+        message: 'Bản ghi được liên kết (hoạt động, nhiệm kỳ hoặc người phụ trách) không tồn tại hoặc đã bị xóa.',
+        isPermissionError: false,
+        isNetworkError: false,
+        isDuplicateError: false,
+        isAuthError: false,
+      };
+    }
+
     return {
       title: 'Không thể xóa dữ liệu liên kết',
       message: 'Không thể xóa dữ liệu này do đang có các bản ghi khác (công việc, giao dịch, hoạt động) liên kết tới.',
