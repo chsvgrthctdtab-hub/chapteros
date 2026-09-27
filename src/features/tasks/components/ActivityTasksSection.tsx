@@ -30,7 +30,7 @@ export function ActivityTasksSection({
   canManage,
   onOpenCreateTaskModal,
 }: ActivityTasksSectionProps) {
-  const { data: tasks = [], isLoading, error } = useTasksByActivity(activityId, organizationId);
+  const { data: tasks = [], isLoading, error, refetch } = useTasksByActivity(activityId, organizationId);
   const updateStatusMutation = useUpdateTaskStatus();
   const deleteTaskMutation = useDeleteTask();
 
@@ -74,9 +74,16 @@ export function ActivityTasksSection({
 
   if (error) {
     return (
-      <div className="p-6 bg-rose-50 border border-rose-200 rounded-2xl text-center text-rose-700 text-xs">
+      <div className="p-6 bg-rose-50 border border-rose-200 rounded-2xl text-center text-rose-700 text-xs space-y-2">
         <AlertTriangle className="w-6 h-6 mx-auto mb-1 text-rose-500" />
-        <p>Không thể tải công việc của hoạt động này.</p>
+        <p className="font-medium">Không thể tải công việc của hoạt động này.</p>
+        <button
+          type="button"
+          onClick={() => refetch()}
+          className="inline-flex items-center gap-1 px-3 py-1.5 bg-rose-100 hover:bg-rose-200 text-rose-800 rounded-lg text-xs font-medium transition-colors cursor-pointer"
+        >
+          Thử lại
+        </button>
       </div>
     );
   }

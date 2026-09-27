@@ -413,48 +413,114 @@ export async function fetchUpcomingTasks(
 ): Promise<UpcomingTaskItem[]> {
   if (!organizationId || !isSupabaseConfigured) return [];
 
-  let query = (supabase.from('tasks') as any)
-    .select(
-      `
-      id,
-      title,
-      status,
-      priority,
-      progress,
-      due_date,
-      assigned_to,
-      assignee:profiles!tasks_assigned_to_fkey(
-        id,
-        full_name,
-        avatar_url,
-        student_id
-      ),
-      activity:activities(
+  let data: any[] = [];
+
+  try {
+    let query = (supabase.from('tasks') as any)
+      .select(
+        `
         id,
         title,
-        code
+        status,
+        priority,
+        progress,
+        due_date,
+        assigned_to,
+        assignee:profiles!tasks_assigned_to_fkey(
+          id,
+          full_name,
+          avatar_url,
+          student_id
+        ),
+        activity:activities(
+          id,
+          title,
+          code
+        )
+      `
       )
-    `
-    )
-    .eq('organization_id', organizationId)
-    .in('status', ['todo', 'in_progress', 'in_review'])
-    .order('due_date', { ascending: true, nullsFirst: false })
-    .limit(limit);
+      .eq('organization_id', organizationId)
+      .in('status', ['todo', 'in_progress', 'in_review'])
+      .order('due_date', { ascending: true, nullsFirst: false })
+      .limit(limit);
 
-  if (termId && termId !== 'all') {
-    query = query.eq('term_id', termId);
-  }
+    if (termId && termId !== 'all') {
+      query = query.eq('term_id', termId);
+    }
 
-  const { data, error } = await query;
+    const { data: resData, error } = await query;
+    if (error) throw error;
+    data = resData || [];
+  } catch (err: any) {
+    console.warn('[fetchUpcomingTasks] Primary select failed, using fallback:', err?.message);
+    let fallbackQuery = (supabase.from('tasks') as any)
+      .select(
+        `
+        id,
+        title,
+        status,
+        priority,
+        progress,
+        due_date,
+        assigned_to,
+        activity:activities(
+          id,
+          title,
+          code
+        )
+      `
+      )
+      .eq('organization_id', organizationId)
+      .in('status', ['todo', 'in_progress', 'in_review'])
+      .order('due_date', { ascending: true, nullsFirst: false })
+      .limit(limit);
 
-  if (error) {
-    console.error('Error fetching upcoming tasks:', error);
-    throw new Error('Không thể tải danh sách công việc sắp tới');
+    if (termId && termId !== 'all') {
+      fallbackQuery = fallbackQuery.eq('term_id', termId);
+    }
+
+    const { data: fallbackData, error: fallbackError } = await fallbackQuery;
+    if (fallbackError) {
+      console.error('Error fetching upcoming tasks:', fallbackError);
+      throw new Error('Không thể tải danh sách công việc sắp tới');
+    }
+    data = fallbackData || [];
+
+    const missingIds = Array.from(new Set(data.filter((r) => r.assigned_to && !r.assignee).map((r) => r.assigned_to)));
+    if (missingIds.length > 0) {
+      try {
+        const [{ data: profs }, { data: mems }] = await Promise.all([
+          (supabase.from('profiles') as any).select('id, full_name, avatar_url, student_id').in('id', missingIds),
+          (supabase.from('members') as any).select('id, user_id, full_name, student_id').in('id', missingIds),
+        ]);
+        const profMap = new Map<string, any>();
+        (profs || []).forEach((p: any) => profMap.set(p.id, p));
+        (mems || []).forEach((m: any) => {
+          if (!profMap.has(m.id)) profMap.set(m.id, m);
+          if (m.user_id && !profMap.has(m.user_id)) profMap.set(m.user_id, m);
+        });
+        data.forEach((r) => {
+          if (r.assigned_to && !r.assignee) {
+            const found = profMap.get(r.assigned_to);
+            if (found) {
+              r.assignee = {
+                id: found.id,
+                full_name: found.full_name,
+                avatarUrl: found.avatar_url || null,
+                studentId: found.student_id || null,
+              };
+            }
+          }
+        });
+      } catch (enrichErr) {
+        console.warn('[fetchUpcomingTasks] Error enriching assignees:', enrichErr);
+      }
+    }
   }
 
   const now = dayjs();
 
-  return (data || []).map((row: any) => {
+  return data.map((row: any) => {
     const isOverdue = row.due_date ? dayjs(row.due_date).isBefore(now) : false;
     return {
       id: row.id,
@@ -468,9 +534,9 @@ export async function fetchUpcomingTasks(
       assignee: row.assignee
         ? {
             id: row.assignee.id,
-            fullName: row.assignee.full_name,
-            avatarUrl: row.assignee.avatar_url,
-            studentId: row.assignee.student_id,
+            fullName: row.assignee.full_name || row.assignee.fullName,
+            avatarUrl: row.assignee.avatar_url || row.assignee.avatarUrl,
+            studentId: row.assignee.student_id || row.assignee.studentId,
           }
         : null,
       activity: row.activity
@@ -495,45 +561,110 @@ export async function fetchOverdueTasks(
   if (!organizationId || !isSupabaseConfigured) return [];
 
   const nowIso = new Date().toISOString();
+  let data: any[] = [];
 
-  let query = (supabase.from('tasks') as any)
-    .select(
-      `
-      id,
-      title,
-      status,
-      priority,
-      due_date,
-      assignee:profiles!tasks_assigned_to_fkey(
-        id,
-        full_name,
-        avatar_url
-      ),
-      activity:activities(
+  try {
+    let query = (supabase.from('tasks') as any)
+      .select(
+        `
         id,
         title,
-        code
+        status,
+        priority,
+        due_date,
+        assigned_to,
+        assignee:profiles!tasks_assigned_to_fkey(
+          id,
+          full_name,
+          avatar_url
+        ),
+        activity:activities(
+          id,
+          title,
+          code
+        )
+      `
       )
-    `
-    )
-    .eq('organization_id', organizationId)
-    .in('status', ['todo', 'in_progress', 'in_review'])
-    .lt('due_date', nowIso)
-    .order('due_date', { ascending: true })
-    .limit(limit);
+      .eq('organization_id', organizationId)
+      .in('status', ['todo', 'in_progress', 'in_review'])
+      .lt('due_date', nowIso)
+      .order('due_date', { ascending: true })
+      .limit(limit);
 
-  if (termId && termId !== 'all') {
-    query = query.eq('term_id', termId);
+    if (termId && termId !== 'all') {
+      query = query.eq('term_id', termId);
+    }
+
+    const { data: resData, error } = await query;
+    if (error) throw error;
+    data = resData || [];
+  } catch (err: any) {
+    console.warn('[fetchOverdueTasks] Primary select failed, using fallback:', err?.message);
+    let fallbackQuery = (supabase.from('tasks') as any)
+      .select(
+        `
+        id,
+        title,
+        status,
+        priority,
+        due_date,
+        assigned_to,
+        activity:activities(
+          id,
+          title,
+          code
+        )
+      `
+      )
+      .eq('organization_id', organizationId)
+      .in('status', ['todo', 'in_progress', 'in_review'])
+      .lt('due_date', nowIso)
+      .order('due_date', { ascending: true })
+      .limit(limit);
+
+    if (termId && termId !== 'all') {
+      fallbackQuery = fallbackQuery.eq('term_id', termId);
+    }
+
+    const { data: fallbackData, error: fallbackError } = await fallbackQuery;
+    if (fallbackError) {
+      console.error('Error fetching overdue tasks:', fallbackError);
+      throw new Error('Không thể tải danh sách công việc quá hạn');
+    }
+    data = fallbackData || [];
+
+    const missingIds = Array.from(new Set(data.filter((r) => r.assigned_to && !r.assignee).map((r) => r.assigned_to)));
+    if (missingIds.length > 0) {
+      try {
+        const [{ data: profs }, { data: mems }] = await Promise.all([
+          (supabase.from('profiles') as any).select('id, full_name, avatar_url').in('id', missingIds),
+          (supabase.from('members') as any).select('id, user_id, full_name').in('id', missingIds),
+        ]);
+        const profMap = new Map<string, any>();
+        (profs || []).forEach((p: any) => profMap.set(p.id, p));
+        (mems || []).forEach((m: any) => {
+          if (!profMap.has(m.id)) profMap.set(m.id, m);
+          if (m.user_id && !profMap.has(m.user_id)) profMap.set(m.user_id, m);
+        });
+        data.forEach((r) => {
+          if (r.assigned_to && !r.assignee) {
+            const found = profMap.get(r.assigned_to);
+            if (found) {
+              r.assignee = {
+                id: found.id,
+                full_name: found.full_name,
+                avatar_url: found.avatar_url || null,
+              };
+            }
+          }
+        });
+      } catch (enrichErr) {
+        console.warn('[fetchOverdueTasks] Error enriching assignees:', enrichErr);
+      }
+    }
   }
 
-  const { data, error } = await query;
-
-  if (error) {
-    console.error('Error fetching overdue tasks:', error);
-    throw new Error('Không thể tải danh sách công việc quá hạn');
-  }
-
-  return (data || []).map((row: any) => ({
+  return data.map((row: any) => ({
     id: row.id,
     title: row.title,
     status: row.status as TaskStatus,
@@ -543,8 +674,8 @@ export async function fetchOverdueTasks(
     assignee: row.assignee
       ? {
           id: row.assignee.id,
-          fullName: row.assignee.full_name,
-          avatarUrl: row.assignee.avatar_url,
+          fullName: row.assignee.full_name || row.assignee.fullName,
+          avatarUrl: row.assignee.avatar_url || row.assignee.avatarUrl,
         }
       : null,
     activity: row.activity

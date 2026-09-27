@@ -187,45 +187,71 @@ function mapRawToTaskListItem(row: RawTaskRow): TaskListItem {
   };
 }
 
-async function enrichTasksAssigneesFallback(rows: RawTaskRow[], organizationId: string): Promise<void> {
-  const missingAssigneeIds = Array.from(
-    new Set(
-      rows
-        .filter((r) => r.assigned_to && !r.assignee)
-        .map((r) => r.assigned_to as string)
-    )
-  );
+async function enrichTasksAssigneesFallback(rows: RawTaskRow[], organizationId?: string): Promise<void> {
+  try {
+    const missingAssigneeIds = Array.from(
+      new Set(
+        rows
+          .filter((r) => r.assigned_to && !r.assignee)
+          .map((r) => r.assigned_to as string)
+      )
+    );
 
-  if (missingAssigneeIds.length === 0) return;
+    if (missingAssigneeIds.length === 0) return;
 
-  const { data: fallbackMembers } = await supabase
-    .from('members')
-    .select('id, user_id, full_name, email, phone, student_id')
-    .eq('organization_id', organizationId)
-    .or(`id.in.(${missingAssigneeIds.join(',')}),user_id.in.(${missingAssigneeIds.join(',')})`);
+    // 1. Check profiles table for user accounts
+    const { data: profilesData } = await supabase
+      .from('profiles')
+      .select('id, full_name, email, avatar_url, student_id, phone')
+      .in('id', missingAssigneeIds);
 
-  if (fallbackMembers) {
-    const fallbackMap = new Map<string, any>();
-    fallbackMembers.forEach((fm: any) => {
-      fallbackMap.set(fm.id, fm);
-      if (fm.user_id) fallbackMap.set(fm.user_id, fm);
+    const profileMap = new Map<string, any>();
+    (profilesData || []).forEach((p: any) => profileMap.set(p.id, p));
+
+    // 2. Check members table for roster members (by id and user_id)
+    let memberQuery = supabase
+      .from('members')
+      .select('id, user_id, full_name, email, phone, student_id');
+
+    if (organizationId) {
+      memberQuery = memberQuery.eq('organization_id', organizationId);
+    }
+
+    const [{ data: byId }, { data: byUserId }] = await Promise.all([
+      memberQuery.in('id', missingAssigneeIds),
+      memberQuery.in('user_id', missingAssigneeIds),
+    ]);
+
+    const memberMap = new Map<string, any>();
+    (byId || []).forEach((m: any) => {
+      memberMap.set(m.id, m);
+      if (m.user_id) memberMap.set(m.user_id, m);
+    });
+    (byUserId || []).forEach((m: any) => {
+      memberMap.set(m.id, m);
+      if (m.user_id) memberMap.set(m.user_id, m);
     });
 
+    // Populate rows
     rows.forEach((r) => {
       if (r.assigned_to && !r.assignee) {
-        const fm = fallbackMap.get(r.assigned_to);
-        if (fm) {
+        const prof = profileMap.get(r.assigned_to);
+        const mem = memberMap.get(r.assigned_to);
+
+        if (prof || mem) {
           r.assignee = {
-            id: fm.user_id || fm.id,
-            full_name: fm.full_name,
-            email: fm.email || '',
-            avatar_url: null,
-            student_id: fm.student_id,
-            phone: fm.phone,
+            id: r.assigned_to,
+            full_name: prof?.full_name || mem?.full_name || 'Hội viên',
+            email: prof?.email || mem?.email || '',
+            avatar_url: prof?.avatar_url || null,
+            student_id: prof?.student_id || mem?.student_id || null,
+            phone: prof?.phone || mem?.phone || null,
           };
         }
       }
     });
+  } catch (err) {
+    console.warn('[enrichTasksAssigneesFallback] Error enriching assignees:', err);
   }
 }
 
@@ -255,10 +281,80 @@ export const taskRepository = {
       sortOrder = 'asc',
     } = params;
 
-    let query = supabase
-      .from('tasks')
-      .select(
-        `
+    const buildQuery = (selectStr: string) => {
+      let q = supabase
+        .from('tasks')
+        .select(selectStr, { count: 'exact' })
+        .eq('organization_id', organizationId);
+
+      // Search by title or description
+      if (search.trim()) {
+        const sanitized = search.trim();
+        q = q.or(`title.ilike.%${sanitized}%,description.ilike.%${sanitized}%`);
+      }
+
+      // Status filter
+      if (status !== 'all') {
+        q = q.eq('status', status as TaskStatus);
+      }
+
+      // Priority filter
+      if (priority !== 'all') {
+        q = q.eq('priority', priority as TaskPriority);
+      }
+
+      // Term filter
+      if (termId !== 'all') {
+        q = q.eq('term_id', termId);
+      }
+
+      // Activity filter
+      if (activityId === 'standalone' || activityId === 'none') {
+        q = q.is('activity_id', null);
+      } else if (activityId !== 'all') {
+        q = q.eq('activity_id', activityId);
+      }
+
+      // Assignee filter
+      if (assignedTo === 'unassigned') {
+        q = q.is('assigned_to', null);
+      } else if (assignedTo !== 'all') {
+        q = q.eq('assigned_to', assignedTo);
+      }
+
+      // Overdue filter
+      if (onlyOverdue) {
+        const nowIso = new Date().toISOString();
+        q = q
+          .lt('due_date', nowIso)
+          .not('status', 'in', '("completed","cancelled")');
+      }
+
+      // Sorting
+      const isAsc = sortOrder === 'asc';
+      if (sortBy === 'due_date') {
+        q = q.order('due_date', { ascending: isAsc, nullsFirst: false });
+      } else if (sortBy === 'priority') {
+        q = q.order('priority', { ascending: isAsc });
+      } else if (sortBy === 'progress') {
+        q = q.order('progress', { ascending: isAsc });
+      } else if (sortBy === 'title') {
+        q = q.order('title', { ascending: isAsc });
+      } else {
+        q = q.order('created_at', { ascending: isAsc });
+      }
+
+      // Pagination
+      const from = (page - 1) * pageSize;
+      const to = from + pageSize - 1;
+      return q.range(from, to);
+    };
+
+    let data: any = null;
+    let count: number | null = null;
+
+    try {
+      const primarySelect = `
         id,
         organization_id,
         term_id,
@@ -299,104 +395,14 @@ export const taskRepository = {
           email,
           avatar_url
         )
-      `,
-        { count: 'exact' }
-      )
-      .eq('organization_id', organizationId);
-
-    // Search by title or description
-    if (search.trim()) {
-      const sanitized = search.trim();
-      query = query.or(`title.ilike.%${sanitized}%,description.ilike.%${sanitized}%`);
-    }
-
-    // Status filter
-    if (status !== 'all') {
-      query = query.eq('status', status as TaskStatus);
-    }
-
-    // Priority filter
-    if (priority !== 'all') {
-      query = query.eq('priority', priority as TaskPriority);
-    }
-
-    // Term filter
-    if (termId !== 'all') {
-      query = query.eq('term_id', termId);
-    }
-
-    // Activity filter
-    if (activityId === 'standalone' || activityId === 'none') {
-      query = query.is('activity_id', null);
-    } else if (activityId !== 'all') {
-      query = query.eq('activity_id', activityId);
-    }
-
-    // Assignee filter
-    if (assignedTo === 'unassigned') {
-      query = query.is('assigned_to', null);
-    } else if (assignedTo !== 'all') {
-      query = query.eq('assigned_to', assignedTo);
-    }
-
-    // Overdue filter
-    if (onlyOverdue) {
-      const nowIso = new Date().toISOString();
-      query = query
-        .lt('due_date', nowIso)
-        .not('status', 'in', '("completed","cancelled")');
-    }
-
-    // Sorting
-    const isAsc = sortOrder === 'asc';
-    if (sortBy === 'due_date') {
-      query = query.order('due_date', { ascending: isAsc, nullsFirst: false });
-    } else if (sortBy === 'priority') {
-      query = query.order('priority', { ascending: isAsc });
-    } else if (sortBy === 'progress') {
-      query = query.order('progress', { ascending: isAsc });
-    } else if (sortBy === 'title') {
-      query = query.order('title', { ascending: isAsc });
-    } else {
-      query = query.order('created_at', { ascending: isAsc });
-    }
-
-    // Pagination
-    const from = (page - 1) * pageSize;
-    const to = from + pageSize - 1;
-    query = query.range(from, to);
-
-    const { data, count, error } = await query;
-
-    if (error) {
-      throw new Error(error.message || 'Không thể tải danh sách công việc');
-    }
-
-    const rows = (data || []) as unknown as RawTaskRow[];
-    await enrichTasksAssigneesFallback(rows, organizationId);
-    const formatted: TaskListItem[] = rows.map(mapRawToTaskListItem);
-    const totalCount = count || 0;
-    const totalPages = Math.ceil(totalCount / pageSize);
-
-    return {
-      data: formatted,
-      totalCount,
-      page,
-      pageSize,
-      totalPages,
-    };
-  },
-
-  /**
-   * Fetch single task details by ID (optionally scoped by organization)
-   */
-  async getById(id: string, organizationId?: string): Promise<TaskDetail | null> {
-    if (!isSupabaseConfigured || !id) return null;
-
-    let query = supabase
-      .from('tasks')
-      .select(
-        `
+      `;
+      const res = await buildQuery(primarySelect);
+      if (res.error) throw res.error;
+      data = res.data;
+      count = res.count;
+    } catch (primaryErr: any) {
+      console.warn('[taskRepository.getTasks] Primary query failed, using fallback:', primaryErr?.message);
+      const fallbackSelect = `
         id,
         organization_id,
         term_id,
@@ -421,83 +427,197 @@ export const taskRepository = {
           code,
           title,
           category,
-          status,
-          start_date,
-          end_date
-        ),
-        assignee:profiles!tasks_assigned_to_fkey (
-          id,
-          full_name,
-          email,
-          avatar_url,
-          student_id,
-          phone
-        ),
-        creator:profiles!tasks_created_by_fkey (
-          id,
-          full_name,
-          email,
-          avatar_url
+          status
         )
-      `
-      )
-      .eq('id', id);
-
-    if (organizationId) {
-      query = query.eq('organization_id', organizationId);
+      `;
+      const fallbackRes = await buildQuery(fallbackSelect);
+      if (fallbackRes.error) {
+        throw new Error(fallbackRes.error.message || 'Không thể tải danh sách công việc');
+      }
+      data = fallbackRes.data;
+      count = fallbackRes.count;
     }
 
-    const { data, error } = await query.maybeSingle();
+    const rows = (data || []) as unknown as RawTaskRow[];
+    await enrichTasksAssigneesFallback(rows, organizationId);
+    const formatted: TaskListItem[] = rows.map(mapRawToTaskListItem);
+    const totalCount = count || 0;
+    const totalPages = Math.ceil(totalCount / pageSize);
 
-    if (error) {
-      throw new Error(error.message || 'Không tìm thấy thông tin công việc');
+    return {
+      data: formatted,
+      totalCount,
+      page,
+      pageSize,
+      totalPages,
+    };
+  },
+
+  /**
+   * Fetch single task details by ID (optionally scoped by organization)
+   */
+  async getById(id: string, organizationId?: string): Promise<TaskDetail | null> {
+    if (!isSupabaseConfigured || !id) return null;
+
+    let data: any = null;
+
+    try {
+      let query = supabase
+        .from('tasks')
+        .select(
+          `
+          id,
+          organization_id,
+          term_id,
+          activity_id,
+          title,
+          description,
+          status,
+          priority,
+          progress,
+          due_date,
+          assigned_to,
+          created_by,
+          created_at,
+          updated_at,
+          term:terms (
+            id,
+            name,
+            is_current
+          ),
+          activity:activities (
+            id,
+            code,
+            title,
+            category,
+            status,
+            start_date,
+            end_date
+          ),
+          assignee:profiles!tasks_assigned_to_fkey (
+            id,
+            full_name,
+            email,
+            avatar_url,
+            student_id,
+            phone
+          ),
+          creator:profiles!tasks_created_by_fkey (
+            id,
+            full_name,
+            email,
+            avatar_url
+          )
+        `
+        )
+        .eq('id', id);
+
+      if (organizationId) {
+        query = query.eq('organization_id', organizationId);
+      }
+
+      const res = await query.maybeSingle();
+      if (res.error) throw res.error;
+      data = res.data;
+    } catch (primaryErr: any) {
+      console.warn('[taskRepository.getById] Primary query failed, using fallback:', primaryErr?.message);
+      let fallbackQuery = supabase
+        .from('tasks')
+        .select(
+          `
+          id,
+          organization_id,
+          term_id,
+          activity_id,
+          title,
+          description,
+          status,
+          priority,
+          progress,
+          due_date,
+          assigned_to,
+          created_by,
+          created_at,
+          updated_at,
+          term:terms (
+            id,
+            name,
+            is_current
+          ),
+          activity:activities (
+            id,
+            code,
+            title,
+            category,
+            status,
+            start_date,
+            end_date
+          )
+        `
+        )
+        .eq('id', id);
+
+      if (organizationId) {
+        fallbackQuery = fallbackQuery.eq('organization_id', organizationId);
+      }
+
+      const { data: fallbackData, error: fallbackError } = await fallbackQuery.maybeSingle();
+      if (fallbackError) {
+        throw new Error(fallbackError.message || 'Không tìm thấy thông tin công việc');
+      }
+      data = fallbackData;
     }
 
     if (!data) return null;
 
     const row = data as unknown as RawTaskRow;
+    await enrichTasksAssigneesFallback([row], row.organization_id);
 
     // Look up member details if assignee exists
     let memberDetails: Member | null = null;
     if (row.assigned_to) {
-      const { data: memberData } = await supabase
-        .from('members')
-        .select('*')
-        .eq('organization_id', row.organization_id)
-        .or(`id.eq.${row.assigned_to},user_id.eq.${row.assigned_to}`)
-        .maybeSingle();
+      try {
+        const { data: memberData } = await supabase
+          .from('members')
+          .select('*')
+          .eq('organization_id', row.organization_id)
+          .or(`id.eq.${row.assigned_to},user_id.eq.${row.assigned_to}`)
+          .maybeSingle();
 
-      if (memberData) {
-        const m = memberData as unknown as DbMember;
-        memberDetails = {
-          id: m.id,
-          organizationId: m.organization_id,
-          userId: m.user_id,
-          studentId: m.student_id,
-          fullName: m.full_name,
-          email: m.email,
-          phone: m.phone,
-          className: m.class_name,
-          major: m.major,
-          cohort: m.cohort,
-          position: m.position,
-          status: m.status as Member['status'],
-          joinedDate: m.joined_date,
-          notes: m.notes,
-          createdAt: m.created_at,
-          updatedAt: m.updated_at,
-        };
-
-        if (!row.assignee) {
-          row.assignee = {
-            id: m.user_id || m.id,
-            full_name: m.full_name,
-            email: m.email || '',
-            avatar_url: null,
-            student_id: m.student_id,
+        if (memberData) {
+          const m = memberData as unknown as DbMember;
+          memberDetails = {
+            id: m.id,
+            organizationId: m.organization_id,
+            userId: m.user_id,
+            studentId: m.student_id,
+            fullName: m.full_name,
+            email: m.email,
             phone: m.phone,
+            className: m.class_name,
+            major: m.major,
+            cohort: m.cohort,
+            position: m.position,
+            status: m.status as Member['status'],
+            joinedDate: m.joined_date,
+            notes: m.notes,
+            createdAt: m.created_at,
+            updatedAt: m.updated_at,
           };
+
+          if (!row.assignee) {
+            row.assignee = {
+              id: m.user_id || m.id,
+              full_name: m.full_name,
+              email: m.email || '',
+              avatar_url: null,
+              student_id: m.student_id,
+              phone: m.phone,
+            };
+          }
         }
+      } catch (memErr) {
+        console.warn('[taskRepository.getById] Error fetching member details:', memErr);
       }
     }
 
@@ -708,59 +828,97 @@ export const taskRepository = {
   async getTasksByActivity(activityId: string, organizationId?: string): Promise<TaskListItem[]> {
     if (!isSupabaseConfigured || !activityId) return [];
 
-    let query = supabase
-      .from('tasks')
-      .select(
+    let rows: RawTaskRow[] = [];
+
+    // Attempt 1: Select with embedded profile relations
+    try {
+      let query = supabase
+        .from('tasks')
+        .select(
+          `
+          id,
+          organization_id,
+          term_id,
+          activity_id,
+          title,
+          description,
+          status,
+          priority,
+          progress,
+          due_date,
+          assigned_to,
+          created_by,
+          created_at,
+          updated_at,
+          assignee:profiles!tasks_assigned_to_fkey (
+            id,
+            full_name,
+            email,
+            avatar_url,
+            student_id,
+            phone
+          ),
+          creator:profiles!tasks_created_by_fkey (
+            id,
+            full_name,
+            email,
+            avatar_url
+          )
         `
-        id,
-        organization_id,
-        term_id,
-        activity_id,
-        title,
-        description,
-        status,
-        priority,
-        progress,
-        due_date,
-        assigned_to,
-        created_by,
-        created_at,
-        updated_at,
-        assignee:profiles!tasks_assigned_to_fkey (
-          id,
-          full_name,
-          email,
-          avatar_url,
-          student_id,
-          phone
-        ),
-        creator:profiles!tasks_created_by_fkey (
-          id,
-          full_name,
-          email,
-          avatar_url
         )
-      `
-      )
-      .eq('activity_id', activityId);
+        .eq('activity_id', activityId);
 
-    if (organizationId) {
-      query = query.eq('organization_id', organizationId);
+      if (organizationId) {
+        query = query.eq('organization_id', organizationId);
+      }
+
+      query = query.order('due_date', { ascending: true, nullsFirst: false });
+
+      const { data, error } = await query;
+      if (error) throw error;
+      rows = (data || []) as unknown as RawTaskRow[];
+    } catch (primaryError: any) {
+      console.warn('[taskRepository.getTasksByActivity] Primary select failed, using fallback:', primaryError?.message);
+
+      // Attempt 2: Fallback select without strict foreign key embedding
+      let fallbackQuery = supabase
+        .from('tasks')
+        .select(
+          `
+          id,
+          organization_id,
+          term_id,
+          activity_id,
+          title,
+          description,
+          status,
+          priority,
+          progress,
+          due_date,
+          assigned_to,
+          created_by,
+          created_at,
+          updated_at
+        `
+        )
+        .eq('activity_id', activityId);
+
+      if (organizationId) {
+        fallbackQuery = fallbackQuery.eq('organization_id', organizationId);
+      }
+
+      fallbackQuery = fallbackQuery.order('due_date', { ascending: true, nullsFirst: false });
+
+      const { data: fallbackData, error: fallbackError } = await fallbackQuery;
+      if (fallbackError) {
+        console.error('[taskRepository.getTasksByActivity] Fallback query error:', fallbackError);
+        throw new Error(fallbackError.message || 'Không thể tải danh sách công việc của hoạt động');
+      }
+      rows = (fallbackData || []) as unknown as RawTaskRow[];
     }
 
-    query = query.order('due_date', { ascending: true, nullsFirst: false });
-
-    const { data, error } = await query;
-
-    if (error) {
-      throw new Error(error.message || 'Không thể tải danh sách công việc của hoạt động');
-    }
-
-    const rows = (data || []) as unknown as RawTaskRow[];
     const orgId = organizationId || rows[0]?.organization_id;
-    if (orgId) {
-      await enrichTasksAssigneesFallback(rows, orgId);
-    }
+    await enrichTasksAssigneesFallback(rows, orgId);
     return rows.map(mapRawToTaskListItem);
   },
 
