@@ -92,6 +92,9 @@ export function TaskFormModal({
   );
   const displayActivities = matchingActivities.length > 0 ? matchingActivities : activities;
 
+  const boardAssignees = React.useMemo(() => assignees.filter((a) => a.isBoard), [assignees]);
+  const regularAssignees = React.useMemo(() => assignees.filter((a) => !a.isBoard), [assignees]);
+
   useEffect(() => {
     if (isOpen) {
       if (initialTask) {
@@ -287,15 +290,37 @@ export function TaskFormModal({
                     <SelectTrigger id="task-form-assignee" className="w-full text-xs h-9 bg-cloud border-hairline text-ink-navy">
                       <SelectValue placeholder={language === 'vi' ? '— Chưa phân công —' : '— Unassigned —'} />
                     </SelectTrigger>
-                    <SelectContent>
+                    <SelectContent className="max-h-72">
                       <SelectItem value="none">
                         {language === 'vi' ? '— Chưa phân công —' : '— Unassigned —'}
                       </SelectItem>
-                      {assignees.map((u) => (
-                        <SelectItem key={u.profileId} value={u.profileId}>
-                          {u.fullName} {u.studentId ? `(${u.studentId})` : ''} {u.position ? `— ${u.position}` : ''}
-                        </SelectItem>
-                      ))}
+                      {boardAssignees.length > 0 && (
+                        <>
+                          <div className="px-2 py-1 text-[10px] font-bold text-signal-blue uppercase tracking-wider bg-[#e6f0ff]/60 rounded-sm my-1 flex items-center gap-1">
+                            <span>⭐</span>
+                            <span>{language === 'vi' ? 'Ban Chấp Hành / Điều Hành' : 'Executive Board'}</span>
+                          </div>
+                          {boardAssignees.map((u) => (
+                            <SelectItem key={u.profileId} value={u.profileId} className="font-medium">
+                              ⭐ {u.fullName} {u.studentId ? `(${u.studentId})` : ''} {u.position ? `— [${u.position}]` : ''}
+                            </SelectItem>
+                          ))}
+                        </>
+                      )}
+                      {regularAssignees.length > 0 && (
+                        <>
+                          {boardAssignees.length > 0 && (
+                            <div className="px-2 py-1 text-[10px] font-semibold text-slate-gray uppercase tracking-wider bg-cloud rounded-sm my-1">
+                              {language === 'vi' ? 'Hội viên Chi hội' : 'Members'}
+                            </div>
+                          )}
+                          {regularAssignees.map((u) => (
+                            <SelectItem key={u.profileId} value={u.profileId}>
+                              {u.fullName} {u.studentId ? `(${u.studentId})` : ''} {u.position ? `— ${u.position}` : ''}
+                            </SelectItem>
+                          ))}
+                        </>
+                      )}
                     </SelectContent>
                   </Select>
                 )}

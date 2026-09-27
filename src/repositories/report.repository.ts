@@ -271,7 +271,7 @@ export const reportRepository = {
       const pos = (m.position || 'Hội viên').trim();
       positionMap[pos] = (positionMap[pos] || 0) + 1;
 
-      const major = getMajorFromClassOrValue(m.className, m.major, '');
+      const major = getMajorFromClassOrValue(m.class_name, m.major, '');
       if (major) {
         majorMap[major] = (majorMap[major] || 0) + 1;
       }

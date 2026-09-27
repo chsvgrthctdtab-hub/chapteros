@@ -163,6 +163,8 @@ export interface TaskAssigneeOption {
   phone?: string | null;
   position?: string | null;
   role?: string | null;
+  isBoard?: boolean;
+  memberId?: string;
 }
 
 export interface TaskListItem {

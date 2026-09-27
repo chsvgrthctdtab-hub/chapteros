@@ -498,7 +498,7 @@ export function CreateCollabTaskDialog({
                       </SelectItem>
                       {filteredPersonnel.map((p) => (
                         <SelectItem key={p.userId} value={p.userId} className="text-xs">
-                          {p.fullName} ({p.organizationCode})
+                          {p.fullName} ({p.organizationCode}) {p.position ? `— ${p.position}` : ''}
                         </SelectItem>
                       ))}
                     </SelectContent>

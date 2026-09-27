@@ -3772,3 +3772,25 @@ CREATE POLICY "collab_participants_delete_policy"
     )
   );
 
+-- ==============================================================================
+-- Relax tasks.assigned_to and collab_tasks.assigned_to strict profile foreign keys
+-- ==============================================================================
+DO $$
+BEGIN
+  IF EXISTS (
+    SELECT 1 FROM pg_constraint
+    WHERE conname = 'tasks_assigned_to_fkey'
+      AND conrelid = 'public.tasks'::regclass
+  ) THEN
+    ALTER TABLE public.tasks DROP CONSTRAINT tasks_assigned_to_fkey;
+  END IF;
+  IF EXISTS (
+    SELECT 1 FROM pg_constraint
+    WHERE conname = 'collab_tasks_assigned_to_fkey'
+      AND conrelid = 'public.collab_tasks'::regclass
+  ) THEN
+    ALTER TABLE public.collab_tasks DROP CONSTRAINT collab_tasks_assigned_to_fkey;
+  END IF;
+END $$;
+
+

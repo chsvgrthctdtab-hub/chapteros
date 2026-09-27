@@ -242,7 +242,7 @@ export const activityService = {
         : undefined;
 
     // Parallelize all validation checks
-    const [, , cleanLeadId] = await Promise.all([
+    const [, , , cleanLeadId] = await Promise.all([
       // Check existing term lock
       existing.termId
         ? (async () => {

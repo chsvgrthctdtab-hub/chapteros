@@ -9,6 +9,8 @@ import type {
   TaskAssigneeOption,
 } from '@/features/tasks/types/task.types';
 import { isTaskOverdue } from '@/features/tasks/types/task.types';
+import { isExecutiveBoard } from '@/features/members/components/MemberRoleBadge';
+import { getRoleVietnameseLabel } from './activity.repository';
 
 export type DbTask = Database['public']['Tables']['tasks']['Row'];
 export type DbTaskInsert = Database['public']['Tables']['tasks']['Insert'];
@@ -185,6 +187,48 @@ function mapRawToTaskListItem(row: RawTaskRow): TaskListItem {
   };
 }
 
+async function enrichTasksAssigneesFallback(rows: RawTaskRow[], organizationId: string): Promise<void> {
+  const missingAssigneeIds = Array.from(
+    new Set(
+      rows
+        .filter((r) => r.assigned_to && !r.assignee)
+        .map((r) => r.assigned_to as string)
+    )
+  );
+
+  if (missingAssigneeIds.length === 0) return;
+
+  const { data: fallbackMembers } = await supabase
+    .from('members')
+    .select('id, user_id, full_name, email, phone, student_id')
+    .eq('organization_id', organizationId)
+    .or(`id.in.(${missingAssigneeIds.join(',')}),user_id.in.(${missingAssigneeIds.join(',')})`);
+
+  if (fallbackMembers) {
+    const fallbackMap = new Map<string, any>();
+    fallbackMembers.forEach((fm: any) => {
+      fallbackMap.set(fm.id, fm);
+      if (fm.user_id) fallbackMap.set(fm.user_id, fm);
+    });
+
+    rows.forEach((r) => {
+      if (r.assigned_to && !r.assignee) {
+        const fm = fallbackMap.get(r.assigned_to);
+        if (fm) {
+          r.assignee = {
+            id: fm.user_id || fm.id,
+            full_name: fm.full_name,
+            email: fm.email || '',
+            avatar_url: null,
+            student_id: fm.student_id,
+            phone: fm.phone,
+          };
+        }
+      }
+    });
+  }
+}
+
 export const taskRepository = {
   /**
    * Fetch paginated and filtered tasks for an organization
@@ -329,6 +373,7 @@ export const taskRepository = {
     }
 
     const rows = (data || []) as unknown as RawTaskRow[];
+    await enrichTasksAssigneesFallback(rows, organizationId);
     const formatted: TaskListItem[] = rows.map(mapRawToTaskListItem);
     const totalCount = count || 0;
     const totalPages = Math.ceil(totalCount / pageSize);
@@ -419,7 +464,7 @@ export const taskRepository = {
         .from('members')
         .select('*')
         .eq('organization_id', row.organization_id)
-        .eq('user_id', row.assigned_to)
+        .or(`id.eq.${row.assigned_to},user_id.eq.${row.assigned_to}`)
         .maybeSingle();
 
       if (memberData) {
@@ -442,6 +487,17 @@ export const taskRepository = {
           createdAt: m.created_at,
           updatedAt: m.updated_at,
         };
+
+        if (!row.assignee) {
+          row.assignee = {
+            id: m.user_id || m.id,
+            full_name: m.full_name,
+            email: m.email || '',
+            avatar_url: null,
+            student_id: m.student_id,
+            phone: m.phone,
+          };
+        }
       }
     }
 
@@ -640,11 +696,17 @@ export const taskRepository = {
     }
 
     const rows = (data || []) as unknown as RawTaskRow[];
+    const orgId = organizationId || rows[0]?.organization_id;
+    if (orgId) {
+      await enrichTasksAssigneesFallback(rows, orgId);
+    }
     return rows.map(mapRawToTaskListItem);
   },
 
   /**
    * Fetch active members/profiles in organization for task assignment
+   * Prioritizes Executive Board (Ban Chấp Hành) members at the top with clear board titles.
+   * Seamlessly includes both organization memberships and roster members.
    */
   async getAssignees(organizationId: string): Promise<TaskAssigneeOption[]> {
     if (!isSupabaseConfigured || !organizationId) return [];
@@ -672,29 +734,42 @@ export const taskRepository = {
       .eq('status', 'active');
 
     if (memError) {
-      throw new Error(memError.message || 'Không thể tải danh sách người thực hiện');
+      console.warn('[taskRepository.getAssignees] Error fetching organization memberships:', memError);
     }
 
-    // 2. Fetch members roster to enrich info
-    const { data: memberRoster } = await supabase
+    // 2. Fetch members roster to enrich info & include direct roster members
+    const { data: memberRoster, error: rosterError } = await supabase
       .from('members')
-      .select('user_id, student_id, full_name, email, position, class_name')
+      .select('*')
       .eq('organization_id', organizationId)
       .eq('status', 'active');
 
-    interface MemberRosterItem {
-      user_id: string | null;
-      student_id: string;
-      full_name: string;
-      email: string | null;
-      position: string | null;
-      class_name: string | null;
+    if (rosterError) {
+      console.warn('[taskRepository.getAssignees] Error fetching members roster:', rosterError);
     }
 
-    const rosterList = (memberRoster || []) as unknown as MemberRosterItem[];
-    const memberMap = new Map<string, MemberRosterItem>();
+    // 3. Fetch term members to capture board department/position
+    const { data: termMembersData } = await supabase
+      .from('term_members')
+      .select('id, member_id, position, department, status')
+      .eq('status', 'active');
+
+    const termMemberMap = new Map<string, { position?: string | null; department?: string | null }>();
+    ((termMembersData || []) as unknown as { member_id: string; position?: string | null; department?: string | null }[]).forEach((tm) => {
+      if (tm.member_id) {
+        termMemberMap.set(tm.member_id, tm);
+      }
+    });
+
+    const rosterList = (memberRoster || []) as unknown as DbMember[];
+    const memberByUserId = new Map<string, DbMember>();
+    const memberByEmail = new Map<string, DbMember>();
+    const memberById = new Map<string, DbMember>();
+
     rosterList.forEach((m) => {
-      if (m.user_id) memberMap.set(m.user_id, m);
+      memberById.set(m.id, m);
+      if (m.user_id) memberByUserId.set(m.user_id, m);
+      if (m.email) memberByEmail.set(m.email.toLowerCase().trim(), m);
     });
 
     interface MembershipWithProfile {
@@ -714,27 +789,110 @@ export const taskRepository = {
 
     const mList = (memberships || []) as unknown as MembershipWithProfile[];
     const assignees: TaskAssigneeOption[] = [];
-    const seen = new Set<string>();
+    const seenUserIds = new Set<string>();
+    const seenMemberIds = new Set<string>();
 
-    mList.forEach((m) => {
-      if (m.profile && !seen.has(m.profile.id)) {
-        seen.add(m.profile.id);
-        const rosterInfo = memberMap.get(m.user_id);
-        assignees.push({
-          userId: m.user_id,
-          profileId: m.profile.id,
-          fullName: m.profile.full_name || rosterInfo?.full_name || 'Hội viên',
-          email: m.profile.email || rosterInfo?.email || '',
-          avatarUrl: m.profile.avatar_url,
-          studentId: m.profile.student_id || rosterInfo?.student_id,
-          phone: m.profile.phone,
-          position: rosterInfo?.position || m.role,
-          role: m.role,
-        });
+    const boardRoles = new Set(['admin', 'leader', 'deputy', 'treasurer', 'secretary', 'board']);
+
+    // Priority 1: Process organization memberships
+    for (const m of mList) {
+      if (!m.profile && !m.user_id) continue;
+      const uId = m.user_id || m.profile?.id;
+      if (!uId) continue;
+      seenUserIds.add(uId);
+
+      const matchedMember =
+        memberByUserId.get(uId) ||
+        (m.profile?.email ? memberByEmail.get(m.profile.email.toLowerCase().trim()) : undefined);
+
+      if (matchedMember) {
+        seenMemberIds.add(matchedMember.id);
       }
-    });
 
-    return assignees.sort((a, b) => a.fullName.localeCompare(b.fullName, 'vi'));
+      const tmInfo = matchedMember ? termMemberMap.get(matchedMember.id) : undefined;
+      const isBoard =
+        boardRoles.has(m.role) ||
+        isExecutiveBoard(matchedMember?.position, tmInfo?.department || tmInfo?.position);
+
+      let displayPosition: string;
+      if (matchedMember?.position && isExecutiveBoard(matchedMember.position)) {
+        displayPosition = matchedMember.position;
+      } else if (tmInfo?.position && isExecutiveBoard(tmInfo.position, tmInfo.department)) {
+        displayPosition = tmInfo.position;
+      } else {
+        displayPosition = getRoleVietnameseLabel(m.role);
+      }
+
+      assignees.push({
+        userId: uId,
+        profileId: uId,
+        memberId: matchedMember?.id,
+        fullName: m.profile?.full_name || matchedMember?.full_name || 'Hội viên',
+        email: m.profile?.email || matchedMember?.email || '',
+        avatarUrl: m.profile?.avatar_url,
+        studentId: m.profile?.student_id || matchedMember?.student_id,
+        phone: m.profile?.phone || matchedMember?.phone,
+        position: displayPosition,
+        role: m.role,
+        isBoard,
+      });
+    }
+
+    // Priority 2: Process members roster who are not in memberships yet
+    for (const m of rosterList) {
+      if (seenMemberIds.has(m.id) || (m.user_id && seenUserIds.has(m.user_id))) {
+        continue;
+      }
+      seenMemberIds.add(m.id);
+      if (m.user_id) seenUserIds.add(m.user_id);
+
+      const tmInfo = termMemberMap.get(m.id);
+      const isBoard = isExecutiveBoard(m.position, tmInfo?.department || tmInfo?.position);
+
+      const assignId = m.user_id || m.id;
+      let displayPosition = m.position || tmInfo?.position;
+      if (!displayPosition) {
+        displayPosition = isBoard ? 'Ủy viên Ban Chấp Hành' : 'Hội viên';
+      }
+
+      assignees.push({
+        userId: assignId,
+        profileId: assignId,
+        memberId: m.id,
+        fullName: m.full_name || 'Hội viên',
+        email: m.email || '',
+        avatarUrl: null,
+        studentId: m.student_id,
+        phone: m.phone,
+        position: displayPosition,
+        role: isBoard ? 'secretary' : 'member',
+        isBoard,
+      });
+    }
+
+    // Sort: Ban Chấp Hành FIRST, then regular members
+    return assignees.sort((a, b) => {
+      if (a.isBoard && !b.isBoard) return -1;
+      if (!a.isBoard && b.isBoard) return 1;
+
+      // Role weight within Executive Board
+      if (a.isBoard && b.isBoard) {
+        const getWeight = (opt: TaskAssigneeOption) => {
+          const pos = (opt.position || '').toLowerCase();
+          const r = (opt.role || '').toLowerCase();
+          if (r === 'leader' || pos.includes('trưởng') || pos.includes('chủ nhiệm')) return 1;
+          if (r === 'deputy' || pos.includes('phó')) return 2;
+          if (r === 'treasurer' || pos.includes('thủ quỹ')) return 3;
+          if (r === 'secretary' || pos.includes('thư ký')) return 4;
+          if (r === 'admin' || pos.includes('quản trị')) return 5;
+          return 6;
+        };
+        const weightDiff = getWeight(a) - getWeight(b);
+        if (weightDiff !== 0) return weightDiff;
+      }
+
+      return a.fullName.localeCompare(b.fullName, 'vi');
+    });
   },
 
   /**
@@ -806,21 +964,31 @@ export const taskRepository = {
   },
 
   /**
-   * Validate that an assignee profile ID belongs to an active membership in the organization
+   * Validate that an assignee profile ID belongs to an active membership or roster member in the organization
    */
   async validateAssigneeMembership(organizationId: string, assignedToProfileId: string): Promise<boolean> {
     if (!isSupabaseConfigured || !organizationId || !assignedToProfileId) return false;
 
-    // Check profiles.id === assignedToProfileId AND organization_memberships.user_id === assignedToProfileId AND organization_id === organizationId AND status === 'active'
-    const { data, error } = await supabase
+    // 1. Check organization_memberships (user_id OR id)
+    const { data: memData } = await supabase
       .from('organization_memberships')
       .select('id, user_id, status')
       .eq('organization_id', organizationId)
-      .eq('user_id', assignedToProfileId)
+      .or(`user_id.eq.${assignedToProfileId},id.eq.${assignedToProfileId}`)
       .eq('status', 'active')
       .maybeSingle();
 
-    if (error || !data) return false;
-    return true;
+    if (memData) return true;
+
+    // 2. Check members roster (id OR user_id)
+    const { data: rosterData } = await supabase
+      .from('members')
+      .select('id, user_id, status')
+      .eq('organization_id', organizationId)
+      .or(`id.eq.${assignedToProfileId},user_id.eq.${assignedToProfileId}`)
+      .eq('status', 'active')
+      .maybeSingle();
+
+    return Boolean(rosterData);
   },
 };

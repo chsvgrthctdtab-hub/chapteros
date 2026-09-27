@@ -887,7 +887,7 @@ export const collabRepository = {
       if (allOrgIds.length === 0) return [];
 
       // Step 2: Query all memberships and joined profiles for these organizations
-      const { data: membershipsData, error: memberError } = await supabase
+      const { data: membershipsData } = await supabase
         .from('organization_memberships')
         .select(`
           user_id,
@@ -909,12 +909,28 @@ export const collabRepository = {
         .in('organization_id', allOrgIds)
         .eq('status', 'active');
 
+      // Fetch organizations details map
+      const { data: orgsData } = await supabase
+        .from('organizations')
+        .select('id, name, code, type, parent_id')
+        .in('id', allOrgIds);
+
+      const orgMap = new Map<string, any>();
+      (orgsData || []).forEach((o: any) => orgMap.set(o.id, o));
+
       // Also query members directory for full details (student_id, class_name, cohort, phone, email, position)
       const { data: membersData } = await supabase
         .from('members')
         .select('*')
         .in('organization_id', allOrgIds)
         .eq('status', 'active');
+
+      const boardKeywords = [
+        'trưởng', 'phó', 'chủ nhiệm', 'ủy viên', 'uy vien',
+        'thủ quỹ', 'thu quy', 'thư ký', 'thu ky', 'bch', 'ban chấp hành',
+        'ban chap hanh', 'quản trị', 'quan tri', 'leader', 'deputy', 'admin',
+        'treasurer', 'secretary', 'board'
+      ];
 
       // Map member details by user_id and full_name + org
       const memberByUserId = new Map<string, any>();
@@ -931,7 +947,7 @@ export const collabRepository = {
       for (const m of (membershipsData as any[]) || []) {
         if (!m.user_id) continue;
         const profile = m.profile;
-        const org = m.organization;
+        const org = m.organization || orgMap.get(m.organization_id);
         const matchedMem = memberByUserId.get(m.user_id) || memberByOrgAndName.get(`${m.organization_id}__${profile?.full_name?.toLowerCase().trim()}`);
 
         const key = `${m.organization_id}__${m.user_id}`;
@@ -956,11 +972,50 @@ export const collabRepository = {
         });
       }
 
-      // Sort by organization name and then full name
+      // Also include members from roster who are not in membershipsData (e.g. BCH members appointed in members table)
+      for (const mem of (membersData as any[]) || []) {
+        const uId = mem.user_id || mem.id;
+        const key = `${mem.organization_id}__${uId}`;
+        const keyByMemberId = `${mem.organization_id}__${mem.id}`;
+        if (seenKeys.has(key) || seenKeys.has(keyByMemberId)) continue;
+        seenKeys.add(key);
+        seenKeys.add(keyByMemberId);
+
+        const org = orgMap.get(mem.organization_id);
+        const p = (mem.position || '').toLowerCase();
+        const isBoardPosition = boardKeywords.some((kw) => p.includes(kw));
+
+        results.push({
+          userId: uId,
+          profileId: uId,
+          fullName: mem.full_name || 'Hội viên',
+          studentId: mem.student_id || null,
+          className: mem.class_name || null,
+          cohort: mem.cohort || null,
+          phone: mem.phone || null,
+          email: mem.email || '',
+          avatarUrl: null,
+          organizationId: mem.organization_id,
+          organizationName: org?.name || 'Đơn vị',
+          organizationCode: org?.code || 'ORG',
+          organizationType: org?.type || 'chi_hoi',
+          role: 'secretary' as OrganizationRole,
+          position: mem.position || (isBoardPosition ? 'Ủy viên BCH' : 'Hội viên'),
+        });
+      }
+
+      // Sort by organization name, then BCH first, then full name
       return results.sort((a, b) => {
-        const orgCompare = a.organizationName.localeCompare(b.organizationName);
+        const orgCompare = a.organizationName.localeCompare(b.organizationName, 'vi');
         if (orgCompare !== 0) return orgCompare;
-        return a.fullName.localeCompare(b.fullName);
+
+        const aIsBoard = boardKeywords.some((kw) => (a.position || '').toLowerCase().includes(kw)) || a.role === 'leader' || a.role === 'deputy' || a.role === 'treasurer' || a.role === 'secretary' || a.role === 'admin';
+        const bIsBoard = boardKeywords.some((kw) => (b.position || '').toLowerCase().includes(kw)) || b.role === 'leader' || b.role === 'deputy' || b.role === 'treasurer' || b.role === 'secretary' || b.role === 'admin';
+
+        if (aIsBoard && !bIsBoard) return -1;
+        if (!aIsBoard && bIsBoard) return 1;
+
+        return a.fullName.localeCompare(b.fullName, 'vi');
       });
     } catch (err) {
       console.error('Error getting collab plan personnel:', err);

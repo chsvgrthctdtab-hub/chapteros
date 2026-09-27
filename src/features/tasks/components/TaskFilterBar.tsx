@@ -285,7 +285,7 @@ export function TaskFilterBar({
                 <SelectItem value="unassigned">Chưa phân công</SelectItem>
                 {assignees.map((u) => (
                   <SelectItem key={u.profileId} value={u.profileId}>
-                    {u.fullName} {u.studentId ? `(${u.studentId})` : ''}
+                    {u.isBoard ? '⭐ ' : ''}{u.fullName} {u.studentId ? `(${u.studentId})` : ''} {u.position ? `— ${u.position}` : ''}
                   </SelectItem>
                 ))}
               </SelectContent>
