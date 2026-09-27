@@ -165,11 +165,11 @@ function mapRawToTaskListItem(row: RawTaskRow): TaskListItem {
     assignee: row.assignee
       ? {
           id: row.assignee.id,
-          fullName: row.assignee.full_name,
-          email: row.assignee.email,
-          avatarUrl: row.assignee.avatar_url,
-          studentId: row.assignee.student_id,
-          phone: row.assignee.phone,
+          fullName: (row.assignee as any).fullName || row.assignee.full_name || 'Hội viên',
+          email: row.assignee.email || '',
+          avatarUrl: (row.assignee as any).avatarUrl || row.assignee.avatar_url || null,
+          studentId: (row.assignee as any).studentId || row.assignee.student_id || null,
+          phone: row.assignee.phone || null,
           createdAt: '',
           updatedAt: '',
         }
@@ -177,9 +177,9 @@ function mapRawToTaskListItem(row: RawTaskRow): TaskListItem {
     creator: row.creator
       ? {
           id: row.creator.id,
-          fullName: row.creator.full_name,
-          email: row.creator.email,
-          avatarUrl: row.creator.avatar_url,
+          fullName: (row.creator as any).fullName || row.creator.full_name || 'Quản trị viên',
+          email: row.creator.email || '',
+          avatarUrl: (row.creator as any).avatarUrl || row.creator.avatar_url || null,
           createdAt: '',
           updatedAt: '',
         }
@@ -192,7 +192,7 @@ async function enrichTasksAssigneesFallback(rows: RawTaskRow[], organizationId?:
     const missingAssigneeIds = Array.from(
       new Set(
         rows
-          .filter((r) => r.assigned_to && !r.assignee)
+          .filter((r) => r.assigned_to && (!r.assignee || !r.assignee.full_name))
           .map((r) => r.assigned_to as string)
       )
     );
@@ -208,18 +208,16 @@ async function enrichTasksAssigneesFallback(rows: RawTaskRow[], organizationId?:
     const profileMap = new Map<string, any>();
     (profilesData || []).forEach((p: any) => profileMap.set(p.id, p));
 
-    // 2. Check members table for roster members (by id and user_id)
-    let memberQuery = supabase
-      .from('members')
-      .select('id, user_id, full_name, email, phone, student_id');
-
-    if (organizationId) {
-      memberQuery = memberQuery.eq('organization_id', organizationId);
-    }
-
+    // 2. Check members table for roster members (create two separate clean queries to avoid query builder mutation)
     const [{ data: byId }, { data: byUserId }] = await Promise.all([
-      memberQuery.in('id', missingAssigneeIds),
-      memberQuery.in('user_id', missingAssigneeIds),
+      supabase
+        .from('members')
+        .select('id, user_id, full_name, email, phone, student_id, position')
+        .in('id', missingAssigneeIds),
+      supabase
+        .from('members')
+        .select('id, user_id, full_name, email, phone, student_id, position')
+        .in('user_id', missingAssigneeIds),
     ]);
 
     const memberMap = new Map<string, any>();
@@ -234,7 +232,7 @@ async function enrichTasksAssigneesFallback(rows: RawTaskRow[], organizationId?:
 
     // Populate rows
     rows.forEach((r) => {
-      if (r.assigned_to && !r.assignee) {
+      if (r.assigned_to && (!r.assignee || !r.assignee.full_name)) {
         const prof = profileMap.get(r.assigned_to);
         const mem = memberMap.get(r.assigned_to);
 

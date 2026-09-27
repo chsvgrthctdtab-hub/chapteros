@@ -45,7 +45,7 @@ export function TaskTable({
               <th className="py-3 px-3.5 min-w-[200px]">Nhiệm vụ</th>
               <th className="py-3 px-2 text-center w-28">Trạng thái</th>
               <th className="py-3 px-2 text-center w-24">Ưu tiên</th>
-              <th className="py-3 px-2 text-center w-14">Phụ trách</th>
+              <th className="py-3 px-2.5 text-left w-36 sm:w-44">Phụ trách</th>
               <th className="py-3 px-2.5 max-w-[150px]">Hoạt động</th>
               <th className="py-3 px-2.5 text-center w-32">Hạn chót</th>
               <th className="py-3 px-2.5 text-center w-24">Tiến độ</th>
@@ -117,11 +117,11 @@ export function TaskTable({
                     <TaskPriorityBadge priority={task.priority} size="sm" />
                   </td>
 
-                  {/* Assignee Column: Compact Avatar with Tooltip */}
-                  <td className="py-2.5 px-2 text-center align-middle">
+                  {/* Assignee Column: Avatar + Full Name */}
+                  <td className="py-2.5 px-2.5 align-middle">
                     {task.assignee ? (
                       <div
-                        className="inline-flex items-center justify-center group/avatar cursor-help"
+                        className="flex items-center gap-2 group/avatar cursor-help min-w-0"
                         title={`${task.assignee.fullName}${task.assignee.studentId ? ` (${task.assignee.studentId})` : ''}`}
                       >
                         {task.assignee.avatarUrl ? (
@@ -129,22 +129,26 @@ export function TaskTable({
                             src={task.assignee.avatarUrl}
                             alt={task.assignee.fullName}
                             referrerPolicy="no-referrer"
-                            className="w-6 h-6 rounded-full object-cover shrink-0 border border-hairline shadow-xs hover:scale-110 transition-transform"
+                            className="w-6 h-6 rounded-full object-cover shrink-0 border border-hairline shadow-xs group-hover/avatar:scale-105 transition-transform"
                           />
                         ) : (
-                          <div className="w-6 h-6 rounded-full bg-[#e6f0ff] text-signal-blue flex items-center justify-center font-bold text-[11px] shrink-0 border border-[#d4e4fa] shadow-xs hover:scale-110 transition-transform">
+                          <div className="w-6 h-6 rounded-full bg-[#e6f0ff] text-signal-blue flex items-center justify-center font-bold text-[11px] shrink-0 border border-[#d4e4fa] shadow-xs group-hover/avatar:scale-105 transition-transform">
                             {task.assignee.fullName?.charAt(0) || 'U'}
                           </div>
                         )}
+                        <span className="font-medium text-ink-navy text-xs truncate max-w-[120px] group-hover/avatar:text-signal-blue transition-colors">
+                          {task.assignee.fullName}
+                        </span>
                       </div>
                     ) : (
                       <div
-                        className="inline-flex items-center justify-center text-mist-gray"
+                        className="flex items-center gap-1.5 text-mist-gray"
                         title="Chưa phân công phụ trách"
                       >
-                        <div className="w-6 h-6 rounded-full border border-dashed border-hairline flex items-center justify-center text-[10px] text-mist-gray">
+                        <div className="w-6 h-6 rounded-full border border-dashed border-hairline flex items-center justify-center text-[10px] text-mist-gray shrink-0">
                           <User className="w-3 h-3" />
                         </div>
+                        <span className="text-[11px] text-mist-gray italic truncate">Chưa giao</span>
                       </div>
                     )}
                   </td>

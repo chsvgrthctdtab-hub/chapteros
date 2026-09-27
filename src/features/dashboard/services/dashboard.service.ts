@@ -486,21 +486,26 @@ export async function fetchUpcomingTasks(
     }
     data = fallbackData || [];
 
-    const missingIds = Array.from(new Set(data.filter((r) => r.assigned_to && !r.assignee).map((r) => r.assigned_to)));
+    const missingIds = Array.from(new Set(data.filter((r) => r.assigned_to && (!r.assignee || !r.assignee.full_name)).map((r) => r.assigned_to)));
     if (missingIds.length > 0) {
       try {
-        const [{ data: profs }, { data: mems }] = await Promise.all([
+        const [{ data: profs }, { data: memsById }, { data: memsByUserId }] = await Promise.all([
           (supabase.from('profiles') as any).select('id, full_name, avatar_url, student_id').in('id', missingIds),
           (supabase.from('members') as any).select('id, user_id, full_name, student_id').in('id', missingIds),
+          (supabase.from('members') as any).select('id, user_id, full_name, student_id').in('user_id', missingIds),
         ]);
         const profMap = new Map<string, any>();
         (profs || []).forEach((p: any) => profMap.set(p.id, p));
-        (mems || []).forEach((m: any) => {
+        (memsById || []).forEach((m: any) => {
+          if (!profMap.has(m.id)) profMap.set(m.id, m);
+          if (m.user_id && !profMap.has(m.user_id)) profMap.set(m.user_id, m);
+        });
+        (memsByUserId || []).forEach((m: any) => {
           if (!profMap.has(m.id)) profMap.set(m.id, m);
           if (m.user_id && !profMap.has(m.user_id)) profMap.set(m.user_id, m);
         });
         data.forEach((r) => {
-          if (r.assigned_to && !r.assignee) {
+          if (r.assigned_to && (!r.assignee || !r.assignee.full_name)) {
             const found = profMap.get(r.assigned_to);
             if (found) {
               r.assignee = {
@@ -633,21 +638,26 @@ export async function fetchOverdueTasks(
     }
     data = fallbackData || [];
 
-    const missingIds = Array.from(new Set(data.filter((r) => r.assigned_to && !r.assignee).map((r) => r.assigned_to)));
+    const missingIds = Array.from(new Set(data.filter((r) => r.assigned_to && (!r.assignee || !r.assignee.full_name)).map((r) => r.assigned_to)));
     if (missingIds.length > 0) {
       try {
-        const [{ data: profs }, { data: mems }] = await Promise.all([
+        const [{ data: profs }, { data: memsById }, { data: memsByUserId }] = await Promise.all([
           (supabase.from('profiles') as any).select('id, full_name, avatar_url').in('id', missingIds),
           (supabase.from('members') as any).select('id, user_id, full_name').in('id', missingIds),
+          (supabase.from('members') as any).select('id, user_id, full_name').in('user_id', missingIds),
         ]);
         const profMap = new Map<string, any>();
         (profs || []).forEach((p: any) => profMap.set(p.id, p));
-        (mems || []).forEach((m: any) => {
+        (memsById || []).forEach((m: any) => {
+          if (!profMap.has(m.id)) profMap.set(m.id, m);
+          if (m.user_id && !profMap.has(m.user_id)) profMap.set(m.user_id, m);
+        });
+        (memsByUserId || []).forEach((m: any) => {
           if (!profMap.has(m.id)) profMap.set(m.id, m);
           if (m.user_id && !profMap.has(m.user_id)) profMap.set(m.user_id, m);
         });
         data.forEach((r) => {
-          if (r.assigned_to && !r.assignee) {
+          if (r.assigned_to && (!r.assignee || !r.assignee.full_name)) {
             const found = profMap.get(r.assigned_to);
             if (found) {
               r.assignee = {
