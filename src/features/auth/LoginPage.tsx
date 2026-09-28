@@ -49,20 +49,20 @@ export function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen w-full flex flex-col justify-between items-center p-4 sm:p-6 bg-cloud text-ink-navy font-sans selection:bg-[#e6f0ff] selection:text-signal-blue">
+    <div className="min-h-screen w-full flex flex-col justify-between items-center p-4 sm:p-6 bg-[#f8fafd] text-[#0b3558] font-sans selection:bg-[#e8f0fe] selection:text-[#1a73e8]">
       <div />
 
       {/* Main Container */}
       <main className="w-full max-w-md my-auto animate-in fade-in zoom-in-95 duration-200">
-        <div className="bg-white rounded-3xl border border-hairline p-8 sm:p-10 shadow-xs space-y-8">
+        <div className="bg-white rounded-[28px] border border-[#e2e8f0] p-8 sm:p-10 shadow-xs space-y-8">
           {/* Brand header */}
           <div className="text-center space-y-3">
-            <div className="inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-signal-blue text-white shadow-sm ring-4 ring-[#e6f0ff]">
-              <GraduationCap strokeWidth={1.5} className="h-7 w-7" />
+            <div className="inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-[#e8f0fe] text-[#1a73e8] shadow-xs ring-4 ring-[#e8f0fe]/60">
+              <GraduationCap size={28} className="text-[#1a73e8]" />
             </div>
             <div className="space-y-1">
-              <h1 className="text-2xl font-bold tracking-tight text-ink-navy">ChapterOS</h1>
-              <p className="text-xs text-mist-gray max-w-xs mx-auto leading-relaxed">
+              <h1 className="text-2xl font-bold tracking-tight text-[#0b3558]">ChapterOS</h1>
+              <p className="text-xs text-[#64748b] max-w-xs mx-auto leading-relaxed">
                 Nền tảng vận hành và quản trị số dành cho Ban Chấp Hành các Đơn vị sinh viên
               </p>
             </div>
@@ -70,7 +70,7 @@ export function LoginPage() {
 
           {/* Database Missing Warning Banner */}
           {!isSupabaseConfigured && (
-            <div className="p-3.5 rounded-2xl bg-amber-50/80 border border-amber-200/70 text-amber-900 text-xs space-y-1">
+            <div className="p-3.5 rounded-2xl bg-amber-50 border border-amber-200 text-amber-900 text-xs space-y-1">
               <div className="flex items-center gap-1.5 font-semibold text-amber-800">
                 <Database className="h-4 w-4 shrink-0" />
                 <span>Chưa cấu hình Supabase Auth</span>
@@ -96,10 +96,10 @@ export function LoginPage() {
               type="button"
               onClick={handleGoogleSignIn}
               disabled={isGoogleLoading}
-              className="w-full h-12 text-sm font-semibold rounded-2xl bg-ink-navy hover:bg-black text-white shadow-xs hover:shadow-sm transition-all flex items-center justify-center gap-3 cursor-pointer disabled:opacity-70"
+              className="w-full h-11 text-sm font-semibold rounded-full bg-white hover:bg-[#f0f4f9] text-[#1f2937] border border-[#dadce0] shadow-xs hover:shadow-sm transition-all flex items-center justify-center gap-3 cursor-pointer disabled:opacity-70"
             >
               {isGoogleLoading ? (
-                <Loader2 className="h-4 w-4 animate-spin text-mist-gray" />
+                <Loader2 className="h-4 w-4 animate-spin text-[#64748b]" />
               ) : (
                 <svg className="h-4 w-4 shrink-0" viewBox="0 0 24 24">
                   <path
@@ -123,13 +123,13 @@ export function LoginPage() {
               <span>{isGoogleLoading ? 'Đang xác thực Google...' : 'Đăng nhập với Google'}</span>
             </Button>
 
-            <p className="text-[11px] text-center text-mist-gray leading-relaxed px-4">
+            <p className="text-[11px] text-center text-[#64748b] leading-relaxed px-4">
               Sử dụng tài khoản Google trường hoặc email cá nhân để truy cập không gian làm việc.
             </p>
           </div>
 
           {/* Security Footnote */}
-          <div className="pt-4 border-t border-hairline flex items-center justify-center gap-1.5 text-xs text-slate-gray font-medium">
+          <div className="pt-4 border-t border-[#e2e8f0] flex items-center justify-center gap-1.5 text-xs text-[#64748b] font-medium">
             <ShieldCheck className="h-4 w-4 text-emerald-600 shrink-0" />
             <span>Bảo mật qua Google OAuth &amp; Supabase RLS</span>
           </div>
@@ -137,9 +137,9 @@ export function LoginPage() {
       </main>
 
       {/* Footer */}
-      <footer className="w-full max-w-sm text-center py-4 text-[11px] text-mist-gray font-medium space-y-1">
+      <footer className="w-full max-w-sm text-center py-4 text-[11px] text-[#94a3b8] font-medium space-y-1">
         <p>&copy; {new Date().getFullYear()} ChapterOS. All rights reserved.</p>
-        <p className="text-mist-gray">Phát triển bởi <span className="text-slate-gray font-semibold">tienthuan_0909</span></p>
+        <p className="text-[#94a3b8]">Phát triển bởi <span className="text-[#64748b] font-semibold">tienthuan_0909</span></p>
       </footer>
     </div>
   );

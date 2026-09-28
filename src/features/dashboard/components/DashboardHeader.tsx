@@ -156,14 +156,14 @@ export function DashboardHeader({
         </div>
       </div>
 
-      {/* Quick Actions Bar for Board & Permitted Roles */}
+      {/* Quick Actions Bar for Board & Permitted Roles — NotebookLM pastel tonal style */}
       {hasAnyQuickAction && (
-        <div className="p-3.5 sm:px-5 sm:py-3.5 rounded-2xl bg-[#0b3558] text-white shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-3">
+        <div className="p-3.5 sm:px-5 sm:py-3.5 rounded-2xl bg-[#edf2fa] border border-[#d2e3fc] text-[#041e49] shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-3">
           <div className="flex items-center gap-2.5 text-xs sm:text-sm">
-            <span className="flex h-2 w-2 rounded-full bg-emerald-400"></span>
-            <span className="font-semibold text-white">Thao tác nhanh Ban Chấp Hành</span>
-            <span className="text-white/40 hidden sm:inline">•</span>
-            <span className="text-white/70 text-xs sm:text-sm hidden sm:inline">Phím tắt tác vụ nhanh</span>
+            <span className="flex h-2 w-2 rounded-full bg-[#1a73e8]"></span>
+            <span className="font-semibold text-[#041e49]">Thao tác nhanh Ban Chấp Hành</span>
+            <span className="text-[#041e49]/30 hidden sm:inline">•</span>
+            <span className="text-[#444746] text-xs sm:text-sm hidden sm:inline">Phím tắt tác vụ nhanh</span>
           </div>
 
           <div className="flex items-center gap-2 flex-wrap">
@@ -171,9 +171,9 @@ export function DashboardHeader({
               <Link to="/members">
                 <Button
                   size="sm"
-                  className="bg-white/10 hover:bg-white/20 text-white text-xs sm:text-sm h-8 px-3.5 border border-white/15 rounded-full cursor-pointer font-medium"
+                  className="bg-white hover:bg-[#dbeafe] text-[#1e293b] text-xs sm:text-sm h-8 px-3.5 border border-[#c2e7ff] rounded-full cursor-pointer font-medium shadow-2xs"
                 >
-                  <UserPlus size={15} className="mr-1.5 text-emerald-400" />
+                  <UserPlus size={15} className="mr-1.5 text-emerald-600" />
                   <span>Member</span>
                 </Button>
               </Link>
@@ -183,9 +183,9 @@ export function DashboardHeader({
               <Link to="/activities">
                 <Button
                   size="sm"
-                  className="bg-white/10 hover:bg-white/20 text-white text-xs sm:text-sm h-8 px-3.5 border border-white/15 rounded-full cursor-pointer font-medium"
+                  className="bg-white hover:bg-[#dbeafe] text-[#1e293b] text-xs sm:text-sm h-8 px-3.5 border border-[#c2e7ff] rounded-full cursor-pointer font-medium shadow-2xs"
                 >
-                  <CalendarPlus size={15} className="mr-1.5 text-sky-400" />
+                  <CalendarPlus size={15} className="mr-1.5 text-sky-600" />
                   <span>Activity</span>
                 </Button>
               </Link>
@@ -195,9 +195,9 @@ export function DashboardHeader({
               <Link to="/tasks">
                 <Button
                   size="sm"
-                  className="bg-white/10 hover:bg-white/20 text-white text-xs sm:text-sm h-8 px-3.5 border border-white/15 rounded-full cursor-pointer font-medium"
+                  className="bg-white hover:bg-[#dbeafe] text-[#1e293b] text-xs sm:text-sm h-8 px-3.5 border border-[#c2e7ff] rounded-full cursor-pointer font-medium shadow-2xs"
                 >
-                  <CheckSquare size={15} className="mr-1.5 text-amber-400" />
+                  <CheckSquare size={15} className="mr-1.5 text-amber-600" />
                   <span>Task</span>
                 </Button>
               </Link>
@@ -219,9 +219,9 @@ export function DashboardHeader({
               <Link to="/documents">
                 <Button
                   size="sm"
-                  className="bg-white/10 hover:bg-white/20 text-white text-xs sm:text-sm h-8 px-3.5 border border-white/15 rounded-full cursor-pointer font-medium"
+                  className="bg-white hover:bg-[#dbeafe] text-[#1e293b] text-xs sm:text-sm h-8 px-3.5 border border-[#c2e7ff] rounded-full cursor-pointer font-medium shadow-2xs"
                 >
-                  <FileUp size={15} className="mr-1.5 text-teal-400" />
+                  <FileUp size={15} className="mr-1.5 text-teal-600" />
                   <span>Document</span>
                 </Button>
               </Link>

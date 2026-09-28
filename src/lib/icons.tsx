@@ -29,12 +29,27 @@ export interface AppIconProps extends React.HTMLAttributes<HTMLSpanElement> {
 export type AppIconComponent = React.FC<Omit<AppIconProps, 'name'>>;
 
 const AppIcon = React.forwardRef<HTMLSpanElement, AppIconProps>(
-  ({ name, size = 18, filled = false, weight = 400, className, style, strokeWidth: _sw, ...props }, ref) => {
-    const sizePx = `${size}px`;
+  ({ name, size, filled = false, weight = 400, className, style, strokeWidth: _sw, ...props }, ref) => {
+    let iconSize = size;
+    if (!iconSize && className) {
+      if (className.includes('w-3') || className.includes('h-3')) iconSize = 12;
+      else if (className.includes('w-3.5') || className.includes('h-3.5')) iconSize = 14;
+      else if (className.includes('w-4') || className.includes('h-4')) iconSize = 16;
+      else if (className.includes('w-5') || className.includes('h-5')) iconSize = 20;
+      else if (className.includes('w-6') || className.includes('h-6')) iconSize = 24;
+      else if (className.includes('w-7') || className.includes('h-7')) iconSize = 28;
+      else if (className.includes('w-8') || className.includes('h-8')) iconSize = 32;
+    }
+    const finalSize = iconSize || 18;
+    const sizePx = `${finalSize}px`;
+
     return (
       <span
         ref={ref}
-        className={cn('material-symbols-rounded select-none shrink-0 transition-all duration-150', className)}
+        className={cn(
+          'material-symbols-rounded select-none shrink-0 inline-flex items-center justify-center leading-none text-center align-middle',
+          className
+        )}
         style={{
           fontSize: sizePx,
           width: sizePx,

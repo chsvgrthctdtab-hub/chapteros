@@ -99,25 +99,25 @@ export function DashboardCalendarPreview({ activities }: DashboardCalendarPrevie
   const dayNames = ['CN', 'T2', 'T3', 'T4', 'T5', 'T6', 'T7'];
 
   return (
-    <Card className="rounded-2xl border-hairline shadow-sm bg-white">
-      <CardHeader className="p-4 sm:p-5 pb-3 border-b border-hairline">
+    <Card className="rounded-2xl border border-[#e2e8f0] shadow-xs bg-white">
+      <CardHeader className="p-4 sm:p-5 pb-3 border-b border-[#e2e8f0]">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-lg bg-[#e6f0ff] text-signal-blue flex items-center justify-center">
-              <CalendarIcon className="w-4 h-4" />
+            <div className="w-9 h-9 rounded-xl bg-[#e8f0fe] text-[#1a73e8] flex items-center justify-center">
+              <CalendarIcon className="w-4.5 h-4.5" />
             </div>
             <div>
-              <CardTitle className="text-base sm:text-lg font-bold text-ink-navy leading-tight">
+              <CardTitle className="text-base sm:text-lg font-bold text-[#0b3558] leading-tight">
                 Lịch sự kiện & Hoạt động
               </CardTitle>
-              <p className="text-xs text-slate-gray mt-0.5">
+              <p className="text-xs text-[#64748b] mt-0.5">
                 Lịch biểu trực quan các phong trào Chi hội
               </p>
             </div>
           </div>
 
           <Link to="/activities">
-            <Button variant="ghost" size="sm" className="text-xs sm:text-sm font-semibold text-signal-blue hover:text-signal-blue/80 hover:bg-pebble h-8 px-2.5">
+            <Button variant="ghost" size="sm" className="text-xs sm:text-sm font-semibold text-[#1a73e8] hover:text-[#1a73e8] hover:bg-[#f0f4f9] rounded-full h-8 px-3">
               <span>Mở rộng</span>
               <ArrowRight className="w-3.5 h-3.5 ml-1" />
             </Button>
@@ -128,7 +128,7 @@ export function DashboardCalendarPreview({ activities }: DashboardCalendarPrevie
       <CardContent className="p-4 sm:p-5 pt-3 space-y-3.5">
         {/* Month Navigation */}
         <div className="flex items-center justify-between">
-          <span className="text-xs sm:text-sm font-bold text-ink-navy">
+          <span className="text-xs sm:text-sm font-bold text-[#0b3558]">
             Tháng {currentMonth.format('MM/YYYY')}
           </span>
 
@@ -136,7 +136,7 @@ export function DashboardCalendarPreview({ activities }: DashboardCalendarPrevie
             <Button
               variant="outline"
               size="icon"
-              className="w-7 h-7 text-ink-navy border-hairline rounded-lg hover:bg-pebble"
+              className="w-7 h-7 text-[#1e293b] border-[#e2e8f0] rounded-full hover:bg-[#f0f4f9]"
               onClick={() => setCurrentMonth((prev) => prev.subtract(1, 'month'))}
               title="Tháng trước"
             >
@@ -145,7 +145,7 @@ export function DashboardCalendarPreview({ activities }: DashboardCalendarPrevie
             <Button
               variant="outline"
               size="sm"
-              className="text-xs h-7 px-2 font-semibold text-ink-navy border-hairline rounded-lg hover:bg-pebble"
+              className="text-xs h-7 px-3 font-semibold text-[#1e293b] border-[#e2e8f0] rounded-full hover:bg-[#f0f4f9]"
               onClick={() => {
                 const now = dayjs();
                 setCurrentMonth(now);
@@ -157,7 +157,7 @@ export function DashboardCalendarPreview({ activities }: DashboardCalendarPrevie
             <Button
               variant="outline"
               size="icon"
-              className="w-7 h-7 text-ink-navy border-hairline rounded-lg hover:bg-pebble"
+              className="w-7 h-7 text-[#1e293b] border-[#e2e8f0] rounded-full hover:bg-[#f0f4f9]"
               onClick={() => setCurrentMonth((prev) => prev.add(1, 'month'))}
               title="Tháng sau"
             >

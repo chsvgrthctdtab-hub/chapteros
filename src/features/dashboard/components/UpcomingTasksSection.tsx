@@ -27,25 +27,25 @@ export function UpcomingTasksSection({
   const hasTasks = tasks && tasks.length > 0;
 
   return (
-    <Card className="rounded-2xl border-hairline shadow-sm bg-white">
-      <CardHeader className="p-4 sm:p-5 pb-3 border-b border-hairline">
+    <Card className="rounded-2xl border border-[#e2e8f0] shadow-xs bg-white">
+      <CardHeader className="p-4 sm:p-5 pb-3 border-b border-[#e2e8f0]">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-lg bg-amber-50 text-amber-700 flex items-center justify-center">
-              <CheckSquare className="w-4 h-4" />
+            <div className="w-9 h-9 rounded-xl bg-[#eff6ff] text-[#2e64de] flex items-center justify-center">
+              <CheckSquare className="w-4.5 h-4.5" />
             </div>
             <div>
-              <CardTitle className="text-base sm:text-lg font-bold text-ink-navy leading-tight">
+              <CardTitle className="text-base sm:text-lg font-bold text-[#0b3558] leading-tight">
                 Trung tâm Công việc (Task Center)
               </CardTitle>
-              <p className="text-xs text-slate-gray mt-0.5">
+              <p className="text-xs text-[#64748b] mt-0.5">
                 Các nhiệm vụ ưu tiên, tiến độ và gần hạn chót nhất
               </p>
             </div>
           </div>
 
           <Link to="/tasks">
-            <Button variant="ghost" size="sm" className="text-xs sm:text-sm font-semibold text-signal-blue hover:text-signal-blue/80 hover:bg-pebble h-8 px-2.5">
+            <Button variant="ghost" size="sm" className="text-xs sm:text-sm font-semibold text-[#1a73e8] hover:text-[#1a73e8] hover:bg-[#f0f4f9] rounded-full h-8 px-3">
               <span>Xem tất cả</span>
               <ArrowRight className="w-3.5 h-3.5 ml-1" />
             </Button>

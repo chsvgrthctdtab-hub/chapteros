@@ -20,25 +20,25 @@ export function UpcomingActivitiesSection({
   const hasActivities = activities && activities.length > 0;
 
   return (
-    <Card className="rounded-2xl border-hairline shadow-sm bg-white">
-      <CardHeader className="p-4 sm:p-5 pb-3 border-b border-hairline">
+    <Card className="rounded-2xl border border-[#e2e8f0] shadow-xs bg-white">
+      <CardHeader className="p-4 sm:p-5 pb-3 border-b border-[#e2e8f0]">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-lg bg-[#e6f0ff] text-signal-blue flex items-center justify-center">
-              <CalendarCheck className="w-4 h-4" />
+            <div className="w-9 h-9 rounded-xl bg-[#f0fdfa] text-[#16a6d5] flex items-center justify-center">
+              <CalendarCheck className="w-4.5 h-4.5" />
             </div>
             <div>
-              <CardTitle className="text-base sm:text-lg font-bold text-ink-navy leading-tight">
+              <CardTitle className="text-base sm:text-lg font-bold text-[#0b3558] leading-tight">
                 Hoạt động & Sự kiện sắp tới
               </CardTitle>
-              <p className="text-xs text-slate-gray mt-0.5">
+              <p className="text-xs text-[#64748b] mt-0.5">
                 Các sự kiện, phong trào sắp và đang diễn ra
               </p>
             </div>
           </div>
 
           <Link to="/activities">
-            <Button variant="ghost" size="sm" className="text-xs sm:text-sm font-semibold text-signal-blue hover:text-signal-blue/80 hover:bg-pebble h-8 px-2.5">
+            <Button variant="ghost" size="sm" className="text-xs sm:text-sm font-semibold text-[#1a73e8] hover:text-[#1a73e8] hover:bg-[#f0f4f9] rounded-full h-8 px-3">
               <span>Xem tất cả</span>
               <ArrowRight className="w-3.5 h-3.5 ml-1" />
             </Button>

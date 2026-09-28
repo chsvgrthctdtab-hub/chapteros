@@ -12,18 +12,18 @@ export function WorkProgressCard({ tasks }: WorkProgressCardProps) {
   const hasData = total > 0;
 
   return (
-    <Card className="border-hairline shadow-sm rounded-2xl overflow-hidden bg-white">
-      <CardHeader className="p-4 sm:p-5 pb-3 border-b border-hairline">
+    <Card className="border border-[#e2e8f0] shadow-xs rounded-2xl overflow-hidden bg-white">
+      <CardHeader className="p-4 sm:p-5 pb-3 border-b border-[#e2e8f0]">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-lg bg-pebble text-ink-navy border border-hairline flex items-center justify-center">
-              <CheckSquare className="w-4 h-4" />
+            <div className="w-9 h-9 rounded-xl bg-[#eff6ff] text-[#2e64de] flex items-center justify-center">
+              <CheckSquare className="w-4.5 h-4.5" />
             </div>
             <div>
-              <CardTitle className="text-base sm:text-lg font-bold text-ink-navy leading-tight">
+              <CardTitle className="text-base sm:text-lg font-bold text-[#0b3558] leading-tight">
                 Work Progress
               </CardTitle>
-              <p className="text-xs text-slate-gray mt-0.5">
+              <p className="text-xs text-[#64748b] mt-0.5">
                 Completion rate & task health metrics
               </p>
             </div>
@@ -31,11 +31,11 @@ export function WorkProgressCard({ tasks }: WorkProgressCardProps) {
 
           {hasData ? (
             <div className="text-right">
-              <span className="text-lg sm:text-xl font-bold text-signal-blue tabular-nums">{completionRate}%</span>
-              <span className="text-[11px] text-slate-gray block -mt-0.5">completed</span>
+              <span className="text-lg sm:text-xl font-bold text-[#2e89f7] tabular-nums">{completionRate}%</span>
+              <span className="text-[11px] text-[#64748b] block -mt-0.5">completed</span>
             </div>
           ) : (
-            <span className="text-xs text-mist-gray italic">No tasks</span>
+            <span className="text-xs text-[#94a3b8] italic">No tasks</span>
           )}
         </div>
       </CardHeader>
@@ -45,8 +45,8 @@ export function WorkProgressCard({ tasks }: WorkProgressCardProps) {
         <div className="space-y-1.5">
           <Progress
             value={hasData ? completionRate : 0}
-            className="h-2 bg-pebble rounded-full border border-hairline/40"
-            indicatorClassName="bg-signal-blue"
+            className="h-2 bg-[#f0f4f9] rounded-full border border-[#e2e8f0]"
+            indicatorClassName="bg-[#2e89f7]"
           />
           <div className="flex items-center justify-between text-xs text-slate-gray">
             <span>

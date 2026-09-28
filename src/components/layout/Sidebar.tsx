@@ -37,11 +37,11 @@ const NAV_ICON_COLORS: Record<string, { icon: string; bg: string }> = {
   '/finance':     { icon: '#ce7918', bg: '#fffbeb' },
   '/documents':   { icon: '#c43d92', bg: '#fff1f2' },
   '/reports':     { icon: '#6858d2', bg: '#f5f3ff' },
-  '/terms':       { icon: '#475569', bg: '#f1f5f9' },
-  '/data-quality':{ icon: '#475569', bg: '#f1f5f9' },
-  '/audit-logs':  { icon: '#475569', bg: '#f1f5f9' },
-  '/integrations':{ icon: '#475569', bg: '#f1f5f9' },
-  '/settings':    { icon: '#475569', bg: '#f1f5f9' },
+  '/terms':       { icon: '#4f46e5', bg: '#eef2ff' },
+  '/data-quality':{ icon: '#059669', bg: '#ecfdf5' },
+  '/audit-logs':  { icon: '#e11d48', bg: '#ffe4e6' },
+  '/integrations':{ icon: '#7c3aed', bg: '#f5f3ff' },
+  '/settings':    { icon: '#0284c7', bg: '#e0f2fe' },
 };
 
 export interface NavItem {
@@ -94,41 +94,37 @@ function NavLinkItem({ item, collapsed, onCloseMobile }: NavLinkItemProps) {
             ? 'w-10 h-10 justify-center px-0 mx-auto rounded-xl'
             : 'w-full h-10 gap-3 px-2.5 rounded-xl',
           isActive
-            ? 'bg-[#e8f0fe]'
-            : 'hover:bg-[#f0f4f9]'
+            ? 'bg-[#e8f0fe] font-semibold text-[#1a73e8] shadow-xs'
+            : 'hover:bg-[#f0f4f9] text-[#475569]'
         )
       }
     >
       {({ isActive }) => (
         <>
-          {/* Icon container — tonal pill chuẩn Google */}
+          {/* Icon container — tonal pastel pill chuẩn Google NotebookLM */}
           <span
             className={cn(
-              'flex items-center justify-center shrink-0 rounded-lg transition-all duration-200',
-              collapsed ? 'w-7 h-7' : 'w-7 h-7'
+              'flex items-center justify-center shrink-0 rounded-xl transition-all duration-200 shadow-2xs',
+              collapsed ? 'w-8 h-8' : 'w-8 h-8',
+              isActive && 'ring-1.5 ring-[#2e89f7]/30'
             )}
             style={{
-              backgroundColor: isActive ? colors.bg : 'transparent',
-              color: isActive ? colors.icon : undefined,
+              backgroundColor: colors.bg,
+              color: colors.icon,
             }}
           >
             <IconComponent
               size={18}
-              className={cn(
-                'shrink-0 transition-all duration-200',
-                isActive
-                  ? ''
-                  : 'text-slate-gray group-hover:text-ink-navy'
-              )}
-              style={isActive ? { color: colors.icon } : undefined}
+              className="shrink-0 transition-transform duration-200 group-hover:scale-105"
+              style={{ color: colors.icon }}
             />
           </span>
 
           {/* Label */}
           <span
             className={cn(
-              'flex-1 truncate text-xs font-medium transition-all duration-200 ease-in-out origin-left whitespace-nowrap overflow-hidden',
-              isActive ? 'text-[#1a73e8] font-semibold' : 'text-slate-gray group-hover:text-ink-navy',
+              'flex-1 truncate text-xs transition-all duration-200 ease-in-out origin-left whitespace-nowrap overflow-hidden',
+              isActive ? 'text-[#1a73e8] font-bold' : 'text-[#334155] group-hover:text-[#0b3558] font-medium',
               collapsed
                 ? 'w-0 opacity-0 -translate-x-2.5 max-w-0 pointer-events-none'
                 : 'w-auto opacity-100 translate-x-0 max-w-[180px]'
@@ -195,7 +191,7 @@ export function Sidebar({ collapsed, onToggleCollapse, mobileOpen, onCloseMobile
       <aside
         id="app-sidebar"
         className={cn(
-          'fixed top-0 bottom-0 left-0 z-50 flex flex-col border-r border-[#e2e8f0] bg-white transition-all duration-200 ease-in-out lg:static shrink-0 select-none overflow-x-hidden',
+          'fixed top-0 bottom-0 left-0 z-50 flex flex-col border-r border-[#e2e8f0] bg-[#f8fafd] transition-all duration-200 ease-in-out lg:static shrink-0 select-none overflow-x-hidden',
           mobileOpen
             ? 'w-64 translate-x-0 shadow-2xl rounded-r-2xl'
             : '-translate-x-full lg:translate-x-0',
