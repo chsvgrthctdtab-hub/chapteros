@@ -37,8 +37,8 @@ export function ActivityKPIStrip({
       value: registeredCount,
       subtext: targetMembers > 0 ? `Chỉ tiêu: ${targetMembers}` : 'Tổng số đăng ký',
       icon: Users,
-      color: 'text-ink-navy',
-      badgeBg: 'bg-[#e6f0ff] text-signal-blue border-[#d4e4fa]',
+      color: 'text-[#0b3558]',
+      badgeBg: 'bg-[#fff7ed] text-[#d97706] border-transparent',
     },
     {
       id: 'kpi-present',
@@ -48,7 +48,7 @@ export function ActivityKPIStrip({
       subtext: `${registeredCount - presentCount} chưa điểm danh`,
       icon: CheckCircle2,
       color: 'text-emerald-700',
-      badgeBg: 'bg-emerald-50 text-emerald-800 border-emerald-200/80',
+      badgeBg: 'bg-emerald-50 text-emerald-800 border-transparent',
     },
     {
       id: 'kpi-rate',
@@ -57,8 +57,8 @@ export function ActivityKPIStrip({
       value: `${participationRate}%`,
       subtext: `${presentCount} / ${registeredCount} đã điểm danh`,
       icon: Percent,
-      color: 'text-signal-blue',
-      badgeBg: 'bg-[#e6f0ff] text-signal-blue border-[#d4e4fa]',
+      color: 'text-[#1a73e8]',
+      badgeBg: 'bg-[#e8f0fe] text-[#1a73e8] border-transparent',
     },
     {
       id: 'kpi-tasks',
@@ -67,8 +67,8 @@ export function ActivityKPIStrip({
       value: tasksCount ? `${tasksCount.completed}/${tasksCount.total}` : '0/0',
       subtext: tasksCount ? `${tasksCount.open} việc đang mở` : 'Tiến độ phân công',
       icon: CheckSquare,
-      color: 'text-purple-700',
-      badgeBg: 'bg-purple-50 text-purple-800 border-purple-200/80',
+      color: 'text-[#6858d2]',
+      badgeBg: 'bg-[#f5f3ff] text-[#6858d2] border-transparent',
     },
     {
       id: 'kpi-finance',
@@ -77,8 +77,8 @@ export function ActivityKPIStrip({
       value: financeSummary ? `${(financeSummary.balance / 1000).toLocaleString()}k` : '0k',
       subtext: financeSummary ? `Chi: ${(financeSummary.expense / 1000).toLocaleString()}k` : 'Kinh phí & thu chi',
       icon: DollarSign,
-      color: 'text-amber-700',
-      badgeBg: 'bg-amber-50 text-amber-800 border-amber-200/80',
+      color: 'text-[#ce7918]',
+      badgeBg: 'bg-[#fffbeb] text-[#ce7918] border-transparent',
     },
   ];
 
@@ -90,19 +90,19 @@ export function ActivityKPIStrip({
           <div
             key={kpi.id}
             id={kpi.id}
-            className="bg-white p-3.5 rounded-2xl border border-hairline shadow-sm hover:shadow-md transition-shadow duration-200 flex flex-col justify-between"
+            className="bg-white p-3.5 rounded-2xl border border-[#e2e8f0] shadow-xs hover:border-[#b8cce0] hover:shadow-sm transition-all duration-200 flex flex-col justify-between"
           >
             <div className="flex items-center justify-between gap-1.5 mb-1.5">
-              <span className="text-[11px] font-semibold text-slate-gray uppercase tracking-wider truncate">{kpi.label}</span>
+              <span className="text-[11px] font-semibold text-[#64748b] uppercase tracking-wider truncate">{kpi.label}</span>
               <div className={cn('p-1.5 rounded-xl border shrink-0', kpi.badgeBg)}>
-                <Icon className="w-3.5 h-3.5" />
+                <Icon size={15} />
               </div>
             </div>
             <div>
               <div className={cn('text-xl font-bold tracking-tight tabular-nums', kpi.color)}>
                 {kpi.value}
               </div>
-              <p className="text-[11px] text-mist-gray font-normal truncate mt-0.5">
+              <p className="text-[11px] text-[#64748b] font-normal truncate mt-0.5">
                 {kpi.subtext}
               </p>
             </div>

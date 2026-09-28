@@ -67,30 +67,30 @@ export function TaskFilterBar({
   const hasActiveFilters = activeFilterCount > 0;
 
   return (
-    <div className="bg-white rounded-2xl border border-hairline shadow-xs overflow-hidden">
+    <div className="bg-white rounded-2xl border border-[#e2e8f0] shadow-xs overflow-hidden">
       {/* Top Toolbar: Search + Mobile Filter Toggle + Sort + View Switcher */}
-      <div className="p-2.5 sm:p-3 flex flex-col md:flex-row items-stretch md:items-center justify-between gap-2 sm:gap-2.5 border-b border-hairline">
+      <div className="p-2.5 sm:p-3 flex flex-col md:flex-row items-stretch md:items-center justify-between gap-2 sm:gap-2.5 border-b border-[#e2e8f0]">
         {/* Left: Search input */}
         <div className="flex items-center gap-2 flex-1 min-w-0">
           <div className="relative flex-1 min-w-[200px] max-w-lg">
-            <Search className="w-4 h-4 text-mist-gray absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
+            <Search size={15} className="text-[#94a3b8] absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
             <input
               type="text"
               id="task-search-input"
               value={filters.search || ''}
               onChange={(e) => onFilterChange({ search: e.target.value, page: 1 })}
               placeholder="Tìm theo tên nhiệm vụ, mã hoặc nội dung..."
-              className="w-full pl-9 pr-8 h-9 text-xs bg-cloud border border-hairline rounded-lg text-ink-navy placeholder:text-mist-gray focus:bg-white focus:outline-hidden focus:ring-2 focus:ring-signal-blue/20 focus:border-signal-blue transition-all font-medium"
+              className="w-full pl-9 pr-8 h-9 text-xs bg-[#f8fafd] border border-[#e2e8f0] rounded-full text-[#1e293b] placeholder:text-[#94a3b8] hover:border-[#b8cce0] hover:bg-white focus:bg-white focus:outline-hidden focus:ring-2 focus:ring-[#2e89f7]/20 focus:border-[#2e89f7] transition-all font-medium"
             />
             {filters.search && (
               <button
                 type="button"
                 id="clear-search-btn"
                 onClick={() => onFilterChange({ search: '', page: 1 })}
-                className="absolute right-2.5 top-1/2 -translate-y-1/2 text-mist-gray hover:text-ink-navy p-0.5 rounded-md cursor-pointer"
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-[#94a3b8] hover:text-[#1e293b] p-0.5 rounded-full cursor-pointer"
                 title="Xóa tìm kiếm"
               >
-                <X className="w-3.5 h-3.5" />
+                <X size={14} />
               </button>
             )}
           </div>
@@ -101,16 +101,16 @@ export function TaskFilterBar({
             id="mobile-filters-toggle-btn"
             onClick={() => setMobileFiltersOpen(!mobileFiltersOpen)}
             className={cn(
-              'md:hidden inline-flex items-center gap-1.5 h-9 px-3 rounded-lg border text-xs font-medium transition-colors cursor-pointer shrink-0',
+              'md:hidden inline-flex items-center gap-1.5 h-9 px-3.5 rounded-full border text-xs font-medium transition-colors cursor-pointer shrink-0',
               mobileFiltersOpen || hasActiveFilters
-                ? 'bg-[#e6f0ff] border-[#d4e4fa] text-signal-blue'
-                : 'bg-white border-hairline text-slate-gray hover:bg-pebble'
+                ? 'bg-[#e8f0fe] border-[#c2e7ff] text-[#1a73e8]'
+                : 'bg-white border-[#e2e8f0] text-[#64748b] hover:bg-[#f0f4f9]'
             )}
           >
-            <SlidersHorizontal className="w-3.5 h-3.5" />
+            <SlidersHorizontal size={14} />
             <span>Bộ lọc</span>
             {activeFilterCount > 0 && (
-              <span className="inline-flex items-center justify-center h-4 w-4 rounded-full bg-signal-blue text-[10px] text-white font-bold tabular-nums">
+              <span className="inline-flex items-center justify-center h-4 w-4 rounded-full bg-[#2e89f7] text-[10px] text-white font-bold tabular-nums">
                 {activeFilterCount}
               </span>
             )}
@@ -120,8 +120,8 @@ export function TaskFilterBar({
         {/* Right: Sort + View Switcher + Actions */}
         <div className="flex items-center gap-2 justify-between md:justify-end shrink-0 flex-wrap sm:flex-nowrap">
           {/* Sort Selector */}
-          <div className="flex items-center gap-1.5 bg-cloud border border-hairline rounded-lg px-2 h-9 text-xs text-ink-navy shrink-0">
-            <ArrowUpDown className="w-3.5 h-3.5 text-mist-gray shrink-0" />
+          <div className="flex items-center gap-1.5 bg-[#f8fafd] border border-[#e2e8f0] rounded-full px-2.5 h-9 text-xs text-[#1e293b] shrink-0">
+            <ArrowUpDown size={14} className="text-[#94a3b8] shrink-0" />
             <Select
               value={`${filters.sortBy || 'due_date'}_${filters.sortOrder || 'asc'}`}
               onValueChange={(val) => {
@@ -132,7 +132,7 @@ export function TaskFilterBar({
                 onFilterChange({ sortBy, sortOrder, page: 1 });
               }}
             >
-              <SelectTrigger className="h-7 border-0 bg-transparent shadow-none px-1 text-xs font-medium text-ink-navy focus:ring-0">
+              <SelectTrigger className="h-7 border-0 bg-transparent shadow-none px-1 text-xs font-medium text-[#1e293b] focus:ring-0">
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
@@ -147,20 +147,20 @@ export function TaskFilterBar({
           </div>
 
           {/* View Switcher: Table | Kanban | Cards */}
-          <div className="flex items-center border border-hairline rounded-lg p-0.5 bg-pebble shrink-0 gap-0.5">
+          <div className="flex items-center border border-[#e2e8f0] rounded-full p-0.5 bg-[#f0f4f9] shrink-0 gap-0.5">
             <button
               type="button"
               id="view-mode-table-btn"
               onClick={() => onToggleViewMode('table')}
               className={cn(
-                'inline-flex items-center gap-1 px-2.5 py-1 rounded-md text-xs font-medium transition-all cursor-pointer',
+                'inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-medium transition-all cursor-pointer',
                 viewMode === 'table'
-                  ? 'bg-white text-ink-navy shadow-xs font-semibold'
-                  : 'text-slate-gray hover:text-ink-navy'
+                  ? 'bg-white text-[#1a73e8] shadow-xs font-semibold'
+                  : 'text-[#64748b] hover:text-[#1e293b]'
               )}
               title="Xem dạng bảng"
             >
-              <List className="w-3.5 h-3.5 text-signal-blue" />
+              <List size={14} className={viewMode === 'table' ? 'text-[#2e89f7]' : 'text-[#64748b]'} />
               <span>Bảng</span>
             </button>
 
@@ -169,14 +169,14 @@ export function TaskFilterBar({
               id="view-mode-kanban-btn"
               onClick={() => onToggleViewMode('kanban')}
               className={cn(
-                'inline-flex items-center gap-1 px-2.5 py-1 rounded-md text-xs font-medium transition-all cursor-pointer',
+                'inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-medium transition-all cursor-pointer',
                 viewMode === 'kanban'
-                  ? 'bg-white text-ink-navy shadow-xs font-semibold'
-                  : 'text-slate-gray hover:text-ink-navy'
+                  ? 'bg-white text-[#1a73e8] shadow-xs font-semibold'
+                  : 'text-[#64748b] hover:text-[#1e293b]'
               )}
               title="Xem dạng Kanban"
             >
-              <FolderKanban className="w-3.5 h-3.5 text-signal-blue" />
+              <FolderKanban size={14} className={viewMode === 'kanban' ? 'text-[#2e89f7]' : 'text-[#64748b]'} />
               <span>Kanban</span>
             </button>
 
@@ -185,14 +185,14 @@ export function TaskFilterBar({
               id="view-mode-cards-btn"
               onClick={() => onToggleViewMode('cards')}
               className={cn(
-                'inline-flex items-center gap-1 px-2.5 py-1 rounded-md text-xs font-medium transition-all cursor-pointer',
+                'inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-medium transition-all cursor-pointer',
                 viewMode === 'cards'
-                  ? 'bg-white text-ink-navy shadow-xs font-semibold'
-                  : 'text-slate-gray hover:text-ink-navy'
+                  ? 'bg-white text-[#1a73e8] shadow-xs font-semibold'
+                  : 'text-[#64748b] hover:text-[#1e293b]'
               )}
               title="Xem dạng lưới thẻ"
             >
-              <LayoutGrid className="w-3.5 h-3.5 text-signal-blue" />
+              <LayoutGrid size={14} className={viewMode === 'cards' ? 'text-[#2e89f7]' : 'text-[#64748b]'} />
               <span>Thẻ</span>
             </button>
           </div>
@@ -204,10 +204,10 @@ export function TaskFilterBar({
               id="refresh-tasks-btn"
               onClick={onRefresh}
               disabled={isRefreshing}
-              className="inline-flex items-center justify-center w-9 h-9 text-slate-gray hover:text-ink-navy bg-white border border-hairline rounded-lg hover:bg-pebble transition-colors shadow-xs cursor-pointer shrink-0 disabled:opacity-50"
+              className="inline-flex items-center justify-center w-9 h-9 text-[#64748b] hover:text-[#1e293b] bg-white border border-[#e2e8f0] rounded-full hover:bg-[#f0f4f9] transition-colors shadow-xs cursor-pointer shrink-0 disabled:opacity-50"
               title="Làm mới dữ liệu nhiệm vụ"
             >
-              <RefreshCw className={cn('w-3.5 h-3.5', isRefreshing && 'animate-spin text-signal-blue')} />
+              <RefreshCw size={14} className={cn(isRefreshing && 'animate-spin text-[#2e89f7]')} />
             </button>
           )}
         </div>
@@ -216,21 +216,21 @@ export function TaskFilterBar({
       {/* Filter Selectors Bar */}
       <div
         className={cn(
-          'p-2.5 sm:p-3 bg-cloud/50 border-t border-hairline',
+          'p-2.5 sm:p-3 bg-[#f8fafd] border-t border-[#e2e8f0]',
           mobileFiltersOpen ? 'block' : 'hidden md:block'
         )}
       >
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-2.5">
           {/* Term Filter */}
           <div>
-            <label className="block text-[10px] font-semibold text-slate-gray uppercase tracking-wider mb-1">
+            <label className="block text-[10px] font-semibold text-[#64748b] uppercase tracking-wider mb-1">
               Nhiệm kỳ
             </label>
             <Select
               value={filters.termId || 'all'}
               onValueChange={(val) => onFilterChange({ termId: val, page: 1 })}
             >
-              <SelectTrigger className="h-8.5 text-xs bg-white border-hairline text-ink-navy">
+              <SelectTrigger className="h-8.5 text-xs bg-white border-[#e2e8f0] text-[#1e293b] rounded-xl">
                 <SelectValue placeholder="Tất cả nhiệm kỳ" />
               </SelectTrigger>
               <SelectContent>
@@ -246,14 +246,14 @@ export function TaskFilterBar({
 
           {/* Activity Filter */}
           <div>
-            <label className="block text-[10px] font-semibold text-slate-gray uppercase tracking-wider mb-1">
+            <label className="block text-[10px] font-semibold text-[#64748b] uppercase tracking-wider mb-1">
               Hoạt động
             </label>
             <Select
               value={filters.activityId || 'all'}
               onValueChange={(val) => onFilterChange({ activityId: val, page: 1 })}
             >
-              <SelectTrigger className="h-8.5 text-xs bg-white border-hairline text-ink-navy">
+              <SelectTrigger className="h-8.5 text-xs bg-white border-[#e2e8f0] text-[#1e293b] rounded-xl">
                 <SelectValue placeholder="Tất cả hoạt động" />
               </SelectTrigger>
               <SelectContent>
@@ -270,14 +270,14 @@ export function TaskFilterBar({
 
           {/* Assignee Filter */}
           <div>
-            <label className="block text-[10px] font-semibold text-slate-gray uppercase tracking-wider mb-1">
+            <label className="block text-[10px] font-semibold text-[#64748b] uppercase tracking-wider mb-1">
               Người phụ trách
             </label>
             <Select
               value={filters.assignedTo || 'all'}
               onValueChange={(val) => onFilterChange({ assignedTo: val, page: 1 })}
             >
-              <SelectTrigger className="h-8.5 text-xs bg-white border-hairline text-ink-navy">
+              <SelectTrigger className="h-8.5 text-xs bg-white border-[#e2e8f0] text-[#1e293b] rounded-xl">
                 <SelectValue placeholder="Tất cả người phụ trách" />
               </SelectTrigger>
               <SelectContent>
@@ -294,14 +294,14 @@ export function TaskFilterBar({
 
           {/* Priority Filter */}
           <div>
-            <label className="block text-[10px] font-semibold text-slate-gray uppercase tracking-wider mb-1">
+            <label className="block text-[10px] font-semibold text-[#64748b] uppercase tracking-wider mb-1">
               Mức ưu tiên
             </label>
             <Select
               value={filters.priority || 'all'}
               onValueChange={(val) => onFilterChange({ priority: val as TaskPriority | 'all', page: 1 })}
             >
-              <SelectTrigger className="h-8.5 text-xs bg-white border-hairline text-ink-navy">
+              <SelectTrigger className="h-8.5 text-xs bg-white border-[#e2e8f0] text-[#1e293b] rounded-xl">
                 <SelectValue placeholder="Tất cả mức ưu tiên" />
               </SelectTrigger>
               <SelectContent>
@@ -317,14 +317,14 @@ export function TaskFilterBar({
 
           {/* Status Filter */}
           <div>
-            <label className="block text-[10px] font-semibold text-slate-gray uppercase tracking-wider mb-1">
+            <label className="block text-[10px] font-semibold text-[#64748b] uppercase tracking-wider mb-1">
               Trạng thái
             </label>
             <Select
               value={filters.status || 'all'}
               onValueChange={(val) => onFilterChange({ status: val as TaskStatus | 'all', page: 1 })}
             >
-              <SelectTrigger className="h-8.5 text-xs bg-white border-hairline text-ink-navy">
+              <SelectTrigger className="h-8.5 text-xs bg-white border-[#e2e8f0] text-[#1e293b] rounded-xl">
                 <SelectValue placeholder="Tất cả trạng thái" />
               </SelectTrigger>
               <SelectContent>
@@ -340,7 +340,7 @@ export function TaskFilterBar({
 
           {/* Due date / Overdue Filter Button */}
           <div className="flex flex-col justify-end">
-            <label className="block text-[10px] font-semibold text-slate-gray uppercase tracking-wider mb-1">
+            <label className="block text-[10px] font-semibold text-[#64748b] uppercase tracking-wider mb-1">
               Hạn chót
             </label>
             <button
@@ -348,13 +348,13 @@ export function TaskFilterBar({
               id="toggle-overdue-filter-btn"
               onClick={() => onFilterChange({ onlyOverdue: !filters.onlyOverdue, page: 1 })}
               className={cn(
-                'w-full flex items-center justify-center gap-1.5 h-8.5 rounded-lg border text-xs font-medium transition-all cursor-pointer',
+                'w-full flex items-center justify-center gap-1.5 h-8.5 rounded-xl border text-xs font-medium transition-all cursor-pointer',
                 filters.onlyOverdue
                   ? 'bg-rose-50 border-rose-300 text-rose-700 shadow-xs font-semibold'
-                  : 'bg-white hover:bg-pebble border-hairline text-slate-gray'
+                  : 'bg-white hover:bg-[#f0f4f9] border-[#e2e8f0] text-[#64748b]'
               )}
             >
-              <AlertTriangle className={cn('w-3.5 h-3.5', filters.onlyOverdue ? 'text-rose-600' : 'text-mist-gray')} />
+              <AlertTriangle size={14} className={filters.onlyOverdue ? 'text-rose-600' : 'text-[#94a3b8]'} />
               <span>Chỉ việc quá hạn</span>
             </button>
           </div>
@@ -362,10 +362,10 @@ export function TaskFilterBar({
 
         {/* Active Filters Summary Strip */}
         {hasActiveFilters && (
-          <div className="flex items-center justify-between gap-2 pt-2.5 mt-2.5 border-t border-hairline text-xs">
-            <div className="flex items-center gap-2 text-slate-gray flex-wrap">
+          <div className="flex items-center justify-between gap-2 pt-2.5 mt-2.5 border-t border-[#e2e8f0] text-xs">
+            <div className="flex items-center gap-2 text-[#64748b] flex-wrap">
               <span>
-                Tìm thấy <strong className="text-ink-navy font-semibold tabular-nums">{totalResults}</strong> nhiệm vụ phù hợp
+                Tìm thấy <strong className="text-[#0b3558] font-semibold tabular-nums">{totalResults}</strong> nhiệm vụ phù hợp
               </span>
             </div>
 
@@ -373,9 +373,9 @@ export function TaskFilterBar({
               type="button"
               id="reset-task-filters-btn"
               onClick={onResetFilters}
-              className="inline-flex items-center gap-1 text-xs font-semibold text-signal-blue hover:text-[#005be0] hover:underline transition-colors cursor-pointer shrink-0"
+              className="inline-flex items-center gap-1 text-xs font-semibold text-[#1a73e8] hover:text-[#005be0] hover:underline transition-colors cursor-pointer shrink-0"
             >
-              <X className="w-3.5 h-3.5" />
+              <X size={14} />
               <span>Xóa bộ lọc</span>
             </button>
           </div>

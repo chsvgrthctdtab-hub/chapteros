@@ -62,7 +62,7 @@ export function SlideOverDrawer({
   return (
     <div
       id={id ? `${id}-container` : 'slide-over-drawer-container'}
-      className="fixed inset-0 z-50 overflow-hidden bg-ink-navy/50 backdrop-blur-xs flex justify-end transition-opacity animate-in fade-in duration-200"
+      className="fixed inset-0 z-50 overflow-hidden bg-[#0b3558]/35 backdrop-blur-sm flex justify-end transition-opacity animate-in fade-in duration-200"
     >
       {/* Click backdrop to close */}
       <div
@@ -78,30 +78,30 @@ export function SlideOverDrawer({
         role="dialog"
         aria-modal="true"
         className={cn(
-          'relative z-10 w-full bg-white h-full shadow-2xl flex flex-col overflow-hidden animate-in slide-in-from-right duration-200 border-l border-hairline',
+          'relative z-10 w-full bg-white h-full shadow-2xl flex flex-col overflow-hidden animate-in slide-in-from-right duration-200 border-l border-[#e2e8f0]',
           sizeClasses[size],
           className
         )}
       >
         {/* Drawer Header */}
-        <div className="p-5 sm:p-6 border-b border-hairline bg-cloud/70 shrink-0">
+        <div className="p-5 sm:p-6 border-b border-[#e2e8f0] bg-[#f8fafd] shrink-0">
           <div className="flex items-start justify-between gap-4">
             <div className="space-y-1.5 min-w-0 flex-1">
               {(tag || badge) && (
                 <div className="flex items-center gap-2 flex-wrap mb-1">
                   {tag && (
-                    <span className="text-[10px] font-bold uppercase tracking-wider text-slate-gray bg-pebble px-2 py-0.5 rounded">
+                    <span className="text-[10px] font-bold uppercase tracking-wider text-[#64748b] bg-[#f0f4f9] px-2.5 py-0.5 rounded-full border border-[#e2e8f0]">
                       {tag}
                     </span>
                   )}
                   {badge}
                 </div>
               )}
-              <h2 className="text-lg sm:text-xl font-bold tracking-tight text-ink-navy truncate">
+              <h2 className="text-lg sm:text-xl font-bold tracking-tight text-[#0b3558] truncate">
                 {title}
               </h2>
               {subtitle && (
-                <div className="text-xs text-slate-gray line-clamp-2">{subtitle}</div>
+                <div className="text-xs text-[#64748b] line-clamp-2">{subtitle}</div>
               )}
             </div>
 
@@ -112,10 +112,10 @@ export function SlideOverDrawer({
                 variant="ghost"
                 size="icon"
                 onClick={onClose}
-                className="h-8 w-8 rounded-lg text-slate-gray hover:text-ink-navy hover:bg-pebble cursor-pointer"
+                className="h-8 w-8 rounded-full text-[#64748b] hover:text-[#1e293b] hover:bg-[#f0f4f9] cursor-pointer"
                 title="Close"
               >
-                <X className="h-4 w-4" />
+                <X size={16} />
                 <span className="sr-only">Close panel</span>
               </Button>
             </div>
@@ -129,7 +129,7 @@ export function SlideOverDrawer({
 
         {/* Drawer Footer (Optional) */}
         {footer && (
-          <div className="p-4 sm:p-5 border-t border-hairline bg-cloud/80 shrink-0 flex items-center justify-between gap-3">
+          <div className="p-4 sm:p-5 border-t border-[#e2e8f0] bg-[#f8fafd] shrink-0 flex items-center justify-between gap-3">
             {footer}
           </div>
         )}

@@ -1,10 +1,13 @@
 import * as React from 'react';
 import { cn } from '@/lib/utils';
 
+// Table wrapper: 2 lớp bo góc — ngoài overflow-hidden, trong overflow-x-auto
 const Table = React.forwardRef<HTMLTableElement, React.HTMLAttributes<HTMLTableElement>>(
   ({ className, ...props }, ref) => (
-    <div className="relative w-full overflow-auto">
-      <table ref={ref} className={cn('w-full caption-bottom text-sm border-collapse', className)} {...props} />
+    <div className="relative w-full rounded-2xl overflow-hidden border border-[#e2e8f0]">
+      <div className="overflow-x-auto">
+        <table ref={ref} className={cn('w-full caption-bottom text-sm border-collapse', className)} {...props} />
+      </div>
     </div>
   )
 );
@@ -14,7 +17,7 @@ const TableHeader = React.forwardRef<
   HTMLTableSectionElement,
   React.HTMLAttributes<HTMLTableSectionElement>
 >(({ className, ...props }, ref) => (
-  <thead ref={ref} className={cn('bg-cloud border-b border-hairline text-slate-gray', className)} {...props} />
+  <thead ref={ref} className={cn('bg-[#f8fafd] border-b border-[#e2e8f0] text-[#64748b]', className)} {...props} />
 ));
 TableHeader.displayName = 'TableHeader';
 
@@ -22,7 +25,7 @@ const TableBody = React.forwardRef<
   HTMLTableSectionElement,
   React.HTMLAttributes<HTMLTableSectionElement>
 >(({ className, ...props }, ref) => (
-  <tbody ref={ref} className={cn('divide-y divide-hairline bg-white [&_tr:last-child]:border-0', className)} {...props} />
+  <tbody ref={ref} className={cn('divide-y divide-[#e2e8f0] bg-white [&_tr:last-child]:border-0', className)} {...props} />
 ));
 TableBody.displayName = 'TableBody';
 
@@ -32,7 +35,7 @@ const TableFooter = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <tfoot
     ref={ref}
-    className={cn('border-t border-hairline bg-cloud font-medium [&>tr]:last:border-b-0', className)}
+    className={cn('border-t border-[#e2e8f0] bg-[#f8fafd] font-medium [&>tr]:last:border-b-0', className)}
     {...props}
   />
 ));
@@ -43,7 +46,7 @@ const TableRow = React.forwardRef<HTMLTableRowElement, React.HTMLAttributes<HTML
     <tr
       ref={ref}
       className={cn(
-        'border-b border-hairline transition-colors duration-150 hover:bg-pebble/70 data-[state=selected]:bg-[#e6f0ff]/50',
+        'border-b border-[#e2e8f0] transition-colors duration-150 hover:bg-[#f0f4f9]/60 data-[state=selected]:bg-[#e8f0fe]/50',
         className
       )}
       {...props}
@@ -59,7 +62,7 @@ const TableHead = React.forwardRef<
   <th
     ref={ref}
     className={cn(
-      'h-9.5 px-4 text-left align-middle text-[11px] font-semibold uppercase tracking-wider text-slate-gray [&:has([role=checkbox])]:pr-0 whitespace-nowrap',
+      'h-9 px-4 text-left align-middle text-[11px] font-semibold uppercase tracking-wider text-[#64748b] [&:has([role=checkbox])]:pr-0 whitespace-nowrap',
       className
     )}
     {...props}
@@ -73,7 +76,7 @@ const TableCell = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <td
     ref={ref}
-    className={cn('py-3 px-4 align-middle text-xs sm:text-sm text-ink-navy [&:has([role=checkbox])]:pr-0', className)}
+    className={cn('py-3 px-4 align-middle text-xs sm:text-sm text-[#1e293b] [&:has([role=checkbox])]:pr-0', className)}
     {...props}
   />
 ));
@@ -83,7 +86,7 @@ const TableCaption = React.forwardRef<
   HTMLTableCaptionElement,
   React.HTMLAttributes<HTMLTableCaptionElement>
 >(({ className, ...props }, ref) => (
-  <caption ref={ref} className={cn('mt-4 text-sm text-mist-gray', className)} {...props} />
+  <caption ref={ref} className={cn('mt-4 text-sm text-[#94a3b8]', className)} {...props} />
 ));
 TableCaption.displayName = 'TableCaption';
 

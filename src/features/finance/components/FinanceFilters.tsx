@@ -59,38 +59,38 @@ export function FinanceFilters({
     Boolean(filters.endDate);
 
   return (
-    <div className="bg-white rounded-2xl border border-hairline shadow-xs p-3 space-y-3">
+    <div className="bg-white rounded-2xl border border-[#e2e8f0] shadow-xs p-3 space-y-3">
       {/* Primary Toolbar Row */}
       <div className="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-2.5">
         {/* Search input */}
         <div className="relative flex-1 min-w-[220px]">
-          <Search className="h-4 w-4 text-mist-gray absolute left-3 top-1/2 -translate-y-1/2" />
+          <Search size={15} className="text-[#94a3b8] absolute left-3.5 top-1/2 -translate-y-1/2" />
           <input
             type="text"
             placeholder="Tìm kiếm phiếu thu/chi theo nội dung, mã, người lập..."
             value={filters.search || ''}
             onChange={(e) => onFilterChange({ search: e.target.value, page: 1 })}
-            className="w-full pl-9 pr-8 py-1.5 text-xs bg-cloud border border-hairline rounded-lg focus:bg-white focus:outline-none focus:ring-1 focus:ring-signal-blue text-ink-navy placeholder:text-mist-gray transition-all"
+            className="w-full pl-9 pr-8 py-1.5 text-xs bg-[#f8fafd] border border-[#e2e8f0] rounded-full focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#2e89f7]/20 focus:border-[#2e89f7] text-[#1e293b] placeholder:text-[#94a3b8] transition-all font-medium"
           />
           {filters.search && (
             <button
               onClick={() => onFilterChange({ search: '', page: 1 })}
-              className="absolute right-2.5 top-1/2 -translate-y-1/2 text-mist-gray hover:text-ink-navy p-0.5 cursor-pointer"
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-[#94a3b8] hover:text-[#1e293b] p-0.5 rounded-full cursor-pointer"
             >
-              <X className="h-3.5 w-3.5" />
+              <X size={14} />
             </button>
           )}
         </div>
 
         {/* Type pills: All, Income, Expense */}
-        <div className="flex items-center gap-1 bg-pebble p-0.5 rounded-lg border border-hairline self-start md:self-auto">
+        <div className="flex items-center gap-0.5 bg-[#f0f4f9] p-0.5 rounded-full border border-[#e2e8f0] self-start md:self-auto">
           <button
             type="button"
             onClick={() => onFilterChange({ type: 'all', categoryId: 'all', page: 1 })}
-            className={`px-2.5 py-1 text-xs font-semibold rounded-md transition-all cursor-pointer ${
+            className={`px-3 py-1 text-xs font-semibold rounded-full transition-all cursor-pointer ${
               !filters.type || filters.type === 'all'
-                ? 'bg-white text-ink-navy shadow-xs'
-                : 'text-slate-gray hover:text-ink-navy'
+                ? 'bg-white text-[#1a73e8] shadow-xs'
+                : 'text-[#64748b] hover:text-[#1e293b]'
             }`}
           >
             Tất cả
@@ -98,25 +98,25 @@ export function FinanceFilters({
           <button
             type="button"
             onClick={() => onFilterChange({ type: 'income', categoryId: 'all', page: 1 })}
-            className={`flex items-center gap-1 px-2.5 py-1 text-xs font-semibold rounded-md transition-all cursor-pointer ${
+            className={`flex items-center gap-1 px-3 py-1 text-xs font-semibold rounded-full transition-all cursor-pointer ${
               filters.type === 'income'
                 ? 'bg-emerald-700 text-white shadow-xs'
                 : 'text-emerald-700 hover:bg-emerald-50'
             }`}
           >
-            <TrendingUp className="h-3 w-3" />
+            <TrendingUp size={13} />
             Thu vào
           </button>
           <button
             type="button"
             onClick={() => onFilterChange({ type: 'expense', categoryId: 'all', page: 1 })}
-            className={`flex items-center gap-1 px-2.5 py-1 text-xs font-semibold rounded-md transition-all cursor-pointer ${
+            className={`flex items-center gap-1 px-3 py-1 text-xs font-semibold rounded-full transition-all cursor-pointer ${
               filters.type === 'expense'
                 ? 'bg-rose-700 text-white shadow-xs'
                 : 'text-rose-700 hover:bg-rose-50'
             }`}
           >
-            <TrendingDown className="h-3 w-3" />
+            <TrendingDown size={13} />
             Chi ra
           </button>
         </div>
@@ -127,10 +127,10 @@ export function FinanceFilters({
             value={filters.termId || 'all'}
             onValueChange={(val) => onFilterChange({ termId: val, page: 1 })}
           >
-            <SelectTrigger className="h-8 text-xs bg-cloud border-hairline rounded-lg text-ink-navy w-auto min-w-[130px]">
+            <SelectTrigger className="h-8.5 text-xs bg-[#f8fafd] border-[#e2e8f0] rounded-full text-[#1e293b] w-auto min-w-[130px]">
               <SelectValue placeholder="Tất cả nhiệm kỳ" />
             </SelectTrigger>
-            <SelectContent className="rounded-xl border-hairline bg-white shadow-lg">
+            <SelectContent className="rounded-2xl border-[#e2e8f0] bg-white shadow-lg">
               <SelectItem value="all" className="text-xs">Tất cả nhiệm kỳ</SelectItem>
               {terms.map((t) => (
                 <SelectItem key={t.id} value={t.id} className="text-xs">
@@ -145,10 +145,10 @@ export function FinanceFilters({
             value={filters.categoryId || 'all'}
             onValueChange={(val) => onFilterChange({ categoryId: val, page: 1 })}
           >
-            <SelectTrigger className="h-8 text-xs bg-cloud border-hairline rounded-lg text-ink-navy w-auto min-w-[140px]">
+            <SelectTrigger className="h-8.5 text-xs bg-[#f8fafd] border-[#e2e8f0] rounded-full text-[#1e293b] w-auto min-w-[140px]">
               <SelectValue placeholder="Tất cả danh mục" />
             </SelectTrigger>
-            <SelectContent className="rounded-xl border-hairline bg-white shadow-lg">
+            <SelectContent className="rounded-2xl border-[#e2e8f0] bg-white shadow-lg">
               <SelectItem value="all" className="text-xs">Tất cả danh mục</SelectItem>
               {filteredCategories.map((c) => (
                 <SelectItem key={c.id} value={c.id} className="text-xs">
@@ -162,16 +162,16 @@ export function FinanceFilters({
           <button
             type="button"
             onClick={() => setIsAdvancedOpen(!isAdvancedOpen)}
-            className={`flex items-center gap-1.5 px-2.5 py-1.5 text-xs rounded-lg border transition-all cursor-pointer ${
+            className={`flex items-center gap-1.5 px-3 py-1.5 text-xs rounded-full border transition-all cursor-pointer ${
               isAdvancedOpen || hasActiveFilters
-                ? 'bg-ink-navy text-white border-ink-navy font-semibold'
-                : 'bg-cloud text-ink-navy border-hairline hover:bg-pebble'
+                ? 'bg-[#0b3558] text-white border-[#0b3558] font-semibold'
+                : 'bg-[#f8fafd] text-[#1e293b] border-[#e2e8f0] hover:bg-[#f0f4f9]'
             }`}
           >
-            <SlidersHorizontal className="h-3 w-3" />
+            <SlidersHorizontal size={13} />
             <span>Bộ lọc</span>
             {hasActiveFilters && (
-              <span className="h-1.5 w-1.5 rounded-full bg-signal-blue" />
+              <span className="h-1.5 w-1.5 rounded-full bg-[#2e89f7]" />
             )}
           </button>
 
@@ -180,9 +180,9 @@ export function FinanceFilters({
               type="button"
               onClick={onReset}
               title="Đặt lại bộ lọc"
-              className="p-1.5 text-mist-gray hover:text-ink-navy hover:bg-cloud rounded-lg border border-transparent transition-all cursor-pointer"
+              className="p-1.5 text-[#94a3b8] hover:text-[#1e293b] hover:bg-[#f0f4f9] rounded-full border border-transparent transition-all cursor-pointer"
             >
-              <RotateCcw className="h-3.5 w-3.5" />
+              <RotateCcw size={14} />
             </button>
           )}
         </div>
@@ -190,10 +190,10 @@ export function FinanceFilters({
 
       {/* Expanded Advanced Filters */}
       {isAdvancedOpen && (
-        <div className="pt-2.5 border-t border-hairline grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-4 gap-2.5 text-xs animate-in fade-in duration-100">
+        <div className="pt-2.5 border-t border-[#e2e8f0] grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-4 gap-2.5 text-xs animate-in fade-in duration-100">
           {/* Status Filter */}
           <div>
-            <label className="block text-[11px] font-semibold text-slate-gray mb-1">
+            <label className="block text-[11px] font-semibold text-[#64748b] mb-1">
               Trạng thái phê duyệt
             </label>
             <Select
@@ -205,10 +205,10 @@ export function FinanceFilters({
                 })
               }
             >
-              <SelectTrigger className="w-full h-8 text-xs bg-cloud border-hairline rounded-lg text-ink-navy">
+              <SelectTrigger className="w-full h-8.5 text-xs bg-[#f8fafd] border-[#e2e8f0] rounded-xl text-[#1e293b]">
                 <SelectValue placeholder="Tất cả trạng thái" />
               </SelectTrigger>
-              <SelectContent className="rounded-xl border-hairline bg-white shadow-lg">
+              <SelectContent className="rounded-2xl border-[#e2e8f0] bg-white shadow-lg">
                 <SelectItem value="all" className="text-xs">Tất cả trạng thái</SelectItem>
                 <SelectItem value="draft" className="text-xs">Bản nháp</SelectItem>
                 <SelectItem value="pending_approval" className="text-xs">Chờ phê duyệt</SelectItem>
@@ -221,17 +221,17 @@ export function FinanceFilters({
 
           {/* Activity Filter */}
           <div>
-            <label className="block text-[11px] font-semibold text-slate-gray mb-1">
+            <label className="block text-[11px] font-semibold text-[#64748b] mb-1">
               Hoạt động liên kết
             </label>
             <Select
               value={filters.activityId || 'all'}
               onValueChange={(val) => onFilterChange({ activityId: val, page: 1 })}
             >
-              <SelectTrigger className="w-full h-8 text-xs bg-cloud border-hairline rounded-lg text-ink-navy">
+              <SelectTrigger className="w-full h-8.5 text-xs bg-[#f8fafd] border-[#e2e8f0] rounded-xl text-[#1e293b]">
                 <SelectValue placeholder="Tất cả hoạt động" />
               </SelectTrigger>
-              <SelectContent className="rounded-xl border-hairline bg-white shadow-lg">
+              <SelectContent className="rounded-2xl border-[#e2e8f0] bg-white shadow-lg">
                 <SelectItem value="all" className="text-xs">Tất cả hoạt động</SelectItem>
                 {activities.map((a) => (
                   <SelectItem key={a.id} value={a.id} className="text-xs">
@@ -244,7 +244,7 @@ export function FinanceFilters({
 
           {/* Start Date */}
           <div>
-            <label className="block text-[11px] font-semibold text-slate-gray mb-1">
+            <label className="block text-[11px] font-semibold text-[#64748b] mb-1">
               Từ ngày
             </label>
             <DatePicker
@@ -257,7 +257,7 @@ export function FinanceFilters({
 
           {/* End Date */}
           <div>
-            <label className="block text-[11px] font-semibold text-slate-gray mb-1">
+            <label className="block text-[11px] font-semibold text-[#64748b] mb-1">
               Đến ngày
             </label>
             <DatePicker

@@ -83,27 +83,27 @@ export function DashboardHeader({
   return (
     <div className="space-y-4">
       {/* Top Header Card */}
-      <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-5 p-5 sm:p-6 rounded-2xl bg-white border border-hairline shadow-sm">
+      <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-5 p-5 sm:p-6 rounded-2xl bg-white border border-[#e2e8f0] shadow-xs">
         <div className="space-y-2">
           {/* Metadata badges */}
-          <div className="flex items-center gap-2.5 flex-wrap text-xs sm:text-sm">
-            <div className="flex items-center gap-1.5 font-medium text-signal-blue bg-[#e6f0ff] border border-hairline px-3 py-1 rounded-full">
-              <Building2 className="w-4 h-4 text-signal-blue" />
+          <div className="flex items-center gap-2 flex-wrap text-xs sm:text-sm">
+            <div className="flex items-center gap-1.5 font-medium text-[#1a73e8] bg-[#e8f0fe] border border-[#c2e7ff] px-3 py-1 rounded-full">
+              <Building2 size={15} className="text-[#1a73e8]" />
               <span>{organizationName}</span>
             </div>
 
-            <Badge variant="outline" className="text-xs sm:text-sm text-ink-navy bg-pebble border-hairline py-1 px-3 rounded-full font-medium">
-              <ShieldCheck className="w-4 h-4 mr-1 text-signal-blue" />
+            <Badge variant="outline" className="text-xs sm:text-sm text-[#1e293b] bg-[#f0f4f9] border-[#e2e8f0] py-1 px-3 rounded-full font-medium">
+              <ShieldCheck size={15} className="mr-1 text-[#2e89f7]" />
               {roleName}
             </Badge>
 
-            <div className="flex items-center gap-1.5 text-slate-gray font-medium bg-pebble border border-hairline px-3 py-1 rounded-full tabular-nums">
-              <Calendar className="w-4 h-4 text-mist-gray" />
+            <div className="flex items-center gap-1.5 text-[#64748b] font-medium bg-[#f0f4f9] border border-[#e2e8f0] px-3 py-1 rounded-full tabular-nums">
+              <Calendar size={15} className="text-[#94a3b8]" />
               <span>{formattedDate}</span>
             </div>
 
             {selectedTerm?.isCurrent && (
-              <Badge variant="default" className="bg-signal-blue hover:bg-[#005be0] text-white text-xs sm:text-sm py-1 px-3 rounded-full font-medium shadow-sm">
+              <Badge variant="default" className="bg-[#2e89f7] hover:bg-[#1a73e8] text-white text-xs sm:text-sm py-1 px-3 rounded-full font-medium shadow-xs">
                 Active Term: {selectedTerm.name}
               </Badge>
             )}
@@ -111,10 +111,10 @@ export function DashboardHeader({
 
           {/* Heading */}
           <div>
-            <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-ink-navy">
+            <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-[#0b3558]">
               Welcome back, {userName}
             </h1>
-            <p className="text-sm text-slate-gray mt-1">
+            <p className="text-sm text-[#64748b] mt-1">
               Chapter operational command center, active deliverables, and real-time treasury metrics.
             </p>
           </div>
@@ -126,13 +126,13 @@ export function DashboardHeader({
             value={selectedTermId}
             onValueChange={onSelectTerm}
           >
-            <SelectTrigger id="dashboard-term-selector" className="h-9.5 text-xs sm:text-sm font-medium text-ink-navy bg-white border-hairline rounded-lg w-auto min-w-[160px]">
+            <SelectTrigger id="dashboard-term-selector" className="h-9 text-xs sm:text-sm font-medium text-[#1e293b] bg-white border-[#e2e8f0] rounded-full w-auto min-w-[160px]">
               <div className="flex items-center gap-2">
-                <CalendarRange className="w-4 h-4 text-mist-gray shrink-0" />
+                <CalendarRange size={15} className="text-[#94a3b8] shrink-0" />
                 <SelectValue placeholder="Tất cả nhiệm kỳ" />
               </div>
             </SelectTrigger>
-            <SelectContent className="bg-white border-hairline rounded-xl shadow-md">
+            <SelectContent className="bg-white border-[#e2e8f0] rounded-2xl shadow-lg">
               <SelectItem value="all">Tất cả nhiệm kỳ</SelectItem>
               {terms.map((term) => (
                 <SelectItem key={term.id} value={term.id}>
@@ -148,9 +148,9 @@ export function DashboardHeader({
             size="sm"
             onClick={onRefresh}
             disabled={isRefreshing}
-            className="text-xs sm:text-sm font-semibold h-9.5 px-4 text-ink-navy bg-white hover:bg-pebble border-hairline rounded-lg shadow-sm cursor-pointer"
+            className="text-xs sm:text-sm font-semibold h-9 px-4 text-[#1e293b] bg-white hover:bg-[#f0f4f9] border-[#e2e8f0] rounded-full shadow-xs cursor-pointer"
           >
-            <RefreshCw className={`w-4 h-4 mr-2 ${isRefreshing ? 'animate-spin text-signal-blue' : 'text-slate-gray'}`} />
+            <RefreshCw size={15} className={`mr-2 ${isRefreshing ? 'animate-spin text-[#2e89f7]' : 'text-[#64748b]'}`} />
             <span>{isRefreshing ? 'Đang đồng bộ...' : 'Làm mới'}</span>
           </Button>
         </div>
@@ -158,7 +158,7 @@ export function DashboardHeader({
 
       {/* Quick Actions Bar for Board & Permitted Roles */}
       {hasAnyQuickAction && (
-        <div className="p-3.5 sm:px-5 sm:py-3.5 rounded-2xl bg-ink-navy text-white shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-3">
+        <div className="p-3.5 sm:px-5 sm:py-3.5 rounded-2xl bg-[#0b3558] text-white shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-3">
           <div className="flex items-center gap-2.5 text-xs sm:text-sm">
             <span className="flex h-2 w-2 rounded-full bg-emerald-400"></span>
             <span className="font-semibold text-white">Thao tác nhanh Ban Chấp Hành</span>
@@ -171,9 +171,9 @@ export function DashboardHeader({
               <Link to="/members">
                 <Button
                   size="sm"
-                  className="bg-white/10 hover:bg-white/20 text-white text-xs sm:text-sm h-8 px-3 border border-white/15 rounded-lg cursor-pointer font-medium"
+                  className="bg-white/10 hover:bg-white/20 text-white text-xs sm:text-sm h-8 px-3.5 border border-white/15 rounded-full cursor-pointer font-medium"
                 >
-                  <UserPlus className="w-3.5 h-3.5 mr-1.5 text-emerald-400" />
+                  <UserPlus size={15} className="mr-1.5 text-emerald-400" />
                   <span>Member</span>
                 </Button>
               </Link>
@@ -183,9 +183,9 @@ export function DashboardHeader({
               <Link to="/activities">
                 <Button
                   size="sm"
-                  className="bg-white/10 hover:bg-white/20 text-white text-xs sm:text-sm h-8 px-3 border border-white/15 rounded-lg cursor-pointer font-medium"
+                  className="bg-white/10 hover:bg-white/20 text-white text-xs sm:text-sm h-8 px-3.5 border border-white/15 rounded-full cursor-pointer font-medium"
                 >
-                  <CalendarPlus className="w-3.5 h-3.5 mr-1.5 text-sky-cyan" />
+                  <CalendarPlus size={15} className="mr-1.5 text-sky-400" />
                   <span>Activity</span>
                 </Button>
               </Link>
@@ -195,9 +195,9 @@ export function DashboardHeader({
               <Link to="/tasks">
                 <Button
                   size="sm"
-                  className="bg-white/10 hover:bg-white/20 text-white text-xs sm:text-sm h-8 px-3 border border-white/15 rounded-lg cursor-pointer font-medium"
+                  className="bg-white/10 hover:bg-white/20 text-white text-xs sm:text-sm h-8 px-3.5 border border-white/15 rounded-full cursor-pointer font-medium"
                 >
-                  <CheckSquare className="w-3.5 h-3.5 mr-1.5 text-amber-400" />
+                  <CheckSquare size={15} className="mr-1.5 text-amber-400" />
                   <span>Task</span>
                 </Button>
               </Link>
@@ -207,9 +207,9 @@ export function DashboardHeader({
               <Link to="/finance">
                 <Button
                   size="sm"
-                  className="bg-signal-blue hover:bg-[#005be0] text-white text-xs sm:text-sm h-8 px-3 border border-transparent rounded-lg cursor-pointer font-medium shadow-sm"
+                  className="bg-[#2e89f7] hover:bg-[#1a73e8] text-white text-xs sm:text-sm h-8 px-3.5 border border-transparent rounded-full cursor-pointer font-medium shadow-xs"
                 >
-                  <DollarSign className="w-3.5 h-3.5 mr-1.5 text-white" />
+                  <DollarSign size={15} className="mr-1.5 text-white" />
                   <span>Transaction</span>
                 </Button>
               </Link>
@@ -219,9 +219,9 @@ export function DashboardHeader({
               <Link to="/documents">
                 <Button
                   size="sm"
-                  className="bg-white/10 hover:bg-white/20 text-white text-xs sm:text-sm h-8 px-3 border border-white/15 rounded-lg cursor-pointer font-medium"
+                  className="bg-white/10 hover:bg-white/20 text-white text-xs sm:text-sm h-8 px-3.5 border border-white/15 rounded-full cursor-pointer font-medium"
                 >
-                  <FileUp className="w-3.5 h-3.5 mr-1.5 text-teal-400" />
+                  <FileUp size={15} className="mr-1.5 text-teal-400" />
                   <span>Document</span>
                 </Button>
               </Link>

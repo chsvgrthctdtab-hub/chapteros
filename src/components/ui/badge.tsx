@@ -8,21 +8,21 @@ const badgeVariants = cva(
     variants: {
       variant: {
         default:
-          "border-[#d4e4fa] bg-[#e6f0ff] text-signal-blue font-medium",
+          "border-[#c2e7ff] bg-[#e8f0fe] text-[#1a73e8] font-medium",
         secondary:
-          "border-hairline bg-pebble text-ink-navy font-medium",
+          "border-[#e2e8f0] bg-[#f0f4f9] text-[#1e293b] font-medium",
         destructive:
           "border-rose-200/80 bg-rose-50 text-rose-700 font-medium",
         outline:
-          "text-ink-navy border-hairline bg-white font-medium",
+          "text-[#1e293b] border-[#e2e8f0] bg-white font-medium",
         success:
           "border-emerald-200/80 bg-emerald-50 text-emerald-800 font-medium",
         warning:
-          "border-amber-200/80 bg-amber-50 text-amber-800 font-medium",
+          "border-amber-200/80 bg-amber-50 text-amber-900 font-medium",
         info:
-          "border-[#d4e4fa] bg-[#e6f0ff] text-signal-blue font-medium",
+          "border-[#c2e7ff] bg-[#e8f0fe] text-[#1a73e8] font-medium",
         purple:
-          "border-purple-200/80 bg-purple-50 text-purple-800 font-medium",
+          "border-purple-200/80 bg-[#f5f3ff] text-[#6858d2] font-medium",
       },
       shape: {
         pill: "rounded-full",

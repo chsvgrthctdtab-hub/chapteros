@@ -65,18 +65,18 @@ export function ConfirmDialog({
 
   return (
     <Dialog open={open} onOpenChange={isLoading ? undefined : onOpenChange}>
-      <DialogContent className="sm:max-w-md p-5 pr-10 sm:p-6 sm:pr-12 rounded-xl">
+      <DialogContent className="sm:max-w-md p-5 pr-10 sm:p-6 sm:pr-12 rounded-2xl border border-[#e2e8f0]">
         <DialogHeader>
           <div className="flex items-start gap-3">
-            <div className={`w-9 h-9 rounded-lg flex items-center justify-center border shrink-0 mt-0.5 ${style.iconBg}`}>
+            <div className={`w-10 h-10 rounded-2xl flex items-center justify-center border shrink-0 mt-0.5 ${style.iconBg}`}>
               {style.icon}
             </div>
             <div className="flex-1 min-w-0 text-left">
-              <DialogTitle className="text-base font-semibold text-ink-navy leading-snug">
+              <DialogTitle className="text-base font-semibold text-[#0b3558] leading-snug">
                 {title}
               </DialogTitle>
               {description && (
-                <DialogDescription className="text-xs text-mist-gray mt-1 leading-relaxed">
+                <DialogDescription className="text-xs text-[#64748b] mt-1 leading-relaxed">
                   {description}
                 </DialogDescription>
               )}
@@ -89,7 +89,7 @@ export function ConfirmDialog({
 
         {/* Warning Note */}
         {warningNote && (
-          <div className="p-3 bg-amber-50/80 border border-amber-200 rounded-lg text-amber-800 text-xs flex items-start gap-2 my-1">
+          <div className="p-3 bg-amber-50/80 border border-amber-200 rounded-xl text-amber-800 text-xs flex items-start gap-2 my-1">
             <AlertTriangle className="w-4 h-4 text-amber-600 shrink-0 mt-0.5" />
             <p className="leading-relaxed">{warningNote}</p>
           </div>
