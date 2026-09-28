@@ -8,7 +8,7 @@ import {
   DialogFooter,
 } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
-import { AlertTriangle, Loader2, Trash2 } from 'lucide-react';
+import { AlertTriangle, Loader2, Trash2 } from '@/lib/icons';
 import { useToast } from '@/contexts/ToastContext';
 import { useDeletePlan } from '../queries/plan.queries';
 import type { Plan } from '@/types';

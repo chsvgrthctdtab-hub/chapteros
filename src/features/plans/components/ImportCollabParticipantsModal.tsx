@@ -19,7 +19,7 @@ import {
   ClipboardPaste,
   Sparkles,
   HelpCircle,
-} from 'lucide-react';
+} from '@/lib/icons';
 import { useBulkAddCollabParticipants } from '../queries/collab.queries';
 import { cn } from '@/lib/utils';
 

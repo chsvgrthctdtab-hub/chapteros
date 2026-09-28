@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Trash2, Loader2 } from 'lucide-react';
+import { Trash2, Loader2 } from '@/lib/icons';
 import {
   Dialog,
   DialogContent,

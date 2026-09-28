@@ -11,7 +11,7 @@ import {
   Loader2,
   Layers,
   Info,
-} from 'lucide-react';
+} from '@/lib/icons';
 import {
   Dialog,
   DialogContent,

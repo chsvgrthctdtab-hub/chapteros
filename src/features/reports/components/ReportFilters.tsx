@@ -1,5 +1,5 @@
 import { useState, useEffect, useId } from 'react';
-import { Calendar, Filter, Layers, Building2 } from 'lucide-react';
+import { Calendar, Filter, Layers, Building2 } from '@/lib/icons';
 import type { Term } from '@/types';
 import type { ReportFilterParams } from '@/types/report';
 import { DatePicker } from '@/components/ui/date-picker';

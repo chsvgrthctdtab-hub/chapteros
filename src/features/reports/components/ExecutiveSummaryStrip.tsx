@@ -1,6 +1,6 @@
 import type { ReportOverview } from '@/types/report';
 import { Card, CardContent } from '@/components/ui/card';
-import { Users, Calendar, CheckSquare, Wallet, ArrowUpRight, ArrowDownRight, Layers, AlertCircle } from 'lucide-react';
+import { Users, Calendar, CheckSquare, Wallet, ArrowUpRight, ArrowDownRight, Layers, AlertCircle } from '@/lib/icons';
 import { formatVND } from '@/features/dashboard/utils/formatters';
 
 interface ExecutiveSummaryStripProps {

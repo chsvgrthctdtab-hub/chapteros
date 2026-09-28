@@ -10,7 +10,7 @@ import {
   Info,
   CheckCircle2,
   Check,
-} from 'lucide-react';
+} from '@/lib/icons';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import type { NotificationItem } from '../types/notification.types';

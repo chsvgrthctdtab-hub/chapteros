@@ -18,7 +18,7 @@ import {
   MoreHorizontal,
   HardDrive,
   Cloud,
-} from 'lucide-react';
+} from '@/lib/icons';
 import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,

@@ -11,7 +11,7 @@ import {
   ChevronLeft,
   ChevronRight,
   UserPlus,
-} from 'lucide-react';
+} from '@/lib/icons';
 import {
   DropdownMenu,
   DropdownMenuContent,

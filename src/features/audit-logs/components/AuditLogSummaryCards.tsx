@@ -6,7 +6,7 @@ import {
   Users,
   ShieldAlert,
   Layers,
-} from 'lucide-react';
+} from '@/lib/icons';
 import type { AuditLogItemWithActor } from '../types/audit-log.types';
 import {
   AUDIT_MODULE_CONFIG,

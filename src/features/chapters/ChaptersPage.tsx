@@ -1,7 +1,7 @@
 import { useState, useMemo } from 'react';
 import { PageHeader } from '@/components/layout/PageHeader';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
-import { Building2, Users, Shield, Network, Loader2 } from 'lucide-react';
+import { Building2, Users, Shield, Network, Loader2 } from '@/lib/icons';
 import { useAuth } from '@/contexts/AuthContext';
 import {
   useOrganizationDetail,

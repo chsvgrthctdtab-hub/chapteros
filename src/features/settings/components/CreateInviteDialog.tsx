@@ -24,7 +24,7 @@ import {
   CheckCircle2,
   AlertCircle,
   UserCheck,
-} from 'lucide-react';
+} from '@/lib/icons';
 import { ROLES, type OrganizationRole } from '@/types/roles';
 
 interface CreateInviteDialogProps {

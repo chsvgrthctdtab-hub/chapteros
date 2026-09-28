@@ -10,7 +10,7 @@ import {
   Eye,
   Globe,
   Upload,
-} from 'lucide-react';
+} from '@/lib/icons';
 import type { ActivityDetail } from '../types/activity.types';
 import type { Member } from '@/types';
 import {

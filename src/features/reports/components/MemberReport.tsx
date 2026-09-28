@@ -3,7 +3,7 @@ import { ReportSkeleton } from './ReportSkeleton';
 import { ReportErrorState } from './ReportErrorState';
 import { ReportEmptyState } from './ReportEmptyState';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card';
-import { Users, UserCheck, UserMinus, GraduationCap, ArrowRightLeft, ShieldCheck, Briefcase, ArrowRight } from 'lucide-react';
+import { Users, UserCheck, UserMinus, GraduationCap, ArrowRightLeft, ShieldCheck, Briefcase, ArrowRight } from '@/lib/icons';
 import { Link } from 'react-router-dom';
 import {
   ResponsiveContainer,

@@ -18,7 +18,7 @@ import {
   CheckSquare,
   DollarSign,
   UserCheck,
-} from 'lucide-react';
+} from '@/lib/icons';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';

@@ -13,7 +13,7 @@ import {
   Phone,
   GraduationCap,
   Sparkles,
-} from 'lucide-react';
+} from '@/lib/icons';
 import type { ActivityForm, ActivityFormResponse } from '@/types';
 import { formatDateTime } from '@/lib/date';
 

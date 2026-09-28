@@ -1,5 +1,5 @@
 import React from 'react';
-import { Calendar, Users, Activity, ChevronRight } from 'lucide-react';
+import { Calendar, Users, Activity, ChevronRight } from '@/lib/icons';
 import { TermStatusBadge } from './TermStatusBadge';
 import dayjs from 'dayjs';
 import type { Term } from '@/types';

@@ -6,7 +6,7 @@ import {
   CheckCircle2,
   Scale,
   Info,
-} from 'lucide-react';
+} from '@/lib/icons';
 import { formatVND } from '../utils/finance.utils';
 import { usePeriodReconciliationPreview } from '../queries/finance.queries';
 import { DatePicker } from '@/components/ui/date-picker';

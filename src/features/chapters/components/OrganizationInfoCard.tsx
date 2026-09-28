@@ -24,7 +24,7 @@ import {
   RefreshCw,
   Trash2,
   ImageIcon,
-} from 'lucide-react';
+} from '@/lib/icons';
 import { useAuth } from '@/contexts/AuthContext';
 import { getOrgTypeLabel, getOrgTypeBadgeClass, ORGANIZATION_TYPE_OPTIONS } from '@/lib/organization.utils';
 import { getRoleLabel } from '@/types/roles';

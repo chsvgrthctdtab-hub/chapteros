@@ -27,7 +27,7 @@ import {
   Sparkles,
   Loader2,
   AlertCircle,
-} from 'lucide-react';
+} from '@/lib/icons';
 import { useAuth } from '@/contexts/AuthContext';
 import { useToast } from '@/contexts/ToastContext';
 import { useCreatePlan } from '../queries/plan.queries';

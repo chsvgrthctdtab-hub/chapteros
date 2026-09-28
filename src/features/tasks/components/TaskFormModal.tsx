@@ -5,7 +5,7 @@ import {
   X,
   CheckSquare,
   AlertCircle,
-} from 'lucide-react';
+} from '@/lib/icons';
 import { taskFormSchema, type TaskFormData } from '../schemas/task.schema';
 import type { TaskListItem, TaskAssigneeOption, TaskPriority, TaskStatus } from '../types/task.types';
 import { TASK_STATUSES, TASK_PRIORITIES } from '../types/task.types';

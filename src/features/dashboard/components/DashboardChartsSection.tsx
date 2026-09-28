@@ -12,7 +12,7 @@ import {
   Cell,
 } from 'recharts';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card';
-import { BarChart3, PieChart as PieIcon, TrendingUp } from 'lucide-react';
+import { BarChart3, PieChart as PieIcon, TrendingUp } from '@/lib/icons';
 import { formatVND } from '../utils/formatters';
 import type { DashboardChartData } from '../types/dashboard.types';
 

@@ -1,6 +1,6 @@
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { ShieldCheck, Lock, CheckCircle2, AlertCircle } from 'lucide-react';
+import { ShieldCheck, Lock, CheckCircle2, AlertCircle } from '@/lib/icons';
 import { GOOGLE_SCOPES_CATALOGUE } from '../constants/scopes';
 
 interface ScopesAuditCardProps {

@@ -15,7 +15,7 @@ import {
   TrendingUp,
   TrendingDown,
   FileText,
-} from 'lucide-react';
+} from '@/lib/icons';
 import { formatDate } from '@/lib/date';
 import {
   formatVND,

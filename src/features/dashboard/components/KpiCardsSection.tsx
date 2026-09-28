@@ -11,7 +11,7 @@ import {
   ArrowUpRight,
   Sparkles,
   TrendingUp,
-} from 'lucide-react';
+} from '@/lib/icons';
 import { formatVND } from '../utils/formatters';
 import type { DashboardStats } from '../types/dashboard.types';
 

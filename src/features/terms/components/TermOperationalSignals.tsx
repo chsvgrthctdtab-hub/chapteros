@@ -6,7 +6,7 @@ import {
   ShieldAlert,
   ArrowRight,
   CheckCircle2,
-} from 'lucide-react';
+} from '@/lib/icons';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import dayjs from 'dayjs';

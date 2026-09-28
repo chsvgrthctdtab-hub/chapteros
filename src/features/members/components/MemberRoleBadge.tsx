@@ -1,4 +1,4 @@
-import { Award, ShieldAlert, Shield, UserCheck, User } from 'lucide-react';
+import { Award, ShieldAlert, Shield, UserCheck, User } from '@/lib/icons';
 
 interface MemberRoleBadgeProps {
   position?: string | null;

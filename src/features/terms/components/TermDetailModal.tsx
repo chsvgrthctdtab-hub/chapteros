@@ -13,7 +13,7 @@ import {
   Layers,
   ArrowRightLeft,
   Lock,
-} from 'lucide-react';
+} from '@/lib/icons';
 import {
   Dialog,
   DialogContent,

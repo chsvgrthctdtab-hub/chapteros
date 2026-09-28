@@ -11,7 +11,7 @@ import {
   Flame,
   CheckCircle2,
   ExternalLink,
-} from 'lucide-react';
+} from '@/lib/icons';
 import { ActivityStatusBadge } from './ActivityStatusBadge';
 import { ActivityCategoryBadge } from './ActivityCategoryBadge';
 import { formatDateRange, formatDateTime } from '@/lib/date';

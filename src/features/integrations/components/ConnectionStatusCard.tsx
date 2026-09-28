@@ -15,7 +15,7 @@ import {
   Loader2,
   ShieldCheck,
   CalendarCheck
-} from 'lucide-react';
+} from '@/lib/icons';
 import type { GoogleConnection, GoogleConnectionType } from '@/types';
 import { formatDate } from '@/lib/date';
 import { GOOGLE_SCOPES_CATALOGUE } from '../constants/scopes';

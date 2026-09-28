@@ -1,5 +1,5 @@
 import { useState, useEffect, useId } from 'react';
-import { Calendar, Filter, Layers, RotateCcw } from 'lucide-react';
+import { Calendar, Filter, Layers, RotateCcw } from '@/lib/icons';
 import type { Term } from '@/types';
 import type { ReportFilterParams } from '@/types/report';
 import { Button } from '@/components/ui/button';

@@ -1,6 +1,6 @@
 import type { ReportOverview } from '@/types/report';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
-import { Sparkles, TrendingUp, ShieldCheck, AlertTriangle, Activity, CheckCircle2 } from 'lucide-react';
+import { Sparkles, TrendingUp, ShieldCheck, AlertTriangle, Activity, CheckCircle2 } from '@/lib/icons';
 import { formatVND } from '@/features/dashboard/utils/formatters';
 
 interface ExecutiveInsightsPanelProps {

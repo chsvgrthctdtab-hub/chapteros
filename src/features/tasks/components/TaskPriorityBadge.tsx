@@ -1,4 +1,4 @@
-import { Flag } from 'lucide-react';
+import { Flag } from '@/lib/icons';
 import { TASK_PRIORITIES, type TaskPriority } from '../types/task.types';
 import { cn } from '@/lib/utils';
 import { useLanguage } from '@/contexts/LanguageContext';

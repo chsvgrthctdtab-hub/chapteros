@@ -11,7 +11,7 @@ import {
   ArrowRightLeft,
   ChevronDown,
   ChevronRight,
-} from 'lucide-react';
+} from '@/lib/icons';
 import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';

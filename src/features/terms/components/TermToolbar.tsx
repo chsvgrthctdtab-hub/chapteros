@@ -1,5 +1,5 @@
 import React from 'react';
-import { Search, LayoutGrid, Table as TableIcon, Columns, X } from 'lucide-react';
+import { Search, LayoutGrid, Table as TableIcon, Columns, X } from '@/lib/icons';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import {

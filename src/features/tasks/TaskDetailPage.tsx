@@ -16,7 +16,7 @@ import {
   RotateCcw,
   XCircle,
   ArrowRight,
-} from 'lucide-react';
+} from '@/lib/icons';
 import { useCurrentOrg } from '@/features/auth/hooks/useCurrentOrg';
 import {
   useTaskDetail,

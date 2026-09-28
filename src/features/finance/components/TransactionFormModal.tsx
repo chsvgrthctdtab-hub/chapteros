@@ -9,7 +9,7 @@ import {
   Loader2,
   CheckCircle2,
   Info,
-} from 'lucide-react';
+} from '@/lib/icons';
 import {
   transactionFormSchema,
   type TransactionFormData,

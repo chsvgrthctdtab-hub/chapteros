@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { supabase, isSupabaseConfigured } from '@/lib/supabase';
 import { authService } from '@/services/auth.service';
-import { GraduationCap, Loader2, AlertCircle, ArrowLeft } from 'lucide-react';
+import { GraduationCap, Loader2, AlertCircle, ArrowLeft } from '@/lib/icons';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 

@@ -8,7 +8,7 @@ import {
   ShieldCheck,
   Wrench,
   ChevronRight,
-} from 'lucide-react';
+} from '@/lib/icons';
 
 export type SettingsTabId =
   | 'organization'

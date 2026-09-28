@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { AlertCircle, CheckCircle2, ArrowRight, User } from 'lucide-react';
+import { AlertCircle, CheckCircle2, ArrowRight, User } from '@/lib/icons';
 import { formatShortDate, TASK_PRIORITY_META } from '../utils/formatters';
 import type { OverdueTaskItem } from '../types/dashboard.types';
 

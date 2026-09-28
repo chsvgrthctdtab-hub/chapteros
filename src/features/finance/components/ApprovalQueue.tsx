@@ -6,7 +6,7 @@ import {
   AlertCircle,
   CheckCircle2,
   AlertTriangle,
-} from 'lucide-react';
+} from '@/lib/icons';
 import { formatDate } from '@/lib/date';
 import { formatVND } from '../utils/finance.utils';
 import { Button } from '@/components/ui/button';

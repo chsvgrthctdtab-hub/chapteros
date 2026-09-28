@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import { type OrganizationRole, ROLES, hasRole, isOrgAdmin, isOrgBoard } from '@/types/roles';
-import { ShieldAlert, ArrowLeft } from 'lucide-react';
+import { ShieldAlert, ArrowLeft } from '@/lib/icons';
 import { Button } from '@/components/ui/button';
 import { useNavigate } from 'react-router-dom';
 

@@ -1,5 +1,5 @@
 import { type ReactNode } from 'react';
-import { AlertTriangle, Trash2, HelpCircle, Loader2 } from 'lucide-react';
+import { AlertTriangle, Trash2, HelpCircle, Loader2 } from '@/lib/icons';
 import {
   Dialog,
   DialogContent,

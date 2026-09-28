@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { AlertCircle, Loader2, CheckCircle2 } from 'lucide-react';
+import { AlertCircle, Loader2, CheckCircle2 } from '@/lib/icons';
 import {
   Dialog,
   DialogContent,

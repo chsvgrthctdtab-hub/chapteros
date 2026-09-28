@@ -9,10 +9,10 @@ const Card = React.forwardRef<HTMLDivElement, CardProps>(
   ({ className, variant = "elevated", ...props }, ref) => {
     const variantClasses =
       variant === "tonal"
-        ? "bg-pebble border border-hairline"
+        ? "bg-[#f8fafd] border border-[#e2e8f0]"
         : variant === "outlined"
-        ? "bg-white border border-hairline"
-        : "bg-white border border-hairline shadow-sm";
+        ? "bg-white border border-[#e2e8f0]"
+        : "bg-white border border-[#e2e8f0] shadow-xs";
 
     return (
       <div

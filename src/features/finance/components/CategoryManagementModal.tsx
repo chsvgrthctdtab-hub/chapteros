@@ -13,7 +13,7 @@ import {
   Lock,
   Edit2,
   Trash2,
-} from 'lucide-react';
+} from '@/lib/icons';
 import {
   categoryFormSchema,
   type CategoryFormData,

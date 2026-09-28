@@ -15,7 +15,7 @@ import {
   LayoutGrid,
   AlertCircle,
   Clock,
-} from 'lucide-react';
+} from '@/lib/icons';
 import { useAuth } from '@/contexts/AuthContext';
 import { useToast } from '@/contexts/ToastContext';
 import {

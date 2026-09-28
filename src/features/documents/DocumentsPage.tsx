@@ -6,7 +6,7 @@ import {
   Building2,
   Cloud,
   ExternalLink,
-} from 'lucide-react';
+} from '@/lib/icons';
 import { Button } from '@/components/ui/button';
 import { useCurrentOrg } from '@/features/auth/hooks/useCurrentOrg';
 import { useAuth } from '@/contexts/AuthContext';

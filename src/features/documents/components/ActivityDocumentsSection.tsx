@@ -15,7 +15,7 @@ import {
   Cloud,
   HardDrive,
   Eye,
-} from 'lucide-react';
+} from '@/lib/icons';
 import { Button } from '@/components/ui/button';
 import { DocumentFileIcon } from './DocumentFileIcon';
 import { DocumentCategoryBadge, DocumentAccessLevelBadge } from './DocumentBadges';

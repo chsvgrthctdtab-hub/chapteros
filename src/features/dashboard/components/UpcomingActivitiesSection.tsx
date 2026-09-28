@@ -2,7 +2,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { CalendarCheck, Calendar, MapPin, Users, ArrowRight, Plus } from 'lucide-react';
+import { CalendarCheck, Calendar, MapPin, Users, ArrowRight, Plus } from '@/lib/icons';
 import { formatDateTime, ACTIVITY_STATUS_META } from '../utils/formatters';
 import type { UpcomingActivityItem } from '../types/dashboard.types';
 import { EmptyState } from '@/components/common/EmptyState';

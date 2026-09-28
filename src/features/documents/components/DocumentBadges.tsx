@@ -4,7 +4,7 @@ import {
 } from '../utils/document.utils';
 import type { DocumentCategory, DocumentAccessLevel } from '../types/document.types';
 import { cn } from '@/lib/utils';
-import { Globe, Lock, ShieldCheck, UserCheck } from 'lucide-react';
+import { Globe, Lock, ShieldCheck, UserCheck } from '@/lib/icons';
 
 interface DocumentCategoryBadgeProps {
   category: DocumentCategory;

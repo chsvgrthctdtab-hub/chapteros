@@ -7,7 +7,7 @@ import {
   Loader2,
   Database,
   ShieldCheck,
-} from 'lucide-react';
+} from '@/lib/icons';
 import { Button } from '@/components/ui/button';
 
 export function LoginPage() {

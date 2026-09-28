@@ -10,7 +10,7 @@ import {
   CheckCircle2,
   Award,
   Layers,
-} from 'lucide-react';
+} from '@/lib/icons';
 import { ActivityStatusBadge } from './ActivityStatusBadge';
 import { ActivityCategoryBadge } from './ActivityCategoryBadge';
 import { formatDateRange } from '@/lib/date';

@@ -1,5 +1,5 @@
 import React from 'react';
-import { CalendarDays, Flame, CheckCircle2, Clock, Users } from 'lucide-react';
+import { CalendarDays, Flame, CheckCircle2, Clock, Users } from '@/lib/icons';
 import type { ActivityListItem } from '../types/activity.types';
 import type { ActivityStatus } from '@/types';
 import { cn } from '@/lib/utils';

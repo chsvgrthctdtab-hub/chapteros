@@ -25,7 +25,7 @@ import {
   Loader2,
   AlertCircle,
   Plus,
-} from 'lucide-react';
+} from '@/lib/icons';
 import { useSearchOrganizations } from '@/features/chapters/queries/organization.queries';
 import { useAddCohost } from '../queries/plan.queries';
 import { getOrgTypeLabel, getOrgTypeBadgeClass } from '@/lib/organization.utils';

@@ -11,7 +11,7 @@ import {
   Clock,
   MapPin,
   Sparkles,
-} from 'lucide-react';
+} from '@/lib/icons';
 import dayjs from 'dayjs';
 import type { UpcomingActivityItem } from '../types/dashboard.types';
 import { formatDateTime, ACTIVITY_STATUS_META } from '../utils/formatters';

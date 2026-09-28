@@ -17,7 +17,7 @@ import {
   DollarSign,
   Users,
   CheckSquare,
-} from 'lucide-react';
+} from '@/lib/icons';
 import { useActivitiesList } from '@/features/activities/queries/activity.queries';
 import { useReportOverview, useReportMemberStats, useReportFundStats } from '../reports.queries';
 import { parseActivityMetadata } from '@/features/activities/utils/activity-metadata';

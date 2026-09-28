@@ -4,7 +4,7 @@ import { ReportSkeleton } from './ReportSkeleton';
 import { ReportErrorState } from './ReportErrorState';
 import { ReportEmptyState } from './ReportEmptyState';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card';
-import { Wallet, ArrowUpRight, ArrowDownRight, Scale, Receipt, ArrowRight, ShieldCheck, AlertTriangle } from 'lucide-react';
+import { Wallet, ArrowUpRight, ArrowDownRight, Scale, Receipt, ArrowRight, ShieldCheck, AlertTriangle } from '@/lib/icons';
 import { formatVND } from '@/features/dashboard/utils/formatters';
 import { Link } from 'react-router-dom';
 import {

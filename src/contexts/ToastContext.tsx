@@ -1,6 +1,6 @@
 import { createContext, useContext, useState, useCallback, useMemo, type ReactNode } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { CheckCircle2, AlertTriangle, AlertCircle, Info, X } from 'lucide-react';
+import { CheckCircle2, AlertTriangle, AlertCircle, Info, X } from '@/lib/icons';
 import { formatErrorMessage } from '@/lib/error-formatter';
 
 export type ToastType = 'success' | 'error' | 'warning' | 'info';

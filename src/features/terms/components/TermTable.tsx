@@ -13,7 +13,7 @@ import {
   Lock,
   Archive,
   FileSpreadsheet,
-} from 'lucide-react';
+} from '@/lib/icons';
 import {
   Table,
   TableHeader,

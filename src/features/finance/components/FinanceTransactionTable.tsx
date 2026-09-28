@@ -9,7 +9,7 @@ import {
   CheckCircle2,
   ShieldAlert,
   AlertCircle,
-} from 'lucide-react';
+} from '@/lib/icons';
 import { formatDate } from '@/lib/date';
 import {
   formatVND,

@@ -1,5 +1,5 @@
 import React, { type ErrorInfo, type ReactNode } from 'react';
-import { AlertOctagon, RefreshCw, Home, ChevronDown, ChevronUp } from 'lucide-react';
+import { AlertOctagon, RefreshCw, Home, ChevronDown, ChevronUp } from '@/lib/icons';
 import { Button } from '@/components/ui/button';
 
 interface Props {

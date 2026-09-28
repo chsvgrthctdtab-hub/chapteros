@@ -3,7 +3,7 @@ import { ReportSkeleton } from './ReportSkeleton';
 import { ReportErrorState } from './ReportErrorState';
 import { ReportEmptyState } from './ReportEmptyState';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card';
-import { Layers, CheckCircle2, Clock, Archive, FileEdit, Star, ArrowUpRight, ArrowDownRight, Wallet } from 'lucide-react';
+import { Layers, CheckCircle2, Clock, Archive, FileEdit, Star, ArrowUpRight, ArrowDownRight, Wallet } from '@/lib/icons';
 import { formatVND } from '@/features/dashboard/utils/formatters';
 import dayjs from 'dayjs';
 import {

@@ -1,4 +1,4 @@
-import { X, Shield } from 'lucide-react';
+import { X, Shield } from '@/lib/icons';
 import type { TaskListItem, TaskStatus } from '../types/task.types';
 import { TASK_STATUSES } from '../types/task.types';
 import { getAllowedTransitions } from '../utils/task-workflow';

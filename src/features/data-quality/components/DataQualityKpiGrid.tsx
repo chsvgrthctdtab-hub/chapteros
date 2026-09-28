@@ -4,7 +4,7 @@ import {
   AlertCircle,
   Info,
   ChevronRight,
-} from 'lucide-react';
+} from '@/lib/icons';
 import type { DataQualitySeverity } from '../types';
 
 interface DataQualityKpiGridProps {

@@ -21,7 +21,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { AlertCircle, Loader2, Sparkles, Plus } from 'lucide-react';
+import { AlertCircle, Loader2, Sparkles, Plus } from '@/lib/icons';
 import { cn } from '@/lib/utils';
 import {
   useCreateCollabTask,

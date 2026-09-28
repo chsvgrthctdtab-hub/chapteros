@@ -1,4 +1,4 @@
-import { CalendarRange, Users, ShieldCheck, CheckCircle2, Archive, Clock } from 'lucide-react';
+import { CalendarRange, Users, ShieldCheck, CheckCircle2, Archive, Clock } from '@/lib/icons';
 import type { Term } from '@/types';
 
 interface TermMetricStripProps {

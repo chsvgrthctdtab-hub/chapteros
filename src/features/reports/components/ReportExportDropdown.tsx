@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
-import { Download, FileSpreadsheet, Printer, ChevronDown, Check } from 'lucide-react';
+import { Download, FileSpreadsheet, Printer, ChevronDown, Check } from '@/lib/icons';
 import { Button } from '@/components/ui/button';
 import type {
   ReportOverview,

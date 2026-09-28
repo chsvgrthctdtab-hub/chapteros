@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Wallet, TrendingUp, TrendingDown, ArrowRight, ArrowUpRight } from 'lucide-react';
+import { Wallet, TrendingUp, TrendingDown, ArrowRight, ArrowUpRight } from '@/lib/icons';
 import { formatVND } from '../utils/formatters';
 import type { DashboardFinanceKpi } from '../types/dashboard.types';
 

@@ -1,6 +1,6 @@
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
-import { CheckSquare, CheckCircle2, Clock, AlertCircle } from 'lucide-react';
+import { CheckSquare, CheckCircle2, Clock, AlertCircle } from '@/lib/icons';
 import type { DashboardTaskKpi } from '../types/dashboard.types';
 
 interface WorkProgressCardProps {

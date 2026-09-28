@@ -15,7 +15,7 @@ import {
   Loader2, 
   Check, 
   Lock,
-} from 'lucide-react';
+} from '@/lib/icons';
 import { GOOGLE_SCOPES_CATALOGUE, DEFAULT_IDENTITY_SCOPES, WORKSPACE_INTEGRATION_SCOPES } from '../constants/scopes';
 import type { ConnectGooglePayload } from '../types/google.types';
 

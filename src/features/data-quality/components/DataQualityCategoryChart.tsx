@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 import { ResponsiveContainer, PieChart, Pie, Cell, Tooltip } from 'recharts';
 import { CATEGORY_META } from '../utils/quality-helpers';
 import type { DataQualityCategory, DataQualitySummary } from '../types';
-import { PieChart as PieChartIcon, CheckCircle2 } from 'lucide-react';
+import { PieChart as PieChartIcon, CheckCircle2 } from '@/lib/icons';
 
 interface DataQualityCategoryChartProps {
   summary?: DataQualitySummary | null;

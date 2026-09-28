@@ -26,7 +26,7 @@ import {
   Loader2,
   AlertCircle,
   Building2,
-} from 'lucide-react';
+} from '@/lib/icons';
 import { activityFormSchema, type ActivityFormData } from '@/features/activities/schemas/activity.schema';
 import { ACTIVITY_CATEGORIES } from '@/features/activities/types/activity.types';
 import { toDateTimeLocalString, fromDateTimeLocalString } from '@/lib/date';

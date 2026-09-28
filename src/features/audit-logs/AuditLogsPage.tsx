@@ -15,7 +15,7 @@ import {
   Building2,
   Lock,
   Download,
-} from 'lucide-react';
+} from '@/lib/icons';
 import type {
   AuditLogFilterParams,
   AuditLogItemWithActor,

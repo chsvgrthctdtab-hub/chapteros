@@ -4,7 +4,7 @@ import {
   GraduationCap,
   CalendarCheck,
   ShieldAlert,
-} from 'lucide-react';
+} from '@/lib/icons';
 import { cn } from '@/lib/utils';
 import { useLanguage } from '@/contexts/LanguageContext';
 import type { MemberFilterParams } from '../types/member.types';

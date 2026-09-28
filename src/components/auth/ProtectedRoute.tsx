@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react';
 import { Navigate, Outlet, useLocation } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
-import { GraduationCap, Loader2 } from 'lucide-react';
+import { GraduationCap, Loader2 } from '@/lib/icons';
 
 interface ProtectedRouteProps {
   children?: ReactNode;

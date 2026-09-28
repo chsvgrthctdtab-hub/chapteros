@@ -27,7 +27,7 @@ import {
   Share2,
   Package,
   ChevronRight,
-} from 'lucide-react';
+} from '@/lib/icons';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';

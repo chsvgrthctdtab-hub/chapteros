@@ -25,7 +25,7 @@ import {
   AlertCircle,
   Loader2,
   Sparkles,
-} from 'lucide-react';
+} from '@/lib/icons';
 import { cn } from '@/lib/utils';
 import { useAddCollabParticipant, useCollabPlanPersonnel } from '../queries/collab.queries';
 

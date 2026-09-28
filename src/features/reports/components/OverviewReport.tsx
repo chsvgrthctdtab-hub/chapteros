@@ -6,7 +6,7 @@ import { ReportEmptyState } from './ReportEmptyState';
 import { ExecutiveInsightsPanel } from './ExecutiveInsightsPanel';
 import { NeedsAttentionSection } from './NeedsAttentionSection';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card';
-import { Users, Calendar, CheckSquare, Wallet, ArrowUpRight, ArrowDownRight, Layers, ArrowRight, CheckCircle2, Clock, AlertTriangle, ShieldCheck } from 'lucide-react';
+import { Users, Calendar, CheckSquare, Wallet, ArrowUpRight, ArrowDownRight, Layers, ArrowRight, CheckCircle2, Clock, AlertTriangle, ShieldCheck } from '@/lib/icons';
 import { formatVND } from '@/features/dashboard/utils/formatters';
 import { Link } from 'react-router-dom';
 

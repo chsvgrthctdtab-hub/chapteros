@@ -11,7 +11,7 @@ import {
   AlertCircle,
   Info,
   type LucideIcon,
-} from 'lucide-react';
+} from '@/lib/icons';
 
 export interface CategoryMeta {
   label: string;

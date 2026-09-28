@@ -6,7 +6,7 @@ import {
   Check,
   FileSpreadsheet,
   X,
-} from 'lucide-react';
+} from '@/lib/icons';
 import {
   Dialog,
   DialogContent,

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { X, ShieldCheck, AlertCircle, Sparkles } from 'lucide-react';
+import { X, ShieldCheck, AlertCircle, Sparkles } from '@/lib/icons';
 import { formatVND } from '../utils/finance.utils';
 
 interface ThresholdSettingsModalProps {

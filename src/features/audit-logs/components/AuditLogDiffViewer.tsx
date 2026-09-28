@@ -1,4 +1,4 @@
-import { ArrowRight, Sparkles, FileText } from 'lucide-react';
+import { ArrowRight, Sparkles, FileText } from '@/lib/icons';
 import {
   formatMetadataKey,
   formatMetadataValue,

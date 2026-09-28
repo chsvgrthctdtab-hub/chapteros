@@ -9,7 +9,7 @@ import {
   Clock, 
   ArrowRight,
   ShieldCheck
-} from 'lucide-react';
+} from '@/lib/icons';
 import type { GoogleServiceReadinessInfo } from '../types/google.types';
 
 interface GoogleServicesReadinessProps {

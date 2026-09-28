@@ -6,7 +6,7 @@ import {
   TrendingDown,
   RotateCcw,
   SlidersHorizontal,
-} from 'lucide-react';
+} from '@/lib/icons';
 import { DatePicker } from '@/components/ui/date-picker';
 import {
   Select,

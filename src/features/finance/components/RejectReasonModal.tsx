@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { X, AlertTriangle, ShieldAlert } from 'lucide-react';
+import { X, AlertTriangle, ShieldAlert } from '@/lib/icons';
 import { formatVND } from '../utils/finance.utils';
 import type { FinanceTransactionListItem } from '../types/finance.types';
 

@@ -9,7 +9,7 @@ import {
   PlusCircle,
   Shield,
   Loader2,
-} from 'lucide-react';
+} from '@/lib/icons';
 import { Link } from 'react-router-dom';
 import { ROLES } from '@/types/roles';
 import type { Organization, OrganizationMembership } from '@/types';

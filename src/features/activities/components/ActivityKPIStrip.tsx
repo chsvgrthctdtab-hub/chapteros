@@ -6,7 +6,7 @@ import {
   CheckSquare,
   DollarSign,
   TrendingUp,
-} from 'lucide-react';
+} from '@/lib/icons';
 import type { ActivityDetail } from '../types/activity.types';
 import type { ActivityParticipantsStats } from '@/repositories/activity.repository';
 import { cn } from '@/lib/utils';

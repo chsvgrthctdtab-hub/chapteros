@@ -4,7 +4,7 @@ import {
   ChevronLeft,
   ChevronRight,
   Calendar as CalendarIcon,
-} from 'lucide-react';
+} from '@/lib/icons';
 import type { ActivityListItem } from '../types/activity.types';
 import { ACTIVITY_STATUSES } from '../types/activity.types';
 import { cn } from '@/lib/utils';

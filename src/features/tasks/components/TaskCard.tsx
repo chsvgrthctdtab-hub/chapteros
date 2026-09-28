@@ -6,7 +6,7 @@ import {
   Edit2,
   Trash2,
   AlertTriangle,
-} from 'lucide-react';
+} from '@/lib/icons';
 import type { TaskListItem } from '../types/task.types';
 import { formatDueDateInfo } from '../types/task.types';
 import { TaskStatusBadge } from './TaskStatusBadge';

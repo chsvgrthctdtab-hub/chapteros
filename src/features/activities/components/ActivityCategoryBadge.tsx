@@ -8,7 +8,7 @@ import {
   BookOpen, 
   HelpCircle,
   type LucideIcon 
-} from 'lucide-react';
+} from '@/lib/icons';
 import { ACTIVITY_CATEGORIES } from '../types/activity.types';
 import type { ActivityCategory } from '@/types';
 

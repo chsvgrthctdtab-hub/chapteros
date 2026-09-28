@@ -21,7 +21,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { Sparkles, MapPin, Building2, Loader2, AlertCircle, ImageIcon } from 'lucide-react';
+import { Sparkles, MapPin, Building2, Loader2, AlertCircle, ImageIcon } from '@/lib/icons';
 import { useCreateCollabActivity } from '../queries/collab.queries';
 import { useAuth } from '@/contexts/AuthContext';
 import { formatError } from '@/lib/error-formatter';

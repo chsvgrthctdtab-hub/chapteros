@@ -24,7 +24,7 @@ import {
   HelpCircle,
   Wrench,
   CheckCircle2,
-} from 'lucide-react';
+} from '@/lib/icons';
 
 interface DataQualityIssueDetailDialogProps {
   issue: DataQualityIssue | null;

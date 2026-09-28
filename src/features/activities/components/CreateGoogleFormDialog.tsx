@@ -10,7 +10,7 @@ import {
   User,
   GraduationCap,
   Layers,
-} from 'lucide-react';
+} from '@/lib/icons';
 import type { ActivityDetail } from '../types/activity.types';
 import type { CreateActivityFormPayload } from '@/integrations/google/forms/google-forms.types';
 

@@ -4,7 +4,7 @@ import {
   UserCheck,
   X,
   Loader2,
-} from 'lucide-react';
+} from '@/lib/icons';
 import type { ActivityFormResponse, Member } from '@/types';
 
 interface ManualMatchMemberDialogProps {

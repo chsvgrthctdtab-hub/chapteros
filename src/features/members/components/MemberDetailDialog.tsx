@@ -12,7 +12,7 @@ import {
   Clock,
   ShieldCheck,
   Shield,
-} from 'lucide-react';
+} from '@/lib/icons';
 import {
   Dialog,
   DialogContent,

@@ -12,7 +12,7 @@ import {
   DollarSign,
   FileUp,
   Sparkles,
-} from 'lucide-react';
+} from '@/lib/icons';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import {

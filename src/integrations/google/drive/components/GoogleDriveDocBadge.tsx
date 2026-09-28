@@ -9,7 +9,7 @@ import {
   Image as ImageIcon,
   Folder,
   Cloud,
-} from 'lucide-react';
+} from '@/lib/icons';
 import { GOOGLE_DRIVE_FILE_TYPE_INFO, getDriveFileTypeGroup } from '../google-drive.constants';
 import type { DocumentSourceType } from '@/types';
 

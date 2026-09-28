@@ -21,7 +21,7 @@ import {
   CheckCircle2,
   AlertCircle,
   HelpCircle,
-} from 'lucide-react';
+} from '@/lib/icons';
 import { isOrgAdmin, ROLES } from '@/types/roles';
 import { EditMembershipDialog } from './EditMembershipDialog';
 import type {

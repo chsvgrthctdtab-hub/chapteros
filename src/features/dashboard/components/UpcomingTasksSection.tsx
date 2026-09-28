@@ -2,7 +2,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { CheckSquare, Calendar, User, ArrowRight, AlertCircle, Plus, CheckCircle2 } from 'lucide-react';
+import { CheckSquare, Calendar, User, ArrowRight, AlertCircle, Plus, CheckCircle2 } from '@/lib/icons';
 import { formatShortDate, TASK_PRIORITY_META, TASK_STATUS_META } from '../utils/formatters';
 import type { UpcomingTaskItem } from '../types/dashboard.types';
 import { EmptyState } from '@/components/common/EmptyState';

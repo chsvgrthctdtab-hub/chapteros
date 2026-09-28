@@ -1,4 +1,4 @@
-import { BarChart3 } from 'lucide-react';
+import { BarChart3 } from '@/lib/icons';
 
 interface ReportEmptyStateProps {
   title?: string;

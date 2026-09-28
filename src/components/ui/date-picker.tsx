@@ -6,7 +6,7 @@ import {
   X,
   Clock,
   Check
-} from 'lucide-react';
+} from '@/lib/icons';
 import { Popover, PopoverContent, PopoverTrigger } from './popover';
 import { Button } from './button';
 import { cn } from '@/lib/utils';

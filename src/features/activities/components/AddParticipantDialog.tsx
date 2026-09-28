@@ -1,7 +1,7 @@
 import { useState, useMemo, useEffect } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { X, Search, UserPlus, AlertCircle, Loader2, Check, User } from 'lucide-react';
+import { X, Search, UserPlus, AlertCircle, Loader2, Check, User } from '@/lib/icons';
 import {
   Select,
   SelectTrigger,

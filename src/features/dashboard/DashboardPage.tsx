@@ -22,7 +22,7 @@ import { WorkProgressCard } from './components/WorkProgressCard';
 import { DashboardChartsSection } from './components/DashboardChartsSection';
 import { DashboardSkeleton } from './components/DashboardSkeleton';
 import { DashboardErrorState } from './components/DashboardErrorState';
-import { Building2 } from 'lucide-react';
+import { Building2 } from '@/lib/icons';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 

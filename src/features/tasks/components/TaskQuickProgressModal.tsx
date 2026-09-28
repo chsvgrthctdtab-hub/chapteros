@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { X, Percent } from 'lucide-react';
+import { X, Percent } from '@/lib/icons';
 import type { TaskListItem } from '../types/task.types';
 import { cn } from '@/lib/utils';
 

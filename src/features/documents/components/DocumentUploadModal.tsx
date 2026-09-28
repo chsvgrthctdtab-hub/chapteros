@@ -16,7 +16,7 @@ import {
   CheckSquare,
   Users,
   ExternalLink,
-} from 'lucide-react';
+} from '@/lib/icons';
 import {
   Dialog,
   DialogContent,

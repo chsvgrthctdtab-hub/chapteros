@@ -6,7 +6,7 @@ import {
   Download,
   Filter,
   X,
-} from 'lucide-react';
+} from '@/lib/icons';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { DatePicker } from '@/components/ui/date-picker';

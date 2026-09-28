@@ -6,7 +6,7 @@ import {
   AlertTriangle,
   ExternalLink,
   Trash2,
-} from 'lucide-react';
+} from '@/lib/icons';
 import { useTasksByActivity } from '../queries/task.queries';
 import { useUpdateTaskStatus, useDeleteTask } from '../mutations/task.mutations';
 import { TaskStatusBadge } from './TaskStatusBadge';

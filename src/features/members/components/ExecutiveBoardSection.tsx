@@ -11,7 +11,7 @@ import {
   Copy,
   Check,
   UserCog,
-} from 'lucide-react';
+} from '@/lib/icons';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { ROLES, getRoleLabel, getOrgBoardTitle, type OrganizationRole } from '@/types/roles';

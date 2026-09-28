@@ -9,7 +9,7 @@ import {
   ExternalLink,
   Edit2,
   Trash2,
-} from 'lucide-react';
+} from '@/lib/icons';
 import {
   useActivityFinance,
   useFinanceCategories,

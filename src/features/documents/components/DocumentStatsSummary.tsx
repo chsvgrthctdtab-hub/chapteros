@@ -7,7 +7,7 @@ import {
   HardDrive,
   Cloud,
   Presentation,
-} from 'lucide-react';
+} from '@/lib/icons';
 import { getFileTypeGroup } from '../utils/document.utils';
 import type { DocumentStats, DocumentItem, DocumentFilterParams } from '../types/document.types';
 

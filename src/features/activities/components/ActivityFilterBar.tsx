@@ -11,7 +11,7 @@ import {
   ArrowUpDown,
   Download,
   Upload,
-} from 'lucide-react';
+} from '@/lib/icons';
 import { ACTIVITY_CATEGORIES, type ActivityFilterParams } from '../types/activity.types';
 import type { ActivityCategory, Term } from '@/types';
 import {

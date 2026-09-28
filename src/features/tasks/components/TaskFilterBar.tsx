@@ -9,7 +9,7 @@ import {
   ArrowUpDown,
   SlidersHorizontal,
   RefreshCw,
-} from 'lucide-react';
+} from '@/lib/icons';
 import type { TaskFilterParams, TaskAssigneeOption, TaskPriority, TaskStatus } from '../types/task.types';
 import type { Term, Activity } from '@/types';
 import { TASK_STATUSES, TASK_PRIORITIES } from '../types/task.types';

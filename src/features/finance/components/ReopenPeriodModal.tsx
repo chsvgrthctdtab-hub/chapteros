@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { X, Unlock, AlertTriangle } from 'lucide-react';
+import { X, Unlock, AlertTriangle } from '@/lib/icons';
 import type { FinancePeriodClosingItem } from '../types/finance.types';
 
 interface ReopenPeriodModalProps {

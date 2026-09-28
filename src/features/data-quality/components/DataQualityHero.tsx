@@ -5,7 +5,7 @@ import {
   AlertTriangle,
   Building2,
   Clock,
-} from 'lucide-react';
+} from '@/lib/icons';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { formatVietnameseDateTime, formatTimeAgo } from '../utils/quality-helpers';

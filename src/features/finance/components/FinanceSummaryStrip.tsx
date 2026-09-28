@@ -6,7 +6,7 @@ import {
   Clock,
   Lock,
   AlertTriangle,
-} from 'lucide-react';
+} from '@/lib/icons';
 import { formatVND } from '../utils/finance.utils';
 import type { FinanceSummaryStats } from '../types/finance.types';
 

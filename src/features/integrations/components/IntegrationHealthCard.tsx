@@ -10,7 +10,7 @@ import {
   RefreshCw, 
   Loader2, 
   ShieldCheck
-} from 'lucide-react';
+} from '@/lib/icons';
 import type { GoogleIntegrationHealthItem } from '../types/google.types';
 import { formatDate } from '@/lib/date';
 

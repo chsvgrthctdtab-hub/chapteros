@@ -32,7 +32,7 @@ import {
   ExternalLink,
   ShieldAlert,
   Sparkles,
-} from 'lucide-react';
+} from '@/lib/icons';
 import {
   extractGoogleDriveFileId,
   buildGoogleDriveViewUrl,

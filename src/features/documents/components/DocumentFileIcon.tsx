@@ -9,7 +9,7 @@ import {
   Presentation,
   CheckSquare,
   Folder,
-} from 'lucide-react';
+} from '@/lib/icons';
 import { getFileTypeGroup, getFileExtension, type FileTypeGroup } from '../utils/document.utils';
 import { cn } from '@/lib/utils';
 

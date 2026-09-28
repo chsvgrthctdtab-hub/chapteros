@@ -16,7 +16,7 @@ import {
   SelectContent,
   SelectItem,
 } from '@/components/ui/select';
-import { UserCog, AlertCircle, Loader2, ShieldCheck, ShieldAlert } from 'lucide-react';
+import { UserCog, AlertCircle, Loader2, ShieldCheck, ShieldAlert } from '@/lib/icons';
 import { ROLES } from '@/types/roles';
 import type { OrganizationMembership, OrganizationRole, MembershipStatus } from '@/types';
 

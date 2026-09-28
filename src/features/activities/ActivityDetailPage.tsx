@@ -18,7 +18,7 @@ import {
   ChevronRight,
   User,
   FolderKanban,
-} from 'lucide-react';
+} from '@/lib/icons';
 import { useCurrentOrg } from '@/features/auth/hooks/useCurrentOrg';
 import { useToast } from '@/contexts/ToastContext';
 import {

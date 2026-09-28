@@ -23,7 +23,7 @@ import { ActivityReport } from './components/ActivityReport';
 import { TaskReport } from './components/TaskReport';
 import { FundReport } from './components/FundReport';
 import { Button } from '@/components/ui/button';
-import { BarChart3, RefreshCw, AlertCircle } from 'lucide-react';
+import { BarChart3, RefreshCw, AlertCircle } from '@/lib/icons';
 
 export function ReportsPage() {
   const queryClient = useQueryClient();

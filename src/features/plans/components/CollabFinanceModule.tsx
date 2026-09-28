@@ -16,7 +16,7 @@ import {
   AlertCircle,
   Loader2,
   PieChart,
-} from 'lucide-react';
+} from '@/lib/icons';
 import {
   Dialog,
   DialogContent,

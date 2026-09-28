@@ -26,7 +26,7 @@ import {
   User,
   Edit3,
   FolderKanban,
-} from 'lucide-react';
+} from '@/lib/icons';
 import { ActivityStatusBadge } from './ActivityStatusBadge';
 import { ActivityCategoryBadge } from './ActivityCategoryBadge';
 import { ParticipantListTable } from './ParticipantListTable';

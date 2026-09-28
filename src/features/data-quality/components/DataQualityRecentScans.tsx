@@ -10,7 +10,7 @@ import {
   Wallet,
   FolderArchive,
   Search,
-} from 'lucide-react';
+} from '@/lib/icons';
 import type { DataQualitySummary } from '../types';
 
 interface DataQualityRecentScansProps {

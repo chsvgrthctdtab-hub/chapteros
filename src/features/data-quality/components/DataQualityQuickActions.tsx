@@ -8,7 +8,7 @@ import {
   Wallet,
   FolderArchive,
   ArrowRight,
-} from 'lucide-react';
+} from '@/lib/icons';
 
 const QUICK_MODULES = [
   {

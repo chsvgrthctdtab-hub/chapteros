@@ -1,5 +1,5 @@
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
-import { AlertTriangle, ArrowRight, CheckCircle2, CheckSquare, Wallet, Users, Calendar } from 'lucide-react';
+import { AlertTriangle, ArrowRight, CheckCircle2, CheckSquare, Wallet, Users, Calendar } from '@/lib/icons';
 import { Link } from 'react-router-dom';
 import type { ReportOverview } from '@/types/report';
 

@@ -10,7 +10,7 @@ import {
   Check,
   Percent,
   AlertCircle,
-} from 'lucide-react';
+} from '@/lib/icons';
 import { AttendanceStatusBadge } from './ParticipantStatusBadge';
 import {
   Select,

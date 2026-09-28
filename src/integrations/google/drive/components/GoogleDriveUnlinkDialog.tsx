@@ -8,7 +8,7 @@ import {
   DialogFooter,
 } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
-import { Link2Off, ShieldAlert, Loader2, ExternalLink } from 'lucide-react';
+import { Link2Off, ShieldAlert, Loader2, ExternalLink } from '@/lib/icons';
 import type { DocumentItem } from '@/features/documents/types/document.types';
 
 interface GoogleDriveUnlinkDialogProps {

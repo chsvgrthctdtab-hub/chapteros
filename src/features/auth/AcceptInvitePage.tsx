@@ -11,7 +11,7 @@ import {
   ArrowRight,
   Home,
   ShieldAlert
-} from 'lucide-react';
+} from '@/lib/icons';
 import { Button } from '@/components/ui/button';
 import { Card, CardHeader, CardContent, CardFooter } from '@/components/ui/card';
 

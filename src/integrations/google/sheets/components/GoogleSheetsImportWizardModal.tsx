@@ -15,7 +15,7 @@ import {
   Info,
   SlidersHorizontal,
   HelpCircle,
-} from 'lucide-react';
+} from '@/lib/icons';
 import {
   Dialog,
   DialogContent,

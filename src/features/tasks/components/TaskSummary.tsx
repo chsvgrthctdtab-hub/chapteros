@@ -4,7 +4,7 @@ import {
   CheckSquare,
   CheckCircle2,
   AlertTriangle,
-} from 'lucide-react';
+} from '@/lib/icons';
 import type { TaskStats } from '../types/task.types';
 import { cn } from '@/lib/utils';
 

@@ -4,7 +4,7 @@ import { ReportSkeleton } from './ReportSkeleton';
 import { ReportErrorState } from './ReportErrorState';
 import { ReportEmptyState } from './ReportEmptyState';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card';
-import { Calendar, CheckCircle2, PlayCircle, Clock, Target, AlertTriangle, ArrowRight, BarChart3 } from 'lucide-react';
+import { Calendar, CheckCircle2, PlayCircle, Clock, Target, AlertTriangle, ArrowRight, BarChart3 } from '@/lib/icons';
 import { Link } from 'react-router-dom';
 import {
   ResponsiveContainer,

@@ -10,7 +10,7 @@ import {
   CheckCircle2,
   Clock,
   Archive,
-} from 'lucide-react';
+} from '@/lib/icons';
 import { TermStatusBadge } from './TermStatusBadge';
 import dayjs from 'dayjs';
 import type { Term } from '@/types';

@@ -7,7 +7,7 @@ import {
   DialogFooter,
 } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
-import { AlertTriangle, Loader2, ShieldCheck, Unlink } from 'lucide-react';
+import { AlertTriangle, Loader2, ShieldCheck, Unlink } from '@/lib/icons';
 import type { GoogleConnection } from '@/types';
 
 interface DisconnectConfirmDialogProps {

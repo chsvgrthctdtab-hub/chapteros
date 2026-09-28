@@ -12,7 +12,7 @@ import {
   ArrowRight,
   ShieldAlert,
   Unlink,
-} from 'lucide-react';
+} from '@/lib/icons';
 import { formatVND } from '../utils/formatters';
 import type { DashboardStats, UpcomingActivityItem, DashboardTermOption } from '../types/dashboard.types';
 

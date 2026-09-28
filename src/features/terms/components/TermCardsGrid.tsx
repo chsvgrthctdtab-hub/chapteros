@@ -12,7 +12,7 @@ import {
   Lock,
   Archive,
   FileSpreadsheet,
-} from 'lucide-react';
+} from '@/lib/icons';
 import { Button } from '@/components/ui/button';
 import { TermStatusBadge } from './TermStatusBadge';
 import dayjs from 'dayjs';

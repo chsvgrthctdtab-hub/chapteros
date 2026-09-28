@@ -7,7 +7,7 @@ import {
   CheckCircle2,
   XCircle,
   type LucideIcon,
-} from 'lucide-react';
+} from '@/lib/icons';
 import type { ActivityStatus } from '@/types';
 import { cn } from '@/lib/utils';
 

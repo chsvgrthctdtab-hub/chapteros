@@ -8,7 +8,7 @@ import {
   ArrowDownRight,
   Scale,
   Clock,
-} from 'lucide-react';
+} from '@/lib/icons';
 import { formatVND } from '../utils/finance.utils';
 import type { FinanceSummaryStats, TransactionStatus } from '../types/finance.types';
 

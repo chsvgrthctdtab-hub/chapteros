@@ -16,7 +16,7 @@ import {
   AlertTriangle,
   Award,
   Clock,
-} from 'lucide-react';
+} from '@/lib/icons';
 import type { Term } from '@/types';
 import type { TermClosingSnapshot } from '../types/term.types';
 

@@ -4,7 +4,7 @@ import {
   AlertCircle, 
   Clock, 
   Activity
-} from 'lucide-react';
+} from '@/lib/icons';
 import { Card, CardContent } from '@/components/ui/card';
 import type { GoogleServiceMetrics, GoogleIntegrationOverview } from '../types/google.types';
 import { formatDate } from '@/lib/date';

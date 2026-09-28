@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { Plus, Users, CalendarPlus, CheckSquare, DollarSign } from 'lucide-react';
+import { Plus, Users, CalendarPlus, CheckSquare, DollarSign } from '@/lib/icons';
 
 interface QuickActionsBarProps {
   canManageMembers?: boolean;

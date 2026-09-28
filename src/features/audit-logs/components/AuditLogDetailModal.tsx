@@ -16,7 +16,7 @@ import {
   Check,
   ShieldCheck,
   Sliders,
-} from 'lucide-react';
+} from '@/lib/icons';
 import type { AuditLogItemWithActor } from '../types/audit-log.types';
 import {
   formatAuditTimestamp,

@@ -11,7 +11,7 @@ import {
   RotateCcw,
   Check,
   XCircle,
-} from 'lucide-react';
+} from '@/lib/icons';
 import type { TaskListItem, TaskStatus } from '../types/task.types';
 import { TASK_STATUSES, formatDueDateInfo } from '../types/task.types';
 import { TaskStatusBadge } from './TaskStatusBadge';

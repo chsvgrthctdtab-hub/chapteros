@@ -8,7 +8,7 @@ import {
   CheckCircle2,
   ChevronRight,
   ChevronDown,
-} from 'lucide-react';
+} from '@/lib/icons';
 import { formatDate } from '@/lib/date';
 import {
   formatVND,

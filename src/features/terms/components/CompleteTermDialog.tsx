@@ -12,7 +12,7 @@ import {
   DollarSign,
   ChevronDown,
   ChevronUp,
-} from 'lucide-react';
+} from '@/lib/icons';
 import {
   Dialog,
   DialogContent,
