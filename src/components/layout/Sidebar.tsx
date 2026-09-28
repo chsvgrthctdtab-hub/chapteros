@@ -174,6 +174,7 @@ interface SidebarProps {
 export function Sidebar({ collapsed, onToggleCollapse, mobileOpen, onCloseMobile }: SidebarProps) {
   const { activeRole } = useAuth();
   const isAdmin = activeRole === 'admin' || activeRole === 'leader';
+  const isEffectiveCollapsed = collapsed && !mobileOpen;
 
   const visibleSystemNavItems = systemNavItems.filter((item) => {
     if (item.href === '/integrations') return isAdmin;
@@ -195,34 +196,36 @@ export function Sidebar({ collapsed, onToggleCollapse, mobileOpen, onCloseMobile
         id="app-sidebar"
         className={cn(
           'fixed top-0 bottom-0 left-0 z-50 flex flex-col border-r border-[#e2e8f0] bg-white transition-all duration-200 ease-in-out lg:static shrink-0 select-none overflow-x-hidden',
-          collapsed ? 'w-[56px]' : 'w-64',
-          mobileOpen ? 'translate-x-0 shadow-2xl rounded-r-2xl' : '-translate-x-full lg:translate-x-0'
+          mobileOpen
+            ? 'w-64 translate-x-0 shadow-2xl rounded-r-2xl'
+            : '-translate-x-full lg:translate-x-0',
+          collapsed ? 'lg:w-[56px]' : 'lg:w-64'
         )}
       >
         {/* Brand header */}
         <div
           className={cn(
             'flex h-16 shrink-0 items-center border-b border-[#e2e8f0]/60 transition-all duration-200 ease-in-out',
-            collapsed ? 'justify-center px-2' : 'justify-between px-4'
+            isEffectiveCollapsed ? 'justify-center px-2' : 'justify-between px-4'
           )}
         >
           <div className="flex items-center gap-3 overflow-hidden min-w-0">
             <button
               type="button"
-              onClick={collapsed ? onToggleCollapse : undefined}
+              onClick={isEffectiveCollapsed ? onToggleCollapse : undefined}
               className={cn(
                 'flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-[#2e89f7] text-white shadow-sm font-bold transition-all duration-200',
-                collapsed ? 'hover:bg-[#1a73e8] cursor-pointer active:scale-95' : 'cursor-default'
+                isEffectiveCollapsed ? 'hover:bg-[#1a73e8] cursor-pointer active:scale-95' : 'cursor-default'
               )}
-              title={collapsed ? 'Mở rộng thanh điều hướng' : 'ChapterOS'}
-              aria-label={collapsed ? 'Mở rộng thanh điều hướng' : 'ChapterOS'}
+              title={isEffectiveCollapsed ? 'Mở rộng thanh điều hướng' : 'ChapterOS'}
+              aria-label={isEffectiveCollapsed ? 'Mở rộng thanh điều hướng' : 'ChapterOS'}
             >
               <GraduationCap size={18} />
             </button>
             <div
               className={cn(
                 'flex flex-col truncate transition-all duration-200 ease-in-out origin-left whitespace-nowrap overflow-hidden',
-                collapsed ? 'w-0 opacity-0 -translate-x-2.5 max-w-0 pointer-events-none' : 'w-auto opacity-100 translate-x-0 max-w-[160px]'
+                isEffectiveCollapsed ? 'w-0 opacity-0 -translate-x-2.5 max-w-0 pointer-events-none' : 'w-auto opacity-100 translate-x-0 max-w-[160px]'
               )}
             >
               <span className="font-bold tracking-tight text-[#0b3558] text-base leading-tight truncate">
@@ -242,7 +245,7 @@ export function Sidebar({ collapsed, onToggleCollapse, mobileOpen, onCloseMobile
             onClick={onToggleCollapse}
             className={cn(
               'hidden lg:flex text-slate-gray hover:text-ink-navy hover:bg-[#f0f4f9] rounded-full transition-all duration-200 shrink-0',
-              collapsed ? 'w-0 opacity-0 p-0 overflow-hidden pointer-events-none' : 'w-8 h-8 opacity-100'
+              isEffectiveCollapsed ? 'w-0 opacity-0 p-0 overflow-hidden pointer-events-none' : 'w-8 h-8 opacity-100'
             )}
             aria-label="Thu gọn thanh điều hướng"
             title="Thu gọn thanh điều hướng"
@@ -259,7 +262,7 @@ export function Sidebar({ collapsed, onToggleCollapse, mobileOpen, onCloseMobile
             <div
               className={cn(
                 'overflow-hidden transition-all duration-200 ease-in-out origin-top',
-                collapsed ? 'max-h-0 opacity-0 mb-0 pointer-events-none' : 'max-h-6 opacity-100 mb-2'
+                isEffectiveCollapsed ? 'max-h-0 opacity-0 mb-0 pointer-events-none' : 'max-h-6 opacity-100 mb-2'
               )}
             >
               <p className="px-2.5 text-[10px] font-bold tracking-wider text-slate-gray/70 uppercase truncate">
@@ -271,7 +274,7 @@ export function Sidebar({ collapsed, onToggleCollapse, mobileOpen, onCloseMobile
                 <NavLinkItem
                   key={item.href}
                   item={item}
-                  collapsed={collapsed}
+                  collapsed={isEffectiveCollapsed}
                   onCloseMobile={onCloseMobile}
                 />
               ))}
@@ -283,7 +286,7 @@ export function Sidebar({ collapsed, onToggleCollapse, mobileOpen, onCloseMobile
             <div
               className={cn(
                 'overflow-hidden transition-all duration-200 ease-in-out origin-top',
-                collapsed ? 'max-h-0 opacity-0 mb-0 pointer-events-none' : 'max-h-6 opacity-100 mb-2'
+                isEffectiveCollapsed ? 'max-h-0 opacity-0 mb-0 pointer-events-none' : 'max-h-6 opacity-100 mb-2'
               )}
             >
               <p className="px-2.5 text-[10px] font-bold tracking-wider text-slate-gray/70 uppercase truncate">
@@ -295,7 +298,7 @@ export function Sidebar({ collapsed, onToggleCollapse, mobileOpen, onCloseMobile
                 <NavLinkItem
                   key={item.href}
                   item={item}
-                  collapsed={collapsed}
+                  collapsed={isEffectiveCollapsed}
                   onCloseMobile={onCloseMobile}
                 />
               ))}
@@ -308,7 +311,7 @@ export function Sidebar({ collapsed, onToggleCollapse, mobileOpen, onCloseMobile
           <div
             className={cn(
               'overflow-hidden transition-all duration-200 ease-in-out',
-              collapsed ? 'max-h-0 opacity-0 pointer-events-none' : 'max-h-20 opacity-100'
+              isEffectiveCollapsed ? 'max-h-0 opacity-0 pointer-events-none' : 'max-h-20 opacity-100'
             )}
           >
             <div className="flex items-center gap-2.5 rounded-xl p-2.5 text-xs text-slate-gray bg-white border border-[#e2e8f0] shadow-xs">
@@ -321,7 +324,7 @@ export function Sidebar({ collapsed, onToggleCollapse, mobileOpen, onCloseMobile
           </div>
 
           {/* Expand button when collapsed */}
-          {collapsed && (
+          {isEffectiveCollapsed && (
             <button
               type="button"
               onClick={onToggleCollapse}
