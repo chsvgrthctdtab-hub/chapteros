@@ -237,42 +237,14 @@
 .bg-info-container { background-color: var(--md-sys-color-info-container); }
 .text-on-info-container { color: var(--md-sys-color-on-info-container); }
 
-/* ==========================================================================
-   MATERIAL SYMBOLS ROUNDED — Self-hosted WOFF2 (Zero CDN dependency)
-   ========================================================================== */
-@font-face {
-  font-family: 'Material Symbols Rounded';
-  font-style: normal;
-  font-weight: 100 700;
-  font-display: block;
-  src: url('/fonts/material-symbols-rounded.woff2') format('woff2');
-}
 
-.material-symbols-rounded {
-  font-family: 'Material Symbols Rounded', sans-serif;
-  font-weight: normal;
-  font-style: normal;
-  font-size: 20px;
-  line-height: 1;
-  letter-spacing: normal;
-  text-transform: none;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  vertical-align: middle;
-  white-space: nowrap;
-  word-wrap: normal;
-  direction: ltr;
-  font-feature-settings: 'liga';
-  -webkit-font-smoothing: antialiased;
-}
 
 /* ==========================================================================
    GLOBAL LUCIDE SVG REFINEMENT — Tầng 2: Nét mảnh & dịu mắt toàn hệ thống
    Áp dụng cho toàn bộ Lucide icon mà không cần sửa từng file
    ========================================================================== */
 svg.lucide {
-  stroke-width: 1.5;
+  stroke-width: 1.75;
   stroke-linecap: round;
   stroke-linejoin: round;
   flex-shrink: 0;
