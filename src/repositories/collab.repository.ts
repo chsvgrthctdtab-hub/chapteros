@@ -925,12 +925,57 @@ export const collabRepository = {
         .in('organization_id', allOrgIds)
         .eq('status', 'active');
 
+      // Query tasks in this plan to find anyone actively assigned tasks
+      const { data: planTasks } = await supabase
+        .from('collab_tasks')
+        .select('assigned_to')
+        .eq('plan_id', planId);
+
+      const assignedUserIds = new Set(
+        (planTasks || []).map((t: any) => t.assigned_to).filter(Boolean)
+      );
+
+      // Query collab activities in this plan to find activity leads
+      const { data: planActivities } = await supabase
+        .from('collab_activities')
+        .select('created_by')
+        .eq('plan_id', planId);
+
+      const activityLeadUserIds = new Set(
+        (planActivities || []).map((a: any) => a.created_by).filter(Boolean)
+      );
+
+      // Query collab participants with designated BTC roles
+      const { data: btcParticipants } = await supabase
+        .from('collab_participants')
+        .select('member_id, role_title')
+        .eq('plan_id', planId);
+
+      const btcParticipantMemberIds = new Set(
+        (btcParticipants || []).map((p: any) => p.member_id).filter(Boolean)
+      );
+
       const boardKeywords = [
         'trưởng', 'phó', 'chủ nhiệm', 'ủy viên', 'uy vien',
         'thủ quỹ', 'thu quy', 'thư ký', 'thu ky', 'bch', 'ban chấp hành',
         'ban chap hanh', 'quản trị', 'quan tri', 'leader', 'deputy', 'admin',
-        'treasurer', 'secretary', 'board'
+        'treasurer', 'secretary', 'board', 'bí thư', 'bi thu', 'chỉ huy',
+        'điều phối', 'phụ trách', 'btc', 'ban tổ chức', 'cán bộ'
       ];
+
+      const isBoardPosition = (position?: string | null): boolean => {
+        if (!position) return false;
+        const p = position.toLowerCase().trim();
+        if (p === 'hội viên' || p === 'member' || p === 'sinh viên' || p === 'tình nguyện viên') {
+          return false;
+        }
+        return boardKeywords.some((kw) => p.includes(kw));
+      };
+
+      const isLeadershipRole = (role?: string | null): boolean => {
+        if (!role) return false;
+        return ['admin', 'leader', 'deputy', 'treasurer', 'secretary'].includes(role.toLowerCase());
+      };
 
       // Map member details by user_id and full_name + org
       const memberByUserId = new Map<string, any>();
@@ -950,8 +995,31 @@ export const collabRepository = {
         const org = m.organization || orgMap.get(m.organization_id);
         const matchedMem = memberByUserId.get(m.user_id) || memberByOrgAndName.get(`${m.organization_id}__${profile?.full_name?.toLowerCase().trim()}`);
 
+        const isLeadership = isLeadershipRole(m.role);
+        const matchedMemIsBCH = matchedMem ? isBoardPosition(matchedMem.position) : false;
+        const isAssigned = assignedUserIds.has(m.user_id) || activityLeadUserIds.has(m.user_id) || (matchedMem && btcParticipantMemberIds.has(matchedMem.id));
+
+        // CRITICAL FILTER: ONLY include if they have a leadership role in the organization,
+        // hold a BCH position, or are actively assigned tasks/activities in this plan.
+        // DO NOT push ordinary chapter members into Ban Tổ Chức!
+        if (!isLeadership && !matchedMemIsBCH && !isAssigned) {
+          continue;
+        }
+
         const key = `${m.organization_id}__${m.user_id}`;
         seenKeys.add(key);
+
+        let finalPosition = matchedMem?.position;
+        if (!finalPosition || finalPosition.toLowerCase().trim() === 'hội viên') {
+          if (m.role === 'admin') finalPosition = 'Ban Quản trị';
+          else if (m.role === 'leader') finalPosition = 'Chi hội trưởng';
+          else if (m.role === 'deputy') finalPosition = 'Chi hội phó';
+          else if (m.role === 'treasurer') finalPosition = 'Thủ quỹ';
+          else if (m.role === 'secretary') finalPosition = 'Ủy viên BCH';
+          else if (assignedUserIds.has(m.user_id)) finalPosition = 'Phụ trách công việc';
+          else if (activityLeadUserIds.has(m.user_id)) finalPosition = 'Trưởng Ban tổ chức hoạt động';
+          else finalPosition = 'Thành viên Ban tổ chức';
+        }
 
         results.push({
           userId: m.user_id,
@@ -968,27 +1036,35 @@ export const collabRepository = {
           organizationCode: org?.code || 'ORG',
           organizationType: org?.type || 'chi_hoi',
           role: (m.role as OrganizationRole) || 'secretary',
-          position: matchedMem?.position || (m.role === 'admin' ? 'Trưởng ban' : m.role === 'leader' ? 'Chi hội trưởng' : m.role === 'deputy' ? 'Chi hội phó' : 'Ủy viên BCH'),
+          position: finalPosition,
         });
       }
 
-      // Also include members from roster who are not in membershipsData (e.g. BCH members appointed in members table)
+      // Also include members from roster who are in BCH or assigned to this plan
       for (const mem of (membersData as any[]) || []) {
         const uId = mem.user_id || mem.id;
         const key = `${mem.organization_id}__${uId}`;
         const keyByMemberId = `${mem.organization_id}__${mem.id}`;
         if (seenKeys.has(key) || seenKeys.has(keyByMemberId)) continue;
+
+        const isBCH = isBoardPosition(mem.position);
+        const isAssigned = (mem.user_id && assignedUserIds.has(mem.user_id)) || btcParticipantMemberIds.has(mem.id);
+
+        // CRITICAL FILTER: ONLY include members who hold a BCH position or are assigned tasks/roles in this plan!
+        // Plain members ('Hội viên') must NEVER be included in Ban Tổ Chức!
+        if (!isBCH && !isAssigned) {
+          continue;
+        }
+
         seenKeys.add(key);
         seenKeys.add(keyByMemberId);
 
         const org = orgMap.get(mem.organization_id);
-        const p = (mem.position || '').toLowerCase();
-        const isBoardPosition = boardKeywords.some((kw) => p.includes(kw));
 
         results.push({
           userId: uId,
           profileId: uId,
-          fullName: mem.full_name || 'Hội viên',
+          fullName: mem.full_name || 'Cán bộ BCH',
           studentId: mem.student_id || null,
           className: mem.class_name || null,
           cohort: mem.cohort || null,
@@ -1000,7 +1076,7 @@ export const collabRepository = {
           organizationCode: org?.code || 'ORG',
           organizationType: org?.type || 'chi_hoi',
           role: 'secretary' as OrganizationRole,
-          position: mem.position || (isBoardPosition ? 'Ủy viên BCH' : 'Hội viên'),
+          position: mem.position || (isAssigned ? 'Cán bộ phụ trách' : 'Ủy viên Ban Chấp Hành'),
         });
       }
 

@@ -383,9 +383,15 @@ export function PlanDetailPage() {
     };
   }, [collabActivities, collabTasks]);
 
-  // Filtered Personnel
+  // Filtered Personnel (Ban Tổ Chức: Cán bộ BCH và nhân sự phụ trách nhiệm vụ)
   const filteredPersonnel = useMemo(() => {
     return personnel.filter((p) => {
+      // Bảo vệ 2 lớp: Loại bỏ hoàn toàn hội viên thường không có nhiệm vụ trong chiến dịch
+      const pPos = (p.position || '').toLowerCase().trim();
+      const isPlainMember = pPos === 'hội viên' || pPos === 'member';
+      const assignedCount = collabTasks.filter((t) => t.assignedTo === p.userId).length;
+      if (isPlainMember && assignedCount === 0) return false;
+
       if (personnelOrgFilter !== 'all' && p.organizationId !== personnelOrgFilter) return false;
       if (personnelSearch.trim()) {
         const q = personnelSearch.toLowerCase();
@@ -394,11 +400,12 @@ export function PlanDetailPage() {
         const classMatch = p.className?.toLowerCase().includes(q);
         const emailMatch = p.email?.toLowerCase().includes(q);
         const orgMatch = p.organizationName.toLowerCase().includes(q);
-        return nameMatch || idMatch || classMatch || emailMatch || orgMatch;
+        const posMatch = pPos.includes(q);
+        return nameMatch || idMatch || classMatch || emailMatch || orgMatch || posMatch;
       }
       return true;
     });
-  }, [personnel, personnelOrgFilter, personnelSearch]);
+  }, [personnel, personnelOrgFilter, personnelSearch, collabTasks]);
 
   // Filtered Campaign Participants
   const filteredCampaignParticipants = useMemo(() => {
