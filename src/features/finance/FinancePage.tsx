@@ -484,9 +484,9 @@ export function FinancePage() {
             size="sm"
             onClick={() => setSheetsExportOpen(true)}
             title="Xuất Google Sheets"
-            className="h-8 px-2 sm:px-2.5 text-xs font-semibold text-slate-gray hover:text-ink-navy bg-white hover:bg-cloud border-hairline shadow-xs"
+            className="h-8 px-3 text-xs font-semibold text-[#1e293b] bg-white hover:bg-[#f0f4f9] border-[#e2e8f0] rounded-full shadow-2xs gap-1.5 cursor-pointer"
           >
-            <FileSpreadsheet className="w-3.5 h-3.5 text-emerald-600 sm:mr-1 shrink-0" />
+            <FileSpreadsheet className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
             <span className="hidden sm:inline">Xuất Sheets</span>
           </Button>
 
@@ -497,9 +497,9 @@ export function FinancePage() {
               size="sm"
               onClick={() => setSheetsImportOpen(true)}
               title="Nhập Google Sheets"
-              className="h-8 px-2 sm:px-2.5 text-xs font-semibold text-slate-gray hover:text-ink-navy bg-white hover:bg-cloud border-hairline shadow-xs"
+              className="h-8 px-3 text-xs font-semibold text-[#1e293b] bg-white hover:bg-[#f0f4f9] border-[#e2e8f0] rounded-full shadow-2xs gap-1.5 cursor-pointer"
             >
-              <FileSpreadsheet className="w-3.5 h-3.5 text-signal-blue sm:mr-1 shrink-0" />
+              <FileSpreadsheet className="w-3.5 h-3.5 text-[#2e89f7] shrink-0" />
               <span className="hidden sm:inline">Nhập Sheets</span>
             </Button>
           )}
@@ -509,9 +509,9 @@ export function FinancePage() {
               size="sm"
               onClick={() => handleOpenCreate('income')}
               title="Ghi thu / chi mới"
-              className="bg-signal-blue hover:bg-[#005be0] text-white text-xs h-8 px-2.5 sm:px-3 shadow-xs font-semibold flex items-center gap-1 shrink-0"
+              className="bg-[#2e89f7] hover:bg-[#1a73e8] text-white text-xs h-8 px-3.5 shadow-2xs font-semibold rounded-full gap-1.5 shrink-0 cursor-pointer"
             >
-              <Plus className="w-3.5 h-3.5 shrink-0" />
+              <Plus className="w-4 h-4 shrink-0" />
               <span className="hidden sm:inline">Ghi thu / chi</span>
             </Button>
           )}

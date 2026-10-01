@@ -203,9 +203,9 @@ export function ActivitiesPage() {
             id="activity-export-sheets-header-btn"
             onClick={() => setSheetsExportOpen(true)}
             title="Xuất Google Sheets"
-            className="h-8 px-2 sm:px-2.5 text-xs font-semibold text-ink-navy bg-white hover:bg-pebble border-hairline rounded-lg shadow-xs"
+            className="h-8 px-3 text-xs font-semibold text-[#1e293b] bg-white hover:bg-[#f0f4f9] border-[#e2e8f0] rounded-full shadow-2xs gap-1.5"
           >
-            <Download className="w-3.5 h-3.5 sm:mr-1 text-signal-blue shrink-0" />
+            <Download className="w-3.5 h-3.5 text-[#2e89f7] shrink-0" />
             <span className="hidden sm:inline">Xuất Sheets</span>
           </Button>
 
@@ -218,9 +218,9 @@ export function ActivitiesPage() {
               id="activity-import-sheets-header-btn"
               onClick={() => setSheetsImportOpen(true)}
               title="Nhập Google Sheets"
-              className="h-8 px-2 sm:px-2.5 text-xs font-semibold text-ink-navy bg-white hover:bg-pebble border-hairline rounded-lg shadow-xs"
+              className="h-8 px-3 text-xs font-semibold text-[#1e293b] bg-white hover:bg-[#f0f4f9] border-[#e2e8f0] rounded-full shadow-2xs gap-1.5"
             >
-              <Upload className="w-3.5 h-3.5 sm:mr-1 text-signal-blue shrink-0" />
+              <Upload className="w-3.5 h-3.5 text-[#2e89f7] shrink-0" />
               <span className="hidden sm:inline">Nhập Sheets</span>
             </Button>
           )}
@@ -233,9 +233,9 @@ export function ActivitiesPage() {
               id="create-new-activity-btn"
               onClick={handleOpenCreate}
               title="Tạo hoạt động mới"
-              className="h-8 px-2.5 sm:px-3 text-xs font-semibold text-white bg-signal-blue hover:bg-[#005be0] rounded-lg shadow-sm flex items-center gap-1"
+              className="h-8 px-3.5 text-xs font-semibold text-white bg-[#2e89f7] hover:bg-[#1a73e8] rounded-full shadow-2xs gap-1.5"
             >
-              <Plus className="w-3.5 h-3.5 shrink-0" />
+              <Plus className="w-4 h-4 shrink-0" />
               <span className="hidden sm:inline">Tạo hoạt động</span>
             </Button>
           )}

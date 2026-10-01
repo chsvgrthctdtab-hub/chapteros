@@ -864,10 +864,10 @@ export function CollabActivityDetailPage() {
                     setEditingTask(null);
                     setIsTaskDialogOpen(true);
                   }}
-                  className="h-8 text-xs bg-signal-blue hover:bg-[#005be0] text-white shadow-xs font-semibold rounded-lg active:scale-[0.98] transition-all cursor-pointer"
+                  className="h-8 text-xs bg-signal-blue hover:bg-[#005be0] text-white shadow-2xs font-semibold rounded-full px-3.5 flex items-center justify-center gap-1.5 active:scale-[0.98] transition-all cursor-pointer"
                 >
-                  <Plus className="h-3.5 w-3.5 mr-1" />
-                  Giao việc
+                  <Plus className="w-4 h-4 shrink-0" />
+                  <span>Giao việc</span>
                 </Button>
               )}
             </div>

@@ -419,19 +419,19 @@ export function CollabFinanceModule({
                 id="btn-add-income"
                 size="sm"
                 onClick={() => openCreateDialog('income')}
-                className="flex-1 text-xs bg-signal-blue hover:bg-[#005be0] text-white h-8 rounded-lg shadow-sm font-semibold"
+                className="flex-1 text-xs bg-signal-blue hover:bg-[#005be0] text-white h-8 rounded-full shadow-2xs font-semibold flex items-center justify-center gap-1.5"
               >
-                <Plus className="h-3.5 w-3.5 mr-1" />
-                Thu quỹ
+                <Plus className="h-4 w-4 shrink-0" />
+                <span>Thu quỹ</span>
               </Button>
               <Button
                 id="btn-add-expense"
                 size="sm"
                 onClick={() => openCreateDialog('expense')}
-                className="flex-1 text-xs bg-ink-navy hover:bg-[#082640] text-white h-8 rounded-lg shadow-sm font-semibold"
+                className="flex-1 text-xs bg-[#0b3558] hover:bg-[#082640] text-white h-8 rounded-full shadow-2xs font-semibold flex items-center justify-center gap-1.5"
               >
-                <Plus className="h-3.5 w-3.5 mr-1" />
-                Ghi Chi
+                <Plus className="h-4 w-4 shrink-0" />
+                <span>Ghi Chi</span>
               </Button>
             </div>
           )}
@@ -582,10 +582,10 @@ export function CollabFinanceModule({
               <Button
                 size="sm"
                 onClick={() => openCreateDialog('expense')}
-                className="mt-3 text-xs h-8 px-3.5 bg-signal-blue hover:bg-[#005be0] text-white font-semibold shadow-sm rounded-lg active:scale-[0.98]"
+                className="mt-3 text-xs h-8 px-3.5 bg-signal-blue hover:bg-[#005be0] text-white font-semibold shadow-2xs rounded-full flex items-center justify-center gap-1.5 active:scale-[0.98]"
               >
-                <Plus className="h-3.5 w-3.5 mr-1" />
-                Ghi nhận giao dịch đầu tiên
+                <Plus className="h-4 w-4 shrink-0" />
+                <span>Ghi nhận giao dịch đầu tiên</span>
               </Button>
             )}
           </div>

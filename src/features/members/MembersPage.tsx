@@ -315,20 +315,20 @@ export function MembersPage() {
                 variant="outline"
                 size="sm"
                 title={t('members.action.export', 'Xuất')}
-                className="text-xs h-8 px-2 sm:px-2.5 text-ink-navy hover:bg-cloud border-hairline rounded-lg cursor-pointer flex items-center gap-1 font-medium shadow-xs"
+                className="text-xs h-8 px-3 text-[#1e293b] hover:bg-[#f0f4f9] border-[#e2e8f0] rounded-full cursor-pointer flex items-center gap-1.5 font-semibold shadow-2xs"
               >
-                <Download className="h-3.5 w-3.5 text-signal-blue shrink-0" />
+                <Download className="w-3.5 h-3.5 text-[#2e89f7] shrink-0" />
                 <span className="hidden sm:inline">{t('members.action.export', 'Xuất')}</span>
-                <ChevronDown className="h-3 w-3 opacity-60 ml-0.5 shrink-0" />
+                <ChevronDown className="w-3 h-3 opacity-60 shrink-0" />
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="w-48 rounded-xl border-hairline bg-white shadow-lg">
+            <DropdownMenuContent align="end" className="w-48 rounded-2xl border-[#e2e8f0] bg-white shadow-lg">
               <DropdownMenuItem onClick={() => setSheetsExportOpen(true)} className="cursor-pointer text-xs py-2">
-                <Download className="h-3.5 w-3.5 mr-2 text-signal-blue" />
+                <Download className="w-3.5 h-3.5 mr-2 text-[#2e89f7]" />
                 <span>{t('members.action.export_sheets', 'Xuất Google Sheets')}</span>
               </DropdownMenuItem>
               <DropdownMenuItem onClick={handleExportCsv} className="cursor-pointer text-xs py-2">
-                <FileSpreadsheet className="h-3.5 w-3.5 mr-2 text-slate-gray" />
+                <FileSpreadsheet className="w-3.5 h-3.5 mr-2 text-slate-gray" />
                 <span>{t('members.action.export_csv', 'Xuất file CSV')}</span>
               </DropdownMenuItem>
             </DropdownMenuContent>
@@ -342,26 +342,26 @@ export function MembersPage() {
                   variant="outline"
                   size="sm"
                   title={t('members.action.import', 'Nhập')}
-                  className="text-xs h-8 px-2 sm:px-2.5 text-ink-navy hover:bg-cloud border-hairline rounded-lg cursor-pointer flex items-center gap-1 font-medium shadow-xs"
+                  className="text-xs h-8 px-3 text-[#1e293b] hover:bg-[#f0f4f9] border-[#e2e8f0] rounded-full cursor-pointer flex items-center gap-1.5 font-semibold shadow-2xs"
                 >
-                  <Upload className="h-3.5 w-3.5 text-signal-blue shrink-0" />
+                  <Upload className="w-3.5 h-3.5 text-[#2e89f7] shrink-0" />
                   <span className="hidden sm:inline">{t('members.action.import', 'Nhập')}</span>
-                  <ChevronDown className="h-3 w-3 opacity-60 ml-0.5 shrink-0" />
+                  <ChevronDown className="w-3 h-3 opacity-60 shrink-0" />
                 </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="w-52 rounded-xl border-hairline bg-white shadow-lg">
+              <DropdownMenuContent align="end" className="w-52 rounded-2xl border-[#e2e8f0] bg-white shadow-lg">
                 <DropdownMenuItem
                   onClick={() => setFileImportOpen(true)}
-                  className="cursor-pointer text-xs py-2 font-medium text-ink-navy focus:bg-cloud"
+                  className="cursor-pointer text-xs py-2 font-medium text-ink-navy focus:bg-[#f0f4f9]"
                 >
-                  <FileSpreadsheet className="h-3.5 w-3.5 mr-2 text-signal-blue" />
+                  <FileSpreadsheet className="w-3.5 h-3.5 mr-2 text-[#2e89f7]" />
                   <span>Nhập từ file Excel / CSV</span>
                 </DropdownMenuItem>
                 <DropdownMenuItem
                   onClick={() => setSheetsImportOpen(true)}
-                  className="cursor-pointer text-xs py-2 text-slate-gray focus:text-ink-navy focus:bg-cloud"
+                  className="cursor-pointer text-xs py-2 text-slate-gray focus:text-ink-navy focus:bg-[#f0f4f9]"
                 >
-                  <Upload className="h-3.5 w-3.5 mr-2 text-signal-blue" />
+                  <Upload className="w-3.5 h-3.5 mr-2 text-[#2e89f7]" />
                   <span>Nhập từ Google Sheets</span>
                 </DropdownMenuItem>
               </DropdownMenuContent>
@@ -374,9 +374,9 @@ export function MembersPage() {
               size="sm"
               onClick={handleOpenCreateDialog}
               title={language === 'vi' ? `Thêm ${memberNoun.toLowerCase()}` : `Add ${memberNoun.toLowerCase()}`}
-              className="bg-signal-blue hover:bg-[#005be0] text-white text-xs h-8 px-2.5 sm:px-3 rounded-lg shadow-sm cursor-pointer font-medium shrink-0 flex items-center gap-1.5"
+              className="bg-[#2e89f7] hover:bg-[#1a73e8] text-white text-xs h-8 px-3.5 rounded-full shadow-2xs cursor-pointer font-semibold shrink-0 flex items-center gap-1.5"
             >
-              <UserPlus className="h-3.5 w-3.5 shrink-0" />
+              <UserPlus className="w-4 h-4 shrink-0" />
               <span className="hidden sm:inline whitespace-nowrap">{language === 'vi' ? `Thêm ${memberNoun.toLowerCase()}` : `Add ${memberNoun.toLowerCase()}`}</span>
             </Button>
           )}

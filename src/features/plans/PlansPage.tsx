@@ -121,9 +121,9 @@ export function PlansPage() {
               id="btn-create-plan"
               onClick={() => setIsCreateOpen(true)}
               title="Tạo chiến dịch phối hợp mới"
-              className="h-8 sm:h-9 px-2.5 sm:px-4 text-xs font-semibold bg-signal-blue hover:bg-[#005be0] text-white gap-1 sm:gap-1.5 shadow-sm cursor-pointer rounded-lg"
+              className="h-8 sm:h-9 px-3 sm:px-4 text-xs font-semibold bg-[#2e89f7] hover:bg-[#1a73e8] text-white gap-1.5 shadow-2xs cursor-pointer rounded-full"
             >
-              <Plus className="h-4 w-4 shrink-0" />
+              <Plus className="w-4 h-4 shrink-0" />
               <span className="hidden sm:inline">Tạo chiến dịch mới</span>
             </Button>
           )}
@@ -188,10 +188,10 @@ export function PlansPage() {
             <Button
               id="btn-empty-create-plan"
               onClick={() => setIsCreateOpen(true)}
-              className="text-xs bg-signal-blue hover:bg-[#005be0] text-white gap-1.5 shadow-sm rounded-lg"
+              className="text-xs h-8 px-3.5 bg-[#2e89f7] hover:bg-[#1a73e8] text-white gap-1.5 shadow-2xs rounded-full font-semibold"
             >
-              <Plus className="h-4 w-4" />
-              Tạo chiến dịch mới
+              <Plus className="w-4 h-4 shrink-0" />
+              <span>Tạo chiến dịch mới</span>
             </Button>
           )}
         </Card>

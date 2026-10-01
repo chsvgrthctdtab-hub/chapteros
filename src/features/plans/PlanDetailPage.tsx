@@ -1274,10 +1274,10 @@ export function PlanDetailPage() {
                     setEditingTask(null);
                     setIsTaskDialogOpen(true);
                   }}
-                  className="h-8 text-xs bg-signal-blue hover:bg-[#005be0] text-white shadow-sm font-semibold rounded-lg active:scale-[0.98] transition-all cursor-pointer"
+                  className="h-8 text-xs bg-signal-blue hover:bg-[#005be0] text-white shadow-2xs font-semibold rounded-full px-3.5 flex items-center justify-center gap-1.5 active:scale-[0.98] transition-all cursor-pointer"
                 >
-                  <Plus className="h-3.5 w-3.5 mr-1" />
-                  Giao việc mới
+                  <Plus className="w-4 h-4 shrink-0" />
+                  <span>Giao việc mới</span>
                 </Button>
               )}
             </div>
@@ -1301,10 +1301,10 @@ export function PlanDetailPage() {
                     setEditingTask(null);
                     setIsTaskDialogOpen(true);
                   }}
-                  className="mt-3 text-xs bg-signal-blue hover:bg-[#005be0] text-white shadow-sm font-semibold rounded-lg active:scale-[0.98]"
+                  className="mt-3 text-xs bg-signal-blue hover:bg-[#005be0] text-white shadow-2xs font-semibold rounded-full px-3.5 flex items-center justify-center gap-1.5 active:scale-[0.98]"
                 >
-                  <Plus className="h-3.5 w-3.5 mr-1" />
-                  Giao việc ngay
+                  <Plus className="w-4 h-4 shrink-0" />
+                  <span>Giao việc ngay</span>
                 </Button>
               )}
             </div>

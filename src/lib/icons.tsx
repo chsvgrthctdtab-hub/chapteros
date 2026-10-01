@@ -28,34 +28,34 @@ export interface AppIconProps extends React.HTMLAttributes<HTMLSpanElement> {
 // Components returned by icon() have 'name' baked in — callers never pass it
 export type AppIconComponent = React.FC<Omit<AppIconProps, 'name'>>;
 
+function parseTailwindIconSize(className?: string): number | undefined {
+  if (!className) return undefined;
+  const match = className.match(/\b(?:w|h)-(\d+(?:\.\d+)?)\b/);
+  if (match) {
+    const val = parseFloat(match[1]);
+    return Math.round(val * 4);
+  }
+  return undefined;
+}
+
 const AppIcon = React.forwardRef<HTMLSpanElement, AppIconProps>(
   ({ name, size, filled = false, weight = 400, className, style, strokeWidth: _sw, ...props }, ref) => {
-    let iconSize = size;
-    if (!iconSize && className) {
-      if (className.includes('w-3') || className.includes('h-3')) iconSize = 12;
-      else if (className.includes('w-3.5') || className.includes('h-3.5')) iconSize = 14;
-      else if (className.includes('w-4') || className.includes('h-4')) iconSize = 16;
-      else if (className.includes('w-5') || className.includes('h-5')) iconSize = 20;
-      else if (className.includes('w-6') || className.includes('h-6')) iconSize = 24;
-      else if (className.includes('w-7') || className.includes('h-7')) iconSize = 28;
-      else if (className.includes('w-8') || className.includes('h-8')) iconSize = 32;
-    }
-    const finalSize = iconSize || 18;
+    const parsedSize = parseTailwindIconSize(className);
+    const finalSize = size || parsedSize || 18;
     const sizePx = `${finalSize}px`;
 
     return (
       <span
         ref={ref}
         className={cn(
-          'material-symbols-rounded select-none shrink-0 inline-flex items-center justify-center text-center',
+          'material-symbols-rounded select-none shrink-0 inline-flex items-center justify-center text-center leading-none',
           className
         )}
         style={{
           fontSize: sizePx,
           width: sizePx,
           height: sizePx,
-          lineHeight: `${finalSize}px`,
-          verticalAlign: 'middle',
+          lineHeight: 1,
           fontVariationSettings: `'FILL' ${filled ? 1 : 0}, 'wght' ${weight}, 'GRAD' 0, 'opsz' 20`,
           ...style,
         }}

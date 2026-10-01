@@ -10,6 +10,7 @@ import {
 } from '@/lib/icons';
 import { useCurrentOrg } from '@/features/auth/hooks/useCurrentOrg';
 import { useToast } from '@/contexts/ToastContext';
+import { Button } from '@/components/ui/button';
 import {
   useTasksList,
   useTaskStats,
@@ -303,39 +304,44 @@ export function TasksPage() {
 
         {/* Action Buttons */}
         <div className="flex items-center gap-1.5 sm:gap-2 flex-wrap shrink-0">
-          <button
+          <Button
             type="button"
+            variant="outline"
+            size="sm"
             onClick={() => setSheetsExportOpen(true)}
             title="Xuất Google Sheets"
-            className="inline-flex items-center gap-1.5 px-3 py-2 text-xs font-medium text-slate-gray bg-white hover:bg-pebble hover:text-ink-navy border border-hairline rounded-lg shadow-xs transition-colors cursor-pointer"
+            className="h-8 px-3 text-xs font-semibold text-[#1e293b] bg-white hover:bg-[#f0f4f9] border-[#e2e8f0] rounded-full shadow-2xs gap-1.5 cursor-pointer"
           >
-            <FileSpreadsheet className="w-3.5 h-3.5 text-signal-blue shrink-0" />
+            <FileSpreadsheet className="w-3.5 h-3.5 text-[#2e89f7] shrink-0" />
             <span className="hidden sm:inline">Xuất Sheets</span>
-          </button>
+          </Button>
 
           {canManage && (
-            <button
+            <Button
               type="button"
+              variant="outline"
+              size="sm"
               onClick={() => setSheetsImportOpen(true)}
               title="Nhập Google Sheets"
-              className="inline-flex items-center gap-1.5 px-3 py-2 text-xs font-medium text-slate-gray bg-white hover:bg-pebble hover:text-ink-navy border border-hairline rounded-lg shadow-xs transition-colors cursor-pointer"
+              className="h-8 px-3 text-xs font-semibold text-[#1e293b] bg-white hover:bg-[#f0f4f9] border-[#e2e8f0] rounded-full shadow-2xs gap-1.5 cursor-pointer"
             >
-              <FileSpreadsheet className="w-3.5 h-3.5 text-signal-blue shrink-0" />
+              <FileSpreadsheet className="w-3.5 h-3.5 text-[#2e89f7] shrink-0" />
               <span className="hidden sm:inline">Nhập Sheets</span>
-            </button>
+            </Button>
           )}
 
           {canManage && (
-            <button
+            <Button
               type="button"
               id="create-task-main-btn"
+              size="sm"
               onClick={() => setIsCreateOpen(true)}
               title="Tạo nhiệm vụ mới"
-              className="inline-flex items-center gap-1.5 px-3.5 py-2 text-xs font-medium text-white bg-signal-blue hover:bg-[#005be0] rounded-lg shadow-xs transition-colors cursor-pointer"
+              className="h-8 px-3.5 text-xs font-semibold text-white bg-[#2e89f7] hover:bg-[#1a73e8] rounded-full shadow-2xs gap-1.5 cursor-pointer"
             >
-              <Plus className="w-3.5 h-3.5 sm:w-4 sm:h-4 shrink-0" />
+              <Plus className="w-4 h-4 shrink-0" />
               <span className="hidden sm:inline">Tạo nhiệm vụ</span>
-            </button>
+            </Button>
           )}
         </div>
       </div>
