@@ -259,6 +259,7 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  vertical-align: middle;
   white-space: nowrap;
   word-wrap: normal;
   direction: ltr;
