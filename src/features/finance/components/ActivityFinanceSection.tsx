@@ -62,7 +62,7 @@ export function ActivityFinanceSection({
   const balance = data?.balance || 0;
   const isBalancePositive = balance >= 0;
 
-  const handleOpenCreate = (type: FinanceType) => {
+  const handleOpenCreate = (type: FinanceType = 'expense') => {
     setEditingTransaction(null);
     setModalDefaultType(type);
     setIsModalOpen(true);
@@ -127,24 +127,14 @@ export function ActivityFinanceSection({
         </div>
 
         {canManage && (
-          <div className="flex items-center gap-2">
-            <button
-              type="button"
-              onClick={() => handleOpenCreate('income')}
-              className="flex items-center gap-1.5 px-3 py-2 text-xs font-bold text-emerald-700 bg-emerald-50 hover:bg-emerald-100 border border-emerald-200 rounded-xl transition-colors shadow-xs"
-            >
-              <TrendingUp className="w-3.5 h-3.5" />
-              <span>Ghi khoản Thu</span>
-            </button>
-            <button
-              type="button"
-              onClick={() => handleOpenCreate('expense')}
-              className="flex items-center gap-1.5 px-3 py-2 text-xs font-bold text-white bg-signal-blue hover:bg-[#005be0] active:bg-[#004fcc] rounded-xl transition-colors shadow-xs"
-            >
-              <Plus className="w-3.5 h-3.5" />
-              <span>Ghi khoản Chi</span>
-            </button>
-          </div>
+          <button
+            type="button"
+            onClick={() => handleOpenCreate('expense')}
+            className="flex items-center gap-1.5 px-3.5 py-2 text-xs font-bold text-white bg-signal-blue hover:bg-[#005be0] active:bg-[#004fcc] rounded-xl transition-colors shadow-xs cursor-pointer"
+          >
+            <Plus className="w-3.5 h-3.5" />
+            <span>Ghi nhận giao dịch</span>
+          </button>
         )}
       </div>
 
@@ -222,7 +212,7 @@ export function ActivityFinanceSection({
                 className="inline-flex items-center gap-1.5 px-4 py-2 bg-signal-blue hover:bg-[#005be0] text-white text-xs font-bold rounded-xl transition-colors shadow-xs"
               >
                 <Plus className="w-4 h-4" />
-                <span>Ghi nhận chi phí đầu tiên</span>
+                <span>Ghi nhận giao dịch đầu tiên</span>
               </button>
             </div>
           )}
