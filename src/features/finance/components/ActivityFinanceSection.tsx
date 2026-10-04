@@ -9,6 +9,7 @@ import {
   ExternalLink,
   Edit2,
   Trash2,
+  User,
 } from '@/lib/icons';
 import {
   useActivityFinance,
@@ -258,19 +259,19 @@ export function ActivityFinanceSection({
                           </p>
                           <div className="flex flex-wrap items-center gap-1.5">
                             {tx.person && (
-                              <span className="inline-flex items-center gap-1 text-[10px] font-medium text-ink-navy bg-[#e6f0ff]/60 px-1.5 py-0.5 rounded border border-[#d4e4fa]">
-                                <span>👤</span>
+                              <span className="inline-flex items-center gap-1 text-[10px] font-medium text-ink-navy bg-cloud px-1.5 py-0.5 rounded border border-hairline">
+                                <User className="w-3 h-3 text-slate-gray shrink-0" />
                                 <span className="truncate max-w-[120px]">{tx.person.name}</span>
                               </span>
                             )}
                             {tx.transactionType === 'expense' && tx.isReimbursed !== undefined && tx.isReimbursed !== null && (
                               tx.isReimbursed ? (
-                                <span className="inline-flex items-center gap-0.5 text-[10px] font-semibold text-emerald-700 bg-emerald-50 px-1.5 py-0.5 rounded-full border border-emerald-200">
-                                  ✓ Đã hoàn tiền
+                                <span className="inline-flex items-center text-[10px] font-medium text-emerald-700 bg-emerald-50 px-1.5 py-0.5 rounded-full border border-emerald-200">
+                                  Đã hoàn tiền
                                 </span>
                               ) : (
-                                <span className="inline-flex items-center gap-0.5 text-[10px] font-semibold text-amber-700 bg-amber-50 px-1.5 py-0.5 rounded-full border border-amber-200">
-                                  ⏳ Chưa hoàn ứng
+                                <span className="inline-flex items-center text-[10px] font-medium text-amber-700 bg-amber-50 px-1.5 py-0.5 rounded-full border border-amber-200">
+                                  Chưa hoàn ứng
                                 </span>
                               )
                             )}

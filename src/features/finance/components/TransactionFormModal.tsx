@@ -342,12 +342,10 @@ export function TransactionFormModal({
               </div>
             </div>
 
-            {/* Person selector (Người nộp / Người chi) */}
+            {/* Person selector */}
             <div>
               <label className="block text-[11px] font-semibold text-slate-gray mb-1">
-                {selectedType === 'income'
-                  ? 'Người nộp / đóng tiền (hoặc người thu)'
-                  : 'Người chi tiền / tạm ứng (người cần hoàn tiền)'}
+                {selectedType === 'income' ? 'Người nộp tiền' : 'Người chi tiền / tạm ứng'}
               </label>
               <Controller
                 name="personProfileId"
@@ -362,6 +360,8 @@ export function TransactionFormModal({
                         if (matched) {
                           setValue('personName', matched.fullName);
                         }
+                      } else {
+                        setValue('personName', '');
                       }
                     }}
                   >
@@ -369,20 +369,19 @@ export function TransactionFormModal({
                       <SelectValue
                         placeholder={
                           selectedType === 'income'
-                            ? '— Chưa chọn người nộp / Người ngoài —'
-                            : '— Chọn người chi / tạm ứng tiền —'
+                            ? '-- Chọn người nộp --'
+                            : '-- Chọn người chi --'
                         }
                       />
                     </SelectTrigger>
                     <SelectContent className="max-h-72">
                       <SelectItem value="none" className="text-xs">
-                        — Không chọn / Người ngoài —
+                        -- Chưa xác định / Khác --
                       </SelectItem>
                       {boardAssignees.length > 0 && (
                         <>
-                          <div className="px-2 py-1 text-[10px] font-bold text-signal-blue uppercase tracking-wider bg-[#e6f0ff]/60 rounded-sm my-1 flex items-center gap-1">
-                            <span>⭐</span>
-                            <span>Ban Chấp Hành / Điều Hành</span>
+                          <div className="px-2 py-1 text-[10px] font-bold text-signal-blue uppercase tracking-wider bg-[#e6f0ff]/60 rounded-sm my-1">
+                            Ban Chấp Hành / Điều Hành
                           </div>
                           {boardAssignees.map((u) => (
                             <SelectItem
@@ -390,7 +389,7 @@ export function TransactionFormModal({
                               value={u.profileId}
                               className="text-xs font-medium"
                             >
-                              ⭐ {u.fullName} {u.studentId ? `(${u.studentId})` : ''}{' '}
+                              {u.fullName} {u.studentId ? `(${u.studentId})` : ''}{' '}
                               {u.position ? `— [${u.position}]` : ''}
                             </SelectItem>
                           ))}
@@ -415,21 +414,6 @@ export function TransactionFormModal({
                   </Select>
                 )}
               />
-              {/* Optional custom external name */}
-              {watch('personProfileId') === 'none' && (
-                <div className="mt-1.5">
-                  <input
-                    type="text"
-                    placeholder={
-                      selectedType === 'income'
-                        ? 'Tên người nộp bên ngoài (nếu có, VD: Cựu SV Trần A)...'
-                        : 'Tên người chi / đơn vị bên ngoài (nếu có)...'
-                    }
-                    {...register('personName')}
-                    className="w-full px-2.5 py-1.5 bg-cloud border border-hairline rounded-lg text-ink-navy text-xs focus:bg-white focus:outline-none focus:ring-1 focus:ring-signal-blue placeholder:text-mist-gray"
-                  />
-                </div>
-              )}
             </div>
 
             {/* Description */}
@@ -450,34 +434,16 @@ export function TransactionFormModal({
 
             {/* Reimbursement checkbox (Chỉ cho Khoản Chi) */}
             {selectedType === 'expense' && (
-              <div className="p-3 rounded-xl border border-hairline bg-cloud/50 hover:bg-cloud transition-colors">
-                <label className="flex items-start gap-2.5 cursor-pointer">
-                  <input
-                    type="checkbox"
-                    {...register('isReimbursed')}
-                    className="mt-0.5 h-4 w-4 rounded border-hairline text-signal-blue focus:ring-signal-blue cursor-pointer"
-                  />
-                  <div className="flex-1 select-none">
-                    <div className="flex items-center gap-2">
-                      <span className="text-xs font-bold text-ink-navy">
-                        Đã thanh toán hoàn tiền (Đã trả lại tiền tạm ứng)
-                      </span>
-                      {watch('isReimbursed') ? (
-                        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 text-emerald-800 border border-emerald-300">
-                          ✓ Đã hoàn tiền
-                        </span>
-                      ) : (
-                        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-100 text-amber-800 border border-amber-300">
-                          ⏳ Chưa hoàn tiền (Cần trả lại)
-                        </span>
-                      )}
-                    </div>
-                    <p className="text-[11px] text-slate-gray mt-0.5">
-                      Tích chọn ô này nếu quỹ Chi hội đã thanh toán trả lại tiền cho người chi / người tạm ứng.
-                    </p>
-                  </div>
-                </label>
-              </div>
+              <label className="flex items-center gap-2 cursor-pointer pt-0.5 text-xs text-ink-navy select-none">
+                <input
+                  type="checkbox"
+                  {...register('isReimbursed')}
+                  className="h-4 w-4 rounded border-hairline text-signal-blue focus:ring-signal-blue cursor-pointer"
+                />
+                <span className="font-semibold">
+                  Đã thanh toán cho người chi (Đã hoàn tiền)
+                </span>
+              </label>
             )}
           </div>
 
