@@ -442,17 +442,6 @@ export function TransactionFormModal({
               )}
             </div>
 
-            {/* Checkbox Đã thanh (Chỉ cho Khoản Chi) */}
-            {selectedType === 'expense' && (
-              <label className="flex items-center gap-2 cursor-pointer pt-0.5 text-xs text-ink-navy select-none">
-                <input
-                  type="checkbox"
-                  {...register('isReimbursed')}
-                  className="h-4 w-4 rounded border-hairline text-emerald-600 focus:ring-emerald-500 cursor-pointer"
-                />
-                <span className="font-medium text-ink-navy">Đã thanh</span>
-              </label>
-            )}
           </div>
 
           {/* Section 2: CONTEXT */}

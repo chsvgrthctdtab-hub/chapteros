@@ -307,7 +307,7 @@ export function TransactionDetailDrawer({
                 }
               >
                 <span
-                  className={`w-3.5 h-3.5 rounded border flex items-center justify-center transition-colors shrink-0 ${
+                  className={`w-3.5 h-3.5 rounded-full border flex items-center justify-center transition-colors shrink-0 ${
                     transaction.isReimbursed === true || transaction.isUnpaid === false
                       ? 'bg-emerald-600 border-emerald-600 text-white'
                       : 'bg-white border-amber-400'
