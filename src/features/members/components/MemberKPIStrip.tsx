@@ -164,9 +164,9 @@ export function MemberKPIStrip({
               {card.subtext}
             </div>
 
-            {/* Active Indicator bar */}
+            {/* Active Indicator — left accent bar */}
             {card.active && (
-              <div className="absolute bottom-0 left-2 right-2 h-0.5 bg-signal-blue rounded-t-full" />
+              <div className="absolute top-2.5 bottom-2.5 left-0 w-[3px] bg-signal-blue rounded-r-full" />
             )}
           </button>
         );
