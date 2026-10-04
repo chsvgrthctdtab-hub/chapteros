@@ -96,7 +96,8 @@ export function TransactionFormModal({
       receiptUrl: '',
       personProfileId: 'none',
       personName: '',
-      isReimbursed: false,
+      isUnpaid: false,
+      isReimbursed: true,
     },
   });
 
@@ -114,6 +115,10 @@ export function TransactionFormModal({
     if (isOpen) {
       if (editingTransaction) {
         const meta = parseTransactionMetadata(editingTransaction.description);
+        const isUnpaid =
+          editingTransaction.isUnpaid ??
+          meta.isUnpaid ??
+          (editingTransaction.isReimbursed === false);
         reset({
           transactionType: editingTransaction.transactionType,
           categoryId: editingTransaction.categoryId,
@@ -127,7 +132,8 @@ export function TransactionFormModal({
           receiptUrl: editingTransaction.receiptUrl || '',
           personProfileId: editingTransaction.person?.profileId || meta.person?.profileId || 'none',
           personName: editingTransaction.person?.name || meta.person?.name || '',
-          isReimbursed: editingTransaction.isReimbursed ?? meta.isReimbursed ?? false,
+          isUnpaid: Boolean(isUnpaid),
+          isReimbursed: !isUnpaid,
         });
       } else {
         const initialType = defaultType || 'income';
@@ -143,7 +149,8 @@ export function TransactionFormModal({
           receiptUrl: '',
           personProfileId: 'none',
           personName: '',
-          isReimbursed: false,
+          isUnpaid: false,
+          isReimbursed: true,
         });
       }
     }
@@ -161,6 +168,7 @@ export function TransactionFormModal({
 
   const handleFormSubmit = async (data: TransactionFormData) => {
     try {
+      const isUnpaid = selectedType === 'expense' ? Boolean(data.isUnpaid) : null;
       await onSubmit({
         ...data,
         amount: Math.abs(Number(data.amount)),
@@ -171,7 +179,8 @@ export function TransactionFormModal({
             ? data.personProfileId
             : null,
         personName: data.personName?.trim() || null,
-        isReimbursed: selectedType === 'expense' ? Boolean(data.isReimbursed) : null,
+        isUnpaid,
+        isReimbursed: selectedType === 'expense' ? !isUnpaid : null,
       });
       onClose();
     } catch (err) {
@@ -432,17 +441,15 @@ export function TransactionFormModal({
               )}
             </div>
 
-            {/* Reimbursement checkbox (Chỉ cho Khoản Chi) */}
+            {/* Checkbox Chưa thanh (Chỉ cho Khoản Chi) */}
             {selectedType === 'expense' && (
               <label className="flex items-center gap-2 cursor-pointer pt-0.5 text-xs text-ink-navy select-none">
                 <input
                   type="checkbox"
-                  {...register('isReimbursed')}
+                  {...register('isUnpaid')}
                   className="h-4 w-4 rounded border-hairline text-signal-blue focus:ring-signal-blue cursor-pointer"
                 />
-                <span className="font-semibold">
-                  Đã thanh toán cho người chi (Đã hoàn tiền)
-                </span>
+                <span className="font-medium text-ink-navy">Chưa thanh</span>
               </label>
             )}
           </div>

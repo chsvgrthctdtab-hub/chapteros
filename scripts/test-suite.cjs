@@ -55,16 +55,17 @@ async function runTestSuite() {
       isReimbursed = rMatch[1].toLowerCase() === 'true';
       clean = clean.replace(rMatch[0], '');
     }
-    return { cleanDescription: clean.trim(), person, isReimbursed };
+    const isUnpaid = typeof isReimbursed === 'boolean' ? !isReimbursed : null;
+    return { cleanDescription: clean.trim(), person, isReimbursed, isUnpaid };
   };
 
   const sampleTx = parseTxMeta('Mua hoa tươi chào đón tân sinh viên [person:u-123:Nguyễn Văn A] [reimbursed:true]');
   assert(sampleTx.cleanDescription === 'Mua hoa tươi chào đón tân sinh viên', 'Parser tài chính: Trích xuất nội dung gốc sạch sẽ');
   assert(sampleTx.person?.name === 'Nguyễn Văn A' && sampleTx.person?.profileId === 'u-123', 'Parser tài chính: Trích xuất đúng thông tin người chi/thu');
-  assert(sampleTx.isReimbursed === true, 'Parser tài chính: Trích xuất đúng trạng thái đã hoàn ứng');
+  assert(sampleTx.isUnpaid === false, 'Parser tài chính: Trích xuất đúng trạng thái đã thanh (isUnpaid = false)');
 
   const pendingTx = parseTxMeta('In tài liệu họp ban [person:none:Trần Thị B] [reimbursed:false]');
-  assert(pendingTx.isReimbursed === false && pendingTx.person?.name === 'Trần Thị B', 'Parser tài chính: Nhận diện chính xác khoản chi chưa hoàn tiền');
+  assert(pendingTx.isUnpaid === true && pendingTx.person?.name === 'Trần Thị B', 'Parser tài chính: Nhận diện chính xác khoản chi "Chưa thanh" (isUnpaid = true)');
 
   // 2. Collab & Multi-org Scale
   console.log('\n--- 2. KIỂM THỬ KHẢ NĂNG PHỐI HỢP ĐA ĐƠN VỊ (MULTI-TENANCY) ---');

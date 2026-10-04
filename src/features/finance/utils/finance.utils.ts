@@ -238,12 +238,14 @@ export interface ParsedTransactionMeta {
   cleanDescription: string;
   person: TransactionPerson | null;
   isReimbursed: boolean | null;
+  isUnpaid: boolean | null;
 }
 
 /**
  * Parses embedded metadata tags from description, such as:
  * - [person:profileId:fullName] or [person:fullName]
  * - [reimbursed:true] or [reimbursed:false]
+ * - [unpaid:true] or [unpaid:false]
  */
 export function parseTransactionMetadata(description: string = ''): ParsedTransactionMeta {
   let cleanDescription = description || '';
@@ -276,12 +278,23 @@ export function parseTransactionMetadata(description: string = ''): ParsedTransa
     cleanDescription = cleanDescription.replace(reimbMatch[0], '');
   }
 
+  // Match [unpaid:true] or [unpaid:false]
+  const unpaidMatch = cleanDescription.match(/\[unpaid:(true|false)\]/i);
+  if (unpaidMatch) {
+    const isU = unpaidMatch[1].toLowerCase() === 'true';
+    isReimbursed = !isU;
+    cleanDescription = cleanDescription.replace(unpaidMatch[0], '');
+  }
+
   cleanDescription = cleanDescription.replace(/\s{2,}/g, ' ').trim();
+
+  const isUnpaid = typeof isReimbursed === 'boolean' ? !isReimbursed : null;
 
   return {
     cleanDescription,
     person,
     isReimbursed,
+    isUnpaid,
   };
 }
 
@@ -292,13 +305,17 @@ export function buildTransactionDescription(
   cleanDescription: string,
   person?: TransactionPerson | null,
   isReimbursed?: boolean | null,
-  transactionType?: FinanceType
+  transactionType?: FinanceType,
+  isUnpaid?: boolean | null
 ): string {
   const parsed = parseTransactionMetadata(cleanDescription);
   let base = parsed.cleanDescription.trim();
 
   const activePerson = person !== undefined ? person : parsed.person;
-  const activeReimbursed = isReimbursed !== undefined ? isReimbursed : parsed.isReimbursed;
+  let activeReimbursed = isReimbursed !== undefined ? isReimbursed : parsed.isReimbursed;
+  if (isUnpaid !== undefined && isUnpaid !== null) {
+    activeReimbursed = !isUnpaid;
+  }
 
   if (activePerson && activePerson.name?.trim()) {
     const pid = activePerson.profileId ? activePerson.profileId.trim() : 'none';

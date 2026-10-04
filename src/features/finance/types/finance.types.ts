@@ -91,6 +91,7 @@ export interface FinanceTransactionListItem {
     name: string;
   } | null;
   isReimbursed?: boolean | null;
+  isUnpaid?: boolean | null;
 }
 
 export interface FinanceSummaryStats {

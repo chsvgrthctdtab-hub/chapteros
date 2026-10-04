@@ -264,16 +264,15 @@ export function ActivityFinanceSection({
                                 <span className="truncate max-w-[120px]">{tx.person.name}</span>
                               </span>
                             )}
-                            {tx.transactionType === 'expense' && tx.isReimbursed !== undefined && tx.isReimbursed !== null && (
-                              tx.isReimbursed ? (
-                                <span className="inline-flex items-center text-[10px] font-medium text-emerald-700 bg-emerald-50 px-1.5 py-0.5 rounded-full border border-emerald-200">
-                                  Đã hoàn tiền
-                                </span>
-                              ) : (
-                                <span className="inline-flex items-center text-[10px] font-medium text-amber-700 bg-amber-50 px-1.5 py-0.5 rounded-full border border-amber-200">
-                                  Chưa hoàn ứng
-                                </span>
-                              )
+                            {tx.transactionType === 'expense' && (tx.isUnpaid || tx.isReimbursed === false) && (
+                              <span className="inline-flex items-center text-[10px] font-medium text-amber-700 bg-amber-50 px-1.5 py-0.5 rounded-full border border-amber-200">
+                                Chưa thanh
+                              </span>
+                            )}
+                            {tx.transactionType === 'expense' && tx.person && (tx.isReimbursed === true || tx.isUnpaid === false) && (
+                              <span className="inline-flex items-center text-[10px] font-medium text-emerald-700 bg-emerald-50 px-1.5 py-0.5 rounded-full border border-emerald-200">
+                                Đã thanh
+                              </span>
                             )}
                             {tx.receiptUrl && (
                               <a

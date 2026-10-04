@@ -397,11 +397,20 @@ export const financeService = {
       name: data.personName?.trim() || '',
     } : null;
 
+    const isUnpaid =
+      typeof data.isUnpaid === 'boolean'
+        ? data.isUnpaid
+        : typeof data.isReimbursed === 'boolean'
+        ? !data.isReimbursed
+        : false;
+    const isReimbursed = !isUnpaid;
+
     const fullDescription = buildTransactionDescription(
       trimmedDesc,
       person,
-      data.isReimbursed,
-      data.transactionType
+      isReimbursed,
+      data.transactionType,
+      isUnpaid
     );
 
     const payload: DbTransactionInsert = {
@@ -576,11 +585,21 @@ export const financeService = {
         person = pName || pId ? { profileId: pId || null, name: pName || '' } : null;
       }
 
-      const isReimbursed =
-        data.isReimbursed !== undefined ? data.isReimbursed : existingMeta.isReimbursed;
+      let isReimbursed = existingMeta.isReimbursed;
+      if (data.isUnpaid !== undefined && data.isUnpaid !== null) {
+        isReimbursed = !data.isUnpaid;
+      } else if (data.isReimbursed !== undefined) {
+        isReimbursed = data.isReimbursed;
+      }
       const txType = (data.transactionType || existing.transactionType) as FinanceType;
 
-      payload.description = buildTransactionDescription(cleanDesc, person, isReimbursed, txType);
+      payload.description = buildTransactionDescription(
+        cleanDesc,
+        person,
+        isReimbursed,
+        txType,
+        data.isUnpaid
+      );
     }
 
     // Validate date

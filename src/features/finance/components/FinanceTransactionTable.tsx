@@ -133,16 +133,15 @@ export function FinanceTransactionTable({
                             <span className="truncate max-w-[120px]">{tx.person.name}</span>
                           </span>
                         )}
-                        {!isIncome && tx.isReimbursed !== undefined && tx.isReimbursed !== null && (
-                          tx.isReimbursed ? (
-                            <span className="inline-flex items-center text-[10px] font-medium text-emerald-700 bg-emerald-50 px-1.5 py-0.5 rounded-full border border-emerald-200">
-                              Đã hoàn tiền
-                            </span>
-                          ) : (
-                            <span className="inline-flex items-center text-[10px] font-medium text-amber-700 bg-amber-50 px-1.5 py-0.5 rounded-full border border-amber-200">
-                              Chưa hoàn ứng
-                            </span>
-                          )
+                        {!isIncome && (tx.isUnpaid || tx.isReimbursed === false) && (
+                          <span className="inline-flex items-center text-[10px] font-medium text-amber-700 bg-amber-50 px-1.5 py-0.5 rounded-full border border-amber-200">
+                            Chưa thanh
+                          </span>
+                        )}
+                        {!isIncome && tx.person && (tx.isReimbursed === true || tx.isUnpaid === false) && (
+                          <span className="inline-flex items-center text-[10px] font-medium text-emerald-700 bg-emerald-50 px-1.5 py-0.5 rounded-full border border-emerald-200">
+                            Đã thanh
+                          </span>
                         )}
                         {tx.activity && (
                           <span className="text-[10px] text-signal-blue truncate max-w-[140px]" title={tx.activity.title}>

@@ -77,16 +77,15 @@ export function TransactionDetailDrawer({
         <span className={`w-1.5 h-1.5 rounded-full ${statusConfig.dotColor}`} />
         {statusConfig.label}
       </span>
-      {!isIncome && transaction.isReimbursed !== undefined && transaction.isReimbursed !== null && (
-        transaction.isReimbursed ? (
-          <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-medium bg-emerald-50 text-emerald-700 border border-emerald-200">
-            Đã hoàn tiền
-          </span>
-        ) : (
-          <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-medium bg-amber-50 text-amber-700 border border-amber-200">
-            Chưa hoàn ứng
-          </span>
-        )
+      {!isIncome && (transaction.isUnpaid || transaction.isReimbursed === false) && (
+        <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-medium bg-amber-50 text-amber-700 border border-amber-200">
+          Chưa thanh
+        </span>
+      )}
+      {!isIncome && (transaction.isReimbursed === true || transaction.isUnpaid === false) && (
+        <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-medium bg-emerald-50 text-emerald-700 border border-emerald-200">
+          Đã thanh
+        </span>
       )}
     </div>
   );
@@ -282,16 +281,16 @@ export function TransactionDetailDrawer({
             </div>
           )}
 
-          {!isIncome && transaction.isReimbursed !== undefined && transaction.isReimbursed !== null && (
+          {!isIncome && (
             <div className="flex justify-between items-center py-0.5">
-              <span className="text-slate-gray">Trạng thái hoàn ứng:</span>
-              {transaction.isReimbursed ? (
-                <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-emerald-50 text-emerald-700 border border-emerald-200">
-                  Đã thanh toán hoàn tiền
+              <span className="text-slate-gray">Trạng thái thanh toán:</span>
+              {transaction.isUnpaid || transaction.isReimbursed === false ? (
+                <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-amber-50 text-amber-700 border border-amber-200">
+                  Chưa thanh
                 </span>
               ) : (
-                <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-amber-50 text-amber-700 border border-amber-200">
-                  Chưa hoàn tiền
+                <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-emerald-50 text-emerald-700 border border-emerald-200">
+                  Đã thanh
                 </span>
               )}
             </div>

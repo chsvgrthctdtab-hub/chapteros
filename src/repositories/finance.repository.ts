@@ -120,6 +120,7 @@ function mapRawToTransactionItem(row: RawTransactionRow): FinanceTransactionList
     cleanDescription: meta.cleanDescription || row.description,
     person: meta.person,
     isReimbursed: meta.isReimbursed,
+    isUnpaid: meta.isUnpaid,
     transactionDate: row.transaction_date,
     status: (row.status || 'posted') as TransactionStatus,
     approvedBy: row.approved_by,
