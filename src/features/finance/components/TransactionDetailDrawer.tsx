@@ -15,6 +15,7 @@ import {
   TrendingUp,
   TrendingDown,
   FileText,
+  Check,
 } from '@/lib/icons';
 import { formatDate } from '@/lib/date';
 import {
@@ -37,6 +38,7 @@ interface TransactionDetailDrawerProps {
   onDelete: (tx: FinanceTransactionListItem) => void;
   onApprove?: (tx: FinanceTransactionListItem) => void;
   onReject?: (tx: FinanceTransactionListItem) => void;
+  onToggleReimbursed?: (tx: FinanceTransactionListItem) => void;
   isApproving?: boolean;
 }
 
@@ -51,6 +53,7 @@ export function TransactionDetailDrawer({
   onDelete,
   onApprove,
   onReject,
+  onToggleReimbursed,
   isApproving = false,
 }: TransactionDetailDrawerProps) {
   if (!isOpen || !transaction) return null;
@@ -284,15 +287,38 @@ export function TransactionDetailDrawer({
           {!isIncome && (
             <div className="flex justify-between items-center py-0.5">
               <span className="text-slate-gray">Trạng thái thanh toán:</span>
-              {transaction.isUnpaid || transaction.isReimbursed === false ? (
-                <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-amber-50 text-amber-700 border border-amber-200">
-                  Chưa thanh
+              <button
+                type="button"
+                disabled={!canManage || !onToggleReimbursed}
+                onClick={() => onToggleReimbursed?.(transaction)}
+                className={`inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-medium border transition-all ${
+                  canManage && onToggleReimbursed ? 'cursor-pointer hover:shadow-2xs active:scale-95' : 'cursor-default'
+                } ${
+                  transaction.isReimbursed === true || transaction.isUnpaid === false
+                    ? 'bg-emerald-50 text-emerald-700 border-emerald-300 hover:bg-emerald-100/80'
+                    : 'bg-amber-50 text-amber-800 border-amber-300 hover:bg-amber-100/80'
+                }`}
+                title={
+                  canManage && onToggleReimbursed
+                    ? transaction.isReimbursed === true || transaction.isUnpaid === false
+                      ? 'Khoản chi đã thanh (Bấm để chuyển về Chưa thanh)'
+                      : 'Khoản chi chưa thanh (Bấm để xác nhận Đã thanh)'
+                    : undefined
+                }
+              >
+                <span
+                  className={`w-3.5 h-3.5 rounded border flex items-center justify-center transition-colors shrink-0 ${
+                    transaction.isReimbursed === true || transaction.isUnpaid === false
+                      ? 'bg-emerald-600 border-emerald-600 text-white'
+                      : 'bg-white border-amber-400'
+                  }`}
+                >
+                  {(transaction.isReimbursed === true || transaction.isUnpaid === false) && (
+                    <Check className="w-2.5 h-2.5 stroke-[3]" />
+                  )}
                 </span>
-              ) : (
-                <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-emerald-50 text-emerald-700 border border-emerald-200">
-                  Đã thanh
-                </span>
-              )}
+                <span>Đã thanh</span>
+              </button>
             </div>
           )}
 

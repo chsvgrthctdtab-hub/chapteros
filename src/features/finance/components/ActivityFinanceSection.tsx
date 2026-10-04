@@ -10,7 +10,9 @@ import {
   Edit2,
   Trash2,
   User,
+  Check,
 } from '@/lib/icons';
+import { useToast } from '@/contexts/ToastContext';
 import {
   useActivityFinance,
   useFinanceCategories,
@@ -51,6 +53,7 @@ export function ActivityFinanceSection({
   const createTxMutation = useCreateFinanceTransaction();
   const updateTxMutation = useUpdateFinanceTransaction();
   const deleteTxMutation = useDeleteFinanceTransaction();
+  const toast = useToast();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalDefaultType, setModalDefaultType] = useState<FinanceType>('expense');
@@ -62,6 +65,34 @@ export function ActivityFinanceSection({
   const totalExpense = data?.totalExpense || 0;
   const balance = data?.balance || 0;
   const isBalancePositive = balance >= 0;
+
+  const handleToggleReimbursed = async (tx: FinanceTransactionListItem) => {
+    const currentlyReimbursed = tx.isReimbursed === true || tx.isUnpaid === false;
+    const nextReimbursed = !currentlyReimbursed;
+    try {
+      await updateTxMutation.mutateAsync({
+        transactionId: tx.id,
+        organizationId,
+        data: {
+          description: tx.cleanDescription || tx.description,
+          amount: tx.amount,
+          transactionType: tx.transactionType,
+          categoryId: tx.categoryId,
+          activityId: tx.activityId || activityId,
+          termId: tx.termId,
+          transactionDate: tx.transactionDate,
+          personProfileId: tx.person?.profileId || 'none',
+          personName: tx.person?.name || '',
+          receiptUrl: tx.receiptUrl || '',
+          isReimbursed: nextReimbursed,
+          isUnpaid: !nextReimbursed,
+        },
+      });
+      toast.success(nextReimbursed ? 'Đã xác nhận "Đã thanh"' : 'Đã chuyển về "Chưa thanh"');
+    } catch (err: unknown) {
+      toast.error(err);
+    }
+  };
 
   const handleOpenCreate = (type: FinanceType = 'expense') => {
     setEditingTransaction(null);
@@ -264,15 +295,49 @@ export function ActivityFinanceSection({
                                 <span className="truncate max-w-[120px]">{tx.person.name}</span>
                               </span>
                             )}
-                            {tx.transactionType === 'expense' && (tx.isUnpaid || tx.isReimbursed === false) && (
-                              <span className="inline-flex items-center text-[10px] font-medium text-amber-700 bg-amber-50 px-1.5 py-0.5 rounded-full border border-amber-200">
-                                Chưa thanh
-                              </span>
-                            )}
-                            {tx.transactionType === 'expense' && tx.person && (tx.isReimbursed === true || tx.isUnpaid === false) && (
-                              <span className="inline-flex items-center text-[10px] font-medium text-emerald-700 bg-emerald-50 px-1.5 py-0.5 rounded-full border border-emerald-200">
-                                Đã thanh
-                              </span>
+                            {/* Nút Đã thanh trực tiếp ở ngoài */}
+                            {tx.transactionType === 'expense' && (
+                              tx.person ||
+                              tx.isUnpaid !== undefined ||
+                              tx.isReimbursed !== undefined
+                            ) && (
+                              <button
+                                type="button"
+                                disabled={!canManage || updateTxMutation.isPending}
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  handleToggleReimbursed(tx);
+                                }}
+                                className={`inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[11px] font-medium border transition-all select-none ${
+                                  canManage ? 'cursor-pointer hover:shadow-2xs active:scale-95' : 'cursor-default'
+                                } ${
+                                  tx.isReimbursed === true || tx.isUnpaid === false
+                                    ? 'bg-emerald-50 text-emerald-700 border-emerald-300 hover:bg-emerald-100/80'
+                                    : 'bg-amber-50 text-amber-800 border-amber-300 hover:bg-amber-100/80'
+                                }`}
+                                title={
+                                  canManage
+                                    ? tx.isReimbursed === true || tx.isUnpaid === false
+                                      ? 'Khoản chi đã thanh (Bấm để chuyển về Chưa thanh)'
+                                      : 'Khoản chi chưa thanh (Bấm để xác nhận Đã thanh)'
+                                    : tx.isReimbursed === true || tx.isUnpaid === false
+                                    ? 'Đã thanh'
+                                    : 'Chưa thanh'
+                                }
+                              >
+                                <span
+                                  className={`w-3.5 h-3.5 rounded border flex items-center justify-center transition-colors shrink-0 ${
+                                    tx.isReimbursed === true || tx.isUnpaid === false
+                                      ? 'bg-emerald-600 border-emerald-600 text-white'
+                                      : 'bg-white border-amber-400'
+                                  }`}
+                                >
+                                  {(tx.isReimbursed === true || tx.isUnpaid === false) && (
+                                    <Check className="w-2.5 h-2.5 stroke-[3]" />
+                                  )}
+                                </span>
+                                <span>Đã thanh</span>
+                              </button>
                             )}
                             {tx.receiptUrl && (
                               <a

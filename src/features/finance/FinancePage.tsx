@@ -250,6 +250,43 @@ export function FinancePage() {
     }
   };
 
+  // Toggle Reimbursed Status
+  const handleToggleReimbursed = async (tx: FinanceTransactionListItem) => {
+    const currentlyReimbursed = tx.isReimbursed === true || tx.isUnpaid === false;
+    const nextReimbursed = !currentlyReimbursed;
+    try {
+      await updateTxMutation.mutateAsync({
+        transactionId: tx.id,
+        organizationId,
+        data: {
+          description: tx.cleanDescription || tx.description,
+          amount: tx.amount,
+          transactionType: tx.transactionType,
+          categoryId: tx.categoryId,
+          activityId: tx.activityId,
+          termId: tx.termId,
+          transactionDate: tx.transactionDate,
+          personProfileId: tx.person?.profileId || 'none',
+          personName: tx.person?.name || '',
+          receiptUrl: tx.receiptUrl || '',
+          isReimbursed: nextReimbursed,
+          isUnpaid: !nextReimbursed,
+        },
+        recordedBy: profile?.id || user?.id || null,
+      });
+      toast.success(nextReimbursed ? 'Đã xác nhận "Đã thanh"' : 'Đã chuyển về "Chưa thanh"');
+      if (selectedTransactionForDrawer?.id === tx.id) {
+        setSelectedTransactionForDrawer({
+          ...selectedTransactionForDrawer,
+          isReimbursed: nextReimbursed,
+          isUnpaid: !nextReimbursed,
+        });
+      }
+    } catch (err: unknown) {
+      toast.error(err);
+    }
+  };
+
   // Transaction Delete
   const handleDeleteConfirm = async () => {
     if (!deletingTransaction) return;
@@ -704,6 +741,7 @@ export function FinancePage() {
               onDelete={(tx) => setDeletingTransaction(tx)}
               onApprove={handleApproveTransaction}
               onReject={(tx) => setRejectingTransaction(tx)}
+              onToggleReimbursed={handleToggleReimbursed}
               isApproving={approveTxMutation.isPending || rejectTxMutation.isPending}
             />
           ) : (
@@ -720,6 +758,7 @@ export function FinancePage() {
                   onDelete={(tx) => setDeletingTransaction(tx)}
                   onApprove={handleApproveTransaction}
                   onReject={(tx) => setRejectingTransaction(tx)}
+                  onToggleReimbursed={handleToggleReimbursed}
                   isApproving={approveTxMutation.isPending || rejectTxMutation.isPending}
                 />
               ))}
@@ -801,6 +840,7 @@ export function FinancePage() {
         onDelete={(tx) => setDeletingTransaction(tx)}
         onApprove={handleApproveTransaction}
         onReject={(tx) => setRejectingTransaction(tx)}
+        onToggleReimbursed={handleToggleReimbursed}
         isApproving={approveTxMutation.isPending || rejectTxMutation.isPending}
       />
 
