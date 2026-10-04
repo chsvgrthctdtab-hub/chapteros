@@ -20,6 +20,7 @@ import type {
   CreatePeriodClosingInput,
   ReopenPeriodInput,
 } from '@/features/finance/types/finance.types';
+import { parseTransactionMetadata } from '@/features/finance/utils/finance.utils';
 
 type DbCategory = Database['public']['Tables']['finance_categories']['Row'];
 type DbCategoryInsert = Database['public']['Tables']['finance_categories']['Insert'];
@@ -106,6 +107,7 @@ function mapCategoryFromDb(row: DbCategory): FinanceCategory {
 }
 
 function mapRawToTransactionItem(row: RawTransactionRow): FinanceTransactionListItem {
+  const meta = parseTransactionMetadata(row.description);
   return {
     id: row.id,
     organizationId: row.organization_id,
@@ -115,6 +117,9 @@ function mapRawToTransactionItem(row: RawTransactionRow): FinanceTransactionList
     transactionType: row.transaction_type as FinanceType,
     amount: Number(row.amount),
     description: row.description,
+    cleanDescription: meta.cleanDescription || row.description,
+    person: meta.person,
+    isReimbursed: meta.isReimbursed,
     transactionDate: row.transaction_date,
     status: (row.status || 'posted') as TransactionStatus,
     approvedBy: row.approved_by,

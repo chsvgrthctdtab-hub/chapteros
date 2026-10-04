@@ -252,21 +252,40 @@ export function ActivityFinanceSection({
                         </div>
                       </td>
                       <td className="py-3 px-4">
-                        <div className="space-y-0.5">
+                        <div className="space-y-1">
                           <p className="text-xs font-medium text-ink-navy line-clamp-1">
-                            {tx.description}
+                            {tx.cleanDescription || tx.description}
                           </p>
-                          {tx.receiptUrl && (
-                            <a
-                              href={tx.receiptUrl}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="inline-flex items-center gap-1 text-[11px] text-signal-blue hover:underline"
-                            >
-                              <ExternalLink className="w-3 h-3" />
-                              <span>Chứng từ</span>
-                            </a>
-                          )}
+                          <div className="flex flex-wrap items-center gap-1.5">
+                            {tx.person && (
+                              <span className="inline-flex items-center gap-1 text-[10px] font-medium text-ink-navy bg-[#e6f0ff]/60 px-1.5 py-0.5 rounded border border-[#d4e4fa]">
+                                <span>👤</span>
+                                <span className="truncate max-w-[120px]">{tx.person.name}</span>
+                              </span>
+                            )}
+                            {tx.transactionType === 'expense' && tx.isReimbursed !== undefined && tx.isReimbursed !== null && (
+                              tx.isReimbursed ? (
+                                <span className="inline-flex items-center gap-0.5 text-[10px] font-semibold text-emerald-700 bg-emerald-50 px-1.5 py-0.5 rounded-full border border-emerald-200">
+                                  ✓ Đã hoàn tiền
+                                </span>
+                              ) : (
+                                <span className="inline-flex items-center gap-0.5 text-[10px] font-semibold text-amber-700 bg-amber-50 px-1.5 py-0.5 rounded-full border border-amber-200">
+                                  ⏳ Chưa hoàn ứng
+                                </span>
+                              )
+                            )}
+                            {tx.receiptUrl && (
+                              <a
+                                href={tx.receiptUrl}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="inline-flex items-center gap-1 text-[11px] text-signal-blue hover:underline"
+                              >
+                                <ExternalLink className="w-3 h-3" />
+                                <span>Chứng từ</span>
+                              </a>
+                            )}
+                          </div>
                         </div>
                       </td>
                       <td className="py-3 px-4 whitespace-nowrap text-xs text-slate-gray">
@@ -319,6 +338,7 @@ export function ActivityFinanceSection({
         categories={categories}
         terms={terms}
         activities={activities}
+        organizationId={organizationId}
         isLoading={createTxMutation.isPending || updateTxMutation.isPending}
       />
 

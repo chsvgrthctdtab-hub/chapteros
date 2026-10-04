@@ -77,6 +77,17 @@ export function TransactionDetailDrawer({
         <span className={`w-1.5 h-1.5 rounded-full ${statusConfig.dotColor}`} />
         {statusConfig.label}
       </span>
+      {!isIncome && transaction.isReimbursed !== undefined && transaction.isReimbursed !== null && (
+        transaction.isReimbursed ? (
+          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
+            ✓ Đã hoàn tiền
+          </span>
+        ) : (
+          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-semibold bg-amber-50 text-amber-700 border border-amber-200">
+            ⏳ Chưa hoàn ứng
+          </span>
+        )
+      )}
     </div>
   );
 
@@ -163,7 +174,7 @@ export function TransactionDetailDrawer({
       id="transaction-detail-drawer"
       isOpen={isOpen}
       onClose={onClose}
-      title={transaction.description}
+      title={transaction.cleanDescription || transaction.description}
       tag="Finance Ledger"
       badge={headerBadge}
       size="2xl"
@@ -258,6 +269,33 @@ export function TransactionDetailDrawer({
               {transaction.recorder?.fullName || 'Hệ thống'}
             </span>
           </div>
+
+          {transaction.person && (
+            <div className="flex justify-between items-center py-0.5">
+              <span className="text-slate-gray">
+                {isIncome ? 'Người nộp / đóng tiền:' : 'Người chi / tạm ứng tiền:'}
+              </span>
+              <span className="font-semibold text-ink-navy flex items-center gap-1">
+                <User className="h-3.5 w-3.5 text-signal-blue" />
+                {transaction.person.name}
+              </span>
+            </div>
+          )}
+
+          {!isIncome && transaction.isReimbursed !== undefined && transaction.isReimbursed !== null && (
+            <div className="flex justify-between items-center py-0.5">
+              <span className="text-slate-gray">Trạng thái hoàn ứng:</span>
+              {transaction.isReimbursed ? (
+                <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-bold bg-emerald-100 text-emerald-800 border border-emerald-300">
+                  ✓ Đã thanh toán hoàn tiền
+                </span>
+              ) : (
+                <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-bold bg-amber-100 text-amber-800 border border-amber-300">
+                  ⏳ Chưa hoàn tiền (Cần trả lại tiền)
+                </span>
+              )}
+            </div>
+          )}
 
           <div className="flex justify-between items-center py-0.5">
             <span className="text-slate-gray">Thời gian tạo:</span>

@@ -40,6 +40,32 @@ async function runTestSuite() {
   assert(parseAttendanceNote('Guest [attendance:present]') === 'present', 'Parser điểm danh: [attendance:present] chính xác');
   assert(parseAttendanceNote('Guest [attendance:absent]') === 'absent', 'Parser điểm danh: [attendance:absent] chính xác');
 
+  // Finance Transaction Metadata & Reimbursement
+  const parseTxMeta = (desc) => {
+    let clean = desc || '';
+    let person = null;
+    let isReimbursed = null;
+    const pMatch = clean.match(/\[person:([^:\]]+)(?::([^\]]+))?\]/i);
+    if (pMatch) {
+      person = { profileId: pMatch[1] !== 'none' ? pMatch[1] : null, name: pMatch[2] || pMatch[1] };
+      clean = clean.replace(pMatch[0], '');
+    }
+    const rMatch = clean.match(/\[reimbursed:(true|false)\]/i);
+    if (rMatch) {
+      isReimbursed = rMatch[1].toLowerCase() === 'true';
+      clean = clean.replace(rMatch[0], '');
+    }
+    return { cleanDescription: clean.trim(), person, isReimbursed };
+  };
+
+  const sampleTx = parseTxMeta('Mua hoa tươi chào đón tân sinh viên [person:u-123:Nguyễn Văn A] [reimbursed:true]');
+  assert(sampleTx.cleanDescription === 'Mua hoa tươi chào đón tân sinh viên', 'Parser tài chính: Trích xuất nội dung gốc sạch sẽ');
+  assert(sampleTx.person?.name === 'Nguyễn Văn A' && sampleTx.person?.profileId === 'u-123', 'Parser tài chính: Trích xuất đúng thông tin người chi/thu');
+  assert(sampleTx.isReimbursed === true, 'Parser tài chính: Trích xuất đúng trạng thái đã hoàn ứng');
+
+  const pendingTx = parseTxMeta('In tài liệu họp ban [person:none:Trần Thị B] [reimbursed:false]');
+  assert(pendingTx.isReimbursed === false && pendingTx.person?.name === 'Trần Thị B', 'Parser tài chính: Nhận diện chính xác khoản chi chưa hoàn tiền');
+
   // 2. Collab & Multi-org Scale
   console.log('\n--- 2. KIỂM THỬ KHẢ NĂNG PHỐI HỢP ĐA ĐƠN VỊ (MULTI-TENANCY) ---');
   const orgList = [

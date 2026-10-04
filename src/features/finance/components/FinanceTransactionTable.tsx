@@ -119,14 +119,31 @@ export function FinanceTransactionTable({
 
                   {/* 2. Transaction Description + Monospace Code */}
                   <td className="py-3 px-4">
-                    <div className="flex flex-col max-w-[280px]">
+                    <div className="flex flex-col max-w-[320px]">
                       <span className="font-semibold text-ink-navy line-clamp-1 group-hover:text-signal-blue transition-colors">
-                        {tx.description}
+                        {tx.cleanDescription || tx.description}
                       </span>
-                      <div className="flex items-center gap-1.5 mt-0.5">
+                      <div className="flex flex-wrap items-center gap-1.5 mt-1">
                         <span className="tabular-nums font-medium text-[10px] text-slate-gray bg-cloud px-1.5 py-0.5 rounded border border-hairline">
                           {txCode}
                         </span>
+                        {tx.person && (
+                          <span className="inline-flex items-center gap-1 text-[10px] font-medium text-ink-navy bg-[#e6f0ff]/60 px-1.5 py-0.5 rounded border border-[#d4e4fa]">
+                            <span>👤</span>
+                            <span className="truncate max-w-[120px]">{tx.person.name}</span>
+                          </span>
+                        )}
+                        {!isIncome && tx.isReimbursed !== undefined && tx.isReimbursed !== null && (
+                          tx.isReimbursed ? (
+                            <span className="inline-flex items-center gap-0.5 text-[10px] font-semibold text-emerald-700 bg-emerald-50 px-1.5 py-0.5 rounded-full border border-emerald-200">
+                              ✓ Đã hoàn tiền
+                            </span>
+                          ) : (
+                            <span className="inline-flex items-center gap-0.5 text-[10px] font-semibold text-amber-700 bg-amber-50 px-1.5 py-0.5 rounded-full border border-amber-200">
+                              ⏳ Chưa hoàn ứng
+                            </span>
+                          )
+                        )}
                         {tx.activity && (
                           <span className="text-[10px] text-signal-blue truncate max-w-[140px]" title={tx.activity.title}>
                             • {tx.activity.title}

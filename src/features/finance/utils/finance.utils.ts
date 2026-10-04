@@ -228,3 +228,87 @@ export function getPeriodTypeLabel(type?: PeriodClosingType): string {
       return 'Kỳ định kỳ';
   }
 }
+
+export interface TransactionPerson {
+  profileId?: string | null;
+  name: string;
+}
+
+export interface ParsedTransactionMeta {
+  cleanDescription: string;
+  person: TransactionPerson | null;
+  isReimbursed: boolean | null;
+}
+
+/**
+ * Parses embedded metadata tags from description, such as:
+ * - [person:profileId:fullName] or [person:fullName]
+ * - [reimbursed:true] or [reimbursed:false]
+ */
+export function parseTransactionMetadata(description: string = ''): ParsedTransactionMeta {
+  let cleanDescription = description || '';
+  let person: TransactionPerson | null = null;
+  let isReimbursed: boolean | null = null;
+
+  // Match [person:profileId:name] or [person:name]
+  const personMatch = cleanDescription.match(/\[person:([^:\]]+)(?::([^\]]+))?\]/i);
+  if (personMatch) {
+    const first = personMatch[1]?.trim();
+    const second = personMatch[2]?.trim();
+    if (second) {
+      person = {
+        profileId: first !== 'none' && first !== 'null' ? first : null,
+        name: second,
+      };
+    } else if (first) {
+      person = {
+        profileId: null,
+        name: first,
+      };
+    }
+    cleanDescription = cleanDescription.replace(personMatch[0], '');
+  }
+
+  // Match [reimbursed:true] or [reimbursed:false]
+  const reimbMatch = cleanDescription.match(/\[reimbursed:(true|false)\]/i);
+  if (reimbMatch) {
+    isReimbursed = reimbMatch[1].toLowerCase() === 'true';
+    cleanDescription = cleanDescription.replace(reimbMatch[0], '');
+  }
+
+  cleanDescription = cleanDescription.replace(/\s{2,}/g, ' ').trim();
+
+  return {
+    cleanDescription,
+    person,
+    isReimbursed,
+  };
+}
+
+/**
+ * Builds full description including metadata tags for person and reimbursement status
+ */
+export function buildTransactionDescription(
+  cleanDescription: string,
+  person?: TransactionPerson | null,
+  isReimbursed?: boolean | null,
+  transactionType?: FinanceType
+): string {
+  const parsed = parseTransactionMetadata(cleanDescription);
+  let base = parsed.cleanDescription.trim();
+
+  const activePerson = person !== undefined ? person : parsed.person;
+  const activeReimbursed = isReimbursed !== undefined ? isReimbursed : parsed.isReimbursed;
+
+  if (activePerson && activePerson.name?.trim()) {
+    const pid = activePerson.profileId ? activePerson.profileId.trim() : 'none';
+    base += ` [person:${pid}:${activePerson.name.trim()}]`;
+  }
+
+  if (transactionType === 'expense' && typeof activeReimbursed === 'boolean') {
+    base += ` [reimbursed:${activeReimbursed ? 'true' : 'false'}]`;
+  }
+
+  return base.trim();
+}
+

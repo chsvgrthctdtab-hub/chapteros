@@ -9,12 +9,13 @@ import {
   Loader2,
   CheckCircle2,
   Info,
+  User,
 } from '@/lib/icons';
 import {
   transactionFormSchema,
   type TransactionFormData,
 } from '../schemas/finance.schema';
-import { formatVND } from '../utils/finance.utils';
+import { formatVND, parseTransactionMetadata } from '../utils/finance.utils';
 import { Button } from '@/components/ui/button';
 import { DatePicker } from '@/components/ui/date-picker';
 import {
@@ -31,6 +32,8 @@ import type {
   FinanceTransactionListItem,
   FinanceType,
 } from '../types/finance.types';
+import type { TaskAssigneeOption } from '@/features/tasks/types/task.types';
+import { useTaskAssignees } from '@/features/tasks/queries/task.queries';
 import dayjs from 'dayjs';
 
 interface TransactionFormModalProps {
@@ -44,6 +47,8 @@ interface TransactionFormModalProps {
   categories: FinanceCategoryOption[];
   terms: FinanceTermOption[];
   activities: FinanceActivityOption[];
+  organizationId?: string;
+  assignees?: TaskAssigneeOption[];
   isLoading?: boolean;
 }
 
@@ -58,10 +63,17 @@ export function TransactionFormModal({
   categories,
   terms,
   activities,
+  organizationId,
+  assignees,
   isLoading = false,
 }: TransactionFormModalProps) {
   const isEditing = Boolean(editingTransaction);
   const activeTerm = terms.find((t) => t.isCurrent) || terms[0];
+
+  const { data: fetchedAssignees = [] } = useTaskAssignees(organizationId);
+  const allAssignees = assignees && assignees.length > 0 ? assignees : fetchedAssignees;
+  const boardAssignees = allAssignees.filter((u) => u.isBoard);
+  const regularAssignees = allAssignees.filter((u) => !u.isBoard);
 
   const {
     register,
@@ -82,6 +94,9 @@ export function TransactionFormModal({
       description: '',
       activityId: defaultActivityId || null,
       receiptUrl: '',
+      personProfileId: 'none',
+      personName: '',
+      isReimbursed: false,
     },
   });
 
@@ -98,6 +113,7 @@ export function TransactionFormModal({
   useEffect(() => {
     if (isOpen) {
       if (editingTransaction) {
+        const meta = parseTransactionMetadata(editingTransaction.description);
         reset({
           transactionType: editingTransaction.transactionType,
           categoryId: editingTransaction.categoryId,
@@ -106,9 +122,12 @@ export function TransactionFormModal({
           transactionDate: editingTransaction.transactionDate
             ? dayjs(editingTransaction.transactionDate).format('YYYY-MM-DD')
             : dayjs().format('YYYY-MM-DD'),
-          description: editingTransaction.description || '',
+          description: meta.cleanDescription || editingTransaction.description || '',
           activityId: editingTransaction.activityId || null,
           receiptUrl: editingTransaction.receiptUrl || '',
+          personProfileId: editingTransaction.person?.profileId || meta.person?.profileId || 'none',
+          personName: editingTransaction.person?.name || meta.person?.name || '',
+          isReimbursed: editingTransaction.isReimbursed ?? meta.isReimbursed ?? false,
         });
       } else {
         const initialType = defaultType || 'income';
@@ -122,6 +141,9 @@ export function TransactionFormModal({
           description: '',
           activityId: defaultActivityId || null,
           receiptUrl: '',
+          personProfileId: 'none',
+          personName: '',
+          isReimbursed: false,
         });
       }
     }
@@ -144,6 +166,12 @@ export function TransactionFormModal({
         amount: Math.abs(Number(data.amount)),
         activityId: data.activityId ? data.activityId : null,
         receiptUrl: data.receiptUrl?.trim() || null,
+        personProfileId:
+          data.personProfileId && data.personProfileId !== 'none'
+            ? data.personProfileId
+            : null,
+        personName: data.personName?.trim() || null,
+        isReimbursed: selectedType === 'expense' ? Boolean(data.isReimbursed) : null,
       });
       onClose();
     } catch (err) {
@@ -314,6 +342,96 @@ export function TransactionFormModal({
               </div>
             </div>
 
+            {/* Person selector (Người nộp / Người chi) */}
+            <div>
+              <label className="block text-[11px] font-semibold text-slate-gray mb-1">
+                {selectedType === 'income'
+                  ? 'Người nộp / đóng tiền (hoặc người thu)'
+                  : 'Người chi tiền / tạm ứng (người cần hoàn tiền)'}
+              </label>
+              <Controller
+                name="personProfileId"
+                control={control}
+                render={({ field }) => (
+                  <Select
+                    value={field.value || 'none'}
+                    onValueChange={(val) => {
+                      field.onChange(val);
+                      if (val !== 'none') {
+                        const matched = allAssignees.find((a) => a.profileId === val);
+                        if (matched) {
+                          setValue('personName', matched.fullName);
+                        }
+                      }
+                    }}
+                  >
+                    <SelectTrigger className="w-full h-9 bg-cloud border-hairline rounded-lg text-xs text-ink-navy">
+                      <SelectValue
+                        placeholder={
+                          selectedType === 'income'
+                            ? '— Chưa chọn người nộp / Người ngoài —'
+                            : '— Chọn người chi / tạm ứng tiền —'
+                        }
+                      />
+                    </SelectTrigger>
+                    <SelectContent className="max-h-72">
+                      <SelectItem value="none" className="text-xs">
+                        — Không chọn / Người ngoài —
+                      </SelectItem>
+                      {boardAssignees.length > 0 && (
+                        <>
+                          <div className="px-2 py-1 text-[10px] font-bold text-signal-blue uppercase tracking-wider bg-[#e6f0ff]/60 rounded-sm my-1 flex items-center gap-1">
+                            <span>⭐</span>
+                            <span>Ban Chấp Hành / Điều Hành</span>
+                          </div>
+                          {boardAssignees.map((u) => (
+                            <SelectItem
+                              key={u.profileId}
+                              value={u.profileId}
+                              className="text-xs font-medium"
+                            >
+                              ⭐ {u.fullName} {u.studentId ? `(${u.studentId})` : ''}{' '}
+                              {u.position ? `— [${u.position}]` : ''}
+                            </SelectItem>
+                          ))}
+                        </>
+                      )}
+                      {regularAssignees.length > 0 && (
+                        <>
+                          {boardAssignees.length > 0 && (
+                            <div className="px-2 py-1 text-[10px] font-semibold text-slate-gray uppercase tracking-wider bg-cloud rounded-sm my-1">
+                              Hội viên Chi hội
+                            </div>
+                          )}
+                          {regularAssignees.map((u) => (
+                            <SelectItem key={u.profileId} value={u.profileId} className="text-xs">
+                              {u.fullName} {u.studentId ? `(${u.studentId})` : ''}{' '}
+                              {u.position ? `— ${u.position}` : ''}
+                            </SelectItem>
+                          ))}
+                        </>
+                      )}
+                    </SelectContent>
+                  </Select>
+                )}
+              />
+              {/* Optional custom external name */}
+              {watch('personProfileId') === 'none' && (
+                <div className="mt-1.5">
+                  <input
+                    type="text"
+                    placeholder={
+                      selectedType === 'income'
+                        ? 'Tên người nộp bên ngoài (nếu có, VD: Cựu SV Trần A)...'
+                        : 'Tên người chi / đơn vị bên ngoài (nếu có)...'
+                    }
+                    {...register('personName')}
+                    className="w-full px-2.5 py-1.5 bg-cloud border border-hairline rounded-lg text-ink-navy text-xs focus:bg-white focus:outline-none focus:ring-1 focus:ring-signal-blue placeholder:text-mist-gray"
+                  />
+                </div>
+              )}
+            </div>
+
             {/* Description */}
             <div>
               <label className="block text-[11px] font-semibold text-slate-gray mb-1">
@@ -329,6 +447,38 @@ export function TransactionFormModal({
                 <p className="text-[11px] text-rose-600 mt-0.5">{errors.description.message}</p>
               )}
             </div>
+
+            {/* Reimbursement checkbox (Chỉ cho Khoản Chi) */}
+            {selectedType === 'expense' && (
+              <div className="p-3 rounded-xl border border-hairline bg-cloud/50 hover:bg-cloud transition-colors">
+                <label className="flex items-start gap-2.5 cursor-pointer">
+                  <input
+                    type="checkbox"
+                    {...register('isReimbursed')}
+                    className="mt-0.5 h-4 w-4 rounded border-hairline text-signal-blue focus:ring-signal-blue cursor-pointer"
+                  />
+                  <div className="flex-1 select-none">
+                    <div className="flex items-center gap-2">
+                      <span className="text-xs font-bold text-ink-navy">
+                        Đã thanh toán hoàn tiền (Đã trả lại tiền tạm ứng)
+                      </span>
+                      {watch('isReimbursed') ? (
+                        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 text-emerald-800 border border-emerald-300">
+                          ✓ Đã hoàn tiền
+                        </span>
+                      ) : (
+                        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-100 text-amber-800 border border-amber-300">
+                          ⏳ Chưa hoàn tiền (Cần trả lại)
+                        </span>
+                      )}
+                    </div>
+                    <p className="text-[11px] text-slate-gray mt-0.5">
+                      Tích chọn ô này nếu quỹ Chi hội đã thanh toán trả lại tiền cho người chi / người tạm ứng.
+                    </p>
+                  </div>
+                </label>
+              </div>
+            )}
           </div>
 
           {/* Section 2: CONTEXT */}

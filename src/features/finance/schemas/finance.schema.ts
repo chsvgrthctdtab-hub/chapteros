@@ -24,6 +24,9 @@ export const transactionFormSchema = z.object({
     .optional()
     .nullable()
     .or(z.literal('')),
+  personProfileId: z.string().optional().nullable(),
+  personName: z.string().optional().nullable(),
+  isReimbursed: z.boolean().optional().nullable(),
 });
 
 export interface TransactionFormData {
@@ -35,6 +38,9 @@ export interface TransactionFormData {
   description: string;
   activityId?: string | null;
   receiptUrl?: string | null;
+  personProfileId?: string | null;
+  personName?: string | null;
+  isReimbursed?: boolean | null;
 }
 
 export const categoryFormSchema = z.object({

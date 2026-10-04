@@ -30,6 +30,10 @@ import type {
   TransactionFormData,
   CategoryFormData,
 } from '@/features/finance/schemas/finance.schema';
+import {
+  buildTransactionDescription,
+  parseTransactionMetadata,
+} from '@/features/finance/utils/finance.utils';
 
 async function getAuthenticatedUserId(actorUserId?: string | null): Promise<string | null> {
   if (actorUserId) return actorUserId;
@@ -388,6 +392,18 @@ export const financeService = {
 
     const userId = await getAuthenticatedUserId(actorUserId);
 
+    const person = (data.personName || (data.personProfileId && data.personProfileId !== 'none')) ? {
+      profileId: data.personProfileId && data.personProfileId !== 'none' ? data.personProfileId : null,
+      name: data.personName?.trim() || '',
+    } : null;
+
+    const fullDescription = buildTransactionDescription(
+      trimmedDesc,
+      person,
+      data.isReimbursed,
+      data.transactionType
+    );
+
     const payload: DbTransactionInsert = {
       organization_id: organizationId,
       term_id: data.termId,
@@ -395,7 +411,7 @@ export const financeService = {
       activity_id: data.activityId || null,
       transaction_type: data.transactionType,
       amount: cleanAmount,
-      description: trimmedDesc,
+      description: fullDescription,
       transaction_date: data.transactionDate,
       status: initialStatus,
       receipt_url: data.receiptUrl?.trim() || null,
@@ -528,13 +544,43 @@ export const financeService = {
       payload.transaction_type = data.transactionType;
     }
 
-    // Validate description
-    if (data.description !== undefined) {
-      const trimmed = data.description.trim();
-      if (!trimmed || trimmed.length < 3) {
+    // Validate description and person/reimbursement
+    if (
+      data.description !== undefined ||
+      data.personName !== undefined ||
+      data.personProfileId !== undefined ||
+      data.isReimbursed !== undefined
+    ) {
+      const existingMeta = parseTransactionMetadata(existing.description);
+      const cleanDesc =
+        data.description !== undefined
+          ? parseTransactionMetadata(data.description).cleanDescription.trim()
+          : existingMeta.cleanDescription;
+
+      if (!cleanDesc || cleanDesc.length < 3) {
         throw new Error('Nội dung giao dịch phải có ít nhất 3 ký tự');
       }
-      payload.description = trimmed;
+
+      let person = existingMeta.person;
+      if (data.personName !== undefined || data.personProfileId !== undefined) {
+        const pId =
+          data.personProfileId !== undefined
+            ? data.personProfileId === 'none'
+              ? null
+              : data.personProfileId
+            : existingMeta.person?.profileId;
+        const pName =
+          data.personName !== undefined
+            ? data.personName?.trim()
+            : existingMeta.person?.name || '';
+        person = pName || pId ? { profileId: pId || null, name: pName || '' } : null;
+      }
+
+      const isReimbursed =
+        data.isReimbursed !== undefined ? data.isReimbursed : existingMeta.isReimbursed;
+      const txType = (data.transactionType || existing.transactionType) as FinanceType;
+
+      payload.description = buildTransactionDescription(cleanDesc, person, isReimbursed, txType);
     }
 
     // Validate date

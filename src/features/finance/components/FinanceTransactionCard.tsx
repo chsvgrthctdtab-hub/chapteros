@@ -100,15 +100,32 @@ export function FinanceTransactionCard({
         {/* Description & ID */}
         <div>
           <p className="text-xs font-semibold text-ink-navy leading-snug line-clamp-2">
-            {tx.description}
+            {tx.cleanDescription || tx.description}
           </p>
-          <div className="flex items-center gap-2 mt-1">
+          <div className="flex flex-wrap items-center gap-1.5 mt-1.5">
             <span className="tabular-nums font-medium text-[10px] text-slate-gray bg-cloud px-1.5 py-0.5 rounded border border-hairline">
               {txCode}
             </span>
             <span className="text-[11px] text-slate-gray">
               {tx.category?.name || 'Khác'}
             </span>
+            {tx.person && (
+              <span className="inline-flex items-center gap-1 text-[10px] font-medium text-ink-navy bg-[#e6f0ff]/60 px-1.5 py-0.5 rounded border border-[#d4e4fa]">
+                <span>👤</span>
+                <span className="truncate max-w-[120px]">{tx.person.name}</span>
+              </span>
+            )}
+            {!isIncome && tx.isReimbursed !== undefined && tx.isReimbursed !== null && (
+              tx.isReimbursed ? (
+                <span className="inline-flex items-center gap-0.5 text-[10px] font-semibold text-emerald-700 bg-emerald-50 px-1.5 py-0.5 rounded-full border border-emerald-200">
+                  ✓ Đã hoàn tiền
+                </span>
+              ) : (
+                <span className="inline-flex items-center gap-0.5 text-[10px] font-semibold text-amber-700 bg-amber-50 px-1.5 py-0.5 rounded-full border border-amber-200">
+                  ⏳ Chưa hoàn ứng
+                </span>
+              )
+            )}
           </div>
         </div>
 

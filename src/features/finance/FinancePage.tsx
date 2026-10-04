@@ -816,6 +816,7 @@ export function FinancePage() {
         categories={categories}
         terms={terms}
         activities={activities}
+        organizationId={organizationId}
         isLoading={createTxMutation.isPending || updateTxMutation.isPending}
       />
 

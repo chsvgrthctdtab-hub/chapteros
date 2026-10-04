@@ -83,6 +83,14 @@ export interface FinanceTransactionListItem {
     email: string;
     avatarUrl?: string | null;
   } | null;
+
+  // Metadata & Payer/Payee info
+  cleanDescription?: string;
+  person?: {
+    profileId?: string | null;
+    name: string;
+  } | null;
+  isReimbursed?: boolean | null;
 }
 
 export interface FinanceSummaryStats {
