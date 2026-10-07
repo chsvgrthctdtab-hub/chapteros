@@ -42,6 +42,8 @@ import { ActivityStatusBadge } from '@/features/activities/components/ActivitySt
 import { ActivityCategoryBadge } from '@/features/activities/components/ActivityCategoryBadge';
 import { ActivityKPIStrip } from '@/features/activities/components/ActivityKPIStrip';
 import { ActivityRelatedTabs } from '@/features/activities/components/ActivityRelatedTabs';
+import { useActivityFinance } from '@/features/finance/queries/finance.queries';
+import { useTasksByActivity } from '@/features/tasks/queries/task.queries';
 import { ActivityDetailSkeleton } from '@/features/activities/components/ActivitySkeleton';
 import { ActivityFormDialog } from '@/features/activities/components/ActivityFormDialog';
 import { AddParticipantDialog } from '@/features/activities/components/AddParticipantDialog';
@@ -130,6 +132,32 @@ export function ActivityDetailPage() {
 
   const { data: terms = [] } = useActivityTerms(currentOrg?.id);
   const { data: leadCandidates = [] } = useActivityLeadCandidates(currentOrg?.id);
+  const { data: activityFinance } = useActivityFinance(currentOrg?.id, id);
+  const { data: activityTasks = [] } = useTasksByActivity(id || '', currentOrg?.id || '');
+
+  const tasksCount = React.useMemo(() => {
+    const total = activityTasks.length;
+    const completed = activityTasks.filter((t) => t.status === 'completed').length;
+    const open = total - completed;
+    return { total, completed, open };
+  }, [activityTasks]);
+
+  const financeSummary = React.useMemo(() => {
+    if (!activityFinance) return undefined;
+    const activeTx = (activityFinance.transactions || []).filter((tx) => tx.status !== 'rejected');
+    const calcExpense = activeTx
+      .filter((t) => t.transactionType === 'expense')
+      .reduce((sum, t) => sum + (Math.abs(Number(t.amount)) || 0), 0);
+    const calcIncome = activeTx
+      .filter((t) => t.transactionType === 'income')
+      .reduce((sum, t) => sum + (Math.abs(Number(t.amount)) || 0), 0);
+
+    const expense = activityFinance.totalExpense > 0 ? activityFinance.totalExpense : calcExpense;
+    const income = activityFinance.totalIncome > 0 ? activityFinance.totalIncome : calcIncome;
+    const balance = income - expense;
+
+    return { income, expense, balance };
+  }, [activityFinance]);
 
   // Mutations
   const updateMutation = useUpdateActivity(id || '', currentOrg?.id);
@@ -449,6 +477,8 @@ export function ActivityDetailPage() {
       <ActivityKPIStrip
         activity={activity}
         stats={participantsData?.stats}
+        tasksCount={tasksCount}
+        financeSummary={financeSummary}
       />
 
       {/* 5. Activity Workspace Tabs */}

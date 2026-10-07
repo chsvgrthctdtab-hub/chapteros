@@ -376,7 +376,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
             code: code.trim().toUpperCase(),
             type: (type as OrganizationType) || 'chi_hoi',
             description: description?.trim() || null,
-            finance_approval_threshold: 0,
+            finance_approval_threshold: 2000000,
           },
           user.id
         );

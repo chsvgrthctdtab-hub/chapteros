@@ -194,10 +194,7 @@ export function useApproveFinanceTransaction() {
     },
     onSuccess: (_, variables) => {
       queryClient.invalidateQueries({
-        queryKey: financeKeys.transactions(variables.organizationId),
-      });
-      queryClient.invalidateQueries({
-        queryKey: financeKeys.summary(variables.organizationId),
+        queryKey: financeKeys.all,
       });
       queryClient.invalidateQueries({
         queryKey: ['dashboard', 'stats', variables.organizationId],
@@ -236,10 +233,7 @@ export function useRejectFinanceTransaction() {
     },
     onSuccess: (_, variables) => {
       queryClient.invalidateQueries({
-        queryKey: financeKeys.transactions(variables.organizationId),
-      });
-      queryClient.invalidateQueries({
-        queryKey: financeKeys.summary(variables.organizationId),
+        queryKey: financeKeys.all,
       });
       queryClient.invalidateQueries({
         queryKey: ['dashboard', 'stats', variables.organizationId],

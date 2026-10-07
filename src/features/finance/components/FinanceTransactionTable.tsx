@@ -176,7 +176,11 @@ export function FinanceTransactionTable({
                                 <Check className="w-2.5 h-2.5 stroke-[3]" />
                               )}
                             </span>
-                            <span>Đã thanh</span>
+                            <span>
+                              {tx.isReimbursed === true || tx.isUnpaid === false
+                                ? 'Đã thanh'
+                                : 'Chưa thanh'}
+                            </span>
                           </button>
                         )}
                         {tx.activity && (

@@ -74,10 +74,20 @@ export function ActivityKPIStrip({
       id: 'kpi-finance',
       label: 'Ngân sách',
       vnLabel: 'Ngân sách',
-      value: financeSummary ? `${(financeSummary.balance / 1000).toLocaleString()}k` : '0k',
-      subtext: financeSummary ? `Chi: ${(financeSummary.expense / 1000).toLocaleString()}k` : 'Kinh phí & thu chi',
+      value: financeSummary ? `${Math.round(financeSummary.balance / 1000).toLocaleString('vi-VN')}k` : '0k',
+      subtext: financeSummary
+        ? financeSummary.income > 0
+          ? `Thu: ${Math.round(financeSummary.income / 1000).toLocaleString('vi-VN')}k • Chi: ${Math.round(financeSummary.expense / 1000).toLocaleString('vi-VN')}k`
+          : `Tổng chi: ${Math.round(financeSummary.expense / 1000).toLocaleString('vi-VN')}k`
+        : 'Kinh phí & thu chi',
       icon: DollarSign,
-      color: 'text-[#ce7918]',
+      color: financeSummary
+        ? financeSummary.balance > 0
+          ? 'text-emerald-700'
+          : financeSummary.balance < 0
+          ? 'text-rose-600'
+          : 'text-slate-gray'
+        : 'text-[#ce7918]',
       badgeBg: 'bg-[#fffbeb] text-[#ce7918] border-transparent',
     },
   ];

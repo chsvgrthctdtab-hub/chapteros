@@ -13,6 +13,7 @@ import {
   Check,
 } from '@/lib/icons';
 import { useToast } from '@/contexts/ToastContext';
+import { useAuth } from '@/contexts/AuthContext';
 import {
   useActivityFinance,
   useFinanceCategories,
@@ -23,6 +24,7 @@ import {
   useCreateFinanceTransaction,
   useUpdateFinanceTransaction,
   useDeleteFinanceTransaction,
+  useApproveFinanceTransaction,
 } from '../mutations/finance.mutations';
 import { formatVND, getTransactionTypeConfig } from '../utils/finance.utils';
 import { formatDate } from '@/lib/date';
@@ -53,7 +55,9 @@ export function ActivityFinanceSection({
   const createTxMutation = useCreateFinanceTransaction();
   const updateTxMutation = useUpdateFinanceTransaction();
   const deleteTxMutation = useDeleteFinanceTransaction();
+  const approveTxMutation = useApproveFinanceTransaction();
   const toast = useToast();
+  const { user, profile, activeMembership } = useAuth();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalDefaultType, setModalDefaultType] = useState<FinanceType>('expense');
@@ -61,10 +65,34 @@ export function ActivityFinanceSection({
   const [deletingTransaction, setDeletingTransaction] = useState<FinanceTransactionListItem | null>(null);
 
   const transactions = data?.transactions || [];
-  const totalIncome = data?.totalIncome || 0;
-  const totalExpense = data?.totalExpense || 0;
-  const balance = data?.balance || 0;
+
+  // Unified calculation of active income and expenses (excluding rejected items)
+  const activeTransactions = transactions.filter((tx) => tx.status !== 'rejected');
+  const calcIncome = activeTransactions
+    .filter((tx) => tx.transactionType === 'income')
+    .reduce((sum, tx) => sum + (Math.abs(Number(tx.amount)) || 0), 0);
+  const calcExpense = activeTransactions
+    .filter((tx) => tx.transactionType === 'expense')
+    .reduce((sum, tx) => sum + (Math.abs(Number(tx.amount)) || 0), 0);
+
+  const totalIncome = data?.totalIncome && data.totalIncome > 0 ? data.totalIncome : calcIncome;
+  const totalExpense = data?.totalExpense && data.totalExpense > 0 ? data.totalExpense : calcExpense;
+  const balance = totalIncome - totalExpense;
   const isBalancePositive = balance >= 0;
+
+  const handleApprove = async (tx: FinanceTransactionListItem) => {
+    try {
+      await approveTxMutation.mutateAsync({
+        transactionId: tx.id,
+        organizationId,
+        actorUserId: profile?.id || user?.id || '',
+        actorRole: activeMembership?.role,
+      });
+      toast.success(`Đã phê duyệt giao dịch "${tx.cleanDescription || tx.description}"`);
+    } catch (err: unknown) {
+      toast.error(err);
+    }
+  };
 
   const handleToggleReimbursed = async (tx: FinanceTransactionListItem) => {
     const currentlyReimbursed = tx.isReimbursed === true || tx.isUnpaid === false;
@@ -326,30 +354,63 @@ export function ActivityFinanceSection({
                                 }
                               >
                                 <span
-                                  className={`w-3.5 h-3.5 rounded-full border flex items-center justify-center transition-colors shrink-0 ${
-                                    tx.isReimbursed === true || tx.isUnpaid === false
-                                      ? 'bg-emerald-600 border-emerald-600 text-white'
-                                      : 'bg-white border-amber-400'
-                                  }`}
-                                >
-                                  {(tx.isReimbursed === true || tx.isUnpaid === false) && (
-                                    <Check className="w-2.5 h-2.5 stroke-[3]" />
+                                    className={`w-3.5 h-3.5 rounded-full border flex items-center justify-center transition-colors shrink-0 ${
+                                      tx.isReimbursed === true || tx.isUnpaid === false
+                                        ? 'bg-emerald-600 border-emerald-600 text-white'
+                                        : 'bg-white border-amber-400'
+                                    }`}
+                                  >
+                                    {(tx.isReimbursed === true || tx.isUnpaid === false) && (
+                                      <Check className="w-2.5 h-2.5 stroke-[3]" />
+                                    )}
+                                  </span>
+                                  <span>
+                                    {tx.isReimbursed === true || tx.isUnpaid === false
+                                      ? 'Đã thanh'
+                                      : 'Chưa thanh'}
+                                  </span>
+                                </button>
+                              )}
+                              {/* Trạng thái duyệt / Duyệt nhanh */}
+                              {tx.status === 'pending_approval' && (
+                                <div className="inline-flex items-center gap-1">
+                                  <span className="inline-flex items-center gap-1 text-[10px] font-semibold text-amber-800 bg-amber-50 px-2 py-0.5 rounded-full border border-amber-300">
+                                    <span className="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse" />
+                                    <span>Chờ duyệt</span>
+                                  </span>
+                                  {canManage && (
+                                    <button
+                                      type="button"
+                                      disabled={approveTxMutation.isPending}
+                                      onClick={(e) => {
+                                        e.stopPropagation();
+                                        handleApprove(tx);
+                                      }}
+                                      className="inline-flex items-center gap-0.5 px-2 py-0.5 text-[10px] font-bold text-white bg-signal-blue hover:bg-[#005be0] rounded-full transition-colors cursor-pointer shadow-2xs"
+                                      title="Phê duyệt giao dịch này"
+                                    >
+                                      <Check className="w-2.5 h-2.5 stroke-[3]" />
+                                      <span>Duyệt</span>
+                                    </button>
                                   )}
+                                </div>
+                              )}
+                              {tx.status === 'rejected' && (
+                                <span className="inline-flex items-center gap-1 text-[10px] font-semibold text-rose-800 bg-rose-50 px-2 py-0.5 rounded-full border border-rose-300">
+                                  <span>Bị từ chối</span>
                                 </span>
-                                <span>Đã thanh</span>
-                              </button>
-                            )}
-                            {tx.receiptUrl && (
-                              <a
-                                href={tx.receiptUrl}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="inline-flex items-center gap-1 text-[11px] text-signal-blue hover:underline"
-                              >
-                                <ExternalLink className="w-3 h-3" />
-                                <span>Chứng từ</span>
-                              </a>
-                            )}
+                              )}
+                              {tx.receiptUrl && (
+                                <a
+                                  href={tx.receiptUrl}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="inline-flex items-center gap-1 text-[11px] text-signal-blue hover:underline"
+                                >
+                                  <ExternalLink className="w-3 h-3" />
+                                  <span>Chứng từ</span>
+                                </a>
+                              )}
                           </div>
                         </div>
                       </td>

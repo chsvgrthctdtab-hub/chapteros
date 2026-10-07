@@ -377,7 +377,9 @@ export const financeRepository = {
       if (error || !data) return 2000000;
       const raw = (data as any).finance_approval_threshold;
       if (raw === null || raw === undefined) return 2000000;
-      return Number(raw) || 0;
+      const num = Number(raw);
+      // Default to 2,000,000 VND if 0 or invalid (prevents all micro-transactions from getting stuck in pending_approval)
+      return isNaN(num) || num <= 0 ? 2000000 : num;
     } catch {
       return 2000000;
     }
@@ -1001,11 +1003,14 @@ export const financeRepository = {
     let totalExpense = 0;
 
     for (const tx of transactions) {
-      if (tx.status === 'posted' || tx.status === 'approved') {
+      // In activity finance, count all active transactions (posted, approved, pending_approval).
+      // Only rejected transactions are excluded.
+      if (tx.status !== 'rejected') {
+        const amt = Math.abs(Number(tx.amount)) || 0;
         if (tx.transactionType === 'income') {
-          totalIncome += tx.amount;
+          totalIncome += amt;
         } else {
-          totalExpense += tx.amount;
+          totalExpense += amt;
         }
       }
     }
