@@ -609,6 +609,19 @@ export function CreateCollabTaskDialog({
                 placeholder="VD: 07:30 - 08:30"
                 className="h-9.5 text-xs bg-white border-hairline rounded-lg text-ink-navy placeholder:text-mist-gray focus:border-signal-blue tabular-nums"
               />
+              <div className="flex items-center gap-1 overflow-x-auto py-0.5 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+                <span className="text-[10px] text-mist-gray font-medium shrink-0">Gợi ý:</span>
+                {['07:30 - 08:30', '08:00 - 11:30', '13:30 - 17:00', '18:00 - 21:00'].map((preset) => (
+                  <button
+                    key={preset}
+                    type="button"
+                    onClick={() => setValue('dueTime', preset)}
+                    className="px-1.5 py-0.5 rounded text-[10px] font-medium bg-cloud text-slate-gray hover:bg-pebble hover:text-ink-navy transition-colors shrink-0 cursor-pointer"
+                  >
+                    {preset}
+                  </button>
+                ))}
+              </div>
             </div>
 
             <div className="space-y-1">

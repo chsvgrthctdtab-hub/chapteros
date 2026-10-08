@@ -23,6 +23,7 @@ import {
 } from '@/lib/icons';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { DatePicker } from '@/components/ui/date-picker';
 import { Badge } from '@/components/ui/badge';
 import {
   Select,
@@ -431,13 +432,12 @@ export function TermDetailDrawer({
                             <label className="text-[10px] font-semibold text-mist-gray uppercase block mb-1">
                               Bắt đầu
                             </label>
-                            <Input
-                              type="date"
+                            <DatePicker
                               value={sem.startDate}
                               disabled={!canManage || isLocked}
-                              onChange={(e) => {
+                              onChange={(val) => {
                                 const updated = [...semesters];
-                                updated[idx] = { ...updated[idx], startDate: e.target.value };
+                                updated[idx] = { ...updated[idx], startDate: val };
                                 setSemesters(updated);
                                 setSemesterSaved(false);
                               }}
@@ -448,13 +448,12 @@ export function TermDetailDrawer({
                             <label className="text-[10px] font-semibold text-mist-gray uppercase block mb-1">
                               Kết thúc
                             </label>
-                            <Input
-                              type="date"
+                            <DatePicker
                               value={sem.endDate}
                               disabled={!canManage || isLocked}
-                              onChange={(e) => {
+                              onChange={(val) => {
                                 const updated = [...semesters];
-                                updated[idx] = { ...updated[idx], endDate: e.target.value };
+                                updated[idx] = { ...updated[idx], endDate: val };
                                 setSemesters(updated);
                                 setSemesterSaved(false);
                               }}

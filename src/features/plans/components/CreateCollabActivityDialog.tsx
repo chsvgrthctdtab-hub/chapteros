@@ -323,20 +323,21 @@ export function CreateCollabActivityDialog({
             )}
           </div>
 
-          {/* Ngày bắt đầu & Ngày kết thúc */}
+          {/* Thời gian bắt đầu & Thời gian kết thúc */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
             <div className="space-y-1.5">
               <label className="block text-xs font-semibold text-ink-navy">
-                Ngày bắt đầu <span className="text-rose-500">*</span>
+                Thời gian bắt đầu <span className="text-rose-500">*</span>
               </label>
               <Controller
                 name="startDate"
                 control={control}
                 render={({ field }) => (
                   <DatePicker
+                    showTime={true}
                     value={field.value}
                     onChange={field.onChange}
-                    placeholder="Chọn ngày bắt đầu"
+                    placeholder="Chọn thời gian bắt đầu"
                   />
                 )}
               />
@@ -347,16 +348,17 @@ export function CreateCollabActivityDialog({
 
             <div className="space-y-1.5">
               <label className="block text-xs font-semibold text-ink-navy">
-                Ngày kết thúc <span className="text-rose-500">*</span>
+                Thời gian kết thúc <span className="text-rose-500">*</span>
               </label>
               <Controller
                 name="endDate"
                 control={control}
                 render={({ field }) => (
                   <DatePicker
+                    showTime={true}
                     value={field.value}
                     onChange={field.onChange}
-                    placeholder="Chọn ngày kết thúc"
+                    placeholder="Chọn thời gian kết thúc"
                   />
                 )}
               />

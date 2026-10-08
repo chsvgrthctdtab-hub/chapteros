@@ -9,6 +9,7 @@ import {
 } from '@/lib/icons';
 import { Popover, PopoverContent, PopoverTrigger } from './popover';
 import { Button } from './button';
+import { TimePickerBar } from './time-picker';
 import { cn } from '@/lib/utils';
 import dayjs from 'dayjs';
 
@@ -147,6 +148,9 @@ export function DatePicker({
     if (selectedDayjs && selectedDayjs.isValid()) {
       const updated = selectedDayjs.hour(parseInt(hour, 10)).minute(parseInt(minute, 10));
       onChange?.(updated.format('YYYY-MM-DDTHH:mm'));
+    } else {
+      const fallback = viewDate.hour(parseInt(hour, 10)).minute(parseInt(minute, 10));
+      onChange?.(fallback.format('YYYY-MM-DDTHH:mm'));
     }
   };
 
@@ -154,6 +158,16 @@ export function DatePicker({
     const today = dayjs();
     setViewDate(today);
     handleSelectDay(today);
+  };
+
+  const handleQuickSelectNow = () => {
+    const now = dayjs();
+    setViewDate(now);
+    setSelectedHour(now.format('HH'));
+    setSelectedMinute(now.format('mm'));
+    let finalDate = now;
+    finalDate = finalDate.hour(now.hour()).minute(now.minute());
+    onChange?.(finalDate.format('YYYY-MM-DDTHH:mm'));
   };
 
   const handleClear = (e: React.MouseEvent) => {
@@ -282,46 +296,36 @@ export function DatePicker({
 
           {/* Time Picker Bar (if showTime) */}
           {showTime && (
-            <div className="pt-2 border-t border-hairline flex items-center justify-between text-xs">
-              <div className="flex items-center gap-1.5 text-slate-gray font-semibold">
-                <Clock className="w-3.5 h-3.5 text-signal-blue" />
-                <span>Giờ:</span>
-              </div>
-              <div className="flex items-center gap-1">
-                <select
-                  value={selectedHour}
-                  onChange={(e) => handleTimeChange(e.target.value, selectedMinute)}
-                  className="h-7 rounded-lg border border-hairline bg-cloud px-1 text-xs tabular-nums font-semibold text-ink-navy"
-                >
-                  {Array.from({ length: 24 }).map((_, i) => {
-                    const val = i.toString().padStart(2, '0');
-                    return <option key={val} value={val}>{val}</option>;
-                  })}
-                </select>
-                <span className="font-bold text-mist-gray">:</span>
-                <select
-                  value={selectedMinute}
-                  onChange={(e) => handleTimeChange(selectedHour, e.target.value)}
-                  className="h-7 rounded-lg border border-hairline bg-cloud px-1 text-xs tabular-nums font-semibold text-ink-navy"
-                >
-                  {Array.from({ length: 12 }).map((_, i) => {
-                    const val = (i * 5).toString().padStart(2, '0');
-                    return <option key={val} value={val}>{val}</option>;
-                  })}
-                </select>
-              </div>
-            </div>
+            <TimePickerBar
+              selectedHour={selectedHour}
+              selectedMinute={selectedMinute}
+              onTimeChange={handleTimeChange}
+            />
           )}
 
           {/* Bottom Actions */}
           <div className="pt-2.5 border-t border-hairline flex items-center justify-between text-xs">
-            <button
-              type="button"
-              onClick={handleQuickSelectToday}
-              className="text-[11px] font-semibold text-signal-blue hover:text-[#005be0] hover:underline cursor-pointer"
-            >
-              Hôm nay
-            </button>
+            <div className="flex items-center gap-2">
+              <button
+                type="button"
+                onClick={handleQuickSelectToday}
+                className="text-[11px] font-semibold text-signal-blue hover:text-[#005be0] hover:underline cursor-pointer"
+              >
+                Hôm nay
+              </button>
+              {showTime && (
+                <>
+                  <span className="text-hairline">|</span>
+                  <button
+                    type="button"
+                    onClick={handleQuickSelectNow}
+                    className="text-[11px] font-semibold text-teal-600 hover:text-teal-700 hover:underline cursor-pointer"
+                  >
+                    Bây giờ
+                  </button>
+                </>
+              )}
+            </div>
             <Button
               type="button"
               size="sm"
