@@ -4,7 +4,6 @@ import {
   RefreshCw,
   Sparkles,
   History,
-  Boxes,
   ArrowRight,
 } from '@/lib/icons';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card';
@@ -113,29 +112,6 @@ export function MaintenanceTab({ organization: _organization }: MaintenanceTabPr
             <Link to="/audit-logs">
               <Button variant="outline" size="sm" className="text-xs w-full justify-between mt-2 cursor-pointer border-hairline hover:bg-cloud text-slate-gray">
                 Mở Nhật Ký Kiểm Toán <ArrowRight className="h-3.5 w-3.5 ml-1 text-mist-gray" />
-              </Button>
-            </Link>
-          </CardContent>
-        </Card>
-
-        {/* Google Workspace */}
-        <Card className="border-hairline shadow-xs bg-white hover:border-mist-gray transition-colors">
-          <CardHeader className="pb-3">
-            <div className="flex items-center justify-between">
-              <div className="h-8 w-8 rounded-lg bg-[#e6f0ff] text-signal-blue flex items-center justify-center border border-[#d4e4fa]">
-                <Boxes className="h-4 w-4" />
-              </div>
-              <Badge variant="outline" className="text-[10px] text-signal-blue bg-[#e6f0ff] border-[#d4e4fa]">Đám mây</Badge>
-            </div>
-            <CardTitle className="text-sm font-bold text-ink-navy mt-2">Tích Hợp Google</CardTitle>
-            <CardDescription className="text-xs text-mist-gray">
-              Quản lý kết nối OAuth, Google Drive và đồng bộ biểu mẫu
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="pt-0">
-            <Link to="/integrations">
-              <Button variant="outline" size="sm" className="text-xs w-full justify-between mt-2 cursor-pointer border-hairline hover:bg-cloud text-slate-gray">
-                Quản Lý Kết Nối <ArrowRight className="h-3.5 w-3.5 ml-1 text-mist-gray" />
               </Button>
             </Link>
           </CardContent>

@@ -11,7 +11,6 @@ import { OrganizationSettingsTab } from './components/OrganizationSettingsTab';
 import { ProfileSettingsTab } from './components/ProfileSettingsTab';
 import { MembersRolesTab } from './components/MembersRolesTab';
 import { FinanceSettingsTab } from './components/FinanceSettingsTab';
-import { IntegrationsTab } from './components/IntegrationsTab';
 import { SecurityTab } from './components/SecurityTab';
 import { MaintenanceTab } from './components/MaintenanceTab';
 
@@ -45,7 +44,7 @@ export function SettingsPage() {
     <div id="settings-page" className="space-y-6">
       <PageHeader
         title="Settings & Administration"
-        description="Quản lý danh tính Chi hội, phân quyền nhân sự Ban Chấp Hành, hạn mức tài chính và tích hợp dịch vụ đám mây."
+        description="Quản lý danh tính Chi hội, phân quyền nhân sự Ban Chấp Hành, hạn mức tài chính và bảo mật hệ thống."
         breadcrumbs={[
           { label: 'Dashboard', href: '/' },
           { label: 'Settings' },
@@ -84,10 +83,6 @@ export function SettingsPage() {
               organization={activeOrganization}
               canManage={canManage}
             />
-          )}
-
-          {activeTab === 'integrations' && (
-            <IntegrationsTab organization={activeOrganization} />
           )}
 
           {activeTab === 'security' && (

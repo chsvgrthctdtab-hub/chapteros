@@ -12,7 +12,6 @@ import {
   CalendarRange,
   ShieldCheck,
   History,
-  Puzzle,
   Settings,
   ChevronLeft,
   ChevronRight,
@@ -40,7 +39,6 @@ const NAV_ICON_COLORS: Record<string, { icon: string; bg: string }> = {
   '/terms':       { icon: '#4f46e5', bg: '#eef2ff' },
   '/data-quality':{ icon: '#059669', bg: '#ecfdf5' },
   '/audit-logs':  { icon: '#e11d48', bg: '#ffe4e6' },
-  '/integrations':{ icon: '#7c3aed', bg: '#f5f3ff' },
   '/settings':    { icon: '#0284c7', bg: '#e0f2fe' },
 };
 
@@ -67,7 +65,6 @@ const systemNavItems: NavItem[] = [
   { name: 'Nhiệm kỳ',           href: '/terms',         icon: CalendarRange },
   { name: 'Kiểm tra dữ liệu',   href: '/data-quality',  icon: ShieldCheck },
   { name: 'Nhật ký kiểm toán',  href: '/audit-logs',    icon: History },
-  { name: 'Tích hợp Google',    href: '/integrations',  icon: Puzzle },
   { name: 'Cài đặt',            href: '/settings',      icon: Settings },
 ];
 
@@ -172,10 +169,7 @@ export function Sidebar({ collapsed, onToggleCollapse, mobileOpen, onCloseMobile
   const isAdmin = activeRole === 'admin' || activeRole === 'leader';
   const isEffectiveCollapsed = collapsed && !mobileOpen;
 
-  const visibleSystemNavItems = systemNavItems.filter((item) => {
-    if (item.href === '/integrations') return isAdmin;
-    return true;
-  });
+  const visibleSystemNavItems = systemNavItems;
 
   return (
     <>

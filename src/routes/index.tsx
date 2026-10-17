@@ -12,7 +12,6 @@ import { TaskDetailPage } from '@/features/tasks/TaskDetailPage';
 import { FinancePage } from '@/features/finance/FinancePage';
 import { DocumentsPage } from '@/features/documents/DocumentsPage';
 import { ReportsPage } from '@/features/reports/ReportsPage';
-import { IntegrationsPage } from '@/features/integrations/IntegrationsPage';
 import { SettingsPage } from '@/features/settings/SettingsPage';
 import { AuditLogsPage } from '@/features/audit-logs/AuditLogsPage';
 import { DataQualityPage } from '@/features/data-quality';
@@ -97,7 +96,6 @@ export function AppRoutes() {
         <Route path="documents" element={<DocumentsPage />} />
         <Route path="reports" element={<ReportsPage />} />
         <Route path="data-quality" element={<DataQualityPage />} />
-        <Route path="integrations" element={<IntegrationsPage />} />
         <Route path="settings" element={<SettingsPage />} />
         <Route path="settings/audit-logs" element={<AuditLogsPage />} />
         <Route path="audit-logs" element={<AuditLogsPage />} />

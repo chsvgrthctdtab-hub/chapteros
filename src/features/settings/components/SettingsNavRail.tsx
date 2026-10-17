@@ -4,7 +4,6 @@ import {
   User,
   Users,
   Wallet,
-  Boxes,
   ShieldCheck,
   Wrench,
   ChevronRight,
@@ -15,7 +14,6 @@ export type SettingsTabId =
   | 'profile'
   | 'roles'
   | 'finance'
-  | 'integrations'
   | 'security'
   | 'maintenance';
 
@@ -24,7 +22,7 @@ export interface SettingsNavItem {
   label: string;
   shortDesc: string;
   icon: React.ComponentType<{ className?: string }>;
-  group: 'general' | 'operations' | 'integrations' | 'security';
+  group: 'general' | 'operations' | 'security';
 }
 
 export const SETTINGS_NAV_ITEMS: SettingsNavItem[] = [
@@ -58,14 +56,6 @@ export const SETTINGS_NAV_ITEMS: SettingsNavItem[] = [
     icon: Wallet,
     group: 'operations',
   },
-  // Integrations
-  {
-    id: 'integrations',
-    label: 'Google Workspace',
-    shortDesc: 'Services & OAuth connections',
-    icon: Boxes,
-    group: 'integrations',
-  },
   // Security & Data
   {
     id: 'security',
@@ -92,7 +82,6 @@ export function SettingsNavRail({ activeTab, onSelectTab }: SettingsNavRailProps
   const groups: Array<{ key: SettingsNavItem['group']; title: string }> = [
     { key: 'general', title: 'GENERAL' },
     { key: 'operations', title: 'OPERATIONS' },
-    { key: 'integrations', title: 'INTEGRATIONS' },
     { key: 'security', title: 'SECURITY & DATA' },
   ];
 

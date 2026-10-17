@@ -4,7 +4,6 @@ import {
   TrendingDown,
   Plus,
   RefreshCw,
-  FileSpreadsheet,
   Layers,
   ShieldCheck,
   ChevronLeft,
@@ -38,8 +37,7 @@ import { ThresholdSettingsModal } from './components/ThresholdSettingsModal';
 import { ClosePeriodModal } from './components/ClosePeriodModal';
 import { ReopenPeriodModal } from './components/ReopenPeriodModal';
 import { RejectReasonModal } from './components/RejectReasonModal';
-import { GoogleSheetsExportModal } from '@/integrations/google/sheets/components/GoogleSheetsExportModal';
-import { GoogleSheetsImportWizardModal } from '@/integrations/google/sheets/components/GoogleSheetsImportWizardModal';
+
 import { ConfirmDialog } from '@/components/common/ConfirmDialog';
 import { EmptyState } from '@/components/common/EmptyState';
 import { QueryErrorState } from '@/components/common/QueryErrorState';
@@ -128,8 +126,7 @@ export function FinancePage() {
   const [deletingTransaction, setDeletingTransaction] = useState<FinanceTransactionListItem | null>(null);
   const [rejectingTransaction, setRejectingTransaction] = useState<FinanceTransactionListItem | null>(null);
   const [reopeningPeriod, setReopeningPeriod] = useState<FinancePeriodClosingItem | null>(null);
-  const [sheetsExportOpen, setSheetsExportOpen] = useState(false);
-  const [sheetsImportOpen, setSheetsImportOpen] = useState(false);
+
 
   // Queries
   const {
@@ -515,31 +512,6 @@ export function FinancePage() {
             <span className="hidden sm:inline">Danh mục ({categories.length})</span>
           </Button>
 
-          <Button
-            type="button"
-            variant="outline"
-            size="sm"
-            onClick={() => setSheetsExportOpen(true)}
-            title="Xuất Google Sheets"
-            className="h-8 px-3 text-xs font-semibold text-[#1e293b] bg-white hover:bg-[#f0f4f9] border-[#e2e8f0] rounded-full shadow-2xs gap-1.5 cursor-pointer"
-          >
-            <FileSpreadsheet className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
-            <span className="hidden sm:inline">Xuất Sheets</span>
-          </Button>
-
-          {canManage && (
-            <Button
-              type="button"
-              variant="outline"
-              size="sm"
-              onClick={() => setSheetsImportOpen(true)}
-              title="Nhập Google Sheets"
-              className="h-8 px-3 text-xs font-semibold text-[#1e293b] bg-white hover:bg-[#f0f4f9] border-[#e2e8f0] rounded-full shadow-2xs gap-1.5 cursor-pointer"
-            >
-              <FileSpreadsheet className="w-3.5 h-3.5 text-[#2e89f7] shrink-0" />
-              <span className="hidden sm:inline">Nhập Sheets</span>
-            </Button>
-          )}
 
           {canManage && (
             <Button
@@ -930,27 +902,6 @@ export function FinancePage() {
         onConfirm={handleDeleteConfirm}
       />
 
-      {/* 8.8 Google Sheets Export Modal */}
-      <GoogleSheetsExportModal
-        open={sheetsExportOpen}
-        onOpenChange={setSheetsExportOpen}
-        module="finance"
-        termId={filters.termId !== 'all' ? filters.termId : undefined}
-        customFilters={{
-          category: filters.categoryId !== 'all' ? filters.categoryId : undefined,
-          fromDate: filters.startDate || undefined,
-          toDate: filters.endDate || undefined,
-        }}
-      />
-
-      {/* 8.9 Google Sheets Import Wizard Modal */}
-      <GoogleSheetsImportWizardModal
-        open={sheetsImportOpen}
-        onOpenChange={setSheetsImportOpen}
-        module="finance"
-        termId={filters.termId !== 'all' ? filters.termId : undefined}
-        onImportSuccess={handleRefreshAll}
-      />
     </div>
   );
 }

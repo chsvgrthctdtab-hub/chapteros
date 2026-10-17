@@ -11,7 +11,6 @@ import {
   CheckCircle2,
   ArrowRight,
   ShieldAlert,
-  Unlink,
 } from '@/lib/icons';
 import { formatVND } from '../utils/formatters';
 import type { DashboardStats, UpcomingActivityItem, DashboardTermOption } from '../types/dashboard.types';
@@ -20,14 +19,12 @@ interface AlertCenterProps {
   stats: DashboardStats;
   upcomingActivities: UpcomingActivityItem[];
   terms: DashboardTermOption[];
-  hasGoogleSyncError?: boolean;
 }
 
 export function AlertCenter({
   stats,
   upcomingActivities,
   terms,
-  hasGoogleSyncError = false,
 }: AlertCenterProps) {
   const alerts: Array<{
     id: string;
@@ -99,18 +96,6 @@ export function AlertCenter({
     });
   }
 
-  // 5. Cảnh báo gián đoạn Google Integration
-  if (hasGoogleSyncError) {
-    alerts.push({
-      id: 'google-sync-error',
-      type: 'info',
-      icon: <Unlink className="w-4 h-4 text-signal-blue" />,
-      title: 'Kết nối Google Workspace cần xác thực lại',
-      description: 'Một số tính năng đồng bộ Lịch/Drive có thể tạm gián đoạn.',
-      actionLabel: 'Kết nối lại',
-      actionLink: '/integrations/google',
-    });
-  }
 
   // If no active alerts, show positive operational status banner
   if (alerts.length === 0) {

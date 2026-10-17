@@ -13,7 +13,6 @@ import {
   Lock,
   Flag,
   UserCheck,
-  Download,
   Share2,
   ChevronRight,
   User,
@@ -47,7 +46,6 @@ import { useTasksByActivity } from '@/features/tasks/queries/task.queries';
 import { ActivityDetailSkeleton } from '@/features/activities/components/ActivitySkeleton';
 import { ActivityFormDialog } from '@/features/activities/components/ActivityFormDialog';
 import { AddParticipantDialog } from '@/features/activities/components/AddParticipantDialog';
-import { GoogleSheetsExportModal } from '@/integrations/google/sheets/components/GoogleSheetsExportModal';
 import { QueryErrorState } from '@/components/common/QueryErrorState';
 import { formatDateRange, formatDateTime } from '@/lib/date';
 import { isActivityLocked } from '@/features/activities/utils/activity-workflow';
@@ -109,7 +107,6 @@ export function ActivityDetailPage() {
   const [isEditOpen, setIsEditOpen] = useState(false);
   const [isAddParticipantOpen, setIsAddParticipantOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-  const [sheetsExportOpen, setSheetsExportOpen] = useState(false);
 
   // Queries
   const {
@@ -313,17 +310,6 @@ export function ActivityDetailPage() {
 
         {/* Action Buttons for Board */}
         <div className="flex items-center gap-1.5 sm:gap-2 flex-wrap shrink-0">
-          {/* Export Sheets */}
-          <button
-            type="button"
-            id="activity-detail-export-sheets-btn"
-            onClick={() => setSheetsExportOpen(true)}
-            title="Xuất Google Sheets"
-            className="inline-flex items-center gap-1 px-2.5 sm:px-3 py-1.5 text-xs font-semibold text-ink-navy bg-white hover:bg-pebble border border-hairline rounded-lg shadow-xs transition-colors cursor-pointer"
-          >
-            <Download className="w-3.5 h-3.5 text-signal-blue shrink-0" />
-            <span className="hidden sm:inline">Xuất Sheets</span>
-          </button>
 
           {canManage && (
             <>
@@ -518,13 +504,6 @@ export function ActivityDetailPage() {
         isSubmitting={addParticipantMutation.isPending}
       />
 
-      {/* 8. Google Sheets Export Modal */}
-      <GoogleSheetsExportModal
-        open={sheetsExportOpen}
-        onOpenChange={setSheetsExportOpen}
-        module="activities"
-        termId={activity.termId}
-      />
 
       {/* 9. Delete / Close Activity Confirmation Modal */}
       {isDeleteModalOpen && (

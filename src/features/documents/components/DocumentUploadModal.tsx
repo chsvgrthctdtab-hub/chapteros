@@ -46,17 +46,15 @@ import {
   MAX_FILE_SIZE_BYTES,
 } from '../utils/document.utils';
 import { DocumentFileIcon } from './DocumentFileIcon';
-import { useUploadDirectToDrive } from '@/integrations/google/drive/google-drive.mutations';
+import { useUploadDocument } from '../mutations/document.mutations';
 import {
   useDocumentTerms,
   useDocumentActivities,
   useDocumentTasks,
   useDocumentMembers,
 } from '../queries/document.queries';
-import { useOrgGoogleConnection, useUserGoogleConnection } from '@/features/integrations/queries/google.queries';
 import { useAuth } from '@/contexts/AuthContext';
 import { cn } from '@/lib/utils';
-import { Link } from 'react-router-dom';
 
 interface DocumentUploadModalProps {
   open: boolean;
@@ -82,20 +80,11 @@ export function DocumentUploadModal({
   const { user } = useAuth();
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  // Check if organization or user has an active Google Drive connection
-  const { data: orgConnection } = useOrgGoogleConnection(organizationId);
-  const { data: userConnection } = useUserGoogleConnection(user?.id || null);
-
-  const isDriveConnected = Boolean(
-    (orgConnection && orgConnection.status === 'connected') ||
-    (userConnection && userConnection.status === 'connected')
-  );
-
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [fileError, setFileError] = useState<string | null>(null);
   const [isDragging, setIsDragging] = useState(false);
   const [uploadProgressStep, setUploadProgressStep] = useState<
-    'idle' | 'preparing' | 'uploading' | 'uploading_drive' | 'saving' | 'completed' | 'success'
+    'idle' | 'preparing' | 'uploading' | 'saving' | 'completed' | 'success'
   >('idle');
 
   // Queries for selectors
@@ -130,10 +119,10 @@ export function DocumentUploadModal({
   const { data: tasks = [] } = useDocumentTasks(organizationId, selectedActivityId || undefined);
   const { data: members = [] } = useDocumentMembers(organizationId);
 
-  const uploadDriveMutation = useUploadDirectToDrive();
-  const isPending = uploadDriveMutation.isPending;
-  const isError = uploadDriveMutation.isError;
-  const activeError = uploadDriveMutation.error as Error | null;
+  const uploadMutation = useUploadDocument();
+  const isPending = uploadMutation.isPending;
+  const isError = uploadMutation.isError;
+  const activeError = uploadMutation.error as Error | null;
 
   // Reset form when modal opens
   useEffect(() => {
@@ -199,31 +188,20 @@ export function DocumentUploadModal({
     }
   };
 
-  // Form Submit -> 100% Google Drive
+  // Form Submit -> Upload to storage & save metadata
   const onSubmit = async (data: DocumentUploadFormData) => {
     if (!selectedFile) {
       setFileError('Vui lòng chọn tệp tin cần tải lên');
       return;
     }
 
-    if (!isDriveConnected) {
-      setFileError('Đơn vị chưa kết nối tài khoản Google Drive. Vui lòng vào mục Tích hợp để kết nối tài khoản Google của Đơn vị.');
-      return;
-    }
-
     try {
-      setUploadProgressStep('uploading_drive');
-      await uploadDriveMutation.mutateAsync({
+      setUploadProgressStep('uploading');
+      await uploadMutation.mutateAsync({
         file: selectedFile,
         organizationId,
-        termId: data.termId || null,
-        activityId: data.activityId || null,
-        taskId: data.taskId || null,
-        memberId: data.memberId || null,
-        title: data.title,
-        category: data.category,
-        accessLevel: data.accessLevel,
-        userId: user?.id,
+        data,
+        uploadedBy: user?.id,
       });
 
       setUploadProgressStep('success');
@@ -234,7 +212,7 @@ export function DocumentUploadModal({
       }, 600);
     } catch (err) {
       setUploadProgressStep('idle');
-      setFileError((err as Error).message || 'Tải lên Google Drive thất bại.');
+      setFileError((err as Error).message || 'Tải lên tài liệu thất bại.');
     }
   };
 
@@ -248,35 +226,14 @@ export function DocumentUploadModal({
             </div>
             <div>
               <DialogTitle className="text-lg font-bold text-ink-navy tracking-tight">
-                Tải tệp lên Google Drive
+                Tải tệp lên hệ thống
               </DialogTitle>
               <DialogDescription className="text-xs text-mist-gray">
-                Lưu trữ trực tiếp và an toàn trên Google Drive của Đơn vị
+                Lưu trữ tài liệu và hồ sơ an toàn của Đơn vị
               </DialogDescription>
             </div>
           </div>
         </DialogHeader>
-
-        {/* Google Drive Connection Notice */}
-        {!isDriveConnected && (
-          <div className="p-3 rounded-2xl bg-amber-50 border border-amber-200/80 text-amber-900 text-xs flex items-start gap-2.5">
-            <AlertCircle className="w-4 h-4 text-amber-600 shrink-0 mt-0.5" />
-            <div className="space-y-0.5 flex-1">
-              <p className="font-semibold text-xs">Đơn vị chưa liên kết Google Drive</p>
-              <p className="text-[11px] text-amber-800 leading-relaxed">
-                Để tải tệp trực tiếp lên Drive, Quản trị viên cần liên kết tài khoản Google của Đơn vị trong phần Tích hợp.
-              </p>
-              <Link
-                to="/integrations"
-                onClick={() => onOpenChange(false)}
-                className="inline-flex items-center gap-1 text-[11px] font-semibold text-signal-blue hover:underline pt-0.5"
-              >
-                Mở trang Tích hợp Google Workspace
-                <ExternalLink className="w-3 h-3" />
-              </Link>
-            </div>
-          </div>
-        )}
 
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-3.5 mt-1">
           {/* 1. File Dropzone */}
@@ -574,8 +531,8 @@ export function DocumentUploadModal({
             <div className="p-3 bg-rose-50 border border-rose-200 rounded-xl flex items-start gap-2 text-rose-700 text-xs">
               <AlertCircle className="w-4 h-4 shrink-0 mt-0.5" />
               <div>
-                <p className="font-bold">Tải lên Google Drive thất bại</p>
-                <p>{activeError?.message || 'Vui lòng kiểm tra lại quyền truy cập hoặc kết nối Google Workspace.'}</p>
+                <p className="font-bold">Tải lên thất bại</p>
+                <p>{activeError?.message || 'Vui lòng kiểm tra lại quyền truy cập hoặc dung lượng tệp tin.'}</p>
               </div>
             </div>
           )}
@@ -583,7 +540,7 @@ export function DocumentUploadModal({
           {uploadProgressStep === 'success' && (
             <div className="p-3 bg-emerald-50 border border-emerald-200 rounded-xl flex items-center gap-2 text-emerald-700 text-xs font-semibold">
               <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
-              <span>Đã tải tệp lên Google Drive của Đơn vị thành công!</span>
+              <span>Đã tải tệp lên thành công!</span>
             </div>
           )}
 
@@ -600,18 +557,18 @@ export function DocumentUploadModal({
 
             <Button
               type="submit"
-              disabled={!selectedFile || isPending || !isDriveConnected}
+              disabled={!selectedFile || isPending}
               className="rounded-xl text-xs text-white font-semibold gap-2 bg-signal-blue hover:bg-[#005be0] transition-colors shadow-xs"
             >
               {isPending ? (
                 <>
                   <Loader2 className="w-3.5 h-3.5 animate-spin" />
-                  <span>Đang tải lên Google Drive...</span>
+                  <span>Đang tải lên...</span>
                 </>
               ) : (
                 <>
                   <HardDrive className="w-3.5 h-3.5" />
-                  <span>Tải lên Google Drive</span>
+                  <span>Tải lên tài liệu</span>
                 </>
               )}
             </Button>

@@ -52,8 +52,6 @@ import {
   useRemoveCollabParticipant,
   useBulkUpdateCollabAttendance,
 } from '@/features/plans/queries/collab.queries';
-import { useActivityForms } from '@/integrations/google/forms/google-forms.queries';
-import { ActivityGoogleFormsSection } from '@/features/activities/components/ActivityGoogleFormsSection';
 import { CreateCollabTaskDialog } from '@/features/plans/components/CreateCollabTaskDialog';
 import { AddCollabParticipantDialog } from '@/features/plans/components/AddCollabParticipantDialog';
 import { ImportCollabParticipantsModal } from '@/features/plans/components/ImportCollabParticipantsModal';
@@ -65,7 +63,7 @@ import { cn } from '@/lib/utils';
 import { getOrgTypeLabel, getOrgTypeBadgeClass } from '@/lib/organization.utils';
 import type { CollabTask, CollabTaskStatus, ActivityStatus } from '@/types';
 
-type CollabActivityTab = 'tasks' | 'participants' | 'forms' | 'finance';
+type CollabActivityTab = 'tasks' | 'participants' | 'finance';
 
 export function CollabActivityDetailPage() {
   const { planId, activityId } = useParams<{ planId: string; activityId: string }>();
@@ -98,7 +96,6 @@ export function CollabActivityDetailPage() {
   const { data: plan, isLoading: isPlanLoading } = usePlanDetail(planId);
   const { data: activity, isLoading: isActivityLoading, refetch: refetchActivity } =
     useCollabActivityDetail(activityId);
-  const { data: forms = [] } = useActivityForms(activityId);
   const { data: tasks = [], isLoading: isTasksLoading, refetch: refetchTasks } = useCollabTasks(
     planId,
     activityId
@@ -606,29 +603,6 @@ export function CollabActivityDetailPage() {
           </span>
         </button>
 
-        <button
-          type="button"
-          onClick={() => setActiveTab('forms')}
-          className={cn(
-            'flex items-center gap-2 py-3 px-3.5 text-xs font-semibold border-b-2 transition-all whitespace-nowrap cursor-pointer -mb-px',
-            activeTab === 'forms'
-              ? 'border-signal-blue text-signal-blue font-bold'
-              : 'border-transparent text-slate-gray hover:text-ink-navy hover:border-slate-gray/40'
-          )}
-        >
-          <FileSpreadsheet className="h-4 w-4 shrink-0" />
-          <span>Google Form</span>
-          {forms.length > 0 && (
-            <span
-              className={cn(
-                'text-[10px] px-1.5 py-0.2 rounded-full tabular-nums font-semibold',
-                activeTab === 'forms' ? 'bg-[#e6f0ff] text-signal-blue' : 'bg-pebble text-slate-gray'
-              )}
-            >
-              {forms.length}
-            </span>
-          )}
-        </button>
 
         <button
           type="button"
@@ -1537,17 +1511,6 @@ export function CollabActivityDetailPage() {
           {/* Action Row & Sub-toolbar */}
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
             <div className="flex items-center gap-2 flex-wrap">
-              {forms.length > 0 && (
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() => setActiveTab('forms')}
-                  className="h-8 text-xs border-[#d4e4fa] text-signal-blue bg-[#e6f0ff] hover:bg-[#d4e5ff] font-semibold gap-1.5 rounded-lg shadow-xs active:scale-[0.98] cursor-pointer"
-                >
-                  <FileSpreadsheet className="h-3.5 w-3.5 text-signal-blue" />
-                  <span>Google Form ({forms.length})</span>
-                </Button>
-              )}
 
               <Button
                 variant="outline"
@@ -2078,13 +2041,6 @@ export function CollabActivityDetailPage() {
         </div>
       )}
 
-      {/* TAB CONTENT 4: GOOGLE FORMS INTEGRATION */}
-      {activeTab === 'forms' && (
-        <ActivityGoogleFormsSection
-          activity={activity as any}
-          canManage={canManageOperational}
-        />
-      )}
 
       {/* Dialog for Create/Edit Collab Task */}
       <CreateCollabTaskDialog

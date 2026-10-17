@@ -34,8 +34,6 @@ interface TaskFilterBarProps {
   totalResults: number;
   onRefresh?: () => void;
   isRefreshing?: boolean;
-  onExportSheets?: () => void;
-  onImportSheets?: () => void;
   canManage?: boolean;
 }
 

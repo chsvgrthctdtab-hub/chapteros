@@ -6,7 +6,6 @@ import {
   CheckSquare,
   DollarSign,
   FolderArchive,
-  Calendar,
   MapPin,
   Tag,
   UserCheck,
@@ -14,7 +13,6 @@ import {
   ArrowRight,
   Info,
   CalendarDays,
-  FileSpreadsheet,
   Lock,
   Plus,
   Clock,
@@ -34,9 +32,6 @@ import { ActivityTasksSection } from '@/features/tasks/components/ActivityTasksS
 import { TaskFormModal } from '@/features/tasks/components/TaskFormModal';
 import { ActivityFinanceSection } from '@/features/finance/components/ActivityFinanceSection';
 import { ActivityDocumentsSection } from '@/features/documents/components/ActivityDocumentsSection';
-import { ActivityGoogleFormsSection } from './ActivityGoogleFormsSection';
-import { ActivityCalendarIntegrationCard } from '@/integrations/google/calendar';
-import { useActivityForms } from '@/integrations/google/forms/google-forms.queries';
 import {
   useTaskAssignees,
   useTaskTerms,
@@ -96,9 +91,7 @@ export type TabType =
   | 'participants'
   | 'tasks'
   | 'finance'
-  | 'forms'
-  | 'documents'
-  | 'calendar';
+  | 'documents';
 
 export function ActivityRelatedTabs({
   activity,
@@ -118,10 +111,6 @@ export function ActivityRelatedTabs({
   const [isCreateTaskOpen, setIsCreateTaskOpen] = useState(false);
 
   const isLocked = isActivityLocked(activity.status);
-
-  // Google Forms Query
-  const { data: activityForms = [] } = useActivityForms(activity.id);
-  const primaryForm = activityForms.find((f) => f.isPrimary) || activityForms[0] || null;
 
   // Task Creation Queries
   const { data: assignees = [] } = useTaskAssignees(activity.organizationId);
@@ -164,14 +153,7 @@ export function ActivityRelatedTabs({
     },
     { id: 'tasks' as const, label: 'Nhiệm vụ', icon: CheckSquare },
     { id: 'finance' as const, label: 'Thu chi', icon: DollarSign },
-    {
-      id: 'forms' as const,
-      label: 'Biểu mẫu',
-      icon: FileSpreadsheet,
-      count: primaryForm?.responseCount,
-    },
     { id: 'documents' as const, label: 'Tài liệu', icon: FolderArchive },
-    { id: 'calendar' as const, label: 'Lịch sự kiện', icon: Calendar },
   ];
 
   return (
@@ -532,50 +514,6 @@ export function ActivityRelatedTabs({
                   )}
                 </div>
 
-                {/* Google Forms Quick Card */}
-                {primaryForm && (
-                  <div className="bg-white rounded-2xl border border-hairline p-4 shadow-sm space-y-2.5">
-                    <div className="flex items-center justify-between">
-                      <h4 className="text-[11px] font-bold text-slate-gray uppercase tracking-wider flex items-center gap-1.5">
-                        <FileSpreadsheet className="w-3.5 h-3.5 text-signal-blue" />
-                        <span>Biểu mẫu đăng ký</span>
-                      </h4>
-                      <span
-                        className={cn(
-                          'text-[10px] font-bold px-2 py-0.5 rounded-full border',
-                          primaryForm.status === 'active'
-                            ? 'bg-emerald-50 text-emerald-800 border-emerald-200'
-                            : 'bg-pebble text-slate-gray border-hairline'
-                        )}
-                      >
-                        {primaryForm.status === 'active' ? 'Đang mở đơn' : 'Đã đóng đơn'}
-                      </span>
-                    </div>
-
-                    <p className="text-xs font-bold text-ink-navy truncate">
-                      {primaryForm.title}
-                    </p>
-
-                    <div className="flex items-center justify-between text-xs text-slate-gray">
-                      <span>Số phản hồi đã đồng bộ:</span>
-                      <strong className="text-ink-navy tabular-nums font-semibold">
-                        {primaryForm.responseCount}
-                      </strong>
-                    </div>
-
-                    {primaryForm.publishedUrl && (
-                      <a
-                        href={primaryForm.publishedUrl}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="inline-flex items-center gap-1 text-xs font-semibold text-signal-blue hover:text-[#005be0] pt-1"
-                      >
-                        <span>Mở biểu mẫu Google Forms</span>
-                        <ExternalLink className="w-3 h-3" />
-                      </a>
-                    )}
-                  </div>
-                )}
               </div>
             </div>
           </div>
@@ -677,16 +615,6 @@ export function ActivityRelatedTabs({
           </div>
         )}
 
-        {/* 6. GOOGLE FORMS TAB */}
-        {activeTab === 'forms' && (
-          <div className="space-y-4">
-            <ActivityGoogleFormsSection
-              activity={activity}
-              canManage={canManage && !isLocked}
-              members={availableMembers}
-            />
-          </div>
-        )}
 
         {/* 7. DOCUMENTS TAB */}
         {activeTab === 'documents' && (
@@ -700,15 +628,6 @@ export function ActivityRelatedTabs({
           </div>
         )}
 
-        {/* 8. CALENDAR TAB */}
-        {activeTab === 'calendar' && (
-          <div className="space-y-4">
-            <ActivityCalendarIntegrationCard
-              activity={activity as unknown as Activity}
-              canManage={canManage && !isLocked}
-            />
-          </div>
-        )}
       </div>
     </div>
   );

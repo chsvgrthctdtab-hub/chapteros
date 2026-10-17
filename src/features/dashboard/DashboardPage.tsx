@@ -10,7 +10,6 @@ import {
   useOverdueTasks,
   useDashboardCharts,
 } from './queries/dashboard.queries';
-import { useGoogleIntegrationOverview } from '@/features/integrations/queries/google.queries';
 import { DashboardHeader } from './components/DashboardHeader';
 import { KpiCardsSection } from './components/KpiCardsSection';
 import { AlertCenter } from './components/AlertCenter';
@@ -91,15 +90,6 @@ export function DashboardPage() {
     refetch: refetchCharts,
   } = useDashboardCharts(currentOrg?.id, selectedTermId);
 
-  // 7. Fetch Google Integration overview for sync alerts
-  const { data: googleOverview } = useGoogleIntegrationOverview(
-    currentOrg?.id || null,
-    user?.id || null
-  );
-
-  const hasGoogleSyncError =
-    googleOverview?.userConnection?.status === 'error' ||
-    googleOverview?.orgConnection?.status === 'error';
 
   // Manual refresh handler
   const handleRefresh = async () => {
@@ -202,7 +192,6 @@ export function DashboardPage() {
           stats={stats}
           upcomingActivities={upcomingActivities}
           terms={terms}
-          hasGoogleSyncError={hasGoogleSyncError}
         />
       )}
 

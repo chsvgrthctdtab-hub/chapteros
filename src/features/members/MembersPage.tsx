@@ -5,7 +5,6 @@ import {
   Download,
   Upload,
   FileSpreadsheet,
-  ChevronDown,
 } from '@/lib/icons';
 import { useAuth } from '@/contexts/AuthContext';
 import { useToast } from '@/contexts/ToastContext';
@@ -13,12 +12,6 @@ import { useLanguage } from '@/contexts/LanguageContext';
 import { useQueryClient } from '@tanstack/react-query';
 import { isOrgBoard, getOrgBoardTitle, getOrgMemberNoun } from '@/types/roles';
 import { Button } from '@/components/ui/button';
-import {
-  DropdownMenu,
-  DropdownMenuTrigger,
-  DropdownMenuContent,
-  DropdownMenuItem,
-} from '@/components/ui/dropdown-menu';
 import { ConfirmDialog } from '@/components/common/ConfirmDialog';
 import { QueryErrorState } from '@/components/common/QueryErrorState';
 import { MemberKPIStrip } from './components/MemberKPIStrip';
@@ -31,8 +24,7 @@ import { MemberDetailDialog } from './components/MemberDetailDialog';
 import { getMajorFromClassOrValue } from './utils/major.utils';
 import { AssignTermDialog } from './components/AssignTermDialog';
 import { ExecutiveBoardSection } from './components/ExecutiveBoardSection';
-import { GoogleSheetsExportModal } from '@/integrations/google/sheets/components/GoogleSheetsExportModal';
-import { GoogleSheetsImportWizardModal } from '@/integrations/google/sheets/components/GoogleSheetsImportWizardModal';
+
 import { ImportMembersFromFileDialog } from './components/ImportMembersFromFileDialog';
 import { useMembersList, useOrgTerms, useMemberKPIStats, memberKeys } from './queries/member.queries';
 import { useOrganizationMemberships } from '@/features/chapters/queries/organization.queries';
@@ -113,8 +105,6 @@ export function MembersPage() {
   const [memberToDelete, setMemberToDelete] = useState<Member | null>(null);
 
   // Google Sheets Modals
-  const [sheetsExportOpen, setSheetsExportOpen] = useState(false);
-  const [sheetsImportOpen, setSheetsImportOpen] = useState(false);
   const [fileImportOpen, setFileImportOpen] = useState(false);
 
   // Total organizational KPI stats (not affected by pagination)
@@ -308,64 +298,30 @@ export function MembersPage() {
 
         {/* Top Header Actions */}
         <div className="flex items-center gap-2 shrink-0">
-          {/* Dropdown Xuất */}
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button
-                variant="outline"
-                size="sm"
-                title={t('members.action.export', 'Xuất')}
-                className="text-xs h-8 px-3 text-[#1e293b] hover:bg-[#f0f4f9] border-[#e2e8f0] rounded-full cursor-pointer flex items-center gap-1.5 font-semibold shadow-2xs"
-              >
-                <Download className="w-3.5 h-3.5 text-[#2e89f7] shrink-0" />
-                <span className="hidden sm:inline">{t('members.action.export', 'Xuất')}</span>
-                <ChevronDown className="w-3 h-3 opacity-60 shrink-0" />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="w-48 rounded-2xl border-[#e2e8f0] bg-white shadow-lg">
-              <DropdownMenuItem onClick={() => setSheetsExportOpen(true)} className="cursor-pointer text-xs py-2">
-                <Download className="w-3.5 h-3.5 mr-2 text-[#2e89f7]" />
-                <span>{t('members.action.export_sheets', 'Xuất Google Sheets')}</span>
-              </DropdownMenuItem>
-              <DropdownMenuItem onClick={handleExportCsv} className="cursor-pointer text-xs py-2">
-                <FileSpreadsheet className="w-3.5 h-3.5 mr-2 text-slate-gray" />
-                <span>{t('members.action.export_csv', 'Xuất file CSV')}</span>
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
+          {/* Nút Xuất CSV */}
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={handleExportCsv}
+            title={t('members.action.export_csv', 'Xuất file CSV')}
+            className="text-xs h-8 px-3 text-[#1e293b] hover:bg-[#f0f4f9] border-[#e2e8f0] rounded-full cursor-pointer flex items-center gap-1.5 font-semibold shadow-2xs"
+          >
+            <Download className="w-3.5 h-3.5 text-[#2e89f7] shrink-0" />
+            <span className="hidden sm:inline">{t('members.action.export', 'Xuất CSV')}</span>
+          </Button>
 
-          {/* Dropdown Nhập */}
+          {/* Nút Nhập file Excel/CSV */}
           {canManage && (
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  title={t('members.action.import', 'Nhập')}
-                  className="text-xs h-8 px-3 text-[#1e293b] hover:bg-[#f0f4f9] border-[#e2e8f0] rounded-full cursor-pointer flex items-center gap-1.5 font-semibold shadow-2xs"
-                >
-                  <Upload className="w-3.5 h-3.5 text-[#2e89f7] shrink-0" />
-                  <span className="hidden sm:inline">{t('members.action.import', 'Nhập')}</span>
-                  <ChevronDown className="w-3 h-3 opacity-60 shrink-0" />
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="w-52 rounded-2xl border-[#e2e8f0] bg-white shadow-lg">
-                <DropdownMenuItem
-                  onClick={() => setFileImportOpen(true)}
-                  className="cursor-pointer text-xs py-2 font-medium text-ink-navy focus:bg-[#f0f4f9]"
-                >
-                  <FileSpreadsheet className="w-3.5 h-3.5 mr-2 text-[#2e89f7]" />
-                  <span>Nhập từ file Excel / CSV</span>
-                </DropdownMenuItem>
-                <DropdownMenuItem
-                  onClick={() => setSheetsImportOpen(true)}
-                  className="cursor-pointer text-xs py-2 text-slate-gray focus:text-ink-navy focus:bg-[#f0f4f9]"
-                >
-                  <Upload className="w-3.5 h-3.5 mr-2 text-[#2e89f7]" />
-                  <span>Nhập từ Google Sheets</span>
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => setFileImportOpen(true)}
+              title="Nhập từ file Excel / CSV"
+              className="text-xs h-8 px-3 text-[#1e293b] hover:bg-[#f0f4f9] border-[#e2e8f0] rounded-full cursor-pointer flex items-center gap-1.5 font-semibold shadow-2xs"
+            >
+              <Upload className="w-3.5 h-3.5 text-[#2e89f7] shrink-0" />
+              <span className="hidden sm:inline">{t('members.action.import', 'Nhập file')}</span>
+            </Button>
           )}
 
           {/* Nút Thêm hội viên */}
@@ -567,26 +523,6 @@ export function MembersPage() {
         onConfirm={handleConfirmDelete}
       />
 
-      {/* Google Sheets Export Modal */}
-      {orgId && (
-        <GoogleSheetsExportModal
-          open={sheetsExportOpen}
-          onOpenChange={setSheetsExportOpen}
-          module="members"
-          termId={filters.termId !== 'all' ? filters.termId : undefined}
-        />
-      )}
-
-      {/* Google Sheets Import Wizard Modal */}
-      {orgId && (
-        <GoogleSheetsImportWizardModal
-          open={sheetsImportOpen}
-          onOpenChange={setSheetsImportOpen}
-          module="members"
-          termId={filters.termId !== 'all' ? filters.termId : undefined}
-          onImportSuccess={() => queryClient.invalidateQueries({ queryKey: memberKeys.all })}
-        />
-      )}
 
       {/* Import từ file Excel/CSV */}
       {orgId && (

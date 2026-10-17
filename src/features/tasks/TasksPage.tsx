@@ -2,7 +2,6 @@ import { useState } from 'react';
 import {
   Plus,
   RefreshCw,
-  FileSpreadsheet,
   ChevronLeft,
   ChevronRight,
   ListTodo,
@@ -37,8 +36,6 @@ import { TaskQuickStatusModal } from './components/TaskQuickStatusModal';
 import { TaskQuickProgressModal } from './components/TaskQuickProgressModal';
 import { ConfirmDialog } from '@/components/common/ConfirmDialog';
 import { EmptyState } from '@/components/common/EmptyState';
-import { GoogleSheetsExportModal } from '@/integrations/google/sheets/components/GoogleSheetsExportModal';
-import { GoogleSheetsImportWizardModal } from '@/integrations/google/sheets/components/GoogleSheetsImportWizardModal';
 import type { TaskFilterParams, TaskListItem, TaskStatus } from './types/task.types';
 import type { TaskFormData } from './schemas/task.schema';
 import { cn } from '@/lib/utils';
@@ -96,8 +93,6 @@ export function TasksPage() {
   const [quickStatusTask, setQuickStatusTask] = useState<TaskListItem | null>(null);
   const [quickProgressTask, setQuickProgressTask] = useState<TaskListItem | null>(null);
   const [taskToDelete, setTaskToDelete] = useState<TaskListItem | null>(null);
-  const [sheetsExportOpen, setSheetsExportOpen] = useState(false);
-  const [sheetsImportOpen, setSheetsImportOpen] = useState(false);
 
   // Queries
   const {
@@ -304,32 +299,6 @@ export function TasksPage() {
 
         {/* Action Buttons */}
         <div className="flex items-center gap-1.5 sm:gap-2 flex-wrap shrink-0">
-          <Button
-            type="button"
-            variant="outline"
-            size="sm"
-            onClick={() => setSheetsExportOpen(true)}
-            title="Xuất Google Sheets"
-            className="h-8 px-3 text-xs font-semibold text-[#1e293b] bg-white hover:bg-[#f0f4f9] border-[#e2e8f0] rounded-full shadow-2xs gap-1.5 cursor-pointer"
-          >
-            <FileSpreadsheet className="w-3.5 h-3.5 text-[#2e89f7] shrink-0" />
-            <span className="hidden sm:inline">Xuất Sheets</span>
-          </Button>
-
-          {canManage && (
-            <Button
-              type="button"
-              variant="outline"
-              size="sm"
-              onClick={() => setSheetsImportOpen(true)}
-              title="Nhập Google Sheets"
-              className="h-8 px-3 text-xs font-semibold text-[#1e293b] bg-white hover:bg-[#f0f4f9] border-[#e2e8f0] rounded-full shadow-2xs gap-1.5 cursor-pointer"
-            >
-              <FileSpreadsheet className="w-3.5 h-3.5 text-[#2e89f7] shrink-0" />
-              <span className="hidden sm:inline">Nhập Sheets</span>
-            </Button>
-          )}
-
           {canManage && (
             <Button
               type="button"
@@ -372,8 +341,6 @@ export function TasksPage() {
         totalResults={totalCount}
         onRefresh={refetch}
         isRefreshing={isTasksFetching}
-        onExportSheets={() => setSheetsExportOpen(true)}
-        onImportSheets={() => setSheetsImportOpen(true)}
         canManage={canManage}
       />
 
@@ -598,23 +565,6 @@ export function TasksPage() {
         onConfirm={handleConfirmDelete}
       />
 
-      {/* Google Sheets Export Modal */}
-      <GoogleSheetsExportModal
-        open={sheetsExportOpen}
-        onOpenChange={setSheetsExportOpen}
-        module="tasks"
-        termId={filters.termId !== 'all' ? filters.termId : undefined}
-        customFilters={filters as unknown as Record<string, unknown>}
-      />
-
-      {/* Google Sheets Import Wizard Modal */}
-      <GoogleSheetsImportWizardModal
-        open={sheetsImportOpen}
-        onOpenChange={setSheetsImportOpen}
-        module="tasks"
-        termId={filters.termId !== 'all' ? filters.termId : undefined}
-        onImportSuccess={() => refetch()}
-      />
     </div>
   );
 }

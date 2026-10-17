@@ -2,8 +2,6 @@ import React, { useState, useMemo } from 'react';
 import {
   Plus,
   Calendar,
-  Download,
-  Upload,
   ChevronLeft,
   ChevronRight,
 } from '@/lib/icons';
@@ -39,8 +37,6 @@ import { ActivityFormDialog } from '@/features/activities/components/ActivityFor
 import { QueryErrorState } from '@/components/common/QueryErrorState';
 import { EmptyState } from '@/components/common/EmptyState';
 import { Button } from '@/components/ui/button';
-import { GoogleSheetsExportModal } from '@/integrations/google/sheets/components/GoogleSheetsExportModal';
-import { GoogleSheetsImportWizardModal } from '@/integrations/google/sheets/components/GoogleSheetsImportWizardModal';
 import { parseActivityMetadata } from '@/features/activities/utils/activity-metadata';
 import type {
   ActivityFilterParams,
@@ -74,8 +70,6 @@ export function ActivitiesPage() {
   // Dialog State
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [editingActivity, setEditingActivity] = useState<ActivityListItem | null>(null);
-  const [sheetsExportOpen, setSheetsExportOpen] = useState(false);
-  const [sheetsImportOpen, setSheetsImportOpen] = useState(false);
 
   // Fetch Activities List
   const {
@@ -195,35 +189,6 @@ export function ActivitiesPage() {
 
         {/* Header Action Buttons */}
         <div className="flex items-center gap-1.5 sm:gap-2 flex-wrap shrink-0">
-          {/* Export Sheets */}
-          <Button
-            type="button"
-            variant="outline"
-            size="sm"
-            id="activity-export-sheets-header-btn"
-            onClick={() => setSheetsExportOpen(true)}
-            title="Xuất Google Sheets"
-            className="h-8 px-3 text-xs font-semibold text-[#1e293b] bg-white hover:bg-[#f0f4f9] border-[#e2e8f0] rounded-full shadow-2xs gap-1.5"
-          >
-            <Download className="w-3.5 h-3.5 text-[#2e89f7] shrink-0" />
-            <span className="hidden sm:inline">Xuất Sheets</span>
-          </Button>
-
-          {/* Import Sheets (Board only) */}
-          {canManage && (
-            <Button
-              type="button"
-              variant="outline"
-              size="sm"
-              id="activity-import-sheets-header-btn"
-              onClick={() => setSheetsImportOpen(true)}
-              title="Nhập Google Sheets"
-              className="h-8 px-3 text-xs font-semibold text-[#1e293b] bg-white hover:bg-[#f0f4f9] border-[#e2e8f0] rounded-full shadow-2xs gap-1.5"
-            >
-              <Upload className="w-3.5 h-3.5 text-[#2e89f7] shrink-0" />
-              <span className="hidden sm:inline">Nhập Sheets</span>
-            </Button>
-          )}
 
           {/* Primary Create Button (Board only) */}
           {canManage && (
@@ -367,20 +332,6 @@ export function ActivitiesPage() {
         isSubmitting={createMutation.isPending || updateMutation.isPending}
       />
 
-      <GoogleSheetsExportModal
-        open={sheetsExportOpen}
-        onOpenChange={setSheetsExportOpen}
-        module="activities"
-        termId={filters.termId !== 'all' ? filters.termId : undefined}
-        customFilters={filters as unknown as Record<string, unknown>}
-      />
-
-      <GoogleSheetsImportWizardModal
-        open={sheetsImportOpen}
-        onOpenChange={setSheetsImportOpen}
-        module="activities"
-        termId={filters.termId !== 'all' ? filters.termId : undefined}
-      />
     </div>
   );
 }

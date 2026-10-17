@@ -1,11 +1,9 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import {
   FolderArchive,
   RefreshCw,
   Building2,
-  Cloud,
-  ExternalLink,
+  Upload,
 } from '@/lib/icons';
 import { Button } from '@/components/ui/button';
 import { useCurrentOrg } from '@/features/auth/hooks/useCurrentOrg';
@@ -14,9 +12,9 @@ import {
   useDocuments,
   useDocumentStats,
 } from './queries/document.queries';
-import { useOrgGoogleConnection } from '@/features/integrations/queries/google.queries';
 import { DocumentStatsSummary } from './components/DocumentStatsSummary';
-import { GoogleDriveExplorer } from './components/GoogleDriveExplorer';
+import { DocumentTable } from './components/DocumentTable';
+import { DocumentUploadModal } from './components/DocumentUploadModal';
 import { DocumentDetailDrawer } from './components/DocumentDetailDrawer';
 import { DocumentEditModal } from './components/DocumentEditModal';
 import { DocumentDeleteDialog } from './components/DocumentDeleteDialog';
@@ -29,7 +27,6 @@ import type {
 export function DocumentsPage() {
   const { currentOrg, isBoard, isAdmin } = useCurrentOrg();
   const { user } = useAuth();
-  const navigate = useNavigate();
   const organizationId = currentOrg?.id || '';
   const canManage = isBoard || isAdmin;
 
@@ -37,6 +34,7 @@ export function DocumentsPage() {
   const [selectedDoc, setSelectedDoc] = useState<DocumentItem | null>(null);
   const [editingDoc, setEditingDoc] = useState<DocumentItem | null>(null);
   const [deletingDoc, setDeletingDoc] = useState<DocumentItem | null>(null);
+  const [isUploadOpen, setIsUploadOpen] = useState(false);
 
   // Filter state
   const [filters, setFilters] = useState<DocumentFilterParams>({
@@ -62,8 +60,6 @@ export function DocumentsPage() {
 
   const { data: stats, isLoading: isLoadingStats } = useDocumentStats(organizationId);
 
-  const { data: orgConn } = useOrgGoogleConnection(organizationId);
-
   // Quick stats filter handler
   const handleQuickFilter = (filterUpdate: Partial<DocumentFilterParams>) => {
     setFilters((prev) => ({
@@ -81,7 +77,7 @@ export function DocumentsPage() {
         </div>
         <h3 className="text-base font-bold text-ink-navy">Chưa chọn Đơn vị</h3>
         <p className="text-xs text-mist-gray max-w-sm mt-1">
-          Vui lòng chọn một Đơn vị từ menu trên thanh công cụ để truy cập hồ sơ tài liệu và Google Drive.
+          Vui lòng chọn một Đơn vị từ menu trên thanh công cụ để truy cập hồ sơ tài liệu.
         </p>
       </div>
     );
@@ -105,12 +101,24 @@ export function DocumentsPage() {
               </span>
             </div>
             <p className="text-xs text-mist-gray mt-1 max-w-2xl">
-              Quản lý hồ sơ, biểu mẫu và tự động đồng bộ trực tiếp với Google Drive chung của Đơn vị.
+              Quản lý hồ sơ, biểu mẫu và tài liệu lưu trữ của Đơn vị.
             </p>
           </div>
         </div>
 
         <div className="flex items-center gap-2 self-start md:self-auto shrink-0 flex-wrap">
+          {canManage && (
+            <Button
+              type="button"
+              size="sm"
+              onClick={() => setIsUploadOpen(true)}
+              className="h-10 px-4 rounded-2xl bg-signal-blue hover:bg-[#005be0] text-white font-semibold gap-1.5 shadow-xs cursor-pointer text-xs"
+            >
+              <Upload className="w-4 h-4" />
+              <span>Tải lên tài liệu</span>
+            </Button>
+          )}
+
           <Button
             type="button"
             variant="outline"
@@ -134,36 +142,7 @@ export function DocumentsPage() {
         onFilterChange={handleQuickFilter}
       />
 
-      {/* Google Workspace Connection Status Banner */}
-      {!orgConn && (
-        <div className="p-4 rounded-2xl bg-amber-50/90 border border-amber-200/80 text-amber-900 text-xs flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 shadow-xs">
-          <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-xl bg-amber-100 border border-amber-200 text-amber-700 flex items-center justify-center shrink-0">
-              <Cloud strokeWidth={1.5} className="w-5 h-5" />
-            </div>
-            <div>
-              <p className="font-bold text-xs">Đơn vị chưa kết nối tài khoản Google Workspace chung</p>
-              <p className="text-[11px] text-amber-800 mt-0.5">
-                Vui lòng cấu hình tài khoản Google chung của Đơn vị trong phần Tích hợp để tự động đồng bộ Google Drive, Sheets, Forms và Calendar.
-              </p>
-            </div>
-          </div>
-          {canManage && (
-            <Button
-              type="button"
-              variant="outline"
-              size="sm"
-              onClick={() => navigate('/integrations')}
-              className="shrink-0 bg-white border-amber-300 text-amber-900 hover:bg-amber-100/60 text-xs font-semibold rounded-xl h-8 px-3 gap-1.5 cursor-pointer shadow-xs"
-            >
-              <span>Đi đến Tích hợp Google</span>
-              <ExternalLink className="w-3 h-3" />
-            </Button>
-          )}
-        </div>
-      )}
-
-      {/* 3. Google Drive Workspace Explorer */}
+      {/* 3. Document Table */}
       {isLoadingDocs ? (
         <div className="space-y-3">
           <div className="h-14 bg-white border border-hairline rounded-3xl animate-pulse" />
@@ -180,18 +159,17 @@ export function DocumentsPage() {
         </div>
       ) : docsError ? (
         <QueryErrorState
-          title="Không thể tải danh sách tài liệu Google Drive"
+          title="Không thể tải danh sách tài liệu"
           error={docsError}
           onRetry={() => refetch()}
         />
       ) : (
-        <GoogleDriveExplorer
-          organizationId={organizationId}
+        <DocumentTable
           documents={documents}
           canManage={canManage}
-          onSelectDoc={(d) => setSelectedDoc(d)}
-          onEditDoc={(d) => setEditingDoc(d)}
-          onDeleteDoc={(d) => setDeletingDoc(d)}
+          onSelect={(d) => setSelectedDoc(d)}
+          onEdit={(d) => setEditingDoc(d)}
+          onDelete={(d) => setDeletingDoc(d)}
         />
       )}
 
@@ -206,6 +184,13 @@ export function DocumentsPage() {
       />
 
       {/* 6. Modals & Dialogs */}
+      <DocumentUploadModal
+        open={isUploadOpen}
+        onOpenChange={setIsUploadOpen}
+        organizationId={organizationId}
+        onSuccess={() => refetch()}
+      />
+
       <DocumentEditModal
         open={Boolean(editingDoc)}
         onOpenChange={(open) => !open && setEditingDoc(null)}

@@ -19,8 +19,6 @@ import {
 import { Button } from '@/components/ui/button';
 import { DocumentFileIcon } from './DocumentFileIcon';
 import { DocumentCategoryBadge, DocumentAccessLevelBadge } from './DocumentBadges';
-import { GoogleDriveDocBadge } from '@/integrations/google/drive/components/GoogleDriveDocBadge';
-import { GoogleDriveLinkModal } from '@/integrations/google/drive/components/GoogleDriveLinkModal';
 import { DocumentUploadModal } from './DocumentUploadModal';
 import { DocumentEditModal } from './DocumentEditModal';
 import { DocumentDeleteDialog } from './DocumentDeleteDialog';
@@ -49,7 +47,6 @@ export function ActivityDocumentsSection({
 }: ActivityDocumentsSectionProps) {
   const { user } = useAuth();
   const [uploadModalOpen, setUploadModalOpen] = useState(false);
-  const [driveLinkModalOpen, setDriveLinkModalOpen] = useState(false);
   const [selectedDoc, setSelectedDoc] = useState<DocumentItem | null>(null);
   const [editingDoc, setEditingDoc] = useState<DocumentItem | null>(null);
   const [deletingDoc, setDeletingDoc] = useState<DocumentItem | null>(null);
@@ -121,16 +118,6 @@ export function ActivityDocumentsSection({
 
         {canManage && (
           <div className="flex items-center gap-2 shrink-0">
-            <Button
-              type="button"
-              variant="outline"
-              onClick={() => setDriveLinkModalOpen(true)}
-              size="sm"
-              className="rounded-lg text-xs text-slate-gray border-hairline bg-white hover:bg-cloud font-semibold gap-1.5 shadow-xs cursor-pointer"
-            >
-              <Cloud className="w-3.5 h-3.5 text-signal-blue" />
-              <span>Link Drive</span>
-            </Button>
 
             <Button
               type="button"
@@ -162,20 +149,10 @@ export function ActivityDocumentsSection({
           </div>
           <h4 className="text-xs font-bold text-ink-navy">No Attached Documents</h4>
           <p className="text-[11px] text-mist-gray max-w-sm mx-auto mt-0.5">
-            Upload operational plans or link files from Google Drive to organize records for this activity.
+            Tải lên tài liệu, quyết định hoặc biểu mẫu phục vụ hoạt động này.
           </p>
           {canManage && (
             <div className="flex items-center justify-center gap-2 mt-3">
-              <Button
-                type="button"
-                variant="outline"
-                size="sm"
-                onClick={() => setDriveLinkModalOpen(true)}
-                className="rounded-lg text-xs text-slate-gray border-hairline hover:bg-cloud gap-1.5 cursor-pointer"
-              >
-                <Cloud className="w-3.5 h-3.5 text-signal-blue" />
-                <span>Link Google Drive</span>
-              </Button>
 
               <Button
                 type="button"
@@ -337,16 +314,6 @@ export function ActivityDocumentsSection({
         preselectedTermId={termId}
       />
 
-      {/* Google Drive Link Modal */}
-      <GoogleDriveLinkModal
-        isOpen={driveLinkModalOpen}
-        onClose={() => setDriveLinkModalOpen(false)}
-        organizationId={organizationId}
-        termId={termId}
-        activityId={activityId}
-        activityTitle={activityTitle}
-        currentUserId={user?.id}
-      />
 
       {/* Edit Modal */}
       <DocumentEditModal
