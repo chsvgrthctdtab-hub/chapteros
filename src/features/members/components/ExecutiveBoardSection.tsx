@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import {
   ShieldCheck,
   Mail,
@@ -16,10 +16,30 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { ROLES, getRoleLabel, getOrgBoardTitle, type OrganizationRole } from '@/types/roles';
 import { useLanguage } from '@/contexts/LanguageContext';
-import type { OrganizationMembership } from '@/types';
+import type { OrganizationMembership, Member } from '@/types';
+
+export interface UnifiedBoardOfficer {
+  id: string;
+  fullName: string;
+  email?: string | null;
+  studentId?: string | null;
+  phone?: string | null;
+  className?: string | null;
+  major?: string | null;
+  avatarUrl?: string | null;
+  role: OrganizationRole;
+  positionLabel: string;
+  hasSystemAccount: boolean;
+  memberId?: string;
+  userId?: string | null;
+  member?: Member;
+  membership?: OrganizationMembership;
+  orderWeight: number;
+}
 
 interface ExecutiveBoardSectionProps {
-  memberships: OrganizationMembership[];
+  memberships?: OrganizationMembership[];
+  members?: Member[];
   organizationName?: string;
   organizationCode?: string;
   organizationType?: string | null;
@@ -28,10 +48,14 @@ interface ExecutiveBoardSectionProps {
   onSearchChange?: (val: string) => void;
   canManage?: boolean;
   onManageMemberships?: () => void;
+  onViewDetail?: (member: Member) => void;
+  onEdit?: (member: Member) => void;
+  children?: React.ReactNode;
 }
 
 export function ExecutiveBoardSection({
-  memberships,
+  memberships = [],
+  members = [],
   organizationName,
   organizationCode,
   organizationType,
@@ -40,6 +64,9 @@ export function ExecutiveBoardSection({
   onSearchChange,
   canManage = false,
   onManageMemberships,
+  onViewDetail,
+  onEdit,
+  children,
 }: ExecutiveBoardSectionProps) {
   const { t, language } = useLanguage();
   const [localSearch, setLocalSearch] = useState('');
@@ -47,19 +74,118 @@ export function ExecutiveBoardSection({
 
   const effectiveSearch = onSearchChange !== undefined ? searchTerm : localSearch;
 
-  // Filter board memberships (only roles < admin: leader, deputy, treasurer, secretary)
-  const boardRoles: OrganizationRole[] = ['leader', 'deputy', 'treasurer', 'secretary'];
-  const validBoardMembers = memberships.filter((m) => m.role !== 'admin' && boardRoles.includes(m.role));
+  const helperInferredRole = (position?: string | null): OrganizationRole => {
+    const p = (position || '').toLowerCase();
+    if (p.includes('trưởng') || p.includes('chủ nhiệm') || p.includes('đội trưởng') || p.includes('leader')) return 'leader';
+    if (p.includes('phó') || p.includes('deputy')) return 'deputy';
+    if (p.includes('thủ quỹ') || p.includes('thu quy') || p.includes('treasurer')) return 'treasurer';
+    if (p.includes('thư ký') || p.includes('thu ky') || p.includes('secretary')) return 'secretary';
+    if (p.includes('admin') || p.includes('quản trị') || p.includes('quan tri')) return 'admin';
+    return 'secretary';
+  };
 
-  const filteredMembers = validBoardMembers.filter((m) => {
-    if (!effectiveSearch) return true;
+  const getRoleWeight = (role: OrganizationRole): number => {
+    switch (role) {
+      case 'admin': return 1;
+      case 'leader': return 2;
+      case 'deputy': return 3;
+      case 'treasurer': return 4;
+      case 'secretary': return 5;
+      default: return 6;
+    }
+  };
+
+  // Merge members roster and memberships into a unified list
+  const unifiedOfficers = useMemo(() => {
+    const boardRoles: OrganizationRole[] = ['admin', 'leader', 'deputy', 'treasurer', 'secretary'];
+    const validMemberships = (memberships || []).filter((m) => boardRoles.includes(m.role));
+
+    const matchedMembershipIds = new Set<string>();
+    const officers: UnifiedBoardOfficer[] = [];
+
+    // 1. Process members roster
+    for (const m of members) {
+      const matchedMem = validMemberships.find((mem) => {
+        if (m.userId && mem.userId === m.userId) return true;
+        if (m.email && mem.profile?.email && m.email.trim().toLowerCase() === mem.profile.email.trim().toLowerCase()) return true;
+        if (m.studentId && mem.profile?.studentId && m.studentId.trim() === mem.profile.studentId.trim()) return true;
+        return false;
+      });
+
+      if (matchedMem) {
+        matchedMembershipIds.add(matchedMem.id);
+      }
+
+      const role = matchedMem?.role || helperInferredRole(m.position);
+      const positionLabel = m.position || getRoleLabel(role, language, organizationType);
+
+      officers.push({
+        id: m.id,
+        fullName: m.fullName || matchedMem?.profile?.fullName || 'Cán bộ BCH',
+        email: m.email || matchedMem?.profile?.email || null,
+        studentId: m.studentId || matchedMem?.profile?.studentId || null,
+        phone: m.phone || matchedMem?.profile?.phone || null,
+        className: m.className || null,
+        major: m.major || null,
+        avatarUrl: matchedMem?.profile?.avatarUrl || null,
+        role,
+        positionLabel,
+        hasSystemAccount: !!matchedMem || !!m.userId,
+        memberId: m.id,
+        userId: matchedMem?.userId || m.userId || null,
+        member: m,
+        membership: matchedMem,
+        orderWeight: getRoleWeight(role),
+      });
+    }
+
+    // 2. Add remaining memberships not linked to a roster member
+    for (const mem of validMemberships) {
+      if (matchedMembershipIds.has(mem.id)) continue;
+
+      const role = mem.role;
+      const positionLabel = getRoleLabel(role, language, organizationType);
+      const fullName = mem.profile?.fullName || mem.profile?.email?.split('@')[0] || 'Cán bộ BCH';
+
+      officers.push({
+        id: mem.id,
+        fullName,
+        email: mem.profile?.email || null,
+        studentId: mem.profile?.studentId || null,
+        phone: mem.profile?.phone || null,
+        className: null,
+        major: null,
+        avatarUrl: mem.profile?.avatarUrl || null,
+        role,
+        positionLabel,
+        hasSystemAccount: true,
+        userId: mem.userId,
+        membership: mem,
+        orderWeight: getRoleWeight(role),
+      });
+    }
+
+    // Sort hierarchically
+    officers.sort((a, b) => {
+      if (a.orderWeight !== b.orderWeight) return a.orderWeight - b.orderWeight;
+      return a.fullName.localeCompare(b.fullName, 'vi');
+    });
+
+    return officers;
+  }, [members, memberships, language, organizationType]);
+
+  const filteredOfficers = useMemo(() => {
+    if (!effectiveSearch) return unifiedOfficers;
     const term = effectiveSearch.toLowerCase().trim();
-    const name = m.profile?.fullName?.toLowerCase() || '';
-    const email = m.profile?.email?.toLowerCase() || '';
-    const studentId = m.profile?.studentId?.toLowerCase() || '';
-    const roleLabel = getRoleLabel(m.role, language, organizationType).toLowerCase();
-    return name.includes(term) || email.includes(term) || studentId.includes(term) || roleLabel.includes(term);
-  });
+    return unifiedOfficers.filter((m) => {
+      const name = m.fullName.toLowerCase();
+      const email = (m.email || '').toLowerCase();
+      const studentId = (m.studentId || '').toLowerCase();
+      const pos = m.positionLabel.toLowerCase();
+      const cls = (m.className || '').toLowerCase();
+      return name.includes(term) || email.includes(term) || studentId.includes(term) || pos.includes(term) || cls.includes(term);
+    });
+  }, [unifiedOfficers, effectiveSearch]);
 
   const handleCopyEmail = (email: string) => {
     navigator.clipboard.writeText(email);
@@ -85,6 +211,7 @@ export function ExecutiveBoardSection({
   };
 
   const boardTitle = getOrgBoardTitle(organizationType, language);
+  const displayCount = unifiedOfficers.length;
 
   return (
     <section className="w-full space-y-4" id="bch-roster-section">
@@ -99,13 +226,13 @@ export function ExecutiveBoardSection({
             <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-white flex items-center gap-2">
               {boardTitle}
               <span className="text-xs font-semibold tabular-nums px-2.5 py-0.5 rounded-full bg-white/20 text-white">
-                {validBoardMembers.length}
+                {displayCount}
               </span>
             </h2>
             <p className="text-xs sm:text-sm text-mist-gray max-w-2xl">
               {t(
                 'members.bch.subtitle',
-                'Tài khoản được phân quyền quản lý và điều hành hệ thống'
+                'Tài khoản và nhân sự được phân quyền quản lý, điều hành Chi hội'
               )}
               {organizationName && ` • ${organizationName} (${organizationCode})`}
             </p>
@@ -124,33 +251,12 @@ export function ExecutiveBoardSection({
             </Button>
           )}
         </div>
-
-        {/* Search inside BCH if there are many members */}
-        {validBoardMembers.length > 4 && (
-          <div className="mt-4 pt-4 border-t border-white/10 max-w-md">
-            <div className="relative">
-              <Search className="w-4 h-4 text-mist-gray absolute left-3 top-1/2 -translate-y-1/2" />
-              <input
-                type="text"
-                value={effectiveSearch}
-                onChange={(e) => {
-                  if (onSearchChange) onSearchChange(e.target.value);
-                  else setLocalSearch(e.target.value);
-                }}
-                placeholder={
-                  language === 'vi'
-                    ? 'Tìm cán bộ BCH theo tên, email, chức vụ...'
-                    : 'Search board members by name, email, role...'
-                }
-                className="w-full pl-9 pr-4 py-2 bg-white/10 border border-white/20 rounded-lg text-xs text-white placeholder:text-mist-gray focus:outline-none focus:ring-2 focus:ring-white/30"
-              />
-            </div>
-          </div>
-        )}
       </div>
 
-      {/* Board Members Grid */}
-      {isLoading ? (
+      {/* Content: Either Table (via children) or Cards Grid */}
+      {children ? (
+        children
+      ) : isLoading ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {[1, 2, 3].map((i) => (
             <div
@@ -167,7 +273,7 @@ export function ExecutiveBoardSection({
             </div>
           ))}
         </div>
-      ) : filteredMembers.length === 0 ? (
+      ) : filteredOfficers.length === 0 ? (
         <div className="bg-white border border-hairline rounded-2xl p-8 text-center shadow-xs space-y-3">
           <div className="w-12 h-12 rounded-full bg-cloud flex items-center justify-center mx-auto text-mist-gray border border-hairline">
             <ShieldCheck strokeWidth={1.5} className="w-6 h-6" />
@@ -179,7 +285,7 @@ export function ExecutiveBoardSection({
                   ? 'Không tìm thấy cán bộ Ban Chấp Hành phù hợp'
                   : 'No matching board members found'
                 : language === 'vi'
-                ? 'Chưa có tài khoản Ban Chấp Hành nào'
+                ? 'Chưa có cán bộ Ban Chấp Hành nào'
                 : 'No Executive Board members found'}
             </h3>
             <p className="text-xs text-slate-gray">
@@ -188,31 +294,32 @@ export function ExecutiveBoardSection({
                   ? 'Hãy thử thay đổi từ khóa tìm kiếm.'
                   : 'Try adjusting your search criteria.'
                 : language === 'vi'
-                ? 'Các tài khoản có vai trò Quản trị viên, Chi hội trưởng, Chi hội phó, Thủ quỹ, Thư ký sẽ tự động xuất hiện tại đây.'
-                : 'Accounts with Admin, Leader, Deputy, Treasurer, or Secretary roles will appear here.'}
+                ? 'Các cán bộ có chức vụ Chi hội trưởng, Chi hội phó, Thủ quỹ, Thư ký, Ủy viên BCH sẽ tự động xuất hiện tại đây.'
+                : 'Officers with Chapter Leader, Deputy, Treasurer, Secretary, or Committee roles will appear here.'}
             </p>
           </div>
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {filteredMembers.map((membership) => {
-            const roleConfig = ROLES[membership.role] || ROLES.secretary;
-            const RoleIcon = getRoleIcon(membership.role);
-            const fullName = membership.profile?.fullName || membership.profile?.email?.split('@')[0] || 'Cán bộ BCH';
-            const email = membership.profile?.email || '';
-            const studentId = membership.profile?.studentId;
-            const phone = membership.profile?.phone;
+          {filteredOfficers.map((officer) => {
+            const roleConfig = ROLES[officer.role] || ROLES.secretary;
+            const RoleIcon = getRoleIcon(officer.role);
+            const fullName = officer.fullName;
+            const email = officer.email || '';
+            const studentId = officer.studentId;
+            const phone = officer.phone;
+            const className = officer.className;
             const initial = fullName.charAt(0).toUpperCase();
 
             return (
               <div
-                key={membership.id}
+                key={officer.id}
                 className="bg-white border border-hairline hover:border-signal-blue/50 rounded-2xl p-5 shadow-xs transition-all duration-200 hover:shadow-xs flex flex-col justify-between space-y-4 group"
               >
                 <div className="flex items-start gap-3.5">
                   <Avatar className="h-12 w-12 rounded-full border-2 border-white shadow-xs shrink-0">
-                    {membership.profile?.avatarUrl && (
-                      <AvatarImage src={membership.profile.avatarUrl} alt={fullName} />
+                    {officer.avatarUrl && (
+                      <AvatarImage src={officer.avatarUrl} alt={fullName} />
                     )}
                     <AvatarFallback className="bg-[#e6f0ff] text-signal-blue font-bold text-sm">
                       {initial}
@@ -221,13 +328,32 @@ export function ExecutiveBoardSection({
 
                   <div className="min-w-0 flex-1 space-y-1">
                     <div className="flex items-center justify-between gap-1.5">
-                      <h4 className="text-sm font-bold text-ink-navy truncate group-hover:text-signal-blue transition-colors">
+                      <h4
+                        className={`text-sm font-bold text-ink-navy truncate ${
+                          officer.member && onViewDetail ? 'cursor-pointer hover:text-signal-blue transition-colors' : ''
+                        }`}
+                        onClick={() => officer.member && onViewDetail && onViewDetail(officer.member)}
+                        title={fullName}
+                      >
                         {fullName}
                       </h4>
-                      <span className="inline-flex items-center gap-1 text-[10px] font-semibold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full shrink-0 border border-emerald-200/60">
-                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-600 shrink-0" />
-                        {language === 'vi' ? 'Hoạt động' : 'Active'}
-                      </span>
+                      {officer.hasSystemAccount ? (
+                        <span
+                          className="inline-flex items-center gap-1 text-[10px] font-semibold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full shrink-0 border border-emerald-200/60"
+                          title={language === 'vi' ? 'Đã kích hoạt tài khoản điều hành' : 'System account active'}
+                        >
+                          <span className="w-1.5 h-1.5 rounded-full bg-emerald-600 shrink-0" />
+                          {language === 'vi' ? 'Hoạt động' : 'Active'}
+                        </span>
+                      ) : (
+                        <span
+                          className="inline-flex items-center gap-1 text-[10px] font-medium text-slate-600 bg-slate-50 px-2 py-0.5 rounded-full shrink-0 border border-slate-200/60"
+                          title={language === 'vi' ? 'Hồ sơ cán bộ trong danh sách Chi hội' : 'Official roster officer'}
+                        >
+                          <span className="w-1.5 h-1.5 rounded-full bg-slate-400 shrink-0" />
+                          {language === 'vi' ? 'Chính thức' : 'Official'}
+                        </span>
+                      )}
                     </div>
 
                     {/* Role Badge */}
@@ -236,7 +362,7 @@ export function ExecutiveBoardSection({
                         className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold border shadow-xs tracking-wide ${roleConfig.colorClasses.bg} ${roleConfig.colorClasses.text} ${roleConfig.colorClasses.border}`}
                       >
                         <RoleIcon className="w-3.5 h-3.5 shrink-0" />
-                        <span>{getRoleLabel(membership.role, language, organizationType)}</span>
+                        <span>{officer.positionLabel}</span>
                       </span>
                     </div>
                   </div>
@@ -272,6 +398,13 @@ export function ExecutiveBoardSection({
                     </div>
                   )}
 
+                  {className && (
+                    <div className="flex items-center gap-1.5 text-slate-gray">
+                      <span className="text-[11px] font-medium text-mist-gray shrink-0">Lớp:</span>
+                      <span className="truncate">{className}</span>
+                    </div>
+                  )}
+
                   {phone && (
                     <div className="flex items-center gap-1.5 text-slate-gray">
                       <Phone className="w-3.5 h-3.5 text-mist-gray shrink-0" />
@@ -285,9 +418,31 @@ export function ExecutiveBoardSection({
                   <span>
                     {organizationCode ? `${organizationCode}` : 'Chi hội'}
                   </span>
-                  <span className="tabular-nums text-[10px]">
-                    ID: {membership.userId.slice(0, 8)}...
-                  </span>
+                  <div className="flex items-center gap-2">
+                    {officer.member && onViewDetail && (
+                      <button
+                        type="button"
+                        onClick={() => onViewDetail(officer.member!)}
+                        className="text-xs text-[#2e89f7] hover:text-[#1a73e8] font-semibold hover:underline cursor-pointer"
+                      >
+                        {language === 'vi' ? 'Chi tiết' : 'Details'}
+                      </button>
+                    )}
+                    {canManage && officer.member && onEdit && (
+                      <button
+                        type="button"
+                        onClick={() => onEdit(officer.member!)}
+                        className="text-xs text-slate-500 hover:text-ink-navy font-medium hover:underline cursor-pointer"
+                      >
+                        {language === 'vi' ? 'Sửa' : 'Edit'}
+                      </button>
+                    )}
+                    {!officer.member && officer.userId && (
+                      <span className="tabular-nums text-[10px]">
+                        ID: {officer.userId.slice(0, 8)}...
+                      </span>
+                    )}
+                  </div>
                 </div>
               </div>
             );

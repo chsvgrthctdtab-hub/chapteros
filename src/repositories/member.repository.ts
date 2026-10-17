@@ -85,7 +85,45 @@ export const memberRepository = {
 
     if (position && position !== 'all') {
       if (position === 'bch') {
-        query = query.or('position.ilike.%trưởng%,position.ilike.%phó%,position.ilike.%chủ nhiệm%,position.ilike.%ủy viên%,position.ilike.%uy vien%,position.ilike.%thủ quỹ%,position.ilike.%thu quy%,position.ilike.%thư ký%,position.ilike.%thu ky%,position.ilike.%bch%,position.ilike.%ban chấp hành%,position.ilike.%ban chap hanh%,position.ilike.%admin%,position.ilike.%leader%,position.ilike.%deputy%');
+        const boardRoles = ['admin', 'leader', 'deputy', 'treasurer', 'secretary'];
+        const { data: bchAccounts } = await supabase
+          .from('organization_memberships')
+          .select('user_id')
+          .eq('organization_id', organizationId)
+          .in('role', boardRoles);
+
+        const bchUserIds = (bchAccounts || [])
+          .map((a: { user_id: string | null }) => a.user_id)
+          .filter((id): id is string => Boolean(id));
+
+        const bchClauses = [
+          'position.ilike.%trưởng%',
+          'position.ilike.%phó%',
+          'position.ilike.%chủ nhiệm%',
+          'position.ilike.%ủy viên%',
+          'position.ilike.%uy vien%',
+          'position.ilike.%thủ quỹ%',
+          'position.ilike.%thu quy%',
+          'position.ilike.%thư ký%',
+          'position.ilike.%thu ky%',
+          'position.ilike.%bch%',
+          'position.ilike.%ban chấp hành%',
+          'position.ilike.%ban chap hanh%',
+          'position.ilike.%quản trị%',
+          'position.ilike.%quan tri%',
+          'position.ilike.%admin%',
+          'position.ilike.%leader%',
+          'position.ilike.%deputy%',
+          'position.ilike.%treasurer%',
+          'position.ilike.%secretary%',
+          'position.ilike.%board%',
+        ];
+
+        if (bchUserIds.length > 0) {
+          bchClauses.push(`user_id.in.(${bchUserIds.join(',')})`);
+        }
+
+        query = query.or(bchClauses.join(','));
       } else {
         query = query.ilike('position', `%${position}%`);
       }

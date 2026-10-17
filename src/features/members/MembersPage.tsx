@@ -1,4 +1,5 @@
 import React, { useState, useMemo } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
   Users,
   UserPlus,
@@ -43,6 +44,7 @@ import type {
 import type { MemberFormData, TermMemberFormData } from './schemas/member.schema';
 
 export function MembersPage() {
+  const navigate = useNavigate();
   const { activeOrganization, activeMembership } = useAuth();
   const { t, language } = useLanguage();
   const toast = useToast();
@@ -362,14 +364,40 @@ export function MembersPage() {
       {isViewingBchOnly ? (
         <ExecutiveBoardSection
           memberships={bchMemberships}
+          members={membersList}
           organizationName={activeOrganization?.name}
           organizationCode={activeOrganization?.code}
           organizationType={activeOrganization?.type}
-          isLoading={isLoadingBch}
+          isLoading={isLoadingBch || isLoadingMembers}
           searchTerm={filters.search}
           onSearchChange={(val) => handleFilterChange({ search: val, page: 1 })}
           canManage={canManage}
-        />
+          onManageMemberships={() => navigate('/settings?tab=members')}
+          onViewDetail={handleOpenDetailDialog}
+          onEdit={handleOpenEditDialog}
+        >
+          {viewMode === 'table' ? (
+            isLoadingMembers ? (
+              <MemberTableSkeleton rows={5} />
+            ) : (
+              <MemberListTable
+                data={membersList}
+                totalCount={membersResponse?.totalCount || stats.boardCount}
+                page={membersResponse?.page || 1}
+                pageSize={membersResponse?.pageSize || 15}
+                totalPages={membersResponse?.totalPages || 1}
+                isLoading={isLoadingMembers}
+                canManage={canManage}
+                onPageChange={(p) => handleFilterChange({ page: p })}
+                onViewDetail={handleOpenDetailDialog}
+                onEdit={handleOpenEditDialog}
+                onAssignTerm={handleOpenAssignTerm}
+                onDelete={handleDeleteMember}
+                onAddNew={handleOpenCreateDialog}
+              />
+            )
+          ) : null}
+        </ExecutiveBoardSection>
       ) : (
         <div className="space-y-6">
           {/* Error State if query fails */}
