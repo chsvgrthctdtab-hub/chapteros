@@ -28,7 +28,7 @@ export function UpcomingTasksSection({
 
   return (
     <Card className="rounded-2xl border border-[#e2e8f0] shadow-xs bg-white">
-      <CardHeader className="p-4 sm:p-5 pb-3 border-b border-[#e2e8f0]">
+      <CardHeader className="p-4 sm:p-5 pb-2">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
             <div className="w-9 h-9 rounded-xl bg-[#eff6ff] text-[#2e64de] flex items-center justify-center">
@@ -55,7 +55,7 @@ export function UpcomingTasksSection({
 
       <CardContent className="p-4 sm:p-5 pt-2">
         {hasTasks ? (
-          <div className="divide-y divide-hairline">
+          <div className="space-y-1">
             {tasks.map((task) => {
               const priorityMeta = TASK_PRIORITY_META[task.priority] || {
                 label: task.priority,
@@ -74,7 +74,7 @@ export function UpcomingTasksSection({
                 <Link
                   key={task.id}
                   to={`/tasks/${task.id}`}
-                  className="group block py-3 first:pt-1.5 last:pb-0.5 focus:outline-none"
+                  className="group block p-2.5 rounded-xl hover:bg-[#f0f4f9] transition-colors focus:outline-none"
                 >
                   <div className="flex items-start justify-between gap-3">
                     <div className="space-y-1 min-w-0 flex-1">

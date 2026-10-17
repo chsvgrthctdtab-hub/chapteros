@@ -190,7 +190,7 @@ export function FinanceFilters({
 
       {/* Expanded Advanced Filters */}
       {isAdvancedOpen && (
-        <div className="pt-2.5 border-t border-[#e2e8f0] grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-4 gap-2.5 text-xs animate-in fade-in duration-100">
+        <div className="pt-2.5 grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-4 gap-2.5 text-xs animate-in fade-in duration-100">
           {/* Status Filter */}
           <div>
             <label className="block text-[11px] font-semibold text-[#64748b] mb-1">

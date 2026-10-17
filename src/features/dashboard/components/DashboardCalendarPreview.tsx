@@ -100,7 +100,7 @@ export function DashboardCalendarPreview({ activities }: DashboardCalendarPrevie
 
   return (
     <Card className="rounded-2xl border border-[#e2e8f0] shadow-xs bg-white">
-      <CardHeader className="p-4 sm:p-5 pb-3 border-b border-[#e2e8f0]">
+      <CardHeader className="p-4 sm:p-5 pb-2">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
             <div className="w-9 h-9 rounded-xl bg-[#e8f0fe] text-[#1a73e8] flex items-center justify-center">
@@ -210,7 +210,7 @@ export function DashboardCalendarPreview({ activities }: DashboardCalendarPrevie
         </div>
 
         {/* Selected Date or Month Activity List (Content-Driven, No Inner Scrollbar) */}
-        <div className="pt-2.5 border-t border-hairline space-y-1.5">
+        <div className="pt-2 space-y-1.5">
           <div className="flex items-center justify-between text-xs text-slate-gray font-medium">
             <span>
               {selectedDate

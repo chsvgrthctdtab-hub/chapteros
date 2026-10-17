@@ -13,7 +13,7 @@ export function WorkProgressCard({ tasks }: WorkProgressCardProps) {
 
   return (
     <Card className="border border-[#e2e8f0] shadow-xs rounded-2xl overflow-hidden bg-white">
-      <CardHeader className="p-4 sm:p-5 pb-3 border-b border-[#e2e8f0]">
+      <CardHeader className="p-4 sm:p-5 pb-2">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
             <div className="w-9 h-9 rounded-xl bg-[#eff6ff] text-[#2e64de] flex items-center justify-center">
@@ -57,7 +57,7 @@ export function WorkProgressCard({ tasks }: WorkProgressCardProps) {
         </div>
 
         {/* Breakdown Badges */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-2 border-t border-hairline text-xs">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-1 text-xs">
           <div className="flex items-center gap-2 p-2 rounded-xl bg-pebble border border-hairline">
             <Clock className="w-3.5 h-3.5 text-slate-gray shrink-0" />
             <div className="truncate">

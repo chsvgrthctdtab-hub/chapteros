@@ -167,7 +167,7 @@ export function MemberFilters({
       </div>
 
       {/* Bottom row: Quick Filter Chips & Results Count */}
-      <div className="flex flex-wrap items-center justify-between gap-3 pt-3 border-t border-[#e2e8f0] text-xs">
+      <div className="flex flex-wrap items-center justify-between gap-3 pt-1 text-xs">
         <div className="flex flex-wrap items-center gap-2">
           <span className="text-[#64748b] font-semibold uppercase tracking-wider text-[10px] flex items-center gap-1.5 mr-1">
             <SlidersHorizontal size={12} />

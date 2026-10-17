@@ -50,7 +50,7 @@ export function KpiCardsSection({ stats }: KpiCardsSectionProps) {
               </div>
             </div>
 
-            <div className="mt-3.5 pt-2.5 border-t border-[#e2e8f0] flex items-center justify-between text-xs text-[#64748b] font-semibold group-hover:text-[#2e89f7] transition-colors">
+            <div className="mt-3.5 flex items-center justify-between text-xs text-[#64748b] font-semibold group-hover:text-[#2e89f7] transition-colors">
               <span>View directory</span>
               <ArrowUpRight size={14} className="opacity-60 group-hover:opacity-100 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" />
             </div>
@@ -90,7 +90,7 @@ export function KpiCardsSection({ stats }: KpiCardsSectionProps) {
               </div>
             </div>
 
-            <div className="mt-3.5 pt-2.5 border-t border-[#e2e8f0] flex items-center justify-between text-xs text-[#64748b] font-semibold group-hover:text-[#2e89f7] transition-colors">
+            <div className="mt-3.5 flex items-center justify-between text-xs text-[#64748b] font-semibold group-hover:text-[#2e89f7] transition-colors">
               <span>View activities</span>
               <ArrowUpRight size={14} className="opacity-60 group-hover:opacity-100 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" />
             </div>
@@ -124,7 +124,7 @@ export function KpiCardsSection({ stats }: KpiCardsSectionProps) {
               </div>
             </div>
 
-            <div className="mt-3.5 pt-2.5 border-t border-[#e2e8f0] flex items-center justify-between text-xs text-[#64748b] font-semibold group-hover:text-[#2e89f7] transition-colors">
+            <div className="mt-3.5 flex items-center justify-between text-xs text-[#64748b] font-semibold group-hover:text-[#2e89f7] transition-colors">
               <span>Task board</span>
               <ArrowUpRight size={14} className="opacity-60 group-hover:opacity-100 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" />
             </div>
@@ -171,7 +171,7 @@ export function KpiCardsSection({ stats }: KpiCardsSectionProps) {
               </div>
             </div>
 
-            <div className={`mt-3.5 pt-2.5 border-t border-[#e2e8f0] flex items-center justify-between text-xs font-semibold transition-colors ${
+            <div className={`mt-3.5 flex items-center justify-between text-xs font-semibold transition-colors ${
               tasks.overdue > 0 ? 'text-rose-700' : 'text-[#64748b] group-hover:text-[#2e89f7]'
             }`}>
               <span>{tasks.overdue > 0 ? 'Resolve now' : 'Details'}</span>
@@ -207,7 +207,7 @@ export function KpiCardsSection({ stats }: KpiCardsSectionProps) {
               </div>
             </div>
 
-            <div className="mt-3.5 pt-2.5 border-t border-[#e2e8f0] flex items-center justify-between text-xs text-[#64748b] font-semibold group-hover:text-[#2e89f7] transition-colors">
+            <div className="mt-3.5 flex items-center justify-between text-xs text-[#64748b] font-semibold group-hover:text-[#2e89f7] transition-colors">
               <span>Ledger & budget</span>
               <ArrowUpRight size={14} className="opacity-60 group-hover:opacity-100 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" />
             </div>
@@ -240,7 +240,7 @@ export function KpiCardsSection({ stats }: KpiCardsSectionProps) {
               </div>
             </div>
 
-            <div className="mt-3.5 pt-2.5 border-t border-[#e2e8f0] flex items-center justify-between text-xs text-[#64748b] font-semibold group-hover:text-[#2e89f7] transition-colors">
+            <div className="mt-3.5 flex items-center justify-between text-xs text-[#64748b] font-semibold group-hover:text-[#2e89f7] transition-colors">
               <span>View reports</span>
               <ArrowUpRight size={14} className="opacity-60 group-hover:opacity-100 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" />
             </div>

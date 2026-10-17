@@ -2,7 +2,7 @@ export function DashboardSkeleton() {
   return (
     <div className="space-y-5 sm:space-y-6 animate-pulse pb-8">
       {/* Tier 1: Header Skeleton */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-3 border-b border-hairline">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div className="space-y-2">
           <div className="h-3.5 w-32 bg-pebble rounded" />
           <div className="h-6 w-56 bg-pebble rounded" />

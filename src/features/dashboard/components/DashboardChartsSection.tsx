@@ -41,7 +41,7 @@ export function DashboardChartsSection({ chartData, isLoading = false }: Dashboa
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 sm:gap-6 items-start">
       {/* Chart 1: Monthly Cashflow Trend */}
       <Card className="border border-[#e2e8f0] shadow-xs rounded-2xl bg-white">
-        <CardHeader className="p-4 sm:p-5 pb-3 border-b border-[#e2e8f0]">
+        <CardHeader className="p-4 sm:p-5 pb-2">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
               <div className="w-9 h-9 rounded-xl bg-emerald-50 text-emerald-700 border border-emerald-100 flex items-center justify-center">
@@ -128,7 +128,7 @@ export function DashboardChartsSection({ chartData, isLoading = false }: Dashboa
 
       {/* Chart 2: Task Status Distribution */}
       <Card className="border border-[#e2e8f0] shadow-xs rounded-2xl bg-white">
-        <CardHeader className="p-4 sm:p-5 pb-3 border-b border-[#e2e8f0]">
+        <CardHeader className="p-4 sm:p-5 pb-2">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
               <div className="w-9 h-9 rounded-xl bg-[#eff6ff] text-[#2e64de] border border-[#d2e3fc] flex items-center justify-center">

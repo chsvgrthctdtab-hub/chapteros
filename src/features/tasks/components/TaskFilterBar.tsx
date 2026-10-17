@@ -67,7 +67,7 @@ export function TaskFilterBar({
   return (
     <div className="bg-white rounded-2xl border border-[#e2e8f0] shadow-xs overflow-hidden">
       {/* Top Toolbar: Search + Mobile Filter Toggle + Sort + View Switcher */}
-      <div className="p-2.5 sm:p-3 flex flex-col md:flex-row items-stretch md:items-center justify-between gap-2 sm:gap-2.5 border-b border-[#e2e8f0]">
+      <div className="p-2.5 sm:p-3 flex flex-col md:flex-row items-stretch md:items-center justify-between gap-2 sm:gap-2.5">
         {/* Left: Search input */}
         <div className="flex items-center gap-2 flex-1 min-w-0">
           <div className="relative flex-1 min-w-[200px] max-w-lg">
@@ -214,7 +214,7 @@ export function TaskFilterBar({
       {/* Filter Selectors Bar */}
       <div
         className={cn(
-          'p-2.5 sm:p-3 bg-[#f8fafd] border-t border-[#e2e8f0]',
+          'p-2.5 sm:p-3 bg-[#f8fafd]',
           mobileFiltersOpen ? 'block' : 'hidden md:block'
         )}
       >
@@ -360,7 +360,7 @@ export function TaskFilterBar({
 
         {/* Active Filters Summary Strip */}
         {hasActiveFilters && (
-          <div className="flex items-center justify-between gap-2 pt-2.5 mt-2.5 border-t border-[#e2e8f0] text-xs">
+          <div className="flex items-center justify-between gap-2 pt-2 text-xs">
             <div className="flex items-center gap-2 text-[#64748b] flex-wrap">
               <span>
                 Tìm thấy <strong className="text-[#0b3558] font-semibold tabular-nums">{totalResults}</strong> nhiệm vụ phù hợp

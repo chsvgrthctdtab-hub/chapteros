@@ -15,7 +15,7 @@ export function FinanceSummaryCard({ finance }: FinanceSummaryCardProps) {
 
   return (
     <Card className="border border-[#e2e8f0] shadow-xs rounded-2xl overflow-hidden bg-white">
-      <CardHeader className="p-4 sm:p-5 pb-3 border-b border-[#e2e8f0]">
+      <CardHeader className="p-4 sm:p-5 pb-2">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
             <div className="w-9 h-9 rounded-xl bg-[#fffbeb] text-[#ce7918] flex items-center justify-center">

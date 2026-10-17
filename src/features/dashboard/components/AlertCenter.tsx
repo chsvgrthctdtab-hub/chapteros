@@ -132,7 +132,7 @@ export function AlertCenter({
 
   return (
     <Card className="rounded-2xl border border-[#e2e8f0] bg-white shadow-xs">
-      <CardHeader className="p-4 sm:p-5 pb-3 border-b border-[#e2e8f0]">
+      <CardHeader className="p-4 sm:p-5 pb-2">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
             <div className="w-9 h-9 rounded-xl bg-amber-50 text-amber-700 flex items-center justify-center shrink-0 border border-amber-200/60">
@@ -153,12 +153,12 @@ export function AlertCenter({
         </div>
       </CardHeader>
 
-      <CardContent className="p-4 sm:p-5 pt-1.5">
-        <div className="divide-y divide-[#e2e8f0]">
+      <CardContent className="p-4 sm:p-5 pt-2">
+        <div className="space-y-2">
           {alerts.map((alert) => (
             <div
               key={alert.id}
-              className="py-3 first:pt-1.5 last:pb-0 flex flex-col sm:flex-row sm:items-center justify-between gap-2.5"
+              className="p-3 rounded-xl bg-[#f8fafd] hover:bg-[#f0f4f9] transition-colors flex flex-col sm:flex-row sm:items-center justify-between gap-2.5"
             >
               <div className="flex items-start gap-2.5">
                 <div className={`w-8 h-8 rounded-xl flex items-center justify-center shrink-0 mt-0.5 ${
