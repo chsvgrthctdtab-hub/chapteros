@@ -48,8 +48,9 @@ CREATE INDEX IF NOT EXISTS idx_activity_participants_status
   ON public.activity_participants(activity_id, attendance_status);
 
 -- 5. Phân hệ Tài chính (Finance Transactions)
+-- Chú ý: Cột lưu loại thu/chi trong bảng finance_transactions là 'transaction_type'
 CREATE INDEX IF NOT EXISTS idx_finance_transactions_org_type 
-  ON public.finance_transactions(organization_id, type);
+  ON public.finance_transactions(organization_id, transaction_type);
 
 CREATE INDEX IF NOT EXISTS idx_finance_transactions_org_term 
   ON public.finance_transactions(organization_id, term_id);
@@ -59,8 +60,9 @@ CREATE INDEX IF NOT EXISTS idx_finance_transactions_org_act
   WHERE activity_id IS NOT NULL;
 
 -- 6. Phân hệ Nhật ký kiểm toán (Audit Logs)
+-- Chú ý: Cột lưu phân hệ trong bảng audit_logs là 'entity_type'
 CREATE INDEX IF NOT EXISTS idx_audit_logs_org_created 
   ON public.audit_logs(organization_id, created_at DESC);
 
-CREATE INDEX IF NOT EXISTS idx_audit_logs_org_module 
-  ON public.audit_logs(organization_id, module, created_at DESC);
+CREATE INDEX IF NOT EXISTS idx_audit_logs_org_entity 
+  ON public.audit_logs(organization_id, entity_type, created_at DESC);
