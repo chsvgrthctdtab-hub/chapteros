@@ -55,7 +55,7 @@ export function Header({ onOpenMobileMenu }: HeaderProps) {
   return (
     <header
       id="app-header"
-      className="relative z-20 flex h-16 w-full items-center justify-between border-b border-[#e2e8f0] bg-white/95 backdrop-blur-md px-4 sm:px-6 lg:px-8 shrink-0"
+      className="relative z-20 flex h-16 w-full items-center justify-between bg-white/95 backdrop-blur-md px-4 sm:px-6 lg:px-8 shrink-0"
     >
       {/* Left side: Mobile menu toggle + Active Chapter Switcher */}
       <div className="flex items-center gap-2 min-w-0">
@@ -177,7 +177,7 @@ export function Header({ onOpenMobileMenu }: HeaderProps) {
           <DropdownMenuTrigger asChild>
             <button
               id="user-account-menu"
-              className="flex items-center gap-2 pl-3 border-l border-[#e2e8f0] focus:outline-hidden hover:opacity-90 transition-opacity cursor-pointer text-left"
+              className="flex items-center gap-2 pl-2 focus:outline-hidden hover:opacity-90 transition-opacity cursor-pointer text-left"
             >
               <Avatar className="h-8 w-8 ring-1 ring-[#e2e8f0]">
                 {profile?.avatarUrl && <AvatarImage src={profile.avatarUrl} alt={displayName} />}

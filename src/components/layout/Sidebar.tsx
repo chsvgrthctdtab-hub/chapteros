@@ -182,7 +182,7 @@ export function Sidebar({ collapsed, onToggleCollapse, mobileOpen, onCloseMobile
       <aside
         id="app-sidebar"
         className={cn(
-          'fixed top-0 bottom-0 left-0 z-50 flex flex-col border-r border-[#e2e8f0] bg-[#f8fafd] transition-all duration-200 ease-in-out lg:static shrink-0 select-none overflow-x-hidden',
+          'fixed top-0 bottom-0 left-0 z-50 flex flex-col bg-[#f8fafd] transition-all duration-200 ease-in-out lg:static shrink-0 select-none overflow-x-hidden',
           mobileOpen
             ? 'w-64 translate-x-0 shadow-2xl rounded-r-2xl'
             : '-translate-x-full lg:translate-x-0',
@@ -192,7 +192,7 @@ export function Sidebar({ collapsed, onToggleCollapse, mobileOpen, onCloseMobile
         {/* Brand header */}
         <div
           className={cn(
-            'flex h-16 shrink-0 items-center border-b border-[#e2e8f0]/60 transition-all duration-200 ease-in-out',
+            'flex h-16 shrink-0 items-center transition-all duration-200 ease-in-out',
             isEffectiveCollapsed ? 'justify-center px-2' : 'justify-between px-4'
           )}
         >
@@ -294,7 +294,7 @@ export function Sidebar({ collapsed, onToggleCollapse, mobileOpen, onCloseMobile
         </div>
 
         {/* Footer */}
-        <div className="border-t border-[#e2e8f0]/60 p-2 bg-[#f8fafd] shrink-0">
+        <div className="p-2 bg-[#f8fafd] shrink-0">
           <div
             className={cn(
               'overflow-hidden transition-all duration-200 ease-in-out',
