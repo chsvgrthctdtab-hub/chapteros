@@ -2,20 +2,20 @@ import type { ActivityStatus, OrganizationRole } from '@/types';
 
 /**
  * Valid activity status transitions according to Chapter Activity Management State Machine:
- * - draft -> ['planning']
- * - planning -> ['published', 'draft']
- * - published -> ['in_progress', 'cancelled']
- * - in_progress -> ['completed', 'cancelled']
- * - completed -> [] (TERMINAL STATE - Locked)
- * - cancelled -> [] (TERMINAL STATE - Locked)
+ * - draft -> ['planning', 'published', 'cancelled']
+ * - planning -> ['published', 'in_progress', 'draft', 'cancelled']
+ * - published -> ['in_progress', 'completed', 'planning', 'draft', 'cancelled']
+ * - in_progress -> ['completed', 'published', 'cancelled']
+ * - completed -> ['in_progress', 'published']
+ * - cancelled -> ['draft', 'planning', 'published']
  */
 export const ALLOWED_ACTIVITY_STATUS_TRANSITIONS: Record<ActivityStatus, ActivityStatus[]> = {
-  draft: ['planning'],
-  planning: ['published', 'draft'],
-  published: ['in_progress', 'cancelled'],
-  in_progress: ['completed', 'cancelled'],
-  completed: [],
-  cancelled: [],
+  draft: ['planning', 'published', 'cancelled'],
+  planning: ['published', 'in_progress', 'draft', 'cancelled'],
+  published: ['in_progress', 'completed', 'cancelled'],
+  in_progress: ['completed', 'published', 'cancelled'],
+  completed: ['in_progress', 'published'],
+  cancelled: ['draft', 'planning', 'published'],
 };
 
 /**
@@ -105,15 +105,7 @@ export function validateActivityStatusTransition(
     return;
   }
 
-  // 3. Terminal state check
-  if (isActivityTerminal(currentStatus)) {
-    const statusLabel = ACTIVITY_STATUS_VIETNAMESE_LABELS[currentStatus] || currentStatus;
-    throw new Error(
-      `Hoạt động đã ở trạng thái "${statusLabel}" (trạng thái kết thúc/đã khóa). Không thể chuyển đổi sang bất kỳ trạng thái nào khác.`
-    );
-  }
-
-  // 4. Allowed transitions check
+  // 3. Allowed transitions check
   const allowed = ALLOWED_ACTIVITY_STATUS_TRANSITIONS[currentStatus] || [];
   if (!allowed.includes(targetStatus)) {
     const currentLabel = ACTIVITY_STATUS_VIETNAMESE_LABELS[currentStatus] || currentStatus;
