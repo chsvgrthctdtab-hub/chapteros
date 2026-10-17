@@ -15,7 +15,6 @@ export interface UseOrganizationRoleReturn {
   canManageActivities: boolean;
   canManageTasks: boolean;
   canManageSettings: boolean;
-  canAccessGoogleIntegrations: boolean;
   roleDisplayName: string;
 }
 
@@ -44,7 +43,6 @@ export function useOrganizationRole(): UseOrganizationRoleReturn {
     const canManageActivities = role ? ['admin', 'leader', 'deputy', 'secretary'].includes(role) : false;
     const canManageTasks = role ? ['admin', 'leader', 'deputy', 'secretary'].includes(role) : false;
     const canManageSettings = role === 'admin';
-    const canAccessGoogleIntegrations = isBoard;
 
     const roleDisplayName = role ? (ROLE_DISPLAY_NAMES[role] || role) : 'Chưa phân quyền';
 
@@ -61,7 +59,6 @@ export function useOrganizationRole(): UseOrganizationRoleReturn {
       canManageActivities,
       canManageTasks,
       canManageSettings,
-      canAccessGoogleIntegrations,
       roleDisplayName,
     };
   }, [activeRole]);

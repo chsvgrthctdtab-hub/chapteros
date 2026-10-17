@@ -935,7 +935,7 @@ export const activityRepository = {
         };
       });
 
-    // Also fetch all Google Form / Google Sheet responses for this activity to include external registrants
+    // Also fetch all form responses for this activity to include external registrants
     let formResponsesRows: any[] = [];
     if (isSupabaseConfigured) {
       try {
@@ -993,7 +993,7 @@ export const activityRepository = {
         registeredAt: subAt,
         attendanceStatus,
         attendedAt: attendanceStatus === 'present' ? fr.updated_at || subAt : null,
-        notes: fr.notes || 'Đăng ký qua Google Forms / Google Sheet',
+        notes: fr.notes || 'Đăng ký qua biểu mẫu ngoài',
         createdAt: subAt,
         updatedAt: subAt,
         member: {

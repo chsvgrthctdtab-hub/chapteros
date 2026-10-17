@@ -52,7 +52,7 @@ export function DocumentFileIcon({
             sizeClasses[size],
             className
           )}
-          title="Google Docs"
+          title="Tài liệu văn bản"
         >
           <FileText className={iconSizes[size]} />
         </div>
@@ -66,7 +66,7 @@ export function DocumentFileIcon({
             sizeClasses[size],
             className
           )}
-          title="Google Sheets"
+          title="Bảng tính"
         >
           <FileSpreadsheet className={iconSizes[size]} />
         </div>
@@ -80,7 +80,7 @@ export function DocumentFileIcon({
             sizeClasses[size],
             className
           )}
-          title="Google Slides"
+          title="Trình chiếu"
         >
           <Presentation className={iconSizes[size]} />
         </div>
@@ -94,7 +94,7 @@ export function DocumentFileIcon({
             sizeClasses[size],
             className
           )}
-          title="Google Forms"
+          title="Biểu mẫu"
         >
           <CheckSquare className={iconSizes[size]} />
         </div>
@@ -108,7 +108,7 @@ export function DocumentFileIcon({
             sizeClasses[size],
             className
           )}
-          title="Thư mục Google Drive"
+          title="Thư mục"
         >
           <Folder className={iconSizes[size]} />
         </div>

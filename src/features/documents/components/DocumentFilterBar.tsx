@@ -6,8 +6,6 @@ import {
   List,
   SlidersHorizontal,
   ArrowUpDown,
-  HardDrive,
-  Cloud,
   Layers,
   Shield,
   Tag,
@@ -52,15 +50,13 @@ const FILE_TYPE_OPTIONS: Array<{
   label: string;
 }> = [
   { id: 'all', label: 'Tất cả' },
-  { id: 'gdoc', label: 'Google Docs' },
-  { id: 'gsheet', label: 'Google Sheets' },
-  { id: 'gslide', label: 'Google Slides' },
-  { id: 'gform', label: 'Google Forms' },
-  { id: 'folder', label: 'Thư mục Drive' },
   { id: 'pdf', label: 'PDF' },
   { id: 'word', label: 'Word' },
   { id: 'excel', label: 'Excel' },
+  { id: 'powerpoint', label: 'Slide' },
   { id: 'image', label: 'Hình ảnh' },
+  { id: 'archive', label: 'Nén / Zip' },
+  { id: 'text', label: 'Văn bản' },
 ];
 
 export function DocumentFilterBar({
@@ -107,7 +103,7 @@ export function DocumentFilterBar({
           <Input
             value={filters.search || ''}
             onChange={(e) => onFilterChange({ ...filters, search: e.target.value })}
-            placeholder="Tìm kiếm tài liệu, Google Docs, Sheets, Drive..."
+            placeholder="Tìm kiếm tài liệu..."
             className="pl-9 pr-8 h-9 rounded-full text-xs bg-[#f8fafd] border-[#e2e8f0] hover:border-[#b8cce0] hover:bg-white focus:bg-white text-[#1e293b] placeholder:text-[#94a3b8]"
           />
           {filters.search && (

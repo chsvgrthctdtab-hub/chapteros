@@ -126,7 +126,7 @@ export function formatErrorMessage(error: unknown, fallbackMessage = 'Đã xảy
     } else if (lowerMsg.includes('email')) {
       duplicateDetail = 'Địa chỉ email này đã tồn tại trong hệ thống.';
     } else if (lowerMsg.includes('drive_file_id') || lowerMsg.includes('uq_docs_org_drive')) {
-      duplicateDetail = 'Tệp Google Drive này đã được liên kết trong Đơn vị hoặc hoạt động tương ứng.';
+      duplicateDetail = 'Tệp tài liệu này đã được liên kết trong Đơn vị hoặc hoạt động tương ứng.';
     } else if (lowerMsg.includes('participant') || lowerMsg.includes('uq_activity_member_participant')) {
       duplicateDetail = 'Hội viên này đã có tên trong danh sách tham gia hoạt động.';
     } else if (lowerMsg.includes('finance_category') || lowerMsg.includes('uq_org_finance_category')) {
@@ -225,25 +225,25 @@ export function formatErrorMessage(error: unknown, fallbackMessage = 'Đã xảy
     };
   }
 
-  // 8. Google OAuth & API Errors
-  if (lowerMsg.includes('google') || lowerMsg.includes('oauth') || lowerMsg.includes('popup_closed_by_user')) {
+  // 8. OAuth Authentication Errors
+  if (lowerMsg.includes('oauth') || lowerMsg.includes('popup_closed_by_user')) {
     if (lowerMsg.includes('popup_closed_by_user') || lowerMsg.includes('user cancelled')) {
       return {
         title: 'Đã hủy thao tác',
-        message: 'Cửa sổ liên kết Google đã được đóng trước khi hoàn tất xác thực.',
+        message: 'Cửa sổ xác thực đã được đóng trước khi hoàn tất đăng nhập.',
         isPermissionError: false,
         isNetworkError: false,
         isDuplicateError: false,
-        isAuthError: false,
+        isAuthError: true,
       };
     }
     return {
-      title: 'Lỗi kết nối Google',
-      message: 'Không thể kết nối dịch vụ Google Workspace. Vui lòng kiểm tra quyền truy cập và thử lại.',
+      title: 'Lỗi xác thực tài khoản',
+      message: 'Không thể hoàn tất xác thực đăng nhập. Vui lòng kiểm tra lại tài khoản và thử lại.',
       isPermissionError: false,
       isNetworkError: false,
       isDuplicateError: false,
-      isAuthError: false,
+      isAuthError: true,
     };
   }
 

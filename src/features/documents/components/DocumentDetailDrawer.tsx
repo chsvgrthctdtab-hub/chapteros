@@ -150,14 +150,14 @@ export function DocumentDetailDrawer({
   );
 
   const displayFilename = isDriveDoc
-    ? (document.driveUrl || 'Google Drive Document')
+    ? (document.driveUrl || 'Liên kết tài liệu')
     : document.filePath.split('/').pop() || document.filePath;
 
   const headerBadge = (
     <div className="flex items-center gap-1.5 flex-wrap">
       {isDriveDoc ? (
         <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-lg text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
-          Google Drive
+          Tài liệu liên kết
         </span>
       ) : (
         <DocumentCategoryBadge category={document.category} />
@@ -239,7 +239,7 @@ export function DocumentDetailDrawer({
             className="h-8 text-xs font-semibold text-slate-gray hover:text-ink-navy bg-white border-hairline shadow-xs gap-1.5 cursor-pointer rounded-xl"
           >
             <ExternalLink className="w-3.5 h-3.5 text-mist-gray" />
-            <span>{isDriveDoc ? 'Mở trên Google Drive' : 'Mở / Xem'}</span>
+            <span>{isDriveDoc ? 'Mở liên kết' : 'Mở / Xem'}</span>
           </Button>
 
           {!isDriveDoc && (

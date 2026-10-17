@@ -10,11 +10,9 @@ import {
   CheckSquare,
   Loader2,
   User,
-  HardDrive,
   Copy,
   Check,
   Link2Off,
-  Cloud,
   Eye,
   MoreHorizontal,
 } from '@/lib/icons';
@@ -60,7 +58,7 @@ export function DocumentCard({
   );
 
   const displayFilename = isDriveDoc
-    ? (document.driveUrl || 'Google Drive Document')
+    ? (document.driveUrl || 'Liên kết tài liệu')
     : document.filePath.split('/').pop() || document.filePath;
 
   const handleDownload = async (e: React.MouseEvent) => {
@@ -152,18 +150,7 @@ export function DocumentCard({
                 </h4>
               )}
               <div className="flex items-center gap-1.5 mt-0.5">
-                {isDriveDoc ? (
-                  <span className="inline-flex items-center gap-0.5 text-[10px] font-semibold text-emerald-700 bg-emerald-50 px-1 py-0.2 rounded border border-emerald-200">
-                    <Cloud className="w-2.5 h-2.5" />
-                    <span>Drive</span>
-                  </span>
-                ) : (
-                  <span className="inline-flex items-center gap-0.5 text-[10px] font-medium text-slate-gray bg-cloud px-1 py-0.2 rounded border border-hairline">
-                    <HardDrive className="w-2.5 h-2.5" />
-                    <span>Storage</span>
-                  </span>
-                )}
-                <span className="text-[11px] text-mist-gray truncate max-w-[140px] font-mono">
+                <span className="text-[11px] text-mist-gray truncate max-w-[180px] font-mono">
                   {formatFileSize(document.fileSize)}
                 </span>
               </div>
@@ -189,13 +176,13 @@ export function DocumentCard({
 
               <DropdownMenuItem onClick={handlePreview} className="gap-2 cursor-pointer">
                 <ExternalLink className="w-3.5 h-3.5 text-slate-gray" />
-                <span>{isDriveDoc ? 'Mở trên Google Drive' : 'Xem / Mở tệp'}</span>
+                <span>{isDriveDoc ? 'Mở liên kết' : 'Xem / Mở tệp'}</span>
               </DropdownMenuItem>
 
               {!isDriveDoc && (
                 <DropdownMenuItem onClick={handleDownload} className="gap-2 cursor-pointer">
                   <Download className="w-3.5 h-3.5 text-slate-gray" />
-                  <span>Download</span>
+                  <span>Tải xuống</span>
                 </DropdownMenuItem>
               )}
 
@@ -225,7 +212,7 @@ export function DocumentCard({
                     className="gap-2 cursor-pointer text-rose-600 hover:bg-rose-50"
                   >
                     <Trash2 className="w-3.5 h-3.5 text-rose-500" />
-                    <span>{isDriveDoc ? 'Gỡ liên kết Drive' : 'Xóa tài liệu'}</span>
+                    <span>Xóa tài liệu</span>
                   </DropdownMenuItem>
                 </>
               )}

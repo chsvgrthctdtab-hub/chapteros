@@ -381,7 +381,7 @@ export function ChapterScorecardReport({
               <div className="space-y-1.5 pt-1">
                 <input
                   type="text"
-                  placeholder="https://drive.google.com/drive/folders/..."
+                  placeholder="https://..."
                   value={tempDriveUrl}
                   onChange={(e) => setTempDriveUrl(e.target.value)}
                   className="w-full px-2 py-1 text-xs bg-white border border-hairline rounded focus:ring-1 focus:ring-signal-blue"
@@ -412,7 +412,7 @@ export function ChapterScorecardReport({
                   className="inline-flex items-center gap-1 text-xs font-semibold text-signal-blue hover:underline truncate max-w-[140px]"
                 >
                   <FolderOpen className="w-3.5 h-3.5" />
-                  <span>Mở Google Drive</span>
+                  <span>Mở thư mục</span>
                 </a>
                 <button
                   type="button"

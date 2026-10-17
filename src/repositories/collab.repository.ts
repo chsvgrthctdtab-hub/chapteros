@@ -1353,7 +1353,7 @@ export const collabRepository = {
   },
 
   /**
-   * Bulk add participants to collab plan / activity (used by Google Sheet import)
+   * Bulk add participants to collab plan / activity (used by Excel/CSV import)
    */
   async bulkAddCollabParticipants(
     planId: string,

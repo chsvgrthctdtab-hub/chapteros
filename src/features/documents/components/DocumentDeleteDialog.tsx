@@ -41,26 +41,6 @@ export function DocumentDeleteDialog({
   const handleDelete = async () => {
     setDeleteError(null);
     try {
-      if (document.driveFileId && !document.driveFileId.startsWith('gfile-')) {
-        try {
-          const localToken = localStorage.getItem('chapteros_google_access_token');
-          await fetch('/api/drive/delete', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-              ...(localToken ? { 'x-google-access-token': localToken } : {}),
-            },
-            body: JSON.stringify({
-              driveFileId: document.driveFileId,
-              organizationId,
-              googleAccessToken: localToken,
-            }),
-          });
-        } catch (cloudDelErr) {
-          console.warn('Google Drive cloud file delete notice:', cloudDelErr);
-        }
-      }
-
       await deleteMutation.mutateAsync({
         documentId: document.id,
         organizationId,
@@ -69,9 +49,7 @@ export function DocumentDeleteDialog({
         taskId: document.taskId,
       });
 
-      toast.success(
-        isDriveDoc ? 'Đã xóa tài liệu khỏi Google Drive và hệ thống.' : 'Đã xóa tài liệu thành công.'
-      );
+      toast.success('Đã xóa tài liệu thành công.');
       onOpenChange(false);
       onSuccess?.();
     } catch (err: unknown) {
@@ -93,7 +71,7 @@ export function DocumentDeleteDialog({
                 Xác nhận xóa tài liệu?
               </DialogTitle>
               <DialogDescription className="text-xs text-mist-gray mt-0.5">
-                Hành động này sẽ xóa vĩnh viễn tệp tin khỏi hệ thống và Google Drive của bạn.
+                Hành động này sẽ xóa vĩnh viễn tệp tin khỏi hệ thống.
               </DialogDescription>
             </div>
           </div>
@@ -112,7 +90,7 @@ export function DocumentDeleteDialog({
             <p className="text-xs font-bold text-ink-navy leading-snug break-all">{document.title}</p>
             <p className="text-[11px] text-mist-gray font-mono break-all line-clamp-1">
               {isDriveDoc
-                ? (document.driveUrl || 'Liên kết Google Drive')
+                ? (document.driveUrl || 'Liên kết tài liệu')
                 : `${document.filePath.split('/').pop()} • ${formatFileSize(document.fileSize)}`}
             </p>
           </div>

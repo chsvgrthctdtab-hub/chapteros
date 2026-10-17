@@ -25,13 +25,6 @@ interface RawActivityRow {
   created_at: string;
 }
 
-interface RawGoogleConnectionRow {
-  id: string;
-  connection_type: string;
-  status: string;
-  email: string | null;
-  updated_at: string;
-}
 
 interface RawFinanceRow {
   transaction_type: string;
@@ -61,7 +54,6 @@ export const notificationService = {
         readKeys,
         tasksRes,
         activitiesRes,
-        googleRes,
         financeRes,
         explicitNotifs,
       ] = await Promise.all([
@@ -79,10 +71,6 @@ export const notificationService = {
           .lte('start_date', next7days.toISOString())
           .order('start_date', { ascending: true })
           .limit(10),
-        (supabase.from('google_connections') as any)
-          .select('id, connection_type, status, email, updated_at')
-          .or(`organization_id.eq.${organizationId},user_id.eq.${userId}`)
-          .in('status', ['error', 'expired']),
         (supabase.from('finance_transactions') as any)
           .select('transaction_type, amount, status')
           .eq('organization_id', organizationId)
@@ -176,25 +164,6 @@ export const notificationService = {
         });
       });
 
-      // 3. Process Google Integration Warnings
-      const googleIssues = (googleRes.data || []) as RawGoogleConnectionRow[];
-      googleIssues.forEach((issue) => {
-        const key = `google-connection-error:${issue.id}`;
-        items.push({
-          id: key,
-          key,
-          organizationId,
-          title: 'Kết nối Google Workspace cần xác thực lại',
-          message: `Tài khoản ${issue.email || ''} bị gián đoạn kết nối (${issue.status}).`,
-          type: 'warning',
-          category: 'integration',
-          link: '/integrations',
-          entityType: 'google_connection',
-          entityId: issue.id,
-          createdAt: issue.updated_at || now.toISOString(),
-          isRead: readKeys.has(key),
-        });
-      });
 
       // 4. Process Finance Negative Balance Alert
       const transactions = (financeRes.data || []) as RawFinanceRow[];

@@ -12,8 +12,6 @@ import {
   Link2Off,
   Copy,
   Check,
-  Cloud,
-  HardDrive,
   Eye,
 } from '@/lib/icons';
 import { Button } from '@/components/ui/button';
@@ -109,16 +107,15 @@ export function ActivityDocumentsSection({
         <div>
           <h3 className="text-sm font-bold text-ink-navy flex items-center gap-2">
             <FileText className="w-4 h-4 text-signal-blue" />
-            <span>Activity Documents & Files</span>
+            <span>Văn bản & Tài liệu hoạt động</span>
           </h3>
           <p className="text-xs text-mist-gray mt-0.5">
-            Operational plans, reports, forms, spreadsheets, and Google Drive links for this activity.
+            Kế hoạch, báo cáo, biểu mẫu và tài liệu phục vụ hoạt động này.
           </p>
         </div>
 
         {canManage && (
           <div className="flex items-center gap-2 shrink-0">
-
             <Button
               type="button"
               onClick={() => setUploadModalOpen(true)}
@@ -126,7 +123,7 @@ export function ActivityDocumentsSection({
               className="rounded-lg text-xs bg-signal-blue hover:bg-[#005be0] text-white font-semibold gap-1.5 shadow-xs cursor-pointer"
             >
               <Upload className="w-3.5 h-3.5" />
-              <span>Upload Document</span>
+              <span>Tải lên tài liệu</span>
             </Button>
           </div>
         )}
@@ -147,13 +144,12 @@ export function ActivityDocumentsSection({
           <div className="w-10 h-10 rounded-xl bg-cloud text-mist-gray flex items-center justify-center mx-auto mb-2.5">
             <FileText strokeWidth={1.5} className="w-5 h-5" />
           </div>
-          <h4 className="text-xs font-bold text-ink-navy">No Attached Documents</h4>
+          <h4 className="text-xs font-bold text-ink-navy">Chưa có tài liệu đính kèm</h4>
           <p className="text-[11px] text-mist-gray max-w-sm mx-auto mt-0.5">
             Tải lên tài liệu, quyết định hoặc biểu mẫu phục vụ hoạt động này.
           </p>
           {canManage && (
             <div className="flex items-center justify-center gap-2 mt-3">
-
               <Button
                 type="button"
                 size="sm"
@@ -161,7 +157,7 @@ export function ActivityDocumentsSection({
                 className="rounded-lg text-xs bg-signal-blue hover:bg-[#005be0] text-white gap-1.5 cursor-pointer"
               >
                 <Plus className="w-3.5 h-3.5" />
-                <span>Upload File</span>
+                <span>Tải lên tệp</span>
               </Button>
             </div>
           )}
@@ -194,17 +190,6 @@ export function ActivityDocumentsSection({
                         {doc.title}
                       </h5>
                       <div className="flex items-center gap-1.5 mt-0.5">
-                        {isDriveDoc ? (
-                          <span className="inline-flex items-center gap-0.5 text-[10px] font-semibold text-emerald-700 bg-emerald-50 px-1 py-0.2 rounded border border-emerald-200">
-                            <Cloud className="w-2.5 h-2.5" />
-                            <span>Drive</span>
-                          </span>
-                        ) : (
-                          <span className="inline-flex items-center gap-0.5 text-[10px] font-medium text-mist-gray bg-cloud px-1.5 py-0.5 rounded border border-hairline">
-                            <HardDrive className="w-2.5 h-2.5" />
-                            <span>Storage</span>
-                          </span>
-                        )}
                         <span className="text-[11px] text-mist-gray truncate font-mono">
                           {formatFileSize(doc.fileSize)}
                         </span>
@@ -267,7 +252,7 @@ export function ActivityDocumentsSection({
                             setEditingDoc(doc);
                           }}
                           className="h-6 w-6 rounded text-mist-gray hover:text-ink-navy cursor-pointer"
-                          title="Edit"
+                          title="Chỉnh sửa"
                         >
                           <Edit3 className="w-3 h-3" />
                         </Button>
@@ -281,7 +266,7 @@ export function ActivityDocumentsSection({
                             setDeletingDoc(doc);
                           }}
                           className="h-6 w-6 rounded text-mist-gray hover:text-rose-600 cursor-pointer"
-                          title={isDriveDoc ? 'Unlink' : 'Delete'}
+                          title="Xóa tài liệu"
                         >
                           <Trash2 className="w-3 h-3" />
                         </Button>

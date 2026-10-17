@@ -565,7 +565,7 @@ export function CreateCollabTaskDialog({
             </div>
           </div>
 
-          {/* Sản phẩm bàn giao (Cột H trên Google Sheet) */}
+          {/* Sản phẩm bàn giao */}
           <div className="space-y-1">
             <div className="flex items-center justify-between">
               <label htmlFor="collab-task-deliverable" className="block text-xs font-semibold text-ink-navy">

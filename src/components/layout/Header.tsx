@@ -1,18 +1,12 @@
 import { useNavigate, Link } from 'react-router-dom';
 import { 
   Menu, 
-  Bell, 
-  Database, 
-  CheckCircle2, 
-  AlertCircle, 
   ChevronDown, 
   Building2, 
   Check, 
   LogOut, 
   PlusCircle,
-  User as UserIcon,
-  ShieldCheck,
-  GraduationCap
+  User as UserIcon
 } from '@/lib/icons';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -43,8 +37,7 @@ export function Header({ onOpenMobileMenu }: HeaderProps) {
     activeOrganization, 
     activeRole, 
     setActiveOrganizationId, 
-    signOut, 
-    isSupabaseConfigured 
+    signOut 
   } = useAuth();
 
   const navigate = useNavigate();
@@ -167,26 +160,8 @@ export function Header({ onOpenMobileMenu }: HeaderProps) {
         )}
       </div>
 
-      {/* Right side: DB status, Notifications & User Account */}
+      {/* Right side: Notifications & User Account */}
       <div className="flex items-center gap-1.5 sm:gap-2">
-        {/* Database connection indicator */}
-        <div
-          className="hidden sm:inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full border border-[#e2e8f0] bg-[#f8fafd] text-xs text-[#64748b]"
-          title={isSupabaseConfigured ? "Connected to PostgreSQL database" : "Running with local demo configuration"}
-        >
-          {isSupabaseConfigured ? (
-            <>
-              <span className="h-2 w-2 rounded-full bg-emerald-500 ring-2 ring-emerald-100" />
-              <span className="text-[#1e293b] font-medium text-xs">Đã kết nối</span>
-            </>
-          ) : (
-            <>
-              <span className="h-2 w-2 rounded-full bg-amber-500 ring-2 ring-amber-100" />
-              <span className="text-[#1e293b] font-medium text-xs">Bản thử nghiệm</span>
-            </>
-          )}
-        </div>
-
         {/* Active Role Badge */}
         {roleInfo && (
           <div className={`hidden sm:inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold border ${roleInfo.colorClasses.bg} ${roleInfo.colorClasses.text} ${roleInfo.colorClasses.border}`}>

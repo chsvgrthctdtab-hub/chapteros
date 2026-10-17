@@ -10,9 +10,7 @@ import { useCurrentOrg } from '@/features/auth/hooks/useCurrentOrg';
 import { useAuth } from '@/contexts/AuthContext';
 import {
   useDocuments,
-  useDocumentStats,
 } from './queries/document.queries';
-import { DocumentStatsSummary } from './components/DocumentStatsSummary';
 import { DocumentTable } from './components/DocumentTable';
 import { DocumentUploadModal } from './components/DocumentUploadModal';
 import { DocumentDetailDrawer } from './components/DocumentDetailDrawer';
@@ -58,15 +56,6 @@ export function DocumentsPage() {
     refetch,
   } = useDocuments(organizationId, filters);
 
-  const { data: stats, isLoading: isLoadingStats } = useDocumentStats(organizationId);
-
-  // Quick stats filter handler
-  const handleQuickFilter = (filterUpdate: Partial<DocumentFilterParams>) => {
-    setFilters((prev) => ({
-      ...prev,
-      ...filterUpdate,
-    }));
-  };
 
   // If no organization selected
   if (!currentOrg) {
@@ -133,14 +122,6 @@ export function DocumentsPage() {
         </div>
       </div>
 
-      {/* 2. Document Summary Strip */}
-      <DocumentStatsSummary
-        stats={stats}
-        documents={documents}
-        isLoading={isLoadingStats}
-        activeFilter={filters}
-        onFilterChange={handleQuickFilter}
-      />
 
       {/* 3. Document Table */}
       {isLoadingDocs ? (

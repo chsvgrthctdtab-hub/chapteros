@@ -16,8 +16,6 @@ import {
   Layers,
   Eye,
   MoreHorizontal,
-  HardDrive,
-  Cloud,
 } from '@/lib/icons';
 import { Button } from '@/components/ui/button';
 import {
@@ -113,7 +111,7 @@ export function DocumentTable({
         <thead className="bg-cloud text-[11px] font-bold uppercase tracking-wider text-mist-gray border-b border-hairline">
           <tr>
             <th scope="col" className="py-3 px-4 min-w-[260px]">
-              Tài liệu & Nguồn lưu trữ
+              Tài liệu
             </th>
             <th scope="col" className="py-3 px-3 min-w-[90px]">
               Định dạng
@@ -140,16 +138,13 @@ export function DocumentTable({
         </thead>
         <tbody className="divide-y divide-hairline">
           {documents.map((doc) => {
-            const isDriveDoc = doc.sourceType === 'google_drive';
             const ext = getFileExtension(doc.filePath);
             const isDownloading = downloadingId === doc.id;
             const isPreviewing = previewingId === doc.id;
             const isCopied = copiedId === doc.id;
 
             const isLinked = Boolean(doc.termId || doc.activityId || doc.taskId || doc.memberId);
-            const displayFilename = isDriveDoc
-              ? (doc.driveUrl || 'Google Drive Link')
-              : doc.filePath.split('/').pop() || doc.filePath;
+            const displayFilename = doc.filePath.split('/').pop() || doc.filePath;
 
             return (
               <tr
@@ -161,59 +156,21 @@ export function DocumentTable({
                 <td className="py-3 px-4">
                   <div className="flex items-center gap-3">
                     <DocumentFileIcon
-                      filename={isDriveDoc ? (doc.driveUrl || doc.title) : doc.filePath}
+                      filename={doc.filePath || doc.title}
                       mimeType={doc.mimeType}
                       size="md"
                     />
                     <div className="min-w-0">
-                      {isDriveDoc && doc.driveUrl ? (
-                        <a
-                          href={doc.driveUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          onClick={(e) => e.stopPropagation()}
-                          className="font-semibold text-ink-navy line-clamp-1 hover:text-signal-blue hover:underline transition-colors block"
-                          title={doc.title}
-                        >
-                          {doc.title}
-                        </a>
-                      ) : (
-                        <p
-                          className="font-semibold text-ink-navy line-clamp-1 group-hover:text-signal-blue transition-colors"
-                          title={doc.title}
-                        >
-                          {doc.title}
-                        </p>
-                      )}
+                      <p
+                        className="font-semibold text-ink-navy line-clamp-1 group-hover:text-signal-blue transition-colors"
+                        title={doc.title}
+                      >
+                        {doc.title}
+                      </p>
                       <div className="flex items-center gap-1.5 mt-0.5">
-                        {isDriveDoc ? (
-                          <span className="inline-flex items-center gap-0.5 text-[10px] font-semibold text-emerald-700 bg-emerald-50 px-1.5 py-0.2 rounded border border-emerald-200">
-                            <Cloud className="w-2.5 h-2.5" />
-                            <span>Drive</span>
-                          </span>
-                        ) : (
-                          <span className="inline-flex items-center gap-0.5 text-[10px] font-medium text-slate-gray bg-cloud px-1.5 py-0.2 rounded border border-hairline">
-                            <HardDrive className="w-2.5 h-2.5" />
-                            <span>Storage</span>
-                          </span>
-                        )}
-                        {isDriveDoc && doc.driveUrl ? (
-                          <a
-                            href={doc.driveUrl}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            onClick={(e) => e.stopPropagation()}
-                            className="text-[11px] text-signal-blue hover:underline truncate max-w-[220px] font-mono inline-flex items-center gap-0.5"
-                            title={doc.driveUrl}
-                          >
-                            <span className="truncate">{doc.driveUrl}</span>
-                            <ExternalLink className="w-2.5 h-2.5 shrink-0 ml-0.5 text-signal-blue" />
-                          </a>
-                        ) : (
-                          <span className="text-[11px] text-mist-gray truncate max-w-[180px] font-mono">
-                            {displayFilename}
-                          </span>
-                        )}
+                        <span className="text-[11px] text-mist-gray truncate max-w-[240px] font-mono">
+                          {displayFilename}
+                        </span>
                       </div>
                     </div>
                   </div>
@@ -222,7 +179,7 @@ export function DocumentTable({
                 {/* 2. File Format / Type Badge */}
                 <td className="py-3 px-3">
                   <span className="inline-block px-2 py-0.5 rounded text-[11px] font-semibold uppercase bg-cloud text-slate-gray border border-hairline">
-                    {ext ? ext.toUpperCase() : isDriveDoc ? 'G-DOC' : 'FILE'}
+                    {ext ? ext.toUpperCase() : 'FILE'}
                   </span>
                 </td>
 
@@ -310,7 +267,7 @@ export function DocumentTable({
                       onClick={(e) => handlePreview(e, doc)}
                       disabled={isPreviewing}
                       className="h-7 w-7 text-slate-gray hover:text-ink-navy hover:bg-cloud rounded-md cursor-pointer"
-                      title={isDriveDoc ? 'Open on Drive' : 'View file'}
+                      title="Xem tệp"
                     >
                       {isPreviewing ? (
                         <Loader2 className="w-3.5 h-3.5 animate-spin" />
@@ -319,23 +276,21 @@ export function DocumentTable({
                       )}
                     </Button>
 
-                    {/* Quick Download button for Supabase files */}
-                    {!isDriveDoc && (
-                      <Button
-                        size="icon"
-                        variant="ghost"
-                        onClick={(e) => handleDownload(e, doc)}
-                        disabled={isDownloading}
-                        className="h-7 w-7 text-slate-gray hover:text-ink-navy hover:bg-cloud rounded-md cursor-pointer"
-                        title="Download file"
-                      >
-                        {isDownloading ? (
-                          <Loader2 className="w-3.5 h-3.5 animate-spin" />
-                        ) : (
-                          <Download className="w-3.5 h-3.5" />
-                        )}
-                      </Button>
-                    )}
+                    {/* Quick Download button */}
+                    <Button
+                      size="icon"
+                      variant="ghost"
+                      onClick={(e) => handleDownload(e, doc)}
+                      disabled={isDownloading}
+                      className="h-7 w-7 text-slate-gray hover:text-ink-navy hover:bg-cloud rounded-md cursor-pointer"
+                      title="Tải xuống tệp"
+                    >
+                      {isDownloading ? (
+                        <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                      ) : (
+                        <Download className="w-3.5 h-3.5" />
+                      )}
+                    </Button>
 
                     {/* More actions dropdown */}
                     <DropdownMenu>
@@ -351,12 +306,12 @@ export function DocumentTable({
                       <DropdownMenuContent align="end" className="w-44 rounded-xl text-xs">
                         <DropdownMenuItem onClick={() => onSelect(doc)} className="gap-2 cursor-pointer">
                           <Eye className="w-3.5 h-3.5 text-slate-gray" />
-                          <span>View Details</span>
+                          <span>Xem chi tiết</span>
                         </DropdownMenuItem>
 
                         <DropdownMenuItem onClick={(e) => handleCopyLink(e, doc)} className="gap-2 cursor-pointer">
                           {isCopied ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <Copy className="w-3.5 h-3.5 text-slate-gray" />}
-                          <span>{isCopied ? 'Link Copied' : 'Copy Link'}</span>
+                          <span>{isCopied ? 'Đã sao chép' : 'Sao chép liên kết'}</span>
                         </DropdownMenuItem>
 
                         {canManage && (
@@ -370,7 +325,7 @@ export function DocumentTable({
                               className="gap-2 cursor-pointer text-slate-gray"
                             >
                               <Edit3 className="w-3.5 h-3.5 text-slate-gray" />
-                              <span>Edit Metadata</span>
+                              <span>Chỉnh sửa thông tin</span>
                             </DropdownMenuItem>
                             <DropdownMenuItem
                               onClick={(e) => {
@@ -380,7 +335,7 @@ export function DocumentTable({
                               className="gap-2 cursor-pointer text-rose-600 hover:bg-rose-50"
                             >
                               <Trash2 className="w-3.5 h-3.5 text-rose-500" />
-                              <span>{isDriveDoc ? 'Unlink from Drive' : 'Delete File'}</span>
+                              <span>Xóa tệp</span>
                             </DropdownMenuItem>
                           </>
                         )}

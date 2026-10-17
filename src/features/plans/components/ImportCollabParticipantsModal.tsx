@@ -81,7 +81,7 @@ export function ImportCollabParticipantsModal({
     setErrorMessage(null);
     const raw = pastedText.trim();
     if (!raw) {
-      setErrorMessage('Vui lòng dán danh sách từ Google Sheet hoặc Excel trước khi tiếp tục.');
+      setErrorMessage('Vui lòng dán danh sách từ Excel hoặc bảng tính trước khi tiếp tục.');
       return;
     }
 
@@ -337,7 +337,7 @@ export function ImportCollabParticipantsModal({
             <div className="w-8 h-8 rounded-lg bg-[#e6f0ff] text-signal-blue border border-hairline flex items-center justify-center shrink-0">
               <FileSpreadsheet strokeWidth={1.5} className="h-5 w-5" />
             </div>
-            <span>Nhập Danh Sách từ Google Sheet / Excel</span>
+            <span>Nhập Danh Sách từ Excel / Bảng tính</span>
           </DialogTitle>
           <div className="flex items-center gap-2 mt-1.5">
             <Badge className="bg-[#e6f0ff] text-signal-blue border border-hairline text-[10px] px-2.5 py-0.5 font-semibold rounded-full">
@@ -345,7 +345,7 @@ export function ImportCollabParticipantsModal({
             </Badge>
           </div>
           <DialogDescription className="text-xs text-slate-gray mt-1">
-            Copy danh sách theo format chuẩn <strong className="text-ink-navy font-semibold">Họ và tên, MSSV, Lớp, Khóa</strong> từ Google Sheet hoặc Excel và dán trực tiếp. Hệ thống tự động nhận diện và bóc tách dữ liệu tức thì.
+            Copy danh sách theo format chuẩn <strong className="text-ink-navy font-semibold">Họ và tên, MSSV, Lớp, Khóa</strong> từ Excel hoặc bảng tính và dán trực tiếp. Hệ thống tự động nhận diện và bóc tách dữ liệu tức thì.
           </DialogDescription>
         </DialogHeader>
 
@@ -415,7 +415,7 @@ export function ImportCollabParticipantsModal({
             <div className="p-3 bg-pebble rounded-xl border border-hairline flex items-start gap-2 text-xs text-ink-navy">
               <HelpCircle className="h-4 w-4 text-signal-blue shrink-0 mt-0.5" />
               <div className="leading-relaxed text-slate-gray">
-                <span className="font-semibold text-ink-navy">Mẹo sao chép nhanh:</span> Chọn và bôi đen các cột theo thứ tự <code className="bg-white border border-hairline px-1.5 py-0.5 rounded text-ink-navy font-mono">Họ và tên | MSSV | Lớp | Khóa</code> trên Google Sheet rồi nhấn <code className="bg-white border border-hairline px-1.5 py-0.5 rounded text-ink-navy font-mono">Ctrl + C</code> và dán thẳng vào đây. Bạn cũng có thể dán kèm các cột Đơn vị, SĐT nếu có.
+                <span className="font-semibold text-ink-navy">Mẹo sao chép nhanh:</span> Chọn và bôi đen các cột theo thứ tự <code className="bg-white border border-hairline px-1.5 py-0.5 rounded text-ink-navy font-mono">Họ và tên | MSSV | Lớp | Khóa</code> trên bảng tính hoặc Excel rồi nhấn <code className="bg-white border border-hairline px-1.5 py-0.5 rounded text-ink-navy font-mono">Ctrl + C</code> và dán thẳng vào đây. Bạn cũng có thể dán kèm các cột Đơn vị, SĐT nếu có.
               </div>
             </div>
           </div>
