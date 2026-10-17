@@ -15,6 +15,7 @@
     "release:check": "npm run check:all"
   },
   "dependencies": {
+    "@fontsource/inter": "^5.3.0",
     "@google/genai": "^2.4.0",
     "@hookform/resolvers": "^5.8.0",
     "@radix-ui/react-avatar": "^1.2.6",
