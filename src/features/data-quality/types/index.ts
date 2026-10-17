@@ -6,7 +6,6 @@ export type DataQualityCategory =
   | 'activities'
   | 'tasks'
   | 'finance'
-  | 'documents'
   | 'system';
 
 export type DataQualitySeverity = 'critical' | 'warning' | 'info';
@@ -17,7 +16,6 @@ export type DataQualityEntityType =
   | 'activity'
   | 'task'
   | 'finance'
-  | 'document'
   | 'system';
 
 export interface DataQualityIssue {

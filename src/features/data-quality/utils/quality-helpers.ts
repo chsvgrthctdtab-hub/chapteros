@@ -5,7 +5,6 @@ import {
   CalendarCheck,
   CheckSquare,
   Wallet,
-  FolderArchive,
   ShieldCheck,
   AlertTriangle,
   AlertCircle,
@@ -68,15 +67,6 @@ export const CATEGORY_META: Record<DataQualityCategory, CategoryMeta> = {
     borderColor: 'border-teal-200',
     badgeClass: 'bg-teal-50 text-teal-700 border-teal-200',
     route: '/finance',
-  },
-  documents: {
-    label: 'Tài liệu',
-    icon: FolderArchive,
-    color: '#ea580c', // orange-600
-    bgColor: 'bg-orange-50',
-    borderColor: 'border-orange-200',
-    badgeClass: 'bg-orange-50 text-orange-700 border-orange-200',
-    route: '/documents',
   },
   system: {
     label: 'Hệ thống',
@@ -171,7 +161,6 @@ export function getEntityDisplayName(type: DataQualityEntityType): string {
     activity: 'Hoạt động',
     task: 'Công việc',
     finance: 'Tài chính',
-    document: 'Tài liệu',
     system: 'Hệ thống',
   };
   return map[type] || type;

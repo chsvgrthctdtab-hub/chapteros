@@ -4,7 +4,6 @@ import { termQualityChecker } from './term.checker';
 import { activityQualityChecker } from './activity.checker';
 import { taskQualityChecker } from './task.checker';
 import { financeQualityChecker } from './finance.checker';
-import { documentQualityChecker } from './document.checker';
 
 export {
   memberQualityChecker,
@@ -12,7 +11,6 @@ export {
   activityQualityChecker,
   taskQualityChecker,
   financeQualityChecker,
-  documentQualityChecker,
 };
 
 export const QUALITY_CHECKERS: Record<DataQualityCategory, DataQualityChecker | null> = {
@@ -21,7 +19,6 @@ export const QUALITY_CHECKERS: Record<DataQualityCategory, DataQualityChecker | 
   activities: activityQualityChecker,
   tasks: taskQualityChecker,
   finance: financeQualityChecker,
-  documents: documentQualityChecker,
   system: null,
 };
 
@@ -31,5 +28,4 @@ export const ALL_CHECKERS: DataQualityChecker[] = [
   activityQualityChecker,
   taskQualityChecker,
   financeQualityChecker,
-  documentQualityChecker,
 ];

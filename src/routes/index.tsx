@@ -10,7 +10,6 @@ import { ActivityDetailPage } from '@/features/activities/ActivityDetailPage';
 import { TasksPage } from '@/features/tasks/TasksPage';
 import { TaskDetailPage } from '@/features/tasks/TaskDetailPage';
 import { FinancePage } from '@/features/finance/FinancePage';
-import { DocumentsPage } from '@/features/documents/DocumentsPage';
 import { ReportsPage } from '@/features/reports/ReportsPage';
 import { SettingsPage } from '@/features/settings/SettingsPage';
 import { AuditLogsPage } from '@/features/audit-logs/AuditLogsPage';
@@ -93,7 +92,6 @@ export function AppRoutes() {
         <Route path="tasks/:id" element={<TaskDetailPage />} />
         <Route path="finance" element={<FinancePage />} />
         <Route path="funds" element={<FinancePage />} />
-        <Route path="documents" element={<DocumentsPage />} />
         <Route path="reports" element={<ReportsPage />} />
         <Route path="data-quality" element={<DataQualityPage />} />
         <Route path="settings" element={<SettingsPage />} />

@@ -7,7 +7,6 @@ import {
   CheckSquare,
   Wallet,
   FileSpreadsheet,
-  FileText,
   ArrowRightLeft,
   CheckCircle,
   Edit2,
@@ -486,24 +485,6 @@ export function TermDetailDrawer({
                 )}
               </div>
 
-              {/* Handover & Resolution Documents */}
-              <div className="rounded-xl border border-hairline bg-white p-4 space-y-3">
-                <div className="flex items-center justify-between">
-                  <h4 className="text-xs font-bold uppercase tracking-wider text-mist-gray flex items-center gap-1.5">
-                    <FileText className="h-3.5 w-3.5 text-teal-600" />
-                    Hồ sơ & Văn bản Đơn vị
-                  </h4>
-                  <Link
-                    to={`/documents?term=${term.id}`}
-                    className="text-xs font-medium text-teal-700 hover:underline"
-                  >
-                    Mở kho Văn bản →
-                  </Link>
-                </div>
-                <p className="text-xs text-slate-gray leading-relaxed">
-                  Truy cập các nghị quyết, biên bản bàn giao, quyết định kiện toàn và chứng từ phát sinh trong nhiệm kỳ này.
-                </p>
-              </div>
 
               {/* Closing Audit Info (if applicable) */}
               {snapshot && (

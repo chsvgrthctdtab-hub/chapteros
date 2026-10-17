@@ -10,7 +10,6 @@ import {
   CalendarPlus,
   CheckSquare,
   DollarSign,
-  FileUp,
   Sparkles,
 } from '@/lib/icons';
 import { Button } from '@/components/ui/button';
@@ -37,7 +36,6 @@ interface DashboardHeaderProps {
   canManageActivities?: boolean;
   canManageTasks?: boolean;
   canManageFinance?: boolean;
-  canManageDocuments?: boolean;
 }
 
 const ROLE_DISPLAY_NAMES: Record<string, string> = {
@@ -71,14 +69,13 @@ export function DashboardHeader({
   canManageActivities = false,
   canManageTasks = false,
   canManageFinance = false,
-  canManageDocuments = false,
 }: DashboardHeaderProps) {
   const selectedTerm = terms.find((t) => t.id === selectedTermId) || terms.find((t) => t.isCurrent);
   const roleName = ROLE_DISPLAY_NAMES[userRole] || userRole;
   const formattedDate = formatVietnameseCurrentDate();
 
   const hasAnyQuickAction =
-    canManageMembers || canManageActivities || canManageTasks || canManageFinance || canManageDocuments;
+    canManageMembers || canManageActivities || canManageTasks || canManageFinance;
 
   return (
     <div className="space-y-4">
@@ -211,18 +208,6 @@ export function DashboardHeader({
                 >
                   <DollarSign size={15} className="mr-1.5 text-white" />
                   <span>Transaction</span>
-                </Button>
-              </Link>
-            )}
-
-            {canManageDocuments && (
-              <Link to="/documents">
-                <Button
-                  size="sm"
-                  className="bg-white hover:bg-[#dbeafe] text-[#1e293b] text-xs sm:text-sm h-8 px-3.5 border border-[#c2e7ff] rounded-full cursor-pointer font-medium shadow-2xs"
-                >
-                  <FileUp size={15} className="mr-1.5 text-teal-600" />
-                  <span>Document</span>
                 </Button>
               </Link>
             )}

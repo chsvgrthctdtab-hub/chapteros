@@ -26,7 +26,6 @@ const CATEGORIES: DataQualityCategory[] = [
   'activities',
   'tasks',
   'finance',
-  'documents',
   'system',
 ];
 
@@ -40,11 +39,11 @@ export function getAccessibleQualityCategories(
 
   const normalized = role.toLowerCase();
   if (['admin', 'leader', 'deputy'].includes(normalized)) {
-    return ['members', 'terms', 'activities', 'tasks', 'finance', 'documents', 'system'];
+    return ['members', 'terms', 'activities', 'tasks', 'finance', 'system'];
   }
 
   if (normalized === 'secretary') {
-    return ['members', 'terms', 'activities', 'tasks', 'documents', 'system'];
+    return ['members', 'terms', 'activities', 'tasks', 'system'];
   }
 
   if (normalized === 'treasurer') {
@@ -227,7 +226,6 @@ export const dataQualityService = {
           activities: { total: 0, critical: 0, warning: 0, info: 0 },
           tasks: { total: 0, critical: 0, warning: 0, info: 0 },
           finance: { total: 0, critical: 0, warning: 0, info: 0 },
-          documents: { total: 0, critical: 0, warning: 0, info: 0 },
           system: { total: 0, critical: 0, warning: 0, info: 0 },
         },
       };
@@ -245,7 +243,6 @@ export const dataQualityService = {
       activities: { total: 0, critical: 0, warning: 0, info: 0 },
       tasks: { total: 0, critical: 0, warning: 0, info: 0 },
       finance: { total: 0, critical: 0, warning: 0, info: 0 },
-      documents: { total: 0, critical: 0, warning: 0, info: 0 },
       system: { total: 0, critical: 0, warning: 0, info: 0 },
     };
 

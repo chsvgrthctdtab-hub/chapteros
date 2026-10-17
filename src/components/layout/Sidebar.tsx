@@ -7,7 +7,6 @@ import {
   CheckSquare,
   Users,
   Wallet,
-  FileText,
   BarChart3,
   CalendarRange,
   ShieldCheck,
@@ -34,7 +33,6 @@ const NAV_ICON_COLORS: Record<string, { icon: string; bg: string }> = {
   '/tasks':       { icon: '#2e64de', bg: '#eff6ff' },
   '/members':     { icon: '#d97706', bg: '#fff7ed' },
   '/finance':     { icon: '#ce7918', bg: '#fffbeb' },
-  '/documents':   { icon: '#c43d92', bg: '#fff1f2' },
   '/reports':     { icon: '#6858d2', bg: '#f5f3ff' },
   '/terms':       { icon: '#4f46e5', bg: '#eef2ff' },
   '/data-quality':{ icon: '#059669', bg: '#ecfdf5' },
@@ -57,7 +55,6 @@ const operationsNavItems: NavItem[] = [
   { name: 'Nhiệm vụ',   href: '/tasks',       icon: CheckSquare },
   { name: 'Hội viên',   href: '/members',     icon: Users },
   { name: 'Tài chính',  href: '/finance',     icon: Wallet },
-  { name: 'Văn bản',    href: '/documents',   icon: FileText },
   { name: 'Báo cáo',    href: '/reports',     icon: BarChart3 },
 ];
 

@@ -24,7 +24,6 @@ export function DataQualityCategoryChart({
       'activities',
       'tasks',
       'finance',
-      'documents',
     ];
 
     return categories

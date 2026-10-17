@@ -6,7 +6,6 @@ import {
   CalendarCheck,
   CheckSquare,
   Wallet,
-  FolderArchive,
   ArrowRight,
 } from '@/lib/icons';
 
@@ -50,14 +49,6 @@ const QUICK_MODULES = [
     icon: Wallet,
     color: 'text-teal-600',
     bg: 'bg-teal-50',
-  },
-  {
-    title: 'Tài liệu',
-    desc: 'Kiểm tra link Google Drive',
-    href: '/documents',
-    icon: FolderArchive,
-    color: 'text-orange-600',
-    bg: 'bg-orange-50',
   },
 ];
 

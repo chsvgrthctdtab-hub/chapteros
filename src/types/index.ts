@@ -25,11 +25,6 @@ import type {
   PeriodClosingType,
   PeriodClosingStatus,
   ReconciliationStatus,
-  DocumentCategory,
-  DocumentAccessLevel,
-  DocumentSourceType,
-  GoogleConnectionStatus,
-  GoogleConnectionType,
 } from './database.types';
 
 // ==============================================================================
@@ -432,67 +427,6 @@ export interface FinancePeriodClosing {
   createdAt: string;
   updatedAt: string;
   term?: Term;
-}
-
-// Document (Tài liệu / Văn bản)
-export interface Document {
-  id: string;
-  organizationId: string;
-  termId?: string | null;
-  activityId?: string | null;
-  memberId?: string | null;
-  taskId?: string | null;
-  title: string;
-  category: DocumentCategory;
-  sourceType: DocumentSourceType;
-  filePath: string;
-  driveFileId?: string | null;
-  driveUrl?: string | null;
-  fileIconUrl?: string | null;
-  thumbnailUrl?: string | null;
-  isFolder?: boolean;
-  fileSize?: number | null;
-  mimeType?: string | null;
-  accessLevel: DocumentAccessLevel;
-  uploadedBy?: string | null;
-  linkedBy?: string | null;
-  metadata?: Record<string, unknown>;
-  createdAt: string;
-  updatedAt: string;
-  uploader?: Profile;
-}
-
-// Google Integration & OAuth Connection Models
-export interface GoogleConnection {
-  id: string;
-  userId?: string | null;
-  organizationId?: string | null;
-  connectionType: GoogleConnectionType;
-  googleAccountId?: string | null;
-  googleEmail: string;
-  googleName?: string | null;
-  googleAvatarUrl?: string | null;
-  status: GoogleConnectionStatus;
-  grantedScopes: string[];
-  tokenExpiresAt?: string | null;
-  lastVerifiedAt: string;
-  errorMessage?: string | null;
-  metadata?: Record<string, unknown>;
-  createdAt: string;
-  updatedAt: string;
-}
-
-// Google Service Readiness for Phase 9 & upcoming phases
-export type GoogleServiceKey = 'identity' | 'drive' | 'sheets' | 'forms' | 'calendar';
-
-export interface GoogleServiceInfo {
-  key: GoogleServiceKey;
-  name: string;
-  description: string;
-  iconName: string;
-  requiredScopes: string[];
-  status: 'ready' | 'connected' | 'requires_auth' | 'planned';
-  badge: string;
 }
 
 // Navigation & UI types

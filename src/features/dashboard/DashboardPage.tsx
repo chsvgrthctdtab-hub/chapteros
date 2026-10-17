@@ -113,7 +113,6 @@ export function DashboardPage() {
   const canManageActivities = isAdmin || isBoard;
   const canManageTasks = isAdmin || isBoard;
   const canManageFinance = isBoard;
-  const canManageDocuments = isAdmin || isBoard;
 
   const displayName =
     (profile as any)?.fullName ||
@@ -167,7 +166,6 @@ export function DashboardPage() {
         canManageActivities={canManageActivities}
         canManageTasks={canManageTasks}
         canManageFinance={canManageFinance}
-        canManageDocuments={canManageDocuments}
       />
 
       {/* TẦNG 1: Executive / KPI Summary & Attention Alerts */}

@@ -78,7 +78,7 @@ export function DataQualityHero({
               Data Quality Hub
             </h1>
             <p className="text-sm sm:text-base text-mist-gray leading-relaxed">
-              Data integrity and governance checks across members, terms, activities, tasks, finance and documents.
+              Data integrity and governance checks across members, terms, activities, tasks, and finance.
             </p>
           </div>
 

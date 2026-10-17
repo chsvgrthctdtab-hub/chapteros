@@ -165,7 +165,7 @@ export function canCloseFinancePeriod(role?: OrganizationRole | null): boolean {
 }
 
 /**
- * Check if the role has document/administrative access
+ * Check if the role has secretarial/administrative access
  */
 export function isOrgSecretary(role?: OrganizationRole | null): boolean {
   if (!role) return false;

@@ -71,7 +71,6 @@ export function DataQualityIssueList({
     { id: 'activities', label: 'Hoạt động' },
     { id: 'tasks', label: 'Công việc' },
     { id: 'finance', label: 'Tài chính' },
-    { id: 'documents', label: 'Tài liệu' },
   ];
 
   const severities: Array<{ id: DataQualitySeverity | 'all'; label: string }> = [

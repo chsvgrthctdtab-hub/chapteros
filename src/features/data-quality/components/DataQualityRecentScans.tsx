@@ -8,7 +8,6 @@ import {
   CalendarCheck,
   CheckSquare,
   Wallet,
-  FolderArchive,
   Search,
 } from '@/lib/icons';
 import type { DataQualitySummary } from '../types';
@@ -59,14 +58,6 @@ const CHECKER_MODULES = [
     color: 'text-teal-600',
     bg: 'bg-teal-50',
   },
-  {
-    category: 'documents' as const,
-    name: 'Kiểm soát Hồ sơ & Lưu trữ',
-    desc: 'Đường dẫn liên kết, phân loại văn bản',
-    icon: FolderArchive,
-    color: 'text-orange-600',
-    bg: 'bg-orange-50',
-  },
 ];
 
 export function DataQualityRecentScans({ summary }: DataQualityRecentScansProps) {
@@ -77,7 +68,7 @@ export function DataQualityRecentScans({ summary }: DataQualityRecentScansProps)
           <Activity className="w-4 h-4 text-signal-blue" />
           <span>Bộ máy rà soát tự động</span>
         </h2>
-        <p className="text-xs text-mist-gray">Trạng thái 6 module kiểm toán dữ liệu</p>
+        <p className="text-xs text-mist-gray">Trạng thái 5 module kiểm toán dữ liệu</p>
       </div>
 
       <div className="space-y-2.5">

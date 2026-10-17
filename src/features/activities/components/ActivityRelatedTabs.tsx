@@ -5,7 +5,6 @@ import {
   CheckCircle2,
   CheckSquare,
   DollarSign,
-  FolderArchive,
   MapPin,
   Tag,
   UserCheck,
@@ -31,7 +30,6 @@ import { ParticipantListTable } from './ParticipantListTable';
 import { ActivityTasksSection } from '@/features/tasks/components/ActivityTasksSection';
 import { TaskFormModal } from '@/features/tasks/components/TaskFormModal';
 import { ActivityFinanceSection } from '@/features/finance/components/ActivityFinanceSection';
-import { ActivityDocumentsSection } from '@/features/documents/components/ActivityDocumentsSection';
 import {
   useTaskAssignees,
   useTaskTerms,
@@ -90,8 +88,7 @@ export type TabType =
   | 'overview'
   | 'participants'
   | 'tasks'
-  | 'finance'
-  | 'documents';
+  | 'finance';
 
 export function ActivityRelatedTabs({
   activity,
@@ -153,7 +150,6 @@ export function ActivityRelatedTabs({
     },
     { id: 'tasks' as const, label: 'Nhiệm vụ', icon: CheckSquare },
     { id: 'finance' as const, label: 'Thu chi', icon: DollarSign },
-    { id: 'documents' as const, label: 'Tài liệu', icon: FolderArchive },
   ];
 
   return (
@@ -607,19 +603,6 @@ export function ActivityRelatedTabs({
         {activeTab === 'finance' && (
           <div className="space-y-4">
             <ActivityFinanceSection
-              activityId={activity.id}
-              activityTitle={activity.title}
-              organizationId={activity.organizationId}
-              canManage={canManage && !isLocked}
-            />
-          </div>
-        )}
-
-
-        {/* 7. DOCUMENTS TAB */}
-        {activeTab === 'documents' && (
-          <div className="space-y-4">
-            <ActivityDocumentsSection
               activityId={activity.id}
               activityTitle={activity.title}
               organizationId={activity.organizationId}
