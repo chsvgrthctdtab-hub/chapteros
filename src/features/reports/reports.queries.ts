@@ -34,7 +34,7 @@ export function useReportOverview(organizationId?: string, termId?: string) {
     queryKey: reportKeys.overview(organizationId, termId),
     enabled: Boolean(organizationId),
     queryFn: () => reportService.getOverview(organizationId!, { termId }),
-    staleTime: 1000 * 30, // 30 seconds
+    staleTime: 1000 * 60 * 3, // 3 minutes
   });
 }
 
@@ -46,7 +46,7 @@ export function useReportMemberStats(organizationId?: string, termId?: string) {
     queryKey: reportKeys.members(organizationId, termId),
     enabled: Boolean(organizationId),
     queryFn: () => reportService.getMemberStatistics(organizationId!, { termId }),
-    staleTime: 1000 * 30,
+    staleTime: 1000 * 60 * 3, // 3 minutes
   });
 }
 
@@ -58,7 +58,7 @@ export function useReportTermStats(organizationId?: string) {
     queryKey: reportKeys.terms(organizationId),
     enabled: Boolean(organizationId),
     queryFn: () => reportService.getTermStatistics(organizationId!),
-    staleTime: 1000 * 60, // 1 minute
+    staleTime: 1000 * 60 * 5, // 5 minutes
   });
 }
 
@@ -73,7 +73,7 @@ export function useReportActivityStats(
     queryKey: reportKeys.activities(organizationId, params),
     enabled: Boolean(organizationId),
     queryFn: () => reportService.getActivityStatistics(organizationId!, params),
-    staleTime: 1000 * 30,
+    staleTime: 1000 * 60 * 3, // 3 minutes
   });
 }
 
@@ -88,7 +88,7 @@ export function useReportTaskStats(
     queryKey: reportKeys.tasks(organizationId, params),
     enabled: Boolean(organizationId),
     queryFn: () => reportService.getTaskStatistics(organizationId!, params),
-    staleTime: 1000 * 30,
+    staleTime: 1000 * 60 * 3, // 3 minutes
   });
 }
 
@@ -103,6 +103,6 @@ export function useReportFundStats(
     queryKey: reportKeys.funds(organizationId, params),
     enabled: Boolean(organizationId),
     queryFn: () => reportService.getFundStatistics(organizationId!, params),
-    staleTime: 1000 * 30,
+    staleTime: 1000 * 60 * 3, // 3 minutes
   });
 }

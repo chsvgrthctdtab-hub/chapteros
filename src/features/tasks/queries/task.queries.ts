@@ -40,6 +40,7 @@ export function useTasksList(organizationId?: string, params: TaskFilterParams =
       return taskService.listTasks(organizationId, params);
     },
     enabled: Boolean(organizationId),
+    staleTime: 1000 * 60 * 2, // 2 minutes
   });
 }
 
@@ -108,6 +109,7 @@ export function useTaskAssignees(organizationId?: string) {
       return taskService.getTaskAssignees(organizationId);
     },
     enabled: Boolean(organizationId),
+    staleTime: 1000 * 60 * 5, // 5 minutes
   });
 }
 
@@ -122,6 +124,7 @@ export function useTaskActivities(organizationId?: string, termId?: string) {
       return taskService.getTaskActivities(organizationId, termId);
     },
     enabled: Boolean(organizationId),
+    staleTime: 1000 * 60 * 2, // 2 minutes
   });
 }
 
@@ -136,5 +139,6 @@ export function useTaskTerms(organizationId?: string) {
       return taskService.getTaskTerms(organizationId);
     },
     enabled: Boolean(organizationId),
+    staleTime: 1000 * 60 * 5, // 5 minutes
   });
 }

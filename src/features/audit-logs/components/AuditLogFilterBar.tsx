@@ -20,6 +20,7 @@ import {
 import dayjs from 'dayjs';
 import type { AuditLogFilterParams } from '../types/audit-log.types';
 import { AUDIT_MODULE_CONFIG } from '../utils/audit-log-formatter';
+import { useDebouncedSearch } from '@/hooks';
 
 interface AuditLogFilterBarProps {
   filters: AuditLogFilterParams;
@@ -55,6 +56,17 @@ export function AuditLogFilterBar({
     Boolean(filters.dateFrom),
     Boolean(filters.dateTo),
   ].filter(Boolean).length;
+
+  const {
+    query: searchQuery,
+    handleChange: handleSearchChange,
+    handleClear: handleSearchClear,
+    handleKeyDown: handleSearchKeyDown,
+  } = useDebouncedSearch({
+    initialValue: filters.search || '',
+    delay: 300,
+    onSearch: (search) => onFilterChange({ search, page: 1 }),
+  });
 
   const handleDatePreset = (preset: 'today' | '7days' | '30days' | 'all') => {
     const today = dayjs().format('YYYY-MM-DD');
@@ -125,15 +137,16 @@ export function AuditLogFilterBar({
         <div className="sm:col-span-2 lg:col-span-4 relative">
           <Search className="w-4 h-4 text-mist-gray absolute left-3 top-1/2 -translate-y-1/2" />
           <Input
-            value={filters.search || ''}
-            onChange={(e) => onFilterChange({ search: e.target.value, page: 1 })}
+            value={searchQuery}
+            onChange={handleSearchChange}
+            onKeyDown={handleSearchKeyDown}
             placeholder="Tìm theo hành động, tên, ID..."
             className="pl-9 pr-8 text-xs h-9 border-hairline bg-white"
           />
-          {filters.search && (
+          {searchQuery && (
             <button
               type="button"
-              onClick={() => onFilterChange({ search: '', page: 1 })}
+              onClick={handleSearchClear}
               className="absolute right-2.5 top-1/2 -translate-y-1/2 text-mist-gray hover:text-slate-gray cursor-pointer"
             >
               <X className="w-3.5 h-3.5" />

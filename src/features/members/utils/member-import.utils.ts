@@ -1,4 +1,3 @@
-import * as XLSX from 'xlsx';
 import { inferMajorFromText } from './major.utils';
 
 export interface ImportedMemberRow {
@@ -49,7 +48,8 @@ function parseDate(value: string): string | undefined {
   return undefined;
 }
 
-export function parseFileToRows(file: File): Promise<Record<string, string>[]> {
+export async function parseFileToRows(file: File): Promise<Record<string, string>[]> {
+  const XLSX = await import('xlsx');
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
     reader.onload = (e) => {
@@ -101,7 +101,8 @@ export function validateImportRows(rows: Record<string, string>[]): ImportValida
   return { valid, errors };
 }
 
-export function downloadTemplateFile() {
+export async function downloadTemplateFile() {
+  const XLSX = await import('xlsx');
   const wb = XLSX.utils.book_new();
   const ws = XLSX.utils.aoa_to_sheet([
     ['Họ và tên', 'MSSV', 'Lớp', 'Khóa', 'Email', 'Số điện thoại', 'Ngành', 'Ngày tham gia', 'Ghi chú'],

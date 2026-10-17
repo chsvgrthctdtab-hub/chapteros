@@ -22,6 +22,7 @@ import type {
   FinanceActivityOption,
   TransactionStatus,
 } from '../types/finance.types';
+import { useDebouncedSearch } from '@/hooks';
 
 interface FinanceFiltersProps {
   filters: FinanceFilterParams;
@@ -58,6 +59,17 @@ export function FinanceFilters({
     Boolean(filters.startDate) ||
     Boolean(filters.endDate);
 
+  const {
+    query: searchQuery,
+    handleChange: handleSearchChange,
+    handleClear: handleSearchClear,
+    handleKeyDown: handleSearchKeyDown,
+  } = useDebouncedSearch({
+    initialValue: filters.search || '',
+    delay: 300,
+    onSearch: (search) => onFilterChange({ search, page: 1 }),
+  });
+
   return (
     <div className="bg-white rounded-2xl border border-[#e2e8f0] shadow-xs p-3 space-y-3">
       {/* Primary Toolbar Row */}
@@ -68,13 +80,14 @@ export function FinanceFilters({
           <input
             type="text"
             placeholder="Tìm kiếm phiếu thu/chi theo nội dung, mã, người lập..."
-            value={filters.search || ''}
-            onChange={(e) => onFilterChange({ search: e.target.value, page: 1 })}
+            value={searchQuery}
+            onChange={handleSearchChange}
+            onKeyDown={handleSearchKeyDown}
             className="w-full pl-9 pr-8 py-1.5 text-xs bg-[#f8fafd] border border-[#e2e8f0] rounded-full focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#2e89f7]/20 focus:border-[#2e89f7] text-[#1e293b] placeholder:text-[#94a3b8] transition-all font-medium"
           />
-          {filters.search && (
+          {searchQuery && (
             <button
-              onClick={() => onFilterChange({ search: '', page: 1 })}
+              onClick={handleSearchClear}
               className="absolute right-3 top-1/2 -translate-y-1/2 text-[#94a3b8] hover:text-[#1e293b] p-0.5 rounded-full cursor-pointer"
             >
               <X size={14} />

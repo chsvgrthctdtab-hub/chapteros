@@ -90,6 +90,7 @@ export function useFinanceCategories(organizationId?: string, type?: FinanceType
       if (!organizationId) return [];
       return financeService.listCategories(organizationId, type);
     },
+    staleTime: 1000 * 60 * 5, // 5 minutes
   });
 }
 
@@ -115,6 +116,7 @@ export function useFinanceTransactions(
       }
       return financeService.listTransactions(organizationId, filters);
     },
+    staleTime: 1000 * 60 * 1, // 1 minute
   });
 }
 
@@ -149,6 +151,7 @@ export function useFinanceSummary(
       }
       return financeService.getFinanceSummary(organizationId, filters);
     },
+    staleTime: 1000 * 60 * 1, // 1 minute
   });
 }
 
@@ -163,6 +166,7 @@ export function useFinanceTerms(organizationId?: string) {
       if (!organizationId) return [];
       return financeService.getFinanceTerms(organizationId);
     },
+    staleTime: 1000 * 60 * 5, // 5 minutes
   });
 }
 
@@ -177,6 +181,7 @@ export function useFinanceActivities(organizationId?: string, termId?: string) {
       if (!organizationId) return [];
       return financeService.getFinanceActivities(organizationId, termId);
     },
+    staleTime: 1000 * 60 * 2, // 2 minutes
   });
 }
 

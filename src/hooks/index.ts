@@ -5,3 +5,5 @@ export * from './useMembers';
 export * from './useActivities';
 export * from './useTasks';
 export * from './useFinance';
+export * from './useDebounce';
+export * from './useDebouncedSearch';

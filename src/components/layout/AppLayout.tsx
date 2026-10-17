@@ -1,7 +1,8 @@
-import { useState } from 'react';
+import { useState, Suspense } from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
 import { Sidebar } from './Sidebar';
 import { Header } from './Header';
+import { PageLoadingFallback } from '@/components/common/PageLoadingFallback';
 
 export function AppLayout() {
   const location = useLocation();
@@ -45,7 +46,9 @@ export function AppLayout() {
           className="flex-1 min-h-0 overflow-y-auto px-4 sm:px-6 lg:px-8 py-5 sm:py-6"
         >
           <div key={location.pathname} className="w-full animate-in fade-in-50 duration-200 ease-out">
-            <Outlet />
+            <Suspense fallback={<PageLoadingFallback />}>
+              <Outlet />
+            </Suspense>
           </div>
         </main>
       </div>

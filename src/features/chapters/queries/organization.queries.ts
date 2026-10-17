@@ -40,7 +40,7 @@ export function useOrganizationDetail(organizationId?: string) {
       return organizationService.getOrganizationById(organizationId);
     },
     enabled: Boolean(organizationId),
-    staleTime: 1000 * 60, // 1 min
+    staleTime: 1000 * 60 * 5, // 5 min
   });
 }
 
@@ -55,7 +55,7 @@ export function useOrganizationMemberships(organizationId?: string) {
       return organizationService.getMemberships(organizationId);
     },
     enabled: Boolean(organizationId),
-    staleTime: 1000 * 30, // 30s
+    staleTime: 1000 * 60 * 2, // 2 min
   });
 }
 
@@ -70,7 +70,7 @@ export function useUserOrganizations(userId?: string) {
       return organizationService.getUserOrganizations(userId);
     },
     enabled: Boolean(userId),
-    staleTime: 1000 * 60,
+    staleTime: 1000 * 60 * 5, // 5 min
   });
 }
 

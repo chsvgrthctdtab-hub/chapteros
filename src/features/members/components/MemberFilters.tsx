@@ -17,6 +17,7 @@ import {
   SelectItem,
 } from '@/components/ui/select';
 import { useLanguage } from '@/contexts/LanguageContext';
+import { useDebouncedSearch } from '@/hooks';
 import { MEMBER_STATUSES } from '../types/member.types';
 import type { MemberFilterParams } from '../types/member.types';
 import type { Term } from '@/types';
@@ -51,6 +52,17 @@ export function MemberFilters({
       (filters.sortBy && filters.sortBy !== 'created_at')
   );
 
+  const {
+    query: searchQuery,
+    handleChange: handleSearchChange,
+    handleClear: handleSearchClear,
+    handleKeyDown: handleSearchKeyDown,
+  } = useDebouncedSearch({
+    initialValue: filters.search || '',
+    delay: 300,
+    onSearch: (search) => onFilterChange({ search, page: 1 }),
+  });
+
   return (
     <div className="bg-white border border-[#e2e8f0] rounded-2xl p-4 sm:p-5 shadow-xs space-y-4">
       {/* Top row: Search, Dropdowns, View Switcher */}
@@ -65,13 +77,14 @@ export function MemberFilters({
                 ? 'Tìm theo họ tên, MSSV, lớp, email...'
                 : 'Search by name, student ID, class, email...'
             }
-            value={filters.search || ''}
-            onChange={(e) => onFilterChange({ search: e.target.value, page: 1 })}
+            value={searchQuery}
+            onChange={handleSearchChange}
+            onKeyDown={handleSearchKeyDown}
             className="pl-9 pr-9 text-xs h-9 bg-[#f8fafd] border-[#e2e8f0] text-[#1e293b] placeholder:text-[#94a3b8] hover:border-[#b8cce0] hover:bg-white focus:bg-white focus:outline-hidden focus:ring-2 focus:ring-[#2e89f7]/20 focus:border-[#2e89f7] transition-all rounded-full font-medium"
           />
-          {filters.search && (
+          {searchQuery && (
             <button
-              onClick={() => onFilterChange({ search: '', page: 1 })}
+              onClick={handleSearchClear}
               className="absolute right-3 top-1/2 -translate-y-1/2 text-[#94a3b8] hover:text-[#1e293b] p-0.5 rounded-full cursor-pointer"
               title={language === 'vi' ? 'Xóa tìm kiếm' : 'Clear search'}
             >

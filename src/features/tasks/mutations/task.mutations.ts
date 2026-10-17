@@ -105,25 +105,51 @@ export function useUpdateTaskStatus() {
     },
     onMutate: async ({ taskId, organizationId, status, progress }) => {
       await queryClient.cancelQueries({ queryKey: taskKeys.detail(organizationId, taskId) });
+      await queryClient.cancelQueries({ queryKey: taskKeys.lists(organizationId) });
       const previousTask = queryClient.getQueryData(taskKeys.detail(organizationId, taskId));
+      const previousLists = queryClient.getQueriesData({ queryKey: taskKeys.lists(organizationId) });
+
+      const nextProgress = (old: any) =>
+        progress !== undefined
+          ? progress
+          : status === 'completed'
+          ? 100
+          : status === 'todo'
+          ? 0
+          : old?.progress ?? 0;
 
       if (previousTask) {
         queryClient.setQueryData(taskKeys.detail(organizationId, taskId), (old: any) => {
           if (!old) return old;
-          const nextProgress = progress !== undefined ? progress : (status === 'completed' ? 100 : (status === 'todo' ? 0 : old.progress));
           return {
             ...old,
             status,
-            progress: nextProgress,
+            progress: nextProgress(old),
           };
         });
       }
 
-      return { previousTask };
+      // Optimistically update all active task lists (table, kanban, cards)
+      queryClient.setQueriesData({ queryKey: taskKeys.lists(organizationId) }, (old: any) => {
+        if (!old?.data || !Array.isArray(old.data)) return old;
+        return {
+          ...old,
+          data: old.data.map((t: any) =>
+            t.id === taskId ? { ...t, status, progress: nextProgress(t) } : t
+          ),
+        };
+      });
+
+      return { previousTask, previousLists };
     },
     onError: (_err, variables, context) => {
       if (context?.previousTask) {
         queryClient.setQueryData(taskKeys.detail(variables.organizationId, variables.taskId), context.previousTask);
+      }
+      if (context?.previousLists) {
+        context.previousLists.forEach(([queryKey, data]) => {
+          queryClient.setQueryData(queryKey, data);
+        });
       }
     },
     onSuccess: (_, variables) => {
@@ -154,7 +180,9 @@ export function useUpdateTaskProgress() {
     },
     onMutate: async ({ taskId, organizationId, progress, status }) => {
       await queryClient.cancelQueries({ queryKey: taskKeys.detail(organizationId, taskId) });
+      await queryClient.cancelQueries({ queryKey: taskKeys.lists(organizationId) });
       const previousTask = queryClient.getQueryData(taskKeys.detail(organizationId, taskId));
+      const previousLists = queryClient.getQueriesData({ queryKey: taskKeys.lists(organizationId) });
 
       if (previousTask) {
         queryClient.setQueryData(taskKeys.detail(organizationId, taskId), (old: any) => {
@@ -167,11 +195,33 @@ export function useUpdateTaskProgress() {
         });
       }
 
-      return { previousTask };
+      // Optimistically update all active task lists
+      queryClient.setQueriesData({ queryKey: taskKeys.lists(organizationId) }, (old: any) => {
+        if (!old?.data || !Array.isArray(old.data)) return old;
+        return {
+          ...old,
+          data: old.data.map((t: any) =>
+            t.id === taskId
+              ? {
+                  ...t,
+                  progress,
+                  status: status || (progress === 100 ? 'completed' : t.status),
+                }
+              : t
+          ),
+        };
+      });
+
+      return { previousTask, previousLists };
     },
     onError: (_err, variables, context) => {
       if (context?.previousTask) {
         queryClient.setQueryData(taskKeys.detail(variables.organizationId, variables.taskId), context.previousTask);
+      }
+      if (context?.previousLists) {
+        context.previousLists.forEach(([queryKey, data]) => {
+          queryClient.setQueryData(queryKey, data);
+        });
       }
     },
     onSuccess: (_, variables) => {

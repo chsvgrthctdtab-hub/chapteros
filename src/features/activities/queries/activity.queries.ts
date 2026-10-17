@@ -38,7 +38,7 @@ export function useActivitiesList(organizationId?: string, params: ActivityFilte
       return activityService.listActivities(organizationId, params);
     },
     enabled: Boolean(organizationId),
-    staleTime: 1000 * 20, // 20 seconds
+    staleTime: 1000 * 60 * 2, // 2 minutes
   });
 }
 
@@ -119,6 +119,7 @@ export function useActivityTerms(organizationId?: string) {
       return activityService.getOrgTerms(organizationId);
     },
     enabled: Boolean(organizationId),
+    staleTime: 1000 * 60 * 5, // 5 minutes
   });
 }
 

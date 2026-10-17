@@ -51,7 +51,7 @@ export function useDashboardStats(organizationId?: string, termId?: string) {
     queryKey: dashboardKeys.stats(organizationId, termId),
     enabled: Boolean(organizationId),
     queryFn: () => fetchDashboardStats(organizationId!, termId),
-    staleTime: 1000 * 30, // 30 seconds
+    staleTime: 1000 * 60 * 2, // 2 minutes
   });
 }
 
@@ -63,7 +63,7 @@ export function useUpcomingActivities(organizationId?: string, termId?: string, 
     queryKey: dashboardKeys.upcomingActivities(organizationId, termId),
     enabled: Boolean(organizationId),
     queryFn: () => fetchUpcomingActivities(organizationId!, termId, limit),
-    staleTime: 1000 * 30,
+    staleTime: 1000 * 60 * 2, // 2 minutes
   });
 }
 
@@ -75,7 +75,7 @@ export function useUpcomingTasks(organizationId?: string, termId?: string, limit
     queryKey: dashboardKeys.upcomingTasks(organizationId, termId),
     enabled: Boolean(organizationId),
     queryFn: () => fetchUpcomingTasks(organizationId!, termId, limit),
-    staleTime: 1000 * 30,
+    staleTime: 1000 * 60 * 2, // 2 minutes
   });
 }
 
@@ -87,7 +87,7 @@ export function useOverdueTasks(organizationId?: string, termId?: string, limit 
     queryKey: dashboardKeys.overdueTasks(organizationId, termId),
     enabled: Boolean(organizationId),
     queryFn: () => fetchOverdueTasks(organizationId!, termId, limit),
-    staleTime: 1000 * 30,
+    staleTime: 1000 * 60 * 2, // 2 minutes
   });
 }
 
@@ -99,6 +99,6 @@ export function useDashboardCharts(organizationId?: string, termId?: string) {
     queryKey: dashboardKeys.charts(organizationId, termId),
     enabled: Boolean(organizationId),
     queryFn: () => fetchDashboardChartData(organizationId!, termId),
-    staleTime: 1000 * 60, // 1 minute
+    staleTime: 1000 * 60 * 3, // 3 minutes
   });
 }

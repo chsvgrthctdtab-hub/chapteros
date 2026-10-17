@@ -48,7 +48,7 @@ export function useMembersList(organizationId?: string, params: MemberFilterPara
       return memberService.listMembers(organizationId, params);
     },
     enabled: Boolean(organizationId),
-    staleTime: 1000 * 30, // 30s cache
+    staleTime: 1000 * 60 * 2, // 2m cache
   });
 }
 
@@ -65,7 +65,7 @@ export function useMemberKPIStats(organizationId?: string, activeTermId?: string
       return memberService.getMemberStats(organizationId, activeTermId);
     },
     enabled: Boolean(organizationId),
-    staleTime: 1000 * 30, // 30s cache
+    staleTime: 1000 * 60 * 5, // 5m cache
   });
 }
 

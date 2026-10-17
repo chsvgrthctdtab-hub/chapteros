@@ -125,9 +125,41 @@ export function useSetMemberStatus(memberId: string, organizationId?: string) {
         throw new Error(formatDbError(err, 'Không thể cập nhật trạng thái hội viên'));
       }
     },
+    onMutate: async (status: MemberStatus) => {
+      await queryClient.cancelQueries({ queryKey: memberKeys.lists() });
+      await queryClient.cancelQueries({ queryKey: memberKeys.detail(memberId) });
+
+      const prevDetail = queryClient.getQueryData(memberKeys.detail(memberId));
+      const prevLists = queryClient.getQueriesData({ queryKey: memberKeys.lists() });
+
+      if (prevDetail) {
+        queryClient.setQueryData(memberKeys.detail(memberId), (old: any) => (old ? { ...old, status } : old));
+      }
+
+      queryClient.setQueriesData({ queryKey: memberKeys.lists() }, (old: any) => {
+        if (!old?.data || !Array.isArray(old.data)) return old;
+        return {
+          ...old,
+          data: old.data.map((m: any) => (m.id === memberId ? { ...m, status } : m)),
+        };
+      });
+
+      return { prevDetail, prevLists };
+    },
+    onError: (_err, _status, context) => {
+      if (context?.prevDetail) {
+        queryClient.setQueryData(memberKeys.detail(memberId), context.prevDetail);
+      }
+      if (context?.prevLists) {
+        context.prevLists.forEach(([queryKey, data]) => {
+          queryClient.setQueryData(queryKey, data);
+        });
+      }
+    },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: memberKeys.lists() });
       queryClient.invalidateQueries({ queryKey: memberKeys.detail(memberId) });
+      queryClient.invalidateQueries({ queryKey: memberKeys.stats(organizationId || '') });
     },
   });
 }

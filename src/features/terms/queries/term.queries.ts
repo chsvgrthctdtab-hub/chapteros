@@ -41,7 +41,7 @@ export function useTermsList(organizationId?: string) {
       return termService.getTermsByOrganization(organizationId);
     },
     enabled: Boolean(organizationId),
-    staleTime: 1000 * 30, // 30s cache
+    staleTime: 1000 * 60 * 5, // 5m cache
   });
 }
 
@@ -56,6 +56,7 @@ export function useCurrentTerm(organizationId?: string) {
       return termService.getCurrentTerm(organizationId);
     },
     enabled: Boolean(organizationId),
+    staleTime: 1000 * 60 * 5, // 5m cache
   });
 }
 
