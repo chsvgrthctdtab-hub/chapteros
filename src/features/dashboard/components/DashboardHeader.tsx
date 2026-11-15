@@ -80,45 +80,45 @@ export function DashboardHeader({
   return (
     <div className="space-y-4">
       {/* Top Header Card */}
-      <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-5 p-5 sm:p-6 rounded-2xl bg-white border border-[#e2e8f0] shadow-xs">
-        <div className="space-y-2">
+      <div className="flex flex-col xl:flex-row xl:items-center justify-between gap-5 p-5 sm:p-6 rounded-2xl bg-white border border-[#e2e8f0] shadow-xs">
+        <div className="space-y-2.5 min-w-0">
           {/* Metadata badges */}
           <div className="flex items-center gap-2 flex-wrap text-xs sm:text-sm">
-            <div className="flex items-center gap-1.5 font-medium text-[#1a73e8] bg-[#e8f0fe] border border-[#c2e7ff] px-3 py-1 rounded-full">
+            <div className="flex items-center gap-1.5 font-medium text-[#1a73e8] bg-[#e8f0fe] border border-[#c2e7ff] px-3 py-1 rounded-full shrink-0">
               <Building2 size={15} className="text-[#1a73e8]" />
               <span>{organizationName}</span>
             </div>
 
-            <Badge variant="outline" className="text-xs sm:text-sm text-[#1e293b] bg-[#f0f4f9] border-[#e2e8f0] py-1 px-3 rounded-full font-medium">
+            <Badge variant="outline" className="text-xs sm:text-sm text-[#1e293b] bg-[#f0f4f9] border-[#e2e8f0] py-1 px-3 rounded-full font-medium shrink-0">
               <ShieldCheck size={15} className="mr-1 text-[#2e89f7]" />
               {roleName}
             </Badge>
 
-            <div className="flex items-center gap-1.5 text-[#64748b] font-medium bg-[#f0f4f9] border border-[#e2e8f0] px-3 py-1 rounded-full tabular-nums">
+            <div className="flex items-center gap-1.5 text-[#64748b] font-medium bg-[#f0f4f9] border border-[#e2e8f0] px-3 py-1 rounded-full tabular-nums shrink-0">
               <Calendar size={15} className="text-[#94a3b8]" />
               <span>{formattedDate}</span>
             </div>
 
             {selectedTerm?.isCurrent && (
-              <Badge variant="default" className="bg-[#2e89f7] hover:bg-[#1a73e8] text-white text-xs sm:text-sm py-1 px-3 rounded-full font-medium shadow-xs">
+              <Badge variant="default" className="bg-[#2e89f7] hover:bg-[#1a73e8] text-white text-xs sm:text-sm py-1 px-3 rounded-full font-medium shadow-xs shrink-0">
                 Active Term: {selectedTerm.name}
               </Badge>
             )}
           </div>
 
           {/* Heading */}
-          <div>
-            <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-[#0b3558]">
+          <div className="min-w-0">
+            <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-[#0b3558] break-words">
               Welcome back, {userName}
             </h1>
-            <p className="text-sm text-[#64748b] mt-1">
+            <p className="text-xs sm:text-sm text-[#64748b] mt-1 break-words max-w-3xl">
               Chapter operational command center, active deliverables, and real-time treasury metrics.
             </p>
           </div>
         </div>
 
         {/* Term Selector & Refresh Action */}
-        <div className="flex items-center gap-2.5 flex-wrap self-start lg:self-auto shrink-0">
+        <div className="flex items-center gap-2.5 flex-wrap shrink-0">
           <Select
             value={selectedTermId}
             onValueChange={onSelectTerm}
@@ -155,8 +155,8 @@ export function DashboardHeader({
 
       {/* Quick Actions Bar for Board & Permitted Roles — NotebookLM pastel tonal style */}
       {hasAnyQuickAction && (
-        <div className="p-3.5 sm:px-5 sm:py-3.5 rounded-2xl bg-[#edf2fa] border border-[#d2e3fc] text-[#041e49] shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-3">
-          <div className="flex items-center gap-2.5 text-xs sm:text-sm">
+        <div className="p-3.5 sm:px-5 sm:py-3.5 rounded-2xl bg-[#edf2fa] border border-[#d2e3fc] text-[#041e49] shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-3 min-w-0">
+          <div className="flex items-center gap-2.5 text-xs sm:text-sm shrink-0">
             <span className="flex h-2 w-2 rounded-full bg-[#1a73e8]"></span>
             <span className="font-semibold text-[#041e49]">Thao tác nhanh Ban Chấp Hành</span>
             <span className="text-[#041e49]/30 hidden sm:inline">•</span>

@@ -151,7 +151,7 @@ export function DashboardPage() {
   }
 
   return (
-    <div id="dashboard-page" className="space-y-5 sm:space-y-6 pb-8">
+    <div id="dashboard-page" className="space-y-5 sm:space-y-6 pb-8 min-w-0">
       {/* 1. Header with Greeting, Org info, Term selector & Role Quick Actions */}
       <DashboardHeader
         userName={displayName}
@@ -194,7 +194,7 @@ export function DashboardPage() {
       )}
 
       {/* TẦNG 2: Operational Priority (Upcoming Activities & Task Center) */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 sm:gap-6 items-start">
+      <div className="grid grid-cols-1 xl:grid-cols-2 gap-5 sm:gap-6 items-start">
         {/* Upcoming Activities */}
         {isActivitiesLoading ? (
           <div className="h-60 rounded-xl bg-pebble animate-pulse" />
@@ -227,14 +227,14 @@ export function DashboardPage() {
       </div>
 
       {/* TẦNG 3: Daily Operations, Treasury Balance & Work Progress */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 sm:gap-6 items-start">
+      <div className="grid grid-cols-1 xl:grid-cols-12 gap-5 sm:gap-6 items-start">
         {/* Calendar / Daily Operations */}
-        <div className="lg:col-span-5 xl:col-span-5">
+        <div className="xl:col-span-5">
           <DashboardCalendarPreview activities={upcomingActivities} />
         </div>
 
         {/* Finance Overview & Work Progress */}
-        <div className="lg:col-span-7 xl:col-span-7 space-y-5 sm:space-y-6">
+        <div className="xl:col-span-7 space-y-5 sm:space-y-6">
           {/* Finance Snapshot */}
           {isStatsLoading ? (
             <div className="h-48 rounded-xl bg-pebble animate-pulse" />
