@@ -5,8 +5,6 @@ import {
   Sparkles,
   History,
   ArrowRight,
-  Database,
-  ExternalLink,
 } from '@/lib/icons';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -73,7 +71,7 @@ export function MaintenanceTab({ organization }: MaintenanceTabProps) {
       </div>
 
       {/* Operational Workspaces Quick Links */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {/* Data Quality */}
         <Card className="border-hairline shadow-xs bg-white hover:border-mist-gray transition-colors">
           <CardHeader className="pb-3">
@@ -117,33 +115,6 @@ export function MaintenanceTab({ organization }: MaintenanceTabProps) {
                 Mở Nhật Ký Kiểm Toán <ArrowRight className="h-3.5 w-3.5 ml-1 text-mist-gray" />
               </Button>
             </Link>
-          </CardContent>
-        </Card>
-
-        {/* Supabase Studio */}
-        <Card className="border-hairline shadow-xs bg-white hover:border-mist-gray transition-colors">
-          <CardHeader className="pb-3">
-            <div className="flex items-center justify-between">
-              <div className="h-8 w-8 rounded-lg bg-emerald-50 text-emerald-700 flex items-center justify-center border border-emerald-200">
-                <Database className="h-4 w-4" />
-              </div>
-              <Badge variant="outline" className="text-[10px] text-emerald-700 bg-emerald-50 border-emerald-200">Cloud DB</Badge>
-            </div>
-            <CardTitle className="text-sm font-bold text-ink-navy mt-2">Supabase Studio</CardTitle>
-            <CardDescription className="text-xs text-mist-gray">
-              Truy cập Table Editor, SQL Editor và quản trị CSDL trực tiếp
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="pt-0">
-            <a
-              href="https://supabase.com/dashboard/project/mjunrouwyzlrhqctesmw"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <Button variant="outline" size="sm" className="text-xs w-full justify-between mt-2 cursor-pointer border-hairline hover:bg-cloud text-slate-gray">
-                Mở Supabase Studio <ExternalLink className="h-3.5 w-3.5 ml-1 text-mist-gray" />
-              </Button>
-            </a>
           </CardContent>
         </Card>
       </div>
