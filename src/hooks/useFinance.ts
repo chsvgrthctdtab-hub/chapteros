@@ -9,6 +9,7 @@ import {
 import {
   useCreateFinanceTransaction,
   useUpdateFinanceTransaction,
+  useToggleFinanceReimbursement,
   useDeleteFinanceTransaction,
   useCreateFinanceCategory,
   useUpdateFinanceCategory,
@@ -126,6 +127,7 @@ export {
   useActivityFinance,
   useCreateFinanceTransaction,
   useUpdateFinanceTransaction,
+  useToggleFinanceReimbursement,
   useDeleteFinanceTransaction,
   useCreateFinanceCategory,
   useUpdateFinanceCategory,

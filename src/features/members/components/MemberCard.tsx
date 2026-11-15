@@ -11,6 +11,8 @@ import {
   Trash2,
 } from '@/lib/icons';
 import { Button } from '@/components/ui/button';
+import { Checkbox } from '@/components/ui/checkbox';
+import { cn } from '@/lib/utils';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -28,6 +30,8 @@ import type { Member } from '@/types';
 interface MemberCardProps {
   member: MemberListItem;
   canManage: boolean;
+  isSelected?: boolean;
+  onToggleSelect?: (id: string) => void;
   onViewDetail: (member: Member) => void;
   onEdit: (member: Member) => void;
   onAssignTerm: (member: Member) => void;
@@ -37,6 +41,8 @@ interface MemberCardProps {
 export function MemberCard({
   member,
   canManage,
+  isSelected = false,
+  onToggleSelect,
   onViewDetail,
   onEdit,
   onAssignTerm,
@@ -71,12 +77,24 @@ export function MemberCard({
   return (
     <div
       onClick={() => onViewDetail(memberObj)}
-      className="bg-white border border-hairline rounded-2xl p-4 shadow-xs hover:border-[#d4e4fa] hover:shadow-xs transition-all duration-150 flex flex-col justify-between cursor-pointer group"
+      className={cn(
+        "bg-white border border-hairline rounded-2xl p-4 shadow-xs hover:border-[#d4e4fa] hover:shadow-xs transition-all duration-150 flex flex-col justify-between cursor-pointer group",
+        isSelected && "border-signal-blue bg-blue-50/20 shadow-xs"
+      )}
     >
       {/* Top section: Avatar, Name, MSSV, Badges */}
       <div className="space-y-3">
         <div className="flex items-start justify-between gap-2">
-          <div className="flex items-center space-x-3 min-w-0">
+          <div className="flex items-center space-x-2.5 min-w-0">
+            {onToggleSelect && (
+              <div onClick={(e) => e.stopPropagation()} className="shrink-0">
+                <Checkbox
+                  checked={isSelected}
+                  onCheckedChange={() => onToggleSelect(member.id)}
+                  aria-label={`Chọn ${member.fullName}`}
+                />
+              </div>
+            )}
             <div className="h-10 w-10 rounded-xl bg-pebble text-ink-navy font-bold text-xs flex items-center justify-center shrink-0 border border-hairline group-hover:border-[#d4e4fa] group-hover:bg-[#e6f0ff] group-hover:text-signal-blue transition-colors">
               {initials || <User className="h-4 w-4" />}
             </div>

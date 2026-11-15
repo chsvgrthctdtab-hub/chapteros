@@ -84,7 +84,7 @@ export function TaskCard({
                     id={`edit-task-btn-${task.id}`}
                     onClick={() => onEdit(task)}
                     className="p-1 text-slate-gray hover:text-ink-navy hover:bg-pebble rounded-md transition-colors cursor-pointer"
-                    title="Edit task"
+                    title="Chỉnh sửa nhiệm vụ"
                   >
                     <Edit2 className="w-3.5 h-3.5" />
                   </button>
@@ -95,7 +95,7 @@ export function TaskCard({
                     id={`delete-task-btn-${task.id}`}
                     onClick={() => onDelete(task)}
                     className="p-1 text-slate-gray hover:text-rose-600 hover:bg-rose-50 rounded-md transition-colors cursor-pointer"
-                    title="Delete task"
+                    title="Xóa nhiệm vụ"
                   >
                     <Trash2 className="w-3.5 h-3.5" />
                   </button>

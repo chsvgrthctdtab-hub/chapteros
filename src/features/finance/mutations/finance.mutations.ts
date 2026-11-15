@@ -5,8 +5,13 @@ import type { OrganizationRole } from '@/types/roles';
 import type {
   CreatePeriodClosingInput,
   ReopenPeriodInput,
+  FinanceTransactionListItem,
 } from '../types/finance.types';
 import type { TransactionFormData, CategoryFormData } from '../schemas/finance.schema';
+import {
+  buildTransactionDescription,
+  parseTransactionMetadata,
+} from '../utils/finance.utils';
 
 export interface CreateTransactionParams {
   organizationId: string;
@@ -167,6 +172,128 @@ export function useUpdateFinanceTransaction() {
             queryKey: financeKeys.activityFinance(variables.organizationId, targetActId),
           });
         }
+      }
+    },
+  });
+}
+
+export interface ToggleReimbursementParams {
+  transaction: FinanceTransactionListItem;
+  organizationId: string;
+  nextReimbursed: boolean;
+  actorUserId?: string | null;
+}
+
+/**
+ * Mutation to toggle reimbursement status with Instant 0ms Optimistic UI updates
+ */
+export function useToggleFinanceReimbursement() {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async ({
+      transaction,
+      organizationId,
+      nextReimbursed,
+      actorUserId,
+    }: ToggleReimbursementParams) => {
+      return financeService.toggleTransactionReimbursement(
+        transaction,
+        organizationId,
+        nextReimbursed,
+        actorUserId
+      );
+    },
+    onMutate: async ({ transaction, organizationId, nextReimbursed }) => {
+      // 1. Cancel queries to prevent them overwriting optimistic state
+      await queryClient.cancelQueries({
+        queryKey: ['finance', 'transactions', organizationId],
+      });
+      await queryClient.cancelQueries({
+        queryKey: ['finance', 'activity-finance', organizationId],
+      });
+
+      // 2. Snapshot previous query caches
+      const previousTransactions = queryClient.getQueriesData({
+        queryKey: ['finance', 'transactions', organizationId],
+      });
+      const previousActivityFinance = queryClient.getQueriesData({
+        queryKey: ['finance', 'activity-finance', organizationId],
+      });
+
+      const cleanDesc =
+        transaction.cleanDescription ||
+        parseTransactionMetadata(transaction.description).cleanDescription;
+      const updatedDescription = buildTransactionDescription(
+        cleanDesc,
+        transaction.person,
+        nextReimbursed,
+        transaction.transactionType,
+        !nextReimbursed
+      );
+
+      const patchTx = (t: FinanceTransactionListItem): FinanceTransactionListItem =>
+        t.id === transaction.id
+          ? {
+              ...t,
+              isReimbursed: nextReimbursed,
+              isUnpaid: !nextReimbursed,
+              description: updatedDescription,
+              cleanDescription: cleanDesc,
+            }
+          : t;
+
+      // 3. Optimistically update all transaction list queries for this organization
+      queryClient.setQueriesData(
+        { queryKey: ['finance', 'transactions', organizationId] },
+        (old: any) => {
+          if (!old || !Array.isArray(old.transactions)) return old;
+          return {
+            ...old,
+            transactions: old.transactions.map(patchTx),
+          };
+        }
+      );
+
+      // 4. Optimistically update activity finance lists for this organization
+      queryClient.setQueriesData(
+        { queryKey: ['finance', 'activity-finance', organizationId] },
+        (old: any) => {
+          if (!old || !Array.isArray(old.transactions)) return old;
+          return {
+            ...old,
+            transactions: old.transactions.map(patchTx),
+          };
+        }
+      );
+
+      return { previousTransactions, previousActivityFinance };
+    },
+    onError: (_err, _vars, context) => {
+      // Rollback to previous state on failure
+      if (context?.previousTransactions) {
+        context.previousTransactions.forEach(([queryKey, data]) => {
+          queryClient.setQueryData(queryKey, data);
+        });
+      }
+      if (context?.previousActivityFinance) {
+        context.previousActivityFinance.forEach(([queryKey, data]) => {
+          queryClient.setQueryData(queryKey, data);
+        });
+      }
+    },
+    onSettled: (_data, _error, variables) => {
+      // Soft background invalidate (without blocking UI or forcing full spinner)
+      queryClient.invalidateQueries({
+        queryKey: ['finance', 'transactions', variables.organizationId],
+      });
+      if (variables.transaction.activityId) {
+        queryClient.invalidateQueries({
+          queryKey: financeKeys.activityFinance(
+            variables.organizationId,
+            variables.transaction.activityId
+          ),
+        });
       }
     },
   });

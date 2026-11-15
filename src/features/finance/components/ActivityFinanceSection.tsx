@@ -11,6 +11,7 @@ import {
   Trash2,
   User,
   Check,
+  Loader2,
 } from '@/lib/icons';
 import { useToast } from '@/contexts/ToastContext';
 import { useAuth } from '@/contexts/AuthContext';
@@ -23,6 +24,7 @@ import {
 import {
   useCreateFinanceTransaction,
   useUpdateFinanceTransaction,
+  useToggleFinanceReimbursement,
   useDeleteFinanceTransaction,
   useApproveFinanceTransaction,
 } from '../mutations/finance.mutations';
@@ -54,6 +56,8 @@ export function ActivityFinanceSection({
 
   const createTxMutation = useCreateFinanceTransaction();
   const updateTxMutation = useUpdateFinanceTransaction();
+  const toggleReimbursementMutation = useToggleFinanceReimbursement();
+  const [togglingTxId, setTogglingTxId] = useState<string | null>(null);
   const deleteTxMutation = useDeleteFinanceTransaction();
   const approveTxMutation = useApproveFinanceTransaction();
   const toast = useToast();
@@ -97,28 +101,19 @@ export function ActivityFinanceSection({
   const handleToggleReimbursed = async (tx: FinanceTransactionListItem) => {
     const currentlyReimbursed = tx.isReimbursed === true || tx.isUnpaid === false;
     const nextReimbursed = !currentlyReimbursed;
+    setTogglingTxId(tx.id);
     try {
-      await updateTxMutation.mutateAsync({
-        transactionId: tx.id,
+      await toggleReimbursementMutation.mutateAsync({
+        transaction: tx,
         organizationId,
-        data: {
-          description: tx.cleanDescription || tx.description,
-          amount: tx.amount,
-          transactionType: tx.transactionType,
-          categoryId: tx.categoryId,
-          activityId: tx.activityId || activityId,
-          termId: tx.termId,
-          transactionDate: tx.transactionDate,
-          personProfileId: tx.person?.profileId || 'none',
-          personName: tx.person?.name || '',
-          receiptUrl: tx.receiptUrl || '',
-          isReimbursed: nextReimbursed,
-          isUnpaid: !nextReimbursed,
-        },
+        nextReimbursed,
+        actorUserId: profile?.id || user?.id || null,
       });
       toast.success(nextReimbursed ? 'Đã xác nhận "Đã thanh"' : 'Đã chuyển về "Chưa thanh"');
     } catch (err: unknown) {
       toast.error(err);
+    } finally {
+      setTogglingTxId(null);
     }
   };
 
@@ -331,13 +326,15 @@ export function ActivityFinanceSection({
                             ) && (
                               <button
                                 type="button"
-                                disabled={!canManage || updateTxMutation.isPending}
+                                disabled={!canManage || togglingTxId === tx.id}
                                 onClick={(e) => {
                                   e.stopPropagation();
                                   handleToggleReimbursed(tx);
                                 }}
                                 className={`inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[11px] font-medium border transition-all select-none ${
-                                  canManage ? 'cursor-pointer hover:shadow-2xs active:scale-95' : 'cursor-default'
+                                  canManage && togglingTxId !== tx.id
+                                    ? 'cursor-pointer hover:shadow-2xs active:scale-95'
+                                    : 'cursor-default opacity-85'
                                 } ${
                                   tx.isReimbursed === true || tx.isUnpaid === false
                                     ? 'bg-emerald-50 text-emerald-700 border-emerald-300 hover:bg-emerald-100/80'
@@ -354,22 +351,24 @@ export function ActivityFinanceSection({
                                 }
                               >
                                 <span
-                                    className={`w-3.5 h-3.5 rounded-full border flex items-center justify-center transition-colors shrink-0 ${
-                                      tx.isReimbursed === true || tx.isUnpaid === false
-                                        ? 'bg-emerald-600 border-emerald-600 text-white'
-                                        : 'bg-white border-amber-400'
-                                    }`}
-                                  >
-                                    {(tx.isReimbursed === true || tx.isUnpaid === false) && (
-                                      <Check className="w-2.5 h-2.5 stroke-[3]" />
-                                    )}
-                                  </span>
-                                  <span>
-                                    {tx.isReimbursed === true || tx.isUnpaid === false
-                                      ? 'Đã thanh'
-                                      : 'Chưa thanh'}
-                                  </span>
-                                </button>
+                                  className={`w-3.5 h-3.5 rounded-full border flex items-center justify-center transition-colors shrink-0 ${
+                                    tx.isReimbursed === true || tx.isUnpaid === false
+                                      ? 'bg-emerald-600 border-emerald-600 text-white'
+                                      : 'bg-white border-amber-400'
+                                  }`}
+                                >
+                                  {togglingTxId === tx.id ? (
+                                    <Loader2 className="w-2.5 h-2.5 animate-spin" />
+                                  ) : (tx.isReimbursed === true || tx.isUnpaid === false) ? (
+                                    <Check className="w-2.5 h-2.5 stroke-[3]" />
+                                  ) : null}
+                                </span>
+                                <span>
+                                  {tx.isReimbursed === true || tx.isUnpaid === false
+                                    ? 'Đã thanh'
+                                    : 'Chưa thanh'}
+                                </span>
+                              </button>
                               )}
                               {/* Trạng thái duyệt / Duyệt nhanh */}
                               {tx.status === 'pending_approval' && (

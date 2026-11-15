@@ -21,10 +21,10 @@ export function WorkProgressCard({ tasks }: WorkProgressCardProps) {
             </div>
             <div>
               <CardTitle className="text-base sm:text-lg font-bold text-[#0b3558] leading-tight">
-                Work Progress
+                Tiến độ Công việc
               </CardTitle>
               <p className="text-xs text-[#64748b] mt-0.5">
-                Completion rate & task health metrics
+                Tỷ lệ hoàn thành và tình trạng nhiệm vụ
               </p>
             </div>
           </div>
@@ -32,10 +32,10 @@ export function WorkProgressCard({ tasks }: WorkProgressCardProps) {
           {hasData ? (
             <div className="text-right">
               <span className="text-lg sm:text-xl font-bold text-[#2e89f7] tabular-nums">{completionRate}%</span>
-              <span className="text-[11px] text-[#64748b] block -mt-0.5">completed</span>
+              <span className="text-[11px] text-[#64748b] block -mt-0.5">đã hoàn thành</span>
             </div>
           ) : (
-            <span className="text-xs text-[#94a3b8] italic">No tasks</span>
+            <span className="text-xs text-[#94a3b8] italic">Chưa có nhiệm vụ</span>
           )}
         </div>
       </CardHeader>

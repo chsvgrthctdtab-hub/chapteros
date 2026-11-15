@@ -290,8 +290,8 @@ export function ActivitiesPage() {
       {totalPages > 1 && !isLoading && (
         <div className="flex items-center justify-between bg-white px-4 py-2.5 border border-hairline rounded-xl text-xs text-slate-gray shadow-sm">
           <div>
-            Showing page <strong className="text-ink-navy font-semibold">{currentPage}</strong> of{' '}
-            <strong className="text-ink-navy font-semibold">{totalPages}</strong> ({totalCount} total activities)
+            Hiển thị trang <strong className="text-ink-navy font-semibold">{currentPage}</strong> /{' '}
+            <strong className="text-ink-navy font-semibold">{totalPages}</strong> (tổng số {totalCount} hoạt động)
           </div>
           <div className="flex items-center gap-1">
             <button
@@ -300,7 +300,7 @@ export function ActivitiesPage() {
               disabled={currentPage <= 1}
               onClick={() => handleFilterChange({ page: currentPage - 1 })}
               className="p-1.5 rounded-lg border border-hairline text-ink-navy hover:bg-pebble disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer transition-colors"
-              title="Previous page"
+              title="Trang trước"
             >
               <ChevronLeft className="w-4 h-4" />
             </button>
@@ -310,7 +310,7 @@ export function ActivitiesPage() {
               disabled={currentPage >= totalPages}
               onClick={() => handleFilterChange({ page: currentPage + 1 })}
               className="p-1.5 rounded-lg border border-hairline text-ink-navy hover:bg-pebble disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer transition-colors"
-              title="Next page"
+              title="Trang sau"
             >
               <ChevronRight className="w-4 h-4" />
             </button>

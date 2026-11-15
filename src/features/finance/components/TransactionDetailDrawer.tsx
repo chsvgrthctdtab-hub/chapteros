@@ -16,6 +16,7 @@ import {
   TrendingDown,
   FileText,
   Check,
+  Loader2,
 } from '@/lib/icons';
 import { formatDate } from '@/lib/date';
 import {
@@ -39,6 +40,7 @@ interface TransactionDetailDrawerProps {
   onApprove?: (tx: FinanceTransactionListItem) => void;
   onReject?: (tx: FinanceTransactionListItem) => void;
   onToggleReimbursed?: (tx: FinanceTransactionListItem) => void;
+  isTogglingReimbursed?: boolean;
   isApproving?: boolean;
 }
 
@@ -54,6 +56,7 @@ export function TransactionDetailDrawer({
   onApprove,
   onReject,
   onToggleReimbursed,
+  isTogglingReimbursed = false,
   isApproving = false,
 }: TransactionDetailDrawerProps) {
   if (!isOpen || !transaction) return null;
@@ -177,7 +180,7 @@ export function TransactionDetailDrawer({
       isOpen={isOpen}
       onClose={onClose}
       title={transaction.cleanDescription || transaction.description}
-      tag="Finance Ledger"
+      tag="Sổ cái thu chi"
       badge={headerBadge}
       size="2xl"
       footer={footer}
@@ -205,7 +208,7 @@ export function TransactionDetailDrawer({
 
         <div className="space-y-2 bg-cloud p-4 rounded-xl border border-hairline text-xs">
           <div className="flex justify-between items-center py-0.5">
-            <span className="text-slate-gray">Transaction ID:</span>
+            <span className="text-slate-gray">Mã giao dịch:</span>
             <span className="tabular-nums font-mono text-[11px] font-semibold text-ink-navy select-all">
               {transaction.id}
             </span>
@@ -289,10 +292,12 @@ export function TransactionDetailDrawer({
               <span className="text-slate-gray">Trạng thái thanh toán:</span>
               <button
                 type="button"
-                disabled={!canManage || !onToggleReimbursed}
+                disabled={!canManage || !onToggleReimbursed || isTogglingReimbursed}
                 onClick={() => onToggleReimbursed?.(transaction)}
                 className={`inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-medium border transition-all ${
-                  canManage && onToggleReimbursed ? 'cursor-pointer hover:shadow-2xs active:scale-95' : 'cursor-default'
+                  canManage && onToggleReimbursed && !isTogglingReimbursed
+                    ? 'cursor-pointer hover:shadow-2xs active:scale-95'
+                    : 'cursor-default opacity-85'
                 } ${
                   transaction.isReimbursed === true || transaction.isUnpaid === false
                     ? 'bg-emerald-50 text-emerald-700 border-emerald-300 hover:bg-emerald-100/80'
@@ -313,11 +318,17 @@ export function TransactionDetailDrawer({
                       : 'bg-white border-amber-400'
                   }`}
                 >
-                  {(transaction.isReimbursed === true || transaction.isUnpaid === false) && (
+                  {isTogglingReimbursed ? (
+                    <Loader2 className="w-2.5 h-2.5 animate-spin" />
+                  ) : (transaction.isReimbursed === true || transaction.isUnpaid === false) ? (
                     <Check className="w-2.5 h-2.5 stroke-[3]" />
-                  )}
+                  ) : null}
                 </span>
-                <span>Đã thanh</span>
+                <span>
+                  {transaction.isReimbursed === true || transaction.isUnpaid === false
+                    ? 'Đã thanh'
+                    : 'Chưa thanh'}
+                </span>
               </button>
             </div>
           )}

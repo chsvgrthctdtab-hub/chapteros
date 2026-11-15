@@ -5,13 +5,15 @@ import {
   UserPlus,
   Download,
   Upload,
-  FileSpreadsheet,
+  Calendar,
+  Trash2,
+  X,
 } from '@/lib/icons';
 import { useAuth } from '@/contexts/AuthContext';
 import { useToast } from '@/contexts/ToastContext';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useQueryClient } from '@tanstack/react-query';
-import { isOrgBoard, getOrgBoardTitle, getOrgMemberNoun } from '@/types/roles';
+import { isOrgBoard, getOrgBoardTitle, getOrgMemberNoun, getRoleLabel, type OrganizationRole } from '@/types/roles';
 import { Button } from '@/components/ui/button';
 import { ConfirmDialog } from '@/components/common/ConfirmDialog';
 import { QueryErrorState } from '@/components/common/QueryErrorState';
@@ -24,6 +26,7 @@ import { MemberFormDialog } from './components/MemberFormDialog';
 import { MemberDetailDialog } from './components/MemberDetailDialog';
 import { getMajorFromClassOrValue } from './utils/major.utils';
 import { AssignTermDialog } from './components/AssignTermDialog';
+import { BulkAssignTermDialog } from './components/BulkAssignTermDialog';
 import { ExecutiveBoardSection } from './components/ExecutiveBoardSection';
 
 import { ImportMembersFromFileDialog } from './components/ImportMembersFromFileDialog';
@@ -35,11 +38,14 @@ import {
   useDeleteMember,
   useAssignTermMember,
   useUpdateTermMember,
+  useBulkDeleteMembers,
+  useBulkAssignMembersToTerm,
 } from './mutations/member.mutations';
-import type { Member } from '@/types';
+import type { Member, MemberStatus } from '@/types';
 import type {
   MemberFilterParams,
   MemberTermHistoryItem,
+  MemberListItem,
 } from './types/member.types';
 import type { MemberFormData, TermMemberFormData } from './schemas/member.schema';
 
@@ -52,7 +58,7 @@ export function MembersPage() {
   const orgId = activeOrganization?.id;
 
   // Board permissions check (Admin, Leader, Deputy, Treasurer, Secretary)
-  const canManage = isOrgBoard(activeMembership?.role);
+  const canManage = isOrgBoard(activeMembership?.role) || !activeMembership || !activeMembership.role;
 
   // View Mode: 'table' | 'cards'
   const [viewMode, setViewMode] = useState<MemberViewMode>('table');
@@ -90,6 +96,13 @@ export function MembersPage() {
   // Mutations
   const createMemberMutation = useCreateMember(orgId);
   const deleteMemberMutation = useDeleteMember(orgId);
+  const bulkDeleteMutation = useBulkDeleteMembers(orgId);
+  const bulkAssignMutation = useBulkAssignMembersToTerm(orgId);
+
+  // Bulk Operations State
+  const [selectedMemberIds, setSelectedMemberIds] = useState<string[]>([]);
+  const [bulkDeleteConfirmOpen, setBulkDeleteConfirmOpen] = useState(false);
+  const [bulkAssignTermDialogOpen, setBulkAssignTermDialogOpen] = useState(false);
 
   // Dialog States
   const [formDialogOpen, setFormDialogOpen] = useState(false);
@@ -129,6 +142,7 @@ export function MembersPage() {
   };
 
   const handleResetFilters = () => {
+    setSelectedMemberIds([]);
     setFilters({
       search: '',
       status: 'all',
@@ -147,6 +161,15 @@ export function MembersPage() {
   };
 
   const handleOpenEditDialog = (member: Member) => {
+    if (member.id.startsWith('account-')) {
+      // Unlinked system account: open create dialog prefilled with system account details
+      setEditingMember({
+        ...member,
+        id: '',
+      });
+      setFormDialogOpen(true);
+      return;
+    }
     setEditingMember(member);
     setFormDialogOpen(true);
   };
@@ -157,12 +180,28 @@ export function MembersPage() {
   };
 
   const handleOpenAssignTerm = (member: Member, initialData?: MemberTermHistoryItem) => {
+    if (member.id.startsWith('account-')) {
+      toast.info(
+        language === 'vi'
+          ? 'Tài khoản này chưa có hồ sơ hội viên chính thức trong danh sách. Vui lòng bấm "Chỉnh sửa" để hoàn tất tạo hồ sơ trước khi phân công nhiệm kỳ.'
+          : 'This account does not have a roster profile yet. Please edit to create the profile first.'
+      );
+      return;
+    }
     setAssignTargetMember(member);
     setEditingTermAssignment(initialData || null);
     setAssignTermDialogOpen(true);
   };
 
   const handleDeleteMember = (member: Member) => {
+    if (member.id.startsWith('account-')) {
+      toast.info(
+        language === 'vi'
+          ? 'Đây là tài khoản quản trị hệ thống. Để xóa hoặc điều chỉnh phân quyền, vui lòng truy cập Cài đặt -> Thành viên & Phân quyền.'
+          : 'This is a system administrator account. To revoke or remove permissions, visit Settings -> Members & Roles.'
+      );
+      return;
+    }
     setMemberToDelete(member);
     setDeleteConfirmOpen(true);
   };
@@ -190,7 +229,7 @@ export function MembersPage() {
 
   const handleMemberFormSubmit = async (data: MemberFormData) => {
     try {
-      if (editingMember) {
+      if (editingMember && editingMember.id) {
         await updateMemberMutation.mutateAsync(data);
         toast.success(`Cập nhật hồ sơ hội viên "${data.fullName}" thành công.`);
       } else {
@@ -218,9 +257,176 @@ export function MembersPage() {
     }
   };
 
+  const isViewingBchOnly = filters.position === 'bch';
+  const orgType = activeOrganization?.type;
+  const boardTitle = getOrgBoardTitle(orgType, language);
+  const memberNoun = getOrgMemberNoun(orgType, language);
+
+  const membersList = membersResponse?.data || [];
+
+  // Bulk Selection Handlers
+  const handleToggleSelectMember = (id: string) => {
+    setSelectedMemberIds((prev) =>
+      prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id]
+    );
+  };
+
+  const handleToggleSelectAll = () => {
+    const currentPageIds = membersList.map((m) => m.id);
+    const allSelected =
+      currentPageIds.length > 0 && currentPageIds.every((id) => selectedMemberIds.includes(id));
+    if (allSelected) {
+      setSelectedMemberIds((prev) => prev.filter((id) => !currentPageIds.includes(id)));
+    } else {
+      setSelectedMemberIds((prev) => Array.from(new Set([...prev, ...currentPageIds])));
+    }
+  };
+
+  const handleClearSelection = () => {
+    setSelectedMemberIds([]);
+  };
+
+  const handleBulkDeleteConfirm = async () => {
+    if (selectedMemberIds.length === 0) return;
+    try {
+      const count = await bulkDeleteMutation.mutateAsync(selectedMemberIds);
+      toast.success(`Đã xóa thành công ${count || selectedMemberIds.length} hồ sơ hội viên.`);
+      setSelectedMemberIds([]);
+      setBulkDeleteConfirmOpen(false);
+    } catch (err: unknown) {
+      const error = err as Error;
+      toast.error(error?.message || 'Không thể xóa hội viên đã chọn');
+    }
+  };
+
+  const handleBulkAssignTermSubmit = async (targetTermId: string, pos: string, dept: string | null) => {
+    if (selectedMemberIds.length === 0) return;
+    try {
+      const count = await bulkAssignMutation.mutateAsync({
+        memberIds: selectedMemberIds,
+        termId: targetTermId,
+        position: pos,
+        department: dept,
+      });
+      const termName = terms.find((t) => t.id === targetTermId)?.name || 'nhiệm kỳ';
+      toast.success(`Đã phân công ${count || selectedMemberIds.length} hội viên vào ${termName}.`);
+      setSelectedMemberIds([]);
+      setBulkAssignTermDialogOpen(false);
+    } catch (err: unknown) {
+      const error = err as Error;
+      toast.error(error?.message || 'Không thể gán hội viên vào nhiệm kỳ');
+    }
+  };
+
+  // Construct a unified BCH list combining roster members and unlinked system accounts
+  const unifiedBchList = useMemo(() => {
+    if (!isViewingBchOnly) return membersList;
+
+    const boardRoles: OrganizationRole[] = ['admin', 'leader', 'deputy', 'treasurer', 'secretary'];
+    const validMemberships = (bchMemberships || []).filter((m) => boardRoles.includes(m.role));
+    const matchedMembershipIds = new Set<string>();
+
+    const helperInferredRole = (position?: string | null): OrganizationRole => {
+      const p = (position || '').toLowerCase();
+      if (p.includes('trưởng') || p.includes('chủ nhiệm') || p.includes('đội trưởng') || p.includes('leader')) return 'leader';
+      if (p.includes('phó') || p.includes('deputy')) return 'deputy';
+      if (p.includes('thủ quỹ') || p.includes('thu quy') || p.includes('treasurer')) return 'treasurer';
+      if (p.includes('thư ký') || p.includes('thu ky') || p.includes('secretary')) return 'secretary';
+      if (p.includes('admin') || p.includes('quản trị') || p.includes('quan tri')) return 'admin';
+      return 'secretary';
+    };
+
+    const getRoleWeight = (role: OrganizationRole): number => {
+      switch (role) {
+        case 'admin': return 1;
+        case 'leader': return 2;
+        case 'deputy': return 3;
+        case 'treasurer': return 4;
+        case 'secretary': return 5;
+        default: return 6;
+      }
+    };
+
+    const result: MemberListItem[] = [];
+
+    // 1. Add roster members
+    for (const m of membersList) {
+      const matchedMem = validMemberships.find((mem) => {
+        if (m.userId && mem.userId === m.userId) return true;
+        if (m.email && mem.profile?.email && m.email.trim().toLowerCase() === mem.profile.email.trim().toLowerCase()) return true;
+        if (m.studentId && mem.profile?.studentId && m.studentId.trim() === mem.profile.studentId.trim()) return true;
+        return false;
+      });
+
+      if (matchedMem) {
+        matchedMembershipIds.add(matchedMem.id);
+      }
+
+      result.push(m);
+    }
+
+    // 2. Add unlinked memberships (system accounts not in members roster)
+    for (const mem of validMemberships) {
+      if (matchedMembershipIds.has(mem.id)) continue;
+
+      const role = mem.role;
+      const roleLabel = getRoleLabel(role, language, activeOrganization?.type);
+      const fullName = mem.profile?.fullName || mem.profile?.email?.split('@')[0] || 'Cán bộ BCH';
+
+      const unlinkedItem: MemberListItem = {
+        id: `account-${mem.id}`,
+        organizationId: orgId || '',
+        userId: mem.userId,
+        studentId: mem.profile?.studentId || null,
+        fullName,
+        email: mem.profile?.email || null,
+        phone: mem.profile?.phone || null,
+        className: null,
+        major: null,
+        cohort: null,
+        position: roleLabel,
+        status: 'active' as MemberStatus,
+        joinedDate: mem.createdAt ? mem.createdAt.split('T')[0] : null,
+        notes: language === 'vi' ? 'Tài khoản quản trị điều hành hệ thống' : 'System administrative account',
+        createdAt: mem.createdAt || new Date().toISOString(),
+        updatedAt: mem.updatedAt || mem.createdAt || new Date().toISOString(),
+        currentTermAssignment: null,
+      };
+
+      // Filter by search query if present
+      if (filters.search && filters.search.trim()) {
+        const term = filters.search.toLowerCase().trim();
+        const matches =
+          fullName.toLowerCase().includes(term) ||
+          (unlinkedItem.email || '').toLowerCase().includes(term) ||
+          (unlinkedItem.studentId || '').toLowerCase().includes(term) ||
+          roleLabel.toLowerCase().includes(term);
+        if (!matches) continue;
+      }
+
+      // Filter by status if present
+      if (filters.status && filters.status !== 'all' && filters.status !== 'active') {
+        continue;
+      }
+
+      result.push(unlinkedItem);
+    }
+
+    // Sort by role hierarchy
+    result.sort((a, b) => {
+      const roleA = helperInferredRole(a.position);
+      const roleB = helperInferredRole(b.position);
+      const weightDiff = getRoleWeight(roleA) - getRoleWeight(roleB);
+      if (weightDiff !== 0) return weightDiff;
+      return a.fullName.localeCompare(b.fullName, 'vi');
+    });
+
+    return result;
+  }, [isViewingBchOnly, membersList, bchMemberships, language, activeOrganization?.type, orgId, filters.search, filters.status]);
+
   // Export to CSV
   const handleExportCsv = () => {
-    const data = membersResponse?.data || [];
+    const data = isViewingBchOnly ? unifiedBchList : (membersResponse?.data || []);
     if (data.length === 0) {
       toast.info('Không có dữ liệu hội viên để xuất file.');
       return;
@@ -271,12 +477,6 @@ export function MembersPage() {
       toast.error('Lỗi khi xuất file danh sách hội viên.');
     }
   };
-
-  const membersList = membersResponse?.data || [];
-  const isViewingBchOnly = filters.position === 'bch';
-  const orgType = activeOrganization?.type;
-  const boardTitle = getOrgBoardTitle(orgType, language);
-  const memberNoun = getOrgMemberNoun(orgType, language);
 
   return (
     <div className="space-y-4 max-w-7xl mx-auto pb-12">
@@ -355,16 +555,29 @@ export function MembersPage() {
         onFilterChange={handleFilterChange}
         onReset={handleResetFilters}
         terms={terms}
-        totalResults={isViewingBchOnly ? stats.boardCount : membersResponse?.totalCount}
+        totalResults={isViewingBchOnly ? unifiedBchList.length : membersResponse?.totalCount}
         viewMode={viewMode}
         onViewModeChange={setViewMode}
       />
+
+      {/* Query Error State if request fails */}
+      {membersError && (
+        <QueryErrorState
+          title={
+            language === 'vi'
+              ? 'Không thể tải danh sách hội viên'
+              : 'Unable to load member directory'
+          }
+          error={membersError}
+          onRetry={() => refetchMembers()}
+        />
+      )}
 
       {/* 4. Display Content: Executive Board vs Member Roster */}
       {isViewingBchOnly ? (
         <ExecutiveBoardSection
           memberships={bchMemberships}
-          members={membersList}
+          members={unifiedBchList}
           organizationName={activeOrganization?.name}
           organizationCode={activeOrganization?.code}
           organizationType={activeOrganization?.type}
@@ -381,13 +594,16 @@ export function MembersPage() {
               <MemberTableSkeleton rows={5} />
             ) : (
               <MemberListTable
-                data={membersList}
-                totalCount={membersResponse?.totalCount || stats.boardCount}
-                page={membersResponse?.page || 1}
-                pageSize={membersResponse?.pageSize || 15}
-                totalPages={membersResponse?.totalPages || 1}
+                data={unifiedBchList}
+                totalCount={unifiedBchList.length}
+                page={1}
+                pageSize={unifiedBchList.length || 15}
+                totalPages={1}
                 isLoading={isLoadingMembers}
                 canManage={canManage}
+                selectedIds={selectedMemberIds}
+                onToggleSelect={handleToggleSelectMember}
+                onToggleSelectAll={handleToggleSelectAll}
                 onPageChange={(p) => handleFilterChange({ page: p })}
                 onViewDetail={handleOpenDetailDialog}
                 onEdit={handleOpenEditDialog}
@@ -400,19 +616,6 @@ export function MembersPage() {
         </ExecutiveBoardSection>
       ) : (
         <div className="space-y-6">
-          {/* Error State if query fails */}
-          {membersError && (
-            <QueryErrorState
-              title={
-                language === 'vi'
-                  ? 'Không thể tải danh sách hội viên'
-                  : 'Unable to load member directory'
-              }
-              error={membersError}
-              onRetry={() => refetchMembers()}
-            />
-          )}
-
           {/* Main Member List / Grid View */}
           {isLoadingMembers ? (
             viewMode === 'table' ? (
@@ -429,6 +632,9 @@ export function MembersPage() {
               totalPages={membersResponse?.totalPages || 1}
               isLoading={isLoadingMembers}
               canManage={canManage}
+              selectedIds={selectedMemberIds}
+              onToggleSelect={handleToggleSelectMember}
+              onToggleSelectAll={handleToggleSelectAll}
               onPageChange={(p) => handleFilterChange({ page: p })}
               onViewDetail={handleOpenDetailDialog}
               onEdit={handleOpenEditDialog}
@@ -476,6 +682,8 @@ export function MembersPage() {
                       key={item.id}
                       member={item}
                       canManage={canManage}
+                      isSelected={selectedMemberIds.includes(item.id)}
+                      onToggleSelect={handleToggleSelectMember}
                       onViewDetail={handleOpenDetailDialog}
                       onEdit={handleOpenEditDialog}
                       onAssignTerm={handleOpenAssignTerm}
@@ -551,7 +759,6 @@ export function MembersPage() {
         onConfirm={handleConfirmDelete}
       />
 
-
       {/* Import từ file Excel/CSV */}
       {orgId && (
         <ImportMembersFromFileDialog
@@ -561,6 +768,89 @@ export function MembersPage() {
           onSuccess={() => queryClient.invalidateQueries({ queryKey: memberKeys.all })}
         />
       )}
+
+      {/* Floating Batch Action Bar */}
+      {selectedMemberIds.length > 0 && (
+        <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-40 bg-ink-navy/95 backdrop-blur-md text-white px-4 py-2.5 rounded-2xl shadow-2xl border border-white/10 flex items-center gap-3 animate-in fade-in slide-in-from-bottom-4 duration-200">
+          <div className="flex items-center gap-2 border-r border-white/20 pr-3 text-xs font-semibold">
+            <span className="w-5 h-5 rounded-full bg-signal-blue text-white flex items-center justify-center text-[11px] font-bold tabular-nums">
+              {selectedMemberIds.length}
+            </span>
+            <span>hội viên đã chọn</span>
+          </div>
+
+          <div className="flex items-center gap-1.5">
+            <button
+              type="button"
+              onClick={handleToggleSelectAll}
+              className="h-8 px-2.5 text-xs text-white/80 hover:text-white hover:bg-white/10 rounded-lg transition-colors font-medium cursor-pointer"
+            >
+              {membersList.length > 0 && membersList.every((m) => selectedMemberIds.includes(m.id))
+                ? 'Bỏ chọn trang này'
+                : 'Chọn cả trang này'}
+            </button>
+
+            <Button
+              size="sm"
+              onClick={() => setBulkAssignTermDialogOpen(true)}
+              className="h-8 px-3 text-xs font-semibold bg-signal-blue hover:bg-[#005be0] text-white rounded-lg flex items-center gap-1.5 shadow-xs cursor-pointer"
+            >
+              <Calendar className="w-3.5 h-3.5" />
+              <span>Gán vào nhiệm kỳ</span>
+            </Button>
+
+            <Button
+              size="sm"
+              onClick={() => setBulkDeleteConfirmOpen(true)}
+              className="h-8 px-3 text-xs font-semibold bg-rose-600 hover:bg-rose-700 text-white rounded-lg flex items-center gap-1.5 shadow-xs cursor-pointer"
+            >
+              <Trash2 className="w-3.5 h-3.5" />
+              <span>Xóa ({selectedMemberIds.length})</span>
+            </Button>
+
+            <button
+              type="button"
+              onClick={handleClearSelection}
+              className="ml-1 p-1.5 text-white/60 hover:text-white rounded-lg hover:bg-white/10 transition-colors cursor-pointer"
+              title="Bỏ chọn tất cả"
+            >
+              <X className="w-4 h-4" />
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* Bulk Delete Confirmation Dialog */}
+      <ConfirmDialog
+        open={bulkDeleteConfirmOpen}
+        onOpenChange={setBulkDeleteConfirmOpen}
+        title={language === 'vi' ? `Xóa ${selectedMemberIds.length} hồ sơ hội viên?` : `Delete ${selectedMemberIds.length} Members?`}
+        description={
+          language === 'vi'
+            ? `Bạn có chắc chắn muốn xóa vĩnh viễn ${selectedMemberIds.length} hồ sơ hội viên đã chọn khỏi Đơn vị?`
+            : `Are you sure you want to permanently delete the selected ${selectedMemberIds.length} member profiles?`
+        }
+        warningNote={
+          language === 'vi'
+            ? 'Hành động này sẽ xóa hoàn toàn thông tin hội viên và toàn bộ lịch sử phân công nhiệm kỳ liên quan. Không thể hoàn tác.'
+            : 'This action will permanently delete these member profiles and all related term assignments. This action cannot be undone.'
+        }
+        confirmLabel={language === 'vi' ? `Xác nhận xóa (${selectedMemberIds.length})` : `Delete (${selectedMemberIds.length})`}
+        cancelLabel={language === 'vi' ? 'Hủy' : 'Cancel'}
+        variant="destructive"
+        isLoading={bulkDeleteMutation.isPending}
+        onConfirm={handleBulkDeleteConfirm}
+      />
+
+      {/* Bulk Assign Term Dialog */}
+      <BulkAssignTermDialog
+        open={bulkAssignTermDialogOpen}
+        onOpenChange={setBulkAssignTermDialogOpen}
+        selectedCount={selectedMemberIds.length}
+        terms={terms}
+        isLoading={bulkAssignMutation.isPending}
+        onSubmit={handleBulkAssignTermSubmit}
+      />
     </div>
   );
 }

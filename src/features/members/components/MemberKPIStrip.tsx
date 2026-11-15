@@ -63,6 +63,7 @@ export function MemberKPIStrip({
       onClick: () =>
         onFilterSelect({
           status: isActiveFilter ? 'all' : 'active',
+          position: 'all',
           page: 1,
         }),
     },
@@ -73,10 +74,11 @@ export function MemberKPIStrip({
       subtext: language === 'vi' ? 'Đã tốt nghiệp ra trường' : 'Graduated members',
       icon: GraduationCap,
       color: 'text-signal-blue',
-      active: isAlumniFilter,
+      active: isAlumniFilter && !isBoardFilter,
       onClick: () =>
         onFilterSelect({
           status: isAlumniFilter ? 'all' : 'alumni',
+          position: 'all',
           page: 1,
         }),
     },
@@ -114,6 +116,7 @@ export function MemberKPIStrip({
       onClick: () =>
         onFilterSelect({
           position: isBoardFilter ? 'all' : 'bch',
+          status: 'all',
           page: 1,
         }),
     },

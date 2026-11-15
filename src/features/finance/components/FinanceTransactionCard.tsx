@@ -13,6 +13,7 @@ import {
   AlertCircle,
   User,
   Check,
+  Loader2,
 } from '@/lib/icons';
 import { formatDate } from '@/lib/date';
 import {
@@ -33,6 +34,7 @@ export interface FinanceTransactionCardProps {
   onApprove?: (tx: FinanceTransactionListItem) => void;
   onReject?: (tx: FinanceTransactionListItem) => void;
   onToggleReimbursed?: (tx: FinanceTransactionListItem) => void;
+  togglingTxId?: string | null;
   isApproving?: boolean;
 }
 
@@ -47,6 +49,7 @@ export function FinanceTransactionCard({
   onApprove,
   onReject,
   onToggleReimbursed,
+  togglingTxId = null,
   isApproving = false,
 }: FinanceTransactionCardProps) {
   const typeConfig = getTransactionTypeConfig(tx.transactionType);
@@ -87,7 +90,7 @@ export function FinanceTransactionCard({
 
             {isLocked && (
               <span className="inline-flex items-center gap-1 text-[10px] font-semibold text-slate-gray bg-cloud px-1.5 py-0.5 rounded-full border border-hairline">
-                <Lock className="h-2.5 w-2.5" /> Locked
+                <Lock className="h-2.5 w-2.5" /> Đã khóa
               </span>
             )}
           </div>
@@ -126,13 +129,15 @@ export function FinanceTransactionCard({
             ) && (
               <button
                 type="button"
-                disabled={!canManage}
+                disabled={!canManage || togglingTxId === tx.id}
                 onClick={(e) => {
                   e.stopPropagation();
                   onToggleReimbursed?.(tx);
                 }}
                 className={`inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[11px] font-medium border transition-all select-none ${
-                  canManage ? 'cursor-pointer hover:shadow-2xs active:scale-95' : 'cursor-default'
+                  canManage && togglingTxId !== tx.id
+                    ? 'cursor-pointer hover:shadow-2xs active:scale-95'
+                    : 'cursor-default opacity-85'
                 } ${
                   tx.isReimbursed === true || tx.isUnpaid === false
                     ? 'bg-emerald-50 text-emerald-700 border-emerald-300 hover:bg-emerald-100/80'
@@ -155,11 +160,17 @@ export function FinanceTransactionCard({
                       : 'bg-white border-amber-400'
                   }`}
                 >
-                  {(tx.isReimbursed === true || tx.isUnpaid === false) && (
+                  {togglingTxId === tx.id ? (
+                    <Loader2 className="w-2.5 h-2.5 animate-spin" />
+                  ) : (tx.isReimbursed === true || tx.isUnpaid === false) ? (
                     <Check className="w-2.5 h-2.5 stroke-[3]" />
-                  )}
+                  ) : null}
                 </span>
-                <span>Đã thanh</span>
+                <span>
+                  {tx.isReimbursed === true || tx.isUnpaid === false
+                    ? 'Đã thanh'
+                    : 'Chưa thanh'}
+                </span>
               </button>
             )}
           </div>

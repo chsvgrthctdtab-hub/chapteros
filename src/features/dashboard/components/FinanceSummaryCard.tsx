@@ -23,17 +23,17 @@ export function FinanceSummaryCard({ finance }: FinanceSummaryCardProps) {
             </div>
             <div>
               <CardTitle className="text-base sm:text-lg font-bold text-[#0b3558] leading-tight">
-                Finance Overview
+                Tổng quan Tài chính
               </CardTitle>
               <p className="text-xs text-[#64748b] mt-0.5">
-                Treasury balance & cash flow summary
+                Số dư quỹ và tóm tắt dòng tiền hoạt động
               </p>
             </div>
           </div>
 
           <Link to="/finance">
             <Button variant="ghost" size="sm" className="text-xs sm:text-sm text-[#1a73e8] hover:text-[#1a73e8] hover:bg-[#f0f4f9] rounded-full h-8 px-3 font-semibold">
-              <span>Ledger</span>
+              <span>Sổ thu chi</span>
               <ArrowRight className="w-3.5 h-3.5 ml-1" />
             </Button>
           </Link>
@@ -44,14 +44,14 @@ export function FinanceSummaryCard({ finance }: FinanceSummaryCardProps) {
         {/* Main Balance Banner */}
         <div className="p-3.5 rounded-xl bg-[#f8fafd] border border-[#e2e8f0] flex items-center justify-between">
           <div>
-            <div className="text-[11px] text-[#64748b] font-semibold uppercase tracking-wider">Current Balance</div>
+            <div className="text-[11px] text-[#64748b] font-semibold uppercase tracking-wider">Số dư hiện tại</div>
             <div className={`text-lg sm:text-xl font-bold tracking-tight mt-0.5 tabular-nums ${isPositive ? 'text-[#0b3558]' : 'text-rose-700'}`}>
               {formatVND(balance)}
             </div>
           </div>
 
           <div className="text-right">
-            <div className="text-[11px] text-[#64748b] font-semibold uppercase tracking-wider">This Month</div>
+            <div className="text-[11px] text-[#64748b] font-semibold uppercase tracking-wider">Tháng này</div>
             <div className={`font-bold text-xs sm:text-sm mt-0.5 tabular-nums ${thisMonthBalance >= 0 ? 'text-emerald-700' : 'text-rose-600'}`}>
               {thisMonthBalance >= 0 ? '+' : ''}{formatVND(thisMonthBalance)}
             </div>
@@ -62,27 +62,27 @@ export function FinanceSummaryCard({ finance }: FinanceSummaryCardProps) {
         <div className="grid grid-cols-2 gap-2.5">
           <div className="p-3 rounded-xl bg-emerald-50/50 border border-emerald-100">
             <div className="flex items-center justify-between text-xs text-emerald-800 mb-0.5">
-              <span className="font-semibold">Total In</span>
+              <span className="font-semibold">Tổng thu</span>
               <TrendingUp className="w-3.5 h-3.5 text-emerald-600" />
             </div>
             <div className="text-sm sm:text-base font-bold text-ink-navy tabular-nums">
               {formatVND(totalIncome)}
             </div>
             <div className="text-[11px] text-emerald-700 mt-0.5 tabular-nums">
-              +{formatVND(thisMonthIncome)} this month
+              +{formatVND(thisMonthIncome)} tháng này
             </div>
           </div>
 
           <div className="p-3 rounded-xl bg-rose-50/50 border border-rose-100">
             <div className="flex items-center justify-between text-xs text-rose-800 mb-0.5">
-              <span className="font-semibold">Total Out</span>
+              <span className="font-semibold">Tổng chi</span>
               <TrendingDown className="w-3.5 h-3.5 text-rose-600" />
             </div>
             <div className="text-sm sm:text-base font-bold text-ink-navy tabular-nums">
               {formatVND(totalExpense)}
             </div>
             <div className="text-[11px] text-rose-700 mt-0.5 tabular-nums">
-              -{formatVND(thisMonthExpense)} this month
+              -{formatVND(thisMonthExpense)} tháng này
             </div>
           </div>
         </div>

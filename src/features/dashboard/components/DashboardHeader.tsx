@@ -171,7 +171,7 @@ export function DashboardHeader({
                   className="bg-white hover:bg-[#dbeafe] text-[#1e293b] text-xs sm:text-sm h-8 px-3.5 border border-[#c2e7ff] rounded-full cursor-pointer font-medium shadow-2xs"
                 >
                   <UserPlus size={15} className="mr-1.5 text-emerald-600" />
-                  <span>Member</span>
+                  <span>Thành viên</span>
                 </Button>
               </Link>
             )}
@@ -183,7 +183,7 @@ export function DashboardHeader({
                   className="bg-white hover:bg-[#dbeafe] text-[#1e293b] text-xs sm:text-sm h-8 px-3.5 border border-[#c2e7ff] rounded-full cursor-pointer font-medium shadow-2xs"
                 >
                   <CalendarPlus size={15} className="mr-1.5 text-sky-600" />
-                  <span>Activity</span>
+                  <span>Hoạt động</span>
                 </Button>
               </Link>
             )}
@@ -195,7 +195,7 @@ export function DashboardHeader({
                   className="bg-white hover:bg-[#dbeafe] text-[#1e293b] text-xs sm:text-sm h-8 px-3.5 border border-[#c2e7ff] rounded-full cursor-pointer font-medium shadow-2xs"
                 >
                   <CheckSquare size={15} className="mr-1.5 text-amber-600" />
-                  <span>Task</span>
+                  <span>Nhiệm vụ</span>
                 </Button>
               </Link>
             )}
@@ -207,7 +207,7 @@ export function DashboardHeader({
                   className="bg-[#2e89f7] hover:bg-[#1a73e8] text-white text-xs sm:text-sm h-8 px-3.5 border border-transparent rounded-full cursor-pointer font-medium shadow-xs"
                 >
                   <DollarSign size={15} className="mr-1.5 text-white" />
-                  <span>Transaction</span>
+                  <span>Thu chi</span>
                 </Button>
               </Link>
             )}

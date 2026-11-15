@@ -265,17 +265,17 @@ export function ActivityDetailPage() {
         <div className="w-12 h-12 rounded-xl bg-rose-50 border border-rose-200 text-rose-600 flex items-center justify-center mx-auto">
           <AlertTriangle className="w-6 h-6" />
         </div>
-        <h2 className="text-base font-bold text-ink-navy">Activity Not Found</h2>
+        <h2 className="text-base font-bold text-ink-navy">Không tìm thấy hoạt động</h2>
         <p className="text-xs text-mist-gray">
           {(detailError as Error)?.message ||
-            'The activity may have been deleted or you do not have permission to access it.'}
+            'Hoạt động có thể đã bị xóa hoặc bạn không có quyền truy cập.'}
         </p>
         <Link
           to="/activities"
           className="inline-flex items-center gap-1.5 px-4 py-2 text-xs font-bold text-white bg-signal-blue rounded-lg hover:bg-[#005be0] transition-colors"
         >
           <ArrowLeft className="w-4 h-4" />
-          <span>Back to Activities</span>
+          <span>Quay lại Hoạt động</span>
         </Link>
       </div>
     );
@@ -517,9 +517,9 @@ export function ActivityDetailPage() {
             </div>
 
             <div className="text-center space-y-1">
-              <h3 className="text-base font-bold text-ink-navy">Close or Delete Activity</h3>
+              <h3 className="text-base font-bold text-ink-navy">Đóng hoặc Xóa hoạt động</h3>
               <p className="text-xs text-slate-gray leading-relaxed">
-                You can mark this activity as cancelled to preserve historical registration records or delete it permanently if created in error.
+                Bạn có thể đánh dấu hủy hoạt động này để bảo lưu dữ liệu điểm danh lịch sử, hoặc xóa vĩnh viễn nếu tạo nhầm.
               </p>
             </div>
 
@@ -558,7 +558,7 @@ export function ActivityDetailPage() {
                 onClick={() => setIsDeleteModalOpen(false)}
                 className="px-4 py-2 text-xs font-semibold text-slate-gray hover:text-ink-navy cursor-pointer transition-colors"
               >
-                Dismiss
+                Hủy bỏ
               </button>
             </div>
           </div>

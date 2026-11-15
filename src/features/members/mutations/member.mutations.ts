@@ -381,3 +381,46 @@ export function useBulkImportMembers(organizationId?: string) {
     },
   });
 }
+
+/**
+ * Hook to bulk delete members
+ */
+export function useBulkDeleteMembers(organizationId?: string) {
+  const queryClient = useQueryClient();
+  const { user } = useAuth();
+
+  return useMutation({
+    mutationFn: async (memberIds: string[]) => {
+      if (!organizationId) throw new Error('Chưa chọn Đơn vị làm việc');
+      if (!memberIds.length) return 0;
+      return memberService.bulkDeleteMembers(memberIds, organizationId, user?.id);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: memberKeys.all });
+    },
+  });
+}
+
+/**
+ * Hook to bulk assign members to a term
+ */
+export function useBulkAssignMembersToTerm(organizationId?: string) {
+  const queryClient = useQueryClient();
+  const { user } = useAuth();
+
+  return useMutation({
+    mutationFn: async (payload: {
+      memberIds: string[];
+      termId: string;
+      position?: string;
+      department?: string | null;
+    }) => {
+      if (!organizationId) throw new Error('Chưa chọn Đơn vị làm việc');
+      if (!payload.memberIds.length || !payload.termId) return 0;
+      return memberService.bulkAssignMembersToTerm(organizationId, payload, user?.id);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: memberKeys.all });
+    },
+  });
+}

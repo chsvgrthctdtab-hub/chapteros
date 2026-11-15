@@ -13,14 +13,14 @@ export function TaskSkeleton({ viewMode, count = 6 }: TaskSkeletonProps) {
           <table className="w-full text-left border-collapse text-xs">
             <thead>
               <tr className="bg-cloud border-b border-hairline text-[11px] font-semibold text-mist-gray uppercase tracking-wider">
-                <th className="py-3 px-4 min-w-[260px]">Task</th>
-                <th className="py-3 px-3.5 min-w-[120px]">Status</th>
-                <th className="py-3 px-3 min-w-[100px]">Priority</th>
-                <th className="py-3 px-3.5 min-w-[160px]">Assignee</th>
-                <th className="py-3 px-3.5 min-w-[170px]">Activity</th>
-                <th className="py-3 px-3.5 min-w-[140px]">Due Date</th>
-                <th className="py-3 px-3.5 min-w-[120px]">Progress</th>
-                <th className="py-3 px-4 text-right min-w-[90px]">Actions</th>
+                <th className="py-3 px-4 min-w-[260px]">Nhiệm vụ</th>
+                <th className="py-3 px-3.5 min-w-[120px]">Trạng thái</th>
+                <th className="py-3 px-3 min-w-[100px]">Ưu tiên</th>
+                <th className="py-3 px-3.5 min-w-[160px]">Phụ trách</th>
+                <th className="py-3 px-3.5 min-w-[170px]">Hoạt động</th>
+                <th className="py-3 px-3.5 min-w-[140px]">Hạn chót</th>
+                <th className="py-3 px-3.5 min-w-[120px]">Tiến độ</th>
+                <th className="py-3 px-4 text-right min-w-[90px]">Thao tác</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-hairline animate-pulse">

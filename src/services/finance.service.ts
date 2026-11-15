@@ -673,6 +673,85 @@ export const financeService = {
   },
 
   /**
+   * Ultra-fast toggle for transaction reimbursement status (isReimbursed / isUnpaid)
+   * Avoids heavy validation overhead and runs lock checks in parallel.
+   */
+  async toggleTransactionReimbursement(
+    transaction: FinanceTransactionListItem,
+    organizationId: string,
+    nextReimbursed: boolean,
+    actorUserId?: string | null
+  ): Promise<FinanceTransactionListItem> {
+    if (!transaction?.id || !organizationId) {
+      throw new Error('Thiếu mã giao dịch hoặc thông tin Chi hội');
+    }
+
+    // 1. Parallel lock checks (Period lock & Term lock)
+    const [closedPeriod, existingTerm] = await Promise.all([
+      transaction.transactionDate
+        ? financeRepository.checkDateInClosedPeriod(organizationId, transaction.transactionDate)
+        : Promise.resolve(null),
+      transaction.termId
+        ? termRepository.getById(transaction.termId)
+        : Promise.resolve(null),
+    ]);
+
+    if (closedPeriod) {
+      throw new Error(
+        `Không thể sửa trạng thái thanh toán: Giao dịch nằm trong kỳ tài chính đã chốt "${closedPeriod.periodName}". Vui lòng mở lại kỳ tài chính để thao tác.`
+      );
+    }
+
+    if (existingTerm) {
+      validateFinanceTermLock(existingTerm.status, 'thay đổi trạng thái thanh toán trong nhiệm kỳ đã khóa');
+    }
+
+    // 2. Build updated description
+    const cleanDesc =
+      transaction.cleanDescription ||
+      parseTransactionMetadata(transaction.description).cleanDescription;
+    const newDescription = buildTransactionDescription(
+      cleanDesc,
+      transaction.person,
+      nextReimbursed,
+      transaction.transactionType,
+      !nextReimbursed
+    );
+
+    // 3. Direct single update query
+    const updated = await financeRepository.updateTransaction(
+      transaction.id,
+      {
+        description: newDescription,
+        updated_at: new Date().toISOString(),
+      },
+      organizationId
+    );
+
+    // 4. Background non-blocking audit logging
+    getAuthenticatedUserId(actorUserId)
+      .then((userId) => {
+        return auditLogRepository.log({
+          organization_id: organizationId,
+          user_id: userId,
+          action: 'finance.update_transaction',
+          entity_type: 'finance_transaction',
+          entity_id: updated.id,
+          metadata: {
+            field: 'isReimbursed',
+            oldValue: transaction.isReimbursed,
+            newValue: nextReimbursed,
+          },
+        });
+      })
+      .catch((err) => {
+        console.warn('Audit log for reimbursement toggle failed:', err);
+      });
+
+    return updated;
+  },
+
+  /**
    * Approve transaction (Admin or Leader only, Self-approval blocked)
    */
   async approveTransaction(

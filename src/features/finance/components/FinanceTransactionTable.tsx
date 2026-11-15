@@ -10,6 +10,7 @@ import {
   AlertCircle,
   User,
   Check,
+  Loader2,
 } from '@/lib/icons';
 import { formatDate } from '@/lib/date';
 import {
@@ -30,6 +31,7 @@ interface FinanceTransactionTableProps {
   onApprove?: (tx: FinanceTransactionListItem) => void;
   onReject?: (tx: FinanceTransactionListItem) => void;
   onToggleReimbursed?: (tx: FinanceTransactionListItem) => void;
+  togglingTxId?: string | null;
   isApproving?: boolean;
   isLoading?: boolean;
 }
@@ -45,6 +47,7 @@ export function FinanceTransactionTable({
   onApprove,
   onReject,
   onToggleReimbursed,
+  togglingTxId = null,
   isApproving = false,
   isLoading = false,
 }: FinanceTransactionTableProps) {
@@ -143,13 +146,15 @@ export function FinanceTransactionTable({
                         ) && (
                           <button
                             type="button"
-                            disabled={!canManage}
+                            disabled={!canManage || togglingTxId === tx.id}
                             onClick={(e) => {
                               e.stopPropagation();
                               onToggleReimbursed?.(tx);
                             }}
                             className={`inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[11px] font-medium border transition-all select-none ${
-                              canManage ? 'cursor-pointer hover:shadow-2xs active:scale-95' : 'cursor-default'
+                              canManage && togglingTxId !== tx.id
+                                ? 'cursor-pointer hover:shadow-2xs active:scale-95'
+                                : 'cursor-default opacity-85'
                             } ${
                               tx.isReimbursed === true || tx.isUnpaid === false
                                 ? 'bg-emerald-50 text-emerald-700 border-emerald-300 hover:bg-emerald-100/80'
@@ -172,9 +177,11 @@ export function FinanceTransactionTable({
                                   : 'bg-white border-amber-400'
                               }`}
                             >
-                              {(tx.isReimbursed === true || tx.isUnpaid === false) && (
+                              {togglingTxId === tx.id ? (
+                                <Loader2 className="w-2.5 h-2.5 animate-spin" />
+                              ) : (tx.isReimbursed === true || tx.isUnpaid === false) ? (
                                 <Check className="w-2.5 h-2.5 stroke-[3]" />
-                              )}
+                              ) : null}
                             </span>
                             <span>
                               {tx.isReimbursed === true || tx.isUnpaid === false
@@ -246,7 +253,7 @@ export function FinanceTransactionTable({
                         {statusConfig.label}
                       </span>
                       {isLocked && (
-                        <span title="Locked in closed period">
+                        <span title="Đã khóa trong kỳ tài chính đã chốt">
                           <Lock className="h-3 w-3 text-mist-gray" />
                         </span>
                       )}

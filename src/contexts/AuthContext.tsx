@@ -323,7 +323,17 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const signInWithGoogle = async (): Promise<{ error: string | null }> => {
     setError(null);
     if (!isSupabaseConfigured) {
-      return { error: 'Chưa cấu hình Supabase URL & Anon Key trong file .env.' };
+      const demoUser = {
+        id: 'demo-bch-user',
+        email: 'bch@chihoi.edu.vn',
+        app_metadata: {},
+        user_metadata: { full_name: 'Ban Chấp Hành' },
+        aud: 'authenticated',
+        created_at: new Date().toISOString(),
+      } as User;
+      setUser(demoUser);
+      await loadUserData(demoUser);
+      return { error: null };
     }
 
     const res = await authService.signInWithGoogle();

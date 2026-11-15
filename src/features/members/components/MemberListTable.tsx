@@ -21,6 +21,8 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { Button } from '@/components/ui/button';
+import { Checkbox } from '@/components/ui/checkbox';
+import { cn } from '@/lib/utils';
 import { MemberStatusBadge } from './MemberStatusBadge';
 import { MemberRoleBadge } from './MemberRoleBadge';
 import { getMajorFromClassOrValue } from '../utils/major.utils';
@@ -35,6 +37,9 @@ interface MemberListTableProps {
   totalPages: number;
   isLoading: boolean;
   canManage: boolean;
+  selectedIds?: string[];
+  onToggleSelect?: (id: string) => void;
+  onToggleSelectAll?: () => void;
   onPageChange: (newPage: number) => void;
   onViewDetail: (member: Member) => void;
   onEdit: (member: Member) => void;
@@ -51,6 +56,9 @@ export function MemberListTable({
   totalPages,
   isLoading,
   canManage,
+  selectedIds = [],
+  onToggleSelect,
+  onToggleSelectAll,
   onPageChange,
   onViewDetail,
   onEdit,
@@ -94,6 +102,16 @@ export function MemberListTable({
         <table className="w-full text-left text-xs text-slate-gray">
           <thead className="sticky top-0 z-10 bg-cloud/95 backdrop-blur-xs text-[11px] font-bold text-slate-gray border-b border-hairline uppercase tracking-wider shadow-xs">
             <tr>
+              {onToggleSelect && (
+                <th className="py-3.5 pl-4 pr-1 w-10 text-center" onClick={(e) => e.stopPropagation()}>
+                  <Checkbox
+                    checked={data.length > 0 && data.every((m) => selectedIds.includes(m.id))}
+                    indeterminate={data.some((m) => selectedIds.includes(m.id)) && !data.every((m) => selectedIds.includes(m.id))}
+                    onCheckedChange={() => onToggleSelectAll?.()}
+                    aria-label="Chọn tất cả"
+                  />
+                </th>
+              )}
               <th className="py-3.5 px-4 min-w-[200px]">Hội viên</th>
               <th className="py-3.5 px-3 min-w-[100px]">MSSV</th>
               <th className="py-3.5 px-3 min-w-[130px]">Lớp / Ngành</th>
@@ -132,12 +150,29 @@ export function MemberListTable({
                 updatedAt: item.updatedAt,
               };
 
+              const isSelected = selectedIds.includes(item.id);
+
               return (
                 <tr
                   key={item.id}
-                  className="hover:bg-cloud/80 transition-colors group cursor-pointer"
+                  className={cn(
+                    "hover:bg-cloud/80 transition-colors group cursor-pointer",
+                    isSelected && "bg-blue-50/60 hover:bg-blue-50/80"
+                  )}
                   onClick={() => onViewDetail(memberObj)}
                 >
+                  {onToggleSelect && (
+                    <td
+                      className="py-3 pl-4 pr-1 w-10 text-center"
+                      onClick={(e) => e.stopPropagation()}
+                    >
+                      <Checkbox
+                        checked={isSelected}
+                        onCheckedChange={() => onToggleSelect(item.id)}
+                        aria-label={`Chọn ${item.fullName}`}
+                      />
+                    </td>
+                  )}
                   {/* 1. Member: Avatar + Name + Secondary email */}
                   <td className="py-3 px-4">
                     <div className="flex items-center space-x-3">
@@ -162,7 +197,7 @@ export function MemberListTable({
                         {item.studentId}
                       </span>
                     ) : (
-                      <span className="text-[11px] text-mist-gray italic">Unassigned</span>
+                      <span className="text-[11px] text-mist-gray italic">Chưa có</span>
                     )}
                   </td>
 
@@ -217,7 +252,7 @@ export function MemberListTable({
                       </div>
                     ) : (
                       <span className="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] text-mist-gray italic bg-cloud border border-dashed border-hairline">
-                        Unassigned
+                        Chưa phân công
                       </span>
                     )}
                   </td>

@@ -205,6 +205,7 @@ export function MemberFilters({
             onClick={() =>
               onFilterChange({
                 position: filters.position === 'bch' ? 'all' : 'bch',
+                status: 'all',
                 page: 1,
               })
             }
@@ -222,12 +223,13 @@ export function MemberFilters({
             type="button"
             onClick={() =>
               onFilterChange({
-                status: filters.status === 'active' ? 'all' : 'active',
+                status: filters.status === 'active' && filters.position !== 'bch' ? 'all' : 'active',
+                position: 'all',
                 page: 1,
               })
             }
             className={`px-3.5 py-1 rounded-full text-xs font-semibold border transition-all duration-150 cursor-pointer active:scale-95 tracking-wide ${
-              filters.status === 'active'
+              filters.status === 'active' && filters.position !== 'bch'
                 ? 'bg-emerald-50 text-emerald-800 border-emerald-300 font-bold shadow-xs'
                 : 'bg-white text-[#64748b] border-[#e2e8f0] hover:bg-[#f0f4f9] hover:text-[#1e293b]'
             }`}
@@ -239,12 +241,13 @@ export function MemberFilters({
             type="button"
             onClick={() =>
               onFilterChange({
-                status: filters.status === 'alumni' ? 'all' : 'alumni',
+                status: filters.status === 'alumni' && filters.position !== 'bch' ? 'all' : 'alumni',
+                position: 'all',
                 page: 1,
               })
             }
             className={`px-3.5 py-1 rounded-full text-xs font-semibold border transition-all duration-150 cursor-pointer active:scale-95 tracking-wide ${
-              filters.status === 'alumni'
+              filters.status === 'alumni' && filters.position !== 'bch'
                 ? 'bg-[#f0f4f9] text-[#1e293b] border-[#e2e8f0] font-bold shadow-xs'
                 : 'bg-white text-[#64748b] border-[#e2e8f0] hover:bg-[#f0f4f9] hover:text-[#1e293b]'
             }`}

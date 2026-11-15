@@ -168,7 +168,7 @@ export function ActivityTable({
                     ) : (
                       <span className="inline-flex items-center gap-1 text-[11px] text-mist-gray italic">
                         <User className="w-3 h-3" />
-                        <span>Unassigned</span>
+                        <span>Chưa phân công</span>
                       </span>
                     )}
                   </td>
@@ -241,7 +241,7 @@ export function ActivityTable({
                           id={`activity-row-edit-btn-${activity.id}`}
                           onClick={() => onEdit(activity)}
                           className="p-1 text-slate-gray hover:text-ink-navy hover:bg-pebble rounded-lg transition-colors cursor-pointer"
-                          title="Edit activity"
+                          title="Chỉnh sửa hoạt động"
                         >
                           <Edit3 className="w-3.5 h-3.5" />
                         </button>
@@ -250,9 +250,9 @@ export function ActivityTable({
                         to={`/activities/${activity.id}`}
                         id={`activity-row-view-btn-${activity.id}`}
                         className="inline-flex items-center gap-0.5 px-2 py-1 text-xs font-semibold text-signal-blue hover:text-[#005be0] hover:bg-[#e6f0ff] rounded-lg transition-colors"
-                        title="View details"
+                        title="Xem chi tiết"
                       >
-                        <span>View</span>
+                        <span>Chi tiết</span>
                         <ChevronRight className="w-3.5 h-3.5" />
                       </Link>
                     </div>

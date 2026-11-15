@@ -58,6 +58,7 @@ import {
 import {
   useCreateFinanceTransaction,
   useUpdateFinanceTransaction,
+  useToggleFinanceReimbursement,
   useDeleteFinanceTransaction,
   useApproveFinanceTransaction,
   useRejectFinanceTransaction,
@@ -161,6 +162,8 @@ export function FinancePage() {
   // Mutations
   const createTxMutation = useCreateFinanceTransaction();
   const updateTxMutation = useUpdateFinanceTransaction();
+  const toggleReimbursementMutation = useToggleFinanceReimbursement();
+  const [togglingTxId, setTogglingTxId] = useState<string | null>(null);
   const deleteTxMutation = useDeleteFinanceTransaction();
   const approveTxMutation = useApproveFinanceTransaction();
   const rejectTxMutation = useRejectFinanceTransaction();
@@ -251,36 +254,37 @@ export function FinancePage() {
   const handleToggleReimbursed = async (tx: FinanceTransactionListItem) => {
     const currentlyReimbursed = tx.isReimbursed === true || tx.isUnpaid === false;
     const nextReimbursed = !currentlyReimbursed;
+    setTogglingTxId(tx.id);
+
+    // Optimistically update drawer if this transaction is currently open
+    if (selectedTransactionForDrawer?.id === tx.id) {
+      setSelectedTransactionForDrawer({
+        ...selectedTransactionForDrawer,
+        isReimbursed: nextReimbursed,
+        isUnpaid: !nextReimbursed,
+      });
+    }
+
     try {
-      await updateTxMutation.mutateAsync({
-        transactionId: tx.id,
+      await toggleReimbursementMutation.mutateAsync({
+        transaction: tx,
         organizationId,
-        data: {
-          description: tx.cleanDescription || tx.description,
-          amount: tx.amount,
-          transactionType: tx.transactionType,
-          categoryId: tx.categoryId,
-          activityId: tx.activityId,
-          termId: tx.termId,
-          transactionDate: tx.transactionDate,
-          personProfileId: tx.person?.profileId || 'none',
-          personName: tx.person?.name || '',
-          receiptUrl: tx.receiptUrl || '',
-          isReimbursed: nextReimbursed,
-          isUnpaid: !nextReimbursed,
-        },
-        recordedBy: profile?.id || user?.id || null,
+        nextReimbursed,
+        actorUserId: profile?.id || user?.id || null,
       });
       toast.success(nextReimbursed ? 'Đã xác nhận "Đã thanh"' : 'Đã chuyển về "Chưa thanh"');
+    } catch (err: unknown) {
+      // Revert drawer state on error
       if (selectedTransactionForDrawer?.id === tx.id) {
         setSelectedTransactionForDrawer({
           ...selectedTransactionForDrawer,
-          isReimbursed: nextReimbursed,
-          isUnpaid: !nextReimbursed,
+          isReimbursed: currentlyReimbursed,
+          isUnpaid: !currentlyReimbursed,
         });
       }
-    } catch (err: unknown) {
       toast.error(err);
+    } finally {
+      setTogglingTxId(null);
     }
   };
 
@@ -714,6 +718,7 @@ export function FinancePage() {
               onApprove={handleApproveTransaction}
               onReject={(tx) => setRejectingTransaction(tx)}
               onToggleReimbursed={handleToggleReimbursed}
+              togglingTxId={togglingTxId}
               isApproving={approveTxMutation.isPending || rejectTxMutation.isPending}
             />
           ) : (
@@ -731,6 +736,7 @@ export function FinancePage() {
                   onApprove={handleApproveTransaction}
                   onReject={(tx) => setRejectingTransaction(tx)}
                   onToggleReimbursed={handleToggleReimbursed}
+                  togglingTxId={togglingTxId}
                   isApproving={approveTxMutation.isPending || rejectTxMutation.isPending}
                 />
               ))}
@@ -741,7 +747,7 @@ export function FinancePage() {
           {totalPages > 1 && (
             <div className="flex items-center justify-between pt-2 px-1 text-xs">
               <span className="text-mist-gray">
-                Page <strong className="text-ink-navy font-semibold">{currentPage}</strong> of {totalPages}
+                Trang <strong className="text-ink-navy font-semibold">{currentPage}</strong> / {totalPages}
               </span>
               <div className="flex items-center gap-1.5">
                 <Button
@@ -752,7 +758,7 @@ export function FinancePage() {
                   className="h-7 text-xs px-2.5"
                 >
                   <ChevronLeft className="w-3.5 h-3.5 mr-0.5" />
-                  Previous
+                  Trang trước
                 </Button>
                 <Button
                   variant="outline"
@@ -761,7 +767,7 @@ export function FinancePage() {
                   onClick={() => handleFilterChange({ page: currentPage + 1 })}
                   className="h-7 text-xs px-2.5"
                 >
-                  Next
+                  Trang sau
                   <ChevronRight className="w-3.5 h-3.5 ml-0.5" />
                 </Button>
               </div>
@@ -813,6 +819,7 @@ export function FinancePage() {
         onApprove={handleApproveTransaction}
         onReject={(tx) => setRejectingTransaction(tx)}
         onToggleReimbursed={handleToggleReimbursed}
+        isTogglingReimbursed={Boolean(togglingTxId && selectedTransactionForDrawer?.id === togglingTxId)}
         isApproving={approveTxMutation.isPending || rejectTxMutation.isPending}
       />
 

@@ -5,8 +5,6 @@ import {
   GraduationCap, 
   AlertCircle, 
   Loader2,
-  Database,
-  ShieldCheck,
 } from '@/lib/icons';
 import { Button } from '@/components/ui/button';
 
@@ -14,7 +12,6 @@ export function LoginPage() {
   const { 
     user, 
     signInWithGoogle, 
-    isSupabaseConfigured,
     isLoading: isAuthLoading 
   } = useAuth();
   
@@ -68,19 +65,6 @@ export function LoginPage() {
             </div>
           </div>
 
-          {/* Database Missing Warning Banner */}
-          {!isSupabaseConfigured && (
-            <div className="p-3.5 rounded-2xl bg-amber-50 border border-amber-200 text-amber-900 text-xs space-y-1">
-              <div className="flex items-center gap-1.5 font-semibold text-amber-800">
-                <Database className="h-4 w-4 shrink-0" />
-                <span>Chưa cấu hình Supabase Auth</span>
-              </div>
-              <p className="text-[11px] text-amber-700 leading-relaxed">
-                Vui lòng cấu hình <code>VITE_SUPABASE_URL</code> và <code>VITE_SUPABASE_ANON_KEY</code> trong môi trường để kích hoạt đăng nhập Google.
-              </p>
-            </div>
-          )}
-
           {/* Error Message */}
           {errorMessage && (
             <div className="p-3.5 rounded-2xl bg-rose-50 border border-rose-200 text-rose-700 text-xs flex items-start gap-2.5 animate-in fade-in">
@@ -122,16 +106,6 @@ export function LoginPage() {
               )}
               <span>{isGoogleLoading ? 'Đang xác thực Google...' : 'Đăng nhập với Google'}</span>
             </Button>
-
-            <p className="text-[11px] text-center text-[#64748b] leading-relaxed px-4">
-              Sử dụng tài khoản Google trường hoặc email cá nhân để truy cập không gian làm việc.
-            </p>
-          </div>
-
-          {/* Security Footnote */}
-          <div className="pt-4 border-t border-[#e2e8f0] flex items-center justify-center gap-1.5 text-xs text-[#64748b] font-medium">
-            <ShieldCheck className="h-4 w-4 text-emerald-600 shrink-0" />
-            <span>Bảo mật qua Google OAuth &amp; Supabase RLS</span>
           </div>
         </div>
       </main>

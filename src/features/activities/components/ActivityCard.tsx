@@ -163,7 +163,7 @@ export function ActivityCard({ activity, onEdit, canEdit = false }: ActivityCard
           ) : (
             <span className="text-[11px] text-mist-gray italic flex items-center gap-1">
               <User className="w-3 h-3" />
-              <span>Unassigned</span>
+              <span>Chưa phân công</span>
             </span>
           )}
         </div>
@@ -214,7 +214,7 @@ export function ActivityCard({ activity, onEdit, canEdit = false }: ActivityCard
             className="inline-flex items-center gap-1 text-xs text-slate-gray hover:text-ink-navy font-semibold py-1 px-2 rounded-lg hover:bg-white border border-transparent hover:border-hairline transition-colors cursor-pointer"
           >
             <Edit3 className="w-3 h-3" />
-            <span>Edit</span>
+            <span>Chỉnh sửa</span>
           </button>
         ) : (
           <div />
@@ -225,7 +225,7 @@ export function ActivityCard({ activity, onEdit, canEdit = false }: ActivityCard
           id={`view-activity-btn-${activity.id}`}
           className="inline-flex items-center gap-1 text-xs font-semibold text-signal-blue hover:text-[#005be0] py-1 px-1.5 transition-colors"
         >
-          <span>View Details</span>
+          <span>Xem chi tiết</span>
           <ChevronRight className="w-3.5 h-3.5" />
         </Link>
       </div>

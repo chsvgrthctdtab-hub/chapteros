@@ -92,9 +92,13 @@ export const memberRepository = {
           .eq('organization_id', organizationId)
           .in('role', boardRoles);
 
-        const bchUserIds = (bchAccounts || [])
-          .map((a: { user_id: string | null }) => a.user_id)
-          .filter((id): id is string => Boolean(id));
+        const bchUserIds = Array.from(
+          new Set(
+            (bchAccounts || [])
+              .map((a: { user_id: string | null }) => a.user_id)
+              .filter((id): id is string => Boolean(id))
+          )
+        );
 
         const bchClauses = [
           'position.ilike.%trưởng%',
@@ -120,7 +124,9 @@ export const memberRepository = {
         ];
 
         if (bchUserIds.length > 0) {
-          bchClauses.push(`user_id.in.(${bchUserIds.join(',')})`);
+          for (const uid of bchUserIds) {
+            bchClauses.push(`user_id.eq.${uid}`);
+          }
         }
 
         query = query.or(bchClauses.join(','));
@@ -343,6 +349,23 @@ export const memberRepository = {
   },
 
   /**
+   * Bulk delete multiple member records
+   */
+  async bulkDelete(ids: string[]): Promise<number> {
+    if (!isSupabaseConfigured || ids.length === 0) return 0;
+    const validIds = ids.filter((id) => !id.startsWith('account-'));
+    if (validIds.length === 0) return 0;
+
+    const { error } = await supabase
+      .from('members')
+      .delete()
+      .in('id', validIds);
+
+    if (error) throw error;
+    return validIds.length;
+  },
+
+  /**
    * Get all term assignment history for a specific member
    */
   async getTermHistory(memberId: string): Promise<MemberTermHistoryItem[]> {
@@ -477,6 +500,37 @@ export const memberRepository = {
   },
 
   /**
+   * Bulk assign members to a term
+   */
+  async bulkAssignToTerm(
+    memberIds: string[],
+    termId: string,
+    position: string = 'Hội viên',
+    department: string | null = null
+  ): Promise<number> {
+    if (!isSupabaseConfigured || memberIds.length === 0 || !termId) return 0;
+    const validMemberIds = memberIds.filter((id) => !id.startsWith('account-'));
+    if (validMemberIds.length === 0) return 0;
+
+    const today = new Date().toISOString().split('T')[0];
+    const rows = validMemberIds.map((memberId) => ({
+      term_id: termId,
+      member_id: memberId,
+      position: position.trim() || 'Hội viên',
+      department: department?.trim() || null,
+      status: 'active' as const,
+      joined_date: today,
+    }));
+
+    const { error } = await supabase
+      .from('term_members')
+      .upsert(rows, { onConflict: 'term_id,member_id' });
+
+    if (error) throw error;
+    return rows.length;
+  },
+
+  /**
    * Fetch all terms for an organization
    */
   async getTerms(organizationId: string): Promise<Term[]> {
@@ -566,7 +620,15 @@ export const memberRepository = {
       return hasBoardPosition || hasBoardAccount;
     });
 
-    const boardCount = boardMembers.length;
+    // Also include board memberships that are not yet linked to any roster member in memberList
+    const linkedMemberUserIds = new Set(
+      memberList.map((m) => m.user_id).filter((uid): uid is string => Boolean(uid))
+    );
+    const unlinkedBoardAccounts = (memberships || []).filter(
+      (m: { user_id: string }) => m.user_id && !linkedMemberUserIds.has(m.user_id)
+    );
+
+    const boardCount = boardMembers.length + unlinkedBoardAccounts.length;
 
     return { total, active, alumni, assignedToTerm, boardCount };
   },

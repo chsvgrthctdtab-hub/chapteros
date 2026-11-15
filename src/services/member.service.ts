@@ -224,6 +224,33 @@ export const memberService = {
   },
 
   /**
+   * Bulk delete members with audit logging
+   */
+  async bulkDeleteMembers(
+    ids: string[],
+    organizationId: string,
+    actorUserId?: string
+  ): Promise<number> {
+    const deletedCount = await memberRepository.bulkDelete(ids);
+
+    if (actorUserId) {
+      await auditLogRepository.log({
+        organization_id: organizationId,
+        user_id: actorUserId,
+        action: 'member.delete',
+        entity_type: 'member',
+        entity_id: ids.join(','),
+        metadata: {
+          count: deletedCount,
+          memberIds: ids,
+        },
+      });
+    }
+
+    return deletedCount;
+  },
+
+  /**
    * Assign member to a term
    */
   async assignMemberToTerm(
@@ -249,6 +276,44 @@ export const memberService = {
     }
 
     return result;
+  },
+
+  /**
+   * Bulk assign members to a term
+   */
+  async bulkAssignMembersToTerm(
+    organizationId: string,
+    payload: {
+      memberIds: string[];
+      termId: string;
+      position?: string;
+      department?: string | null;
+    },
+    actorUserId?: string
+  ): Promise<number> {
+    const assignedCount = await memberRepository.bulkAssignToTerm(
+      payload.memberIds,
+      payload.termId,
+      payload.position,
+      payload.department
+    );
+
+    if (actorUserId) {
+      await auditLogRepository.log({
+        organization_id: organizationId,
+        user_id: actorUserId,
+        action: 'member.term_assign',
+        entity_type: 'term_member',
+        entity_id: payload.termId,
+        metadata: {
+          count: assignedCount,
+          termId: payload.termId,
+          memberIds: payload.memberIds,
+        },
+      });
+    }
+
+    return assignedCount;
   },
 
   /**
