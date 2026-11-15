@@ -100,29 +100,29 @@ export function AlertCenter({
   // If no active alerts, show positive operational status banner
   if (alerts.length === 0) {
     return (
-      <Card className="rounded-2xl border border-[#e2e8f0] bg-white shadow-xs">
+      <Card className="rounded-2xl border border-slate-200/80 bg-white shadow-xs">
         <CardContent className="p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-3.5">
           <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-xl bg-emerald-50 text-emerald-700 flex items-center justify-center shrink-0 border border-emerald-200/60">
+            <div className="w-9 h-9 rounded-xl bg-emerald-50 text-emerald-700 flex items-center justify-center shrink-0 border border-emerald-200/80">
               <CheckCircle2 className="w-4.5 h-4.5" />
             </div>
             <div>
               <div className="flex items-center gap-2">
                 <h4 className="text-xs sm:text-sm font-semibold text-[#0b3558] leading-tight">
-                  All Systems & Operations Normal
+                  Hệ thống vận hành bình thường
                 </h4>
                 <Badge className="bg-emerald-50 text-emerald-800 border-emerald-200/80 text-[11px] py-0.5 px-2.5 rounded-full font-medium hover:bg-emerald-50">
-                  Optimal
+                  Ổn định
                 </Badge>
               </div>
-              <p className="text-xs text-[#64748b] mt-0.5">
-                No overdue tasks, chapter treasury is balanced, and planned activities are on track.
+              <p className="text-xs text-slate-500 mt-0.5">
+                Không có nhiệm vụ quá hạn, ngân quỹ cân đối và các hoạt động đang đúng tiến độ.
               </p>
             </div>
           </div>
 
-          <Link to="/tasks" className="text-xs sm:text-sm font-semibold text-[#1a73e8] hover:text-[#1a73e8] flex items-center shrink-0 self-end sm:self-auto transition-colors">
-            <span>Operational queue</span>
+          <Link to="/tasks" className="text-xs sm:text-sm font-semibold text-[#1a73e8] hover:text-[#1557b0] flex items-center shrink-0 self-end sm:self-auto transition-colors">
+            <span>Xem danh sách việc</span>
             <ArrowRight className="w-3.5 h-3.5 ml-1 opacity-60" />
           </Link>
         </CardContent>
@@ -131,22 +131,22 @@ export function AlertCenter({
   }
 
   return (
-    <Card className="rounded-2xl border border-[#e2e8f0] bg-white shadow-xs">
+    <Card className="rounded-2xl border border-slate-200/80 bg-white shadow-xs">
       <CardHeader className="p-4 sm:p-5 pb-2">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-xl bg-amber-50 text-amber-700 flex items-center justify-center shrink-0 border border-amber-200/60">
+            <div className="w-9 h-9 rounded-xl bg-amber-50 text-amber-700 flex items-center justify-center shrink-0 border border-amber-200/80">
               <AlertTriangle className="w-4.5 h-4.5" />
             </div>
             <div>
               <CardTitle className="text-sm sm:text-base font-bold text-[#0b3558] flex items-center gap-2">
-                <span>Attention Required</span>
+                <span>Hạng mục cần chú ý</span>
                 <Badge variant="outline" className="text-[11px] px-2.5 py-0.5 rounded-full bg-amber-50 text-amber-800 border-amber-200 font-semibold">
-                  {alerts.length} action items
+                  {alerts.length} vấn đề
                 </Badge>
               </CardTitle>
-              <p className="text-xs text-[#64748b] mt-0.5">
-                High-priority operational items requiring immediate review
+              <p className="text-xs text-slate-500 mt-0.5">
+                Các vấn đề vận hành ưu tiên cao cần Ban Chấp Hành rà soát ngay
               </p>
             </div>
           </div>
@@ -158,15 +158,15 @@ export function AlertCenter({
           {alerts.map((alert) => (
             <div
               key={alert.id}
-              className="p-3 rounded-xl bg-[#f8fafd] hover:bg-[#f0f4f9] transition-colors flex flex-col sm:flex-row sm:items-center justify-between gap-2.5"
+              className="p-3 rounded-xl bg-slate-50/70 hover:bg-slate-100/80 border border-slate-200/60 transition-colors flex flex-col sm:flex-row sm:items-center justify-between gap-2.5"
             >
               <div className="flex items-start gap-2.5">
                 <div className={`w-8 h-8 rounded-xl flex items-center justify-center shrink-0 mt-0.5 ${
                   alert.type === 'danger'
-                    ? 'bg-rose-50 text-rose-700 border border-rose-200/60'
+                    ? 'bg-rose-50 text-rose-700 border border-rose-200/80'
                     : alert.type === 'warning'
-                    ? 'bg-amber-50 text-amber-700 border border-amber-200/60'
-                    : 'bg-[#eff6ff] text-[#2e64de] border border-[#d2e3fc]'
+                    ? 'bg-amber-50 text-amber-700 border border-amber-200/80'
+                    : 'bg-blue-50 text-[#1a73e8] border border-blue-200/80'
                 }`}>
                   {alert.icon}
                 </div>
@@ -174,7 +174,7 @@ export function AlertCenter({
                   <h5 className="text-xs sm:text-sm font-semibold text-[#0b3558]">
                     {alert.title}
                   </h5>
-                  <p className="text-xs text-[#64748b]">
+                  <p className="text-xs text-slate-500">
                     {alert.description}
                   </p>
                 </div>
@@ -184,7 +184,7 @@ export function AlertCenter({
                 <Button
                   size="sm"
                   variant={alert.type === 'danger' ? 'destructive' : 'outline'}
-                  className="text-xs h-7.5 px-3.5 rounded-full shadow-2xs font-semibold cursor-pointer border-[#e2e8f0]"
+                  className="text-xs h-7.5 px-3.5 rounded-full shadow-2xs font-semibold cursor-pointer border-slate-200"
                 >
                   <span>{alert.actionLabel}</span>
                   <ArrowRight className="w-3 h-3 ml-1.5" />

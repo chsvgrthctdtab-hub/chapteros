@@ -27,11 +27,11 @@ export function UpcomingTasksSection({
   const hasTasks = tasks && tasks.length > 0;
 
   return (
-    <Card className="rounded-2xl border border-[#e2e8f0] shadow-xs bg-white">
+    <Card className="rounded-2xl border border-slate-200/80 shadow-xs bg-white">
       <CardHeader className="p-4 sm:p-5 pb-2">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-xl bg-[#eff6ff] text-[#2e64de] flex items-center justify-center">
+            <div className="w-9 h-9 rounded-xl bg-blue-50 text-[#1a73e8] border border-blue-100/80 flex items-center justify-center">
               <CheckSquare className="w-4.5 h-4.5" />
             </div>
             <div>

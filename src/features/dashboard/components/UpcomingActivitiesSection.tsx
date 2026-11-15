@@ -20,11 +20,11 @@ export function UpcomingActivitiesSection({
   const hasActivities = activities && activities.length > 0;
 
   return (
-    <Card className="rounded-2xl border border-[#e2e8f0] shadow-xs bg-white">
+    <Card className="rounded-2xl border border-slate-200/80 shadow-xs bg-white">
       <CardHeader className="p-4 sm:p-5 pb-2">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-xl bg-[#f0fdfa] text-[#16a6d5] flex items-center justify-center">
+            <div className="w-9 h-9 rounded-xl bg-emerald-50 text-emerald-700 border border-emerald-100/80 flex items-center justify-center">
               <CalendarCheck className="w-4.5 h-4.5" />
             </div>
             <div>

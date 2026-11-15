@@ -55,7 +55,7 @@ export function Header({ onOpenMobileMenu }: HeaderProps) {
   return (
     <header
       id="app-header"
-      className="relative z-20 flex h-16 w-full items-center justify-between bg-white/95 backdrop-blur-md px-4 sm:px-6 lg:px-8 shrink-0"
+      className="relative z-20 flex h-16 w-full items-center justify-between bg-white border-b border-slate-200/80 px-4 sm:px-6 lg:px-8 shrink-0"
     >
       {/* Left side: Mobile menu toggle + Active Chapter Switcher */}
       <div className="flex items-center gap-2 min-w-0">
@@ -63,7 +63,7 @@ export function Header({ onOpenMobileMenu }: HeaderProps) {
           id="btn-mobile-menu"
           variant="ghost"
           size="icon-sm"
-          className="lg:hidden text-[#475569] hover:text-[#1e293b] hover:bg-[#f0f4f9] rounded-full shrink-0"
+          className="lg:hidden text-slate-500 hover:text-slate-900 hover:bg-slate-100 rounded-full shrink-0"
           onClick={onOpenMobileMenu}
           aria-label="Toggle navigation menu"
         >
@@ -76,10 +76,10 @@ export function Header({ onOpenMobileMenu }: HeaderProps) {
             <DropdownMenuTrigger asChild>
               <Button
                 variant="ghost"
-                className="h-8 py-1 pl-2 pr-2.5 -ml-1 text-left bg-[#f0f4f9] hover:bg-[#e8f0fe] border border-[#e2e8f0] rounded-full flex items-center gap-2 group transition-all cursor-pointer"
+                className="h-8.5 py-1 pl-2 pr-3 -ml-1 text-left bg-slate-50 hover:bg-slate-100 border border-slate-200/80 rounded-full flex items-center gap-2 group transition-all cursor-pointer shadow-2xs"
                 title={activeOrganization.name}
               >
-                <div className="h-5 w-5 rounded-full bg-[#2e89f7] flex items-center justify-center text-white font-bold text-[9px] shrink-0 overflow-hidden">
+                <div className="h-5 w-5 rounded-full bg-[#1a73e8] flex items-center justify-center text-white font-bold text-[9px] shrink-0 overflow-hidden shadow-2xs">
                   {activeOrganization.logoUrl ? (
                     <img
                       src={activeOrganization.logoUrl}
@@ -90,10 +90,10 @@ export function Header({ onOpenMobileMenu }: HeaderProps) {
                     activeOrganization.code ? activeOrganization.code.slice(0, 2).toUpperCase() : (activeOrgTypeShort || 'CH')
                   )}
                 </div>
-                <span className="text-xs font-semibold text-[#0b3558] tracking-tight group-hover:text-[#2e89f7] transition-colors">
+                <span className="text-xs font-semibold text-[#0b3558] tracking-tight group-hover:text-[#1a73e8] transition-colors">
                   {activeOrganization.code || activeOrganization.name}
                 </span>
-                <ChevronDown size={14} className="text-[#64748b] group-hover:text-[#2e89f7] transition-colors shrink-0" />
+                <ChevronDown size={14} className="text-slate-400 group-hover:text-slate-600 transition-colors shrink-0" />
               </Button>
             </DropdownMenuTrigger>
 

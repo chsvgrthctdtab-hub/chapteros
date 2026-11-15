@@ -80,39 +80,40 @@ export function DashboardHeader({
   return (
     <div className="space-y-4">
       {/* Top Header Card */}
-      <div className="flex flex-col xl:flex-row xl:items-center justify-between gap-5 p-5 sm:p-6 rounded-2xl bg-white border border-[#e2e8f0] shadow-xs">
+      <div className="flex flex-col xl:flex-row xl:items-center justify-between gap-5 p-5 sm:p-6 rounded-2xl bg-white border border-slate-200/80 shadow-xs">
         <div className="space-y-2.5 min-w-0">
           {/* Metadata badges */}
           <div className="flex items-center gap-2 flex-wrap text-xs sm:text-sm">
-            <div className="flex items-center gap-1.5 font-medium text-[#1a73e8] bg-[#e8f0fe] border border-[#c2e7ff] px-3 py-1 rounded-full shrink-0">
+            <div className="flex items-center gap-1.5 font-medium text-slate-700 bg-slate-50 border border-slate-200/80 px-3 py-1 rounded-full shrink-0">
               <Building2 size={15} className="text-[#1a73e8]" />
               <span>{organizationName}</span>
             </div>
 
-            <Badge variant="outline" className="text-xs sm:text-sm text-[#1e293b] bg-[#f0f4f9] border-[#e2e8f0] py-1 px-3 rounded-full font-medium shrink-0">
-              <ShieldCheck size={15} className="mr-1 text-[#2e89f7]" />
+            <Badge variant="outline" className="text-xs sm:text-sm text-slate-700 bg-slate-50 border-slate-200/80 py-1 px-3 rounded-full font-medium shrink-0">
+              <ShieldCheck size={15} className="mr-1 text-[#1a73e8]" />
               {roleName}
             </Badge>
 
-            <div className="flex items-center gap-1.5 text-[#64748b] font-medium bg-[#f0f4f9] border border-[#e2e8f0] px-3 py-1 rounded-full tabular-nums shrink-0">
-              <Calendar size={15} className="text-[#94a3b8]" />
+            <div className="flex items-center gap-1.5 text-slate-600 font-medium bg-slate-50 border border-slate-200/80 px-3 py-1 rounded-full tabular-nums shrink-0">
+              <Calendar size={15} className="text-slate-400" />
               <span>{formattedDate}</span>
             </div>
 
             {selectedTerm?.isCurrent && (
-              <Badge variant="default" className="bg-[#2e89f7] hover:bg-[#1a73e8] text-white text-xs sm:text-sm py-1 px-3 rounded-full font-medium shadow-xs shrink-0">
-                Active Term: {selectedTerm.name}
-              </Badge>
+              <div className="flex items-center gap-1.5 text-xs sm:text-sm font-semibold text-[#1a73e8] bg-blue-50 border border-blue-200/80 px-3 py-1 rounded-full shrink-0">
+                <span className="w-2 h-2 rounded-full bg-[#1a73e8]"></span>
+                <span>Nhiệm kỳ hiện tại: {selectedTerm.name}</span>
+              </div>
             )}
           </div>
 
           {/* Heading */}
           <div className="min-w-0">
             <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-[#0b3558] break-words">
-              Welcome back, {userName}
+              Chào mừng trở lại, {userName}
             </h1>
-            <p className="text-xs sm:text-sm text-[#64748b] mt-1 break-words max-w-3xl">
-              Chapter operational command center, active deliverables, and real-time treasury metrics.
+            <p className="text-xs sm:text-sm text-slate-500 mt-1 break-words max-w-3xl">
+              Trung tâm điều hành Chi hội, tổng quan hoạt động và chỉ số ngân quỹ thời gian thực.
             </p>
           </div>
         </div>
@@ -123,13 +124,13 @@ export function DashboardHeader({
             value={selectedTermId}
             onValueChange={onSelectTerm}
           >
-            <SelectTrigger id="dashboard-term-selector" className="h-9 text-xs sm:text-sm font-medium text-[#1e293b] bg-white border-[#e2e8f0] rounded-full w-auto min-w-[160px]">
+            <SelectTrigger id="dashboard-term-selector" className="h-9 text-xs sm:text-sm font-medium text-slate-700 bg-white border-slate-200 rounded-full w-auto min-w-[160px]">
               <div className="flex items-center gap-2">
-                <CalendarRange size={15} className="text-[#94a3b8] shrink-0" />
+                <CalendarRange size={15} className="text-slate-400 shrink-0" />
                 <SelectValue placeholder="Tất cả nhiệm kỳ" />
               </div>
             </SelectTrigger>
-            <SelectContent className="bg-white border-[#e2e8f0] rounded-2xl shadow-lg">
+            <SelectContent className="bg-white border-slate-200 rounded-2xl shadow-lg">
               <SelectItem value="all">Tất cả nhiệm kỳ</SelectItem>
               {terms.map((term) => (
                 <SelectItem key={term.id} value={term.id}>
@@ -145,22 +146,22 @@ export function DashboardHeader({
             size="sm"
             onClick={onRefresh}
             disabled={isRefreshing}
-            className="text-xs sm:text-sm font-semibold h-9 px-4 text-[#1e293b] bg-white hover:bg-[#f0f4f9] border-[#e2e8f0] rounded-full shadow-xs cursor-pointer"
+            className="text-xs sm:text-sm font-semibold h-9 px-4 text-slate-700 bg-white hover:bg-slate-50 border-slate-200 rounded-full shadow-xs cursor-pointer"
           >
-            <RefreshCw size={15} className={`mr-2 ${isRefreshing ? 'animate-spin text-[#2e89f7]' : 'text-[#64748b]'}`} />
+            <RefreshCw size={15} className={`mr-2 ${isRefreshing ? 'animate-spin text-[#1a73e8]' : 'text-slate-400'}`} />
             <span>{isRefreshing ? 'Đang đồng bộ...' : 'Làm mới'}</span>
           </Button>
         </div>
       </div>
 
-      {/* Quick Actions Bar for Board & Permitted Roles — NotebookLM pastel tonal style */}
+      {/* Quick Actions Bar for Board & Permitted Roles */}
       {hasAnyQuickAction && (
-        <div className="p-3.5 sm:px-5 sm:py-3.5 rounded-2xl bg-[#edf2fa] border border-[#d2e3fc] text-[#041e49] shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-3 min-w-0">
+        <div className="p-3.5 sm:px-5 sm:py-3.5 rounded-2xl bg-white border border-slate-200/80 text-slate-900 shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-3 min-w-0">
           <div className="flex items-center gap-2.5 text-xs sm:text-sm shrink-0">
             <span className="flex h-2 w-2 rounded-full bg-[#1a73e8]"></span>
-            <span className="font-semibold text-[#041e49]">Thao tác nhanh Ban Chấp Hành</span>
-            <span className="text-[#041e49]/30 hidden sm:inline">•</span>
-            <span className="text-[#444746] text-xs sm:text-sm hidden sm:inline">Phím tắt tác vụ nhanh</span>
+            <span className="font-bold text-slate-900">Thao tác nhanh Ban Chấp Hành</span>
+            <span className="text-slate-300 hidden sm:inline">•</span>
+            <span className="text-slate-500 text-xs sm:text-sm hidden sm:inline">Phím tắt tác vụ thường dùng</span>
           </div>
 
           <div className="flex items-center gap-2 flex-wrap">
@@ -168,7 +169,7 @@ export function DashboardHeader({
               <Link to="/members">
                 <Button
                   size="sm"
-                  className="bg-white hover:bg-[#dbeafe] text-[#1e293b] text-xs sm:text-sm h-8 px-3.5 border border-[#c2e7ff] rounded-full cursor-pointer font-medium shadow-2xs"
+                  className="bg-slate-50 hover:bg-slate-100 text-slate-700 text-xs sm:text-sm h-8 px-3.5 border border-slate-200/80 rounded-xl cursor-pointer font-medium shadow-2xs transition-colors"
                 >
                   <UserPlus size={15} className="mr-1.5 text-emerald-600" />
                   <span>Thành viên</span>
@@ -180,7 +181,7 @@ export function DashboardHeader({
               <Link to="/activities">
                 <Button
                   size="sm"
-                  className="bg-white hover:bg-[#dbeafe] text-[#1e293b] text-xs sm:text-sm h-8 px-3.5 border border-[#c2e7ff] rounded-full cursor-pointer font-medium shadow-2xs"
+                  className="bg-slate-50 hover:bg-slate-100 text-slate-700 text-xs sm:text-sm h-8 px-3.5 border border-slate-200/80 rounded-xl cursor-pointer font-medium shadow-2xs transition-colors"
                 >
                   <CalendarPlus size={15} className="mr-1.5 text-sky-600" />
                   <span>Hoạt động</span>
@@ -192,7 +193,7 @@ export function DashboardHeader({
               <Link to="/tasks">
                 <Button
                   size="sm"
-                  className="bg-white hover:bg-[#dbeafe] text-[#1e293b] text-xs sm:text-sm h-8 px-3.5 border border-[#c2e7ff] rounded-full cursor-pointer font-medium shadow-2xs"
+                  className="bg-slate-50 hover:bg-slate-100 text-slate-700 text-xs sm:text-sm h-8 px-3.5 border border-slate-200/80 rounded-xl cursor-pointer font-medium shadow-2xs transition-colors"
                 >
                   <CheckSquare size={15} className="mr-1.5 text-amber-600" />
                   <span>Nhiệm vụ</span>
@@ -204,7 +205,7 @@ export function DashboardHeader({
               <Link to="/finance">
                 <Button
                   size="sm"
-                  className="bg-[#2e89f7] hover:bg-[#1a73e8] text-white text-xs sm:text-sm h-8 px-3.5 border border-transparent rounded-full cursor-pointer font-medium shadow-xs"
+                  className="bg-[#1a73e8] hover:bg-[#1557b0] text-white text-xs sm:text-sm h-8 px-3.5 border border-transparent rounded-xl cursor-pointer font-medium shadow-xs transition-colors"
                 >
                   <DollarSign size={15} className="mr-1.5 text-white" />
                   <span>Thu chi</span>

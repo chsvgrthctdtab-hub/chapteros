@@ -23,23 +23,6 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { useAuth } from '@/hooks/useAuth';
 
-// ============================================================
-// Pastel icon color map — chuẩn Google NotebookLM
-// ============================================================
-const NAV_ICON_COLORS: Record<string, { icon: string; bg: string }> = {
-  '/':            { icon: '#2f63df', bg: '#eef4fe' },
-  '/plans':       { icon: '#cf3d92', bg: '#fdf2f8' },
-  '/activities':  { icon: '#16a6d5', bg: '#f0fdfa' },
-  '/tasks':       { icon: '#2e64de', bg: '#eff6ff' },
-  '/members':     { icon: '#d97706', bg: '#fff7ed' },
-  '/finance':     { icon: '#ce7918', bg: '#fffbeb' },
-  '/reports':     { icon: '#6858d2', bg: '#f5f3ff' },
-  '/terms':       { icon: '#4f46e5', bg: '#eef2ff' },
-  '/data-quality':{ icon: '#059669', bg: '#ecfdf5' },
-  '/audit-logs':  { icon: '#e11d48', bg: '#ffe4e6' },
-  '/settings':    { icon: '#0284c7', bg: '#e0f2fe' },
-};
-
 export interface NavItem {
   name: string;
   href: string;
@@ -73,7 +56,6 @@ interface NavLinkItemProps {
 
 function NavLinkItem({ item, collapsed, onCloseMobile }: NavLinkItemProps) {
   const IconComponent = item.icon;
-  const colors = NAV_ICON_COLORS[item.href] ?? { icon: '#475569', bg: '#f1f5f9' };
 
   return (
     <NavLink
@@ -83,42 +65,33 @@ function NavLinkItem({ item, collapsed, onCloseMobile }: NavLinkItemProps) {
       onClick={onCloseMobile}
       className={({ isActive }) =>
         cn(
-          'group flex items-center transition-all duration-200 ease-in-out relative select-none',
+          'group flex items-center transition-all duration-150 relative select-none',
           collapsed
             ? 'w-10 h-10 justify-center px-0 mx-auto rounded-xl'
-            : 'w-full h-10 gap-3 px-2.5 rounded-xl',
+            : 'w-full h-10 gap-3 px-3 rounded-xl',
           isActive
-            ? 'bg-[#e8f0fe] font-semibold text-[#1a73e8] shadow-xs'
-            : 'hover:bg-[#f0f4f9] text-[#475569]'
+            ? 'bg-blue-50 text-[#1a73e8] font-semibold ring-1 ring-blue-500/20 shadow-2xs'
+            : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
         )
       }
     >
       {({ isActive }) => (
         <>
-          {/* Icon container — tonal pastel pill chuẩn Google NotebookLM */}
-          <span
+          <IconComponent
+            size={collapsed ? 20 : 18}
             className={cn(
-              'flex items-center justify-center shrink-0 rounded-xl transition-all duration-200 shadow-2xs',
-              collapsed ? 'w-8 h-8' : 'w-8 h-8',
-              isActive && 'ring-1.5 ring-[#2e89f7]/30'
+              'shrink-0 transition-all duration-150',
+              isActive
+                ? 'text-[#1a73e8]'
+                : 'text-slate-500 group-hover:text-slate-900 group-hover:scale-105'
             )}
-            style={{
-              backgroundColor: colors.bg,
-              color: colors.icon,
-            }}
-          >
-            <IconComponent
-              size={18}
-              className="shrink-0 transition-transform duration-200 group-hover:scale-105"
-              style={{ color: colors.icon }}
-            />
-          </span>
+          />
 
           {/* Label */}
           <span
             className={cn(
               'flex-1 truncate text-xs transition-all duration-200 ease-in-out origin-left whitespace-nowrap overflow-hidden',
-              isActive ? 'text-[#1a73e8] font-bold' : 'text-[#334155] group-hover:text-[#0b3558] font-medium',
+              isActive ? 'text-[#1a73e8] font-bold' : 'text-slate-700 group-hover:text-slate-900 font-medium',
               collapsed
                 ? 'w-0 opacity-0 -translate-x-2.5 max-w-0 pointer-events-none'
                 : 'w-auto opacity-100 translate-x-0 max-w-[180px]'
@@ -143,7 +116,7 @@ function NavLinkItem({ item, collapsed, onCloseMobile }: NavLinkItemProps) {
           {/* Floating Tooltip when Collapsed */}
           {collapsed && (
             <div
-              className="absolute left-full ml-3 px-2.5 py-1.5 bg-[#1e293b] text-white text-xs font-medium rounded-lg shadow-lg whitespace-nowrap opacity-0 pointer-events-none group-hover:opacity-100 transition-all duration-150 z-[60] -translate-x-1 group-hover:translate-x-0"
+              className="absolute left-full ml-3 px-2.5 py-1.5 bg-slate-900 text-white text-xs font-medium rounded-lg shadow-xl whitespace-nowrap opacity-0 pointer-events-none group-hover:opacity-100 transition-all duration-150 z-[70] -translate-x-1 group-hover:translate-x-0"
             >
               {item.name}
             </div>
@@ -174,7 +147,7 @@ export function Sidebar({ collapsed, onToggleCollapse, mobileOpen, onCloseMobile
       {mobileOpen && (
         <div
           id="sidebar-mobile-backdrop"
-          className="fixed inset-0 z-40 bg-ink-navy/40 backdrop-blur-xs lg:hidden transition-opacity duration-200"
+          className="fixed inset-0 z-40 bg-slate-900/40 backdrop-blur-xs lg:hidden transition-opacity duration-200"
           onClick={onCloseMobile}
         />
       )}
@@ -182,7 +155,7 @@ export function Sidebar({ collapsed, onToggleCollapse, mobileOpen, onCloseMobile
       <aside
         id="app-sidebar"
         className={cn(
-          'fixed top-0 bottom-0 left-0 z-50 flex flex-col bg-[#f8fafd] transition-all duration-200 ease-in-out lg:static shrink-0 select-none overflow-x-hidden',
+          'fixed top-0 bottom-0 left-0 z-50 flex flex-col bg-white border-r border-slate-200/80 transition-all duration-200 ease-in-out lg:static shrink-0 select-none overflow-x-hidden',
           mobileOpen
             ? 'w-64 translate-x-0 shadow-2xl rounded-r-2xl'
             : '-translate-x-full lg:translate-x-0',
@@ -192,7 +165,7 @@ export function Sidebar({ collapsed, onToggleCollapse, mobileOpen, onCloseMobile
         {/* Brand header */}
         <div
           className={cn(
-            'flex h-16 shrink-0 items-center transition-all duration-200 ease-in-out',
+            'flex h-16 shrink-0 items-center border-b border-slate-200/80 transition-all duration-200 ease-in-out',
             isEffectiveCollapsed ? 'justify-center px-0' : 'justify-between px-4'
           )}
         >
@@ -201,13 +174,13 @@ export function Sidebar({ collapsed, onToggleCollapse, mobileOpen, onCloseMobile
               type="button"
               onClick={isEffectiveCollapsed ? onToggleCollapse : undefined}
               className={cn(
-                'flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-[#2e89f7] text-white shadow-sm font-bold transition-all duration-200',
-                isEffectiveCollapsed ? 'hover:bg-[#1a73e8] cursor-pointer active:scale-95' : 'cursor-default'
+                'flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-gradient-to-tr from-[#1a73e8] to-[#2563eb] text-white shadow-xs font-bold transition-all duration-200',
+                isEffectiveCollapsed ? 'hover:bg-[#1557b0] hover:shadow-sm cursor-pointer active:scale-95' : 'cursor-default'
               )}
               title={isEffectiveCollapsed ? 'Mở rộng thanh điều hướng' : 'ChapterOS'}
               aria-label={isEffectiveCollapsed ? 'Mở rộng thanh điều hướng' : 'ChapterOS'}
             >
-              <GraduationCap size={18} />
+              <GraduationCap size={20} />
             </button>
             <div
               className={cn(
@@ -218,7 +191,7 @@ export function Sidebar({ collapsed, onToggleCollapse, mobileOpen, onCloseMobile
               <span className="font-bold tracking-tight text-[#0b3558] text-base leading-tight truncate">
                 ChapterOS
               </span>
-              <span className="text-[11px] text-[#2e89f7] font-semibold tracking-wider uppercase truncate">
+              <span className="text-[11px] text-[#1a73e8] font-semibold tracking-wider uppercase truncate">
                 Operations Suite
               </span>
             </div>
@@ -231,7 +204,7 @@ export function Sidebar({ collapsed, onToggleCollapse, mobileOpen, onCloseMobile
             size="icon-xs"
             onClick={onToggleCollapse}
             className={cn(
-              'hidden lg:flex text-slate-gray hover:text-ink-navy hover:bg-[#f0f4f9] rounded-full transition-all duration-200 shrink-0',
+              'hidden lg:flex text-slate-500 hover:text-slate-900 hover:bg-slate-100 rounded-lg transition-all duration-200 shrink-0',
               isEffectiveCollapsed ? 'w-0 opacity-0 p-0 overflow-hidden pointer-events-none' : 'w-8 h-8 opacity-100'
             )}
             aria-label="Thu gọn thanh điều hướng"
@@ -242,7 +215,7 @@ export function Sidebar({ collapsed, onToggleCollapse, mobileOpen, onCloseMobile
         </div>
 
         {/* Navigation links */}
-        <div className="flex-1 overflow-y-auto overflow-x-hidden px-2 py-4 space-y-5">
+        <div className="flex-1 overflow-y-auto overflow-x-hidden px-2.5 py-4 space-y-5">
 
           {/* Operations Section */}
           <div>
@@ -252,11 +225,11 @@ export function Sidebar({ collapsed, onToggleCollapse, mobileOpen, onCloseMobile
                 isEffectiveCollapsed ? 'max-h-0 opacity-0 mb-0 pointer-events-none' : 'max-h-6 opacity-100 mb-2'
               )}
             >
-              <p className="px-2.5 text-[10px] font-bold tracking-wider text-slate-gray/70 uppercase truncate">
+              <p className="px-3 text-[11px] font-bold tracking-wider text-slate-400 uppercase truncate">
                 Quản trị vận hành
               </p>
             </div>
-            <nav className="space-y-0.5">
+            <nav className="space-y-1">
               {operationsNavItems.map((item) => (
                 <NavLinkItem
                   key={item.href}
@@ -276,11 +249,11 @@ export function Sidebar({ collapsed, onToggleCollapse, mobileOpen, onCloseMobile
                 isEffectiveCollapsed ? 'max-h-0 opacity-0 mb-0 pointer-events-none' : 'max-h-6 opacity-100 mb-2'
               )}
             >
-              <p className="px-2.5 text-[10px] font-bold tracking-wider text-slate-gray/70 uppercase truncate">
+              <p className="px-3 text-[11px] font-bold tracking-wider text-slate-400 uppercase truncate">
                 Hệ thống & Tiện ích
               </p>
             </div>
-            <nav className="space-y-0.5">
+            <nav className="space-y-1">
               {visibleSystemNavItems.map((item) => (
                 <NavLinkItem
                   key={item.href}
@@ -294,18 +267,18 @@ export function Sidebar({ collapsed, onToggleCollapse, mobileOpen, onCloseMobile
         </div>
 
         {/* Footer */}
-        <div className="p-2 bg-[#f8fafd] shrink-0">
+        <div className="p-2 border-t border-slate-200/80 bg-white shrink-0">
           <div
             className={cn(
               'overflow-hidden transition-all duration-200 ease-in-out',
               isEffectiveCollapsed ? 'max-h-0 opacity-0 pointer-events-none' : 'max-h-20 opacity-100'
             )}
           >
-            <div className="flex items-center gap-2.5 rounded-xl p-2.5 text-xs text-slate-gray bg-white border border-[#e2e8f0] shadow-xs">
-              <Shield size={15} className="text-[#2e89f7] shrink-0" />
+            <div className="flex items-center gap-2.5 rounded-xl p-2.5 text-xs text-slate-600 bg-slate-50 border border-slate-200/80 shadow-2xs">
+              <Shield size={15} className="text-[#1a73e8] shrink-0" />
               <div className="truncate">
                 <p className="font-bold text-[#0b3558] text-xs leading-tight truncate">ChapterOS</p>
-                <p className="text-[11px] text-slate-gray truncate">Tác giả: <span className="font-semibold text-[#2e89f7]">tienthuan_0909</span></p>
+                <p className="text-[11px] text-slate-500 truncate">Tác giả: <span className="font-semibold text-[#1a73e8]">tienthuan_0909</span></p>
               </div>
             </div>
           </div>
@@ -315,11 +288,11 @@ export function Sidebar({ collapsed, onToggleCollapse, mobileOpen, onCloseMobile
             <button
               type="button"
               onClick={onToggleCollapse}
-              className="flex justify-center items-center w-9 h-8 mx-auto text-slate-gray hover:text-ink-navy hover:bg-[#f0f4f9] rounded-full transition-colors cursor-pointer"
+              className="flex justify-center items-center w-10 h-10 mx-auto text-slate-500 hover:text-slate-900 hover:bg-slate-100 rounded-xl transition-all cursor-pointer"
               title="Mở rộng thanh điều hướng"
               aria-label="Mở rộng thanh điều hướng"
             >
-              <ChevronRight size={16} />
+              <ChevronRight size={18} />
             </button>
           )}
         </div>
