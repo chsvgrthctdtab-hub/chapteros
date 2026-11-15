@@ -11,7 +11,6 @@ import {
   Code2,
   ArrowUpRight,
 } from '@/lib/icons';
-import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { supabase, isSupabaseConfigured } from '@/lib/supabase';
@@ -22,6 +21,7 @@ interface TableStat {
   name: string;
   description: string;
   category: string;
+  badgeClass: string;
   count: number | null;
   loading: boolean;
   error?: string | null;
@@ -33,42 +33,49 @@ const TRACKED_TABLES: Omit<TableStat, 'count' | 'loading' | 'error'>[] = [
     name: 'members',
     description: 'Hồ sơ hội viên & thông tin cá nhân',
     category: 'Nhân sự',
+    badgeClass: 'bg-blue-950/70 text-blue-300 border-blue-800/60',
   },
   {
     id: 'term_members',
     name: 'term_members',
     description: 'Phân công hội viên theo từng nhiệm kỳ',
     category: 'Nhiệm kỳ',
+    badgeClass: 'bg-purple-950/70 text-purple-300 border-purple-800/60',
   },
   {
     id: 'terms',
     name: 'terms',
     description: 'Danh mục nhiệm kỳ & niên khóa',
     category: 'Nhiệm kỳ',
+    badgeClass: 'bg-purple-950/70 text-purple-300 border-purple-800/60',
   },
   {
     id: 'activities',
     name: 'activities',
     description: 'Sự kiện, buổi họp & phong trào sinh hoạt',
     category: 'Hoạt động',
+    badgeClass: 'bg-amber-950/70 text-amber-300 border-amber-800/60',
   },
   {
     id: 'tasks',
     name: 'tasks',
     description: 'Công việc & phân công phụ trách',
     category: 'Công việc',
+    badgeClass: 'bg-indigo-950/70 text-indigo-300 border-indigo-800/60',
   },
   {
     id: 'finance_transactions',
     name: 'finance_transactions',
     description: 'Chứng từ thu - chi ngân quỹ',
     category: 'Tài chính',
+    badgeClass: 'bg-emerald-950/70 text-emerald-300 border-emerald-800/60',
   },
   {
     id: 'audit_logs',
     name: 'audit_logs',
     description: 'Nhật ký truy vết thao tác & bảo mật',
     category: 'Kiểm toán',
+    badgeClass: 'bg-rose-950/70 text-rose-300 border-rose-800/60',
   },
 ];
 
@@ -155,43 +162,46 @@ export function DatabaseMonitorSection({ organizationId }: DatabaseMonitorSectio
   const activeTablesCount = tables.filter((t) => !t.error).length;
 
   return (
-    <Card className="border-hairline shadow-xs bg-white overflow-hidden">
+    <div className="relative rounded-2xl bg-[#090D16] border border-slate-800 shadow-2xl overflow-hidden text-slate-100">
+      {/* High-tech Glowing Top Gradient Border */}
+      <div className="h-1 w-full bg-gradient-to-r from-blue-500 via-cyan-400 to-indigo-500" />
+
       {/* Header section with title and actions */}
-      <CardHeader className="p-5 sm:p-6 border-b border-hairline bg-cloud/30">
+      <div className="p-5 sm:p-6 border-b border-slate-800/80 bg-[#0D121F]/80">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-          <div className="flex items-start gap-3">
-            <div className="h-10 w-10 rounded-xl bg-signal-blue/10 text-signal-blue flex items-center justify-center shrink-0 border border-signal-blue/20">
+          <div className="flex items-start gap-3.5">
+            <div className="h-11 w-11 rounded-xl bg-cyan-950/60 text-cyan-400 flex items-center justify-center shrink-0 border border-cyan-800/50 shadow-inner">
               <Database className="h-5 w-5" />
             </div>
             <div>
-              <div className="flex items-center gap-2 flex-wrap">
-                <CardTitle className="text-base font-bold text-ink-navy">
+              <div className="flex items-center gap-2.5 flex-wrap">
+                <h3 className="text-base sm:text-lg font-bold text-white tracking-tight">
                   Giám Sát Bảng Dữ Liệu Supabase
-                </CardTitle>
-                <Badge
-                  variant="outline"
-                  className="text-[10px] font-mono bg-emerald-50 text-emerald-700 border-emerald-200 flex items-center gap-1 py-0.5"
-                >
-                  <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                  Realtime Connected
-                </Badge>
+                </h3>
+                <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-mono font-medium bg-emerald-950/80 text-emerald-300 border border-emerald-800/70 shadow-xs">
+                  <span className="relative flex h-2 w-2">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                    <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                  </span>
+                  Realtime Active
+                </span>
               </div>
-              <CardDescription className="text-xs text-mist-gray mt-1">
-                Theo dõi số lượng bản ghi trực tiếp trên các bảng lõi của ChapterOS theo thời gian thực
-              </CardDescription>
+              <p className="text-xs sm:text-sm text-slate-400 mt-1">
+                Theo dõi trực tiếp dung lượng bản ghi và độ trễ kết nối tầng vật lý theo thời gian thực
+              </p>
             </div>
           </div>
 
-          <div className="flex items-center gap-2 shrink-0 self-start sm:self-auto">
+          <div className="flex items-center gap-2.5 shrink-0 self-start sm:self-auto">
             <Button
               variant="outline"
               size="sm"
               onClick={fetchTableCounts}
               disabled={isRefreshing}
-              className="text-xs h-8 text-slate-gray border-hairline hover:bg-cloud cursor-pointer shadow-xs font-medium"
+              className="text-xs h-8 bg-slate-900/90 text-slate-200 border-slate-700 hover:bg-slate-800 hover:text-white cursor-pointer shadow-xs font-medium"
             >
-              <RefreshCw className={`h-3.5 w-3.5 mr-1.5 text-mist-gray ${isRefreshing ? 'animate-spin' : ''}`} />
-              {isRefreshing ? 'Đang đồng bộ...' : 'Kiểm tra lại'}
+              <RefreshCw className={`h-3.5 w-3.5 mr-1.5 text-cyan-400 ${isRefreshing ? 'animate-spin' : ''}`} />
+              {isRefreshing ? 'Đang đồng bộ...' : 'Quét lại'}
             </Button>
             <a
               href={`https://supabase.com/dashboard/project/${projectRef}/editor`}
@@ -200,7 +210,7 @@ export function DatabaseMonitorSection({ organizationId }: DatabaseMonitorSectio
             >
               <Button
                 size="sm"
-                className="text-xs h-8 bg-ink-navy hover:bg-ink-navy/90 text-white cursor-pointer shadow-xs font-medium flex items-center gap-1.5"
+                className="text-xs h-8 bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-500 hover:to-cyan-500 text-white cursor-pointer shadow-md shadow-blue-950/50 font-semibold flex items-center gap-1.5 border border-cyan-400/30"
               >
                 <span>Supabase Studio</span>
                 <ExternalLink className="h-3 w-3" />
@@ -209,182 +219,180 @@ export function DatabaseMonitorSection({ organizationId }: DatabaseMonitorSectio
           </div>
         </div>
 
-        {/* 4 KPI Quick Metric Strip */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 mt-4 pt-4 border-t border-hairline/70">
-          <div className="p-3 rounded-xl bg-white border border-hairline shadow-xs">
-            <div className="flex items-center justify-between text-mist-gray">
-              <span className="text-[11px] font-medium">Tổng bản ghi</span>
-              <Layers className="h-3.5 w-3.5 text-slate-gray" />
+        {/* 4 KPI Quick Metric Strip with Antigravity High-Contrast Styling */}
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 mt-5 pt-5 border-t border-slate-800/80">
+          <div className="p-3.5 rounded-xl bg-[#111726] border border-slate-800/90 shadow-sm hover:border-slate-700 transition-colors">
+            <div className="flex items-center justify-between text-slate-400">
+              <span className="text-xs font-semibold uppercase tracking-wider">Tổng bản ghi</span>
+              <Layers className="h-4 w-4 text-cyan-400" />
             </div>
-            <div className="text-lg font-bold text-ink-navy mt-1">
+            <div className="text-2xl font-bold font-mono text-white mt-1.5 tracking-tight">
               {isRefreshing && tables[0]?.loading ? (
-                <span className="text-xs text-mist-gray font-normal">Đang tính...</span>
+                <span className="text-xs text-slate-400 font-normal">Đang đếm...</span>
               ) : (
                 totalRecords.toLocaleString('vi-VN')
               )}
             </div>
-            <p className="text-[10px] text-mist-gray mt-0.5">Trên 7 bảng hệ thống</p>
+            <p className="text-[11px] text-slate-400 mt-0.5">Trên 7 bảng hệ thống</p>
           </div>
 
-          <div className="p-3 rounded-xl bg-white border border-hairline shadow-xs">
-            <div className="flex items-center justify-between text-mist-gray">
-              <span className="text-[11px] font-medium">Bảng hoạt động</span>
-              <CheckCircle className="h-3.5 w-3.5 text-emerald-600" />
+          <div className="p-3.5 rounded-xl bg-[#111726] border border-slate-800/90 shadow-sm hover:border-slate-700 transition-colors">
+            <div className="flex items-center justify-between text-slate-400">
+              <span className="text-xs font-semibold uppercase tracking-wider">Bảng hoạt động</span>
+              <CheckCircle className="h-4 w-4 text-emerald-400" />
             </div>
-            <div className="text-lg font-bold text-ink-navy mt-1">
+            <div className="text-2xl font-bold font-mono text-white mt-1.5 tracking-tight">
               {activeTablesCount} / {TRACKED_TABLES.length}
             </div>
-            <p className="text-[10px] text-emerald-600 font-medium mt-0.5">Sẵn sàng truy vấn</p>
+            <p className="text-[11px] text-emerald-400 font-medium mt-0.5">Sẵn sàng truy vấn</p>
           </div>
 
-          <div className="p-3 rounded-xl bg-white border border-hairline shadow-xs">
-            <div className="flex items-center justify-between text-mist-gray">
-              <span className="text-[11px] font-medium">Độ trễ phản hồi</span>
-              <Activity className="h-3.5 w-3.5 text-signal-blue" />
+          <div className="p-3.5 rounded-xl bg-[#111726] border border-slate-800/90 shadow-sm hover:border-slate-700 transition-colors">
+            <div className="flex items-center justify-between text-slate-400">
+              <span className="text-xs font-semibold uppercase tracking-wider">Độ trễ mạng</span>
+              <Activity className="h-4 w-4 text-blue-400" />
             </div>
-            <div className="text-lg font-bold text-ink-navy mt-1">
+            <div className="text-2xl font-bold font-mono text-white mt-1.5 tracking-tight">
               {latencyMs !== null ? `${latencyMs} ms` : '—'}
             </div>
-            <p className="text-[10px] text-mist-gray mt-0.5">Supabase REST API</p>
+            <p className="text-[11px] text-slate-400 mt-0.5">Supabase REST API</p>
           </div>
 
-          <div className="p-3 rounded-xl bg-white border border-hairline shadow-xs">
-            <div className="flex items-center justify-between text-mist-gray">
-              <span className="text-[11px] font-medium">Quét lần cuối</span>
-              <Clock className="h-3.5 w-3.5 text-slate-gray" />
+          <div className="p-3.5 rounded-xl bg-[#111726] border border-slate-800/90 shadow-sm hover:border-slate-700 transition-colors">
+            <div className="flex items-center justify-between text-slate-400">
+              <span className="text-xs font-semibold uppercase tracking-wider">Lần quét gần nhất</span>
+              <Clock className="h-4 w-4 text-indigo-400" />
             </div>
-            <div className="text-sm font-semibold text-ink-navy mt-1 truncate">
+            <div className="text-base font-bold font-mono text-white mt-2 truncate">
               {lastChecked ? lastChecked.toLocaleTimeString('vi-VN') : 'Đang quét...'}
             </div>
-            <p className="text-[10px] text-mist-gray mt-0.5">Client-side probe</p>
+            <p className="text-[11px] text-slate-400 mt-0.5">Client-side probe</p>
           </div>
         </div>
-      </CardHeader>
+      </div>
 
-      {/* Main Table view */}
-      <CardContent className="p-0">
-        <div className="overflow-x-auto">
-          <table className="w-full text-left border-collapse">
-            <thead>
-              <tr className="border-b border-hairline bg-cloud/50 text-[11px] font-semibold text-slate-gray uppercase tracking-wider">
-                <th className="py-3 px-4 sm:px-6">Bảng CSDL & Phân Hệ</th>
-                <th className="py-3 px-4">Mô Tả Chức Năng</th>
-                <th className="py-3 px-4 text-center">Trạng Thái</th>
-                <th className="py-3 px-4 sm:px-6 text-right">Số Bản Ghi</th>
-                <th className="py-3 px-4 text-right">Thao Tác</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-hairline text-xs">
-              {tables.map((table) => {
-                const tableUrl = `https://supabase.com/dashboard/project/${projectRef}/editor/${table.id}`;
-                return (
-                  <tr
-                    key={table.id}
-                    className="hover:bg-cloud/40 transition-colors group"
-                  >
-                    {/* Table name and Module */}
-                    <td className="py-3.5 px-4 sm:px-6">
-                      <div className="flex items-center gap-2.5">
-                        <span className="font-mono font-semibold text-ink-navy text-xs bg-slate-50 border border-slate-200 px-2 py-0.5 rounded">
-                          {table.name}
-                        </span>
-                        <Badge
-                          variant="outline"
-                          className="text-[10px] py-0 px-1.5 font-normal text-slate-gray bg-white border-hairline"
-                        >
-                          {table.category}
-                        </Badge>
-                      </div>
-                    </td>
-
-                    {/* Table Description */}
-                    <td className="py-3.5 px-4 text-mist-gray max-w-xs truncate">
-                      {table.description}
-                    </td>
-
-                    {/* Status */}
-                    <td className="py-3.5 px-4 text-center">
-                      {table.loading ? (
-                        <span className="inline-flex items-center gap-1 text-[11px] text-mist-gray">
-                          <RefreshCw className="h-3 w-3 animate-spin" />
-                          Đang đọc
-                        </span>
-                      ) : table.error ? (
-                        <span className="inline-flex items-center gap-1 text-[11px] text-coral-red font-medium">
-                          <AlertCircle className="h-3 w-3" />
-                          Lỗi
-                        </span>
-                      ) : (
-                        <span className="inline-flex items-center gap-1 text-[11px] text-emerald-600 font-medium">
-                          <CheckCircle className="h-3 w-3" />
-                          Bình thường
-                        </span>
-                      )}
-                    </td>
-
-                    {/* Row Count */}
-                    <td className="py-3.5 px-4 sm:px-6 text-right font-mono font-bold text-ink-navy text-sm">
-                      {table.loading ? (
-                        <span className="text-mist-gray text-xs font-normal">...</span>
-                      ) : table.error ? (
-                        <span className="text-coral-red text-xs font-normal">N/A</span>
-                      ) : (
-                        (table.count ?? 0).toLocaleString('vi-VN')
-                      )}
-                    </td>
-
-                    {/* Supabase Action */}
-                    <td className="py-3.5 px-4 text-right">
-                      <a
-                        href={tableUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center gap-1 text-[11px] font-medium text-signal-blue hover:text-signal-blue/80 hover:underline"
+      {/* Main Table view with Antigravity Dark Console Styling */}
+      <div className="p-0 overflow-x-auto">
+        <table className="w-full text-left border-collapse">
+          <thead>
+            <tr className="border-b border-slate-800 bg-[#0C101A] text-[11px] font-semibold text-slate-400 uppercase tracking-wider">
+              <th className="py-3.5 px-4 sm:px-6">Bảng CSDL & Phân Hệ</th>
+              <th className="py-3.5 px-4">Mô Tả Chức Năng</th>
+              <th className="py-3.5 px-4 text-center">Trạng Thái</th>
+              <th className="py-3.5 px-4 sm:px-6 text-right">Số Bản Ghi</th>
+              <th className="py-3.5 px-4 text-right">Thao Tác</th>
+            </tr>
+          </thead>
+          <tbody className="divide-y divide-slate-800/80 text-xs">
+            {tables.map((table) => {
+              const tableUrl = `https://supabase.com/dashboard/project/${projectRef}/editor/${table.id}`;
+              return (
+                <tr
+                  key={table.id}
+                  className="hover:bg-slate-800/40 transition-colors group"
+                >
+                  {/* Table name and Module badge */}
+                  <td className="py-3.5 px-4 sm:px-6">
+                    <div className="flex items-center gap-2.5">
+                      <span className="font-mono font-semibold text-cyan-300 text-xs bg-cyan-950/40 border border-cyan-800/50 px-2 py-0.5 rounded shadow-xs">
+                        {table.name}
+                      </span>
+                      <Badge
+                        variant="outline"
+                        className={`text-[10px] py-0 px-2 font-medium border ${table.badgeClass}`}
                       >
-                        <span>Mở bảng</span>
-                        <ArrowUpRight className="h-3 w-3" />
-                      </a>
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
+                        {table.category}
+                      </Badge>
+                    </div>
+                  </td>
+
+                  {/* Table Description */}
+                  <td className="py-3.5 px-4 text-slate-300 max-w-xs truncate text-xs font-normal">
+                    {table.description}
+                  </td>
+
+                  {/* Status */}
+                  <td className="py-3.5 px-4 text-center">
+                    {table.loading ? (
+                      <span className="inline-flex items-center gap-1.5 text-xs text-slate-400 font-mono">
+                        <RefreshCw className="h-3 w-3 animate-spin text-cyan-400" />
+                        Đang đọc
+                      </span>
+                    ) : table.error ? (
+                      <span className="inline-flex items-center gap-1.5 text-xs text-rose-400 font-semibold font-mono">
+                        <AlertCircle className="h-3.5 w-3.5 text-rose-400" />
+                        Lỗi truy vấn
+                      </span>
+                    ) : (
+                      <span className="inline-flex items-center gap-1.5 text-xs text-emerald-400 font-semibold font-mono">
+                        <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 shadow-sm shadow-emerald-400" />
+                        Bình thường
+                      </span>
+                    )}
+                  </td>
+
+                  {/* Row Count */}
+                  <td className="py-3.5 px-4 sm:px-6 text-right font-mono font-bold text-white text-sm sm:text-base">
+                    {table.loading ? (
+                      <span className="text-slate-500 text-xs font-normal">...</span>
+                    ) : table.error ? (
+                      <span className="text-rose-400 text-xs font-normal">N/A</span>
+                    ) : (
+                      (table.count ?? 0).toLocaleString('vi-VN')
+                    )}
+                  </td>
+
+                  {/* Supabase Action */}
+                  <td className="py-3.5 px-4 text-right">
+                    <a
+                      href={tableUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1 text-xs font-semibold text-cyan-400 hover:text-cyan-300 hover:underline transition-colors"
+                    >
+                      <span>Mở bảng</span>
+                      <ArrowUpRight className="h-3.5 w-3.5" />
+                    </a>
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
+
+      {/* Footer shortcuts bar with Antigravity styling */}
+      <div className="p-4 sm:px-6 bg-[#0C101A] border-t border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs text-slate-400">
+        <div className="flex items-center gap-2.5">
+          <span className="text-xs text-slate-400">Dự án Supabase:</span>
+          <code className="bg-slate-900 px-2.5 py-0.5 rounded border border-slate-750 text-cyan-300 font-mono text-xs font-medium">
+            {projectRef}
+          </code>
         </div>
 
-        {/* Footer shortcuts bar */}
-        <div className="p-4 sm:px-6 bg-cloud/20 border-t border-hairline flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
-          <div className="flex items-center gap-2 text-mist-gray">
-            <span className="text-[11px]">Dự án Supabase:</span>
-            <code className="bg-white px-2 py-0.5 rounded border border-hairline text-slate-gray font-mono text-[11px]">
-              {projectRef}
-            </code>
-          </div>
-
-          <div className="flex items-center gap-3">
-            <a
-              href={`https://supabase.com/dashboard/project/${projectRef}/sql`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-1 text-slate-gray hover:text-ink-navy font-medium transition-colors"
-            >
-              <Code2 className="h-3.5 w-3.5 text-mist-gray" />
-              <span>SQL Editor</span>
-              <ExternalLink className="h-3 w-3 text-mist-gray" />
-            </a>
-            <span className="text-hairline">|</span>
-            <a
-              href={`https://supabase.com/dashboard/project/${projectRef}/editor`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-1 text-signal-blue hover:underline font-medium"
-            >
-              <span>Xem tất cả bảng trong Supabase Studio</span>
-              <ArrowUpRight className="h-3.5 w-3.5" />
-            </a>
-          </div>
+        <div className="flex items-center gap-4">
+          <a
+            href={`https://supabase.com/dashboard/project/${projectRef}/sql`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-1.5 text-slate-300 hover:text-white font-medium transition-colors"
+          >
+            <Code2 className="h-3.5 w-3.5 text-cyan-400" />
+            <span>SQL Query Editor</span>
+            <ExternalLink className="h-3 w-3 text-slate-400" />
+          </a>
+          <span className="text-slate-700">|</span>
+          <a
+            href={`https://supabase.com/dashboard/project/${projectRef}/editor`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-1.5 text-cyan-400 hover:text-cyan-300 hover:underline font-semibold"
+          >
+            <span>Mở Table Editor trên Supabase</span>
+            <ArrowUpRight className="h-3.5 w-3.5" />
+          </a>
         </div>
-      </CardContent>
-    </Card>
+      </div>
+    </div>
   );
 }
