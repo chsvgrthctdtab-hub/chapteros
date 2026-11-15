@@ -44,7 +44,7 @@ export function MaintenanceTab({ organization }: MaintenanceTabProps) {
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
             <div className="flex items-center gap-2">
-              <Badge variant="outline" className="text-[11px] font-semibold bg-blue-50 text-blue-700 border-blue-200">
+              <Badge variant="outline" className="text-[11px] font-semibold bg-slate-100 text-slate-800 border-slate-300">
                 Bảo trì & Vận hành
               </Badge>
               <span className="text-xs text-slate-500 font-mono font-medium">Hạ tầng đám mây & Đồng bộ dữ liệu</span>
@@ -76,7 +76,7 @@ export function MaintenanceTab({ organization }: MaintenanceTabProps) {
         <Card className="border-slate-200 shadow-sm bg-white hover:border-slate-300 transition-colors">
           <CardHeader className="pb-3">
             <div className="flex items-center justify-between">
-              <div className="h-9 w-9 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center border border-blue-200">
+              <div className="h-9 w-9 rounded-xl bg-slate-100 text-slate-700 flex items-center justify-center border border-slate-200">
                 <Sparkles className="h-4 w-4" />
               </div>
               <Badge variant="success" className="text-[11px] font-medium">Chẩn đoán</Badge>
@@ -99,10 +99,10 @@ export function MaintenanceTab({ organization }: MaintenanceTabProps) {
         <Card className="border-slate-200 shadow-sm bg-white hover:border-slate-300 transition-colors">
           <CardHeader className="pb-3">
             <div className="flex items-center justify-between">
-              <div className="h-9 w-9 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center border border-blue-200">
+              <div className="h-9 w-9 rounded-xl bg-slate-100 text-slate-700 flex items-center justify-center border border-slate-200">
                 <History className="h-4 w-4" />
               </div>
-              <Badge variant="outline" className="text-[11px] font-medium text-blue-700 bg-blue-50 border-blue-200">Truy vết</Badge>
+              <Badge variant="outline" className="text-[11px] font-medium text-slate-700 bg-slate-100 border-slate-200">Truy vết</Badge>
             </div>
             <CardTitle className="text-base font-bold text-slate-900 mt-2.5">Nhật Ký Hoạt Động</CardTitle>
             <CardDescription className="text-xs sm:text-sm text-slate-600 mt-1">
@@ -119,7 +119,7 @@ export function MaintenanceTab({ organization }: MaintenanceTabProps) {
         </Card>
       </div>
 
-      {/* Database Realtime Row Counts & Monitoring - Antigravity High-Contrast Tech Console */}
+      {/* Database Realtime Row Counts & Monitoring - Pure Clean Dark Console */}
       <DatabaseMonitorSection
         organizationId={organization?.id}
         organizationName={organization?.name}
@@ -129,7 +129,7 @@ export function MaintenanceTab({ organization }: MaintenanceTabProps) {
       <Card className="border-slate-200 shadow-sm bg-white">
         <CardHeader className="pb-4 border-b border-slate-200">
           <CardTitle className="text-sm sm:text-base font-bold text-slate-900 flex items-center gap-2">
-            <Server className="h-4 w-4 text-blue-600" />
+            <Server className="h-4 w-4 text-slate-700" />
             Tình Trạng Kết Nối Hạ Tầng & Dịch Vụ
           </CardTitle>
           <CardDescription className="text-xs sm:text-sm text-slate-600 mt-1">

@@ -21,7 +21,6 @@ interface TableStat {
   name: string;
   description: string;
   category: string;
-  badgeClass: string;
   count: number | null;
   loading: boolean;
   error?: string | null;
@@ -33,49 +32,42 @@ const TRACKED_TABLES: Omit<TableStat, 'count' | 'loading' | 'error'>[] = [
     name: 'members',
     description: 'Hồ sơ hội viên & thông tin cá nhân',
     category: 'Nhân sự',
-    badgeClass: 'bg-blue-950/70 text-blue-300 border-blue-800/60',
   },
   {
     id: 'term_members',
     name: 'term_members',
     description: 'Phân công hội viên theo từng nhiệm kỳ',
     category: 'Nhiệm kỳ',
-    badgeClass: 'bg-purple-950/70 text-purple-300 border-purple-800/60',
   },
   {
     id: 'terms',
     name: 'terms',
     description: 'Danh mục nhiệm kỳ & niên khóa',
     category: 'Nhiệm kỳ',
-    badgeClass: 'bg-purple-950/70 text-purple-300 border-purple-800/60',
   },
   {
     id: 'activities',
     name: 'activities',
     description: 'Sự kiện, buổi họp & phong trào sinh hoạt',
     category: 'Hoạt động',
-    badgeClass: 'bg-amber-950/70 text-amber-300 border-amber-800/60',
   },
   {
     id: 'tasks',
     name: 'tasks',
     description: 'Công việc & phân công phụ trách',
     category: 'Công việc',
-    badgeClass: 'bg-indigo-950/70 text-indigo-300 border-indigo-800/60',
   },
   {
     id: 'finance_transactions',
     name: 'finance_transactions',
     description: 'Chứng từ thu - chi ngân quỹ',
     category: 'Tài chính',
-    badgeClass: 'bg-emerald-950/70 text-emerald-300 border-emerald-800/60',
   },
   {
     id: 'audit_logs',
     name: 'audit_logs',
     description: 'Nhật ký truy vết thao tác & bảo mật',
     category: 'Kiểm toán',
-    badgeClass: 'bg-rose-950/70 text-rose-300 border-rose-800/60',
   },
 ];
 
@@ -162,15 +154,12 @@ export function DatabaseMonitorSection({ organizationId }: DatabaseMonitorSectio
   const activeTablesCount = tables.filter((t) => !t.error).length;
 
   return (
-    <div className="relative rounded-2xl bg-[#090D16] border border-slate-800 shadow-2xl overflow-hidden text-slate-100">
-      {/* High-tech Glowing Top Gradient Border */}
-      <div className="h-1 w-full bg-gradient-to-r from-blue-500 via-cyan-400 to-indigo-500" />
-
-      {/* Header section with title and actions */}
-      <div className="p-5 sm:p-6 border-b border-slate-800/80 bg-[#0D121F]/80">
+    <div className="relative rounded-2xl bg-[#090D16] border border-slate-800 shadow-xl overflow-hidden text-slate-100">
+      {/* Header section with title and actions - Pure Clean Monochrome / Slate */}
+      <div className="p-5 sm:p-6 border-b border-slate-800/80 bg-[#0D121F]">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div className="flex items-start gap-3.5">
-            <div className="h-11 w-11 rounded-xl bg-cyan-950/60 text-cyan-400 flex items-center justify-center shrink-0 border border-cyan-800/50 shadow-inner">
+            <div className="h-10 w-10 rounded-xl bg-slate-800 text-slate-200 flex items-center justify-center shrink-0 border border-slate-700 shadow-inner">
               <Database className="h-5 w-5" />
             </div>
             <div>
@@ -178,11 +167,8 @@ export function DatabaseMonitorSection({ organizationId }: DatabaseMonitorSectio
                 <h3 className="text-base sm:text-lg font-bold text-white tracking-tight">
                   Giám Sát Bảng Dữ Liệu Supabase
                 </h3>
-                <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-mono font-medium bg-emerald-950/80 text-emerald-300 border border-emerald-800/70 shadow-xs">
-                  <span className="relative flex h-2 w-2">
-                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                    <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
-                  </span>
+                <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-mono font-medium bg-emerald-950/70 text-emerald-300 border border-emerald-800/60 shadow-xs">
+                  <span className="h-2 w-2 rounded-full bg-emerald-500"></span>
                   Realtime Active
                 </span>
               </div>
@@ -198,9 +184,9 @@ export function DatabaseMonitorSection({ organizationId }: DatabaseMonitorSectio
               size="sm"
               onClick={fetchTableCounts}
               disabled={isRefreshing}
-              className="text-xs h-8 bg-slate-900/90 text-slate-200 border-slate-700 hover:bg-slate-800 hover:text-white cursor-pointer shadow-xs font-medium"
+              className="text-xs h-8 bg-slate-800 text-slate-200 border-slate-700 hover:bg-slate-700 hover:text-white cursor-pointer shadow-xs font-medium"
             >
-              <RefreshCw className={`h-3.5 w-3.5 mr-1.5 text-cyan-400 ${isRefreshing ? 'animate-spin' : ''}`} />
+              <RefreshCw className={`h-3.5 w-3.5 mr-1.5 text-slate-400 ${isRefreshing ? 'animate-spin' : ''}`} />
               {isRefreshing ? 'Đang đồng bộ...' : 'Quét lại'}
             </Button>
             <a
@@ -210,7 +196,7 @@ export function DatabaseMonitorSection({ organizationId }: DatabaseMonitorSectio
             >
               <Button
                 size="sm"
-                className="text-xs h-8 bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-500 hover:to-cyan-500 text-white cursor-pointer shadow-md shadow-blue-950/50 font-semibold flex items-center gap-1.5 border border-cyan-400/30"
+                className="text-xs h-8 bg-white hover:bg-slate-100 text-slate-900 cursor-pointer shadow-sm font-semibold flex items-center gap-1.5 border border-transparent"
               >
                 <span>Supabase Studio</span>
                 <ExternalLink className="h-3 w-3" />
@@ -219,12 +205,12 @@ export function DatabaseMonitorSection({ organizationId }: DatabaseMonitorSectio
           </div>
         </div>
 
-        {/* 4 KPI Quick Metric Strip with Antigravity High-Contrast Styling */}
+        {/* 4 KPI Quick Metric Strip */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 mt-5 pt-5 border-t border-slate-800/80">
-          <div className="p-3.5 rounded-xl bg-[#111726] border border-slate-800/90 shadow-sm hover:border-slate-700 transition-colors">
+          <div className="p-3.5 rounded-xl bg-[#111726] border border-slate-800 shadow-sm hover:border-slate-700 transition-colors">
             <div className="flex items-center justify-between text-slate-400">
               <span className="text-xs font-semibold uppercase tracking-wider">Tổng bản ghi</span>
-              <Layers className="h-4 w-4 text-cyan-400" />
+              <Layers className="h-4 w-4 text-slate-400" />
             </div>
             <div className="text-2xl font-bold font-mono text-white mt-1.5 tracking-tight">
               {isRefreshing && tables[0]?.loading ? (
@@ -236,7 +222,7 @@ export function DatabaseMonitorSection({ organizationId }: DatabaseMonitorSectio
             <p className="text-[11px] text-slate-400 mt-0.5">Trên 7 bảng hệ thống</p>
           </div>
 
-          <div className="p-3.5 rounded-xl bg-[#111726] border border-slate-800/90 shadow-sm hover:border-slate-700 transition-colors">
+          <div className="p-3.5 rounded-xl bg-[#111726] border border-slate-800 shadow-sm hover:border-slate-700 transition-colors">
             <div className="flex items-center justify-between text-slate-400">
               <span className="text-xs font-semibold uppercase tracking-wider">Bảng hoạt động</span>
               <CheckCircle className="h-4 w-4 text-emerald-400" />
@@ -247,10 +233,10 @@ export function DatabaseMonitorSection({ organizationId }: DatabaseMonitorSectio
             <p className="text-[11px] text-emerald-400 font-medium mt-0.5">Sẵn sàng truy vấn</p>
           </div>
 
-          <div className="p-3.5 rounded-xl bg-[#111726] border border-slate-800/90 shadow-sm hover:border-slate-700 transition-colors">
+          <div className="p-3.5 rounded-xl bg-[#111726] border border-slate-800 shadow-sm hover:border-slate-700 transition-colors">
             <div className="flex items-center justify-between text-slate-400">
               <span className="text-xs font-semibold uppercase tracking-wider">Độ trễ mạng</span>
-              <Activity className="h-4 w-4 text-blue-400" />
+              <Activity className="h-4 w-4 text-slate-400" />
             </div>
             <div className="text-2xl font-bold font-mono text-white mt-1.5 tracking-tight">
               {latencyMs !== null ? `${latencyMs} ms` : '—'}
@@ -258,10 +244,10 @@ export function DatabaseMonitorSection({ organizationId }: DatabaseMonitorSectio
             <p className="text-[11px] text-slate-400 mt-0.5">Supabase REST API</p>
           </div>
 
-          <div className="p-3.5 rounded-xl bg-[#111726] border border-slate-800/90 shadow-sm hover:border-slate-700 transition-colors">
+          <div className="p-3.5 rounded-xl bg-[#111726] border border-slate-800 shadow-sm hover:border-slate-700 transition-colors">
             <div className="flex items-center justify-between text-slate-400">
               <span className="text-xs font-semibold uppercase tracking-wider">Lần quét gần nhất</span>
-              <Clock className="h-4 w-4 text-indigo-400" />
+              <Clock className="h-4 w-4 text-slate-400" />
             </div>
             <div className="text-base font-bold font-mono text-white mt-2 truncate">
               {lastChecked ? lastChecked.toLocaleTimeString('vi-VN') : 'Đang quét...'}
@@ -271,7 +257,7 @@ export function DatabaseMonitorSection({ organizationId }: DatabaseMonitorSectio
         </div>
       </div>
 
-      {/* Main Table view with Antigravity Dark Console Styling */}
+      {/* Main Table view */}
       <div className="p-0 overflow-x-auto">
         <table className="w-full text-left border-collapse">
           <thead>
@@ -294,12 +280,12 @@ export function DatabaseMonitorSection({ organizationId }: DatabaseMonitorSectio
                   {/* Table name and Module badge */}
                   <td className="py-3.5 px-4 sm:px-6">
                     <div className="flex items-center gap-2.5">
-                      <span className="font-mono font-semibold text-cyan-300 text-xs bg-cyan-950/40 border border-cyan-800/50 px-2 py-0.5 rounded shadow-xs">
+                      <span className="font-mono font-semibold text-slate-100 text-xs bg-slate-800 border border-slate-700 px-2.5 py-0.5 rounded shadow-xs">
                         {table.name}
                       </span>
                       <Badge
                         variant="outline"
-                        className={`text-[10px] py-0 px-2 font-medium border ${table.badgeClass}`}
+                        className="text-[10px] py-0 px-2 font-medium bg-slate-800/60 text-slate-300 border-slate-700"
                       >
                         {table.category}
                       </Badge>
@@ -315,7 +301,7 @@ export function DatabaseMonitorSection({ organizationId }: DatabaseMonitorSectio
                   <td className="py-3.5 px-4 text-center">
                     {table.loading ? (
                       <span className="inline-flex items-center gap-1.5 text-xs text-slate-400 font-mono">
-                        <RefreshCw className="h-3 w-3 animate-spin text-cyan-400" />
+                        <RefreshCw className="h-3 w-3 animate-spin text-slate-400" />
                         Đang đọc
                       </span>
                     ) : table.error ? (
@@ -325,7 +311,7 @@ export function DatabaseMonitorSection({ organizationId }: DatabaseMonitorSectio
                       </span>
                     ) : (
                       <span className="inline-flex items-center gap-1.5 text-xs text-emerald-400 font-semibold font-mono">
-                        <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 shadow-sm shadow-emerald-400" />
+                        <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
                         Bình thường
                       </span>
                     )}
@@ -348,7 +334,7 @@ export function DatabaseMonitorSection({ organizationId }: DatabaseMonitorSectio
                       href={tableUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1 text-xs font-semibold text-cyan-400 hover:text-cyan-300 hover:underline transition-colors"
+                      className="inline-flex items-center gap-1 text-xs font-medium text-slate-300 hover:text-white hover:underline transition-colors"
                     >
                       <span>Mở bảng</span>
                       <ArrowUpRight className="h-3.5 w-3.5" />
@@ -361,11 +347,11 @@ export function DatabaseMonitorSection({ organizationId }: DatabaseMonitorSectio
         </table>
       </div>
 
-      {/* Footer shortcuts bar with Antigravity styling */}
+      {/* Footer shortcuts bar */}
       <div className="p-4 sm:px-6 bg-[#0C101A] border-t border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs text-slate-400">
         <div className="flex items-center gap-2.5">
           <span className="text-xs text-slate-400">Dự án Supabase:</span>
-          <code className="bg-slate-900 px-2.5 py-0.5 rounded border border-slate-750 text-cyan-300 font-mono text-xs font-medium">
+          <code className="bg-slate-800 px-2.5 py-0.5 rounded border border-slate-700 text-slate-200 font-mono text-xs font-medium">
             {projectRef}
           </code>
         </div>
@@ -377,7 +363,7 @@ export function DatabaseMonitorSection({ organizationId }: DatabaseMonitorSectio
             rel="noopener noreferrer"
             className="inline-flex items-center gap-1.5 text-slate-300 hover:text-white font-medium transition-colors"
           >
-            <Code2 className="h-3.5 w-3.5 text-cyan-400" />
+            <Code2 className="h-3.5 w-3.5 text-slate-400" />
             <span>SQL Query Editor</span>
             <ExternalLink className="h-3 w-3 text-slate-400" />
           </a>
@@ -386,7 +372,7 @@ export function DatabaseMonitorSection({ organizationId }: DatabaseMonitorSectio
             href={`https://supabase.com/dashboard/project/${projectRef}/editor`}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-1.5 text-cyan-400 hover:text-cyan-300 hover:underline font-semibold"
+            className="inline-flex items-center gap-1.5 text-slate-200 hover:text-white hover:underline font-medium"
           >
             <span>Mở Table Editor trên Supabase</span>
             <ArrowUpRight className="h-3.5 w-3.5" />
