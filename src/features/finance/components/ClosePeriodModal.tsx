@@ -308,7 +308,7 @@ export function ClosePeriodModal({
                 </span>
               </div>
               <div className="bg-ink-navy text-white p-2.5 rounded-xl border border-ink-navy">
-                <span className="text-[11px] text-mist-gray font-medium block">Số dư tính toán</span>
+                <span className="text-[11px] text-blue-200 font-medium block">Số dư tính toán</span>
                 <span className="text-sm font-bold text-white tabular-nums">
                   {formatVND(calculatedClosingBalance)}
                 </span>

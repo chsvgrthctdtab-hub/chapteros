@@ -234,7 +234,11 @@ export function ActivityFinanceSection({
           }`}
         >
           <div className="flex items-center justify-between mb-1.5">
-            <span className="text-xs font-semibold text-mist-gray uppercase tracking-wider">
+            <span
+              className={`text-xs font-semibold uppercase tracking-wider ${
+                isBalancePositive ? 'text-blue-100' : 'text-rose-200'
+              }`}
+            >
               Cân đối thu chi
             </span>
             <div className="w-7 h-7 rounded-lg bg-white/10 text-white flex items-center justify-center">

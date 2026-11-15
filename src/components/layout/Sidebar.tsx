@@ -186,17 +186,17 @@ export function Sidebar({ collapsed, onToggleCollapse, mobileOpen, onCloseMobile
           mobileOpen
             ? 'w-64 translate-x-0 shadow-2xl rounded-r-2xl'
             : '-translate-x-full lg:translate-x-0',
-          collapsed ? 'lg:w-[56px]' : 'lg:w-64'
+          collapsed ? 'lg:w-16' : 'lg:w-64'
         )}
       >
         {/* Brand header */}
         <div
           className={cn(
             'flex h-16 shrink-0 items-center transition-all duration-200 ease-in-out',
-            isEffectiveCollapsed ? 'justify-center px-2' : 'justify-between px-4'
+            isEffectiveCollapsed ? 'justify-center px-0' : 'justify-between px-4'
           )}
         >
-          <div className="flex items-center gap-3 overflow-hidden min-w-0">
+          <div className={cn('flex items-center min-w-0', isEffectiveCollapsed ? 'justify-center' : 'gap-3 overflow-hidden')}>
             <button
               type="button"
               onClick={isEffectiveCollapsed ? onToggleCollapse : undefined}

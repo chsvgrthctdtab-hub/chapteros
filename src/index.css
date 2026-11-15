@@ -1,24 +1,24 @@
 @import "tailwindcss";
 
 @theme {
-  /* High-Contrast Core Colors (+30% contrast enhanced) */
-  --color-ink-navy: #061a2d;
-  --color-signal-blue: #0052cc;
-  --color-slate-gray: #24374b;
-  --color-mist-gray: #465d75;
-  --color-cloud: #edf3f9;
+  /* Balanced High-Contrast Colors (Refined & Clean) */
+  --color-ink-navy: #0b2540;
+  --color-signal-blue: #0066f5;
+  --color-slate-gray: #334e68;
+  --color-mist-gray: #627d98;
+  --color-cloud: #f8fafc;
   --color-paper: #ffffff;
-  --color-pebble: #e0e9f3;
-  --color-hairline: #a8bed4;
+  --color-pebble: #eef2f6;
+  --color-hairline: #cbd5e1;
   --color-carbon: #0a0a0a;
   --color-coral-magenta: #c026d3;
   --color-sky-cyan: #0284c7;
-  --color-deep-cobalt: #003780;
+  --color-deep-cobalt: #003a8c;
 
   /* Blue-tinted shadow stack */
-  --shadow-calendly-card: rgba(36, 55, 75, 0.08) 0px 4px 6px 0px, rgba(36, 55, 75, 0.06) 0px 8px 18px 0px, rgba(36, 55, 75, 0.12) 0px 30px 50px 0px;
-  --shadow-calendly-sm: rgba(36, 55, 75, 0.08) 0px 4px 6px 0px, rgba(36, 55, 75, 0.06) 0px 4px 12px 0px, rgba(36, 55, 75, 0.08) 0px 10px 20px 0px;
-  --shadow-calendly-btn: rgba(36, 55, 75, 0.08) 0px 4px 6px 0px, rgba(36, 55, 75, 0.06) 0px 8px 18px 0px, rgba(36, 55, 75, 0.1) 0px 15px 30px 0px;
+  --shadow-calendly-card: rgba(51, 78, 104, 0.05) 0px 4px 6px 0px, rgba(51, 78, 104, 0.04) 0px 8px 18px 0px, rgba(51, 78, 104, 0.08) 0px 30px 50px 0px;
+  --shadow-calendly-sm: rgba(51, 78, 104, 0.05) 0px 4px 6px 0px, rgba(51, 78, 104, 0.04) 0px 4px 12px 0px, rgba(51, 78, 104, 0.06) 0px 10px 20px 0px;
+  --shadow-calendly-btn: rgba(51, 78, 104, 0.05) 0px 4px 6px 0px, rgba(51, 78, 104, 0.04) 0px 8px 18px 0px, rgba(51, 78, 104, 0.07) 0px 15px 30px 0px;
 
   /* Radii */
   --radius-cards: 24px;
@@ -28,37 +28,31 @@
 }
 
 @layer base {
-  html {
-    /* Scale entire system UI up by ~20% across all rem units */
-    font-size: 120%;
-    -webkit-text-size-adjust: 100%;
-  }
-
   :root {
-    /* Calendly Tokens mapped to semantic HSL Variables with High Contrast */
-    --background: 214 26% 94%; /* #edf2f7 */
-    --foreground: 210 75% 10%; /* #061a2d */
+    /* Calendly Tokens mapped to semantic HSL Variables */
+    --background: 216 28% 97%; /* #f8fafd */
+    --foreground: 210 65% 15%; /* #0b2540 */
     --card: 0 0% 100%; /* #ffffff */
-    --card-foreground: 210 75% 10%; /* #061a2d */
+    --card-foreground: 210 65% 15%; /* #0b2540 */
     --popover: 0 0% 100%;
-    --popover-foreground: 210 75% 10%;
-    --primary: 216 100% 40%; /* #0052cc */
+    --popover-foreground: 210 65% 15%;
+    --primary: 215 100% 48%; /* #0066f5 */
     --primary-foreground: 0 0% 100%;
-    --secondary: 212 30% 91%; /* #e0e9f3 */
-    --secondary-foreground: 210 75% 10%;
-    --muted: 212 30% 91%; /* #e0e9f3 */
-    --muted-foreground: 212 28% 28%; /* #34485c */
-    --accent: 212 30% 91%;
-    --accent-foreground: 210 75% 10%;
-    --destructive: 0 84.2% 55%;
+    --secondary: 214 24% 94%; /* #eef2f6 */
+    --secondary-foreground: 210 65% 15%;
+    --muted: 214 24% 94%; /* #eef2f6 */
+    --muted-foreground: 212 25% 36%; /* #475d73 */
+    --accent: 214 24% 94%;
+    --accent-foreground: 210 65% 15%;
+    --destructive: 0 84.2% 58%;
     --destructive-foreground: 210 40% 98%;
-    --border: 212 32% 75%; /* #a8bed4 */
-    --input: 212 32% 75%; /* #a8bed4 */
-    --ring: 216 100% 40%;
+    --border: 214 25% 82%; /* #cbd5e1 */
+    --input: 214 25% 82%; /* #cbd5e1 */
+    --ring: 215 100% 48%;
     --radius: 0.5rem; /* 8px */
 
     /* ==========================================================================
-       MATERIAL DESIGN 3 (M3) SEMANTIC DESIGN TOKENS - LIGHT THEME (HIGH CONTRAST)
+       MATERIAL DESIGN 3 (M3) SEMANTIC DESIGN TOKENS - LIGHT THEME
        ========================================================================== */
     --md-sys-color-primary: #1d4ed8;
     --md-sys-color-on-primary: #ffffff;
@@ -75,32 +69,32 @@
     --md-sys-color-tertiary-container: #dbeafe;
     --md-sys-color-on-tertiary-container: #172554;
 
-    --md-sys-color-error: #b91c1c;
+    --md-sys-color-error: #dc2626;
     --md-sys-color-on-error: #ffffff;
     --md-sys-color-error-container: #fee2e2;
     --md-sys-color-on-error-container: #7f1d1d;
 
-    --md-sys-color-surface: #edf2f7;
-    --md-sys-color-on-surface: #0a192f;
-    --md-sys-color-surface-variant: #e2e8f0;
-    --md-sys-color-on-surface-variant: #334155;
+    --md-sys-color-surface: #f8fafc;
+    --md-sys-color-on-surface: #0f172a;
+    --md-sys-color-surface-variant: #f1f5f9;
+    --md-sys-color-on-surface-variant: #475569;
 
     --md-sys-color-surface-container-lowest: #ffffff;
     --md-sys-color-surface-container-low: #f8fafc;
-    --md-sys-color-surface-container: #edf2f7;
+    --md-sys-color-surface-container: #f1f5f9;
     --md-sys-color-surface-container-high: #e2e8f0;
     --md-sys-color-surface-container-highest: #cbd5e1;
 
-    --md-sys-color-outline: #94a3b8;
-    --md-sys-color-outline-variant: #cbd5e1;
+    --md-sys-color-outline: #cbd5e1;
+    --md-sys-color-outline-variant: #e2e8f0;
 
-    /* Semantic Status Tokens - Light (High Contrast) */
-    --md-sys-color-success: #047857;
+    /* Semantic Status Tokens - Light */
+    --md-sys-color-success: #059669;
     --md-sys-color-on-success: #ffffff;
     --md-sys-color-success-container: #d1fae5;
     --md-sys-color-on-success-container: #064e3b;
 
-    --md-sys-color-warning: #b45309;
+    --md-sys-color-warning: #d97706;
     --md-sys-color-on-warning: #ffffff;
     --md-sys-color-warning-container: #fef3c7;
     --md-sys-color-on-warning-container: #78350f;
@@ -244,10 +238,10 @@
 .text-on-info-container { color: var(--md-sys-color-on-info-container); }
 
 /* ==========================================================================
-   GLOBAL LUCIDE SVG REFINEMENT — Tầng 2: Nét đậm rõ ràng (+15% stroke)
+   GLOBAL LUCIDE SVG REFINEMENT — Tầng 2: Nét mảnh & dịu mắt toàn hệ thống
    ========================================================================== */
 svg.lucide {
-  stroke-width: 2;
+  stroke-width: 1.75;
   stroke-linecap: round;
   stroke-linejoin: round;
   flex-shrink: 0;
@@ -255,7 +249,7 @@ svg.lucide {
 
 body {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-  background-color: #edf2f7;
+  background-color: #f8fafd;
   color: hsl(var(--foreground));
   min-height: 100vh;
   margin: 0;
@@ -264,10 +258,10 @@ body {
   text-rendering: optimizeLegibility;
 }
 
-/* Custom distinct scrollbar styling */
+/* Custom subtle scrollbar styling */
 ::-webkit-scrollbar {
-  width: 7px;
-  height: 7px;
+  width: 6px;
+  height: 6px;
 }
 
 ::-webkit-scrollbar-track {
@@ -275,16 +269,16 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #94a3b8;
+  background: #cbd5e1;
   border-radius: 9999px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #64748b;
+  background: #94a3b8;
 }
 
 /* Text selection color */
 ::selection {
-  background-color: #bfdbfe;
+  background-color: #dbeafe;
   color: #1e3a8a;
 }
